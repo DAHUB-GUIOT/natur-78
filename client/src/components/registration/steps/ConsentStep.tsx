@@ -85,7 +85,7 @@ const ConsentStep = ({ formData, updateFormData, onSubmit, onBack, onNext }: Con
         <Button 
           type="submit" 
           disabled={!formData.acceptTerms}
-          className="bg-[#EDFF60] text-[#191C0F] hover:bg-[#CEDD9F] px-8 py-6 text-lg disabled:opacity-50"
+          className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-bold px-8 py-6 text-lg disabled:opacity-50 shadow-xl"
         >
           Continuar
         </Button>

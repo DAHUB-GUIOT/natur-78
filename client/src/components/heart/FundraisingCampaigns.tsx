@@ -39,13 +39,13 @@ export const FundraisingCampaigns = ({ handleContribute }: FundraisingCampaignsP
                 <span>$45.000.000 / $100.000.000</span>
               </div>
               <div className="w-full h-2 bg-gray-100 rounded-full">
-                <div className="h-full bg-yellow-600 rounded-full" style={{width: "45%"}}></div>
+                <div className="h-full bg-green-600 rounded-full" style={{width: "45%"}}></div>
               </div>
             </div>
             
             <Button 
               onClick={() => handleContribute("energia-limpia")} 
-              className="w-full bg-yellow-600 hover:bg-yellow-700"
+              className="w-full bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-bold"
             >
               Contribuir a esta causa
             </Button>

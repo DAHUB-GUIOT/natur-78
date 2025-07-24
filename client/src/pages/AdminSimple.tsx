@@ -122,31 +122,31 @@ const AdminSimple = () => {
   return (
     <div className="container mx-auto px-4 py-8 max-w-6xl">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-[#FCF8EE]">Panel de Administración</h1>
-        <p className="text-[#FCF8EE]/70 mt-2">
+        <h1 className="text-3xl font-bold text-black">Panel de Administración</h1>
+        <p className="text-black/70 mt-2 font-medium">
           Gestiona contenido y usuarios de la plataforma Festival NATUR
         </p>
       </div>
 
       <Tabs defaultValue="experiences" className="space-y-6">
-        <TabsList className="bg-[#FCF8EE]/10 border-[#FCF8EE]/20">
+        <TabsList className="bg-white border-2 border-green-500">
           <TabsTrigger 
             value="experiences" 
-            className="data-[state=active]:bg-[#EDFF60] data-[state=active]:text-[#222408]"
+            className="data-[state=active]:bg-green-600 data-[state=active]:text-white text-black font-bold"
           >
             <Eye className="h-4 w-4 mr-2" />
             Experiencias Pendientes ({pendingExperiences.length})
           </TabsTrigger>
           <TabsTrigger 
             value="companies"
-            className="data-[state=active]:bg-[#EDFF60] data-[state=active]:text-[#222408]"
+            className="data-[state=active]:bg-green-600 data-[state=active]:text-white text-black font-bold"
           >
             <Users className="h-4 w-4 mr-2" />
             Empresas Registradas ({registeredCompanies.length})
           </TabsTrigger>
           <TabsTrigger 
             value="settings"
-            className="data-[state=active]:bg-[#EDFF60] data-[state=active]:text-[#222408]"
+            className="data-[state=active]:bg-green-600 data-[state=active]:text-white text-black font-bold"
           >
             <Settings className="h-4 w-4 mr-2" />
             Configuración
@@ -157,25 +157,25 @@ const AdminSimple = () => {
         <TabsContent value="experiences" className="space-y-4">
           <div className="grid gap-4">
             {pendingExperiences.map((experience) => (
-              <Card key={experience.id} className="bg-[#FCF8EE]/5 border-[#FCF8EE]/20">
+              <Card key={experience.id} className="bg-white border-2 border-green-500 shadow-lg">
                 <CardContent className="p-6">
                   <div className="flex items-start justify-between">
                     <div className="space-y-3 flex-1">
                       <div className="flex items-center gap-3">
-                        <h3 className="text-xl font-semibold text-[#FCF8EE]">
+                        <h3 className="text-xl font-bold text-black">
                           {experience.title}
                         </h3>
                         <Badge 
                           variant="secondary"
-                          className="bg-yellow-500/20 text-yellow-400 border-yellow-500/30"
+                          className="bg-gray-500 text-white border-gray-500"
                         >
                           Pendiente
                         </Badge>
                       </div>
                       
-                      <p className="text-[#FCF8EE]/80">{experience.description}</p>
+                      <p className="text-black/80 font-medium">{experience.description}</p>
                       
-                      <div className="grid md:grid-cols-2 gap-4 text-sm text-[#FCF8EE]/70">
+                      <div className="grid md:grid-cols-2 gap-4 text-sm text-black/70 font-medium">
                         <div className="flex items-center">
                           <MapPin className="h-4 w-4 mr-2" />
                           {experience.location}

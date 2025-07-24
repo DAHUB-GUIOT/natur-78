@@ -29,11 +29,12 @@ export function Hero() {
         <div className="flex flex-col sm:flex-row gap-4 w-full max-w-[90vw] sm:max-w-[500px]">
           <Link to="/auth/empresas" className="flex-1">
             <Button className="
-              bg-[#EDFF60] hover:bg-[#E5F73D] w-full
-              text-sm sm:text-base text-[#222408] 
-              font-medium uppercase tracking-[-0.3px] 
+              bg-black hover:bg-gray-800 w-full
+              text-sm sm:text-base text-white 
+              font-bold uppercase tracking-[-0.3px] 
               px-6 py-4 sm:px-8 sm:py-6 h-auto
-              font-jakarta transition-colors
+              font-jakarta transition-colors shadow-xl
+              border-2 border-black
             ">
               <Building2 className="w-4 h-4 mr-2" />
               Portal Empresas

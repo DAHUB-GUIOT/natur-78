@@ -106,14 +106,14 @@ const Experiencias = () => {
     <div className="container mx-auto px-4 py-8 max-w-4xl">
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-3xl font-bold text-[#FCF8EE]">Mis Experiencias</h1>
-          <p className="text-[#FCF8EE]/70 mt-2">
+          <h1 className="text-3xl font-bold text-black">Mis Experiencias</h1>
+          <p className="text-black/70 mt-2 font-medium">
             Gestiona las experiencias de turismo sostenible que ofreces
           </p>
         </div>
         <Button
           onClick={() => setShowCreateForm(true)}
-          className="bg-[#EDFF60] text-[#222408] hover:bg-[#EDFF60]/90"
+          className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-bold shadow-xl"
         >
           <Plus className="h-4 w-4 mr-2" />
           Nueva Experiencia
@@ -122,20 +122,20 @@ const Experiencias = () => {
 
       {/* Create/Edit Form */}
       {showCreateForm && (
-        <Card className="bg-[#FCF8EE]/5 border-[#FCF8EE]/20 mb-6">
-          <CardHeader>
-            <CardTitle className="text-[#FCF8EE]">
+        <Card className="bg-white border-2 border-green-500 mb-6 shadow-xl">
+          <CardHeader className="bg-gradient-to-r from-green-600 to-green-700">
+            <CardTitle className="text-white font-bold text-xl">
               {editingId ? 'Editar Experiencia' : 'Crear Nueva Experiencia'}
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-4 p-6 bg-white">
             <div className="grid md:grid-cols-2 gap-4">
               <div>
                 <Input
                   placeholder="Título de la experiencia"
                   value={formData.title}
                   onChange={(e) => setFormData({...formData, title: e.target.value})}
-                  className="bg-[#FCF8EE]/10 border-[#FCF8EE]/20 text-[#FCF8EE]"
+                  className="border-2 border-green-600 focus:border-green-700 text-black font-medium"
                 />
               </div>
               <div>
@@ -143,7 +143,7 @@ const Experiencias = () => {
                   placeholder="Ubicación"
                   value={formData.location}
                   onChange={(e) => setFormData({...formData, location: e.target.value})}
-                  className="bg-[#FCF8EE]/10 border-[#FCF8EE]/20 text-[#FCF8EE]"
+                  className="border-2 border-green-600 focus:border-green-700 text-black font-medium"
                 />
               </div>
             </div>
@@ -152,7 +152,7 @@ const Experiencias = () => {
               placeholder="Descripción detallada de la experiencia"
               value={formData.description}
               onChange={(e) => setFormData({...formData, description: e.target.value})}
-              className="bg-[#FCF8EE]/10 border-[#FCF8EE]/20 text-[#FCF8EE]"
+              className="border-2 border-green-600 focus:border-green-700 text-black font-medium"
               rows={3}
             />
 
@@ -161,19 +161,19 @@ const Experiencias = () => {
                 placeholder="Categoría"
                 value={formData.category}
                 onChange={(e) => setFormData({...formData, category: e.target.value})}
-                className="bg-[#FCF8EE]/10 border-[#FCF8EE]/20 text-[#FCF8EE]"
+                className="border-2 border-green-600 focus:border-green-700 text-black font-medium"
               />
               <Input
                 placeholder="Precio (ej: $150,000)"
                 value={formData.price}
                 onChange={(e) => setFormData({...formData, price: e.target.value})}
-                className="bg-[#FCF8EE]/10 border-[#FCF8EE]/20 text-[#FCF8EE]"
+                className="border-2 border-green-600 focus:border-green-700 text-black font-medium"
               />
               <Input
                 placeholder="Fechas disponibles"
                 value={formData.dates}
                 onChange={(e) => setFormData({...formData, dates: e.target.value})}
-                className="bg-[#FCF8EE]/10 border-[#FCF8EE]/20 text-[#FCF8EE]"
+                className="border-2 border-green-600 focus:border-green-700 text-black font-medium"
               />
             </div>
 
@@ -181,11 +181,11 @@ const Experiencias = () => {
               placeholder="Tags (separados por comas)"
               value={formData.tags}
               onChange={(e) => setFormData({...formData, tags: e.target.value})}
-              className="bg-[#FCF8EE]/10 border-[#FCF8EE]/20 text-[#FCF8EE]"
+              className="border-2 border-green-600 focus:border-green-700 text-black font-medium"
             />
 
             <div className="flex gap-2">
-              <Button onClick={handleSubmit} className="bg-[#EDFF60] text-[#222408] hover:bg-[#EDFF60]/90">
+              <Button onClick={handleSubmit} className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-bold shadow-xl">
                 {editingId ? 'Actualizar' : 'Crear'} Experiencia
               </Button>
               <Button 
@@ -195,7 +195,7 @@ const Experiencias = () => {
                   setEditingId(null);
                   setFormData({title: '', description: '', location: '', category: '', price: '', dates: '', tags: ''});
                 }}
-                className="border-[#FCF8EE]/30 text-[#FCF8EE] hover:bg-[#FCF8EE]/10"
+                className="border-2 border-gray-300 text-black hover:bg-gray-100 font-medium"
               >
                 Cancelar
               </Button>
@@ -207,19 +207,19 @@ const Experiencias = () => {
       {/* Experiences List */}
       <div className="space-y-4">
         {experiences.map((experience) => (
-          <Card key={experience.id} className="bg-[#FCF8EE]/5 border-[#FCF8EE]/20">
+          <Card key={experience.id} className="bg-white border-2 border-green-500 shadow-lg">
             <CardContent className="p-6">
               <div className="flex items-start justify-between">
                 <div className="space-y-3 flex-1">
                   <div className="flex items-center gap-3">
-                    <h3 className="text-xl font-semibold text-[#FCF8EE]">
+                    <h3 className="text-xl font-bold text-black">
                       {experience.title}
                     </h3>
                     <Badge 
                       variant={experience.status === 'activa' ? 'default' : 'secondary'}
                       className={experience.status === 'activa' 
-                        ? "bg-green-500/20 text-green-400 border-green-500/30" 
-                        : "bg-yellow-500/20 text-yellow-400 border-yellow-500/30"
+                        ? "bg-green-600 text-white border-green-600" 
+                        : "bg-gray-500 text-white border-gray-500"
                       }
                     >
                       {experience.status === 'activa' ? 'Activa' : 'Pendiente'}
