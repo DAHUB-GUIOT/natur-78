@@ -3,6 +3,41 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Mobile optimization for iOS and Android */
+@supports (-webkit-touch-callout: none) {
+  /* iOS specific styles */
+  .touch-manipulation {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+}
+
+/* Android specific optimizations */
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  .touch-manipulation {
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    touch-action: manipulation;
+  }
+}
+
+/* Fixed header buttons optimization */
+.fixed-header-buttons {
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+}
+
+/* Ensure buttons are accessible on all mobile devices */
+@media (max-width: 640px) {
+  .fixed-header-buttons button {
+    min-height: 44px; /* iOS minimum touch target */
+    min-width: 44px;
+  }
+}
+
 @layer base {
   :root {
     --background: 84 42% 95%;

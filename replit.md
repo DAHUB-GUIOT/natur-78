@@ -10,12 +10,13 @@ This is a full-stack web application for Festival NATUR (www.festivalnatur.com),
 
 ## Recent Changes
 
-- ✅ **January 24, 2025**: Main Portal Entry Points Added
-  - **NEW**: MainPortals.tsx component with two distinct entry points on homepage
-  - **NEW**: "Portal Empresas" button - directs registered companies to /registro then /experiencias
-  - **NEW**: "Con-Sentidos" button - directs travelers directly to public map (/mapa)
-  - **NEW**: Professional card-based design with clear differentiation between business and traveler portals
-  - **NEW**: Additional admin access option for festival administrators
+- ✅ **January 24, 2025**: Header Alignment & Mobile Optimization Completed
+  - **NEW**: HeaderButtons.tsx unified component for consistent navigation across all views
+  - **NEW**: Mobile-optimized touch targets (44px minimum) for iOS/Android compatibility
+  - **NEW**: CSS optimizations for webkit touch handling and backdrop blur effects
+  - **NEW**: Portal buttons integrated on homepage (Portal Empresas + Con-Sentidos)
+  - **NEW**: Consistent header positioning across MapaPublicoOptimized, ExperienciasOptimized, AdminOptimized
+  - **NEW**: Touch-manipulation CSS class for improved mobile interaction
 
 - ✅ **January 24, 2025**: Platform Optimization and White Theme Implementation completed
   - **NEW**: Complete platform redesign with clean white background and professional UI

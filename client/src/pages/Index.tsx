@@ -9,10 +9,9 @@ import { Location } from "@/components/sections/Location";
 import { Award } from "@/components/sections/Award";
 import { Partners } from "@/components/sections/Partners";
 import { Contact } from "@/components/sections/Contact";
-import { TopButtons } from "@/components/ui/TopButtons";
+import { HeaderButtons } from "@/components/layout/HeaderButtons";
 import { HomeBanner } from "@/components/sections/HomeBanner";
 import { FeaturedArticles } from "@/components/sections/FeaturedArticles";
-import { MainPortals } from "@/components/sections/MainPortals";
 
 const Index = () => {
   // Smooth scroll to anchor links
@@ -38,12 +37,10 @@ const Index = () => {
   return (
     <div className="overflow-x-hidden w-full">
       <div className="min-h-screen bg-[#FCF8EE] w-full">
-        <TopButtons />
+        <HeaderButtons showPortalButtons={true} />
         
         <HomeBanner />
         <FeaturedArticles />
-        
-        <MainPortals />
         
         <Hero />
         
