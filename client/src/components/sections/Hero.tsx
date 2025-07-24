@@ -64,15 +64,15 @@ export function Hero() {
         <div className="max-w-7xl w-full">
           <div className="max-w-3xl">
             {/* Main Title */}
-            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-yellow-400 mb-3 font-gasoek tracking-wide leading-none">
+            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black mb-3 font-gasoek tracking-wide leading-none" style={{ color: '#EDFF60' }}>
               NATUR
             </h1>
             
             {/* Subtitle */}
-            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-yellow-300 mb-6 leading-tight max-w-xl">
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-6 leading-tight max-w-xl" style={{ color: '#EDFF60' }}>
               Todo sobre turismo sostenible
               <br />
-              <span className="text-yellow-200">y más</span>
+              <span style={{ color: '#EDFF60', opacity: 0.8 }}>y más</span>
             </h2>
 
             {/* Main Action Buttons - Stacked vertically like BIME */}
@@ -80,7 +80,8 @@ export function Hero() {
               <Link to="/tickets">
                 <Button 
                   size="md" 
-                  className="bg-yellow-400 hover:bg-yellow-300 text-black font-bold text-sm px-6 py-3 rounded-lg shadow-lg flex items-center justify-center w-full"
+                  className="text-black font-bold text-sm px-6 py-3 rounded-lg shadow-lg flex items-center justify-center w-full hover:opacity-90"
+                  style={{ backgroundColor: '#EDFF60' }}
                 >
                   <Ticket className="w-4 h-4 mr-2" />
                   TICKETS
