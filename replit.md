@@ -8,6 +8,15 @@ This is a full-stack web application for Festival NATUR (www.festivalnatur.com),
 
 ## Recent Changes
 
+- ✅ **January 24, 2025**: Dashboard integrado completado
+  - **NEW**: Eliminada página de ecosistema y creado dashboard integrado con diseño moderno
+  - **NEW**: Sidebar colapsible con navegación entre módulos del dashboard
+  - **NEW**: Topbar con búsqueda global y menú de usuario
+  - **NEW**: Mapa interactivo de empresas con filtros y marcadores por tipo
+  - **NEW**: Buscador de contactos estilo LinkedIn con filtros avanzados
+  - **NEW**: Sistema de chat comunitario con salas temáticas y chat general NATUR
+  - **NEW**: Panel de control con estadísticas, actividad reciente y acciones rápidas
+
 - ✅ **January 24, 2025**: Navigation and subscription improvements
   - **NEW**: Added "Corazón NATUR" module before Platform in navigation menu
   - **NEW**: Added free subscription plan ($0/mes) with basic features

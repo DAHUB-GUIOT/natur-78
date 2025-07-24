@@ -22,6 +22,7 @@ import Admin from "./pages/Admin";
 import Heart from "./pages/Heart";
 import Acceleradora from "./pages/Acceleradora";
 import StartupDirectory from "./pages/StartupDirectory";
+import Dashboard from "./pages/Dashboard";
 import { AuthProvider } from "./contexts/AuthContext";
 
 // Create QueryClient outside component to prevent recreation on renders
@@ -77,6 +78,7 @@ const App = () => (
             <Route path="/startups">
               <MainLayout><StartupDirectory /></MainLayout>
             </Route>
+            <Route path="/dashboard" component={Dashboard} />
             <Route><NotFound /></Route>
           </Switch>
         </Router>

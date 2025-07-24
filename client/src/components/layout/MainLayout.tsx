@@ -85,6 +85,9 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
                   <Button variant="ghost" className="w-full justify-start text-base hover:bg-transparent text-[#FCF8EE] hover:text-[#EDFF60]" asChild>
                     <Link to="/experiencias">Experiencias</Link>
                   </Button>
+                  <Button variant="ghost" className="w-full justify-start text-base hover:bg-transparent text-[#FCF8EE] hover:text-[#EDFF60]" asChild>
+                    <Link to="/dashboard">📊 Dashboard</Link>
+                  </Button>
                 </div>
               </SheetContent>
             </Sheet>
