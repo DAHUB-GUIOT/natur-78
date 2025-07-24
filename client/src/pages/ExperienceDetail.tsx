@@ -7,14 +7,15 @@ import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { 
   ArrowLeft, MapPin, Calendar, Clock, Users, Star, 
-  Wheelchair, Heart, Share, DollarSign, Globe, Phone
+  Heart, Share, DollarSign, Globe, Phone, Accessibility
 } from "lucide-react";
+import type { Experience } from "@shared/schema";
 
 const ExperienceDetail = () => {
   const { id } = useParams();
   
-  const { data: experience, isLoading } = useQuery({
-    queryKey: ['/api/experiences', id],
+  const { data: experience, isLoading } = useQuery<Experience>({
+    queryKey: [`/api/experiences/${id}`],
     retry: false,
   });
 
@@ -67,14 +68,13 @@ const ExperienceDetail = () => {
             <div className="lg:col-span-2 space-y-6">
               {/* Hero Image */}
               <Card className="backdrop-blur-xl bg-white/10 border border-white/30 overflow-hidden">
-                <div className="relative h-64">
-                  <img 
-                    src={experience.image || "/api/placeholder/800/400"}
-                    alt={experience.title}
-                    className="w-full h-full object-cover"
-                  />
+                <div className="relative h-64 bg-gradient-to-r from-green-600 to-emerald-600 flex items-center justify-center">
+                  <div className="text-center text-white">
+                    <h3 className="text-xl font-bold">{experience.title}</h3>
+                    <p className="text-white/80 mt-2">Imagen de experiencia</p>
+                  </div>
                   <div className="absolute top-4 left-4">
-                    <Badge className="bg-green-600 text-white">
+                    <Badge className="bg-white/20 text-white border-white/30">
                       {experience.type || "Regular"}
                     </Badge>
                   </div>
@@ -136,7 +136,7 @@ const ExperienceDetail = () => {
 
                   {experience.wheelchairAccessible === "yes" && (
                     <div className="flex items-center text-green-400">
-                      <Wheelchair className="w-4 h-4 mr-2" />
+                      <Accessibility className="w-4 h-4 mr-2" />
                       <span className="text-sm">Accesible para sillas de ruedas</span>
                     </div>
                   )}

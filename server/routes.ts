@@ -217,6 +217,22 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.get("/api/experiences/:id", async (req, res) => {
+    try {
+      const experienceId = parseInt(req.params.id);
+      const experience = await storage.getExperience(experienceId);
+      
+      if (!experience) {
+        return res.status(404).json({ error: "Experience not found" });
+      }
+
+      res.json(experience);
+    } catch (error) {
+      console.error("Get experience error:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+
   app.post("/api/experiences", async (req, res) => {
     try {
       if (!req.session.userId) {

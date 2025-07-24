@@ -26,11 +26,13 @@ export interface IStorage {
 export class MemStorage implements IStorage {
   private users: Map<number, User>;
   private userProfiles: Map<number, UserProfile>;
+  private experiences: Map<number, Experience>;
   currentId: number;
 
   constructor() {
     this.users = new Map();
     this.userProfiles = new Map();
+    this.experiences = new Map();
     this.currentId = 1;
   }
 
@@ -152,8 +154,7 @@ export class MemStorage implements IStorage {
 
   // Experience methods (in-memory storage)
   async getExperiences(userId: number): Promise<Experience[]> {
-    // Mock experiences for in-memory storage
-    return [];
+    return Array.from(this.experiences.values()).filter(exp => exp.userId === userId);
   }
 
   async createExperience(experienceData: InsertExperience): Promise<Experience> {
@@ -200,17 +201,28 @@ export class MemStorage implements IStorage {
       createdAt: new Date(),
       updatedAt: new Date()
     };
+    this.experiences.set(id, experience);
     return experience;
   }
 
   async updateExperience(id: number, experienceData: Partial<InsertExperience>): Promise<Experience> {
-    // Mock implementation
-    throw new Error("Experience not found");
+    const existingExperience = this.experiences.get(id);
+    if (!existingExperience) {
+      throw new Error("Experience not found");
+    }
+    
+    const updatedExperience: Experience = {
+      ...existingExperience,
+      ...experienceData,
+      updatedAt: new Date()
+    };
+    
+    this.experiences.set(id, updatedExperience);
+    return updatedExperience;
   }
 
   async getExperience(id: number): Promise<Experience | undefined> {
-    // Mock implementation
-    return undefined;
+    return this.experiences.get(id);
   }
 }
 
