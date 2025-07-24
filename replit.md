@@ -10,18 +10,17 @@ This is a full-stack web application for Festival NATUR (www.festivalnatur.com),
 
 ## Recent Changes
 
-- ✅ **January 24, 2025**: Portal Empresas Full-Screen Map Integration with Glassmorphism Sidebar
-  - **NEW**: Integrated full-screen Mapbox map into Portal Empresas dashboard 
-  - **NEW**: Removed "Inicio" section and made "Mapa" the default active view in Portal Empresas
-  - **NEW**: Implemented conditional layout: full-screen for map, regular dashboard for other sections
-  - **NEW**: Created floating glassmorphism sidebar specifically for map view with white fonts
-  - **NEW**: Added Mapbox GL JS integration with VITE_MAPBOX_PUBLIC_KEY environment variable
-  - **NEW**: Map shows real company locations with interactive markers across Latin America
-  - **NEW**: Floating filters panel with search and company type filtering
-  - **NEW**: Company info cards display when markers are clicked with detailed information
-  - **NEW**: Seamless navigation between full-screen map and regular dashboard sections
-  - **NEW**: Preserved existing Portal Empresas functionality while adding immersive map experience
-  - **NEW**: Glassmorphism sidebar maintains NATUR branding with green accent colors
+- ✅ **January 24, 2025**: Portal Empresas Complete Glassmorphism Design with Map Background
+  - **NEW**: Applied full-screen Mapbox map as background for ALL Portal Empresas pages
+  - **NEW**: Added persistent top green navigation bar across all sections
+  - **NEW**: Implemented consistent glassmorphism sidebar design for all pages
+  - **NEW**: Updated all text to white fonts for perfect contrast on map background
+  - **NEW**: Redesigned Experiencias, Empresas, Mensajes, Estadísticas, and Ajustes pages with transparent cards
+  - **NEW**: All content panels now use backdrop-blur-xl bg-black/20 with white/30 borders
+  - **NEW**: Maintained functional navigation while creating immersive map-based environment
+  - **NEW**: Green gradient buttons and accent colors throughout for brand consistency
+  - **NEW**: Floating content panels positioned over map background for optimal UX
+  - **NEW**: Responsive design preserves glassmorphism aesthetics across all screen sizes
 
 - ✅ **January 24, 2025**: Homepage Sections Complete UX/UI Optimization
   - **NEW**: Redesigned ALL homepage sections with improved design, smaller elements, and better organization

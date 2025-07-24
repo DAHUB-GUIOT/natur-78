@@ -221,8 +221,8 @@ const PortalEmpresasDashboard = () => {
         return (
           <div className="space-y-6">
             <div className="flex justify-between items-center">
-              <h2 className="text-2xl font-bold text-gray-900">Mis Experiencias</h2>
-              <Button className="bg-blue-600 hover:bg-blue-700 text-white">
+              <h2 className="text-2xl font-bold text-white">Mis Experiencias</h2>
+              <Button className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white">
                 <Plus className="w-4 h-4 mr-2" />
                 Crear Experiencia
               </Button>
@@ -230,7 +230,7 @@ const PortalEmpresasDashboard = () => {
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {experiences.map((experience) => (
-                <Card key={experience.id} className="bg-white border border-gray-200 hover:shadow-lg transition-shadow overflow-hidden">
+                <Card key={experience.id} className="backdrop-blur-xl bg-white/10 border border-white/30 hover:bg-white/20 transition-all duration-200 overflow-hidden">
                   <div className="relative">
                     <img 
                       src={experience.image} 
@@ -238,14 +238,14 @@ const PortalEmpresasDashboard = () => {
                       className="w-full h-48 object-cover"
                     />
                     <div className="absolute top-4 right-4 space-y-2">
-                      <Button size="sm" variant="secondary" className="w-8 h-8 p-0 bg-white/80 backdrop-blur-sm">
+                      <Button size="sm" variant="secondary" className="w-8 h-8 p-0 bg-white/20 backdrop-blur-md text-white hover:bg-white/30">
                         <Heart className="w-4 h-4" />
                       </Button>
-                      <Button size="sm" variant="secondary" className="w-8 h-8 p-0 bg-white/80 backdrop-blur-sm">
+                      <Button size="sm" variant="secondary" className="w-8 h-8 p-0 bg-white/20 backdrop-blur-md text-white hover:bg-white/30">
                         <Share className="w-4 h-4" />
                       </Button>
                     </div>
-                    <Badge className="absolute top-4 left-4 bg-white/90 text-gray-900">
+                    <Badge className="absolute top-4 left-4 bg-green-600 text-white">
                       {experience.category}
                     </Badge>
                   </div>
@@ -253,11 +253,11 @@ const PortalEmpresasDashboard = () => {
                   <CardContent className="p-6">
                     <div className="space-y-4">
                       <div>
-                        <h3 className="font-semibold text-lg text-gray-900 mb-1">{experience.title}</h3>
-                        <p className="text-gray-600 text-sm">{experience.subtitle}</p>
+                        <h3 className="font-semibold text-lg text-white mb-1">{experience.title}</h3>
+                        <p className="text-white/80 text-sm">{experience.subtitle}</p>
                       </div>
                       
-                      <div className="flex items-center text-sm text-gray-600">
+                      <div className="flex items-center text-sm text-white/80">
                         <MapPin className="w-4 h-4 mr-1" />
                         {experience.location}
                       </div>
@@ -266,36 +266,36 @@ const PortalEmpresasDashboard = () => {
                         <div className="flex items-center space-x-2">
                           <Avatar className="w-6 h-6">
                             <AvatarImage src={experience.hostAvatar} />
-                            <AvatarFallback>{experience.host[0]}</AvatarFallback>
+                            <AvatarFallback className="bg-green-500 text-white">{experience.host[0]}</AvatarFallback>
                           </Avatar>
-                          <span className="text-sm text-gray-600">{experience.host}</span>
+                          <span className="text-sm text-white/80">{experience.host}</span>
                         </div>
                         <div className="flex items-center space-x-1">
                           <Star className="w-4 h-4 text-yellow-400 fill-current" />
-                          <span className="text-sm font-medium">{experience.rating}</span>
-                          <span className="text-sm text-gray-500">({experience.reviews})</span>
+                          <span className="text-sm font-medium text-white">{experience.rating}</span>
+                          <span className="text-sm text-white/70">({experience.reviews})</span>
                         </div>
                       </div>
                       
                       <div className="flex items-center justify-between">
                         <div className="flex space-x-2">
                           {experience.tags.map((tag) => (
-                            <Badge key={tag} variant="secondary" className="text-xs">
+                            <Badge key={tag} className="bg-white/20 text-white text-xs backdrop-blur-md">
                               {tag}
                             </Badge>
                           ))}
                         </div>
                         <div className="text-right">
-                          <p className="text-lg font-bold text-gray-900">
+                          <p className="text-lg font-bold text-white">
                             ${experience.price.toLocaleString()}
                           </p>
-                          <p className="text-sm text-gray-600">por persona</p>
+                          <p className="text-sm text-white/70">por persona</p>
                         </div>
                       </div>
                       
                       <div className="flex space-x-2 pt-2">
-                        <Button size="sm" className="flex-1">Ver más</Button>
-                        <Button size="sm" variant="outline">
+                        <Button size="sm" className="flex-1 bg-green-600 hover:bg-green-700 text-white">Ver más</Button>
+                        <Button size="sm" variant="outline" className="border-white/30 text-white hover:bg-white/20">
                           <Edit className="w-4 h-4" />
                         </Button>
                       </div>
@@ -311,9 +311,9 @@ const PortalEmpresasDashboard = () => {
         return (
           <div className="space-y-6">
             <div className="flex justify-between items-center">
-              <h2 className="text-2xl font-bold text-gray-900">Directorio de Empresas</h2>
+              <h2 className="text-2xl font-bold text-white">Directorio de Empresas</h2>
               <div className="flex space-x-2">
-                <Button variant="outline" size="sm">
+                <Button variant="outline" size="sm" className="border-white/30 text-white hover:bg-white/20">
                   <Filter className="w-4 h-4 mr-2" />
                   Filtros
                 </Button>
@@ -322,27 +322,27 @@ const PortalEmpresasDashboard = () => {
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {companies.map((company) => (
-                <Card key={company.id} className="bg-white border border-gray-200 hover:shadow-lg transition-shadow">
+                <Card key={company.id} className="backdrop-blur-xl bg-white/10 border border-white/30 hover:bg-white/20 transition-all duration-200">
                   <CardContent className="p-6">
                     <div className="flex items-start space-x-4">
-                      <Avatar className="w-16 h-16">
+                      <Avatar className="w-16 h-16 ring-2 ring-white/30">
                         <AvatarImage src={company.image} />
-                        <AvatarFallback>{company.name[0]}</AvatarFallback>
+                        <AvatarFallback className="bg-green-500 text-white">{company.name[0]}</AvatarFallback>
                       </Avatar>
                       
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center space-x-2 mb-1">
-                          <h3 className="font-semibold text-gray-900 truncate">{company.name}</h3>
+                          <h3 className="font-semibold text-white truncate">{company.name}</h3>
                           {company.verified && (
-                            <Badge variant="secondary" className="text-xs bg-blue-100 text-blue-800">
+                            <Badge className="text-xs bg-green-600 text-white">
                               Verificado
                             </Badge>
                           )}
                         </div>
                         
-                        <p className="text-sm text-gray-600 mb-2">{company.category}</p>
+                        <p className="text-sm text-white/80 mb-2">{company.category}</p>
                         
-                        <div className="flex items-center text-sm text-gray-600 mb-3">
+                        <div className="flex items-center text-sm text-white/80 mb-3">
                           <MapPin className="w-4 h-4 mr-1" />
                           {company.location}
                         </div>
@@ -350,13 +350,13 @@ const PortalEmpresasDashboard = () => {
                         <div className="flex items-center justify-between">
                           <div className="flex items-center space-x-1">
                             <Star className="w-4 h-4 text-yellow-400 fill-current" />
-                            <span className="text-sm font-medium">{company.rating}</span>
-                            <span className="text-sm text-gray-500">({company.reviews})</span>
+                            <span className="text-sm font-medium text-white">{company.rating}</span>
+                            <span className="text-sm text-white/70">({company.reviews})</span>
                           </div>
                           
                           <div className="flex space-x-2">
-                            <Button size="sm" variant="outline">Ver perfil</Button>
-                            <Button size="sm">Chatear</Button>
+                            <Button size="sm" variant="outline" className="border-white/30 text-white hover:bg-white/20">Ver perfil</Button>
+                            <Button size="sm" className="bg-green-600 hover:bg-green-700 text-white">Chatear</Button>
                           </div>
                         </div>
                       </div>
@@ -374,14 +374,14 @@ const PortalEmpresasDashboard = () => {
       case "mensajes":
         return (
           <div className="space-y-6">
-            <h2 className="text-2xl font-bold text-gray-900">Mensajes</h2>
-            <Card className="bg-white border border-gray-200">
+            <h2 className="text-2xl font-bold text-white">Mensajes</h2>
+            <Card className="backdrop-blur-xl bg-white/10 border border-white/30">
               <CardContent className="p-6">
-                <div className="bg-gray-100 rounded-lg flex items-center justify-center h-96">
-                  <div className="text-center text-gray-600">
+                <div className="bg-white/5 rounded-lg flex items-center justify-center h-96">
+                  <div className="text-center text-white">
                     <MessageCircle className="w-16 h-16 mx-auto mb-4" />
                     <p className="text-lg font-medium">Sistema de Mensajería</p>
-                    <p className="text-sm">Chat estilo WhatsApp/Telegram se implementará aquí</p>
+                    <p className="text-sm text-white/80">Chat estilo WhatsApp/Telegram se implementará aquí</p>
                   </div>
                 </div>
               </CardContent>
@@ -392,14 +392,14 @@ const PortalEmpresasDashboard = () => {
       case "estadisticas":
         return (
           <div className="space-y-6">
-            <h2 className="text-2xl font-bold text-gray-900">Estadísticas</h2>
-            <Card className="bg-white border border-gray-200">
+            <h2 className="text-2xl font-bold text-white">Estadísticas</h2>
+            <Card className="backdrop-blur-xl bg-white/10 border border-white/30">
               <CardContent className="p-6">
-                <div className="bg-gray-100 rounded-lg flex items-center justify-center h-96">
-                  <div className="text-center text-gray-600">
+                <div className="bg-white/5 rounded-lg flex items-center justify-center h-96">
+                  <div className="text-center text-white">
                     <BarChart3 className="w-16 h-16 mx-auto mb-4" />
                     <p className="text-lg font-medium">Panel de Estadísticas</p>
-                    <p className="text-sm">Gráficos y métricas detalladas se mostrarán aquí</p>
+                    <p className="text-sm text-white/80">Gráficos y métricas detalladas se mostrarán aquí</p>
                   </div>
                 </div>
               </CardContent>
@@ -410,19 +410,19 @@ const PortalEmpresasDashboard = () => {
       case "ajustes":
         return (
           <div className="space-y-6">
-            <h2 className="text-2xl font-bold text-gray-900">Ajustes</h2>
+            <h2 className="text-2xl font-bold text-white">Ajustes</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <Card className="bg-white border border-gray-200">
+              <Card className="backdrop-blur-xl bg-white/10 border border-white/30">
                 <CardHeader>
-                  <CardTitle className="text-lg font-semibold">Perfil</CardTitle>
+                  <CardTitle className="text-lg font-semibold text-white">Perfil</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
-                    <Button variant="outline" className="w-full justify-start">
+                    <Button variant="outline" className="w-full justify-start border-white/30 text-white hover:bg-white/20">
                       <User className="w-4 h-4 mr-2" />
                       Editar perfil
                     </Button>
-                    <Button variant="outline" className="w-full justify-start">
+                    <Button variant="outline" className="w-full justify-start border-white/30 text-white hover:bg-white/20">
                       <Settings className="w-4 h-4 mr-2" />
                       Cambiar contraseña
                     </Button>
@@ -430,17 +430,17 @@ const PortalEmpresasDashboard = () => {
                 </CardContent>
               </Card>
               
-              <Card className="bg-white border border-gray-200">
+              <Card className="backdrop-blur-xl bg-white/10 border border-white/30">
                 <CardHeader>
-                  <CardTitle className="text-lg font-semibold">Configuración</CardTitle>
+                  <CardTitle className="text-lg font-semibold text-white">Configuración</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
-                    <Button variant="outline" className="w-full justify-start">
+                    <Button variant="outline" className="w-full justify-start border-white/30 text-white hover:bg-white/20">
                       <DollarSign className="w-4 h-4 mr-2" />
                       Métodos de pago
                     </Button>
-                    <Button variant="outline" className="w-full justify-start">
+                    <Button variant="outline" className="w-full justify-start border-white/30 text-white hover:bg-white/20">
                       <Bell className="w-4 h-4 mr-2" />
                       Notificaciones
                     </Button>
@@ -534,16 +534,19 @@ const PortalEmpresasDashboard = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Top Bar */}
-      <header className="bg-green-600 border-b border-green-700 shadow-lg px-6 py-4 sticky top-0 z-40">
+    <div className="h-screen w-full relative overflow-hidden">
+      {/* Full-screen map as background for all pages */}
+      <InteractiveMap />
+      
+      {/* Top green bar for all pages */}
+      <header className="absolute top-0 left-0 right-0 bg-green-600 border-b border-green-700 shadow-lg px-6 py-4 z-40 backdrop-blur-md bg-green-600/95">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-green-600 rounded-lg flex items-center justify-center">
+              <div className="w-8 h-8 bg-green-500 rounded-lg flex items-center justify-center shadow-lg">
                 <span className="text-white font-bold text-sm">N</span>
               </div>
-              <span className="text-xl font-bold text-white">NATUR</span>
+              <span className="text-xl font-bold text-white tracking-wide">NATUR</span>
             </div>
           </div>
           
@@ -552,7 +555,7 @@ const PortalEmpresasDashboard = () => {
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-white/70" />
               <Input 
                 placeholder="Buscar experiencias, empresas, ubicaciones..." 
-                className="pl-10 bg-white/10 border-white/20 text-white placeholder-white/60"
+                className="pl-10 bg-white/10 border-white/20 text-white placeholder-white/60 backdrop-blur-md"
               />
             </div>
           </div>
@@ -598,54 +601,66 @@ const PortalEmpresasDashboard = () => {
         </div>
       </header>
 
-      <div className="flex">
-        {/* Sidebar */}
-        <aside className={`bg-white border-r border-gray-200 transition-all duration-300 ${
-          sidebarCollapsed ? 'w-16' : 'w-64'
-        }`}>
-          <nav className="p-4 space-y-2">
-            {sidebarItems.map((item) => {
-              const Icon = item.icon;
-              return (
-                <button
-                  key={item.id}
-                  onClick={() => setActiveSection(item.id)}
-                  className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg transition-colors ${
-                    activeSection === item.id 
-                      ? 'bg-blue-50 text-blue-600' 
-                      : 'text-gray-700 hover:bg-gray-100'
-                  }`}
-                >
-                  <Icon className="w-5 h-5" />
-                  {!sidebarCollapsed && (
-                    <span className="font-medium">{item.label}</span>
-                  )}
-                </button>
-              );
-            })}
-          </nav>
-          
-          <div className="absolute bottom-4 left-4">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-            >
-              <MoreVertical className="w-4 h-4" />
-            </Button>
+      {/* Floating glassmorphism sidebar for all pages */}
+      <div className="absolute top-24 left-6 z-50 w-64 backdrop-blur-xl bg-black/20 border border-white/30 rounded-2xl shadow-2xl">
+        <div className="p-6 border-b border-white/20">
+          <div className="flex items-center space-x-3">
+            <div className="w-8 h-8 bg-gradient-to-br from-green-400 to-green-600 rounded-xl flex items-center justify-center shadow-lg">
+              <span className="text-white font-bold text-sm">N</span>
+            </div>
+            <span className="text-xl font-bold text-white tracking-wide">NATUR</span>
           </div>
-        </aside>
-
-        {/* Main Content */}
-        <main className="flex-1 p-8">
-          {renderContent()}
-        </main>
+          <p className="text-white/70 text-sm mt-2">Portal Empresas</p>
+        </div>
+        
+        <nav className="p-4 space-y-1">
+          {sidebarItems.map((item) => {
+            const Icon = item.icon;
+            return (
+              <button
+                key={item.id}
+                onClick={() => setActiveSection(item.id)}
+                className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200 ${
+                  activeSection === item.id 
+                    ? 'bg-gradient-to-r from-green-500/30 to-green-400/30 text-white shadow-lg border border-green-400/30' 
+                    : 'text-white/90 hover:bg-white/10 hover:text-white hover:shadow-md'
+                }`}
+              >
+                <Icon className="w-5 h-5" />
+                <span className="font-semibold text-sm">{item.label}</span>
+              </button>
+            );
+          })}
+        </nav>
+        
+        {/* User profile section */}
+        <div className="p-4 border-t border-white/20">
+          <div className="flex items-center space-x-3 px-4 py-3 rounded-xl bg-white/5">
+            <Avatar className="w-8 h-8 ring-2 ring-white/30">
+              <AvatarImage src="/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg" />
+              <AvatarFallback className="bg-green-500 text-white">U</AvatarFallback>
+            </Avatar>
+            <div className="flex-1 min-w-0">
+              <p className="text-white font-semibold text-sm truncate">Usuario</p>
+              <p className="text-white/70 text-xs">Empresa</p>
+            </div>
+          </div>
+        </div>
       </div>
+
+      {/* Main Content with glassmorphism background (except for map) */}
+      {activeSection !== "mapa" && (
+        <main className="absolute top-24 left-80 right-6 bottom-6 z-40 backdrop-blur-xl bg-black/20 border border-white/30 rounded-2xl shadow-2xl overflow-hidden">
+          <div className="h-full overflow-y-auto p-8">
+            {renderContent()}
+          </div>
+        </main>
+      )}
 
       {/* Floating Action Button - Create Experience */}
       {activeSection !== "mapa" && (
         <Button
-          className="fixed bottom-6 right-6 w-14 h-14 rounded-full bg-blue-600 hover:bg-blue-700 shadow-lg"
+          className="fixed bottom-8 right-8 w-14 h-14 rounded-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 shadow-2xl z-50"
           size="lg"
         >
           <Plus className="w-6 h-6" />
