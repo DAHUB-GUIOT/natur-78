@@ -32,7 +32,7 @@ export function Hero() {
             <Link to="/auth/empresas">
               <Button 
                 size="sm" 
-                className="bg-black hover:bg-gray-800 text-white font-medium px-4 py-2 rounded-full"
+                className="bg-white hover:bg-gray-100 text-black font-medium px-4 py-2 rounded-full"
               >
                 Portal Empresas
               </Button>
@@ -41,7 +41,7 @@ export function Hero() {
             <Link to="/auth/consentidos">
               <Button 
                 size="sm" 
-                className="bg-green-600 hover:bg-green-700 text-white font-medium px-4 py-2 rounded-full"
+                className="bg-white hover:bg-gray-100 text-black font-medium px-4 py-2 rounded-full"
               >
                 Con-Sentidos
               </Button>
@@ -88,8 +88,7 @@ export function Hero() {
             <Link to="/agenda">
               <Button 
                 size="lg" 
-                variant="outline"
-                className="border-2 border-white text-white hover:bg-white hover:text-green-800 font-bold text-lg px-8 py-4 rounded-lg backdrop-blur-sm flex items-center justify-center w-full sm:w-auto min-w-[180px]"
+                className="bg-black hover:bg-gray-800 text-white font-bold text-lg px-8 py-4 rounded-lg shadow-xl flex items-center justify-center w-full sm:w-auto min-w-[180px]"
               >
                 <Calendar className="w-6 h-6 mr-3" />
                 AGENDA
@@ -99,8 +98,7 @@ export function Hero() {
             <Link to="/mapa">
               <Button 
                 size="lg" 
-                variant="outline"
-                className="border-2 border-white text-white hover:bg-white hover:text-green-800 font-bold text-lg px-8 py-4 rounded-lg backdrop-blur-sm flex items-center justify-center w-full sm:w-auto min-w-[180px]"
+                className="bg-green-600 hover:bg-green-700 text-white font-bold text-lg px-8 py-4 rounded-lg shadow-xl flex items-center justify-center w-full sm:w-auto min-w-[180px]"
               >
                 <Calendar className="w-6 h-6 mr-3" />
                 EXPERIENCIAS
