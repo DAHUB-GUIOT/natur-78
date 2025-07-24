@@ -12,6 +12,7 @@ import { Contact } from "@/components/sections/Contact";
 import { TopButtons } from "@/components/ui/TopButtons";
 import { HomeBanner } from "@/components/sections/HomeBanner";
 import { FeaturedArticles } from "@/components/sections/FeaturedArticles";
+import { MainPortals } from "@/components/sections/MainPortals";
 
 const Index = () => {
   // Smooth scroll to anchor links
@@ -43,6 +44,8 @@ const Index = () => {
         <FeaturedArticles />
         
         <Hero />
+        
+        <MainPortals />
         
         <div id="about">
           <About />
