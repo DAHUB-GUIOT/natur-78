@@ -1,6 +1,8 @@
 
 import React from "react";
 import { Link } from "wouter";
+import { Building2, MapPin } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export function Hero() {
   return (
@@ -24,19 +26,33 @@ export function Hero() {
             transition-all
           " 
         />
-        <Link 
-          to="/reserva"
-          className="
-            bg-[#EDFF60] w-full max-w-[90vw] sm:max-w-[401px] 
-            text-sm sm:text-base text-[#222408] 
-            font-medium uppercase tracking-[-0.3px] 
-            px-6 py-4 sm:px-8 sm:py-6 
-            hover:bg-[#E5F73D] transition-colors 
-            font-jakarta
-          " 
-        >
-          ¡QUIERO SER PARTE!
-        </Link>
+        <div className="flex flex-col sm:flex-row gap-4 w-full max-w-[90vw] sm:max-w-[500px]">
+          <Link to="/registro" className="flex-1">
+            <Button className="
+              bg-[#EDFF60] hover:bg-[#E5F73D] w-full
+              text-sm sm:text-base text-[#222408] 
+              font-medium uppercase tracking-[-0.3px] 
+              px-6 py-4 sm:px-8 sm:py-6 h-auto
+              font-jakarta transition-colors
+            ">
+              <Building2 className="w-4 h-4 mr-2" />
+              Portal Empresas
+            </Button>
+          </Link>
+          
+          <Link to="/con-sentidos" className="flex-1">
+            <Button className="
+              bg-green-600 hover:bg-green-700 w-full
+              text-sm sm:text-base text-white 
+              font-medium uppercase tracking-[-0.3px] 
+              px-6 py-4 sm:px-8 sm:py-6 h-auto
+              font-jakarta transition-colors
+            ">
+              <MapPin className="w-4 h-4 mr-2" />
+              Con-Sentidos
+            </Button>
+          </Link>
+        </div>
       </div>
     </header>
   );
