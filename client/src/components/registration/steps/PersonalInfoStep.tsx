@@ -29,18 +29,19 @@ const PersonalInfoStep = ({ formData, updateFormData, onNext, onBack }: Personal
           variant="ghost" 
           onClick={onBack}
           type="button"
-          className="text-black hover:text-green-700 hover:bg-transparent p-0 mr-4"
+          className="hover:bg-transparent p-0 mr-4"
+          style={{ color: '#EDFF60' }}
         >
           <ArrowLeft className="h-5 w-5" />
         </Button>
-        <h2 className="text-2xl font-gasoek text-black tracking-wide uppercase font-bold">
+        <h2 className="text-xl sm:text-2xl font-gasoek tracking-wide uppercase font-bold" style={{ color: '#EDFF60' }}>
           Datos personales / de organización
         </h2>
       </div>
 
       <div className="space-y-4">
         <div>
-          <Label htmlFor="name" className="text-black font-bold text-lg">
+          <Label htmlFor="name" className="font-bold text-base sm:text-lg" style={{ color: '#EDFF60' }}>
             Nombre completo / Nombre de la organización*
           </Label>
           <Input
@@ -50,12 +51,13 @@ const PersonalInfoStep = ({ formData, updateFormData, onNext, onBack }: Personal
             onChange={handleChange}
             required
             placeholder="Ingresa tu nombre completo o el de tu organización"
-            className="border-2 border-green-600 focus:border-green-700 text-black font-medium placeholder:text-black/50 mt-2"
+            className="border-2 border-[#EDFF60] focus:border-[#EDFF60] bg-transparent font-medium mt-2"
+            style={{ color: '#EDFF60' }}
           />
         </div>
         
         <div>
-          <Label htmlFor="email" className="text-black font-bold text-lg">
+          <Label htmlFor="email" className="font-bold text-base sm:text-lg" style={{ color: '#EDFF60' }}>
             Correo electrónico*
           </Label>
           <Input
@@ -66,12 +68,13 @@ const PersonalInfoStep = ({ formData, updateFormData, onNext, onBack }: Personal
             onChange={handleChange}
             required
             placeholder="correo@ejemplo.com"
-            className="border-2 border-green-600 focus:border-green-700 text-black font-medium placeholder:text-black/50 mt-2"
+            className="border-2 border-[#EDFF60] focus:border-[#EDFF60] bg-transparent font-medium mt-2"
+            style={{ color: '#EDFF60' }}
           />
         </div>
         
         <div>
-          <Label htmlFor="phone" className="text-black font-bold text-lg">
+          <Label htmlFor="phone" className="font-bold text-base sm:text-lg" style={{ color: '#EDFF60' }}>
             Número de contacto (WhatsApp opcional)
           </Label>
           <Input
@@ -80,12 +83,13 @@ const PersonalInfoStep = ({ formData, updateFormData, onNext, onBack }: Personal
             value={formData.phone}
             onChange={handleChange}
             placeholder="+57 300 000 0000"
-            className="border-2 border-green-600 focus:border-green-700 text-black font-medium placeholder:text-black/50 mt-2"
+            className="border-2 border-[#EDFF60] focus:border-[#EDFF60] bg-transparent font-medium mt-2"
+            style={{ color: '#EDFF60' }}
           />
         </div>
         
         <div>
-          <Label htmlFor="location" className="text-black font-bold text-lg">
+          <Label htmlFor="location" className="font-bold text-base sm:text-lg" style={{ color: '#EDFF60' }}>
             Ciudad y país*
           </Label>
           <Input
@@ -95,12 +99,13 @@ const PersonalInfoStep = ({ formData, updateFormData, onNext, onBack }: Personal
             onChange={handleChange}
             required
             placeholder="Bogotá, Colombia"
-            className="border-2 border-green-600 focus:border-green-700 text-black font-medium placeholder:text-black/50 mt-2"
+            className="border-2 border-[#EDFF60] focus:border-[#EDFF60] bg-transparent font-medium mt-2"
+            style={{ color: '#EDFF60' }}
           />
         </div>
         
         <div>
-          <Label htmlFor="website" className="text-black font-bold text-lg">
+          <Label htmlFor="website" className="font-bold text-base sm:text-lg" style={{ color: '#EDFF60' }}>
             Página web / redes sociales (opcional)
           </Label>
           <Input
@@ -109,12 +114,13 @@ const PersonalInfoStep = ({ formData, updateFormData, onNext, onBack }: Personal
             value={formData.website}
             onChange={handleChange}
             placeholder="https://example.com o @username"
-            className="border-2 border-green-600 focus:border-green-700 text-black font-medium placeholder:text-black/50 mt-2"
+            className="border-2 border-[#EDFF60] focus:border-[#EDFF60] bg-transparent font-medium mt-2"
+            style={{ color: '#EDFF60' }}
           />
         </div>
         
         <div>
-          <Label htmlFor="referral" className="text-black font-bold text-lg">
+          <Label htmlFor="referral" className="font-bold text-base sm:text-lg" style={{ color: '#EDFF60' }}>
             ¿Cómo te enteraste del Festival NATUR?*
           </Label>
           <Input
@@ -124,7 +130,8 @@ const PersonalInfoStep = ({ formData, updateFormData, onNext, onBack }: Personal
             onChange={handleChange}
             required
             placeholder="Redes sociales, amigos, etc."
-            className="border-2 border-green-600 focus:border-green-700 text-black font-medium placeholder:text-black/50 mt-2"
+            className="border-2 border-[#EDFF60] focus:border-[#EDFF60] bg-transparent font-medium mt-2"
+            style={{ color: '#EDFF60' }}
           />
         </div>
       </div>
@@ -132,7 +139,8 @@ const PersonalInfoStep = ({ formData, updateFormData, onNext, onBack }: Personal
       <div className="flex justify-end">
         <Button 
           type="submit" 
-          className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-bold px-8 py-6 text-lg shadow-xl"
+          className="border-2 border-[#EDFF60] bg-transparent hover:bg-[#EDFF60]/10 font-bold px-6 py-3 text-base shadow-lg"
+          style={{ color: '#EDFF60' }}
         >
           Continuar
         </Button>

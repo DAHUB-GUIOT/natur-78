@@ -11,63 +11,63 @@ const Register = () => {
   const [, setLocation] = useLocation();
 
   return (
-    <div className="min-h-screen bg-white">
-      <HeaderButtons showPortalButtons={false} />
+    <div className="min-h-screen relative">
+      {/* Background Image - Same as Hero */}
+      <img 
+        alt="Festival NATUR - Portal Empresas Registration" 
+        className="absolute h-full w-full object-cover inset-0" 
+        src="/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg" 
+      />
       
-      {/* Hero Banner with Background Image */}
-      <div className="relative bg-gradient-to-r from-black/70 to-green-900/70 text-white">
-        <img 
-          src="/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
-          alt="Sustainable Tourism"
-          className="absolute inset-0 w-full h-full object-cover -z-10"
-        />
-        <div className="relative z-10 container mx-auto px-4 py-24 text-center">
-          <div className="flex items-center justify-center mb-8">
-            <div className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center shadow-2xl">
-              <Building2 className="w-10 h-10 text-white" />
-            </div>
+      {/* Light Gradient Overlay */}
+      <div className="absolute inset-0 bg-black/20"></div>
+      
+      {/* Top Navigation - Fixed with Glassmorphism */}
+      <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-white/10 border-b border-white/20">
+        <div className="flex items-center justify-between max-w-7xl mx-auto px-6 py-4">
+          <div className="flex items-center space-x-4">
+            <span className="font-bold text-2xl font-gasoek" style={{ color: '#EDFF60' }}>N</span>
           </div>
-          <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 font-gasoek tracking-wide drop-shadow-2xl">
-            PORTAL EMPRESAS
-          </h1>
-          <p className="text-xl md:text-2xl text-white max-w-3xl mx-auto font-medium drop-shadow-lg">
-            Registra tu empresa o iniciativa de turismo sostenible y conecta con viajeros conscientes
-          </p>
-        </div>
-      </div>
-      
-      <div className="container mx-auto px-4 py-16 max-w-4xl">
-        {/* Registration Card */}
-        <Card className="shadow-2xl border-2 border-green-500 bg-white">
-          <CardHeader className="bg-gradient-to-r from-green-600 to-green-700 border-b-2 border-green-500">
-            <CardTitle className="text-3xl text-white flex items-center font-bold">
-              <Building2 className="w-8 h-8 mr-4 text-white" />
-              Registro de Empresa
-            </CardTitle>
-          </CardHeader>
           
-          <CardContent className="p-8 bg-white">
-            <RegistrationForm />
-          </CardContent>
-        </Card>
-
-        {/* Additional Info */}
-        <div className="text-center mt-12">
-          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-            <Link to="/auth/empresas">
-              <Button 
-                variant="outline" 
-                className="border-2 border-green-600 text-green-800 hover:bg-green-50 font-bold text-lg px-8 py-3"
-              >
-                Ya tengo cuenta - Iniciar sesión
+          <div className="flex items-center space-x-4">
+            <Link to="/">
+              <Button variant="ghost" className="text-white hover:bg-white/20">
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Volver al inicio
               </Button>
             </Link>
-            <p className="text-black text-lg font-medium">
-              ¿Eres un viajero?{" "}
-              <Link to="/con-sentidos" className="text-green-700 hover:text-green-900 underline font-bold">
-                Únete a Con-Sentidos
+          </div>
+        </div>
+      </nav>
+      
+      {/* Main Content */}
+      <div className="relative z-10 pt-24 pb-12 px-4 sm:px-6 md:px-8">
+        <div className="container mx-auto max-w-4xl">
+          {/* Registration Form with Transparent Yellow Styling */}
+          <div className="backdrop-blur-sm bg-transparent border-2 border-[#EDFF60] rounded-2xl p-6 sm:p-8 md:p-10">
+            <RegistrationForm />
+          </div>
+
+          {/* Additional Info with Transparent Yellow Styling */}
+          <div className="text-center mt-8">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <Link to="/auth/empresas">
+                <Button 
+                  variant="outline" 
+                  className="border-2 border-[#EDFF60] bg-transparent text-[#EDFF60] hover:bg-[#EDFF60]/10 font-bold text-sm sm:text-base px-6 py-2 sm:px-8 sm:py-3 backdrop-blur-sm"
+                >
+                  Ya tengo cuenta - Iniciar sesión
+                </Button>
               </Link>
-            </p>
+              <div className="backdrop-blur-sm bg-white/5 border border-[#EDFF60]/30 rounded-lg p-3 sm:p-4">
+                <p className="text-[#EDFF60] text-sm sm:text-base font-medium">
+                  ¿Eres un viajero?{" "}
+                  <Link to="/con-sentidos" className="text-[#EDFF60] hover:text-white underline font-bold">
+                    Únete a Con-Sentidos
+                  </Link>
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>

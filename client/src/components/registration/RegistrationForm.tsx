@@ -33,7 +33,7 @@ import { useToast } from "@/components/ui/use-toast";
 import RegistrationAuth from "../auth/RegistrationAuth";
 import { createUserProfile } from "@/services/profileService";
 
-export type CategoryType = "sponsor" | "ecosystem" | "startup";
+export type CategoryType = "sponsor" | "ecosystem" | "startup" | "attendee";
 export type SubcategoryType = string;
 
 const RegistrationForm = () => {
@@ -272,92 +272,48 @@ const RegistrationForm = () => {
   };
 
   return (
-    <div className="min-h-screen relative">
-      {/* Background Image - Same as Hero */}
-      <img 
-        alt="Festival NATUR - Empresa Registration" 
-        className="absolute h-full w-full object-cover inset-0" 
-        src="/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg" 
-      />
-      
-      {/* Light Gradient Overlay */}
-      <div className="absolute inset-0 bg-black/20"></div>
-      
-      {/* Top Navigation - Fixed with Glassmorphism (same as Hero) */}
-      <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-white/10 border-b border-white/20">
-        <div className="flex items-center justify-between max-w-7xl mx-auto px-6 py-4">
-          <div className="flex items-center space-x-4">
-            <span className="font-bold text-2xl font-gasoek" style={{ color: '#EDFF60' }}>N</span>
-          </div>
-          
-          <div className="flex items-center space-x-4">
-            <Link to="/">
-              <Button variant="ghost" className="text-white hover:bg-white/20">
-                Volver
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </nav>
-      
-      {/* Main Content - Centered */}
-      <div className="relative z-10 flex items-center justify-center min-h-screen px-6 pt-20">
-        <div className="w-full max-w-4xl">
-          
-          {/* Title Section */}
-          <div className="text-center mb-8">
-            <h1 className="text-3xl md:text-4xl font-bold mb-4 font-gasoek tracking-wide" style={{ color: '#EDFF60' }}>
-              REGISTRO DE EMPRESA
-            </h1>
-            <p className="text-lg text-white max-w-2xl mx-auto font-medium">
-              Únete a la comunidad de empresas comprometidas con el turismo sostenible
-            </p>
-          </div>
-
-          {/* Progress Steps */}
-          <div className="mb-8">
-            <div className="flex justify-between mb-4">
-              {[1, 2, 3, 4, 5, 6].map((stepNumber) => (
-                <div 
-                  key={stepNumber}
-                  className={`flex flex-col items-center ${stepNumber <= step ? "opacity-100" : "opacity-50"}`}
-                >
-                  <div 
-                    className={`w-8 h-8 rounded-full flex items-center justify-center mb-2 font-bold border-2
-                    ${stepNumber < step ? "text-black border-transparent" : 
-                      stepNumber === step ? "text-black border-transparent" : "text-white border-white/50"}`}
-                    style={{ backgroundColor: stepNumber <= step ? '#EDFF60' : 'transparent' }}
-                  >
-                    {stepNumber < step ? "✓" : stepNumber}
-                  </div>
-                  <span className="text-xs hidden sm:block font-bold" style={{ color: '#EDFF60' }}>
-                    {stepNumber === 1 && "Participación"}
-                    {stepNumber === 2 && "Perfil"}
-                    {stepNumber === 3 && "Datos"}
-                    {stepNumber === 4 && "Información"}
-                    {stepNumber === 5 && "Términos"}
-                    {stepNumber === 6 && "Plataforma"}
-                  </span>
-                </div>
-              ))}
-            </div>
-            <div className="h-2 bg-white/20 rounded-full">
+    <div className="w-full">
+      {/* Progress Steps - Simplified without banners */}
+      <div className="mb-6">
+        <div className="flex justify-between mb-4">
+          {[1, 2, 3, 4, 5, 6].map((stepNumber) => (
+            <div 
+              key={stepNumber}
+              className={`flex flex-col items-center ${stepNumber <= step ? "opacity-100" : "opacity-50"}`}
+            >
               <div 
-                className="h-2 rounded-full transition-all duration-300"
-                style={{ 
-                  width: `${(step / 6) * 100}%`,
-                  backgroundColor: '#EDFF60'
-                }}
-              ></div>
+                className={`w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center mb-1 sm:mb-2 font-bold border-2 text-xs sm:text-sm
+                ${stepNumber < step ? "text-black border-transparent" : 
+                  stepNumber === step ? "text-black border-transparent" : "border-[#EDFF60]/50"}`}
+                style={{ backgroundColor: stepNumber <= step ? '#EDFF60' : 'transparent', color: stepNumber <= step ? 'black' : '#EDFF60' }}
+              >
+                {stepNumber < step ? "✓" : stepNumber}
+              </div>
+              <span className="text-xs hidden sm:block font-bold" style={{ color: '#EDFF60' }}>
+                {stepNumber === 1 && "Participación"}
+                {stepNumber === 2 && "Perfil"}
+                {stepNumber === 3 && "Datos"}
+                {stepNumber === 4 && "Información"}
+                {stepNumber === 5 && "Términos"}
+                {stepNumber === 6 && "Plataforma"}
+              </span>
             </div>
-          </div>
-
-          <Card className="shadow-2xl backdrop-blur-md bg-white/10 border-2" style={{ borderColor: '#EDFF60' }}>
-            <CardContent className="pt-6 backdrop-blur-md bg-white/5">
-              {renderStep()}
-            </CardContent>
-          </Card>
+          ))}
         </div>
+        <div className="h-1 sm:h-2 bg-white/20 rounded-full">
+          <div 
+            className="h-1 sm:h-2 rounded-full transition-all duration-300"
+            style={{ 
+              width: `${(step / 6) * 100}%`,
+              backgroundColor: '#EDFF60'
+            }}
+          ></div>
+        </div>
+      </div>
+
+      {/* Form Content - Transparent with Yellow Outline */}
+      <div className="backdrop-blur-sm bg-transparent border-2 border-[#EDFF60] rounded-xl p-4 sm:p-6 md:p-8">
+        {renderStep()}
       </div>
     </div>
   );

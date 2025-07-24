@@ -48,7 +48,7 @@ const AdditionalInfoStep = ({
 
   const renderAttendeeFields = () => (
     <div className="space-y-4">
-      <p className="text-black font-bold text-lg mb-4">¿Qué tipo de experiencias te interesan?</p>
+      <p className="font-bold text-lg mb-4" style={{ color: '#EDFF60' }}>¿Qué tipo de experiencias te interesan?</p>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="flex items-center space-x-3">
           <Checkbox
@@ -56,7 +56,7 @@ const AdditionalInfoStep = ({
             checked={formData.interests.ecotourism}
             onCheckedChange={handleCheckboxChange("interests", "ecotourism")}
           />
-          <Label htmlFor="ecotourism" className="text-black font-medium text-lg">Ecoturismo</Label>
+          <Label htmlFor="ecotourism" className="font-medium text-lg" style={{ color: '#EDFF60' }}>Ecoturismo</Label>
         </div>
         <div className="flex items-center space-x-3">
           <Checkbox
@@ -64,7 +64,7 @@ const AdditionalInfoStep = ({
             checked={formData.interests.communityTourism}
             onCheckedChange={handleCheckboxChange("interests", "communityTourism")}
           />
-          <Label htmlFor="communityTourism" className="text-black font-medium text-lg">Turismo comunitario</Label>
+          <Label htmlFor="communityTourism" className="font-medium text-lg" style={{ color: '#EDFF60' }}>Turismo comunitario</Label>
         </div>
         <div className="flex items-center space-x-3">
           <Checkbox
@@ -72,7 +72,7 @@ const AdditionalInfoStep = ({
             checked={formData.interests.culturalTourism}
             onCheckedChange={handleCheckboxChange("interests", "culturalTourism")}
           />
-          <Label htmlFor="culturalTourism" className="text-black font-medium text-lg">Turismo cultural y creativo</Label>
+          <Label htmlFor="culturalTourism" className="font-medium text-lg" style={{ color: '#EDFF60' }}>Turismo cultural y creativo</Label>
         </div>
         <div className="flex items-center space-x-3">
           <Checkbox
