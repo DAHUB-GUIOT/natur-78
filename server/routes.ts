@@ -1,7 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { insertUserSchema, insertUserProfileSchema } from "@shared/schema";
+import { insertUserSchema, insertUserProfileSchema, insertExperienceSchema } from "@shared/schema";
 import { z } from "zod";
 import passport from 'passport';
 import { setupGoogleAuth } from './googleAuth';
@@ -198,6 +198,81 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json(profile);
     } catch (error) {
       console.error("Update profile error:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+
+  // Experience routes
+  app.get("/api/experiences", async (req, res) => {
+    try {
+      if (!req.session.userId) {
+        return res.status(401).json({ error: "Not authenticated" });
+      }
+
+      const experiences = await storage.getExperiences(req.session.userId);
+      res.json(experiences);
+    } catch (error) {
+      console.error("Get experiences error:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+
+  app.post("/api/experiences", async (req, res) => {
+    try {
+      if (!req.session.userId) {
+        return res.status(401).json({ error: "Not authenticated" });
+      }
+
+      const experienceData = insertExperienceSchema.parse({
+        ...req.body,
+        userId: req.session.userId
+      });
+
+      const experience = await storage.createExperience(experienceData);
+      res.status(201).json(experience);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        console.error("Validation error:", error.errors);
+        return res.status(400).json({ error: "Invalid input", details: error.errors });
+      }
+      console.error("Create experience error:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+
+  app.get("/api/experiences/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const experience = await storage.getExperience(id);
+      
+      if (!experience) {
+        return res.status(404).json({ error: "Experience not found" });
+      }
+
+      res.json(experience);
+    } catch (error) {
+      console.error("Get experience error:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+
+  app.put("/api/experiences/:id", async (req, res) => {
+    try {
+      if (!req.session.userId) {
+        return res.status(401).json({ error: "Not authenticated" });
+      }
+
+      const id = parseInt(req.params.id);
+      const experienceData = insertExperienceSchema.partial().parse(req.body);
+
+      const experience = await storage.updateExperience(id, experienceData);
+      res.json(experience);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        console.error("Validation error:", error.errors);
+        return res.status(400).json({ error: "Invalid input", details: error.errors });
+      }
+      console.error("Update experience error:", error);
       res.status(500).json({ error: "Internal server error" });
     }
   });

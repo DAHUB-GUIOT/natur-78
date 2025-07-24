@@ -1,4 +1,4 @@
-import { users, userProfiles, type User, type InsertUser, type UserProfile, type InsertUserProfile } from "@shared/schema";
+import { users, userProfiles, experiences, type User, type InsertUser, type UserProfile, type InsertUserProfile, type Experience, type InsertExperience } from "@shared/schema";
 import { db } from "./db";
 import { eq } from "drizzle-orm";
 
@@ -15,6 +15,12 @@ export interface IStorage {
   getUserProfile(userId: number): Promise<UserProfile | undefined>;
   createUserProfile(profile: InsertUserProfile): Promise<UserProfile>;
   updateUserProfile(userId: number, profile: Partial<InsertUserProfile>): Promise<UserProfile>;
+  
+  // Experience methods
+  getExperiences(userId: number): Promise<Experience[]>;
+  createExperience(experience: InsertExperience): Promise<Experience>;
+  updateExperience(id: number, experience: Partial<InsertExperience>): Promise<Experience>;
+  getExperience(id: number): Promise<Experience | undefined>;
 }
 
 export class MemStorage implements IStorage {
@@ -143,6 +149,69 @@ export class MemStorage implements IStorage {
     this.userProfiles.set(existingProfile.id, updatedProfile);
     return updatedProfile;
   }
+
+  // Experience methods (in-memory storage)
+  async getExperiences(userId: number): Promise<Experience[]> {
+    // Mock experiences for in-memory storage
+    return [];
+  }
+
+  async createExperience(experienceData: InsertExperience): Promise<Experience> {
+    const id = this.currentId++;
+    const experience: Experience = {
+      id,
+      userId: experienceData.userId,
+      title: experienceData.title,
+      type: experienceData.type || "regular",
+      status: experienceData.status || "draft",
+      isActive: experienceData.isActive || true,
+      modality: experienceData.modality || null,
+      adultPriceNet: experienceData.adultPriceNet || null,
+      adultPricePvp: experienceData.adultPricePvp || null,
+      childPriceNet: experienceData.childPriceNet || null,
+      childPricePvp: experienceData.childPricePvp || null,
+      seniorPriceNet: experienceData.seniorPriceNet || null,
+      seniorPricePvp: experienceData.seniorPricePvp || null,
+      commission: experienceData.commission || "25",
+      description: experienceData.description || null,
+      duration: experienceData.duration || null,
+      included: experienceData.included || null,
+      notIncluded: experienceData.notIncluded || null,
+      operationDays: experienceData.operationDays || null,
+      operationHours: experienceData.operationHours || null,
+      meetingPoint: experienceData.meetingPoint || null,
+      hotelTransfer: experienceData.hotelTransfer || false,
+      cutOff: experienceData.cutOff || "12",
+      minimumPeople: experienceData.minimumPeople || null,
+      wheelchairAccessible: experienceData.wheelchairAccessible || "no",
+      petsAllowed: experienceData.petsAllowed || false,
+      minimumAge: experienceData.minimumAge || null,
+      closedDays: experienceData.closedDays || null,
+      foodIncluded: experienceData.foodIncluded || false,
+      foodDetails: experienceData.foodDetails || null,
+      activeTourismData: experienceData.activeTourismData || null,
+      cancellationPolicy: experienceData.cancellationPolicy || null,
+      voucherInfo: experienceData.voucherInfo || null,
+      faqs: experienceData.faqs || null,
+      additionalQuestions: experienceData.additionalQuestions || null,
+      languages: experienceData.languages || null,
+      guideType: experienceData.guideType || null,
+      passengerDataRequired: experienceData.passengerDataRequired || null,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    };
+    return experience;
+  }
+
+  async updateExperience(id: number, experienceData: Partial<InsertExperience>): Promise<Experience> {
+    // Mock implementation
+    throw new Error("Experience not found");
+  }
+
+  async getExperience(id: number): Promise<Experience | undefined> {
+    // Mock implementation
+    return undefined;
+  }
 }
 
 export class DatabaseStorage implements IStorage {
@@ -201,6 +270,36 @@ export class DatabaseStorage implements IStorage {
       throw new Error('Profile not found');
     }
     
+    return result[0];
+  }
+
+  // Experience methods (database storage)
+  async getExperiences(userId: number): Promise<Experience[]> {
+    const result = await db.select().from(experiences).where(eq(experiences.userId, userId));
+    return result;
+  }
+
+  async createExperience(experienceData: InsertExperience): Promise<Experience> {
+    const result = await db.insert(experiences).values(experienceData).returning();
+    return result[0];
+  }
+
+  async updateExperience(id: number, experienceData: Partial<InsertExperience>): Promise<Experience> {
+    const result = await db
+      .update(experiences)
+      .set({ ...experienceData, updatedAt: new Date() })
+      .where(eq(experiences.id, id))
+      .returning();
+      
+    if (result.length === 0) {
+      throw new Error('Experience not found');
+    }
+    
+    return result[0];
+  }
+
+  async getExperience(id: number): Promise<Experience | undefined> {
+    const result = await db.select().from(experiences).where(eq(experiences.id, id)).limit(1);
     return result[0];
   }
 }

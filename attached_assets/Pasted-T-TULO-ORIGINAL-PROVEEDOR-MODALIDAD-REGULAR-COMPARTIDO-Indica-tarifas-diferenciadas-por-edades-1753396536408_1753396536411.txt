@@ -1,0 +1,134 @@
+TÍTULO ORIGINAL PROVEEDOR	MODALIDAD	REGULAR / COMPARTIDO				"Indica tarifas diferenciadas por edades. Si no tienes un estándar, sugerimos:
+Adultos: De 18 a 60 años // Niños: de 5 a 18 años // Bebés: menores de 5 años // Mayores: desde los 60"									COMISIÓN	"TIPO
+
+(Marcar con X)"		"IDIOMAS
+
+(Marcar con X. Si el producto no tiene guía, no se marca nada)"		"ORGANIZACIÓN
+
+(Marcar con X)"		"DESCRIPCIÓN E ITINERARIO
+
+(Describir el itinerario paso a paso. Es imprescindible saber el orden de las principales visitas o actividades del producto. Indicar lugar y hora de finalización del tour. Es deseable conocer “highlights” o datos de interés que ayuden a convencer al cliente.
+
+Si aplica, indicar datos de interés sobre visados, condiciones climatológicas, restricciones, código de vestimenta…)"	"SI ES ACTIVIDAD DE TURISMO ACTIVO, INDICAR SEGÚN CORRESPONDA:
+
+- Extensión (km)
+- Altitud (m o km)
+- Nivel de dificultad
+- Quien no puede realizar la actividad"	"¿EL TOUR INCLUYE COMIDA?
+
+(Indicar hora y lugar de la comida, inclusiones, menú, información sobre alternativas para veganos, personas con intolerancias, niños…)"	"RELEASE o 
+CUT OFF
+
+(Hasta cuantas horas antes se puede reservar por la web de Civitatis. Recomendamos el menor tiempo posible para recibir más reservas)"	"MÍNIMO PERSONAS
+
+(Los tours regulares deben salir siempre sin mínimo. En caso de requerir un mínimo, debería ser muy bajo - preferentemente no más que 2 o 3)"	"¿EL CLIENTE PUEDE LLEVAR MASCOTA?
+
+(Marcar con X)"		"EDAD MÍNIMA
+
+(Si la actividad tuviese restricción de edad)"	"DÍAS DE CIERRE
+
+(Fechas concretas a lo largo del año en que el tour no opera)"	"POLÍTICA DE CANCELACIÓN
+
+(Porcentaje de reembolso al cliente según la antelación de la cancelación. Recomendamos cancelación gratis hasta 24h antes para recibir más reservas)"	"INFORMACIÓN VOUCHER
+
+(Datos imprescindibles que deben ser indicados en el voucher recibido por el cliente)"	"FAQs
+
+(Preguntas frecuentes. Entran infos específicas. Ej.: el horario del tour depende del clima; el barco tiene baño; no hay más de 6 personas por grupo; etc.)"	"DURACIÓN
+
+(Indicar la duración del tour y detallar la duración aproximada de traslados, actividades, tiempo libre…)"	"INCLUIDO
+
+(Lo que SÍ está contemplado en el precio de la actividad)"	"NO INCLUIDO
+
+(Lo que NO está contemplado en el precio de la actividad. Además de listar lo que no se incluye, indicar precios no incluidos que deban ser abonados el día del tour (tasas, entradas, impuestos, alquiler de equipos…))"	"PREGUNTAS ADICIONALES
+
+(Preguntas que el cliente deba contestar durante la reserva y que son importantes para la buena prestación del servicio)"	"PUNTO DE ENCUENTRO O TRASLADOS DESDE/HACIA EL HOTEL
+
+(Marcar con X. Elegir uno u otro o ambos, si se da el caso)"		"DÍAS Y HORARIOS DE OPERACIÓN
+(pasa el cursor para más info)
+(Ejemplo:
+Desde 10/abril a 15/septiembre
+Lunes, martes y viernes
+07:30 a 08:30 aprox. – pick-up hoteles
+09:00 – comienzo del tour)"	"DATOS PASAJEROS SOLICITADOS
+
+(Marcar con X. Solo los que sean imprescindibles para operar la actividad)"		"¿ACCESIBLE EN SILLA DE RUEDAS?
+
+(Marcar con X. Elegir SOLO 1 opción)"		"SOLO SI LA ACTIVIDAD ES ACCESIBLE PARA SILLA DE RUEDAS, CONTESTAR A LOS PUNTOS A SEGUIR
+
+(Marcar con X)"					
+																																																		
+																																																		
+		ADULTO		EUR	COMPETENCIA	NIÑOS		EUR	COMPETENCIA	MAYORES		EUR	COMPETENCIA	BEBÉS																																				
+		NET (lo que el proveedor recibe)	PVP (lo que el cliente paga)			NET (lo que el proveedor recibe)	PVP (lo que el cliente paga)			NET (lo que el proveedor recibe)	PVP (lo que el cliente paga)																																							
+"Título EJEMPLO
+
+CB587 - Excursión AAAAA"	"Modalidad EJEMPLO
+
+Con recogida y comida"	De 13 a 60 años		EUR	COMPETENCIA	De 2 a 13 años		EUR	COMPETENCIA	Desde los 60 años		EUR	COMPETENCIA	Menores de 2 años van gratis	25%	X	Con guía	X	Español	X	Monolingüe 100%	"Salidas desde AAAAA normalmente entre las 7:00 y las 8:00. El recorrido es de un promedio de 110 km con una duración de 1h 40m (pasando por XXX, YYY, ZZZ). 
+
+Al llegar a BBBBB, empezaremos una visita a 3 sitios productores de flores, un paseo ideal para los amantes de la naturaleza, que podrán hacer muchas fotos. El monitor de cada finca hará una presentación y nos contará las fases de cultivo de cada especie. En total, las visitas a los 3 sitios tendrán una duración de aprox. 2h.
+
+Después de esas visitas guiadas a las fincas productoras de flores, haremos un city tour panorámico por los principales puntos de interés de BBBBBBB y el guía nos contará curiosidades sobre la ciudad, su gastronomía y sus puntos de interés, como el Mercado de las Flores, la Plaza CCCCCC, el Molino DDDDD, Museo EEEEEEE, Plaza del Ayuntamiento, Iglesia Matriz, Deck del Amor (una especie de pasarela en la laguna Vitoria Regia donde la gente pone el candado con el nombre de la pareja) y laguna Vitória Regia. Durante todo el tour, contaremos de manera resumida la historia de la inmigración holandesa.
+
+Haremos una parada para comer en el Restaurante FFFFFF (aprox 1h), con vistas panorámicas para el Río. Degustaremos la comida típica de la zona - las bebidas no están incluidas. 
+
+Después de la parada para comer, seguiremos hacia tres de los principales puntos de interés de la ciudad: Deck del Amor (+-20min), Laguna Vitoria Regia (+-20miny el molino XXXXXX (+-40min).
+
+Terminaremos el tour en el centro de la ciudad. El visitante tendrá tiempo libre para comprar souvenirs o disfrutar de otras atracciones de la ciudad.
+
+Estaremos de vuelta a AAAAA en torno de las 19h.
+
+Plantaciones que serán visitadas:
+Gerberas de corte: son flores cultivadas em invernaderos y dan flores todo el año. Son perfectas para las fotos, porque tienen muchos colores.
+
+Crisantemos/Margaritas: son conocidas como flores del campo, pero también son cultivadas en invernadores todo el año. Son flores más altas y que crecen muy cerca unas de las otras, dando la sensación de una alfombra de colores.
+
+Anturios: flores cultivadas en invernadores, plantados en macetas con colores vibrantes.
+Importante: las flores tienen su “temporada”, por lo que siempre visitamos las plantaciones con más flores."	" - Sendero de 3 km
+- Altitud de 1,5 km
+- Dificultad fácil
+- No apto para embarazadas
+"	"Sí. Menú de tres pasos:
+
+1 - ensaladas variadas
+
+2 - carnes, pescado y arroz
+
+3 - postre
+
+Hay opción para vegetarianos con caldos, sopas y lasaña de soja
+
+"	12h	-	X	Sí	-	25/12, 01/01	"Cancelación gratuita: 24h
+
+Menos de 24h: no reembolsable"	-	"P. El vehículo de la excursión tiene baño? 
+R. Sí."	"10h - tiempo total tour
+
+3h30 - traslados"	"Guía
+
+Comida 
+
+Fotos de cortesía
+
+Traslados - servicio a bordo: caramelos, agua y zumo"	"Bebidas
+
+Entrada Molino DDDDD: 10BRL
+
+Entrada Museo EEEEE: 10 BRL"	1 - Tienes alguna alergia o intolerancia alimentaria?		Punto de encuentro: Shopping Beira Mar - entrada principal (Calle Don Emilio, 57). El guía llevará una camiseta con el logo de AAA Tours.	"Todos los días del año
+
+07:00 a 08:00 aprox. – pick-up hoteles
+08:00 – comienzo del tour"		Nombre	X	No	¿OBLIGATORIO INDICARLO AL RESERVAR?					
+		 $  75.000 	 $  100.000 	 $  -   	 -	 $  37.500 	 $  50.000 	 $  -   	 -	 $  56.250 	 $  75.000 	100.00	-																													Apellidos			X	Sí			No	
+																	Acompañante																									Número de documento	X	Sí, todas las zonas						
+																												Sí, con trasportín														Fecha de caducidad del documento			¿HAY PRÉSTAMO DE SILLA DE RUEDAS?					
+																	Solo chofer	X	Inglés		Monolingüe 80%																					Fecha de expedición del documento								
+																																										Edad		Sí, solo para sillas de ruedas plegables	X	Sí, gratis		Sí, de pago		No
+																	Audioguía											Sí, menos de 10kg														Peso								
+																																										Altura			¿OBLIGATORIO IR CON ACOMPAÑANTE?					
+																	Transporte		Italiano		Bilingüe																	X	Traslados desde/hacia el hotel: todos los hoteles del paseo marítimo y centro de la ciudad. Quien se aloje en otras zonas debe ir al punto de encuentro.			Nacionalidad		Sí, varía según la atracción incluida						
+																												Sí, solo en zonas exteriores														Fecha de nacimiento				Sí		X	No	
+																	Comida																									Lugar de nacimiento								
+																		X	Portugués		Trilingüe																					Sexo		Sí, solo algunas zonas son accesibles	¿LOS ASEOS SON ACCESIBLES?					
+																X	Entrada																									Número de pie								
+																												No														Tamaño del casco			X	Sí			No	
+																	Música		Francés		Multilingüe																					Tamaño de los guantes		Sí, la mayoría de las zonas es accesible						
+																																										Domicilio fiscal								

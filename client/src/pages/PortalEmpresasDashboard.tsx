@@ -37,10 +37,12 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { InteractiveMap } from "@/components/dashboard/InteractiveMap";
+import ExperienceForm from "@/components/dashboard/ExperienceForm";
 
 const PortalEmpresasDashboard = () => {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [activeSection, setActiveSection] = useState("mapa");
+  const [showExperienceForm, setShowExperienceForm] = useState(false);
 
   const sidebarItems = [
     { id: "mapa", label: "Mapa", icon: Map },
@@ -222,7 +224,11 @@ const PortalEmpresasDashboard = () => {
           <div className="space-y-4">
             <div className="flex justify-between items-center">
               <h2 className="text-xl font-bold text-white">Mis Experiencias</h2>
-              <Button size="sm" className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white">
+              <Button 
+                size="sm" 
+                onClick={() => setShowExperienceForm(true)}
+                className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white"
+              >
                 <Plus className="w-3 h-3 mr-1" />
                 Crear
               </Button>
@@ -853,11 +859,17 @@ const PortalEmpresasDashboard = () => {
       {/* Floating Action Button - Create Experience */}
       {activeSection !== "mapa" && (
         <Button
+          onClick={() => setShowExperienceForm(true)}
           className="fixed bottom-8 right-8 w-14 h-14 rounded-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 shadow-2xl z-50"
           size="lg"
         >
           <Plus className="w-6 h-6" />
         </Button>
+      )}
+
+      {/* Experience Form Modal */}
+      {showExperienceForm && (
+        <ExperienceForm onClose={() => setShowExperienceForm(false)} />
       )}
     </div>
   );
