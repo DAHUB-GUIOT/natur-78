@@ -194,11 +194,11 @@ const ConSentidosRegister = () => {
                 
                 <div className="space-y-6">
                   <div className="space-y-2">
-                    <Label htmlFor="travelStyle" className="text-gray-700 font-medium">
+                    <Label htmlFor="travelStyle" className="font-medium" style={{ color: '#EDFF60' }}>
                       Estilo de viaje preferido
                     </Label>
                     <Select value={formData.travelStyle} onValueChange={(value) => handleInputChange('travelStyle', value)}>
-                      <SelectTrigger className="border-gray-200 focus:border-green-500 focus:ring-green-500">
+                      <SelectTrigger className="border-2 bg-white/10 backdrop-blur-sm text-white font-medium" style={{ borderColor: '#EDFF60' }}>
                         <SelectValue placeholder="Selecciona tu estilo" />
                       </SelectTrigger>
                       <SelectContent>
@@ -214,7 +214,7 @@ const ConSentidosRegister = () => {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="interests" className="text-gray-700 font-medium">
+                    <Label htmlFor="interests" className="font-medium" style={{ color: '#EDFF60' }}>
                       Intereses específicos (separados por comas)
                     </Label>
                     <Input
@@ -222,16 +222,17 @@ const ConSentidosRegister = () => {
                       value={formData.interests}
                       onChange={(e) => handleInputChange('interests', e.target.value)}
                       placeholder="Ej: naturaleza, medicina ancestral, artesanías, fauna, flora"
-                      className="border-gray-200 focus:border-green-500 focus:ring-green-500"
+                      className="border-2 bg-white/10 backdrop-blur-sm text-white font-medium placeholder-white/60"
+                      style={{ borderColor: '#EDFF60' }}
                     />
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="experience" className="text-gray-700 font-medium">
+                    <Label htmlFor="experience" className="font-medium" style={{ color: '#EDFF60' }}>
                       Experiencia en turismo sostenible
                     </Label>
                     <Select value={formData.experience} onValueChange={(value) => handleInputChange('experience', value)}>
-                      <SelectTrigger className="border-gray-200 focus:border-green-500 focus:ring-green-500">
+                      <SelectTrigger className="border-2 bg-white/10 backdrop-blur-sm text-white font-medium" style={{ borderColor: '#EDFF60' }}>
                         <SelectValue placeholder="Selecciona tu nivel" />
                       </SelectTrigger>
                       <SelectContent>
@@ -244,7 +245,7 @@ const ConSentidosRegister = () => {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="motivation" className="text-gray-700 font-medium">
+                    <Label htmlFor="motivation" className="font-medium" style={{ color: '#EDFF60' }}>
                       ¿Qué te motiva a viajar de manera sostenible?
                     </Label>
                     <Textarea
@@ -252,17 +253,18 @@ const ConSentidosRegister = () => {
                       value={formData.motivation}
                       onChange={(e) => handleInputChange('motivation', e.target.value)}
                       placeholder="Comparte tu motivación para el turismo consciente..."
-                      className="border-gray-200 focus:border-green-500 focus:ring-green-500 min-h-[100px]"
+                      className="border-2 bg-white/10 backdrop-blur-sm text-white font-medium placeholder-white/60 min-h-[100px]"
+                      style={{ borderColor: '#EDFF60' }}
                     />
                   </div>
                 </div>
               </div>
 
               {/* Submit Button */}
-              <div className="pt-6 border-t border-gray-100">
+              <div className="pt-6 border-t-2" style={{ borderColor: '#EDFF60' }}>
                 <div className="flex flex-col sm:flex-row gap-4 justify-between items-center">
                   <Link to="/mapa">
-                    <Button variant="ghost" className="text-gray-600 hover:text-gray-800">
+                    <Button variant="ghost" className="hover:bg-white/20" style={{ color: '#EDFF60' }}>
                       ← Explorar sin registrarse
                     </Button>
                   </Link>
@@ -271,14 +273,16 @@ const ConSentidosRegister = () => {
                     <Link to="/auth/consentidos">
                       <Button
                         variant="outline"
-                        className="border-green-200 text-green-700 hover:bg-green-50 w-full sm:w-auto"
+                        className="border-2 bg-transparent hover:bg-[#EDFF60]/10 w-full sm:w-auto"
+                        style={{ borderColor: '#EDFF60', color: '#EDFF60' }}
                       >
                         Ya tengo cuenta - Iniciar sesión
                       </Button>
                     </Link>
                     <Button
                       type="submit"
-                      className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 text-lg font-medium"
+                      className="border-2 border-[#EDFF60] bg-transparent hover:bg-[#EDFF60]/10 px-8 py-3 text-lg font-medium"
+                      style={{ color: '#EDFF60' }}
                     >
                       Registrarme en Con-Sentidos
                     </Button>

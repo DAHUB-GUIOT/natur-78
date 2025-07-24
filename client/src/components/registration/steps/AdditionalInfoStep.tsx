@@ -80,7 +80,7 @@ const AdditionalInfoStep = ({
             checked={formData.interests.slowTravel}
             onCheckedChange={handleCheckboxChange("interests", "slowTravel")}
           />
-          <Label htmlFor="slowTravel" className="text-black font-medium text-lg">Workation / Slow Travel</Label>
+          <Label htmlFor="slowTravel" className="font-medium text-lg" style={{ color: '#EDFF60' }}>Workation / Slow Travel</Label>
         </div>
         <div className="flex items-center space-x-3">
           <Checkbox
@@ -88,7 +88,7 @@ const AdditionalInfoStep = ({
             checked={formData.interests.workshops}
             onCheckedChange={handleCheckboxChange("interests", "workshops")}
           />
-          <Label htmlFor="workshops" className="text-black font-medium text-lg">Formación y talleres</Label>
+          <Label htmlFor="workshops" className="font-medium text-lg" style={{ color: '#EDFF60' }}>Formación y talleres</Label>
         </div>
       </div>
     </div>
@@ -96,7 +96,7 @@ const AdditionalInfoStep = ({
 
   const renderSponsorFields = () => (
     <div className="space-y-4">
-      <p className="text-black font-bold text-lg mb-4">¿Qué tipo de participación te interesa?</p>
+      <p className="font-bold text-lg mb-4" style={{ color: '#EDFF60' }}>¿Qué tipo de participación te interesa?</p>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="flex items-center space-x-3">
           <Checkbox
@@ -104,7 +104,7 @@ const AdditionalInfoStep = ({
             checked={formData.participationType.sponsorActivities}
             onCheckedChange={handleCheckboxChange("participationType", "sponsorActivities")}
           />
-          <Label htmlFor="sponsorActivities" className="text-black font-medium text-lg">Patrocinar actividades o escenarios</Label>
+          <Label htmlFor="sponsorActivities" className="font-medium text-lg" style={{ color: '#EDFF60' }}>Patrocinar actividades o escenarios</Label>
         </div>
         <div className="flex items-center space-x-2">
           <Checkbox
@@ -112,7 +112,7 @@ const AdditionalInfoStep = ({
             checked={formData.participationType.installStand}
             onCheckedChange={handleCheckboxChange("participationType", "installStand")}
           />
-          <Label htmlFor="installStand" className="text-black font-medium text-lg">Instalar un stand</Label>
+          <Label htmlFor="installStand" className="font-medium text-lg" style={{ color: '#EDFF60' }}>Instalar un stand</Label>
         </div>
         <div className="flex items-center space-x-3">
           <Checkbox
@@ -120,7 +120,7 @@ const AdditionalInfoStep = ({
             checked={formData.participationType.brandExposure}
             onCheckedChange={handleCheckboxChange("participationType", "brandExposure")}
           />
-          <Label htmlFor="brandExposure" className="text-black font-medium text-lg">Difundir marca en app y redes</Label>
+          <Label htmlFor="brandExposure" className="font-medium text-lg" style={{ color: '#EDFF60' }}>Difundir marca en app y redes</Label>
         </div>
         <div className="flex items-center space-x-3">
           <Checkbox
@@ -128,19 +128,20 @@ const AdditionalInfoStep = ({
             checked={formData.participationType.productSupport}
             onCheckedChange={handleCheckboxChange("participationType", "productSupport")}
           />
-          <Label htmlFor="productSupport" className="text-black font-medium text-lg">Apoyar con productos/servicios</Label>
+          <Label htmlFor="productSupport" className="font-medium text-lg" style={{ color: '#EDFF60' }}>Apoyar con productos/servicios</Label>
         </div>
       </div>
 
       <div>
-        <Label htmlFor="proposal" className="text-black font-bold text-lg">¿Tienes una propuesta específica?</Label>
+        <Label htmlFor="proposal" className="font-bold text-lg" style={{ color: '#EDFF60' }}>¿Tienes una propuesta específica?</Label>
         <Textarea
           id="proposal"
           name="proposal"
           value={formData.proposal}
           onChange={handleChange}
           placeholder="Descríbenos tu propuesta..."
-          className="border-2 border-green-600 focus:border-green-700 text-black font-medium placeholder:text-black/50 mt-2"
+          className="border-2 border-[#EDFF60] focus:border-[#EDFF60] bg-transparent font-medium mt-2"
+          style={{ color: '#EDFF60' }}
         />
       </div>
     </div>
@@ -154,11 +155,11 @@ const AdditionalInfoStep = ({
           checked={formData.wantsSeal}
           onCheckedChange={handleWantsSeal}
         />
-        <Label htmlFor="wantsSeal" className="text-black font-medium text-lg">¿Quieres optar al Sello NATUR?</Label>
+        <Label htmlFor="wantsSeal" className="font-medium text-lg" style={{ color: '#EDFF60' }}>¿Quieres optar al Sello NATUR?</Label>
       </div>
 
       <div>
-        <Label htmlFor="servicesOffered" className="text-black font-bold text-lg">¿Qué servicios o experiencias ofreces?*</Label>
+        <Label htmlFor="servicesOffered" className="font-bold text-lg" style={{ color: '#EDFF60' }}>¿Qué servicios o experiencias ofreces?*</Label>
         <Textarea
           id="servicesOffered"
           name="servicesOffered"
@@ -166,19 +167,21 @@ const AdditionalInfoStep = ({
           onChange={handleChange}
           required
           placeholder="Describe tus servicios o experiencias..."
-          className="border-2 border-green-600 focus:border-green-700 text-black font-medium placeholder:text-black/50 mt-2"
+          className="border-2 border-[#EDFF60] focus:border-[#EDFF60] bg-transparent font-medium mt-2"
+          style={{ color: '#EDFF60' }}
         />
       </div>
 
       <div>
-        <Label htmlFor="certifications" className="text-black font-bold text-lg">¿Ya cuentas con certificaciones previas? (opcional)</Label>
+        <Label htmlFor="certifications" className="font-bold text-lg" style={{ color: '#EDFF60' }}>¿Ya cuentas con certificaciones previas? (opcional)</Label>
         <Input
           id="certifications"
           name="certifications"
           value={formData.certifications}
           onChange={handleChange}
           placeholder="Certificaciones de sostenibilidad, turismo responsable, etc."
-          className="border-2 border-green-600 focus:border-green-700 text-black font-medium placeholder:text-black/50 mt-2"
+          className="border-2 border-[#EDFF60] focus:border-[#EDFF60] bg-transparent font-medium mt-2"
+          style={{ color: '#EDFF60' }}
         />
       </div>
     </div>
@@ -187,7 +190,7 @@ const AdditionalInfoStep = ({
   const renderStartupFields = () => (
     <div className="space-y-4">
       <div>
-        <Label htmlFor="startupName" className="text-black font-bold text-lg">Nombre de tu startup*</Label>
+        <Label htmlFor="startupName" className="font-bold text-lg" style={{ color: '#EDFF60' }}>Nombre de tu startup*</Label>
         <Input
           id="startupName"
           name="startupName"
@@ -195,12 +198,13 @@ const AdditionalInfoStep = ({
           onChange={handleChange}
           required
           placeholder="Nombre de tu emprendimiento o solución"
-          className="border-2 border-green-600 focus:border-green-700 text-black font-medium placeholder:text-black/50 mt-2"
+          className="border-2 border-[#EDFF60] focus:border-[#EDFF60] bg-transparent font-medium mt-2"
+          style={{ color: '#EDFF60' }}
         />
       </div>
 
       <div>
-        <Label htmlFor="problemSolved" className="text-black font-bold text-lg">¿Qué problema resuelves en el turismo sostenible?*</Label>
+        <Label htmlFor="problemSolved" className="font-bold text-lg" style={{ color: '#EDFF60' }}>¿Qué problema resuelves en el turismo sostenible?*</Label>
         <Textarea
           id="problemSolved"
           name="problemSolved"
@@ -208,24 +212,26 @@ const AdditionalInfoStep = ({
           onChange={handleChange}
           required
           placeholder="Describe el problema que resuelve tu startup..."
-          className="border-2 border-green-600 focus:border-green-700 text-black font-medium placeholder:text-black/50 mt-2"
+          className="border-2 border-[#EDFF60] focus:border-[#EDFF60] bg-transparent font-medium mt-2"
+          style={{ color: '#EDFF60' }}
         />
       </div>
 
       <div>
-        <Label htmlFor="startupWebsite" className="text-black font-bold text-lg">Sitio web o redes sociales (opcional)</Label>
+        <Label htmlFor="startupWebsite" className="font-bold text-lg" style={{ color: '#EDFF60' }}>Sitio web o redes sociales (opcional)</Label>
         <Input
           id="startupWebsite"
           name="startupWebsite"
           value={formData.startupWebsite}
           onChange={handleChange}
           placeholder="URL de tu sitio web o perfiles sociales"
-          className="border-2 border-green-600 focus:border-green-700 text-black font-medium placeholder:text-black/50 mt-2"
+          className="border-2 border-[#EDFF60] focus:border-[#EDFF60] bg-transparent font-medium mt-2"
+          style={{ color: '#EDFF60' }}
         />
       </div>
 
       <div className="space-y-4">
-        <p className="text-black font-bold text-lg mb-4">¿Qué tipo de apoyo te interesa?</p>
+        <p className="font-bold text-lg mb-4" style={{ color: '#EDFF60' }}>¿Qué tipo de apoyo te interesa?</p>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="flex items-center space-x-3">
             <Checkbox
@@ -233,7 +239,7 @@ const AdditionalInfoStep = ({
               checked={formData.supportNeeded.visibility}
               onCheckedChange={handleCheckboxChange("supportNeeded", "visibility")}
             />
-            <Label htmlFor="visibility" className="text-black font-medium text-lg">Visibilidad en el festival</Label>
+            <Label htmlFor="visibility" className="font-medium text-lg" style={{ color: '#EDFF60' }}>Visibilidad en el festival</Label>
           </div>
           <div className="flex items-center space-x-3">
             <Checkbox
@@ -241,7 +247,7 @@ const AdditionalInfoStep = ({
               checked={formData.supportNeeded.marketplace}
               onCheckedChange={handleCheckboxChange("supportNeeded", "marketplace")}
             />
-            <Label htmlFor="marketplace" className="text-black font-medium text-lg">Espacio en el marketplace</Label>
+            <Label htmlFor="marketplace" className="font-medium text-lg" style={{ color: '#EDFF60' }}>Espacio en el marketplace</Label>
           </div>
           <div className="flex items-center space-x-3">
             <Checkbox
@@ -249,7 +255,7 @@ const AdditionalInfoStep = ({
               checked={formData.supportNeeded.networking}
               onCheckedChange={handleCheckboxChange("supportNeeded", "networking")}
             />
-            <Label htmlFor="networking" className="text-black font-medium text-lg">Networking con aliados</Label>
+            <Label htmlFor="networking" className="font-medium text-lg" style={{ color: '#EDFF60' }}>Networking con aliados</Label>
           </div>
           <div className="flex items-center space-x-3">
             <Checkbox
@@ -257,7 +263,7 @@ const AdditionalInfoStep = ({
               checked={formData.supportNeeded.funding}
               onCheckedChange={handleCheckboxChange("supportNeeded", "funding")}
             />
-            <Label htmlFor="funding" className="text-black font-medium text-lg">Acceso a fondos o inversión</Label>
+            <Label htmlFor="funding" className="font-medium text-lg" style={{ color: '#EDFF60' }}>Acceso a fondos o inversión</Label>
           </div>
           <div className="flex items-center space-x-3">
             <Checkbox
@@ -265,7 +271,7 @@ const AdditionalInfoStep = ({
               checked={formData.supportNeeded.incubation}
               onCheckedChange={handleCheckboxChange("supportNeeded", "incubation")}
             />
-            <Label htmlFor="incubation" className="text-black font-medium text-lg">Programas de incubación/aceleración</Label>
+            <Label htmlFor="incubation" className="font-medium text-lg" style={{ color: '#EDFF60' }}>Programas de incubación/aceleración</Label>
           </div>
         </div>
       </div>
