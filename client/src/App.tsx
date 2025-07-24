@@ -8,6 +8,8 @@ import { MainLayout } from "./components/layout/MainLayout";
 import Index from "./pages/Index";
 import Register from "./pages/Register";
 import ConSentidosRegister from "./pages/ConSentidosRegister";
+import AuthEmpresas from "./pages/AuthEmpresas";
+import AuthConSentidos from "./pages/AuthConSentidos";
 import Reservation from "./pages/Reservation";
 import NotFound from "./pages/NotFound";
 import Platform from "./pages/Platform";
@@ -37,6 +39,8 @@ const App = () => (
             <Route path="/" component={Index} />
             <Route path="/registro" component={Register} />
             <Route path="/con-sentidos" component={ConSentidosRegister} />
+            <Route path="/auth/empresas" component={AuthEmpresas} />
+            <Route path="/auth/consentidos" component={AuthConSentidos} />
             <Route path="/reserva" component={Reservation} />
             <Route path="/experiencias">
               <MainLayout><ExperienciasOptimized /></MainLayout>

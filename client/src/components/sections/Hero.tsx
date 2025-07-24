@@ -27,7 +27,7 @@ export function Hero() {
           " 
         />
         <div className="flex flex-col sm:flex-row gap-4 w-full max-w-[90vw] sm:max-w-[500px]">
-          <Link to="/registro" className="flex-1">
+          <Link to="/auth/empresas" className="flex-1">
             <Button className="
               bg-[#EDFF60] hover:bg-[#E5F73D] w-full
               text-sm sm:text-base text-[#222408] 
@@ -40,7 +40,7 @@ export function Hero() {
             </Button>
           </Link>
           
-          <Link to="/con-sentidos" className="flex-1">
+          <Link to="/auth/consentidos" className="flex-1">
             <Button className="
               bg-green-600 hover:bg-green-700 w-full
               text-sm sm:text-base text-white 

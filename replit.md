@@ -10,13 +10,15 @@ This is a full-stack web application for Festival NATUR (www.festivalnatur.com),
 
 ## Recent Changes
 
-- ✅ **January 24, 2025**: Header Alignment & Mobile Optimization Completed
-  - **NEW**: HeaderButtons.tsx unified component for consistent navigation across all views
-  - **NEW**: Mobile-optimized touch targets (44px minimum) for iOS/Android compatibility
-  - **NEW**: CSS optimizations for webkit touch handling and backdrop blur effects
-  - **NEW**: Portal buttons integrated on homepage (Portal Empresas + Con-Sentidos)
-  - **NEW**: Consistent header positioning across MapaPublicoOptimized, ExperienciasOptimized, AdminOptimized
-  - **NEW**: Touch-manipulation CSS class for improved mobile interaction
+- ✅ **January 24, 2025**: Unified Authentication System & Portal Integration Completed
+  - **NEW**: Auth.tsx unified authentication component with login/register tabs for both portals
+  - **NEW**: AuthEmpresas.tsx - Yellow-themed authentication for Portal Empresas (/auth/empresas)
+  - **NEW**: AuthConSentidos.tsx - Green-themed authentication for Con-Sentidos (/auth/consentidos)
+  - **NEW**: Portal buttons in hero section replace "QUIERO SER PARTE" button
+  - **NEW**: Portal Empresas (yellow) and Con-Sentidos (green) prominently displayed in main hero
+  - **NEW**: Removed duplicate navigation buttons from header (registro, explorar, dashboard)
+  - **NEW**: Clean authentication flow with proper redirects after login/registration
+  - **NEW**: Cross-portal navigation links in authentication pages
 
 - ✅ **January 24, 2025**: Platform Optimization and White Theme Implementation completed
   - **NEW**: Complete platform redesign with clean white background and professional UI
