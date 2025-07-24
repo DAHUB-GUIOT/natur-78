@@ -4,6 +4,13 @@ import { storage } from "./storage";
 import { insertUserSchema, insertUserProfileSchema } from "@shared/schema";
 import { z } from "zod";
 
+// Extend Express Request type to include session
+declare module 'express-session' {
+  interface SessionData {
+    userId: number;
+  }
+}
+
 export async function registerRoutes(app: Express): Promise<Server> {
   // Authentication routes
   app.post("/api/auth/login", async (req, res) => {
@@ -19,8 +26,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(401).json({ error: "Invalid credentials" });
       }
 
-      // In a real app, you'd use proper session management
-      req.session = { userId: user.id } as any;
+      // Set session with user ID
+      req.session.userId = user.id;
       
       res.json({ user: { id: user.id, email: user.email } });
     } catch (error) {
@@ -42,7 +49,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const user = await storage.createUser(userData);
       
       // Auto-login after registration
-      req.session = { userId: user.id } as any;
+      req.session.userId = user.id;
       
       res.status(201).json({ user: { id: user.id, email: user.email } });
     } catch (error) {
@@ -55,18 +62,22 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   app.post("/api/auth/logout", (req, res) => {
-    req.session = null;
-    res.json({ message: "Logged out successfully" });
+    req.session.destroy((err) => {
+      if (err) {
+        console.error("Session destroy error:", err);
+        return res.status(500).json({ error: "Could not log out" });
+      }
+      res.json({ message: "Logged out successfully" });
+    });
   });
 
   app.get("/api/auth/me", async (req, res) => {
     try {
-      const session = req.session as any;
-      if (!session?.userId) {
+      if (!req.session.userId) {
         return res.status(401).json({ error: "Not authenticated" });
       }
 
-      const user = await storage.getUser(session.userId);
+      const user = await storage.getUser(req.session.userId);
       if (!user) {
         return res.status(404).json({ error: "User not found" });
       }
@@ -97,14 +108,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/profiles", async (req, res) => {
     try {
-      const session = req.session as any;
-      if (!session?.userId) {
+      if (!req.session.userId) {
         return res.status(401).json({ error: "Not authenticated" });
       }
 
       const profileData = insertUserProfileSchema.parse({
         ...req.body,
-        userId: session.userId
+        userId: req.session.userId
       });
 
       const profile = await storage.createUserProfile(profileData);
@@ -120,10 +130,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.put("/api/profiles/:userId", async (req, res) => {
     try {
-      const session = req.session as any;
       const userId = parseInt(req.params.userId);
       
-      if (!session?.userId || session.userId !== userId) {
+      if (!req.session.userId || req.session.userId !== userId) {
         return res.status(403).json({ error: "Unauthorized" });
       }
 
