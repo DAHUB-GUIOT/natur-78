@@ -7,6 +7,7 @@ import { Router, Route, Switch } from "wouter";
 import { MainLayout } from "./components/layout/MainLayout";
 import Index from "./pages/Index";
 import Register from "./pages/Register";
+import ConSentidosRegister from "./pages/ConSentidosRegister";
 import Reservation from "./pages/Reservation";
 import NotFound from "./pages/NotFound";
 import Platform from "./pages/Platform";
@@ -35,6 +36,7 @@ const App = () => (
           <Switch>
             <Route path="/" component={Index} />
             <Route path="/registro" component={Register} />
+            <Route path="/con-sentidos" component={ConSentidosRegister} />
             <Route path="/reserva" component={Reservation} />
             <Route path="/experiencias">
               <MainLayout><ExperienciasOptimized /></MainLayout>

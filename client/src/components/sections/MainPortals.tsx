@@ -13,7 +13,7 @@ export function MainPortals() {
         </Button>
       </Link>
       
-      <Link to="/mapa">
+      <Link to="/con-sentidos">
         <Button className="bg-blue-600 hover:bg-blue-700 text-white px-2 h-8 text-xs font-medium touch-manipulation">
           <MapPin className="w-3 h-3 mr-1" />
           Con-Sentidos
