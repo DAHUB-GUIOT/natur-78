@@ -22,9 +22,7 @@ export function Hero() {
       <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-white/10 border-b border-white/20">
         <div className="flex items-center justify-between max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center space-x-4">
-            <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#EDFF60' }}>
-              <span className="text-black font-bold text-lg">N</span>
-            </div>
+            <span className="font-bold text-2xl" style={{ color: '#EDFF60' }}>N</span>
           </div>
           
           {/* Portal Buttons in Top Menu */}
