@@ -6,6 +6,8 @@ This is a full-stack web application for Festival NATUR (www.festivalnatur.com),
 
 **Migration Status**: Successfully migrated from Lovable to Replit (January 2025) ✅
 
+**Domain Status**: festivalnatur.com is currently serving an old production build. The optimized version with white theme and improved UX is ready for deployment from this Replit environment.
+
 ## Recent Changes
 
 - ✅ **January 24, 2025**: Platform Optimization and White Theme Implementation completed
