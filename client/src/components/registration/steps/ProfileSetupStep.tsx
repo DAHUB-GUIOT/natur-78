@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Heart } from "lucide-react";
 import { useLocation } from "wouter";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -576,8 +576,19 @@ const ProfileSetupStep = ({
       </ScrollArea>
 
       {successMessage ? (
-        <div className="bg-[#EDFF60]/10 border border-[#EDFF60] rounded-md p-4 text-[#EDFF60]">
-          {successMessage}
+        <div className="space-y-4">
+          <div className="bg-[#EDFF60]/10 border border-[#EDFF60] rounded-md p-4 text-[#EDFF60]">
+            {successMessage}
+          </div>
+          <div className="flex justify-center">
+            <Button 
+              onClick={() => window.location.href = '/heart'}
+              className="bg-[#EDFF60] text-[#191C0F] hover:bg-[#CEDD9F] px-8 py-6 text-lg font-gasoek tracking-wide uppercase flex items-center gap-2"
+            >
+              <Heart className="h-5 w-5" />
+              Corazón NATUR
+            </Button>
+          </div>
         </div>
       ) : (
         <div className="flex justify-end">

@@ -4,6 +4,17 @@
 
 This is a full-stack web application for Festival NATUR, a sustainable tourism and regenerative practices platform. The application serves as a comprehensive ecosystem connecting startups, investors, mentors, digital nomads, and other stakeholders in the sustainable tourism space. It features multiple modules including networking, education, marketplace, experiences, fundraising, and an accelerator program.
 
+**Migration Status**: Successfully migrated from Lovable to Replit (January 2025)
+
+## Recent Changes
+
+- ✅ **January 24, 2025**: Successfully completed migration from Lovable to Replit
+  - Migrated from React Router to Wouter for better Replit compatibility
+  - Replaced Supabase with PostgreSQL/Drizzle ORM backend
+  - Created comprehensive database schema for users and profiles
+  - Implemented secure server-side API endpoints with session management
+  - Added "Corazón NATUR" button in registration flow that leads to Heart module after completion
+
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
@@ -13,8 +24,8 @@ Preferred communication style: Simple, everyday language.
 ### Frontend Architecture
 - **Framework**: React 18 with TypeScript
 - **Build Tool**: Vite for fast development and optimized builds
-- **Routing**: Wouter for lightweight client-side routing
-- **Styling**: Tailwind CSS with custom design system
+- **Routing**: Wouter for lightweight client-side routing (migrated from React Router)
+- **Styling**: Tailwind CSS with custom design system and font-gasoek support
 - **UI Components**: Radix UI components with shadcn/ui component library
 - **State Management**: React Context for authentication, TanStack Query for server state
 - **Form Handling**: React Hook Form with Zod validation
@@ -22,10 +33,11 @@ Preferred communication style: Simple, everyday language.
 ### Backend Architecture
 - **Runtime**: Node.js with TypeScript
 - **Framework**: Express.js for RESTful API
-- **Database ORM**: Drizzle ORM with PostgreSQL
+- **Database ORM**: Drizzle ORM with PostgreSQL (migrated from Supabase)
 - **Database Provider**: Neon serverless PostgreSQL
-- **Session Management**: Connect-pg-simple for PostgreSQL-backed sessions
+- **Session Management**: Express sessions with secure server-side storage
 - **Development**: Hot reload with Vite middleware integration
+- **Security**: Proper client/server separation with API authentication
 
 ### Project Structure
 ```

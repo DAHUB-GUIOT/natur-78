@@ -1,6 +1,6 @@
 import { apiRequest } from '@/lib/queryClient';
 
-export type CategoryType = 'startup' | 'investor' | 'mentor' | 'ecosystem';
+export type CategoryType = 'startup' | 'investor' | 'mentor' | 'ecosystem' | 'attendee' | 'sponsor';
 
 export const createUserProfile = async (
   userId: number,
