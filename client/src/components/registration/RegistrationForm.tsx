@@ -150,7 +150,7 @@ const RegistrationForm = () => {
       if (user?.id) {
         // Create user profile in database
         await createUserProfile(
-          user.id, 
+          parseInt(user.id), 
           formData, 
           selectedCategory as CategoryType, 
           selectedSubcategory
@@ -180,6 +180,7 @@ const RegistrationForm = () => {
         description: error.message || "Hubo un problema al crear tu perfil. Por favor intenta nuevamente.",
         variant: "destructive",
       });
+      setSuccessMessage(""); // Clear success message on error
     } finally {
       setIsSubmitting(false);
     }

@@ -38,7 +38,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const signUp = async (email: string, password: string) => {
     try {
-      const response = await apiRequest('/api/auth/signup', {
+      const response = await apiRequest('/api/auth/register', {
         method: 'POST',
         body: JSON.stringify({ email, password }),
       });
@@ -50,18 +50,19 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           title: "¡Bienvenido!",
           description: "Te has registrado correctamente",
         });
+        return { data: { user: response.user }, error: null };
       }
       
-      return response;
-    } catch (error) {
+      return { data: { user: response.user }, error: null };
+    } catch (error: any) {
       console.error('Error signing up:', error);
-      throw error;
+      return { data: null, error: { message: error.message || 'Error en el registro' } };
     }
   };
 
   const signIn = async (email: string, password: string) => {
     try {
-      const response = await apiRequest('/api/auth/signin', {
+      const response = await apiRequest('/api/auth/login', {
         method: 'POST',
         body: JSON.stringify({ email, password }),
       });
@@ -73,12 +74,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           title: "¡Bienvenido!",
           description: "Has iniciado sesión correctamente",
         });
+        return { data: { user: response.user }, error: null };
       }
       
-      return response;
-    } catch (error) {
+      return { data: { user: response.user }, error: null };
+    } catch (error: any) {
       console.error('Error signing in:', error);
-      throw error;
+      return { data: null, error: { message: error.message || 'Error al iniciar sesión' } };
     }
   };
 

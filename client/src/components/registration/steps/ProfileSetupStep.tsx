@@ -47,7 +47,7 @@ const ProfileSetupStep = ({
   const handleSubmitAndRedirect = (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Save all form data to localStorage
+    // Save all form data to localStorage for backup
     localStorage.setItem('userProfileData', JSON.stringify({
       ...formData,
       userCategory: category,
@@ -55,13 +55,6 @@ const ProfileSetupStep = ({
     
     // Call the original onSubmit to process form submission
     onSubmit(e);
-    
-    // After a short delay, redirect to profile page
-    if (!successMessage) return;
-    
-    setTimeout(() => {
-      setLocation('/perfil');
-    }, 3000);
   };
 
   const renderCategorySpecificFields = () => {

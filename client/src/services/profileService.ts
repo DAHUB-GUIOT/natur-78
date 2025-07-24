@@ -61,17 +61,10 @@ export const createUserProfile = async (
 
     const response = await apiRequest('/api/profiles', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
       body: JSON.stringify(profileData),
     });
 
-    if (!response.ok) {
-      throw new Error('Failed to create profile');
-    }
-
-    return await response.json();
+    return response;
 
   } catch (error) {
     console.error("Error creating user profile:", error);
@@ -82,19 +75,10 @@ export const createUserProfile = async (
 export const getUserProfile = async (userId: number) => {
   try {
     const response = await apiRequest(`/api/profiles/${userId}`);
-    
-    if (!response.ok) {
-      if (response.status === 404) {
-        return null;
-      }
-      throw new Error('Failed to fetch profile');
-    }
-
-    return await response.json();
-    
+    return { profile: response };
   } catch (error) {
     console.error("Error fetching user profile:", error);
-    throw error;
+    return { profile: null };
   }
 };
 
@@ -102,18 +86,10 @@ export const updateUserProfile = async (userId: number, updateData: any) => {
   try {
     const response = await apiRequest(`/api/profiles/${userId}`, {
       method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
       body: JSON.stringify(updateData),
     });
 
-    if (!response.ok) {
-      throw new Error('Failed to update profile');
-    }
-
-    return await response.json();
-
+    return response;
   } catch (error) {
     console.error("Error updating user profile:", error);
     throw error;
