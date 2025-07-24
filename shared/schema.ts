@@ -15,7 +15,7 @@ export const users = pgTable("users", {
 export const userProfiles = pgTable("user_profiles", {
   id: serial("id").primaryKey(),
   userId: integer("user_id").references(() => users.id).notNull(),
-  fullName: text("full_name").notNull(),
+  fullName: text("full_name"), // Make optional for flexibility
   userCategory: text("user_category").notNull(), // startup, investor, mentor, etc.
   subcategory: text("subcategory"),
   
@@ -78,6 +78,28 @@ export const insertUserProfileSchema = createInsertSchema(userProfiles).omit({
   id: true,
   createdAt: true,
   updatedAt: true,
+}).extend({
+  // Make arrays optional and allow empty arrays  
+  investmentFocus: z.array(z.string()).optional().nullable(),
+  expertise: z.array(z.string()).optional().nullable(),
+  mentorshipType: z.array(z.string()).optional().nullable(),
+  skills: z.array(z.string()).optional().nullable(),
+  interests: z.array(z.string()).optional().nullable(),
+  // Make all numeric fields optional
+  foundingYear: z.number().optional().nullable(),
+  teamSize: z.number().optional().nullable(),
+  portfolioSize: z.number().optional().nullable(),
+  // Make optional fields explicitly partial
+  fullName: z.string().optional(),
+  subcategory: z.string().optional().nullable(),
+  phone: z.string().optional().nullable(),
+  whatsapp: z.string().optional().nullable(),
+  website: z.string().optional().nullable(),
+  linkedin: z.string().optional().nullable(),
+  bio: z.string().optional().nullable(),
+  description: z.string().optional().nullable(),
+  country: z.string().optional().nullable(),
+  city: z.string().optional().nullable(),
 });
 
 export type InsertUser = z.infer<typeof insertUserSchema>;

@@ -121,7 +121,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(201).json(profile);
     } catch (error) {
       if (error instanceof z.ZodError) {
-        return res.status(400).json({ error: "Invalid input", details: error.errors });
+        console.error("Validation error:", error.errors);
+        return res.status(400).json({ 
+          error: "Invalid input", 
+          details: error.errors,
+          receivedData: req.body 
+        });
       }
       console.error("Create profile error:", error);
       res.status(500).json({ error: "Internal server error" });
