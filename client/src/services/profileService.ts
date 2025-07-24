@@ -40,20 +40,32 @@ export const createUserProfile = async (
       currentRevenue: formData.currentRevenue,
       
       // Investor specific
-      investmentFocus: formData.investmentFocus || [],
+      investmentFocus: typeof formData.investmentFocus === 'string' ? 
+        (formData.investmentFocus ? formData.investmentFocus.split(',').map((item: string) => item.trim()).filter(Boolean) : []) : 
+        (formData.investmentFocus || []),
       investmentRange: formData.investmentRange,
       portfolioSize: formData.portfolioSize ? parseInt(formData.portfolioSize) : undefined,
       
       // Mentor specific
-      expertise: formData.expertise || [],
+      expertise: typeof formData.expertise === 'string' ? 
+        (formData.expertise ? formData.expertise.split(',').map((item: string) => item.trim()).filter(Boolean) : []) : 
+        (formData.expertise || []),
       experience: formData.experience,
-      mentorshipType: formData.mentorshipType || [],
+      mentorshipType: typeof formData.mentorshipType === 'string' ? 
+        (formData.mentorshipType ? formData.mentorshipType.split(',').map((item: string) => item.trim()).filter(Boolean) : []) : 
+        (formData.mentorshipType || []),
       
       // Support and skills
       supportNeeded: formData.supportNeeded,
       supportOffered: formData.supportOffered,
-      skills: formData.skills || [],
-      interests: formData.interestsTags?.split(',').map((tag: string) => tag.trim()) || formData.interests || [],
+      skills: typeof formData.skills === 'string' ? 
+        (formData.skills ? formData.skills.split(',').map((item: string) => item.trim()).filter(Boolean) : []) : 
+        (formData.skills || []),
+      interests: formData.interestsTags ? 
+        formData.interestsTags.split(',').map((tag: string) => tag.trim()).filter(Boolean) : 
+        (typeof formData.interests === 'string' ? 
+          (formData.interests ? formData.interests.split(',').map((item: string) => item.trim()).filter(Boolean) : []) : 
+          (formData.interests || [])),
       
       // Profile settings
       isPublic: formData.isPublic !== false,
