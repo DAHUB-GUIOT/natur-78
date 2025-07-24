@@ -2,16 +2,16 @@
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { useAuth } from '@/contexts/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'wouter';
 import { LogOut, UserCog } from 'lucide-react';
 
 const AccountSettings = () => {
   const { user, signOut } = useAuth();
-  const navigate = useNavigate();
+  const [, setLocation] = useLocation();
   
   const handleSignOut = async () => {
     await signOut();
-    navigate('/');
+    setLocation('/');
   };
   
   return (

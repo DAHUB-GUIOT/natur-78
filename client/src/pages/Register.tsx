@@ -2,11 +2,11 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useLocation } from "wouter";
 import RegistrationForm from "@/components/registration/RegistrationForm";
 
 const Register = () => {
-  const navigate = useNavigate();
+  const [, setLocation] = useLocation();
 
   return (
     <div className="min-h-screen bg-[#222408] px-2 sm:px-6 md:px-8 lg:px-16 py-4 sm:py-8">
@@ -15,7 +15,7 @@ const Register = () => {
           <Button 
             variant="ghost" 
             className="text-[#FCF8EE] hover:text-[#EDFF60] hover:bg-transparent mr-2 sm:mr-4"
-            onClick={() => navigate('/')}
+            onClick={() => setLocation('/')}
           >
             <ArrowLeft className="mr-1 sm:mr-2 h-4 w-4 sm:h-5 sm:w-5" />
             Volver

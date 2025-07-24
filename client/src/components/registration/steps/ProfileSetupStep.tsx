@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { ArrowLeft } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useLocation } from "wouter";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -29,7 +29,7 @@ const ProfileSetupStep = ({
   successMessage,
   category
 }: ProfileSetupStepProps) => {
-  const navigate = useNavigate();
+  const [, setLocation] = useLocation();
   
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     updateFormData({ [e.target.name]: e.target.value });
@@ -60,7 +60,7 @@ const ProfileSetupStep = ({
     if (!successMessage) return;
     
     setTimeout(() => {
-      navigate('/perfil');
+      setLocation('/perfil');
     }, 3000);
   };
 

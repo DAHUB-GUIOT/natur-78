@@ -1,191 +1,77 @@
+import { apiRequest } from '@/lib/queryClient';
 
-import { supabase } from '@/integrations/supabase/client';
-import { CategoryType } from '@/components/registration/RegistrationForm';
-
-interface BaseProfileData {
-  name: string;
-  email: string;
-  phone: string;
-  location: string;
-  website: string;
-  referral: string;
-  profile_bio: string;
-  interests_tags: string;
-  expertise: string;
-  user_category: string;
-  subcategory: string;
-}
-
-interface StartupData {
-  startup_name: string;
-  founding_year: string;
-  problem_solved: string;
-  startup_stage: string;
-  needs_visibility: boolean;
-  needs_marketplace: boolean;
-  needs_networking: boolean;
-  needs_funding: boolean;
-  needs_incubation: boolean;
-}
-
-interface SponsorData {
-  company_size: string;
-  budget: string;
-  sponsor_activities: boolean;
-  install_stand: boolean;
-  brand_exposure: boolean;
-  product_support: boolean;
-  proposal: string;
-}
-
-interface EcosystemEntityData {
-  org_type: string;
-  years_operating: string;
-  services_offered: string;
-  certifications: string;
-  wants_seal: boolean;
-}
-
-interface AttendeeData {
-  occupation: string;
-  interest_ecotourism: boolean;
-  interest_community_tourism: boolean;
-  interest_cultural_tourism: boolean;
-  interest_slow_travel: boolean;
-  interest_workshops: boolean;
-  expectations: string;
-}
+export type CategoryType = 'startup' | 'investor' | 'mentor' | 'ecosystem';
 
 export const createUserProfile = async (
-  userId: string,
+  userId: number,
   formData: any,
   category: CategoryType,
-  subcategory: string
+  subcategory?: string
 ) => {
   try {
-    // Map common profile data
-    const profileData: BaseProfileData = {
-      name: formData.name,
-      email: formData.email,
-      phone: formData.phone || null,
-      location: formData.location,
-      website: formData.website || null,
-      referral: formData.referral,
-      profile_bio: formData.profileBio || "",
-      interests_tags: formData.interestsTags || "",
-      expertise: formData.expertise || null,
-      user_category: category,
-      subcategory: subcategory,
+    // Map form data to our new schema
+    const profileData = {
+      userId,
+      fullName: formData.name || formData.fullName,
+      userCategory: category,
+      subcategory: subcategory || formData.subcategory,
+      
+      // Contact info
+      phone: formData.phone,
+      whatsapp: formData.whatsapp,
+      website: formData.website,
+      linkedin: formData.linkedin,
+      
+      // Profile content
+      bio: formData.profileBio || formData.bio,
+      description: formData.description,
+      
+      // Location
+      country: formData.country,
+      city: formData.city || formData.location,
+      
+      // Startup specific
+      startupName: formData.startupName,
+      foundingYear: formData.foundingYear ? parseInt(formData.foundingYear) : undefined,
+      stage: formData.startupStage || formData.stage,
+      sector: formData.sector,
+      teamSize: formData.teamSize ? parseInt(formData.teamSize) : undefined,
+      fundingNeeded: formData.fundingNeeded,
+      currentRevenue: formData.currentRevenue,
+      
+      // Investor specific
+      investmentFocus: formData.investmentFocus || [],
+      investmentRange: formData.investmentRange,
+      portfolioSize: formData.portfolioSize ? parseInt(formData.portfolioSize) : undefined,
+      
+      // Mentor specific
+      expertise: formData.expertise || [],
+      experience: formData.experience,
+      mentorshipType: formData.mentorshipType || [],
+      
+      // Support and skills
+      supportNeeded: formData.supportNeeded,
+      supportOffered: formData.supportOffered,
+      skills: formData.skills || [],
+      interests: formData.interestsTags?.split(',').map((tag: string) => tag.trim()) || formData.interests || [],
+      
+      // Profile settings
+      isPublic: formData.isPublic !== false,
     };
-    
-    // Insert profile data
-    const { data: profileData_, error: profileError } = await supabase
-      .from('profiles')
-      .insert([
-        {
-          id: userId,
-          ...profileData
-        }
-      ]);
 
-    if (profileError) throw profileError;
+    const response = await apiRequest('/api/profiles', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(profileData),
+    });
 
-    // Insert category-specific data
-    switch(category) {
-      case 'startup':
-        const startupData: StartupData = {
-          startup_name: formData.startupName || "",
-          founding_year: formData.foundingYear || "",
-          problem_solved: formData.problemSolved || "",
-          startup_stage: formData.startupStage || "",
-          needs_visibility: formData.supportNeeded?.visibility || false,
-          needs_marketplace: formData.supportNeeded?.marketplace || false,
-          needs_networking: formData.supportNeeded?.networking || false,
-          needs_funding: formData.supportNeeded?.funding || false,
-          needs_incubation: formData.supportNeeded?.incubation || false,
-        };
-
-        const { error: startupError } = await supabase
-          .from('startups')
-          .insert([
-            {
-              id: userId,
-              ...startupData
-            }
-          ]);
-
-        if (startupError) throw startupError;
-        break;
-
-      case 'sponsor':
-        const sponsorData: SponsorData = {
-          company_size: formData.companySize || "",
-          budget: formData.budget || "",
-          sponsor_activities: formData.participationType?.sponsorActivities || false,
-          install_stand: formData.participationType?.installStand || false,
-          brand_exposure: formData.participationType?.brandExposure || false,
-          product_support: formData.participationType?.productSupport || false,
-          proposal: formData.proposal || "",
-        };
-
-        const { error: sponsorError } = await supabase
-          .from('sponsors')
-          .insert([
-            {
-              id: userId,
-              ...sponsorData
-            }
-          ]);
-
-        if (sponsorError) throw sponsorError;
-        break;
-
-      case 'ecosystem':
-        const ecosystemData: EcosystemEntityData = {
-          org_type: formData.orgType || "",
-          years_operating: formData.yearsOperating || "",
-          services_offered: formData.servicesOffered || "",
-          certifications: formData.certifications || "",
-          wants_seal: formData.wantsSeal || false,
-        };
-
-        const { error: ecosystemError } = await supabase
-          .from('ecosystem_entities')
-          .insert([
-            {
-              id: userId,
-              ...ecosystemData
-            }
-          ]);
-
-        if (ecosystemError) throw ecosystemError;
-        break;
-
-      case 'attendee':
-        const attendeeData: AttendeeData = {
-          occupation: formData.occupation || "",
-          interest_ecotourism: formData.interests?.ecotourism || false,
-          interest_community_tourism: formData.interests?.communityTourism || false,
-          interest_cultural_tourism: formData.interests?.culturalTourism || false,
-          interest_slow_travel: formData.interests?.slowTravel || false,
-          interest_workshops: formData.interests?.workshops || false,
-          expectations: formData.expectations || "",
-        };
-
-        const { error: attendeeError } = await supabase
-          .from('attendees')
-          .insert([
-            {
-              id: userId,
-              ...attendeeData
-            }
-          ]);
-
-        if (attendeeError) throw attendeeError;
-        break;
+    if (!response.ok) {
+      throw new Error('Failed to create profile');
     }
 
-    return { success: true };
+    return await response.json();
 
   } catch (error) {
     console.error("Error creating user profile:", error);
@@ -193,84 +79,18 @@ export const createUserProfile = async (
   }
 };
 
-export const getUserProfile = async (userId: string) => {
+export const getUserProfile = async (userId: number) => {
   try {
-    // Get base profile data
-    const { data: profileData, error: profileError } = await supabase
-      .from('profiles')
-      .select('*')
-      .eq('id', userId)
-      .single();
-
-    if (profileError) throw profileError;
-
-    let categoryData = null;
+    const response = await apiRequest(`/api/profiles/${userId}`);
     
-    // Get category-specific data
-    if (profileData) {
-      switch(profileData.user_category) {
-        case 'startup':
-          const { data: startupData, error: startupError } = await supabase
-            .from('startups')
-            .select('*')
-            .eq('id', userId)
-            .single();
-
-          if (startupError && !startupError.message.includes('No rows found')) {
-            throw startupError;
-          }
-          
-          categoryData = startupData;
-          break;
-
-        case 'sponsor':
-          const { data: sponsorData, error: sponsorError } = await supabase
-            .from('sponsors')
-            .select('*')
-            .eq('id', userId)
-            .single();
-
-          if (sponsorError && !sponsorError.message.includes('No rows found')) {
-            throw sponsorError;
-          }
-          
-          categoryData = sponsorData;
-          break;
-
-        case 'ecosystem':
-          const { data: ecosystemData, error: ecosystemError } = await supabase
-            .from('ecosystem_entities')
-            .select('*')
-            .eq('id', userId)
-            .single();
-
-          if (ecosystemError && !ecosystemError.message.includes('No rows found')) {
-            throw ecosystemError;
-          }
-          
-          categoryData = ecosystemData;
-          break;
-
-        case 'attendee':
-          const { data: attendeeData, error: attendeeError } = await supabase
-            .from('attendees')
-            .select('*')
-            .eq('id', userId)
-            .single();
-
-          if (attendeeError && !attendeeError.message.includes('No rows found')) {
-            throw attendeeError;
-          }
-          
-          categoryData = attendeeData;
-          break;
+    if (!response.ok) {
+      if (response.status === 404) {
+        return null;
       }
+      throw new Error('Failed to fetch profile');
     }
 
-    return {
-      profile: profileData,
-      categoryData
-    };
+    return await response.json();
     
   } catch (error) {
     console.error("Error fetching user profile:", error);
@@ -278,45 +98,33 @@ export const getUserProfile = async (userId: string) => {
   }
 };
 
-export const updateProfileImage = async (userId: string, file: File, type: 'profile' | 'cover') => {
+export const updateUserProfile = async (userId: number, updateData: any) => {
   try {
-    const fileExt = file.name.split('.').pop();
-    const fileName = `${userId}/${type}_image.${fileExt}`;
-    const filePath = `${fileName}`;
+    const response = await apiRequest(`/api/profiles/${userId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updateData),
+    });
 
-    // Upload the image to storage
-    const { data: uploadData, error: uploadError } = await supabase
-      .storage
-      .from('profiles')
-      .upload(filePath, file, {
-        cacheControl: '3600',
-        upsert: true
-      });
+    if (!response.ok) {
+      throw new Error('Failed to update profile');
+    }
 
-    if (uploadError) throw uploadError;
+    return await response.json();
 
-    // Get the public URL
-    const { data: { publicUrl } } = supabase
-      .storage
-      .from('profiles')
-      .getPublicUrl(filePath);
-
-    // Update the profile with the new image URL
-    const updateData = type === 'profile' 
-      ? { profile_image_url: publicUrl } 
-      : { cover_image_url: publicUrl };
-
-    const { error: updateError } = await supabase
-      .from('profiles')
-      .update(updateData)
-      .eq('id', userId);
-
-    if (updateError) throw updateError;
-
-    return { publicUrl };
-    
   } catch (error) {
-    console.error(`Error updating ${type} image:`, error);
+    console.error("Error updating user profile:", error);
     throw error;
   }
+};
+
+// Note: File upload functionality would need to be implemented separately
+// as we don't have storage setup in this migration
+export const updateProfileImage = async (userId: number, file: File, type: 'profile' | 'cover') => {
+  // This would require implementing file upload endpoints and storage
+  // For now, return a placeholder response
+  console.warn("Profile image upload not implemented yet in new backend");
+  return { url: null };
 };

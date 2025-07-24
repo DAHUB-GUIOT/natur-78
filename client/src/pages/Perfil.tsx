@@ -9,18 +9,18 @@ import { PersonalInfoCard } from "@/components/profile/PersonalInfoCard";
 import { ModernActivityTimeline } from "@/components/profile/ModernActivityTimeline";
 import { ContentTab } from "@/components/profile/ContentTab";
 import { useAuth } from "@/contexts/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useLocation } from "wouter";
 
 const Perfil = () => {
   const [activeTab, setActiveTab] = useState("overview");
   const { user, loading } = useAuth();
-  const navigate = useNavigate();
+  const [, setLocation] = useLocation();
   
   useEffect(() => {
     if (!loading && !user) {
-      navigate('/registro');
+      setLocation('/registro');
     }
-  }, [user, loading, navigate]);
+  }, [user, loading, setLocation]);
 
   if (loading) {
     return (
@@ -38,7 +38,7 @@ const Perfil = () => {
         <div className="text-center py-12">
           <h2 className="text-2xl font-gasoek text-[#EDFF60] mb-4">Acceso restringido</h2>
           <p className="text-[#FCF8EE] mb-6">Necesitas iniciar sesión para ver tu perfil</p>
-          <Button onClick={() => navigate('/registro')} className="bg-[#EDFF60] text-[#222408] hover:bg-[#CEDD9F]">
+          <Button onClick={() => setLocation('/registro')} className="bg-[#EDFF60] text-[#222408] hover:bg-[#CEDD9F]">
             Registrarse
           </Button>
         </div>

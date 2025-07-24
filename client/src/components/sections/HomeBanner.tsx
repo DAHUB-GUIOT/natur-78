@@ -2,9 +2,8 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Rocket, Save, Lightbulb, LineChart, Globe, DollarSign, Star, Award, TrendingUp } from 'lucide-react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'wouter';
 import { useToast } from "@/components/ui/use-toast";
-import { Link } from 'react-router-dom';
 
 interface HomeBannerProps {
   subcategory?: string;

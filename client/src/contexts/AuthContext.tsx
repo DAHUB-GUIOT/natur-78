@@ -1,12 +1,15 @@
 
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
-import { User, Session } from '@supabase/supabase-js';
-import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/components/ui/use-toast';
+import { apiRequest } from '@/lib/queryClient';
+
+interface User {
+  id: string;
+  email: string;
+}
 
 interface AuthContextType {
   user: User | null;
-  session: Session | null;
   loading: boolean;
   signUp: (email: string, password: string) => Promise<any>;
   signIn: (email: string, password: string) => Promise<any>;
@@ -17,48 +20,39 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
 
   useEffect(() => {
-    // Set up auth state listener FIRST
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, newSession) => {
-        setSession(newSession);
-        setUser(newSession?.user ?? null);
-        
-        if (event === 'SIGNED_IN') {
-          toast({
-            title: "¡Bienvenido!",
-            description: "Has iniciado sesión correctamente",
-          });
-        }
-        
-        if (event === 'SIGNED_OUT') {
-          toast({
-            title: "Sesión cerrada",
-            description: "Has cerrado sesión correctamente",
-          });
-        }
+    // Check for existing session in localStorage
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      try {
+        setUser(JSON.parse(storedUser));
+      } catch (error) {
+        localStorage.removeItem('user');
       }
-    );
-
-    // THEN check for existing session
-    supabase.auth.getSession().then(({ data: { session: currentSession } }) => {
-      setSession(currentSession);
-      setUser(currentSession?.user ?? null);
-      setLoading(false);
-    });
-
-    return () => {
-      subscription.unsubscribe();
-    };
-  }, [toast]);
+    }
+    setLoading(false);
+  }, []);
 
   const signUp = async (email: string, password: string) => {
     try {
-      return await supabase.auth.signUp({ email, password });
+      const response = await apiRequest('/api/auth/signup', {
+        method: 'POST',
+        body: JSON.stringify({ email, password }),
+      });
+      
+      if (response.user) {
+        setUser(response.user);
+        localStorage.setItem('user', JSON.stringify(response.user));
+        toast({
+          title: "¡Bienvenido!",
+          description: "Te has registrado correctamente",
+        });
+      }
+      
+      return response;
     } catch (error) {
       console.error('Error signing up:', error);
       throw error;
@@ -67,7 +61,21 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const signIn = async (email: string, password: string) => {
     try {
-      return await supabase.auth.signInWithPassword({ email, password });
+      const response = await apiRequest('/api/auth/signin', {
+        method: 'POST',
+        body: JSON.stringify({ email, password }),
+      });
+      
+      if (response.user) {
+        setUser(response.user);
+        localStorage.setItem('user', JSON.stringify(response.user));
+        toast({
+          title: "¡Bienvenido!",
+          description: "Has iniciado sesión correctamente",
+        });
+      }
+      
+      return response;
     } catch (error) {
       console.error('Error signing in:', error);
       throw error;
@@ -75,11 +83,21 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const signOut = async () => {
-    await supabase.auth.signOut();
+    try {
+      setUser(null);
+      localStorage.removeItem('user');
+      toast({
+        title: "Sesión cerrada",
+        description: "Has cerrado sesión correctamente",
+      });
+    } catch (error) {
+      console.error('Error signing out:', error);
+      throw error;
+    }
   };
 
   return (
-    <AuthContext.Provider value={{ user, session, loading, signUp, signIn, signOut }}>
+    <AuthContext.Provider value={{ user, loading, signUp, signIn, signOut }}>
       {children}
     </AuthContext.Provider>
   );

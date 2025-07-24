@@ -28,7 +28,7 @@ import PersonalInfoStep from "./steps/PersonalInfoStep";
 import AdditionalInfoStep from "./steps/AdditionalInfoStep";
 import ConsentStep from "./steps/ConsentStep";
 import ProfileSetupStep from "./steps/ProfileSetupStep";
-import { useNavigate } from "react-router-dom";
+import { useLocation } from "wouter";
 import { useToast } from "@/components/ui/use-toast";
 import RegistrationAuth from "../auth/RegistrationAuth";
 import { createUserProfile } from "@/services/profileService";
@@ -41,7 +41,7 @@ const RegistrationForm = () => {
   const [selectedCategory, setSelectedCategory] = useState<CategoryType | "">("");
   const [selectedSubcategory, setSelectedSubcategory] = useState("");
   const { toast } = useToast();
-  const navigate = useNavigate();
+  const [, setLocation] = useLocation();
   
   // Updated initial form data
   const [formData, setFormData] = useState({
@@ -168,7 +168,7 @@ const RegistrationForm = () => {
         
         // After a short delay, redirect to profile page
         setTimeout(() => {
-          navigate('/perfil');
+          setLocation('/perfil');
         }, 3000);
       } else {
         throw new Error("No se pudo obtener el ID de usuario");

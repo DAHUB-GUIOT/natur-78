@@ -99,6 +99,13 @@
     @apply font-bold text-primary;
   }
 
+  .font-gasoek {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-weight: 100;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+  }
+
   h2 {
     @apply font-gasoek font-thin tracking-[4px] uppercase;
     letter-spacing: 4px;

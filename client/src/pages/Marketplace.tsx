@@ -23,7 +23,7 @@ const Marketplace = () => {
       if (categoryFilters.includes(value)) {
         return {
           ...prevFilters,
-          [category]: categoryFilters.filter(filter => filter !== value)
+          [category]: categoryFilters.filter(filter => filter !== value) as string[]
         };
       } else {
         return {

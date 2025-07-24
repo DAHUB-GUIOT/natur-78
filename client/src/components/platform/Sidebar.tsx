@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation } from "wouter";
 import { Home, Calendar, Users, GraduationCap, ShoppingCart, Edit, User, Settings, Menu, Award, Heart, Rocket, Briefcase, LineChart, Star, Building } from "lucide-react";
 import { Sidebar as ShadcnSidebar, SidebarContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarTrigger } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
@@ -80,8 +80,8 @@ interface SidebarProps {
 }
 
 export const Sidebar = ({ userType }: SidebarProps) => {
-  const location = useLocation();
-  const currentPath = location.pathname;
+  const [location] = useLocation();
+  const currentPath = location;
   const isMobile = useIsMobile();
   const [userCategory, setUserCategory] = useState<string | null>(userType);
   const [userSubcategory, setUserSubcategory] = useState<string | null>(null);

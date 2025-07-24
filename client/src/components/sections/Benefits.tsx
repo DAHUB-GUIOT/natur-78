@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link } from "wouter";
 export function Benefits() {
   const benefits = [{
     icon: "https://cdn.builder.io/api/v1/image/assets/TEMP/c69e9adba6c070477cebd9fa2a2d900202f74818?placeholderIfAbsent=true",

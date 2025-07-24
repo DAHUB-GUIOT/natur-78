@@ -12,7 +12,7 @@ import {
   Building, 
   Award 
 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link } from "wouter";
 import { Drawer, DrawerContent, DrawerClose } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";

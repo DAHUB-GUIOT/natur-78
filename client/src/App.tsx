@@ -3,7 +3,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Router, Route, Switch } from "wouter";
 import { MainLayout } from "./components/layout/MainLayout";
 import Index from "./pages/Index";
 import Register from "./pages/Register";
@@ -33,27 +33,53 @@ const App = () => (
       <TooltipProvider>
         <Toaster />
         <Sonner />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/registro" element={<Register />} />
-            <Route path="/reserva" element={<Reservation />} />
-            <Route path="/plataforma" element={<MainLayout>{<Platform />}</MainLayout>} />
-            <Route path="/agenda" element={<MainLayout>{<Agenda />}</MainLayout>} />
-            <Route path="/networking" element={<MainLayout>{<Networking />}</MainLayout>} />
-            <Route path="/educacion" element={<MainLayout>{<Educacion />}</MainLayout>} />
-            <Route path="/marketplace" element={<MainLayout>{<Marketplace />}</MainLayout>} />
-            <Route path="/experiencias" element={<MainLayout>{<Experiencias />}</MainLayout>} />
-            <Route path="/fundraiser" element={<MainLayout>{<Fundraiser />}</MainLayout>} />
-            <Route path="/perfil" element={<MainLayout>{<Perfil />}</MainLayout>} />
-            <Route path="/perfil/:username" element={<MainLayout>{<PublicProfile />}</MainLayout>} />
-            <Route path="/admin" element={<MainLayout>{<Admin />}</MainLayout>} />
-            <Route path="/heart" element={<MainLayout>{<Heart />}</MainLayout>} />
-            <Route path="/acceleradora" element={<MainLayout>{<Acceleradora />}</MainLayout>} />
-            <Route path="/startups" element={<MainLayout>{<StartupDirectory />}</MainLayout>} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
+        <Router>
+          <Switch>
+            <Route path="/" component={Index} />
+            <Route path="/registro" component={Register} />
+            <Route path="/reserva" component={Reservation} />
+            <Route path="/plataforma">
+              <MainLayout><Platform /></MainLayout>
+            </Route>
+            <Route path="/agenda">
+              <MainLayout><Agenda /></MainLayout>
+            </Route>
+            <Route path="/networking">
+              <MainLayout><Networking /></MainLayout>
+            </Route>
+            <Route path="/educacion">
+              <MainLayout><Educacion /></MainLayout>
+            </Route>
+            <Route path="/marketplace">
+              <MainLayout><Marketplace /></MainLayout>
+            </Route>
+            <Route path="/experiencias">
+              <MainLayout><Experiencias /></MainLayout>
+            </Route>
+            <Route path="/fundraiser">
+              <MainLayout><Fundraiser /></MainLayout>
+            </Route>
+            <Route path="/perfil">
+              <MainLayout><Perfil /></MainLayout>
+            </Route>
+            <Route path="/perfil/:username">
+              <MainLayout><PublicProfile /></MainLayout>
+            </Route>
+            <Route path="/admin">
+              <MainLayout><Admin /></MainLayout>
+            </Route>
+            <Route path="/heart">
+              <MainLayout><Heart /></MainLayout>
+            </Route>
+            <Route path="/acceleradora">
+              <MainLayout><Acceleradora /></MainLayout>
+            </Route>
+            <Route path="/startups">
+              <MainLayout><StartupDirectory /></MainLayout>
+            </Route>
+            <Route><NotFound /></Route>
+          </Switch>
+        </Router>
       </TooltipProvider>
     </AuthProvider>
   </QueryClientProvider>

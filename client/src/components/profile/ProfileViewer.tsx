@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { ProfileHeader, UserCategory } from './ProfileHeader';
+import ProfileHeader, { UserCategory } from './ProfileHeader';
 import { ProfileStatsCard } from './ProfileStatsCard';
 import { PersonalInfoCard } from './PersonalInfoCard';
 import { BadgesCard } from './BadgesCard';

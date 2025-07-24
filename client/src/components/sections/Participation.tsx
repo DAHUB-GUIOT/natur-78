@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link } from "wouter";
 const PARTICIPANTS = ["Agencias y operadores", "Hoteles y hostales", "Emprendimientos de turismo comunitario o local", "Guías turísticos", "Proyectos, fundaciones y organizaciones", "Empresas comprometidos con la sostenibilidad", "Instituciones gubernamentales y atractivos turísticos", "Restaurantes con proposito", "Startups"];
 export function Participation() {
   return <section className="w-full px-3 sm:px-6 md:px-20 py-10 md:py-[100px] lg:py-[131px] flex justify-center items-center font-jakarta bg-[#191c0f]">

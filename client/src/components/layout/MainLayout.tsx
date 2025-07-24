@@ -10,7 +10,7 @@ import {
 import { Menu } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button";
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'wouter';
 import { useAuth } from '@/contexts/AuthContext';
 import LoginForm from '../auth/LoginForm';
 
@@ -21,12 +21,12 @@ interface MainLayoutProps {
 export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { user } = useAuth();
-  const navigate = useNavigate();
+  const [location, setLocation] = useLocation();
   const [showLogin, setShowLogin] = useState(false);
 
   useEffect(() => {
     setIsMenuOpen(false);
-  }, [navigate]);
+  }, [location]);
 
   return (
     <div className="min-h-screen bg-[#222408] text-[#FCF8EE]">

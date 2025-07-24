@@ -2,7 +2,7 @@
 import React from "react";
 import { Globe, LogIn, UserPlus } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { Link } from "wouter";
 
 export function TopButtons() {
   return (

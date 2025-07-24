@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams } from 'wouter';
 import { ProfileViewer } from '@/components/profile/ProfileViewer';
 import { UserCategory } from '@/components/profile/ProfileHeader';
 import { useToast } from '@/components/ui/use-toast';
