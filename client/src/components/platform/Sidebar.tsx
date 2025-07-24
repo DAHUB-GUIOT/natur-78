@@ -9,8 +9,12 @@ import { HoverCard, HoverCardTrigger, HoverCardContent } from "@/components/ui/h
 
 // Define navigation items outside component to prevent re-creation on render
 const getNavigationItems = (userType: string | null, userSubcategory: string | null) => [{
+  icon: Heart,
+  text: "Corazón NATUR",
+  path: "/heart"
+}, {
   icon: Home,
-  text: "Inicio",
+  text: "Plataforma",
   path: "/plataforma"
 }, {
   icon: Calendar,
@@ -36,10 +40,6 @@ const getNavigationItems = (userType: string | null, userSubcategory: string | n
   icon: Award,
   text: "Recaudación",
   path: "/fundraiser"
-}, {
-  icon: Heart,
-  text: "Corazón",
-  path: "/heart"
 }, {
   icon: Building,
   text: "Startups",

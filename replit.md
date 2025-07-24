@@ -8,6 +8,18 @@ This is a full-stack web application for Festival NATUR (www.festivalnatur.com),
 
 ## Recent Changes
 
+- ✅ **January 24, 2025**: Navigation and subscription improvements
+  - **NEW**: Added "Corazón NATUR" module before Platform in navigation menu
+  - **NEW**: Added free subscription plan ($0/mes) with basic features
+  - Enhanced user experience with clearer navigation hierarchy
+  - Updated sidebar and main navigation to prioritize Heart module
+
+- ✅ **January 24, 2025**: Registration system completed and working
+  - Fixed authentication endpoints and error handling
+  - Corrected database integration for user profiles
+  - Implemented proper redirect flow from registration to profile page
+  - System fully functional for user onboarding
+
 - ✅ **January 24, 2025**: Security vulnerability patch applied
   - **CRITICAL**: Upgraded Vite from ^5.4.14 to ^5.4.15 to fix CVE-2025-30208
   - Security patch verified working, application tested and confirmed operational

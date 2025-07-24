@@ -65,6 +65,9 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
                 </SheetHeader>
                 <div className="py-4">
                   <Button variant="ghost" className="w-full justify-start text-base hover:bg-transparent text-[#FCF8EE] hover:text-[#EDFF60]" asChild>
+                    <Link to="/heart">💚 Corazón NATUR</Link>
+                  </Button>
+                  <Button variant="ghost" className="w-full justify-start text-base hover:bg-transparent text-[#FCF8EE] hover:text-[#EDFF60]" asChild>
                     <Link to="/plataforma">Plataforma</Link>
                   </Button>
                   <Button variant="ghost" className="w-full justify-start text-base hover:bg-transparent text-[#FCF8EE] hover:text-[#EDFF60]" asChild>

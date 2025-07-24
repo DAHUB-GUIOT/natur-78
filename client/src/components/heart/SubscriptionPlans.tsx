@@ -46,7 +46,46 @@ export const SubscriptionPlans = ({
           </div>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {/* Plan 0: Gratuito */}
+          <Card className="overflow-hidden hover:shadow-lg transition-all border-2 border-gray-200 hover:border-green-200">
+            <CardHeader className="bg-gray-50 pb-6">
+              <div className="flex justify-center mb-4">
+                <div className="bg-gray-100 p-3 rounded-full">
+                  <Heart className="h-6 w-6 text-gray-600" />
+                </div>
+              </div>
+              <CardTitle className="text-center text-xl mb-1">Gratuito</CardTitle>
+              <div className="text-center">
+                <span className="text-3xl font-bold">$0</span>
+                <span className="text-sm text-muted-foreground">/mes</span>
+              </div>
+            </CardHeader>
+            <CardContent className="pt-6">
+              <ul className="space-y-2 mb-6">
+                <li className="flex items-center text-sm">
+                  <div className="w-2 h-2 rounded-full bg-gray-500 mr-2"></div>
+                  Registro en la plataforma
+                </li>
+                <li className="flex items-center text-sm">
+                  <div className="w-2 h-2 rounded-full bg-gray-500 mr-2"></div>
+                  Acceso a contenido básico
+                </li>
+                <li className="flex items-center text-sm">
+                  <div className="w-2 h-2 rounded-full bg-gray-500 mr-2"></div>
+                  Newsletter ocasional
+                </li>
+              </ul>
+              <Button 
+                className="w-full" 
+                variant="outline"
+                onClick={() => handleSubscribe("gratuito")}
+              >
+                Empezar Gratis
+              </Button>
+            </CardContent>
+          </Card>
+
           {/* Plan 1: Colaborador */}
           <Card className="overflow-hidden hover:shadow-lg transition-all border-2 border-transparent hover:border-green-200">
             <CardHeader className="bg-green-50 pb-6">
