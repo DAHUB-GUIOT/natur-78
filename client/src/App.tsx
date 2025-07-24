@@ -53,6 +53,18 @@ const App = () => (
             </Route>
             <Route path="/dashboard" component={Dashboard} />
             <Route path="/mapa" component={MapaPublicoOptimized} />
+            <Route path="/plataforma">
+              <MainLayout><Platform /></MainLayout>
+            </Route>
+            <Route path="/agenda">
+              <MainLayout><Agenda /></MainLayout>
+            </Route>
+            <Route path="/educacion">
+              <MainLayout><Educacion /></MainLayout>
+            </Route>
+            <Route path="/marketplace">
+              <MainLayout><Marketplace /></MainLayout>
+            </Route>
             <Route><NotFound /></Route>
           </Switch>
         </Router>

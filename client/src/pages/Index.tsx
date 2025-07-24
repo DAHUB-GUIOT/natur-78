@@ -20,7 +20,7 @@ const Index = () => {
       anchor.addEventListener('click', function (e) {
         e.preventDefault();
         
-        const targetId = (this as HTMLAnchorElement).getAttribute('href')?.substring(1);
+        const targetId = (anchor as HTMLAnchorElement).getAttribute('href')?.substring(1);
         if (!targetId) return;
         
         const targetElement = document.getElementById(targetId);
