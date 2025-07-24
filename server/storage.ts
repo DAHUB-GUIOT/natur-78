@@ -92,7 +92,37 @@ export class MemStorage implements IStorage {
       ...insertProfile,
       id,
       createdAt: new Date(),
-      updatedAt: new Date()
+      updatedAt: new Date(),
+      // Set defaults for required fields not provided in insertProfile
+      fullName: insertProfile.fullName ?? null,
+      subcategory: insertProfile.subcategory ?? null,
+      phone: insertProfile.phone ?? null,
+      whatsapp: insertProfile.whatsapp ?? null,
+      website: insertProfile.website ?? null,
+      linkedin: insertProfile.linkedin ?? null,
+      bio: insertProfile.bio ?? null,
+      description: insertProfile.description ?? null,
+      startupName: insertProfile.startupName ?? null,
+      foundingYear: insertProfile.foundingYear ?? null,
+      stage: insertProfile.stage ?? null,
+      sector: insertProfile.sector ?? null,
+      teamSize: insertProfile.teamSize ?? null,
+      fundingNeeded: insertProfile.fundingNeeded ?? null,
+      currentRevenue: insertProfile.currentRevenue ?? null,
+      investmentFocus: insertProfile.investmentFocus ?? null,
+      investmentRange: insertProfile.investmentRange ?? null,
+      portfolioSize: insertProfile.portfolioSize ?? null,
+      expertise: insertProfile.expertise ?? null,
+      experience: insertProfile.experience ?? null,
+      mentorshipType: insertProfile.mentorshipType ?? null,
+      supportNeeded: insertProfile.supportNeeded ?? null,
+      supportOffered: insertProfile.supportOffered ?? null,
+      skills: insertProfile.skills ?? null,
+      interests: insertProfile.interests ?? null,
+      country: insertProfile.country ?? null,
+      city: insertProfile.city ?? null,
+      isProfileComplete: insertProfile.isProfileComplete ?? false,
+      isPublic: insertProfile.isPublic ?? true
     };
     this.userProfiles.set(id, profile);
     return profile;
@@ -126,7 +156,26 @@ export class DatabaseStorage implements IStorage {
     return result[0];
   }
 
+  async getUserByGoogleId(googleId: string): Promise<User | undefined> {
+    const result = await db.select().from(users).where(eq(users.googleId, googleId)).limit(1);
+    return result[0];
+  }
+
   async createUser(insertUser: InsertUser): Promise<User> {
+    const result = await db.insert(users).values(insertUser).returning();
+    return result[0];
+  }
+
+  async createGoogleUser(userData: any): Promise<User> {
+    const insertUser: InsertUser = {
+      email: userData.email,
+      password: undefined,
+      googleId: userData.googleId,
+      firstName: userData.firstName,
+      lastName: userData.lastName,
+      profilePicture: userData.profilePicture,
+      authProvider: "google"
+    };
     const result = await db.insert(users).values(insertUser).returning();
     return result[0];
   }

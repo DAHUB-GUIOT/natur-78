@@ -74,11 +74,17 @@ export const userProfiles = pgTable("user_profiles", {
 });
 
 // Schemas for validation
-export const insertUserSchema = createInsertSchema(users).pick({
-  email: true,
-  password: true,
+export const insertUserSchema = createInsertSchema(users).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
 }).extend({
   password: z.string().optional(), // Make password optional for OAuth users
+  googleId: z.string().optional().nullable(),
+  firstName: z.string().optional().nullable(),
+  lastName: z.string().optional().nullable(),
+  profilePicture: z.string().optional().nullable(),
+  authProvider: z.string().default("local"),
 });
 
 export const insertGoogleUserSchema = createInsertSchema(users).pick({

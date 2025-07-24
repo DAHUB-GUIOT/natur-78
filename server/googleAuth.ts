@@ -3,10 +3,16 @@ import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import { storage } from './storage';
 
 export function setupGoogleAuth() {
+  // Only setup Google OAuth if credentials are available
+  if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
+    console.log('Google OAuth credentials not found, skipping Google authentication setup');
+    return;
+  }
+
   // Google OAuth Strategy
   passport.use(new GoogleStrategy({
-    clientID: process.env.GOOGLE_CLIENT_ID!,
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     callbackURL: "/api/auth/google/callback"
   },
   async (accessToken, refreshToken, profile, done) => {
