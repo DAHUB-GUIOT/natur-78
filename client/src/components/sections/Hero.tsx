@@ -43,12 +43,12 @@ export function Hero() {
       <div className="relative z-10 flex items-center min-h-screen px-6 sm:px-8 md:px-20">
         <div className="max-w-7xl mx-auto w-full">
           {/* Main Title */}
-          <h1 className="text-7xl sm:text-8xl md:text-9xl lg:text-[10rem] xl:text-[12rem] font-black text-emerald-300 mb-6 font-gasoek tracking-wider leading-none">
+          <h1 className="text-7xl sm:text-8xl md:text-9xl lg:text-[10rem] xl:text-[12rem] font-black text-emerald-300 mb-6 font-gasoek tracking-wide leading-none">
             NATUR
           </h1>
           
           {/* Subtitle */}
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-8 max-w-3xl leading-tight">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-8 max-w-3xl leading-tight font-jakarta">
             Todo sobre turismo sostenible
             <br />
             <span className="text-emerald-300">y más</span>
