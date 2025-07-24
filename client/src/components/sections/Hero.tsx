@@ -18,21 +18,39 @@ export function Hero() {
       {/* Gradient Overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-emerald-800/60"></div>
       
-      {/* Top Navigation */}
-      <nav className="absolute top-0 left-0 right-0 z-50 p-6">
-        <div className="flex items-center justify-between max-w-7xl mx-auto">
+      {/* Top Navigation - Fixed with Glassmorphism */}
+      <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-white/10 border-b border-white/20">
+        <div className="flex items-center justify-between max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center space-x-4">
             <div className="w-10 h-10 bg-emerald-600 rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-lg">N</span>
             </div>
           </div>
           
-          {/* Top Right Actions */}
+          {/* Portal Buttons in Top Menu */}
           <div className="flex items-center space-x-4">
-            <Button variant="ghost" size="sm" className="text-emerald-300 hover:bg-emerald-600/20">
+            <Link to="/auth/empresas">
+              <Button 
+                size="sm" 
+                className="bg-black hover:bg-gray-800 text-white font-medium px-4 py-2 rounded-full"
+              >
+                Portal Empresas
+              </Button>
+            </Link>
+            
+            <Link to="/auth/consentidos">
+              <Button 
+                size="sm" 
+                className="bg-green-600 hover:bg-green-700 text-white font-medium px-4 py-2 rounded-full"
+              >
+                Con-Sentidos
+              </Button>
+            </Link>
+            
+            <Button variant="ghost" size="sm" className="text-white hover:bg-white/20">
               <User className="w-5 h-5" />
             </Button>
-            <Button variant="ghost" size="sm" className="text-emerald-300 hover:bg-emerald-600/20">
+            <Button variant="ghost" size="sm" className="text-white hover:bg-white/20">
               <Menu className="w-5 h-5" />
             </Button>
           </div>
@@ -40,7 +58,7 @@ export function Hero() {
       </nav>
       
       {/* Main Content */}
-      <div className="relative z-10 flex items-center justify-center min-h-screen px-4">
+      <div className="relative z-10 flex items-center justify-center min-h-screen px-4 pt-20">
         <div className="max-w-4xl mx-auto text-center">
           {/* Main Title */}
           <h1 className="text-6xl md:text-8xl font-bold text-green-800 mb-6 font-gasoek tracking-wide">
@@ -55,36 +73,37 @@ export function Hero() {
             Conectamos emprendedores, viajeros e inversores para crear experiencias de turismo consciente y regenerativo
           </p>
           
-          {/* Portal Buttons */}
-          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-12">
-            <Link to="/auth/empresas">
+          {/* Main Action Buttons */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <Link to="/tickets">
               <Button 
                 size="lg" 
-                className="bg-black hover:bg-gray-800 text-white font-bold text-xl px-12 py-6 rounded-full shadow-2xl transform hover:scale-105 transition-all duration-300"
+                className="bg-green-600 hover:bg-green-700 text-white font-bold text-lg px-8 py-4 rounded-lg shadow-xl flex items-center justify-center w-full sm:w-auto min-w-[180px]"
               >
-                Portal Empresas
+                <Ticket className="w-6 h-6 mr-3" />
+                TICKETS
               </Button>
             </Link>
             
-            <Link to="/auth/consentidos">
+            <Link to="/agenda">
               <Button 
                 size="lg" 
-                className="bg-green-600 hover:bg-green-700 text-white font-bold text-xl px-12 py-6 rounded-full shadow-2xl transform hover:scale-105 transition-all duration-300"
+                variant="outline"
+                className="border-2 border-white text-white hover:bg-white hover:text-green-800 font-bold text-lg px-8 py-4 rounded-lg backdrop-blur-sm flex items-center justify-center w-full sm:w-auto min-w-[180px]"
               >
-                Con-Sentidos
+                <Calendar className="w-6 h-6 mr-3" />
+                AGENDA
               </Button>
             </Link>
-          </div>
-          
-          {/* Quick Access */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            
             <Link to="/mapa">
               <Button 
-                variant="outline" 
-                size="lg"
-                className="border-2 border-green-600 text-green-700 hover:bg-green-50 font-medium text-lg px-8 py-4"
+                size="lg" 
+                variant="outline"
+                className="border-2 border-white text-white hover:bg-white hover:text-green-800 font-bold text-lg px-8 py-4 rounded-lg backdrop-blur-sm flex items-center justify-center w-full sm:w-auto min-w-[180px]"
               >
-                Explorar Experiencias
+                <Calendar className="w-6 h-6 mr-3" />
+                EXPERIENCIAS
               </Button>
             </Link>
           </div>

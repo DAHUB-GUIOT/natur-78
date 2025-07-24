@@ -10,16 +10,16 @@ This is a full-stack web application for Festival NATUR (www.festivalnatur.com),
 
 ## Recent Changes
 
-- ✅ **January 24, 2025**: BIME-Style Landing Page Redesign
+- ✅ **January 24, 2025**: BIME-Style Landing Page with Fixed Navigation Redesign
   - **NEW**: Redesigned Hero.tsx with BIME event-style layout inspired by attached design reference
-  - **NEW**: Implemented massive bold "NATUR" title overlay on full-screen event photo background
-  - **NEW**: Added prominent search bar in top navigation with green styling and backdrop blur
-  - **NEW**: Created event-style action buttons: "PORTAL EMPRESAS" and "EXPERIENCIAS" 
-  - **NEW**: Added top navigation with user icons and menu buttons
+  - **NEW**: Implemented fixed top navigation with glassmorphism effect (backdrop-blur-md bg-white/10)
+  - **NEW**: Moved Portal Empresas and Con-Sentidos buttons to top right navigation menu
+  - **NEW**: Added three main action buttons in center: TICKETS, AGENDA, and EXPERIENCIAS
+  - **NEW**: Restored original NATUR font styling and green color scheme (green-800 title, green-700 subtitle)
+  - **NEW**: Removed search bar for cleaner design and changed to organic emerald accent colors
   - **NEW**: Implemented gradient overlays for better text readability over background image
-  - **NEW**: Used green color scheme with modern typography and event-style button design
-  - **NEW**: Added secondary "Con-Sentidos" link for travelers below main action buttons
-  - **NEW**: Full-screen immersive design matching modern event website aesthetics
+  - **NEW**: Maintained full-screen immersive design with proper spacing for fixed header
+  - **NEW**: Used original font-gasoek for title and proper button styling with icons
 
 - ✅ **January 24, 2025**: Portal Empresas Modern Dashboard Implementation
   - **NEW**: Created PortalEmpresasDashboard.tsx with clean, modern design inspired by Notion/Airbnb/LinkedIn
