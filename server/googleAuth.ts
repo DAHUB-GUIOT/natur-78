@@ -13,10 +13,18 @@ export function setupGoogleAuth(app: Express) {
     return;
   }
 
+  const domain = process.env.REPLIT_DOMAINS?.split(',')[0] || 'localhost:5000';
+  const callbackURL = domain.includes('localhost') 
+    ? `http://${domain}/api/auth/google/callback`
+    : `https://${domain}/api/auth/google/callback`;
+
+  console.log(`Google OAuth Callback URL: ${callbackURL}`);
+  console.log(`Add this URL to your Google Cloud Console authorized redirect URIs: ${callbackURL}`);
+
   passport.use(new GoogleStrategy({
     clientID: clientId,
     clientSecret: clientSecret,
-    callbackURL: "/api/auth/google/callback"
+    callbackURL: callbackURL
   },
   async (accessToken, refreshToken, profile, done) => {
     try {
