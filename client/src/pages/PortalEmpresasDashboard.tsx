@@ -538,9 +538,8 @@ const PortalEmpresasDashboard = () => {
       {/* Full-screen map as background for all pages */}
       <InteractiveMap />
       
-      {/* Top green bar - only for non-map pages */}
-      {activeSection !== "mapa" && (
-        <header className="absolute top-0 left-0 right-0 bg-green-600 border-b border-green-700 shadow-lg px-6 py-4 z-40 backdrop-blur-md bg-green-600/95">
+      {/* Top green bar for all pages */}
+      <header className="absolute top-0 left-0 right-0 bg-green-600 border-b border-green-700 shadow-lg px-6 py-4 z-40 backdrop-blur-md bg-green-600/95">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <div className="flex items-center space-x-2">
@@ -601,10 +600,9 @@ const PortalEmpresasDashboard = () => {
             </div>
           </div>
         </header>
-      )}
 
       {/* Floating glassmorphism sidebar for all pages */}
-      <div className={`absolute ${activeSection === "mapa" ? "top-6" : "top-24"} left-6 z-50 w-64 backdrop-blur-xl bg-black/20 border border-white/30 rounded-2xl shadow-2xl`}>
+      <div className="absolute top-24 left-6 z-50 w-64 backdrop-blur-xl bg-black/20 border border-white/30 rounded-2xl shadow-2xl">
         <div className="p-6 border-b border-white/20">
           <div className="flex items-center space-x-3">
             <div className="w-8 h-8 bg-gradient-to-br from-green-400 to-green-600 rounded-xl flex items-center justify-center shadow-lg">
