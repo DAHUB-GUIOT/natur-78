@@ -472,16 +472,7 @@ const PortalEmpresasDashboard = () => {
   };
 
   return (
-    <div 
-      className="min-h-screen bg-gray-50"
-      style={{
-        backgroundImage: "url('/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg')",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-        backgroundAttachment: "fixed"
-      }}
-    >
+    <div className="min-h-screen bg-gray-50">
       {/* Top Bar */}
       <header className="bg-white border-b border-gray-200 px-6 py-4 sticky top-0 z-40">
         <div className="flex items-center justify-between">
