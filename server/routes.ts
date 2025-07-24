@@ -277,6 +277,30 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Google OAuth routes
+  if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
+    app.get('/api/auth/google',
+      passport.authenticate('google', { scope: ['profile', 'email'] })
+    );
+
+    app.get('/api/auth/google/callback',
+      passport.authenticate('google', { failureRedirect: '/auth/empresas' }),
+      async (req, res) => {
+        try {
+          // Set session for authenticated user
+          if (req.user) {
+            req.session.userId = (req.user as any).id;
+          }
+          // Successful authentication
+          res.redirect('/portal-empresas');
+        } catch (error) {
+          console.error('Google callback error:', error);
+          res.redirect('/auth/empresas?error=auth_failed');
+        }
+      }
+    );
+  }
+
   const httpServer = createServer(app);
 
   return httpServer;

@@ -10,7 +10,7 @@ This is a full-stack web application for Festival NATUR (www.festivalnatur.com),
 
 ## Recent Changes
 
-- ✅ **January 24, 2025**: Complete Experience Upload System for Portal Empresas
+- ✅ **January 24, 2025**: Complete Experience Management System with UI/UX Enhancements
   - **NEW**: Created comprehensive ExperienceForm.tsx with 6-step wizard based on detailed requirements
   - **NEW**: Added experiences database table with all required fields from attached specifications
   - **NEW**: Implemented full CRUD API endpoints for experience management (/api/experiences)
@@ -18,6 +18,11 @@ This is a full-stack web application for Festival NATUR (www.festivalnatur.com),
   - **NEW**: Form includes all fields: pricing by age groups, languages, accessibility, policies, etc.
   - **NEW**: Integrated form with Portal Empresas dashboard with floating action buttons
   - **NEW**: Added proper validation, loading states, and success/error handling
+  - **NEW**: Created ExperienceDetail.tsx page for individual experience viewing
+  - **NEW**: Added Link navigation from experience cards to detail pages (/experiencia/:id)
+  - **NEW**: Enhanced statistics dashboard with sales metrics and performance indicators
+  - **NEW**: Implemented Google OAuth login integration for Portal Empresas authentication
+  - **NEW**: Added comprehensive sales tracking and experience performance analytics
   - **NEW**: Companies can now upload detailed experiences with professional tour operator requirements
   - **NEW**: Form supports complex pricing structures, operational details, and passenger data requirements
 

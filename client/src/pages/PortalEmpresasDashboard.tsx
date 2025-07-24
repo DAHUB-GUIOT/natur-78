@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { 
   Home, 
   Map, 
@@ -38,11 +39,18 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { InteractiveMap } from "@/components/dashboard/InteractiveMap";
 import ExperienceForm from "@/components/dashboard/ExperienceForm";
+import { Link } from "wouter";
 
 const PortalEmpresasDashboard = () => {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [activeSection, setActiveSection] = useState("mapa");
   const [showExperienceForm, setShowExperienceForm] = useState(false);
+
+  // Fetch experiences data
+  const { data: experiences = [], isLoading: experiencesLoading } = useQuery({
+    queryKey: ['/api/experiences'],
+    retry: false,
+  });
 
   const sidebarItems = [
     { id: "mapa", label: "Mapa", icon: Map },
@@ -53,52 +61,7 @@ const PortalEmpresasDashboard = () => {
     { id: "ajustes", label: "Ajustes", icon: Settings },
   ];
 
-  const experiences = [
-    {
-      id: 1,
-      title: "Tour de Café Sostenible",
-      subtitle: "Descubre el proceso del café de la montaña",
-      image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg",
-      location: "Eje Cafetero, Colombia",
-      category: "Gastronomía",
-      price: 85000,
-      date: "2025-02-15",
-      time: "09:00",
-      duration: "4 horas",
-      language: "Español/Inglés",
-      capacity: 12,
-      rating: 4.8,
-      reviews: 127,
-      host: "Finca El Paraíso",
-      hostAvatar: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg",
-      tags: ["Ecológica", "Educativa"],
-      isAccessible: true,
-      isPetFriendly: false,
-      isEcoFriendly: true
-    },
-    {
-      id: 2,
-      title: "Caminata Nocturna en la Selva",
-      subtitle: "Aventura única para descubrir la vida nocturna",
-      image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg",
-      location: "Amazonas, Colombia",
-      category: "Aventura",
-      price: 120000,
-      date: "2025-02-20",
-      time: "18:00",
-      duration: "3 horas",
-      language: "Español",
-      capacity: 8,
-      rating: 4.9,
-      reviews: 89,
-      host: "EcoGuías Amazonas",
-      hostAvatar: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg",
-      tags: ["Aventura", "Nocturna"],
-      isAccessible: false,
-      isPetFriendly: false,
-      isEcoFriendly: true
-    }
-  ];
+
 
   const companies = [
     {
@@ -235,7 +198,7 @@ const PortalEmpresasDashboard = () => {
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
-              {experiences.map((experience) => (
+              {(experiences as any[]).map((experience: any) => (
                 <Card key={experience.id} className="backdrop-blur-xl bg-white/10 border border-white/30 hover:bg-white/20 transition-all duration-200 overflow-hidden">
                   <div className="relative">
                     <img 
@@ -284,7 +247,7 @@ const PortalEmpresasDashboard = () => {
                       
                       <div className="flex items-center justify-between">
                         <div className="flex space-x-1">
-                          {experience.tags.slice(0, 2).map((tag) => (
+                          {experience.tags?.slice(0, 2).map((tag: string) => (
                             <Badge key={tag} className="bg-white/20 text-white text-xs backdrop-blur-md px-1 py-0">
                               {tag}
                             </Badge>
@@ -298,7 +261,9 @@ const PortalEmpresasDashboard = () => {
                       </div>
                       
                       <div className="flex space-x-1 pt-1">
-                        <Button size="sm" className="flex-1 bg-green-600 hover:bg-green-700 text-white text-xs h-6">Ver</Button>
+                        <Link href={`/experiencia/${experience.id}`} className="flex-1">
+                          <Button size="sm" className="w-full bg-green-600 hover:bg-green-700 text-white text-xs h-6">Ver</Button>
+                        </Link>
                         <Button size="sm" variant="outline" className="border-white/30 text-white hover:bg-white/20 h-6 w-6 p-0">
                           <Edit className="w-3 h-3" />
                         </Button>
