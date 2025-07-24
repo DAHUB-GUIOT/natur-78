@@ -230,12 +230,20 @@ const ConSentidosRegister = () => {
                     </Button>
                   </Link>
                   
-                  <Button
-                    type="submit"
-                    className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 text-lg font-medium"
-                  >
-                    Unirme a Con-Sentidos
-                  </Button>
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    <Button
+                      variant="outline"
+                      className="border-green-200 text-green-700 hover:bg-green-50"
+                    >
+                      Ya tengo cuenta - Iniciar sesión
+                    </Button>
+                    <Button
+                      type="submit"
+                      className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 text-lg font-medium"
+                    >
+                      Registrarme en Con-Sentidos
+                    </Button>
+                  </div>
                 </div>
               </div>
             </form>
