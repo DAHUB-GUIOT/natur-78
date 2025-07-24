@@ -5,7 +5,7 @@ import type { Express } from 'express';
 
 export function setupGoogleAuth(app: Express) {
   // Only setup if credentials are available
-  const clientId = process.env.GOOGLE_CLIENT_ID || '10396090422-ttmfc1n33sfq35522k6tmeod9b1s6gnc.apps.googleusercontent.com';
+  const clientId = process.env.GOOGLE_CLIENT_ID || '10396090422-35f3hnacnisnua1uaak8cmrkg0r3ivpe.apps.googleusercontent.com';
   const clientSecret = process.env.GOOGLE_CLIENT_SECRET || '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';
   
   if (!clientId || !clientSecret) {
