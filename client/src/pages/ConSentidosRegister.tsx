@@ -53,8 +53,8 @@ const ConSentidosRegister = () => {
       {/* Light Gradient Overlay */}
       <div className="absolute inset-0 bg-black/20"></div>
       
-      {/* Top Navigation - Fixed with Glassmorphism (same as Hero) */}
-      <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-white/10 border-b border-white/20">
+      {/* Top Navigation - Fixed with Green Background */}
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-green-600 border-b border-green-700 shadow-lg">
         <div className="flex items-center justify-between max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center space-x-4">
             <span className="font-bold text-2xl font-gasoek" style={{ color: '#EDFF60' }}>N</span>
