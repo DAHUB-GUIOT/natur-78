@@ -22,8 +22,8 @@ export function Hero() {
       <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-white/10 border-b border-white/20">
         <div className="flex items-center justify-between max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center space-x-4">
-            <div className="w-10 h-10 bg-emerald-600 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-lg">N</span>
+            <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#EDFF60' }}>
+              <span className="text-black font-bold text-lg">N</span>
             </div>
           </div>
           
@@ -33,7 +33,8 @@ export function Hero() {
               <Button 
                 size="sm" 
                 variant="outline"
-                className="bg-transparent border-2 border-white hover:bg-white/20 text-white font-medium px-4 py-2 rounded-full backdrop-blur-sm"
+                className="bg-transparent border-2 text-black font-medium px-4 py-2 rounded-full backdrop-blur-sm hover:opacity-90"
+                style={{ borderColor: '#EDFF60', color: '#EDFF60' }}
               >
                 Portal Empresas
               </Button>
@@ -43,7 +44,8 @@ export function Hero() {
               <Button 
                 size="sm" 
                 variant="outline"
-                className="bg-transparent border-2 border-white hover:bg-white/20 text-white font-medium px-4 py-2 rounded-full backdrop-blur-sm"
+                className="bg-transparent border-2 text-black font-medium px-4 py-2 rounded-full backdrop-blur-sm hover:opacity-90"
+                style={{ borderColor: '#EDFF60', color: '#EDFF60' }}
               >
                 Con-Sentidos
               </Button>
