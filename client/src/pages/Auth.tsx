@@ -104,39 +104,46 @@ const Auth = ({ type }: AuthProps) => {
     <div className="min-h-screen bg-white">
       <HeaderButtons showPortalButtons={false} />
       
+      {/* Hero Banner */}
+      <div className="relative bg-gradient-to-r from-black/70 to-green-900/70 text-white">
+        <img 
+          src="/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
+          alt="Authentication"
+          className="absolute inset-0 w-full h-full object-cover -z-10"
+        />
+        <div className="relative z-10 container mx-auto px-4 py-16 text-center">
+          <div className="flex items-center justify-center mb-6">
+            <div className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center shadow-2xl">
+              <IconComponent className="w-10 h-10 text-white" />
+            </div>
+          </div>
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 font-gasoek tracking-wide drop-shadow-2xl">
+            {currentConfig.title.toUpperCase()}
+          </h1>
+          <p className="text-lg md:text-xl text-white max-w-2xl mx-auto font-medium drop-shadow-lg">
+            {currentConfig.subtitle}
+          </p>
+        </div>
+      </div>
+      
       <div className="container mx-auto px-4 py-16 max-w-md">
         {/* Back button */}
-        <div className="mb-6">
+        <div className="mb-8">
           <Link to="/">
-            <Button variant="ghost" className="text-gray-600 hover:text-gray-800">
+            <Button variant="ghost" className="text-black hover:text-green-800 font-bold">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Volver al inicio
             </Button>
           </Link>
         </div>
 
-        {/* Header */}
-        <div className="text-center mb-8">
-          <div className="flex items-center justify-center mb-4">
-            <div className={`w-16 h-16 ${currentConfig.bgColor} rounded-full flex items-center justify-center`}>
-              <IconComponent className={`w-8 h-8 ${currentConfig.iconColor}`} />
-            </div>
-          </div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            {currentConfig.title}
-          </h1>
-          <p className="text-gray-600 text-sm">
-            {currentConfig.subtitle}
-          </p>
-        </div>
-
         {/* Auth Form */}
-        <Card className={`shadow-lg ${currentConfig.borderColor}`}>
-          <CardHeader className={`${currentConfig.bgColor} ${currentConfig.borderColor} border-b`}>
+        <Card className="shadow-2xl border-2 border-green-500 bg-white">
+          <CardHeader className="bg-gradient-to-r from-green-600 to-green-700 border-b-2 border-green-500">
             <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as 'login' | 'register')}>
-              <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="login">Iniciar Sesión</TabsTrigger>
-                <TabsTrigger value="register">Registrarse</TabsTrigger>
+              <TabsList className="grid w-full grid-cols-2 bg-white/20">
+                <TabsTrigger value="login" className="text-white font-bold data-[state=active]:bg-white data-[state=active]:text-green-700">Iniciar Sesión</TabsTrigger>
+                <TabsTrigger value="register" className="text-white font-bold data-[state=active]:bg-white data-[state=active]:text-green-700">Registrarse</TabsTrigger>
               </TabsList>
             </Tabs>
           </CardHeader>
@@ -146,36 +153,36 @@ const Auth = ({ type }: AuthProps) => {
               {/* Login Tab */}
               <TabsContent value="login">
                 <form onSubmit={handleLogin} className="space-y-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="login-email" className="text-gray-700 font-medium">
+                  <div className="space-y-3">
+                    <Label htmlFor="login-email" className="text-black font-bold text-lg">
                       Correo electrónico
                     </Label>
                     <div className="relative">
-                      <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                      <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 text-green-600 w-5 h-5" />
                       <Input
                         id="login-email"
                         type="email"
                         value={loginData.email}
                         onChange={(e) => setLoginData(prev => ({ ...prev, email: e.target.value }))}
-                        className={`pl-10 border-gray-200 ${currentConfig.focusColor}`}
+                        className="pl-12 border-2 border-green-600 focus:border-green-700 focus:ring-green-600 text-black font-medium text-lg p-4"
                         placeholder="tu@email.com"
                         required
                       />
                     </div>
                   </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="login-password" className="text-gray-700 font-medium">
+                  <div className="space-y-3">
+                    <Label htmlFor="login-password" className="text-black font-bold text-lg">
                       Contraseña
                     </Label>
                     <div className="relative">
-                      <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                      <Lock className="absolute left-4 top-1/2 transform -translate-y-1/2 text-green-600 w-5 h-5" />
                       <Input
                         id="login-password"
                         type="password"
                         value={loginData.password}
                         onChange={(e) => setLoginData(prev => ({ ...prev, password: e.target.value }))}
-                        className={`pl-10 border-gray-200 ${currentConfig.focusColor}`}
+                        className="pl-12 border-2 border-green-600 focus:border-green-700 focus:ring-green-600 text-black font-medium text-lg p-4"
                         placeholder="••••••••"
                         required
                       />
@@ -190,7 +197,7 @@ const Auth = ({ type }: AuthProps) => {
 
                   <Button
                     type="submit"
-                    className={`w-full ${currentConfig.buttonColor} text-white py-3 font-medium`}
+                    className="w-full bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white py-4 font-bold text-lg shadow-xl"
                   >
                     Iniciar Sesión
                   </Button>

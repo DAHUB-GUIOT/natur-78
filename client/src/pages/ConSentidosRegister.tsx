@@ -40,50 +40,58 @@ const ConSentidosRegister = () => {
     <div className="min-h-screen bg-white">
       <HeaderButtons showPortalButtons={false} />
       
-      <div className="container mx-auto px-4 py-16 max-w-4xl">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <div className="flex items-center justify-center mb-6">
-            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center">
-              <Heart className="w-8 h-8 text-green-600" />
+      {/* Hero Banner with Background Image */}
+      <div className="relative bg-gradient-to-r from-green-900/80 to-black/70 text-white">
+        <img 
+          src="/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
+          alt="Conscious Travel"
+          className="absolute inset-0 w-full h-full object-cover -z-10"
+        />
+        <div className="relative z-10 container mx-auto px-4 py-24 text-center">
+          <div className="flex items-center justify-center mb-8">
+            <div className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center shadow-2xl">
+              <Heart className="w-10 h-10 text-white" />
             </div>
           </div>
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">
-            Únete a Con-Sentidos
+          <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 font-gasoek tracking-wide drop-shadow-2xl">
+            CON-SENTIDOS
           </h1>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <p className="text-xl md:text-2xl text-white max-w-3xl mx-auto font-medium drop-shadow-lg">
             Conecta con experiencias de turismo sostenible y descubre Colombia de manera consciente
           </p>
         </div>
+      </div>
+      
+      <div className="container mx-auto px-4 py-16 max-w-4xl">
 
         {/* Registration Form */}
-        <Card className="shadow-lg border-green-100">
-          <CardHeader className="bg-green-50 border-b border-green-100">
-            <CardTitle className="text-2xl text-gray-900 flex items-center">
-              <MapPin className="w-6 h-6 mr-3 text-green-600" />
-              Registro de Viajero
+        <Card className="shadow-2xl border-2 border-green-500 bg-white">
+          <CardHeader className="bg-gradient-to-r from-green-600 to-green-700 border-b-2 border-green-500">
+            <CardTitle className="text-3xl text-white flex items-center font-bold">
+              <MapPin className="w-8 h-8 mr-4 text-white" />
+              Registro de Viajero Consciente
             </CardTitle>
           </CardHeader>
           
-          <CardContent className="p-8">
+          <CardContent className="p-8 bg-white">
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Personal Information */}
               <div className="grid md:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <Label htmlFor="name" className="text-gray-700 font-medium">
+                <div className="space-y-3">
+                  <Label htmlFor="name" className="text-black font-bold text-lg">
                     Nombre completo *
                   </Label>
                   <Input
                     id="name"
                     value={formData.name}
                     onChange={(e) => handleInputChange('name', e.target.value)}
-                    className="border-gray-200 focus:border-green-500 focus:ring-green-500"
+                    className="border-2 border-green-600 focus:border-green-700 focus:ring-green-600 text-black font-medium text-lg p-4"
                     required
                   />
                 </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="email" className="text-gray-700 font-medium">
+                <div className="space-y-3">
+                  <Label htmlFor="email" className="text-black font-bold text-lg">
                     Correo electrónico *
                   </Label>
                   <Input
@@ -91,7 +99,7 @@ const ConSentidosRegister = () => {
                     type="email"
                     value={formData.email}
                     onChange={(e) => handleInputChange('email', e.target.value)}
-                    className="border-gray-200 focus:border-green-500 focus:ring-green-500"
+                    className="border-2 border-green-600 focus:border-green-700 focus:ring-green-600 text-black font-medium text-lg p-4"
                     required
                   />
                 </div>

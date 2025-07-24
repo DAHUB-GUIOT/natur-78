@@ -14,47 +14,57 @@ const Register = () => {
     <div className="min-h-screen bg-white">
       <HeaderButtons showPortalButtons={false} />
       
-      <div className="container mx-auto px-4 py-16 max-w-4xl">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <div className="flex items-center justify-center mb-6">
-            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center">
-              <Building2 className="w-8 h-8 text-green-600" />
+      {/* Hero Banner with Background Image */}
+      <div className="relative bg-gradient-to-r from-black/70 to-green-900/70 text-white">
+        <img 
+          src="/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
+          alt="Sustainable Tourism"
+          className="absolute inset-0 w-full h-full object-cover -z-10"
+        />
+        <div className="relative z-10 container mx-auto px-4 py-24 text-center">
+          <div className="flex items-center justify-center mb-8">
+            <div className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center shadow-2xl">
+              <Building2 className="w-10 h-10 text-white" />
             </div>
           </div>
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">
-            Portal Empresas
+          <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 font-gasoek tracking-wide drop-shadow-2xl">
+            PORTAL EMPRESAS
           </h1>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <p className="text-xl md:text-2xl text-white max-w-3xl mx-auto font-medium drop-shadow-lg">
             Registra tu empresa o iniciativa de turismo sostenible y conecta con viajeros conscientes
           </p>
         </div>
-
+      </div>
+      
+      <div className="container mx-auto px-4 py-16 max-w-4xl">
         {/* Registration Card */}
-        <Card className="shadow-lg border-green-100">
-          <CardHeader className="bg-green-50 border-b border-green-100">
-            <CardTitle className="text-2xl text-gray-900 flex items-center">
-              <Building2 className="w-6 h-6 mr-3 text-green-600" />
+        <Card className="shadow-2xl border-2 border-green-500 bg-white">
+          <CardHeader className="bg-gradient-to-r from-green-600 to-green-700 border-b-2 border-green-500">
+            <CardTitle className="text-3xl text-white flex items-center font-bold">
+              <Building2 className="w-8 h-8 mr-4 text-white" />
               Registro de Empresa
             </CardTitle>
           </CardHeader>
           
-          <CardContent className="p-8">
+          <CardContent className="p-8 bg-white">
             <RegistrationForm />
           </CardContent>
         </Card>
 
         {/* Additional Info */}
-        <div className="text-center mt-8">
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+        <div className="text-center mt-12">
+          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
             <Link to="/auth/empresas">
-              <Button variant="outline" className="border-yellow-200 text-yellow-700 hover:bg-yellow-50">
+              <Button 
+                variant="outline" 
+                className="border-2 border-green-600 text-green-800 hover:bg-green-50 font-bold text-lg px-8 py-3"
+              >
                 Ya tengo cuenta - Iniciar sesión
               </Button>
             </Link>
-            <p className="text-gray-600 text-sm">
+            <p className="text-black text-lg font-medium">
               ¿Eres un viajero?{" "}
-              <Link to="/con-sentidos" className="text-green-600 hover:underline font-medium">
+              <Link to="/con-sentidos" className="text-green-700 hover:text-green-900 underline font-bold">
                 Únete a Con-Sentidos
               </Link>
             </p>

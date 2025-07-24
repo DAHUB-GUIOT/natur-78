@@ -10,58 +10,63 @@ interface CategoryStepProps {
 
 const CategoryStep = ({ onCategorySelect }: CategoryStepProps) => {
   return (
-    <div className="space-y-6">
-      <h2 className="text-2xl font-bold text-gray-900 text-center mb-8">
-        ¿Qué tipo de empresa o iniciativa tienes?
-      </h2>
+    <div className="space-y-8">
+      <div className="text-center bg-gradient-to-r from-green-600 to-green-700 text-white p-8 rounded-xl shadow-xl">
+        <h2 className="text-3xl md:text-4xl font-bold mb-4 font-gasoek tracking-wide">
+          ¿QUÉ TIPO DE EMPRESA TIENES?
+        </h2>
+        <p className="text-xl font-medium">
+          Selecciona la categoría que mejor describe tu organización
+        </p>
+      </div>
       
-      <div className="grid grid-cols-1 gap-4">
+      <div className="grid grid-cols-1 gap-6">
         <div 
-          className="p-6 border-2 border-gray-200 hover:border-green-400 bg-white hover:bg-green-50 rounded-lg cursor-pointer transition-all duration-300"
+          className="p-8 border-4 border-green-600 hover:border-green-800 bg-white hover:bg-green-50 rounded-xl cursor-pointer transition-all duration-300 shadow-lg hover:shadow-2xl"
           onClick={() => onCategorySelect("sponsor")}
         >
-          <div className="flex flex-col items-center text-center gap-4">
-            <div className="text-green-600 p-3 bg-green-100 rounded-full">
-              <Briefcase className="w-8 h-8" />
+          <div className="flex flex-col items-center text-center gap-6">
+            <div className="text-white p-6 bg-gradient-to-br from-green-600 to-green-700 rounded-full shadow-xl">
+              <Briefcase className="w-12 h-12" />
             </div>
-            <h3 className="text-gray-900 font-semibold text-xl">
+            <h3 className="text-black font-bold text-2xl">
               Empresa de Turismo Sostenible
             </h3>
-            <p className="text-gray-600 text-sm">
+            <p className="text-black text-lg font-medium">
               Ofrezco experiencias de ecoturismo, turismo rural o sostenible
             </p>
           </div>
         </div>
         
         <div 
-          className="p-6 border-2 border-gray-200 hover:border-green-400 bg-white hover:bg-green-50 rounded-lg cursor-pointer transition-all duration-300"
+          className="p-8 border-4 border-green-600 hover:border-green-800 bg-white hover:bg-green-50 rounded-xl cursor-pointer transition-all duration-300 shadow-lg hover:shadow-2xl"
           onClick={() => onCategorySelect("ecosystem")}
         >
-          <div className="flex flex-col items-center text-center gap-4">
-            <div className="text-green-600 p-3 bg-green-100 rounded-full">
-              <UserPlus className="w-8 h-8" />
+          <div className="flex flex-col items-center text-center gap-6">
+            <div className="text-white p-6 bg-gradient-to-br from-green-600 to-green-700 rounded-full shadow-xl">
+              <UserPlus className="w-12 h-12" />
             </div>
-            <h3 className="text-gray-900 font-semibold text-xl">
+            <h3 className="text-black font-bold text-2xl">
               Organización del Ecosistema
             </h3>
-            <p className="text-gray-600 text-sm">
+            <p className="text-black text-lg font-medium">
               NGO, agencia, operador o institución en turismo regenerativo
             </p>
           </div>
         </div>
         
         <div 
-          className="p-6 border-2 border-gray-200 hover:border-green-400 bg-white hover:bg-green-50 rounded-lg cursor-pointer transition-all duration-300"
+          className="p-8 border-4 border-green-600 hover:border-green-800 bg-white hover:bg-green-50 rounded-xl cursor-pointer transition-all duration-300 shadow-lg hover:shadow-2xl"
           onClick={() => onCategorySelect("startup")}
         >
-          <div className="flex flex-col items-center text-center gap-4">
-            <div className="text-green-600 p-3 bg-green-100 rounded-full">
-              <Rocket className="w-8 h-8" />
+          <div className="flex flex-col items-center text-center gap-6">
+            <div className="text-white p-6 bg-gradient-to-br from-green-600 to-green-700 rounded-full shadow-xl">
+              <Rocket className="w-12 h-12" />
             </div>
-            <h3 className="text-gray-900 font-semibold text-xl">
+            <h3 className="text-black font-bold text-2xl">
               Startup o Emprendimiento
             </h3>
-            <p className="text-gray-600 text-sm">
+            <p className="text-black text-lg font-medium">
               Tengo una startup innovadora con componente sostenible en turismo
             </p>
           </div>
