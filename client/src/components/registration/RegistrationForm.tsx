@@ -306,7 +306,7 @@ const RegistrationForm = () => {
         </div>
       </div>
 
-      <Card className="bg-white border-2 border-green-500 shadow-xl">
+      <Card className="bg-white border-2 shadow-xl" style={{ borderColor: '#EDFF60' }}>
         <CardContent className="pt-6">
           {renderStep()}
         </CardContent>
