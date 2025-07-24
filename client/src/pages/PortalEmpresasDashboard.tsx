@@ -126,59 +126,59 @@ const PortalEmpresasDashboard = () => {
       case "inicio":
         return (
           <div className="space-y-6">
-            {/* Stats Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            {/* Compact Stats Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
               <Card className="bg-white border border-gray-200 hover:shadow-md transition-shadow">
-                <CardContent className="p-6">
+                <CardContent className="p-3">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm text-gray-600 font-medium">Experiencias Activas</p>
-                      <p className="text-3xl font-bold text-gray-900">12</p>
+                      <p className="text-xs text-gray-600 font-medium">Experiencias Activas</p>
+                      <p className="text-xl font-bold text-gray-900">12</p>
                     </div>
-                    <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                      <Star className="w-6 h-6 text-blue-600" />
+                    <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                      <Star className="w-4 h-4 text-blue-600" />
                     </div>
                   </div>
                 </CardContent>
               </Card>
               
               <Card className="bg-white border border-gray-200 hover:shadow-md transition-shadow">
-                <CardContent className="p-6">
+                <CardContent className="p-3">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm text-gray-600 font-medium">Reservas del Mes</p>
-                      <p className="text-3xl font-bold text-gray-900">89</p>
+                      <p className="text-xs text-gray-600 font-medium">Reservas del Mes</p>
+                      <p className="text-xl font-bold text-gray-900">89</p>
                     </div>
-                    <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
-                      <Calendar className="w-6 h-6 text-green-600" />
+                    <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
+                      <Calendar className="w-4 h-4 text-green-600" />
                     </div>
                   </div>
                 </CardContent>
               </Card>
               
               <Card className="bg-white border border-gray-200 hover:shadow-md transition-shadow">
-                <CardContent className="p-6">
+                <CardContent className="p-3">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm text-gray-600 font-medium">Ingresos</p>
-                      <p className="text-3xl font-bold text-gray-900">$2.4M</p>
+                      <p className="text-xs text-gray-600 font-medium">Ingresos</p>
+                      <p className="text-xl font-bold text-gray-900">$2.4M</p>
                     </div>
-                    <div className="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
-                      <DollarSign className="w-6 h-6 text-yellow-600" />
+                    <div className="w-8 h-8 bg-yellow-100 rounded-lg flex items-center justify-center">
+                      <DollarSign className="w-4 h-4 text-yellow-600" />
                     </div>
                   </div>
                 </CardContent>
               </Card>
               
               <Card className="bg-white border border-gray-200 hover:shadow-md transition-shadow">
-                <CardContent className="p-6">
+                <CardContent className="p-3">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm text-gray-600 font-medium">Clientes Nuevos</p>
-                      <p className="text-3xl font-bold text-gray-900">24</p>
+                      <p className="text-xs text-gray-600 font-medium">Clientes Nuevos</p>
+                      <p className="text-xl font-bold text-gray-900">24</p>
                     </div>
-                    <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
-                      <Users className="w-6 h-6 text-purple-600" />
+                    <div className="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
+                      <Users className="w-4 h-4 text-purple-600" />
                     </div>
                   </div>
                 </CardContent>
@@ -219,84 +219,82 @@ const PortalEmpresasDashboard = () => {
 
       case "experiencias":
         return (
-          <div className="space-y-6">
+          <div className="space-y-4">
             <div className="flex justify-between items-center">
-              <h2 className="text-2xl font-bold text-white">Mis Experiencias</h2>
-              <Button className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white">
-                <Plus className="w-4 h-4 mr-2" />
-                Crear Experiencia
+              <h2 className="text-xl font-bold text-white">Mis Experiencias</h2>
+              <Button size="sm" className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white">
+                <Plus className="w-3 h-3 mr-1" />
+                Crear
               </Button>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
               {experiences.map((experience) => (
                 <Card key={experience.id} className="backdrop-blur-xl bg-white/10 border border-white/30 hover:bg-white/20 transition-all duration-200 overflow-hidden">
                   <div className="relative">
                     <img 
                       src={experience.image} 
                       alt={experience.title}
-                      className="w-full h-48 object-cover"
+                      className="w-full h-32 object-cover"
                     />
-                    <div className="absolute top-4 right-4 space-y-2">
-                      <Button size="sm" variant="secondary" className="w-8 h-8 p-0 bg-white/20 backdrop-blur-md text-white hover:bg-white/30">
-                        <Heart className="w-4 h-4" />
+                    <div className="absolute top-2 right-2 space-y-1">
+                      <Button size="sm" variant="secondary" className="w-6 h-6 p-0 bg-white/20 backdrop-blur-md text-white hover:bg-white/30">
+                        <Heart className="w-3 h-3" />
                       </Button>
-                      <Button size="sm" variant="secondary" className="w-8 h-8 p-0 bg-white/20 backdrop-blur-md text-white hover:bg-white/30">
-                        <Share className="w-4 h-4" />
+                      <Button size="sm" variant="secondary" className="w-6 h-6 p-0 bg-white/20 backdrop-blur-md text-white hover:bg-white/30">
+                        <Share className="w-3 h-3" />
                       </Button>
                     </div>
-                    <Badge className="absolute top-4 left-4 bg-green-600 text-white">
+                    <Badge className="absolute top-2 left-2 bg-green-600 text-white text-xs">
                       {experience.category}
                     </Badge>
                   </div>
                   
-                  <CardContent className="p-6">
-                    <div className="space-y-4">
+                  <CardContent className="p-3">
+                    <div className="space-y-2">
                       <div>
-                        <h3 className="font-semibold text-lg text-white mb-1">{experience.title}</h3>
-                        <p className="text-white/80 text-sm">{experience.subtitle}</p>
+                        <h3 className="font-semibold text-sm text-white mb-1">{experience.title}</h3>
+                        <p className="text-white/80 text-xs line-clamp-2">{experience.subtitle}</p>
                       </div>
                       
-                      <div className="flex items-center text-sm text-white/80">
-                        <MapPin className="w-4 h-4 mr-1" />
+                      <div className="flex items-center text-xs text-white/80">
+                        <MapPin className="w-3 h-3 mr-1" />
                         {experience.location}
                       </div>
                       
                       <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-2">
-                          <Avatar className="w-6 h-6">
+                        <div className="flex items-center space-x-1">
+                          <Avatar className="w-4 h-4">
                             <AvatarImage src={experience.hostAvatar} />
-                            <AvatarFallback className="bg-green-500 text-white">{experience.host[0]}</AvatarFallback>
+                            <AvatarFallback className="bg-green-500 text-white text-xs">{experience.host[0]}</AvatarFallback>
                           </Avatar>
-                          <span className="text-sm text-white/80">{experience.host}</span>
+                          <span className="text-xs text-white/80 truncate">{experience.host}</span>
                         </div>
                         <div className="flex items-center space-x-1">
-                          <Star className="w-4 h-4 text-yellow-400 fill-current" />
-                          <span className="text-sm font-medium text-white">{experience.rating}</span>
-                          <span className="text-sm text-white/70">({experience.reviews})</span>
+                          <Star className="w-3 h-3 text-yellow-400 fill-current" />
+                          <span className="text-xs font-medium text-white">{experience.rating}</span>
                         </div>
                       </div>
                       
                       <div className="flex items-center justify-between">
-                        <div className="flex space-x-2">
-                          {experience.tags.map((tag) => (
-                            <Badge key={tag} className="bg-white/20 text-white text-xs backdrop-blur-md">
+                        <div className="flex space-x-1">
+                          {experience.tags.slice(0, 2).map((tag) => (
+                            <Badge key={tag} className="bg-white/20 text-white text-xs backdrop-blur-md px-1 py-0">
                               {tag}
                             </Badge>
                           ))}
                         </div>
                         <div className="text-right">
-                          <p className="text-lg font-bold text-white">
+                          <p className="text-sm font-bold text-white">
                             ${experience.price.toLocaleString()}
                           </p>
-                          <p className="text-sm text-white/70">por persona</p>
                         </div>
                       </div>
                       
-                      <div className="flex space-x-2 pt-2">
-                        <Button size="sm" className="flex-1 bg-green-600 hover:bg-green-700 text-white">Ver más</Button>
-                        <Button size="sm" variant="outline" className="border-white/30 text-white hover:bg-white/20">
-                          <Edit className="w-4 h-4" />
+                      <div className="flex space-x-1 pt-1">
+                        <Button size="sm" className="flex-1 bg-green-600 hover:bg-green-700 text-white text-xs h-6">Ver</Button>
+                        <Button size="sm" variant="outline" className="border-white/30 text-white hover:bg-white/20 h-6 w-6 p-0">
+                          <Edit className="w-3 h-3" />
                         </Button>
                       </div>
                     </div>
@@ -526,47 +524,47 @@ const PortalEmpresasDashboard = () => {
           </div>
         </header>
         
-        {/* Floating glassmorphism sidebar for map view - optimized */}
-        <div className="absolute top-24 left-6 z-50 w-64 backdrop-blur-xl bg-black/20 border border-white/30 rounded-2xl shadow-2xl">
-          <div className="p-6 border-b border-white/20">
-            <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 bg-gradient-to-br from-green-400 to-green-600 rounded-xl flex items-center justify-center shadow-lg">
-                <span className="text-white font-bold text-sm">N</span>
+        {/* Compact glassmorphism sidebar for map view */}
+        <div className="absolute top-24 left-4 z-50 w-52 backdrop-blur-xl bg-black/20 border border-white/30 rounded-xl shadow-2xl">
+          <div className="p-3 border-b border-white/20">
+            <div className="flex items-center space-x-2">
+              <div className="w-6 h-6 bg-gradient-to-br from-green-400 to-green-600 rounded-lg flex items-center justify-center shadow-lg">
+                <span className="text-white font-bold text-xs">N</span>
               </div>
-              <span className="text-xl font-bold text-white tracking-wide">NATUR</span>
+              <span className="text-lg font-bold text-white tracking-wide">NATUR</span>
             </div>
-            <p className="text-white/70 text-sm mt-2">Portal Empresas</p>
+            <p className="text-white/70 text-xs mt-1">Portal Empresas</p>
           </div>
           
-          <nav className="p-4 space-y-1">
+          <nav className="p-2 space-y-0.5">
             {sidebarItems.map((item) => {
               const Icon = item.icon;
               return (
                 <button
                   key={item.id}
                   onClick={() => setActiveSection(item.id)}
-                  className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200 ${
+                  className={`w-full flex items-center space-x-2 px-3 py-2 rounded-lg transition-all duration-200 ${
                     activeSection === item.id 
                       ? 'bg-gradient-to-r from-green-500/30 to-green-400/30 text-white shadow-lg border border-green-400/30' 
                       : 'text-white/90 hover:bg-white/10 hover:text-white hover:shadow-md'
                   }`}
                 >
-                  <Icon className="w-5 h-5" />
-                  <span className="font-semibold text-sm">{item.label}</span>
+                  <Icon className="w-4 h-4" />
+                  <span className="font-medium text-xs">{item.label}</span>
                 </button>
               );
             })}
           </nav>
           
-          {/* User profile section */}
-          <div className="p-4 border-t border-white/20">
-            <div className="flex items-center space-x-3 px-4 py-3 rounded-xl bg-white/5">
-              <Avatar className="w-8 h-8 ring-2 ring-white/30">
+          {/* Compact user profile section */}
+          <div className="p-2 border-t border-white/20">
+            <div className="flex items-center space-x-2 px-3 py-2 rounded-lg bg-white/5">
+              <Avatar className="w-6 h-6 ring-1 ring-white/30">
                 <AvatarImage src="/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg" />
-                <AvatarFallback className="bg-green-500 text-white">U</AvatarFallback>
+                <AvatarFallback className="bg-green-500 text-white text-xs">U</AvatarFallback>
               </Avatar>
               <div className="flex-1 min-w-0">
-                <p className="text-white font-semibold text-sm truncate">Usuario</p>
+                <p className="text-white font-medium text-xs truncate">Usuario</p>
                 <p className="text-white/70 text-xs">Empresa</p>
               </div>
             </div>
@@ -646,57 +644,57 @@ const PortalEmpresasDashboard = () => {
           </div>
         </header>
 
-      {/* Floating glassmorphism sidebar for all pages */}
-      <div className="absolute top-24 left-6 z-50 w-64 backdrop-blur-xl bg-black/20 border border-white/30 rounded-2xl shadow-2xl">
-        <div className="p-6 border-b border-white/20">
-          <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 bg-gradient-to-br from-green-400 to-green-600 rounded-xl flex items-center justify-center shadow-lg">
-              <span className="text-white font-bold text-sm">N</span>
+      {/* Compact glassmorphism sidebar for all pages */}
+      <div className="absolute top-24 left-4 z-50 w-52 backdrop-blur-xl bg-black/20 border border-white/30 rounded-xl shadow-2xl">
+        <div className="p-3 border-b border-white/20">
+          <div className="flex items-center space-x-2">
+            <div className="w-6 h-6 bg-gradient-to-br from-green-400 to-green-600 rounded-lg flex items-center justify-center shadow-lg">
+              <span className="text-white font-bold text-xs">N</span>
             </div>
-            <span className="text-xl font-bold text-white tracking-wide">NATUR</span>
+            <span className="text-lg font-bold text-white tracking-wide">NATUR</span>
           </div>
-          <p className="text-white/70 text-sm mt-2">Portal Empresas</p>
+          <p className="text-white/70 text-xs mt-1">Portal Empresas</p>
         </div>
         
-        <nav className="p-4 space-y-1">
+        <nav className="p-2 space-y-0.5">
           {sidebarItems.map((item) => {
             const Icon = item.icon;
             return (
               <button
                 key={item.id}
                 onClick={() => setActiveSection(item.id)}
-                className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200 ${
+                className={`w-full flex items-center space-x-2 px-3 py-2 rounded-lg transition-all duration-200 ${
                   activeSection === item.id 
                     ? 'bg-gradient-to-r from-green-500/30 to-green-400/30 text-white shadow-lg border border-green-400/30' 
                     : 'text-white/90 hover:bg-white/10 hover:text-white hover:shadow-md'
                 }`}
               >
-                <Icon className="w-5 h-5" />
-                <span className="font-semibold text-sm">{item.label}</span>
+                <Icon className="w-4 h-4" />
+                <span className="font-medium text-xs">{item.label}</span>
               </button>
             );
           })}
         </nav>
         
-        {/* User profile section */}
-        <div className="p-4 border-t border-white/20">
-          <div className="flex items-center space-x-3 px-4 py-3 rounded-xl bg-white/5">
-            <Avatar className="w-8 h-8 ring-2 ring-white/30">
+        {/* Compact user profile section */}
+        <div className="p-2 border-t border-white/20">
+          <div className="flex items-center space-x-2 px-3 py-2 rounded-lg bg-white/5">
+            <Avatar className="w-6 h-6 ring-1 ring-white/30">
               <AvatarImage src="/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg" />
-              <AvatarFallback className="bg-green-500 text-white">U</AvatarFallback>
+              <AvatarFallback className="bg-green-500 text-white text-xs">U</AvatarFallback>
             </Avatar>
             <div className="flex-1 min-w-0">
-              <p className="text-white font-semibold text-sm truncate">Usuario</p>
+              <p className="text-white font-medium text-xs truncate">Usuario</p>
               <p className="text-white/70 text-xs">Empresa</p>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Main Content with glassmorphism background (except for map) */}
+      {/* Compact main content with glassmorphism background (except for map) */}
       {activeSection !== "mapa" && (
-        <main className="absolute top-24 left-80 right-6 bottom-6 z-40 backdrop-blur-xl bg-black/20 border border-white/30 rounded-2xl shadow-2xl overflow-hidden">
-          <div className="h-full overflow-y-auto p-8">
+        <main className="absolute top-24 left-60 right-4 bottom-4 z-40 backdrop-blur-xl bg-black/20 border border-white/30 rounded-xl shadow-2xl overflow-hidden">
+          <div className="h-full overflow-y-auto p-4">
             {renderContent()}
           </div>
         </main>
