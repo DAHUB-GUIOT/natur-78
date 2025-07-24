@@ -5,12 +5,13 @@ import type { Express } from 'express';
 
 export function setupGoogleAuth(app: Express) {
   // Check for Google OAuth credentials
-  const clientId = process.env.GOOGLE_CLIENT_ID;
+  const clientId = process.env.GOOGLE_CLIENT_ID || '10396090422-uk84om191tt2voentri7783kk7jnin1c.apps.googleusercontent.com';
   const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
   
   if (!clientId || !clientSecret) {
     console.log('Google OAuth credentials not found, skipping Google authentication setup');
-    console.log('To enable Google login, please provide GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET');
+    console.log('Current Client ID:', clientId || 'Not provided');
+    console.log('To enable Google login, please provide the Client Secret for this Client ID');
     return;
   }
 
