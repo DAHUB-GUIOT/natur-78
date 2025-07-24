@@ -64,45 +64,45 @@ export function Hero() {
         <div className="max-w-7xl w-full">
           <div className="max-w-3xl">
             {/* Main Title */}
-            <h1 className="text-7xl sm:text-8xl md:text-9xl lg:text-[10rem] xl:text-[12rem] font-black text-yellow-400 mb-4 font-gasoek tracking-wide leading-none">
+            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-yellow-400 mb-3 font-gasoek tracking-wide leading-none">
               NATUR
             </h1>
             
             {/* Subtitle */}
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-yellow-300 mb-8 leading-tight max-w-2xl">
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-yellow-300 mb-6 leading-tight max-w-xl">
               Todo sobre turismo sostenible
               <br />
               <span className="text-yellow-200">y más</span>
             </h2>
 
             {/* Main Action Buttons - Stacked vertically like BIME */}
-            <div className="flex flex-col gap-4 max-w-xs">
+            <div className="flex flex-col gap-3 max-w-xs">
               <Link to="/tickets">
                 <Button 
-                  size="lg" 
-                  className="bg-yellow-400 hover:bg-yellow-300 text-black font-bold text-lg px-8 py-4 rounded-lg shadow-xl flex items-center justify-center w-full"
+                  size="md" 
+                  className="bg-yellow-400 hover:bg-yellow-300 text-black font-bold text-sm px-6 py-3 rounded-lg shadow-lg flex items-center justify-center w-full"
                 >
-                  <Ticket className="w-6 h-6 mr-3" />
+                  <Ticket className="w-4 h-4 mr-2" />
                   TICKETS
                 </Button>
               </Link>
               
               <Link to="/agenda">
                 <Button 
-                  size="lg" 
-                  className="bg-white hover:bg-yellow-50 text-black font-bold text-lg px-8 py-4 rounded-lg shadow-xl flex items-center justify-center w-full"
+                  size="md" 
+                  className="bg-white hover:bg-yellow-50 text-black font-bold text-sm px-6 py-3 rounded-lg shadow-lg flex items-center justify-center w-full"
                 >
-                  <Calendar className="w-6 h-6 mr-3" />
+                  <Calendar className="w-4 h-4 mr-2" />
                   AGENDA
                 </Button>
               </Link>
               
               <Link to="/mapa">
                 <Button 
-                  size="lg" 
-                  className="bg-white hover:bg-yellow-50 text-black font-bold text-lg px-8 py-4 rounded-lg shadow-xl flex items-center justify-center w-full"
+                  size="md" 
+                  className="bg-white hover:bg-yellow-50 text-black font-bold text-sm px-6 py-3 rounded-lg shadow-lg flex items-center justify-center w-full"
                 >
-                  <Calendar className="w-6 h-6 mr-3" />
+                  <Calendar className="w-4 h-4 mr-2" />
                   EXPERIENCIAS
                 </Button>
               </Link>
