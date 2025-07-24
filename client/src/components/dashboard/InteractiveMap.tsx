@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import mapboxgl from 'mapbox-gl';
+import 'mapbox-gl/dist/mapbox-gl.css';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -12,7 +14,8 @@ import {
   Search,
   Globe,
   Zap,
-  Leaf
+  Leaf,
+  X
 } from "lucide-react";
 
 // Mock data para empresas
@@ -75,9 +78,12 @@ const companies = [
 ];
 
 export const InteractiveMap = () => {
+  const mapContainer = useRef<HTMLDivElement>(null);
+  const map = useRef<mapboxgl.Map | null>(null);
   const [selectedFilter, setSelectedFilter] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCompany, setSelectedCompany] = useState<any>(null);
+  const [showFilters, setShowFilters] = useState(false);
 
   const filteredCompanies = companies.filter(company => {
     const matchesFilter = selectedFilter === 'all' || company.type === selectedFilter;
@@ -85,6 +91,77 @@ export const InteractiveMap = () => {
                          company.description.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesFilter && matchesSearch;
   });
+
+  // Initialize map
+  useEffect(() => {
+    if (map.current) return; // Initialize map only once
+    
+    // Set the Mapbox access token
+    mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_PUBLIC_KEY || '';
+    
+    if (!mapboxgl.accessToken) {
+      console.warn('Mapbox access token not found. Please set VITE_MAPBOX_PUBLIC_KEY environment variable.');
+      return;
+    }
+
+    map.current = new mapboxgl.Map({
+      container: mapContainer.current!,
+      style: 'mapbox://styles/mapbox/light-v11',
+      center: [-74.0721, 4.7110], // Bogotá, Colombia
+      zoom: 4
+    });
+
+    // Add navigation controls
+    map.current.addControl(new mapboxgl.NavigationControl(), 'top-right');
+
+    return () => {
+      if (map.current) {
+        map.current.remove();
+        map.current = null;
+      }
+    };
+  }, []);
+
+  // Update markers when filtered companies change
+  useEffect(() => {
+    if (!map.current) return;
+
+    // Clear existing markers
+    const existingMarkers = document.querySelectorAll('.mapbox-marker');
+    existingMarkers.forEach(marker => marker.remove());
+
+    // Add markers for filtered companies
+    filteredCompanies.forEach((company) => {
+      const el = document.createElement('div');
+      el.className = 'mapbox-marker';
+      el.innerHTML = `
+        <div class="bg-white rounded-full p-2 shadow-lg border-2 border-green-500 cursor-pointer hover:scale-110 transition-transform">
+          ${getMarkerIcon(company.type)}
+        </div>
+      `;
+      
+      el.addEventListener('click', () => {
+        setSelectedCompany(company);
+      });
+
+      new mapboxgl.Marker(el)
+        .setLngLat([company.location.lng, company.location.lat])
+        .addTo(map.current!);
+    });
+  }, [filteredCompanies]);
+
+  const getMarkerIcon = (type: string) => {
+    switch (type) {
+      case 'startup':
+        return '<div class="w-4 h-4 text-blue-500">⚡</div>';
+      case 'investor':
+        return '<div class="w-4 h-4 text-green-500">🏢</div>';
+      case 'ecosystem':
+        return '<div class="w-4 h-4 text-emerald-500">🌱</div>';
+      default:
+        return '<div class="w-4 h-4 text-gray-500">🌐</div>';
+    }
+  };
 
   const getCompanyIcon = (type: string) => {
     switch (type) {
@@ -115,138 +192,123 @@ export const InteractiveMap = () => {
   };
 
   return (
-    <div className="p-6 h-full">
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900 mb-2">
-          Mapa Interactivo de Empresas
-        </h1>
-        <p className="text-gray-600">
-          Explora el ecosistema de empresas sostenibles en Latinoamérica
-        </p>
-      </div>
+    <div className="h-screen w-full relative">
+      {/* Full-screen Mapbox map */}
+      <div 
+        ref={mapContainer} 
+        className="absolute inset-0 w-full h-full"
+        style={{ background: '#f8f9fa' }}
+      />
 
-      {/* Filters */}
-      <div className="mb-6 flex flex-col sm:flex-row gap-4">
-        <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-          <Input
-            placeholder="Buscar empresas..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-10"
-          />
-        </div>
-        <Select value={selectedFilter} onValueChange={setSelectedFilter}>
-          <SelectTrigger className="w-full sm:w-48">
-            <Filter className="h-4 w-4 mr-2" />
-            <SelectValue placeholder="Filtrar por tipo" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">Todos los tipos</SelectItem>
-            <SelectItem value="startup">Startups</SelectItem>
-            <SelectItem value="investor">Inversores</SelectItem>
-            <SelectItem value="ecosystem">Ecosistema</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-[calc(100vh-250px)]">
-        {/* Map area (placeholder) */}
-        <div className="lg:col-span-2">
-          <Card className="h-full">
-            <CardHeader>
-              <CardTitle className="flex items-center">
-                <MapPin className="h-5 w-5 mr-2" />
-                Mapa de Ubicaciones
-              </CardTitle>
+      {/* Floating Filters Panel */}
+      <div className="absolute top-4 right-4 z-40">
+        <Button
+          onClick={() => setShowFilters(!showFilters)}
+          className="mb-2 backdrop-blur-md bg-white/10 border border-white/20 text-white hover:bg-white/20"
+        >
+          <Filter className="h-4 w-4 mr-2" />
+          Filtros
+        </Button>
+        
+        {showFilters && (
+          <Card className="w-80 backdrop-blur-md bg-white/10 border border-white/20">
+            <CardHeader className="pb-3">
+              <div className="flex items-center justify-between">
+                <CardTitle className="text-white text-sm">Filtros de Búsqueda</CardTitle>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setShowFilters(false)}
+                  className="text-white hover:bg-white/20 p-1"
+                >
+                  <X className="h-4 w-4" />
+                </Button>
+              </div>
             </CardHeader>
-            <CardContent className="h-full">
-              <div className="w-full h-full bg-gradient-to-br from-green-50 to-blue-50 rounded-lg flex items-center justify-center relative overflow-hidden">
-                {/* Placeholder map with company markers */}
-                <div className="absolute inset-0 opacity-20">
-                  <svg viewBox="0 0 800 600" className="w-full h-full">
-                    {/* Simple South America outline */}
-                    <path
-                      d="M300 100 L500 120 L520 200 L480 350 L450 420 L400 480 L350 500 L280 480 L250 400 L220 300 L240 200 Z"
-                      fill="currentColor"
-                      className="text-green-200"
-                    />
-                  </svg>
-                </div>
-                
-                {/* Company markers */}
-                {filteredCompanies.map((company, index) => (
-                  <div
-                    key={company.id}
-                    className="absolute cursor-pointer transform -translate-x-1/2 -translate-y-1/2 hover:scale-110 transition-transform"
-                    style={{
-                      left: `${30 + (index * 15)}%`,
-                      top: `${40 + (index * 8)}%`
-                    }}
-                    onClick={() => setSelectedCompany(company)}
-                  >
-                    <div className="bg-white rounded-full p-2 shadow-lg border-2 border-green-500">
-                      {getCompanyIcon(company.type)}
-                    </div>
-                    <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-1 bg-black text-white text-xs px-2 py-1 rounded whitespace-nowrap opacity-0 hover:opacity-100 transition-opacity">
-                      {company.name}
-                    </div>
+            <CardContent className="space-y-4">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white/70" />
+                <Input
+                  placeholder="Buscar empresas..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="pl-10 backdrop-blur-md bg-white/20 border-white/30 text-white placeholder:text-white/70"
+                />
+              </div>
+              <Select value={selectedFilter} onValueChange={setSelectedFilter}>
+                <SelectTrigger className="backdrop-blur-md bg-white/20 border-white/30 text-white">
+                  <SelectValue placeholder="Filtrar por tipo" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Todos los tipos</SelectItem>
+                  <SelectItem value="startup">Startups</SelectItem>
+                  <SelectItem value="investor">Inversores</SelectItem>
+                  <SelectItem value="ecosystem">Ecosistema</SelectItem>
+                </SelectContent>
+              </Select>
+              <div className="text-white/80 text-sm">
+                Mostrando {filteredCompanies.length} empresas
+              </div>
+            </CardContent>
+          </Card>
+        )}
+      </div>
+
+      {/* Selected Company Info Panel */}
+      {selectedCompany && (
+        <div className="absolute bottom-4 left-4 right-4 z-40 md:left-80 md:right-4">
+          <Card className="backdrop-blur-md bg-white/10 border border-white/20">
+            <CardHeader className="pb-3">
+              <div className="flex items-start justify-between">
+                <div className="flex items-center space-x-2">
+                  {getCompanyIcon(selectedCompany.type)}
+                  <div>
+                    <CardTitle className="text-white text-lg">{selectedCompany.name}</CardTitle>
+                    <p className="text-white/80 text-sm">{selectedCompany.category}</p>
                   </div>
-                ))}
-                
-                <div className="text-center text-gray-500">
-                  <Globe className="h-16 w-16 mx-auto mb-4 opacity-50" />
-                  <p className="text-lg">Mapa Interactivo</p>
-                  <p className="text-sm">Haz clic en los marcadores para ver detalles</p>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Badge className={getBadgeColor(selectedCompany.stage)}>
+                    {selectedCompany.stage}
+                  </Badge>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setSelectedCompany(null)}
+                    className="text-white hover:bg-white/20 p-1"
+                  >
+                    <X className="h-4 w-4" />
+                  </Button>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <p className="text-white/90 mb-4">{selectedCompany.description}</p>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                <div className="flex items-center text-white/80">
+                  <MapPin className="h-4 w-4 mr-2" />
+                  {selectedCompany.location.city}, {selectedCompany.location.country}
+                </div>
+                <div className="flex items-center text-white/80">
+                  <Users className="h-4 w-4 mr-2" />
+                  {selectedCompany.employees} empleados
+                </div>
+                <div className="flex items-center text-white/80">
+                  <Globe className="h-4 w-4 mr-2" />
+                  <a 
+                    href={`https://${selectedCompany.website}`} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="hover:text-white transition-colors"
+                  >
+                    {selectedCompany.website}
+                  </a>
                 </div>
               </div>
             </CardContent>
           </Card>
         </div>
-
-        {/* Company list */}
-        <div className="space-y-4 overflow-y-auto">
-          <h3 className="font-semibold text-lg flex items-center">
-            <Building className="h-5 w-5 mr-2" />
-            Empresas ({filteredCompanies.length})
-          </h3>
-          
-          {filteredCompanies.map((company) => (
-            <Card 
-              key={company.id} 
-              className={`cursor-pointer hover:shadow-md transition-shadow ${
-                selectedCompany?.id === company.id ? 'ring-2 ring-green-500' : ''
-              }`}
-              onClick={() => setSelectedCompany(company)}
-            >
-              <CardHeader className="pb-2">
-                <div className="flex items-start justify-between">
-                  <div className="flex items-center space-x-2">
-                    {getCompanyIcon(company.type)}
-                    <CardTitle className="text-sm">{company.name}</CardTitle>
-                  </div>
-                  <Badge className={getBadgeColor(company.stage)}>
-                    {company.stage}
-                  </Badge>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <p className="text-xs text-gray-600 mb-2">{company.description}</p>
-                <div className="flex items-center justify-between text-xs text-gray-500">
-                  <span className="flex items-center">
-                    <MapPin className="h-3 w-3 mr-1" />
-                    {company.location.city}, {company.location.country}
-                  </span>
-                  <span className="flex items-center">
-                    <Users className="h-3 w-3 mr-1" />
-                    {company.employees}
-                  </span>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </div>
+      )}
     </div>
   );
 };

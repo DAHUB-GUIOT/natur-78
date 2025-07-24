@@ -26,11 +26,6 @@ export const DashboardSidebar = ({
 }: DashboardSidebarProps) => {
   const menuItems = [
     {
-      id: 'overview',
-      label: 'Panel General',
-      icon: LayoutDashboard,
-    },
-    {
       id: 'map',
       label: 'Mapa de Empresas',
       icon: Map,
@@ -49,22 +44,22 @@ export const DashboardSidebar = ({
 
   return (
     <div className={cn(
-      "bg-white border-r border-gray-200 flex flex-col transition-all duration-300",
+      "absolute top-4 left-4 z-50 backdrop-blur-md bg-white/10 border border-white/20 rounded-lg flex flex-col transition-all duration-300 shadow-lg",
       collapsed ? "w-16" : "w-64"
     )}>
       {/* Header */}
-      <div className="p-4 border-b border-gray-200 flex items-center justify-between">
+      <div className="p-4 border-b border-white/20 flex items-center justify-between">
         {!collapsed && (
           <div className="flex items-center space-x-2">
-            <Heart className="h-6 w-6 text-green-600" />
-            <span className="font-gasoek text-lg text-green-700">NATUR</span>
+            <Heart className="h-6 w-6 text-white" />
+            <span className="font-gasoek text-lg text-white">NATUR</span>
           </div>
         )}
         <Button
           variant="ghost"
           size="sm"
           onClick={() => setCollapsed(!collapsed)}
-          className="p-1"
+          className="p-1 text-white hover:bg-white/20"
         >
           {collapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
         </Button>
@@ -75,11 +70,11 @@ export const DashboardSidebar = ({
         {menuItems.map((item) => (
           <Button
             key={item.id}
-            variant={activeView === item.id ? "default" : "ghost"}
+            variant="ghost"
             className={cn(
-              "w-full justify-start",
+              "w-full justify-start text-white hover:bg-white/20",
               collapsed && "px-2",
-              activeView === item.id && "bg-green-100 text-green-700 hover:bg-green-200"
+              activeView === item.id && "bg-white/30 text-white hover:bg-white/40"
             )}
             onClick={() => setActiveView(item.id)}
           >
