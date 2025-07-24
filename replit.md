@@ -10,6 +10,12 @@ This is a full-stack web application for Festival NATUR (www.festivalnatur.com),
 
 ## Recent Changes
 
+- ✅ **January 24, 2025**: Traveler Registration Marketplace Redirect Implementation
+  - **NEW**: Modified ConSentidosRegister.tsx to redirect travelers to marketplace (/mapa) after registration
+  - **NEW**: Updated Auth.tsx to ensure travelers access marketplace after login/registration
+  - **NEW**: Enhanced user flow for viajeros to automatically access experience marketplace
+  - **NEW**: Added proper redirect timing and success messages for traveler registration completion
+
 - ✅ **January 24, 2025**: High Contrast Design & Font Visibility Fix FULLY COMPLETED
   - **NEW**: Fixed all yellow font visibility issues across the entire platform
   - **NEW**: Updated numbered registration steps (1-6: Participación, Perfil, Datos, Información, Términos, Plataforma) with black fonts

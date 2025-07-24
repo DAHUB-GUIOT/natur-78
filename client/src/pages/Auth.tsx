@@ -71,7 +71,7 @@ const Auth = ({ type }: AuthProps) => {
     if (isEmpresas) {
       setLocation('/experiencias');
     } else {
-      setLocation('/mapa');
+      setLocation('/mapa'); // Marketplace for travelers
     }
   };
 
@@ -96,7 +96,7 @@ const Auth = ({ type }: AuthProps) => {
     if (isEmpresas) {
       setLocation('/registro');
     } else {
-      setLocation('/con-sentidos');
+      setLocation('/con-sentidos'); // Con-Sentidos registration for travelers
     }
   };
 

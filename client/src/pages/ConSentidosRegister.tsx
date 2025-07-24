@@ -32,8 +32,13 @@ const ConSentidosRegister = () => {
     e.preventDefault();
     toast({
       title: "¡Registro exitoso!",
-      description: "Te has unido a Con-Sentidos. Pronto recibirás información sobre experiencias sostenibles.",
+      description: "Te has unido a Con-Sentidos. Descubre experiencias sostenibles en nuestro marketplace.",
     });
+    
+    // Redirect to marketplace after successful registration
+    setTimeout(() => {
+      window.location.href = '/mapa';
+    }, 1500);
   };
 
   return (
