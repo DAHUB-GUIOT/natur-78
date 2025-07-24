@@ -48,47 +48,47 @@ const AdditionalInfoStep = ({
 
   const renderAttendeeFields = () => (
     <div className="space-y-4">
-      <p className="text-[#FCF8EE]">¿Qué tipo de experiencias te interesan?</p>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-        <div className="flex items-center space-x-2">
+      <p className="text-black font-bold text-lg mb-4">¿Qué tipo de experiencias te interesan?</p>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="flex items-center space-x-3">
           <Checkbox
             id="ecotourism"
             checked={formData.interests.ecotourism}
             onCheckedChange={handleCheckboxChange("interests", "ecotourism")}
           />
-          <Label htmlFor="ecotourism" className="text-[#FCF8EE]">Ecoturismo</Label>
+          <Label htmlFor="ecotourism" className="text-black font-medium text-lg">Ecoturismo</Label>
         </div>
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-3">
           <Checkbox
             id="communityTourism"
             checked={formData.interests.communityTourism}
             onCheckedChange={handleCheckboxChange("interests", "communityTourism")}
           />
-          <Label htmlFor="communityTourism" className="text-[#FCF8EE]">Turismo comunitario</Label>
+          <Label htmlFor="communityTourism" className="text-black font-medium text-lg">Turismo comunitario</Label>
         </div>
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-3">
           <Checkbox
             id="culturalTourism"
             checked={formData.interests.culturalTourism}
             onCheckedChange={handleCheckboxChange("interests", "culturalTourism")}
           />
-          <Label htmlFor="culturalTourism" className="text-[#FCF8EE]">Turismo cultural y creativo</Label>
+          <Label htmlFor="culturalTourism" className="text-black font-medium text-lg">Turismo cultural y creativo</Label>
         </div>
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-3">
           <Checkbox
             id="slowTravel"
             checked={formData.interests.slowTravel}
             onCheckedChange={handleCheckboxChange("interests", "slowTravel")}
           />
-          <Label htmlFor="slowTravel" className="text-[#FCF8EE]">Workation / Slow Travel</Label>
+          <Label htmlFor="slowTravel" className="text-black font-medium text-lg">Workation / Slow Travel</Label>
         </div>
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-3">
           <Checkbox
             id="workshops"
             checked={formData.interests.workshops}
             onCheckedChange={handleCheckboxChange("interests", "workshops")}
           />
-          <Label htmlFor="workshops" className="text-[#FCF8EE]">Formación y talleres</Label>
+          <Label htmlFor="workshops" className="text-black font-medium text-lg">Formación y talleres</Label>
         </div>
       </div>
     </div>
@@ -96,15 +96,15 @@ const AdditionalInfoStep = ({
 
   const renderSponsorFields = () => (
     <div className="space-y-4">
-      <p className="text-[#FCF8EE]">¿Qué tipo de participación te interesa?</p>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-        <div className="flex items-center space-x-2">
+      <p className="text-black font-bold text-lg mb-4">¿Qué tipo de participación te interesa?</p>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="flex items-center space-x-3">
           <Checkbox
             id="sponsorActivities"
             checked={formData.participationType.sponsorActivities}
             onCheckedChange={handleCheckboxChange("participationType", "sponsorActivities")}
           />
-          <Label htmlFor="sponsorActivities" className="text-[#FCF8EE]">Patrocinar actividades o escenarios</Label>
+          <Label htmlFor="sponsorActivities" className="text-black font-medium text-lg">Patrocinar actividades o escenarios</Label>
         </div>
         <div className="flex items-center space-x-2">
           <Checkbox
@@ -112,35 +112,35 @@ const AdditionalInfoStep = ({
             checked={formData.participationType.installStand}
             onCheckedChange={handleCheckboxChange("participationType", "installStand")}
           />
-          <Label htmlFor="installStand" className="text-[#FCF8EE]">Instalar un stand</Label>
+          <Label htmlFor="installStand" className="text-black font-medium text-lg">Instalar un stand</Label>
         </div>
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-3">
           <Checkbox
             id="brandExposure"
             checked={formData.participationType.brandExposure}
             onCheckedChange={handleCheckboxChange("participationType", "brandExposure")}
           />
-          <Label htmlFor="brandExposure" className="text-[#FCF8EE]">Difundir marca en app y redes</Label>
+          <Label htmlFor="brandExposure" className="text-black font-medium text-lg">Difundir marca en app y redes</Label>
         </div>
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-3">
           <Checkbox
             id="productSupport"
             checked={formData.participationType.productSupport}
             onCheckedChange={handleCheckboxChange("participationType", "productSupport")}
           />
-          <Label htmlFor="productSupport" className="text-[#FCF8EE]">Apoyar con productos/servicios</Label>
+          <Label htmlFor="productSupport" className="text-black font-medium text-lg">Apoyar con productos/servicios</Label>
         </div>
       </div>
 
       <div>
-        <Label htmlFor="proposal" className="text-[#FCF8EE]">¿Tienes una propuesta específica?</Label>
+        <Label htmlFor="proposal" className="text-black font-bold text-lg">¿Tienes una propuesta específica?</Label>
         <Textarea
           id="proposal"
           name="proposal"
           value={formData.proposal}
           onChange={handleChange}
           placeholder="Descríbenos tu propuesta..."
-          className="bg-[#FCF8EE]/10 border-[#FCF8EE]/30 text-[#FCF8EE] placeholder:text-[#FCF8EE]/50"
+          className="border-2 border-green-600 focus:border-green-700 text-black font-medium placeholder:text-black/50 mt-2"
         />
       </div>
     </div>
@@ -148,17 +148,17 @@ const AdditionalInfoStep = ({
 
   const renderEcosystemFields = () => (
     <div className="space-y-4">
-      <div className="flex items-center space-x-2">
+      <div className="flex items-center space-x-3">
         <Checkbox
           id="wantsSeal"
           checked={formData.wantsSeal}
           onCheckedChange={handleWantsSeal}
         />
-        <Label htmlFor="wantsSeal" className="text-[#FCF8EE]">¿Quieres optar al Sello NATUR?</Label>
+        <Label htmlFor="wantsSeal" className="text-black font-medium text-lg">¿Quieres optar al Sello NATUR?</Label>
       </div>
 
       <div>
-        <Label htmlFor="servicesOffered" className="text-[#FCF8EE]">¿Qué servicios o experiencias ofreces?*</Label>
+        <Label htmlFor="servicesOffered" className="text-black font-bold text-lg">¿Qué servicios o experiencias ofreces?*</Label>
         <Textarea
           id="servicesOffered"
           name="servicesOffered"
@@ -166,19 +166,19 @@ const AdditionalInfoStep = ({
           onChange={handleChange}
           required
           placeholder="Describe tus servicios o experiencias..."
-          className="bg-[#FCF8EE]/10 border-[#FCF8EE]/30 text-[#FCF8EE] placeholder:text-[#FCF8EE]/50"
+          className="border-2 border-green-600 focus:border-green-700 text-black font-medium placeholder:text-black/50 mt-2"
         />
       </div>
 
       <div>
-        <Label htmlFor="certifications" className="text-[#FCF8EE]">¿Ya cuentas con certificaciones previas? (opcional)</Label>
+        <Label htmlFor="certifications" className="text-black font-bold text-lg">¿Ya cuentas con certificaciones previas? (opcional)</Label>
         <Input
           id="certifications"
           name="certifications"
           value={formData.certifications}
           onChange={handleChange}
           placeholder="Certificaciones de sostenibilidad, turismo responsable, etc."
-          className="bg-[#FCF8EE]/10 border-[#FCF8EE]/30 text-[#FCF8EE] placeholder:text-[#FCF8EE]/50"
+          className="border-2 border-green-600 focus:border-green-700 text-black font-medium placeholder:text-black/50 mt-2"
         />
       </div>
     </div>
@@ -187,7 +187,7 @@ const AdditionalInfoStep = ({
   const renderStartupFields = () => (
     <div className="space-y-4">
       <div>
-        <Label htmlFor="startupName" className="text-[#FCF8EE]">Nombre de tu startup*</Label>
+        <Label htmlFor="startupName" className="text-black font-bold text-lg">Nombre de tu startup*</Label>
         <Input
           id="startupName"
           name="startupName"
@@ -195,12 +195,12 @@ const AdditionalInfoStep = ({
           onChange={handleChange}
           required
           placeholder="Nombre de tu emprendimiento o solución"
-          className="bg-[#FCF8EE]/10 border-[#FCF8EE]/30 text-[#FCF8EE] placeholder:text-[#FCF8EE]/50"
+          className="border-2 border-green-600 focus:border-green-700 text-black font-medium placeholder:text-black/50 mt-2"
         />
       </div>
 
       <div>
-        <Label htmlFor="problemSolved" className="text-[#FCF8EE]">¿Qué problema resuelves en el turismo sostenible?*</Label>
+        <Label htmlFor="problemSolved" className="text-black font-bold text-lg">¿Qué problema resuelves en el turismo sostenible?*</Label>
         <Textarea
           id="problemSolved"
           name="problemSolved"
@@ -208,64 +208,64 @@ const AdditionalInfoStep = ({
           onChange={handleChange}
           required
           placeholder="Describe el problema que resuelve tu startup..."
-          className="bg-[#FCF8EE]/10 border-[#FCF8EE]/30 text-[#FCF8EE] placeholder:text-[#FCF8EE]/50"
+          className="border-2 border-green-600 focus:border-green-700 text-black font-medium placeholder:text-black/50 mt-2"
         />
       </div>
 
       <div>
-        <Label htmlFor="startupWebsite" className="text-[#FCF8EE]">Sitio web o redes sociales (opcional)</Label>
+        <Label htmlFor="startupWebsite" className="text-black font-bold text-lg">Sitio web o redes sociales (opcional)</Label>
         <Input
           id="startupWebsite"
           name="startupWebsite"
           value={formData.startupWebsite}
           onChange={handleChange}
           placeholder="URL de tu sitio web o perfiles sociales"
-          className="bg-[#FCF8EE]/10 border-[#FCF8EE]/30 text-[#FCF8EE] placeholder:text-[#FCF8EE]/50"
+          className="border-2 border-green-600 focus:border-green-700 text-black font-medium placeholder:text-black/50 mt-2"
         />
       </div>
 
-      <div className="space-y-2">
-        <p className="text-[#FCF8EE]">¿Qué tipo de apoyo te interesa?</p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-          <div className="flex items-center space-x-2">
+      <div className="space-y-4">
+        <p className="text-black font-bold text-lg mb-4">¿Qué tipo de apoyo te interesa?</p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="flex items-center space-x-3">
             <Checkbox
               id="visibility"
               checked={formData.supportNeeded.visibility}
               onCheckedChange={handleCheckboxChange("supportNeeded", "visibility")}
             />
-            <Label htmlFor="visibility" className="text-[#FCF8EE]">Visibilidad en el festival</Label>
+            <Label htmlFor="visibility" className="text-black font-medium text-lg">Visibilidad en el festival</Label>
           </div>
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-3">
             <Checkbox
               id="marketplace"
               checked={formData.supportNeeded.marketplace}
               onCheckedChange={handleCheckboxChange("supportNeeded", "marketplace")}
             />
-            <Label htmlFor="marketplace" className="text-[#FCF8EE]">Espacio en el marketplace</Label>
+            <Label htmlFor="marketplace" className="text-black font-medium text-lg">Espacio en el marketplace</Label>
           </div>
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-3">
             <Checkbox
               id="networking"
               checked={formData.supportNeeded.networking}
               onCheckedChange={handleCheckboxChange("supportNeeded", "networking")}
             />
-            <Label htmlFor="networking" className="text-[#FCF8EE]">Networking con aliados</Label>
+            <Label htmlFor="networking" className="text-black font-medium text-lg">Networking con aliados</Label>
           </div>
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-3">
             <Checkbox
               id="funding"
               checked={formData.supportNeeded.funding}
               onCheckedChange={handleCheckboxChange("supportNeeded", "funding")}
             />
-            <Label htmlFor="funding" className="text-[#FCF8EE]">Acceso a fondos o inversión</Label>
+            <Label htmlFor="funding" className="text-black font-medium text-lg">Acceso a fondos o inversión</Label>
           </div>
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-3">
             <Checkbox
               id="incubation"
               checked={formData.supportNeeded.incubation}
               onCheckedChange={handleCheckboxChange("supportNeeded", "incubation")}
             />
-            <Label htmlFor="incubation" className="text-[#FCF8EE]">Programas de incubación/aceleración</Label>
+            <Label htmlFor="incubation" className="text-black font-medium text-lg">Programas de incubación/aceleración</Label>
           </div>
         </div>
       </div>
@@ -294,11 +294,11 @@ const AdditionalInfoStep = ({
           variant="ghost" 
           onClick={onBack}
           type="button"
-          className="text-[#FCF8EE] hover:text-[#EDFF60] hover:bg-transparent p-0 mr-4"
+          className="text-black hover:text-green-700 hover:bg-transparent p-0 mr-4"
         >
           <ArrowLeft className="h-5 w-5" />
         </Button>
-        <h2 className="text-2xl font-gasoek text-[#EDFF60] tracking-wide uppercase">
+        <h2 className="text-2xl font-gasoek text-black tracking-wide uppercase font-bold">
           Información adicional
         </h2>
       </div>
@@ -308,7 +308,7 @@ const AdditionalInfoStep = ({
       <div className="flex justify-end">
         <Button 
           type="submit" 
-          className="bg-[#EDFF60] text-[#191C0F] hover:bg-[#CEDD9F] px-8 py-6 text-lg"
+          className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-bold px-8 py-6 text-lg shadow-xl"
         >
           Continuar
         </Button>

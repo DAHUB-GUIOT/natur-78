@@ -29,18 +29,18 @@ const PersonalInfoStep = ({ formData, updateFormData, onNext, onBack }: Personal
           variant="ghost" 
           onClick={onBack}
           type="button"
-          className="text-[#FCF8EE] hover:text-[#EDFF60] hover:bg-transparent p-0 mr-4"
+          className="text-black hover:text-green-700 hover:bg-transparent p-0 mr-4"
         >
           <ArrowLeft className="h-5 w-5" />
         </Button>
-        <h2 className="text-2xl font-gasoek text-[#EDFF60] tracking-wide uppercase">
+        <h2 className="text-2xl font-gasoek text-black tracking-wide uppercase font-bold">
           Datos personales / de organización
         </h2>
       </div>
 
       <div className="space-y-4">
         <div>
-          <Label htmlFor="name" className="text-[#FCF8EE]">
+          <Label htmlFor="name" className="text-black font-bold text-lg">
             Nombre completo / Nombre de la organización*
           </Label>
           <Input
@@ -50,12 +50,12 @@ const PersonalInfoStep = ({ formData, updateFormData, onNext, onBack }: Personal
             onChange={handleChange}
             required
             placeholder="Ingresa tu nombre completo o el de tu organización"
-            className="bg-[#FCF8EE]/10 border-[#FCF8EE]/30 text-[#FCF8EE] placeholder:text-[#FCF8EE]/50"
+            className="border-2 border-green-600 focus:border-green-700 text-black font-medium placeholder:text-black/50 mt-2"
           />
         </div>
         
         <div>
-          <Label htmlFor="email" className="text-[#FCF8EE]">
+          <Label htmlFor="email" className="text-black font-bold text-lg">
             Correo electrónico*
           </Label>
           <Input
@@ -66,12 +66,12 @@ const PersonalInfoStep = ({ formData, updateFormData, onNext, onBack }: Personal
             onChange={handleChange}
             required
             placeholder="correo@ejemplo.com"
-            className="bg-[#FCF8EE]/10 border-[#FCF8EE]/30 text-[#FCF8EE] placeholder:text-[#FCF8EE]/50"
+            className="border-2 border-green-600 focus:border-green-700 text-black font-medium placeholder:text-black/50 mt-2"
           />
         </div>
         
         <div>
-          <Label htmlFor="phone" className="text-[#FCF8EE]">
+          <Label htmlFor="phone" className="text-black font-bold text-lg">
             Número de contacto (WhatsApp opcional)
           </Label>
           <Input
@@ -80,12 +80,12 @@ const PersonalInfoStep = ({ formData, updateFormData, onNext, onBack }: Personal
             value={formData.phone}
             onChange={handleChange}
             placeholder="+57 300 000 0000"
-            className="bg-[#FCF8EE]/10 border-[#FCF8EE]/30 text-[#FCF8EE] placeholder:text-[#FCF8EE]/50"
+            className="border-2 border-green-600 focus:border-green-700 text-black font-medium placeholder:text-black/50 mt-2"
           />
         </div>
         
         <div>
-          <Label htmlFor="location" className="text-[#FCF8EE]">
+          <Label htmlFor="location" className="text-black font-bold text-lg">
             Ciudad y país*
           </Label>
           <Input
@@ -95,12 +95,12 @@ const PersonalInfoStep = ({ formData, updateFormData, onNext, onBack }: Personal
             onChange={handleChange}
             required
             placeholder="Bogotá, Colombia"
-            className="bg-[#FCF8EE]/10 border-[#FCF8EE]/30 text-[#FCF8EE] placeholder:text-[#FCF8EE]/50"
+            className="border-2 border-green-600 focus:border-green-700 text-black font-medium placeholder:text-black/50 mt-2"
           />
         </div>
         
         <div>
-          <Label htmlFor="website" className="text-[#FCF8EE]">
+          <Label htmlFor="website" className="text-black font-bold text-lg">
             Página web / redes sociales (opcional)
           </Label>
           <Input
@@ -109,12 +109,12 @@ const PersonalInfoStep = ({ formData, updateFormData, onNext, onBack }: Personal
             value={formData.website}
             onChange={handleChange}
             placeholder="https://example.com o @username"
-            className="bg-[#FCF8EE]/10 border-[#FCF8EE]/30 text-[#FCF8EE] placeholder:text-[#FCF8EE]/50"
+            className="border-2 border-green-600 focus:border-green-700 text-black font-medium placeholder:text-black/50 mt-2"
           />
         </div>
         
         <div>
-          <Label htmlFor="referral" className="text-[#FCF8EE]">
+          <Label htmlFor="referral" className="text-black font-bold text-lg">
             ¿Cómo te enteraste del Festival NATUR?*
           </Label>
           <Input
@@ -124,7 +124,7 @@ const PersonalInfoStep = ({ formData, updateFormData, onNext, onBack }: Personal
             onChange={handleChange}
             required
             placeholder="Redes sociales, amigos, etc."
-            className="bg-[#FCF8EE]/10 border-[#FCF8EE]/30 text-[#FCF8EE] placeholder:text-[#FCF8EE]/50"
+            className="border-2 border-green-600 focus:border-green-700 text-black font-medium placeholder:text-black/50 mt-2"
           />
         </div>
       </div>
@@ -132,7 +132,7 @@ const PersonalInfoStep = ({ formData, updateFormData, onNext, onBack }: Personal
       <div className="flex justify-end">
         <Button 
           type="submit" 
-          className="bg-[#EDFF60] text-[#191C0F] hover:bg-[#CEDD9F] px-8 py-6 text-lg"
+          className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-bold px-8 py-6 text-lg shadow-xl"
         >
           Continuar
         </Button>

@@ -10,6 +10,18 @@ This is a full-stack web application for Festival NATUR (www.festivalnatur.com),
 
 ## Recent Changes
 
+- ✅ **January 24, 2025**: High Contrast Design & Font Visibility Fix Completed
+  - **NEW**: Fixed all yellow font visibility issues across the entire platform
+  - **NEW**: Updated numbered registration steps (1-6: Participación, Perfil, Datos, Información, Términos, Plataforma) with black fonts
+  - **NEW**: Implemented high contrast black text on white/light backgrounds throughout
+  - **NEW**: Replaced all yellow colors with green gradient alternatives for buttons and progress bars
+  - **NEW**: Updated CSS color system with pure black/white and green accent colors
+  - **NEW**: Enhanced form styling with bold black labels and green borders
+  - **NEW**: Fixed Portal Empresas button styling with black background and white text
+  - **NEW**: Improved visibility in Admin panel, Experiencias page, and registration forms
+  - **NEW**: All cards, badges, and interactive elements now use high contrast colors
+  - **NEW**: Registration forms now feature white cards with green borders and black text
+
 - ✅ **January 24, 2025**: Unified Authentication System & Portal Integration Completed
   - **NEW**: Auth.tsx unified authentication component with login/register tabs for both portals
   - **NEW**: AuthEmpresas.tsx - Yellow-themed authentication for Portal Empresas (/auth/empresas)

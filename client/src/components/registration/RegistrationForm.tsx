@@ -278,16 +278,16 @@ const RegistrationForm = () => {
           {[1, 2, 3, 4, 5, 6].map((stepNumber) => (
             <div 
               key={stepNumber}
-              className={`flex flex-col items-center ${stepNumber <= step ? "text-[#EDFF60]" : "text-[#FCF8EE]/50"}`}
+              className={`flex flex-col items-center ${stepNumber <= step ? "text-black" : "text-black/50"}`}
             >
               <div 
-                className={`w-8 h-8 rounded-full flex items-center justify-center mb-2 
-                ${stepNumber < step ? "bg-[#EDFF60] text-[#222408]" : 
-                  stepNumber === step ? "border-2 border-[#EDFF60]" : "border border-[#FCF8EE]/50"}`}
+                className={`w-8 h-8 rounded-full flex items-center justify-center mb-2 font-bold
+                ${stepNumber < step ? "bg-green-600 text-white" : 
+                  stepNumber === step ? "border-2 border-green-600 text-black" : "border border-black/50 text-black/50"}`}
               >
                 {stepNumber < step ? "✓" : stepNumber}
               </div>
-              <span className="text-xs hidden sm:block">
+              <span className="text-xs hidden sm:block font-bold">
                 {stepNumber === 1 && "Participación"}
                 {stepNumber === 2 && "Perfil"}
                 {stepNumber === 3 && "Datos"}
@@ -298,15 +298,15 @@ const RegistrationForm = () => {
             </div>
           ))}
         </div>
-        <div className="h-2 bg-[#FCF8EE]/20 rounded-full">
+        <div className="h-2 bg-gray-200 rounded-full">
           <div 
-            className="h-2 bg-[#EDFF60] rounded-full transition-all duration-300"
+            className="h-2 bg-green-600 rounded-full transition-all duration-300"
             style={{ width: `${(step / 6) * 100}%` }}
           ></div>
         </div>
       </div>
 
-      <Card className="bg-[#FCF8EE]/10 backdrop-blur-lg border-none text-[#FCF8EE]">
+      <Card className="bg-white border-2 border-green-500 shadow-xl">
         <CardContent className="pt-6">
           {renderStep()}
         </CardContent>
