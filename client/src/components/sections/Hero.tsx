@@ -63,24 +63,24 @@ export function Hero() {
       <div className="relative z-10 flex items-center justify-center min-h-screen px-4 pt-20">
         <div className="max-w-4xl mx-auto text-center">
           {/* Main Title */}
-          <h1 className="text-6xl md:text-8xl font-bold text-green-800 mb-6 font-gasoek tracking-wide">
+          <h1 className="text-8xl sm:text-9xl md:text-[10rem] lg:text-[12rem] xl:text-[14rem] font-black text-yellow-400 mb-6 font-gasoek tracking-wide leading-none">
             NATUR
           </h1>
           
           {/* Subtitle */}
-          <h2 className="text-2xl md:text-3xl text-green-700 mb-8 font-medium">
-            Plataforma de Turismo Sostenible
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-yellow-300 mb-8 leading-tight">
+            Todo sobre turismo sostenible
+            <br />
+            <span className="text-yellow-200">y más</span>
           </h2>
-          <p className="text-lg md:text-xl text-white mb-12 max-w-3xl mx-auto leading-relaxed">
-            Conectamos emprendedores, viajeros e inversores para crear experiencias de turismo consciente y regenerativo
-          </p>
+
           
           {/* Main Action Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link to="/tickets">
               <Button 
                 size="lg" 
-                className="bg-green-600 hover:bg-green-700 text-white font-bold text-lg px-8 py-4 rounded-lg shadow-xl flex items-center justify-center w-full sm:w-auto min-w-[180px]"
+                className="bg-white hover:bg-yellow-50 text-black font-bold text-lg px-8 py-4 rounded-lg shadow-xl flex items-center justify-center w-full sm:w-auto min-w-[180px]"
               >
                 <Ticket className="w-6 h-6 mr-3" />
                 TICKETS
@@ -90,7 +90,7 @@ export function Hero() {
             <Link to="/agenda">
               <Button 
                 size="lg" 
-                className="bg-black hover:bg-gray-800 text-white font-bold text-lg px-8 py-4 rounded-lg shadow-xl flex items-center justify-center w-full sm:w-auto min-w-[180px]"
+                className="bg-yellow-400 hover:bg-yellow-300 text-black font-bold text-lg px-8 py-4 rounded-lg shadow-xl flex items-center justify-center w-full sm:w-auto min-w-[180px]"
               >
                 <Calendar className="w-6 h-6 mr-3" />
                 AGENDA
@@ -100,7 +100,7 @@ export function Hero() {
             <Link to="/mapa">
               <Button 
                 size="lg" 
-                className="bg-green-600 hover:bg-green-700 text-white font-bold text-lg px-8 py-4 rounded-lg shadow-xl flex items-center justify-center w-full sm:w-auto min-w-[180px]"
+                className="bg-white hover:bg-yellow-50 text-black font-bold text-lg px-8 py-4 rounded-lg shadow-xl flex items-center justify-center w-full sm:w-auto min-w-[180px]"
               >
                 <Calendar className="w-6 h-6 mr-3" />
                 EXPERIENCIAS
