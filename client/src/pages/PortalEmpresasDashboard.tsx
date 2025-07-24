@@ -459,40 +459,75 @@ const PortalEmpresasDashboard = () => {
   // Full-screen layout for map, regular layout for other sections
   if (activeSection === "mapa") {
     return (
-      <div className="h-screen w-full relative">
-        {/* Full-screen map */}
+      <div className="h-screen w-full relative overflow-hidden">
+        {/* Full-screen map as background */}
         <InteractiveMap />
         
-        {/* Floating glassmorphism sidebar for map view */}
-        <div className="absolute top-4 left-4 z-50 backdrop-blur-md bg-white/10 border border-white/20 rounded-lg shadow-lg">
-          <div className="p-4 border-b border-white/20 flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <div className="w-6 h-6 bg-green-500 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-xs">N</span>
+        {/* Floating glassmorphism sidebar for map view - optimized */}
+        <div className="absolute top-6 left-6 z-50 w-64 backdrop-blur-xl bg-black/20 border border-white/30 rounded-2xl shadow-2xl">
+          <div className="p-6 border-b border-white/20">
+            <div className="flex items-center space-x-3">
+              <div className="w-8 h-8 bg-gradient-to-br from-green-400 to-green-600 rounded-xl flex items-center justify-center shadow-lg">
+                <span className="text-white font-bold text-sm">N</span>
               </div>
-              <span className="text-lg font-bold text-white">NATUR</span>
+              <span className="text-xl font-bold text-white tracking-wide">NATUR</span>
             </div>
+            <p className="text-white/70 text-sm mt-2">Portal Empresas</p>
           </div>
           
-          <nav className="p-4 space-y-2">
+          <nav className="p-4 space-y-1">
             {sidebarItems.map((item) => {
               const Icon = item.icon;
               return (
                 <button
                   key={item.id}
                   onClick={() => setActiveSection(item.id)}
-                  className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg transition-colors ${
+                  className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200 ${
                     activeSection === item.id 
-                      ? 'bg-white/30 text-white' 
-                      : 'text-white/80 hover:bg-white/20 hover:text-white'
+                      ? 'bg-gradient-to-r from-green-500/30 to-green-400/30 text-white shadow-lg border border-green-400/30' 
+                      : 'text-white/90 hover:bg-white/10 hover:text-white hover:shadow-md'
                   }`}
                 >
                   <Icon className="w-5 h-5" />
-                  <span className="font-medium">{item.label}</span>
+                  <span className="font-semibold text-sm">{item.label}</span>
                 </button>
               );
             })}
           </nav>
+          
+          {/* User profile section */}
+          <div className="p-4 border-t border-white/20">
+            <div className="flex items-center space-x-3 px-4 py-3 rounded-xl bg-white/5">
+              <Avatar className="w-8 h-8 ring-2 ring-white/30">
+                <AvatarImage src="/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg" />
+                <AvatarFallback className="bg-green-500 text-white">U</AvatarFallback>
+              </Avatar>
+              <div className="flex-1 min-w-0">
+                <p className="text-white font-semibold text-sm truncate">Usuario</p>
+                <p className="text-white/70 text-xs">Empresa</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Top notification bar */}
+        <div className="absolute top-6 right-6 z-50 flex space-x-3">
+          <Button 
+            variant="ghost" 
+            size="sm" 
+            className="backdrop-blur-xl bg-black/20 border border-white/30 text-white hover:bg-white/20 rounded-xl px-4 py-2"
+          >
+            <Bell className="w-4 h-4 mr-2" />
+            <span className="hidden sm:inline">3</span>
+          </Button>
+          <Button 
+            variant="ghost" 
+            size="sm" 
+            className="backdrop-blur-xl bg-black/20 border border-white/30 text-white hover:bg-white/20 rounded-xl px-4 py-2"
+          >
+            <MessageCircle className="w-4 h-4 mr-2" />
+            <span className="hidden sm:inline">2</span>
+          </Button>
         </div>
       </div>
     );

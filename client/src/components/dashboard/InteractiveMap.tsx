@@ -200,110 +200,140 @@ export const InteractiveMap = () => {
         style={{ background: '#f8f9fa' }}
       />
 
-      {/* Floating Filters Panel */}
-      <div className="absolute top-4 right-4 z-40">
+      {/* Floating Filters Panel - optimized design */}
+      <div className="absolute top-24 right-6 z-40">
         <Button
           onClick={() => setShowFilters(!showFilters)}
-          className="mb-2 backdrop-blur-md bg-white/10 border border-white/20 text-white hover:bg-white/20"
+          className="mb-3 backdrop-blur-xl bg-black/20 border border-white/30 text-white hover:bg-white/20 rounded-xl px-6 py-3 shadow-2xl"
         >
-          <Filter className="h-4 w-4 mr-2" />
-          Filtros
+          <Filter className="h-5 w-5 mr-2" />
+          <span className="font-semibold">Filtros</span>
         </Button>
         
         {showFilters && (
-          <Card className="w-80 backdrop-blur-md bg-white/10 border border-white/20">
-            <CardHeader className="pb-3">
+          <Card className="w-80 backdrop-blur-xl bg-black/20 border border-white/30 rounded-2xl shadow-2xl">
+            <CardHeader className="pb-4">
               <div className="flex items-center justify-between">
-                <CardTitle className="text-white text-sm">Filtros de Búsqueda</CardTitle>
+                <CardTitle className="text-white text-lg font-bold">Buscar Empresas</CardTitle>
                 <Button
                   variant="ghost"
                   size="sm"
                   onClick={() => setShowFilters(false)}
-                  className="text-white hover:bg-white/20 p-1"
+                  className="text-white hover:bg-white/20 rounded-lg p-2"
                 >
-                  <X className="h-4 w-4" />
+                  <X className="h-5 w-5" />
                 </Button>
               </div>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-6">
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white/70" />
+                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-white/70" />
                 <Input
-                  placeholder="Buscar empresas..."
+                  placeholder="Buscar por nombre o descripción..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10 backdrop-blur-md bg-white/20 border-white/30 text-white placeholder:text-white/70"
+                  className="pl-12 h-12 backdrop-blur-xl bg-white/10 border-white/40 text-white placeholder:text-white/60 rounded-xl font-medium"
                 />
               </div>
-              <Select value={selectedFilter} onValueChange={setSelectedFilter}>
-                <SelectTrigger className="backdrop-blur-md bg-white/20 border-white/30 text-white">
-                  <SelectValue placeholder="Filtrar por tipo" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">Todos los tipos</SelectItem>
-                  <SelectItem value="startup">Startups</SelectItem>
-                  <SelectItem value="investor">Inversores</SelectItem>
-                  <SelectItem value="ecosystem">Ecosistema</SelectItem>
-                </SelectContent>
-              </Select>
-              <div className="text-white/80 text-sm">
-                Mostrando {filteredCompanies.length} empresas
+              <div className="space-y-2">
+                <label className="text-white font-semibold text-sm">Tipo de Empresa</label>
+                <Select value={selectedFilter} onValueChange={setSelectedFilter}>
+                  <SelectTrigger className="h-12 backdrop-blur-xl bg-white/10 border-white/40 text-white rounded-xl">
+                    <SelectValue placeholder="Seleccionar tipo" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-gray-900 border-white/30">
+                    <SelectItem value="all" className="text-white hover:bg-white/20">Todos los tipos</SelectItem>
+                    <SelectItem value="startup" className="text-white hover:bg-white/20">Startups</SelectItem>
+                    <SelectItem value="investor" className="text-white hover:bg-white/20">Inversores</SelectItem>
+                    <SelectItem value="ecosystem" className="text-white hover:bg-white/20">Ecosistema</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="pt-2 border-t border-white/20">
+                <p className="text-white/90 text-sm font-medium">
+                  {filteredCompanies.length} empresas encontradas
+                </p>
               </div>
             </CardContent>
           </Card>
         )}
       </div>
 
-      {/* Selected Company Info Panel */}
+      {/* Selected Company Info Panel - optimized design */}
       {selectedCompany && (
-        <div className="absolute bottom-4 left-4 right-4 z-40 md:left-80 md:right-4">
-          <Card className="backdrop-blur-md bg-white/10 border border-white/20">
-            <CardHeader className="pb-3">
+        <div className="absolute bottom-6 left-80 right-6 z-40">
+          <Card className="backdrop-blur-xl bg-black/20 border border-white/30 rounded-2xl shadow-2xl">
+            <CardHeader className="pb-4">
               <div className="flex items-start justify-between">
-                <div className="flex items-center space-x-2">
-                  {getCompanyIcon(selectedCompany.type)}
+                <div className="flex items-center space-x-4">
+                  <div className="p-3 bg-gradient-to-br from-green-400 to-green-600 rounded-xl shadow-lg">
+                    {getCompanyIcon(selectedCompany.type)}
+                  </div>
                   <div>
-                    <CardTitle className="text-white text-lg">{selectedCompany.name}</CardTitle>
-                    <p className="text-white/80 text-sm">{selectedCompany.category}</p>
+                    <CardTitle className="text-white text-xl font-bold">{selectedCompany.name}</CardTitle>
+                    <p className="text-white/80 text-sm font-medium">{selectedCompany.category}</p>
                   </div>
                 </div>
-                <div className="flex items-center space-x-2">
-                  <Badge className={getBadgeColor(selectedCompany.stage)}>
+                <div className="flex items-center space-x-3">
+                  <Badge className={`${getBadgeColor(selectedCompany.stage)} px-3 py-1 rounded-full font-semibold`}>
                     {selectedCompany.stage}
                   </Badge>
                   <Button
                     variant="ghost"
                     size="sm"
                     onClick={() => setSelectedCompany(null)}
-                    className="text-white hover:bg-white/20 p-1"
+                    className="text-white hover:bg-white/20 rounded-lg p-2"
                   >
-                    <X className="h-4 w-4" />
+                    <X className="h-5 w-5" />
                   </Button>
                 </div>
               </div>
             </CardHeader>
-            <CardContent>
-              <p className="text-white/90 mb-4">{selectedCompany.description}</p>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-                <div className="flex items-center text-white/80">
-                  <MapPin className="h-4 w-4 mr-2" />
-                  {selectedCompany.location.city}, {selectedCompany.location.country}
+            <CardContent className="space-y-6">
+              <p className="text-white/90 text-base leading-relaxed">{selectedCompany.description}</p>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="flex items-center space-x-3 text-white/90">
+                  <div className="p-2 bg-white/10 rounded-lg">
+                    <MapPin className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <p className="font-semibold">Ubicación</p>
+                    <p className="text-sm text-white/70">{selectedCompany.location.city}, {selectedCompany.location.country}</p>
+                  </div>
                 </div>
-                <div className="flex items-center text-white/80">
-                  <Users className="h-4 w-4 mr-2" />
-                  {selectedCompany.employees} empleados
+                <div className="flex items-center space-x-3 text-white/90">
+                  <div className="p-2 bg-white/10 rounded-lg">
+                    <Users className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <p className="font-semibold">Equipo</p>
+                    <p className="text-sm text-white/70">{selectedCompany.employees} empleados</p>
+                  </div>
                 </div>
-                <div className="flex items-center text-white/80">
-                  <Globe className="h-4 w-4 mr-2" />
-                  <a 
-                    href={`https://${selectedCompany.website}`} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="hover:text-white transition-colors"
-                  >
-                    {selectedCompany.website}
-                  </a>
+                <div className="flex items-center space-x-3 text-white/90">
+                  <div className="p-2 bg-white/10 rounded-lg">
+                    <Globe className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <p className="font-semibold">Sitio Web</p>
+                    <a 
+                      href={`https://${selectedCompany.website}`} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="text-sm text-green-300 hover:text-green-200 transition-colors underline"
+                    >
+                      {selectedCompany.website}
+                    </a>
+                  </div>
                 </div>
+              </div>
+              <div className="flex space-x-3 pt-4 border-t border-white/20">
+                <Button className="flex-1 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-semibold rounded-xl">
+                  Contactar
+                </Button>
+                <Button variant="outline" className="border-white/30 text-white hover:bg-white/10 rounded-xl">
+                  Ver Perfil
+                </Button>
               </div>
             </CardContent>
           </Card>
