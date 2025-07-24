@@ -42,61 +42,82 @@ const ConSentidosRegister = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white">
-      <HeaderButtons showPortalButtons={false} />
+    <div className="min-h-screen relative">
+      {/* Background Image - Same as Hero */}
+      <img 
+        alt="Festival NATUR - Con-Sentidos Registration" 
+        className="absolute h-full w-full object-cover inset-0" 
+        src="/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg" 
+      />
       
-      {/* Hero Banner with Background Image */}
-      <div className="relative bg-gradient-to-r from-green-900/80 to-black/70 text-white">
-        <img 
-          src="/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
-          alt="Conscious Travel"
-          className="absolute inset-0 w-full h-full object-cover -z-10"
-        />
-        <div className="relative z-10 container mx-auto px-4 py-24 text-center">
-          <div className="flex items-center justify-center mb-8">
-            <div className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center shadow-2xl">
-              <Heart className="w-10 h-10 text-white" />
-            </div>
+      {/* Light Gradient Overlay */}
+      <div className="absolute inset-0 bg-black/20"></div>
+      
+      {/* Top Navigation - Fixed with Glassmorphism (same as Hero) */}
+      <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-white/10 border-b border-white/20">
+        <div className="flex items-center justify-between max-w-7xl mx-auto px-6 py-4">
+          <div className="flex items-center space-x-4">
+            <span className="font-bold text-2xl font-gasoek" style={{ color: '#EDFF60' }}>N</span>
           </div>
-          <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 font-gasoek tracking-wide drop-shadow-2xl">
-            CON-SENTIDOS
-          </h1>
-          <p className="text-xl md:text-2xl text-white max-w-3xl mx-auto font-medium drop-shadow-lg">
-            Conecta con experiencias de turismo sostenible y descubre Colombia de manera consciente
-          </p>
-        </div>
-      </div>
-      
-      <div className="container mx-auto px-4 py-16 max-w-4xl">
-
-        {/* Registration Form */}
-        <Card className="shadow-2xl border-2 border-green-500 bg-white">
-          <CardHeader className="bg-gradient-to-r from-green-600 to-green-700 border-b-2 border-green-500">
-            <CardTitle className="text-3xl text-white flex items-center font-bold">
-              <MapPin className="w-8 h-8 mr-4 text-white" />
-              Registro de Viajero Consciente
-            </CardTitle>
-          </CardHeader>
           
-          <CardContent className="p-8 bg-white">
+          <div className="flex items-center space-x-4">
+            <Link to="/">
+              <Button variant="ghost" className="text-white hover:bg-white/20">
+                Volver
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </nav>
+      
+      {/* Main Content - Centered */}
+      <div className="relative z-10 flex items-center justify-center min-h-screen px-6 pt-20">
+        <div className="w-full max-w-4xl">
+          
+          {/* Title Section */}
+          <div className="text-center mb-8">
+            <div className="flex items-center justify-center mb-6">
+              <div className="w-16 h-16 rounded-full flex items-center justify-center" style={{ backgroundColor: '#EDFF60' }}>
+                <Heart className="w-8 h-8 text-black" />
+              </div>
+            </div>
+            <h1 className="text-3xl md:text-4xl font-bold mb-4 font-gasoek tracking-wide" style={{ color: '#EDFF60' }}>
+              CON-SENTIDOS
+            </h1>
+            <p className="text-lg text-white max-w-2xl mx-auto font-medium">
+              Conecta con experiencias de turismo sostenible y descubre Colombia de manera consciente
+            </p>
+          </div>
+
+          {/* Registration Form - Transparent with yellow outlines */}
+          <Card className="shadow-2xl backdrop-blur-md bg-white/10 border-2" style={{ borderColor: '#EDFF60' }}>
+            <CardHeader className="backdrop-blur-md bg-white/5 border-b-2" style={{ borderColor: '#EDFF60' }}>
+              <CardTitle className="text-2xl flex items-center font-bold" style={{ color: '#EDFF60' }}>
+                <MapPin className="w-6 h-6 mr-4" style={{ color: '#EDFF60' }} />
+                Registro de Viajero Consciente
+              </CardTitle>
+            </CardHeader>
+          
+          <CardContent className="p-8 backdrop-blur-md bg-white/5">
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Personal Information */}
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-3">
-                  <Label htmlFor="name" className="text-black font-bold text-lg">
+                  <Label htmlFor="name" className="font-bold text-lg" style={{ color: '#EDFF60' }}>
                     Nombre completo *
                   </Label>
                   <Input
                     id="name"
                     value={formData.name}
                     onChange={(e) => handleInputChange('name', e.target.value)}
-                    className="border-2 border-green-600 focus:border-green-700 focus:ring-green-600 text-black font-medium text-lg p-4"
+                    className="border-2 bg-white/10 backdrop-blur-sm text-white font-medium text-lg p-4 placeholder-white/60"
+                    style={{ borderColor: '#EDFF60' }}
                     required
                   />
                 </div>
 
                 <div className="space-y-3">
-                  <Label htmlFor="email" className="text-black font-bold text-lg">
+                  <Label htmlFor="email" className="font-bold text-lg" style={{ color: '#EDFF60' }}>
                     Correo electrónico *
                   </Label>
                   <Input
@@ -104,7 +125,8 @@ const ConSentidosRegister = () => {
                     type="email"
                     value={formData.email}
                     onChange={(e) => handleInputChange('email', e.target.value)}
-                    className="border-2 border-green-600 focus:border-green-700 focus:ring-green-600 text-black font-medium text-lg p-4"
+                    className="border-2 bg-white/10 backdrop-blur-sm text-white font-medium text-lg p-4 placeholder-white/60"
+                    style={{ borderColor: '#EDFF60' }}
                     required
                   />
                 </div>
@@ -112,23 +134,24 @@ const ConSentidosRegister = () => {
 
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <Label htmlFor="phone" className="text-gray-700 font-medium">
+                  <Label htmlFor="phone" className="font-medium" style={{ color: '#EDFF60' }}>
                     Teléfono
                   </Label>
                   <Input
                     id="phone"
                     value={formData.phone}
                     onChange={(e) => handleInputChange('phone', e.target.value)}
-                    className="border-gray-200 focus:border-green-500 focus:ring-green-500"
+                    className="border-2 bg-white/10 backdrop-blur-sm text-white font-medium placeholder-white/60"
+                    style={{ borderColor: '#EDFF60' }}
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="country" className="text-gray-700 font-medium">
+                  <Label htmlFor="country" className="font-medium" style={{ color: '#EDFF60' }}>
                     País de origen *
                   </Label>
                   <Select value={formData.country} onValueChange={(value) => handleInputChange('country', value)}>
-                    <SelectTrigger className="border-gray-200 focus:border-green-500 focus:ring-green-500">
+                    <SelectTrigger className="border-2 bg-white/10 backdrop-blur-sm text-white" style={{ borderColor: '#EDFF60' }}>
                       <SelectValue placeholder="Selecciona tu país" />
                     </SelectTrigger>
                     <SelectContent>
@@ -151,20 +174,21 @@ const ConSentidosRegister = () => {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="city" className="text-gray-700 font-medium">
+                <Label htmlFor="city" className="font-medium" style={{ color: '#EDFF60' }}>
                   Ciudad de residencia
                 </Label>
                 <Input
                   id="city"
                   value={formData.city}
                   onChange={(e) => handleInputChange('city', e.target.value)}
-                  className="border-gray-200 focus:border-green-500 focus:ring-green-500"
+                  className="border-2 bg-white/10 backdrop-blur-sm text-white font-medium placeholder-white/60"
+                  style={{ borderColor: '#EDFF60' }}
                 />
               </div>
 
               {/* Travel Preferences */}
-              <div className="border-t border-gray-100 pt-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">
+              <div className="border-t pt-6" style={{ borderColor: '#EDFF60' }}>
+                <h3 className="text-lg font-semibold mb-4" style={{ color: '#EDFF60' }}>
                   Preferencias de viaje
                 </h3>
                 
@@ -265,14 +289,15 @@ const ConSentidosRegister = () => {
           </CardContent>
         </Card>
 
-        {/* Additional Info */}
-        <div className="text-center mt-8 text-gray-600">
-          <p className="text-sm">
-            ¿Tienes una empresa de turismo sostenible?{" "}
-            <Link to="/registro" className="text-green-600 hover:underline font-medium">
-              Regístrate como empresa
-            </Link>
-          </p>
+          {/* Additional Info */}
+          <div className="text-center mt-8">
+            <p className="text-sm" style={{ color: '#EDFF60' }}>
+              ¿Tienes una empresa de turismo sostenible?{" "}
+              <Link to="/registro" className="hover:underline font-medium" style={{ color: '#EDFF60' }}>
+                Regístrate como empresa
+              </Link>
+            </p>
+          </div>
         </div>
       </div>
     </div>
