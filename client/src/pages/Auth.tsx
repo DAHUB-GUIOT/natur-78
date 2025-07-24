@@ -67,7 +67,7 @@ const Auth = ({ type }: AuthProps) => {
       description: `Bienvenido de vuelta a ${currentConfig.title}`,
     });
     
-    // Redirect based on type
+    // For existing users, redirect to their dashboards
     if (isEmpresas) {
       setLocation('/experiencias');
     } else {
@@ -92,7 +92,7 @@ const Auth = ({ type }: AuthProps) => {
       description: `Te has registrado en ${currentConfig.title}. Completa tu perfil para comenzar.`,
     });
     
-    // Redirect to appropriate registration form
+    // Redirect to detailed registration forms with subcategories
     if (isEmpresas) {
       setLocation('/registro');
     } else {

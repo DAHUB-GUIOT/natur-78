@@ -17,8 +17,9 @@ This is a full-stack web application for Festival NATUR (www.festivalnatur.com),
   - **NEW**: Portal buttons in hero section replace "QUIERO SER PARTE" button
   - **NEW**: Portal Empresas (yellow) and Con-Sentidos (green) prominently displayed in main hero
   - **NEW**: Removed duplicate navigation buttons from header (registro, explorar, dashboard)
-  - **NEW**: Clean authentication flow with proper redirects after login/registration
-  - **NEW**: Cross-portal navigation links in authentication pages
+  - **NEW**: Authentication flows redirect to full registration forms with all subcategories and questions
+  - **NEW**: Registration forms maintain all detailed questions and category selection steps
+  - **NEW**: Cross-portal navigation links in authentication and registration pages
 
 - ✅ **January 24, 2025**: Platform Optimization and White Theme Implementation completed
   - **NEW**: Complete platform redesign with clean white background and professional UI

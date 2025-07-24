@@ -46,14 +46,19 @@ const Register = () => {
 
         {/* Additional Info */}
         <div className="text-center mt-8">
-          <p className="text-gray-600 text-sm mb-4">
-            ¿Eres un viajero buscando experiencias sostenibles?
-          </p>
-          <Link to="/con-sentidos">
-            <Button variant="outline" className="border-green-200 text-green-700 hover:bg-green-50">
-              Únete a Con-Sentidos
-            </Button>
-          </Link>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <Link to="/auth/empresas">
+              <Button variant="outline" className="border-yellow-200 text-yellow-700 hover:bg-yellow-50">
+                Ya tengo cuenta - Iniciar sesión
+              </Button>
+            </Link>
+            <p className="text-gray-600 text-sm">
+              ¿Eres un viajero?{" "}
+              <Link to="/con-sentidos" className="text-green-600 hover:underline font-medium">
+                Únete a Con-Sentidos
+              </Link>
+            </p>
+          </div>
         </div>
       </div>
     </div>

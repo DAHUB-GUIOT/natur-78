@@ -231,12 +231,14 @@ const ConSentidosRegister = () => {
                   </Link>
                   
                   <div className="flex flex-col sm:flex-row gap-3">
-                    <Button
-                      variant="outline"
-                      className="border-green-200 text-green-700 hover:bg-green-50"
-                    >
-                      Ya tengo cuenta - Iniciar sesión
-                    </Button>
+                    <Link to="/auth/consentidos">
+                      <Button
+                        variant="outline"
+                        className="border-green-200 text-green-700 hover:bg-green-50 w-full sm:w-auto"
+                      >
+                        Ya tengo cuenta - Iniciar sesión
+                      </Button>
+                    </Link>
                     <Button
                       type="submit"
                       className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 text-lg font-medium"
