@@ -17,12 +17,9 @@ import Marketplace from "./pages/Marketplace";
 import Experiencias from "./pages/Experiencias";
 import Perfil from "./pages/Perfil";
 import PublicProfile from "./pages/PublicProfile";
-import Fundraiser from "./pages/Fundraiser";
-import Admin from "./pages/Admin";
-import Heart from "./pages/Heart";
-import Acceleradora from "./pages/Acceleradora";
-import StartupDirectory from "./pages/StartupDirectory";
+import AdminSimple from "./pages/AdminSimple";
 import Dashboard from "./pages/Dashboard";
+import MapaPublico from "./pages/MapaPublico";
 import { AuthProvider } from "./contexts/AuthContext";
 
 // Create QueryClient outside component to prevent recreation on renders
@@ -39,26 +36,11 @@ const App = () => (
             <Route path="/" component={Index} />
             <Route path="/registro" component={Register} />
             <Route path="/reserva" component={Reservation} />
-            <Route path="/plataforma">
-              <MainLayout><Platform /></MainLayout>
-            </Route>
-            <Route path="/agenda">
-              <MainLayout><Agenda /></MainLayout>
-            </Route>
-            <Route path="/networking">
-              <MainLayout><Networking /></MainLayout>
-            </Route>
-            <Route path="/educacion">
-              <MainLayout><Educacion /></MainLayout>
-            </Route>
-            <Route path="/marketplace">
-              <MainLayout><Marketplace /></MainLayout>
-            </Route>
             <Route path="/experiencias">
               <MainLayout><Experiencias /></MainLayout>
             </Route>
-            <Route path="/fundraiser">
-              <MainLayout><Fundraiser /></MainLayout>
+            <Route path="/networking">
+              <MainLayout><Networking /></MainLayout>
             </Route>
             <Route path="/perfil">
               <MainLayout><Perfil /></MainLayout>
@@ -67,18 +49,10 @@ const App = () => (
               <MainLayout><PublicProfile /></MainLayout>
             </Route>
             <Route path="/admin">
-              <MainLayout><Admin /></MainLayout>
-            </Route>
-            <Route path="/heart">
-              <MainLayout><Heart /></MainLayout>
-            </Route>
-            <Route path="/acceleradora">
-              <MainLayout><Acceleradora /></MainLayout>
-            </Route>
-            <Route path="/startups">
-              <MainLayout><StartupDirectory /></MainLayout>
+              <MainLayout><AdminSimple /></MainLayout>
             </Route>
             <Route path="/dashboard" component={Dashboard} />
+            <Route path="/mapa" component={MapaPublico} />
             <Route><NotFound /></Route>
           </Switch>
         </Router>

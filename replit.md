@@ -8,6 +8,14 @@ This is a full-stack web application for Festival NATUR (www.festivalnatur.com),
 
 ## Recent Changes
 
+- ✅ **January 24, 2025**: MVP Simplification based on user flows
+  - **NEW**: Simplified platform based on three main user roles and their specific flows
+  - **NEW**: Emprendimiento/Iniciativa role: registration, profile completion, experience upload, networking
+  - **NEW**: Viajero role: free access, interactive map viewing, initiative details viewing
+  - **NEW**: Administrador role: content approval, experience management, user management
+  - **NEW**: Removed complex modules and focused on core MVP functionality
+  - **NEW**: Fixed registration validation errors for array fields (expertise, skills, interests)
+
 - ✅ **January 24, 2025**: Dashboard integrado completado
   - **NEW**: Eliminada página de ecosistema y creado dashboard integrado con diseño moderno
   - **NEW**: Sidebar colapsible con navegación entre módulos del dashboard
@@ -97,14 +105,17 @@ Preferred communication style: Simple, everyday language.
 - **Digital Nomads**: Content creators, remote workers, community leaders
 - **Attendees**: Tourists, students, citizens with different interests
 
-### Platform Modules
-1. **Platform Dashboard**: Impact indicators, news, quick access
-2. **Networking**: User search, community features, forums
-3. **Education**: Guides, workshops, certifications, collaborative content
-4. **Marketplace**: Sustainable products from local communities
-5. **Experiences**: Regenerative tourism experiences and custom trip planning
-6. **Fundraising (Heart)**: Donation campaigns, subscription plans, regenerative projects
-7. **Accelerator**: Startup acceleration program with tools and mentorship
+### MVP Core Modules (Simplified)
+1. **Interactive Map**: Main public interface for exploring initiatives and experiences
+2. **User Profiles**: Registration and profile management for entrepreneurs/initiatives
+3. **Experience Management**: Upload and manage sustainable tourism experiences
+4. **Admin Panel**: Content moderation and user management
+5. **Basic Networking**: Simple contact and communication features
+
+### User Role Flows
+- **Emprendimiento/Iniciativa**: Register → Complete Profile → Upload Experiences → Network with others
+- **Viajero**: Browse Map → View Initiative Details → Contact for more information → Optional Registration
+- **Administrador**: Login → Review Pending Content → Approve/Reject → Manage User Directory
 
 ## Data Flow
 

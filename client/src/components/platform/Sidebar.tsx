@@ -9,69 +9,29 @@ import { HoverCard, HoverCardTrigger, HoverCardContent } from "@/components/ui/h
 
 // Define navigation items outside component to prevent re-creation on render
 const getNavigationItems = (userType: string | null, userSubcategory: string | null) => [{
-  icon: Heart,
-  text: "Corazón NATUR",
-  path: "/heart"
-}, {
   icon: Home,
-  text: "Plataforma",
-  path: "/plataforma"
+  text: "Mapa Interactivo",
+  path: "/dashboard"
 }, {
-  icon: Calendar,
-  text: "Agenda",
-  path: "/agenda"
+  icon: Edit,
+  text: "Mis Experiencias",
+  path: "/experiencias",
+  showOnlyFor: ["startup", "emprendimiento", "iniciativa"]
 }, {
   icon: Users,
   text: "Networking",
-  path: "/networking"
-}, {
-  icon: GraduationCap,
-  text: "Educación",
-  path: "/educacion"
-}, {
-  icon: ShoppingCart,
-  text: "Marketplace",
-  path: "/marketplace"
-}, {
-  icon: Edit,
-  text: "Experiencias",
-  path: "/experiencias"
-}, {
-  icon: Award,
-  text: "Recaudación",
-  path: "/fundraiser"
-}, {
-  icon: Building,
-  text: "Startups",
-  path: "/startups"
-}, {
-  icon: Rocket,
-  text: "Acceleradora",
-  path: "/acceleradora",
-  showOnlyFor: ["startup", "investor", "angel", "mentor", "venture-capital"]
-}, {
-  icon: Users,
-  text: "Mentoría",
-  path: "/mentoria",
-  showOnlyFor: ["mentor"]
-}, {
-  icon: LineChart,
-  text: "Inversiones",
-  path: "/inversiones",
-  showOnlyFor: ["investor", "angel", "venture-capital"]
-}, {
-  icon: Star,
-  text: "Startups Destacadas",
-  path: "/startups-destacadas",
-  showOnlyFor: ["investor", "angel", "venture-capital"]
+  path: "/networking",
+  showOnlyFor: ["startup", "emprendimiento", "iniciativa"]
 }, {
   icon: User,
-  text: "Perfil",
-  path: "/perfil"
+  text: "Mi Perfil",
+  path: "/perfil",
+  showOnlyFor: ["startup", "emprendimiento", "iniciativa"]
 }, {
   icon: Settings,
   text: "Administración",
-  path: "/admin"
+  path: "/admin",
+  showOnlyFor: ["admin", "administrador"]
 }];
 
 // Add interface for component props
