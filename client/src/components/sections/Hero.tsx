@@ -32,7 +32,8 @@ export function Hero() {
             <Link to="/auth/empresas">
               <Button 
                 size="sm" 
-                className="bg-white hover:bg-gray-100 text-black font-medium px-4 py-2 rounded-full"
+                variant="outline"
+                className="bg-transparent border-2 border-white hover:bg-white/20 text-white font-medium px-4 py-2 rounded-full backdrop-blur-sm"
               >
                 Portal Empresas
               </Button>
@@ -41,7 +42,8 @@ export function Hero() {
             <Link to="/auth/consentidos">
               <Button 
                 size="sm" 
-                className="bg-white hover:bg-gray-100 text-black font-medium px-4 py-2 rounded-full"
+                variant="outline"
+                className="bg-transparent border-2 border-white hover:bg-white/20 text-white font-medium px-4 py-2 rounded-full backdrop-blur-sm"
               >
                 Con-Sentidos
               </Button>
