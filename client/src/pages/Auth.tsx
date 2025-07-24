@@ -101,52 +101,82 @@ const Auth = ({ type }: AuthProps) => {
   };
 
   return (
-    <div className="min-h-screen bg-white">
-      <HeaderButtons showPortalButtons={false} />
+    <div className="min-h-screen relative">
+      {/* Background Image - Same as Hero */}
+      <img 
+        alt="Festival NATUR - Authentication" 
+        className="absolute h-full w-full object-cover inset-0" 
+        src="/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg" 
+      />
       
-      {/* Hero Banner */}
-      <div className="relative bg-gradient-to-r from-black/70 to-green-900/70 text-white">
-        <img 
-          src="/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
-          alt="Authentication"
-          className="absolute inset-0 w-full h-full object-cover -z-10"
-        />
-        <div className="relative z-10 container mx-auto px-4 py-16 text-center">
-          <div className="flex items-center justify-center mb-6">
-            <div className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center shadow-2xl">
-              <IconComponent className="w-10 h-10 text-white" />
-            </div>
+      {/* Light Gradient Overlay */}
+      <div className="absolute inset-0 bg-black/20"></div>
+      
+      {/* Top Navigation - Fixed with Glassmorphism (same as Hero) */}
+      <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-white/10 border-b border-white/20">
+        <div className="flex items-center justify-between max-w-7xl mx-auto px-6 py-4">
+          <div className="flex items-center space-x-4">
+            <span className="font-bold text-2xl font-gasoek" style={{ color: '#EDFF60' }}>N</span>
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 font-gasoek tracking-wide drop-shadow-2xl">
-            {currentConfig.title.toUpperCase()}
-          </h1>
-          <p className="text-lg md:text-xl text-white max-w-2xl mx-auto font-medium drop-shadow-lg">
-            {currentConfig.subtitle}
-          </p>
+          
+          <div className="flex items-center space-x-4">
+            <Link to="/">
+              <Button variant="ghost" className="text-white hover:bg-white/20">
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Volver
+              </Button>
+            </Link>
+          </div>
         </div>
-      </div>
+      </nav>
       
-      <div className="container mx-auto px-4 py-16 max-w-md">
-        {/* Back button */}
-        <div className="mb-8">
-          <Link to="/">
-            <Button variant="ghost" className="text-black hover:text-green-800 font-bold">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Volver al inicio
-            </Button>
-          </Link>
-        </div>
+      {/* Main Content - Centered like BIME */}
+      <div className="relative z-10 flex items-center justify-center min-h-screen px-6 pt-20">
+        <div className="w-full max-w-md">
+          
+          {/* Title Section */}
+          <div className="text-center mb-8">
+            <div className="flex items-center justify-center mb-6">
+              <div className="w-16 h-16 rounded-full flex items-center justify-center" style={{ backgroundColor: isEmpresas ? '#EDFF60' : 'transparent', border: isEmpresas ? 'none' : '2px solid #10B981' }}>
+                <IconComponent className="w-8 h-8" style={{ color: isEmpresas ? '#000' : '#10B981' }} />
+              </div>
+            </div>
+            <h1 className="text-3xl md:text-4xl font-bold mb-4 font-gasoek tracking-wide" style={{ color: isEmpresas ? '#EDFF60' : '#10B981' }}>
+              {currentConfig.title.toUpperCase()}
+            </h1>
+            <p className="text-lg text-white max-w-2xl mx-auto font-medium">
+              {currentConfig.subtitle}
+            </p>
+          </div>
 
-        {/* Auth Form */}
-        <Card className="shadow-2xl border-2 border-green-500 bg-white">
-          <CardHeader className="bg-gradient-to-r from-green-600 to-green-700 border-b-2 border-green-500">
-            <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as 'login' | 'register')}>
-              <TabsList className="grid w-full grid-cols-2 bg-white/20">
-                <TabsTrigger value="login" className="text-white font-bold data-[state=active]:bg-white data-[state=active]:text-green-700">Iniciar Sesión</TabsTrigger>
-                <TabsTrigger value="register" className="text-white font-bold data-[state=active]:bg-white data-[state=active]:text-green-700">Registrarse</TabsTrigger>
-              </TabsList>
-            </Tabs>
-          </CardHeader>
+          {/* Auth Form - Transparent with colored outlines */}
+          <Card className="shadow-2xl backdrop-blur-md bg-white/10 border-2" style={{ borderColor: isEmpresas ? '#EDFF60' : '#10B981' }}>
+            <CardHeader className="backdrop-blur-md bg-white/5 border-b-2" style={{ borderColor: isEmpresas ? '#EDFF60' : '#10B981' }}>
+              <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as 'login' | 'register')}>
+                <TabsList className="grid w-full grid-cols-2 bg-white/20">
+                  <TabsTrigger 
+                    value="login" 
+                    className="font-bold data-[state=active]:bg-white/20"
+                    style={{ 
+                      color: isEmpresas ? '#EDFF60' : '#10B981',
+                      borderColor: isEmpresas ? '#EDFF60' : '#10B981'
+                    }}
+                  >
+                    Iniciar Sesión
+                  </TabsTrigger>
+                  <TabsTrigger 
+                    value="register" 
+                    className="font-bold data-[state=active]:bg-white/20"
+                    style={{ 
+                      color: isEmpresas ? '#EDFF60' : '#10B981',
+                      borderColor: isEmpresas ? '#EDFF60' : '#10B981'
+                    }}
+                  >
+                    Registrarse
+                  </TabsTrigger>
+                </TabsList>
+              </Tabs>
+            </CardHeader>
           
           <CardContent className="p-6">
             <Tabs value={activeTab}>
@@ -154,17 +184,18 @@ const Auth = ({ type }: AuthProps) => {
               <TabsContent value="login">
                 <form onSubmit={handleLogin} className="space-y-4">
                   <div className="space-y-3">
-                    <Label htmlFor="login-email" className="text-black font-bold text-lg">
+                    <Label htmlFor="login-email" className="font-bold text-lg" style={{ color: isEmpresas ? '#EDFF60' : '#10B981' }}>
                       Correo electrónico
                     </Label>
                     <div className="relative">
-                      <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 text-green-600 w-5 h-5" />
+                      <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5" style={{ color: isEmpresas ? '#EDFF60' : '#10B981' }} />
                       <Input
                         id="login-email"
                         type="email"
                         value={loginData.email}
                         onChange={(e) => setLoginData(prev => ({ ...prev, email: e.target.value }))}
-                        className="pl-12 border-2 border-green-600 focus:border-green-700 focus:ring-green-600 text-black font-medium text-lg p-4"
+                        className="pl-12 border-2 bg-white/10 backdrop-blur-sm text-white font-medium text-lg p-4 placeholder-white/60"
+                        style={{ borderColor: isEmpresas ? '#EDFF60' : '#10B981' }}
                         placeholder="tu@email.com"
                         required
                       />
@@ -172,17 +203,18 @@ const Auth = ({ type }: AuthProps) => {
                   </div>
 
                   <div className="space-y-3">
-                    <Label htmlFor="login-password" className="text-black font-bold text-lg">
+                    <Label htmlFor="login-password" className="font-bold text-lg" style={{ color: isEmpresas ? '#EDFF60' : '#10B981' }}>
                       Contraseña
                     </Label>
                     <div className="relative">
-                      <Lock className="absolute left-4 top-1/2 transform -translate-y-1/2 text-green-600 w-5 h-5" />
+                      <Lock className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5" style={{ color: isEmpresas ? '#EDFF60' : '#10B981' }} />
                       <Input
                         id="login-password"
                         type="password"
                         value={loginData.password}
                         onChange={(e) => setLoginData(prev => ({ ...prev, password: e.target.value }))}
-                        className="pl-12 border-2 border-green-600 focus:border-green-700 focus:ring-green-600 text-black font-medium text-lg p-4"
+                        className="pl-12 border-2 bg-white/10 backdrop-blur-sm text-white font-medium text-lg p-4 placeholder-white/60"
+                        style={{ borderColor: isEmpresas ? '#EDFF60' : '#10B981' }}
                         placeholder="••••••••"
                         required
                       />
@@ -190,14 +222,15 @@ const Auth = ({ type }: AuthProps) => {
                   </div>
 
                   <div className="flex items-center justify-between text-sm">
-                    <a href="#" className={`${currentConfig.iconColor} hover:underline`}>
+                    <a href="#" className="hover:underline" style={{ color: isEmpresas ? '#EDFF60' : '#10B981' }}>
                       ¿Olvidaste tu contraseña?
                     </a>
                   </div>
 
                   <Button
                     type="submit"
-                    className="w-full bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white py-4 font-bold text-lg shadow-xl"
+                    className="w-full text-black py-4 font-bold text-lg shadow-xl hover:opacity-90"
+                    style={{ backgroundColor: isEmpresas ? '#EDFF60' : '#10B981' }}
                   >
                     Iniciar Sesión
                   </Button>
@@ -208,17 +241,18 @@ const Auth = ({ type }: AuthProps) => {
               <TabsContent value="register">
                 <form onSubmit={handleRegister} className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="register-name" className="text-gray-700 font-medium">
+                    <Label htmlFor="register-name" className="font-medium" style={{ color: isEmpresas ? '#EDFF60' : '#10B981' }}>
                       Nombre completo
                     </Label>
                     <div className="relative">
-                      <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                      <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4" style={{ color: isEmpresas ? '#EDFF60' : '#10B981' }} />
                       <Input
                         id="register-name"
                         type="text"
                         value={registerData.name}
                         onChange={(e) => setRegisterData(prev => ({ ...prev, name: e.target.value }))}
-                        className={`pl-10 border-gray-200 ${currentConfig.focusColor}`}
+                        className="pl-10 border-2 bg-white/10 backdrop-blur-sm text-white font-medium placeholder-white/60"
+                        style={{ borderColor: isEmpresas ? '#EDFF60' : '#10B981' }}
                         placeholder="Tu nombre completo"
                         required
                       />
@@ -226,17 +260,18 @@ const Auth = ({ type }: AuthProps) => {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="register-email" className="text-gray-700 font-medium">
+                    <Label htmlFor="register-email" className="font-medium" style={{ color: isEmpresas ? '#EDFF60' : '#10B981' }}>
                       Correo electrónico
                     </Label>
                     <div className="relative">
-                      <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                      <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4" style={{ color: isEmpresas ? '#EDFF60' : '#10B981' }} />
                       <Input
                         id="register-email"
                         type="email"
                         value={registerData.email}
                         onChange={(e) => setRegisterData(prev => ({ ...prev, email: e.target.value }))}
-                        className={`pl-10 border-gray-200 ${currentConfig.focusColor}`}
+                        className="pl-10 border-2 bg-white/10 backdrop-blur-sm text-white font-medium placeholder-white/60"
+                        style={{ borderColor: isEmpresas ? '#EDFF60' : '#10B981' }}
                         placeholder="tu@email.com"
                         required
                       />
@@ -244,17 +279,18 @@ const Auth = ({ type }: AuthProps) => {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="register-password" className="text-gray-700 font-medium">
+                    <Label htmlFor="register-password" className="font-medium" style={{ color: isEmpresas ? '#EDFF60' : '#10B981' }}>
                       Contraseña
                     </Label>
                     <div className="relative">
-                      <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                      <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4" style={{ color: isEmpresas ? '#EDFF60' : '#10B981' }} />
                       <Input
                         id="register-password"
                         type="password"
                         value={registerData.password}
                         onChange={(e) => setRegisterData(prev => ({ ...prev, password: e.target.value }))}
-                        className={`pl-10 border-gray-200 ${currentConfig.focusColor}`}
+                        className="pl-10 border-2 bg-white/10 backdrop-blur-sm text-white font-medium placeholder-white/60"
+                        style={{ borderColor: isEmpresas ? '#EDFF60' : '#10B981' }}
                         placeholder="••••••••"
                         required
                       />
@@ -262,17 +298,18 @@ const Auth = ({ type }: AuthProps) => {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="confirm-password" className="text-gray-700 font-medium">
+                    <Label htmlFor="confirm-password" className="font-medium" style={{ color: isEmpresas ? '#EDFF60' : '#10B981' }}>
                       Confirmar contraseña
                     </Label>
                     <div className="relative">
-                      <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                      <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4" style={{ color: isEmpresas ? '#EDFF60' : '#10B981' }} />
                       <Input
                         id="confirm-password"
                         type="password"
                         value={registerData.confirmPassword}
                         onChange={(e) => setRegisterData(prev => ({ ...prev, confirmPassword: e.target.value }))}
-                        className={`pl-10 border-gray-200 ${currentConfig.focusColor}`}
+                        className="pl-10 border-2 bg-white/10 backdrop-blur-sm text-white font-medium placeholder-white/60"
+                        style={{ borderColor: isEmpresas ? '#EDFF60' : '#10B981' }}
                         placeholder="••••••••"
                         required
                       />
@@ -281,7 +318,8 @@ const Auth = ({ type }: AuthProps) => {
 
                   <Button
                     type="submit"
-                    className={`w-full ${currentConfig.buttonColor} text-white py-3 font-medium`}
+                    className="w-full text-black py-3 font-medium hover:opacity-90"
+                    style={{ backgroundColor: isEmpresas ? '#EDFF60' : '#10B981' }}
                   >
                     Crear Cuenta
                   </Button>
@@ -291,23 +329,24 @@ const Auth = ({ type }: AuthProps) => {
           </CardContent>
         </Card>
 
-        {/* Additional Links */}
-        <div className="text-center mt-6 text-gray-600 text-sm">
-          {isEmpresas ? (
-            <p>
-              ¿Eres un viajero?{" "}
-              <Link to="/auth/consentidos" className="text-green-600 hover:underline font-medium">
-                Únete a Con-Sentidos
-              </Link>
-            </p>
-          ) : (
-            <p>
-              ¿Tienes una empresa?{" "}
-              <Link to="/auth/empresas" className="text-yellow-600 hover:underline font-medium">
-                Accede al Portal Empresas
-              </Link>
-            </p>
-          )}
+          {/* Additional Links */}
+          <div className="text-center mt-6 text-sm">
+            {isEmpresas ? (
+              <p style={{ color: '#EDFF60' }}>
+                ¿Eres un viajero?{" "}
+                <Link to="/auth/consentidos" className="hover:underline font-medium" style={{ color: '#10B981' }}>
+                  Únete a Con-Sentidos
+                </Link>
+              </p>
+            ) : (
+              <p style={{ color: '#10B981' }}>
+                ¿Tienes una empresa?{" "}
+                <Link to="/auth/empresas" className="hover:underline font-medium" style={{ color: '#EDFF60' }}>
+                  Accede al Portal Empresas
+                </Link>
+              </p>
+            )}
+          </div>
         </div>
       </div>
     </div>
