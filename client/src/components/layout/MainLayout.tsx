@@ -30,9 +30,9 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
 
   return (
     <div className="min-h-screen bg-[#222408] text-[#FCF8EE]">
-      <header className="bg-[#222408] sticky top-0 z-50 border-b border-b-[#FCF8EE]/5">
+      <header className="bg-green-600 border-b border-green-700 shadow-lg sticky top-0 z-50">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-          <Link to="/" className="font-gasoek text-xl text-[#EDFF60] tracking-wide uppercase">
+          <Link to="/" className="font-gasoek text-xl text-white tracking-wide uppercase">
             Festival Natur
           </Link>
           
@@ -45,14 +45,14 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
                 </Avatar>
               </Link>
             ) : (
-              <Button onClick={() => setShowLogin(true)} variant="outline" className="border-[#FCF8EE]/30 text-[#FCF8EE] hover:bg-[#FCF8EE]/10">
+              <Button onClick={() => setShowLogin(true)} variant="outline" className="border-white/30 text-white hover:bg-white/20">
                 Iniciar Sesión
               </Button>
             )}
 
             <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
               <SheetTrigger asChild>
-                <Button variant="ghost" className="p-2 hover:bg-transparent text-[#FCF8EE] hover:text-[#EDFF60]">
+                <Button variant="ghost" className="p-2 hover:bg-white/20 text-white hover:text-white">
                   <Menu className="h-5 w-5" />
                 </Button>
               </SheetTrigger>

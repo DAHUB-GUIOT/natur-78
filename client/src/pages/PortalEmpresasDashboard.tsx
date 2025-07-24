@@ -474,29 +474,29 @@ const PortalEmpresasDashboard = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Top Bar */}
-      <header className="bg-white border-b border-gray-200 px-6 py-4 sticky top-0 z-40">
+      <header className="bg-green-600 border-b border-green-700 shadow-lg px-6 py-4 sticky top-0 z-40">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <div className="flex items-center space-x-2">
               <div className="w-8 h-8 bg-green-600 rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-sm">N</span>
               </div>
-              <span className="text-xl font-bold text-gray-900">NATUR</span>
+              <span className="text-xl font-bold text-white">NATUR</span>
             </div>
           </div>
           
           <div className="flex-1 max-w-md mx-8">
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-white/70" />
               <Input 
                 placeholder="Buscar experiencias, empresas, ubicaciones..." 
-                className="pl-10 bg-gray-50 border-gray-200 focus:bg-white"
+                className="pl-10 bg-white/10 border-white/20 text-white placeholder-white/60"
               />
             </div>
           </div>
           
           <div className="flex items-center space-x-4">
-            <Button variant="ghost" size="sm" className="relative">
+            <Button variant="ghost" size="sm" className="relative text-white hover:bg-white/20">
               <Bell className="w-5 h-5" />
               <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full text-xs text-white flex items-center justify-center">3</span>
             </Button>
