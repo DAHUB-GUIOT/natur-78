@@ -56,7 +56,25 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       return { data: { user: response.user }, error: null };
     } catch (error: any) {
       console.error('Error signing up:', error);
-      return { data: null, error: { message: error.message || 'Error en el registro' } };
+      
+      // Better error handling for different scenarios
+      let errorMessage = 'Error en el registro';
+      
+      if (error.message?.includes('400') || error.message?.includes('User already exists')) {
+        errorMessage = 'Ya existe una cuenta con este email. Intenta iniciar sesión o usa otro email.';
+      } else if (error.message?.includes('500')) {
+        errorMessage = 'Error interno del servidor. Intenta nuevamente.';
+      } else if (error.message?.includes('Invalid input')) {
+        errorMessage = 'Datos de registro inválidos. Verifica el email y contraseña.';
+      }
+      
+      toast({
+        title: "Error de registro",
+        description: errorMessage,
+        variant: "destructive"
+      });
+      
+      return { data: null, error: { message: errorMessage } };
     }
   };
 

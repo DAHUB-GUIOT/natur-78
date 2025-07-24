@@ -8,13 +8,17 @@ This is a full-stack web application for Festival NATUR (www.festivalnatur.com),
 
 ## Recent Changes
 
-- ✅ **January 24, 2025**: MVP Simplification based on user flows
+- ✅ **January 24, 2025**: MVP Simplification and Bug Fixes completed
   - **NEW**: Simplified platform based on three main user roles and their specific flows
   - **NEW**: Emprendimiento/Iniciativa role: registration, profile completion, experience upload, networking
   - **NEW**: Viajero role: free access, interactive map viewing, initiative details viewing
   - **NEW**: Administrador role: content approval, experience management, user management
+  - **NEW**: Created AdminSimple.tsx focused on content approval workflow
+  - **NEW**: Updated TopButtons to direct travelers to public map (/mapa)
+  - **NEW**: Simplified Experiencias.tsx for entrepreneur experience management
+  - **NEW**: Fixed registration validation errors and improved error handling
+  - **NEW**: Cleaned database and resolved "User already exists" registration issue
   - **NEW**: Removed complex modules and focused on core MVP functionality
-  - **NEW**: Fixed registration validation errors for array fields (expertise, skills, interests)
 
 - ✅ **January 24, 2025**: Dashboard integrado completado
   - **NEW**: Eliminada página de ecosistema y creado dashboard integrado con diseño moderno
