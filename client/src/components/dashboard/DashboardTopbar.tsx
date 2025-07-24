@@ -32,7 +32,7 @@ export const DashboardTopbar = ({
   const { user, signOut } = useAuth();
 
   return (
-    <header className="bg-white border-b border-gray-200 px-6 py-4">
+    <header className="bg-green-600 border-b border-green-700 shadow-lg px-6 py-4">
       <div className="flex items-center justify-between">
         {/* Left side */}
         <div className="flex items-center space-x-4">
@@ -46,10 +46,10 @@ export const DashboardTopbar = ({
           </Button>
           
           <div className="relative max-w-md">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white/70" />
             <Input 
               placeholder="Buscar empresas, contactos..." 
-              className="pl-10 w-80"
+              className="pl-10 w-80 bg-white/10 border-white/20 text-white placeholder-white/60"
             />
           </div>
         </div>
@@ -57,7 +57,7 @@ export const DashboardTopbar = ({
         {/* Right side */}
         <div className="flex items-center space-x-4">
           {/* Notifications */}
-          <Button variant="ghost" size="sm" className="relative">
+          <Button variant="ghost" size="sm" className="relative text-white hover:bg-white/20">
             <Bell className="h-4 w-4" />
             <span className="absolute -top-1 -right-1 h-3 w-3 bg-red-500 rounded-full"></span>
           </Button>
@@ -65,7 +65,7 @@ export const DashboardTopbar = ({
           {/* User menu */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+              <Button variant="ghost" className="relative h-8 w-8 rounded-full text-white hover:bg-white/20">
                 <Avatar className="h-8 w-8">
                   <AvatarImage src="/avatars/user.png" alt="Usuario" />
                   <AvatarFallback>
