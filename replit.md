@@ -10,19 +10,18 @@ This is a full-stack web application for Festival NATUR (www.festivalnatur.com),
 
 ## Recent Changes
 
-- ✅ **January 24, 2025**: Full-Screen Map Dashboard with Glassmorphism Sidebar Implementation
-  - **NEW**: Redesigned dashboard to make the interactive map the main/home page
-  - **NEW**: Removed "Inicio" section and made map the default active view  
-  - **NEW**: Implemented full-screen Mapbox GL JS integration with real map data
-  - **NEW**: Created floating transparent glassmorphism sidebar with backdrop-blur effects
-  - **NEW**: Added white fonts throughout the interface for better contrast on map
-  - **NEW**: Positioned sidebar as floating overlay (top-left) instead of fixed panel
-  - **NEW**: Integrated real Mapbox API with environment variable support (MAPBOX_PUBLIC_KEY)
-  - **NEW**: Added floating filters panel with glassmorphism styling
-  - **NEW**: Created interactive company markers with click-to-select functionality
-  - **NEW**: Added bottom floating company info panel with detailed information
-  - **NEW**: Responsive design maintains glassmorphism theme across all screen sizes
-  - **NEW**: Updated navigation to remove overview/dashboard sections, focus on map-first experience
+- ✅ **January 24, 2025**: Portal Empresas Full-Screen Map Integration with Glassmorphism Sidebar
+  - **NEW**: Integrated full-screen Mapbox map into Portal Empresas dashboard 
+  - **NEW**: Removed "Inicio" section and made "Mapa" the default active view in Portal Empresas
+  - **NEW**: Implemented conditional layout: full-screen for map, regular dashboard for other sections
+  - **NEW**: Created floating glassmorphism sidebar specifically for map view with white fonts
+  - **NEW**: Added Mapbox GL JS integration with VITE_MAPBOX_PUBLIC_KEY environment variable
+  - **NEW**: Map shows real company locations with interactive markers across Latin America
+  - **NEW**: Floating filters panel with search and company type filtering
+  - **NEW**: Company info cards display when markers are clicked with detailed information
+  - **NEW**: Seamless navigation between full-screen map and regular dashboard sections
+  - **NEW**: Preserved existing Portal Empresas functionality while adding immersive map experience
+  - **NEW**: Glassmorphism sidebar maintains NATUR branding with green accent colors
 
 - ✅ **January 24, 2025**: Homepage Sections Complete UX/UI Optimization
   - **NEW**: Redesigned ALL homepage sections with improved design, smaller elements, and better organization

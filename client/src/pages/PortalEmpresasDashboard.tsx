@@ -36,13 +36,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { InteractiveMap } from "@/components/dashboard/InteractiveMap";
 
 const PortalEmpresasDashboard = () => {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
-  const [activeSection, setActiveSection] = useState("inicio");
+  const [activeSection, setActiveSection] = useState("mapa");
 
   const sidebarItems = [
-    { id: "inicio", label: "Inicio", icon: Home },
     { id: "mapa", label: "Mapa", icon: Map },
     { id: "empresas", label: "Empresas", icon: Building2 },
     { id: "experiencias", label: "Experiencias", icon: Star },
@@ -369,22 +369,7 @@ const PortalEmpresasDashboard = () => {
         );
 
       case "mapa":
-        return (
-          <div className="space-y-6">
-            <h2 className="text-2xl font-bold text-gray-900">Mapa de Experiencias</h2>
-            <Card className="bg-white border border-gray-200">
-              <CardContent className="p-6">
-                <div className="bg-gray-100 rounded-lg flex items-center justify-center h-96">
-                  <div className="text-center text-gray-600">
-                    <Map className="w-16 h-16 mx-auto mb-4" />
-                    <p className="text-lg font-medium">Mapa Interactivo</p>
-                    <p className="text-sm">Aquí se integrará Mapbox para mostrar experiencias y empresas</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        );
+        return <InteractiveMap />;
 
       case "mensajes":
         return (
@@ -471,6 +456,48 @@ const PortalEmpresasDashboard = () => {
     }
   };
 
+  // Full-screen layout for map, regular layout for other sections
+  if (activeSection === "mapa") {
+    return (
+      <div className="h-screen w-full relative">
+        {/* Full-screen map */}
+        <InteractiveMap />
+        
+        {/* Floating glassmorphism sidebar for map view */}
+        <div className="absolute top-4 left-4 z-50 backdrop-blur-md bg-white/10 border border-white/20 rounded-lg shadow-lg">
+          <div className="p-4 border-b border-white/20 flex items-center justify-between">
+            <div className="flex items-center space-x-2">
+              <div className="w-6 h-6 bg-green-500 rounded-lg flex items-center justify-center">
+                <span className="text-white font-bold text-xs">N</span>
+              </div>
+              <span className="text-lg font-bold text-white">NATUR</span>
+            </div>
+          </div>
+          
+          <nav className="p-4 space-y-2">
+            {sidebarItems.map((item) => {
+              const Icon = item.icon;
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => setActiveSection(item.id)}
+                  className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg transition-colors ${
+                    activeSection === item.id 
+                      ? 'bg-white/30 text-white' 
+                      : 'text-white/80 hover:bg-white/20 hover:text-white'
+                  }`}
+                >
+                  <Icon className="w-5 h-5" />
+                  <span className="font-medium">{item.label}</span>
+                </button>
+              );
+            })}
+          </nav>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Top Bar */}
@@ -501,14 +528,14 @@ const PortalEmpresasDashboard = () => {
               <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full text-xs text-white flex items-center justify-center">3</span>
             </Button>
             
-            <Button variant="ghost" size="sm" className="relative">
+            <Button variant="ghost" size="sm" className="relative text-white hover:bg-white/20">
               <MessageCircle className="w-5 h-5" />
               <span className="absolute -top-1 -right-1 w-4 h-4 bg-blue-500 rounded-full text-xs text-white flex items-center justify-center">2</span>
             </Button>
             
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="flex items-center space-x-2 p-2">
+                <Button variant="ghost" className="flex items-center space-x-2 p-2 text-white hover:bg-white/20">
                   <Avatar className="w-8 h-8">
                     <AvatarImage src="/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg" />
                     <AvatarFallback>U</AvatarFallback>
@@ -581,12 +608,14 @@ const PortalEmpresasDashboard = () => {
       </div>
 
       {/* Floating Action Button - Create Experience */}
-      <Button
-        className="fixed bottom-6 right-6 w-14 h-14 rounded-full bg-blue-600 hover:bg-blue-700 shadow-lg"
-        size="lg"
-      >
-        <Plus className="w-6 h-6" />
-      </Button>
+      {activeSection !== "mapa" && (
+        <Button
+          className="fixed bottom-6 right-6 w-14 h-14 rounded-full bg-blue-600 hover:bg-blue-700 shadow-lg"
+          size="lg"
+        >
+          <Plus className="w-6 h-6" />
+        </Button>
+      )}
     </div>
   );
 };
