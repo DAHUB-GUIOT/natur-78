@@ -7,7 +7,9 @@ export interface IStorage {
   // User authentication methods
   getUser(id: number): Promise<User | undefined>;
   getUserByEmail(email: string): Promise<User | undefined>;
+  getUserByGoogleId(googleId: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
+  createGoogleUser(userData: any): Promise<User>;
   
   // User profile methods
   getUserProfile(userId: number): Promise<UserProfile | undefined>;
@@ -36,11 +38,41 @@ export class MemStorage implements IStorage {
     );
   }
 
+  async getUserByGoogleId(googleId: string): Promise<User | undefined> {
+    return Array.from(this.users.values()).find(
+      (user) => user.googleId === googleId,
+    );
+  }
+
   async createUser(insertUser: InsertUser): Promise<User> {
     const id = this.currentId++;
     const user: User = { 
-      ...insertUser, 
       id,
+      email: insertUser.email,
+      password: insertUser.password || null,
+      googleId: null,
+      firstName: null,
+      lastName: null,
+      profilePicture: null,
+      authProvider: "local",
+      createdAt: new Date(),
+      updatedAt: new Date()
+    };
+    this.users.set(id, user);
+    return user;
+  }
+
+  async createGoogleUser(userData: any): Promise<User> {
+    const id = this.currentId++;
+    const user: User = {
+      id,
+      email: userData.email,
+      password: null,
+      googleId: userData.googleId,
+      firstName: userData.firstName,
+      lastName: userData.lastName,
+      profilePicture: userData.profilePicture,
+      authProvider: "google",
       createdAt: new Date(),
       updatedAt: new Date()
     };

@@ -3,6 +3,8 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertUserSchema, insertUserProfileSchema } from "@shared/schema";
 import { z } from "zod";
+import passport from 'passport';
+import { setupGoogleAuth } from './googleAuth';
 
 // Extend Express Request type to include session
 declare module 'express-session' {
@@ -12,6 +14,24 @@ declare module 'express-session' {
 }
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Initialize passport and Google OAuth
+  setupGoogleAuth();
+  app.use(passport.initialize());
+  app.use(passport.session());
+
+  // Google OAuth routes
+  app.get('/api/auth/google', 
+    passport.authenticate('google', { scope: ['profile', 'email'] })
+  );
+
+  app.get('/api/auth/google/callback',
+    passport.authenticate('google', { failureRedirect: '/auth/failure' }),
+    (req, res) => {
+      // Successful authentication, redirect to dashboard or home
+      res.redirect('/?auth=success');
+    }
+  );
+
   // Authentication routes
   app.post("/api/auth/login", async (req, res) => {
     try {
@@ -72,6 +92,37 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   app.get("/api/auth/me", async (req, res) => {
+    try {
+      // Support both session-based auth (Google OAuth) and custom session auth
+      const userId = req.session.userId || (req.user as any)?.id;
+      
+      if (!userId) {
+        return res.status(401).json({ error: "Not authenticated" });
+      }
+
+      const user = await storage.getUser(userId);
+      if (!user) {
+        return res.status(404).json({ error: "User not found" });
+      }
+
+      res.json({ 
+        user: { 
+          id: user.id, 
+          email: user.email,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          profilePicture: user.profilePicture,
+          authProvider: user.authProvider
+        } 
+      });
+    } catch (error) {
+      console.error("Get user error:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+
+  // Alternative auth check route 
+  app.get("/api/auth/check", async (req, res) => {
     try {
       if (!req.session.userId) {
         return res.status(401).json({ error: "Not authenticated" });

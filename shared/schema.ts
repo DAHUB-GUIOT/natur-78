@@ -6,7 +6,12 @@ import { z } from "zod";
 export const users = pgTable("users", {
   id: serial("id").primaryKey(),
   email: text("email").notNull().unique(),
-  password: text("password").notNull(),
+  password: text("password"), // Make optional for OAuth users
+  googleId: text("google_id").unique(), // For Google OAuth
+  firstName: text("first_name"),
+  lastName: text("last_name"),
+  profilePicture: text("profile_picture"),
+  authProvider: text("auth_provider").notNull().default("local"), // 'local' or 'google'
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
@@ -72,6 +77,18 @@ export const userProfiles = pgTable("user_profiles", {
 export const insertUserSchema = createInsertSchema(users).pick({
   email: true,
   password: true,
+}).extend({
+  password: z.string().optional(), // Make password optional for OAuth users
+});
+
+export const insertGoogleUserSchema = createInsertSchema(users).pick({
+  email: true,
+  googleId: true,
+  firstName: true,
+  lastName: true,
+  profilePicture: true,
+}).extend({
+  authProvider: z.literal("google"),
 });
 
 export const insertUserProfileSchema = createInsertSchema(userProfiles).omit({
