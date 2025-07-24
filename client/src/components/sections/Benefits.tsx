@@ -20,36 +20,40 @@ export function Benefits() {
     icon: "https://cdn.builder.io/api/v1/image/assets/TEMP/d6a793563b4e94b8666faeecc1dbe1a8188a48d2?placeholderIfAbsent=true",
     text: "Sé parte del movimiento que está cambiando el turismo en Colombia"
   }];
-  return <section className="bg-[#222408] flex w-full flex-col text-base sm:text-lg md:text-xl text-[#FCF8EE] font-medium justify-center px-4 sm:px-6 md:px-20 py-8 sm:py-10 md:py-[100px] lg:py-[131px] max-md:max-w-full font-jakarta">
-      <div className="flex w-full max-w-[1476px] flex-col items-center">
+  return <section className="bg-[#222408] flex w-full flex-col text-base sm:text-lg md:text-xl text-[#FCF8EE] font-medium justify-center px-4 sm:px-6 md:px-12 py-12 md:py-16 lg:py-20 max-md:max-w-full font-jakarta">
+      <div className="flex w-full max-w-6xl mx-auto flex-col items-center">
         <h2 style={{
-        letterSpacing: 2
-      }} className="font-gasoek text-[#EDFF60] text-center text-2xl sm:text-3xl md:text-5xl lg:text-7xl font-normal leading-tight tracking-[2px] uppercase max-w-[90vw] mb-8 sm:mb-10 md:mb-12">¿POR QUÉ SER PARTE DE ESTA TRIBU ?</h2>
+        letterSpacing: 1.5
+      }} className="font-gasoek text-[#EDFF60] text-center text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-normal leading-tight tracking-wide uppercase max-w-[90vw] mb-6 sm:mb-8 md:mb-10">¿POR QUÉ SER PARTE DE ESTA TRIBU?</h2>
         
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-12 w-full mt-6 sm:mt-8 md:mt-16 lg:mt-32">
-          {benefits.map((benefit, index) => <div key={index} className="flex items-start gap-4 md:gap-6 lg:gap-10 p-4 sm:p-6 md:p-8 rounded-none bg-transparent">
-              <img src={benefit.icon} alt="" className="w-[40px] sm:w-[50px] md:w-[70px] lg:w-[82px] aspect-square object-contain shrink-0" />
-              <div className="grow shrink my-auto font-jakarta text-sm sm:text-base md:text-lg lg:text-xl text-[#FCF8EE] leading-snug sm:leading-relaxed">
-                {benefit.text}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 w-full mt-4 sm:mt-6 md:mt-8">
+          {benefits.map((benefit, index) => <div key={index} className="backdrop-blur-sm bg-white/5 border border-[#EDFF60]/20 rounded-xl p-4 sm:p-5 md:p-6 hover:border-[#EDFF60]/40 transition-all duration-300 hover:bg-white/10">
+              <div className="flex items-start gap-3 md:gap-4">
+                <img src={benefit.icon} alt="" className="w-8 sm:w-10 md:w-12 aspect-square object-contain shrink-0 mt-1" />
+                <div className="grow font-jakarta text-xs sm:text-sm md:text-base text-[#FCF8EE] leading-relaxed">
+                  {benefit.text}
+                </div>
               </div>
             </div>)}
         </div>
 
         <Link to="/reserva" className="
-            bg-[#B92F09] w-full max-w-[90vw] sm:max-w-[401px] 
-            text-sm sm:text-base text-[#FFD5C7] 
-            text-center uppercase tracking-[-0.3px] 
-            mt-8 sm:mt-10 md:mt-16 lg:mt-24
-            px-6 py-4 sm:px-8 sm:py-6 
-            hover:bg-[#A62A08] transition-colors 
-            font-unbounded font-bold
+            bg-[#EDFF60] text-black w-full max-w-[90vw] sm:max-w-[320px] 
+            text-sm sm:text-base
+            text-center uppercase tracking-wide font-bold
+            mt-6 sm:mt-8 md:mt-10
+            px-6 py-3 sm:px-8 sm:py-4 
+            hover:bg-[#EDFF60]/90 transition-all duration-300
+            font-unbounded rounded-lg shadow-lg
           ">
           ¡Reserva tu stand o patrocina!
         </Link>
 
-        <p className="text-center leading-6 sm:leading-7 md:leading-8 tracking-[1.6px] uppercase mt-8 sm:mt-10 md:mt-16 max-w-[90vw] font-unbounded text-sm sm:text-base font-light">
-          El Festival NATUR es el punto de encuentro entre la sostenibilidad, el turismo y la innovación. Aquí convergen viajeros, empresas y destinos que creen en el turismo como fuerza transformadora.
-        </p>
+        <div className="backdrop-blur-sm bg-white/5 border border-[#EDFF60]/20 rounded-xl p-4 sm:p-6 mt-6 sm:mt-8 md:mt-10 max-w-4xl">
+          <p className="text-center leading-5 sm:leading-6 md:leading-7 tracking-wide uppercase font-unbounded text-xs sm:text-sm md:text-base font-light text-[#EDFF60]">
+            El Festival NATUR es el punto de encuentro entre la sostenibilidad, el turismo y la innovación. Aquí convergen viajeros, empresas y destinos que creen en el turismo como fuerza transformadora.
+          </p>
+        </div>
       </div>
     </section>;
 }

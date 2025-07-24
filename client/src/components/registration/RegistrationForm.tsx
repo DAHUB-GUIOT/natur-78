@@ -28,7 +28,7 @@ import PersonalInfoStep from "./steps/PersonalInfoStep";
 import AdditionalInfoStep from "./steps/AdditionalInfoStep";
 import ConsentStep from "./steps/ConsentStep";
 import ProfileSetupStep from "./steps/ProfileSetupStep";
-import { useLocation } from "wouter";
+import { useLocation, Link } from "wouter";
 import { useToast } from "@/components/ui/use-toast";
 import RegistrationAuth from "../auth/RegistrationAuth";
 import { createUserProfile } from "@/services/profileService";
