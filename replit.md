@@ -10,6 +10,17 @@ This is a full-stack web application for Festival NATUR (www.festivalnatur.com),
 
 ## Recent Changes
 
+- ✅ **January 24, 2025**: BIME-Style Landing Page Redesign
+  - **NEW**: Redesigned Hero.tsx with BIME event-style layout inspired by attached design reference
+  - **NEW**: Implemented massive bold "NATUR" title overlay on full-screen event photo background
+  - **NEW**: Added prominent search bar in top navigation with green styling and backdrop blur
+  - **NEW**: Created event-style action buttons: "PORTAL EMPRESAS" and "EXPERIENCIAS" 
+  - **NEW**: Added top navigation with user icons and menu buttons
+  - **NEW**: Implemented gradient overlays for better text readability over background image
+  - **NEW**: Used green color scheme with modern typography and event-style button design
+  - **NEW**: Added secondary "Con-Sentidos" link for travelers below main action buttons
+  - **NEW**: Full-screen immersive design matching modern event website aesthetics
+
 - ✅ **January 24, 2025**: Portal Empresas Modern Dashboard Implementation
   - **NEW**: Created PortalEmpresasDashboard.tsx with clean, modern design inspired by Notion/Airbnb/LinkedIn
   - **NEW**: Implemented white minimalist design with soft borders, modern icons, and sans-serif fonts
