@@ -10,9 +10,12 @@ This is a full-stack web application for Festival NATUR (www.festivalnatur.com),
 
 ## Recent Changes
 
-- ✅ **January 24, 2025**: High Contrast Design & Font Visibility Fix Completed
+- ✅ **January 24, 2025**: High Contrast Design & Font Visibility Fix FULLY COMPLETED
   - **NEW**: Fixed all yellow font visibility issues across the entire platform
   - **NEW**: Updated numbered registration steps (1-6: Participación, Perfil, Datos, Información, Términos, Plataforma) with black fonts
+  - **NEW**: Fixed "Busco articulación territorial" and all subcategory selection text to black
+  - **NEW**: Fixed "Consentimiento y envío" section with black fonts for all consent form text
+  - **NEW**: Updated consent checkboxes labels "Acepto los términos y condiciones" and "Deseo recibir noticias" to black
   - **NEW**: Implemented high contrast black text on white/light backgrounds throughout
   - **NEW**: Replaced all yellow colors with green gradient alternatives for buttons and progress bars
   - **NEW**: Updated CSS color system with pure black/white and green accent colors

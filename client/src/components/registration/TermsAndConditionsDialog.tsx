@@ -15,7 +15,7 @@ const TermsAndConditionsDialog = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="link" className="text-[#EDFF60] p-0 h-auto underline text-xs">
+        <Button variant="link" className="text-green-600 p-0 h-auto underline text-sm font-bold">
           Ver más Términos y Condiciones de Uso
         </Button>
       </DialogTrigger>

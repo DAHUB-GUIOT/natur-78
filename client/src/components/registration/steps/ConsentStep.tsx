@@ -30,11 +30,11 @@ const ConsentStep = ({ formData, updateFormData, onSubmit, onBack, onNext }: Con
           variant="ghost" 
           onClick={onBack}
           type="button"
-          className="text-[#FCF8EE] hover:text-[#EDFF60] hover:bg-transparent p-0 mr-4"
+          className="text-black hover:text-green-700 hover:bg-transparent p-0 mr-4"
         >
           <ArrowLeft className="h-5 w-5" />
         </Button>
-        <h2 className="text-2xl font-gasoek text-[#EDFF60] tracking-wide uppercase">
+        <h2 className="text-2xl font-gasoek text-black tracking-wide uppercase font-bold">
           Consentimiento y envío
         </h2>
       </div>
@@ -48,14 +48,14 @@ const ConsentStep = ({ formData, updateFormData, onSubmit, onBack, onNext }: Con
             required
           />
           <div className="space-y-1 leading-none">
-            <Label htmlFor="acceptTerms" className="text-[#FCF8EE] text-sm flex flex-col gap-1">
+            <Label htmlFor="acceptTerms" className="text-black font-bold text-base flex flex-col gap-2">
               <span className="flex items-center gap-1">
                 Acepto los términos y condiciones de participación*
               </span>
-              <div className="font-normal text-[#FCF8EE]/70 text-xs">
+              <div className="font-medium text-black text-sm">
                 <p>Al aceptar, confirmas que has leído y estás de acuerdo con nuestras políticas de privacidad
                 y los términos de participación en el Festival NATUR.</p>
-                <div className="mt-1">
+                <div className="mt-2">
                   <TermsAndConditionsDialog />
                 </div>
               </div>
@@ -70,9 +70,9 @@ const ConsentStep = ({ formData, updateFormData, onSubmit, onBack, onNext }: Con
             onCheckedChange={handleAcceptUpdates}
           />
           <div className="space-y-1 leading-none">
-            <Label htmlFor="acceptUpdates" className="text-[#FCF8EE] text-sm flex flex-col gap-1">
+            <Label htmlFor="acceptUpdates" className="text-black font-bold text-base flex flex-col gap-2">
               <span>Deseo recibir noticias y actualizaciones del Festival NATUR</span>
-              <span className="font-normal text-[#FCF8EE]/70 text-xs">
+              <span className="font-medium text-black text-sm">
                 Te mantendremos informado sobre novedades, eventos y oportunidades relacionadas con el festival.
                 Puedes darte de baja en cualquier momento.
               </span>
