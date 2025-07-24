@@ -463,8 +463,71 @@ const PortalEmpresasDashboard = () => {
         {/* Full-screen map as background */}
         <InteractiveMap />
         
+        {/* Top green bar for map page */}
+        <header className="absolute top-0 left-0 right-0 bg-green-600 border-b border-green-700 shadow-lg px-6 py-4 z-40 backdrop-blur-md bg-green-600/95">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-2">
+                <div className="w-8 h-8 bg-green-500 rounded-lg flex items-center justify-center shadow-lg">
+                  <span className="text-white font-bold text-sm">N</span>
+                </div>
+                <span className="text-xl font-bold text-white tracking-wide">NATUR</span>
+              </div>
+            </div>
+            
+            <div className="flex-1 max-w-md mx-8">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-white/70" />
+                <Input 
+                  placeholder="Buscar experiencias, empresas, ubicaciones..." 
+                  className="pl-10 bg-white/10 border-white/20 text-white placeholder-white/60 backdrop-blur-md"
+                />
+              </div>
+            </div>
+            
+            <div className="flex items-center space-x-4">
+              <Button variant="ghost" size="sm" className="relative text-white hover:bg-white/20">
+                <Bell className="w-5 h-5" />
+                <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full text-xs text-white flex items-center justify-center">3</span>
+              </Button>
+              
+              <Button variant="ghost" size="sm" className="relative text-white hover:bg-white/20">
+                <MessageCircle className="w-5 h-5" />
+                <span className="absolute -top-1 -right-1 w-4 h-4 bg-blue-500 rounded-full text-xs text-white flex items-center justify-center">2</span>
+              </Button>
+              
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" className="flex items-center space-x-2 p-2 text-white hover:bg-white/20">
+                    <Avatar className="w-8 h-8">
+                      <AvatarImage src="/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg" />
+                      <AvatarFallback>U</AvatarFallback>
+                    </Avatar>
+                    <span className="text-sm font-medium">Usuario</span>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-56">
+                  <DropdownMenuItem>
+                    <User className="w-4 h-4 mr-2" />
+                    Perfil
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Settings className="w-4 h-4 mr-2" />
+                    Ajustes
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem>
+                    <LogOut className="w-4 h-4 mr-2" />
+                    Cerrar sesión
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+          </div>
+        </header>
+        
         {/* Floating glassmorphism sidebar for map view - optimized */}
-        <div className="absolute top-6 left-6 z-50 w-64 backdrop-blur-xl bg-black/20 border border-white/30 rounded-2xl shadow-2xl">
+        <div className="absolute top-24 left-6 z-50 w-64 backdrop-blur-xl bg-black/20 border border-white/30 rounded-2xl shadow-2xl">
           <div className="p-6 border-b border-white/20">
             <div className="flex items-center space-x-3">
               <div className="w-8 h-8 bg-gradient-to-br from-green-400 to-green-600 rounded-xl flex items-center justify-center shadow-lg">
@@ -510,25 +573,7 @@ const PortalEmpresasDashboard = () => {
           </div>
         </div>
 
-        {/* Top notification bar */}
-        <div className="absolute top-6 right-6 z-50 flex space-x-3">
-          <Button 
-            variant="ghost" 
-            size="sm" 
-            className="backdrop-blur-xl bg-black/20 border border-white/30 text-white hover:bg-white/20 rounded-xl px-4 py-2"
-          >
-            <Bell className="w-4 h-4 mr-2" />
-            <span className="hidden sm:inline">3</span>
-          </Button>
-          <Button 
-            variant="ghost" 
-            size="sm" 
-            className="backdrop-blur-xl bg-black/20 border border-white/30 text-white hover:bg-white/20 rounded-xl px-4 py-2"
-          >
-            <MessageCircle className="w-4 h-4 mr-2" />
-            <span className="hidden sm:inline">2</span>
-          </Button>
-        </div>
+
       </div>
     );
   }
