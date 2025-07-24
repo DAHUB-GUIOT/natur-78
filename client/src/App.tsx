@@ -14,12 +14,12 @@ import Agenda from "./pages/Agenda";
 import Networking from "./pages/Networking";
 import Educacion from "./pages/Educacion";
 import Marketplace from "./pages/Marketplace";
-import Experiencias from "./pages/Experiencias";
+import ExperienciasOptimized from "./pages/ExperienciasOptimized";
 import Perfil from "./pages/Perfil";
 import PublicProfile from "./pages/PublicProfile";
-import AdminSimple from "./pages/AdminSimple";
+import AdminOptimized from "./pages/AdminOptimized";
 import Dashboard from "./pages/Dashboard";
-import MapaPublico from "./pages/MapaPublico";
+import MapaPublicoOptimized from "./pages/MapaPublicoOptimized";
 import { AuthProvider } from "./contexts/AuthContext";
 
 // Create QueryClient outside component to prevent recreation on renders
@@ -37,7 +37,7 @@ const App = () => (
             <Route path="/registro" component={Register} />
             <Route path="/reserva" component={Reservation} />
             <Route path="/experiencias">
-              <MainLayout><Experiencias /></MainLayout>
+              <MainLayout><ExperienciasOptimized /></MainLayout>
             </Route>
             <Route path="/networking">
               <MainLayout><Networking /></MainLayout>
@@ -49,10 +49,10 @@ const App = () => (
               <MainLayout><PublicProfile /></MainLayout>
             </Route>
             <Route path="/admin">
-              <MainLayout><AdminSimple /></MainLayout>
+              <MainLayout><AdminOptimized /></MainLayout>
             </Route>
             <Route path="/dashboard" component={Dashboard} />
-            <Route path="/mapa" component={MapaPublico} />
+            <Route path="/mapa" component={MapaPublicoOptimized} />
             <Route><NotFound /></Route>
           </Switch>
         </Router>
