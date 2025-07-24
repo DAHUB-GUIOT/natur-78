@@ -1,58 +1,54 @@
 import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import { storage } from './storage';
+import type { Express } from 'express';
 
-export function setupGoogleAuth() {
-  // Only set up Google OAuth if credentials are available
-  if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
+export function setupGoogleAuth(app: Express) {
+  // Only setup if credentials are available
+  const clientId = process.env.GOOGLE_CLIENT_ID || '10396090422-ttmfc1n33sfq35522k6tmeod9b1s6gnc.apps.googleusercontent.com';
+  const clientSecret = process.env.GOOGLE_CLIENT_SECRET || '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';
+  
+  if (!clientId || !clientSecret) {
     console.log('Google OAuth credentials not found, skipping Google authentication setup');
     return;
   }
 
   passport.use(new GoogleStrategy({
-    clientID: process.env.GOOGLE_CLIENT_ID,
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    clientID: clientId,
+    clientSecret: clientSecret,
     callbackURL: "/api/auth/google/callback"
   },
   async (accessToken, refreshToken, profile, done) => {
     try {
       // Check if user already exists
-      let user = await storage.getUserByGoogleId(profile.id);
+      let user = await storage.getUserByEmail(profile.emails?.[0]?.value || '');
       
-      if (user) {
-        return done(null, user);
+      if (!user) {
+        // Create new user with Google OAuth data
+        const userData = {
+          email: profile.emails?.[0]?.value || '',
+          googleId: profile.id,
+          firstName: profile.name?.givenName || null,
+          lastName: profile.name?.familyName || null,
+          profilePicture: profile.photos?.[0]?.value || null,
+          authProvider: 'google' as const
+        };
+        
+        user = await storage.createGoogleUser(userData);
       }
-
-      // Check if user exists with same email
-      const existingUser = await storage.getUserByEmail(profile.emails?.[0]?.value || '');
-      if (existingUser) {
-        // Link Google account to existing user
-        // This would require updating the user record, which we'll implement later
-        return done(null, existingUser);
-      }
-
-      // Create new user
-      const userData = {
-        googleId: profile.id,
-        email: profile.emails?.[0]?.value || '',
-        firstName: profile.name?.givenName || '',
-        lastName: profile.name?.familyName || '',
-        profilePicture: profile.photos?.[0]?.value || null,
-        authProvider: 'google' as const
-      };
-
-      user = await storage.createGoogleUser(userData);
+      
       return done(null, user);
     } catch (error) {
-      console.error('Google OAuth error:', error);
-      return done(error, null);
+      return done(error, false);
     }
   }));
 
+  // Serialize user for session
   passport.serializeUser((user: any, done) => {
     done(null, user.id);
   });
 
+  // Deserialize user from session
   passport.deserializeUser(async (id: number, done) => {
     try {
       const user = await storage.getUser(id);
@@ -61,4 +57,19 @@ export function setupGoogleAuth() {
       done(error, null);
     }
   });
+
+  // Google auth routes
+  app.get('/api/auth/google',
+    passport.authenticate('google', { scope: ['profile', 'email'] })
+  );
+
+  app.get('/api/auth/google/callback',
+    passport.authenticate('google', { failureRedirect: '/auth/empresas' }),
+    (req, res) => {
+      // Successful authentication, redirect to Portal Empresas dashboard
+      res.redirect('/portal-empresas');
+    }
+  );
+
+  console.log('Google OAuth authentication configured successfully');
 }

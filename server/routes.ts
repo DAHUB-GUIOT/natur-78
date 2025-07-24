@@ -14,23 +14,14 @@ declare module 'express-session' {
 }
 
 export async function registerRoutes(app: Express): Promise<Server> {
-  // Initialize passport and Google OAuth
-  setupGoogleAuth();
+  // Initialize passport middleware
   app.use(passport.initialize());
   app.use(passport.session());
+  
+  // Setup Google OAuth with routes
+  setupGoogleAuth(app);
 
-  // Google OAuth routes
-  app.get('/api/auth/google', 
-    passport.authenticate('google', { scope: ['profile', 'email'] })
-  );
-
-  app.get('/api/auth/google/callback',
-    passport.authenticate('google', { failureRedirect: '/auth/failure' }),
-    (req, res) => {
-      // Successful authentication, redirect to dashboard or home
-      res.redirect('/?auth=success');
-    }
-  );
+  // Google OAuth routes are now handled in setupGoogleAuth
 
   // Authentication routes
   app.post("/api/auth/login", async (req, res) => {
