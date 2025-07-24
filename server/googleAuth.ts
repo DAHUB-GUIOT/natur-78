@@ -28,10 +28,17 @@ export function setupGoogleAuth(app: Express) {
   },
   async (accessToken, refreshToken, profile, done) => {
     try {
+      console.log('Google OAuth profile received:', {
+        id: profile.id,
+        email: profile.emails?.[0]?.value,
+        name: profile.displayName
+      });
+      
       // Check if user already exists
       let user = await storage.getUserByEmail(profile.emails?.[0]?.value || '');
       
       if (!user) {
+        console.log('Creating new Google user');
         // Create new user with Google OAuth data
         const userData = {
           email: profile.emails?.[0]?.value || '',
@@ -43,10 +50,14 @@ export function setupGoogleAuth(app: Express) {
         };
         
         user = await storage.createGoogleUser(userData);
+        console.log('New Google user created:', user.id);
+      } else {
+        console.log('Existing user found:', user.id);
       }
       
       return done(null, user);
     } catch (error) {
+      console.error('Google OAuth error:', error);
       return done(error, false);
     }
   }));
@@ -72,10 +83,12 @@ export function setupGoogleAuth(app: Express) {
   );
 
   app.get('/api/auth/google/callback',
-    passport.authenticate('google', { failureRedirect: '/auth/empresas' }),
+    passport.authenticate('google', { failureRedirect: '/auth/empresas?error=auth_failed' }),
     (req, res) => {
+      console.log('Google OAuth callback successful, user authenticated');
+      console.log('User:', req.user);
       // Successful authentication, redirect to Portal Empresas dashboard
-      res.redirect('/portal-empresas');
+      res.redirect('/portal-empresas?auth=success');
     }
   );
 
