@@ -8,6 +8,11 @@ This is a full-stack web application for Festival NATUR (www.festivalnatur.com),
 
 ## Recent Changes
 
+- ✅ **January 24, 2025**: Security vulnerability patch applied
+  - **CRITICAL**: Upgraded Vite from ^5.4.14 to ^5.4.15 to fix CVE-2025-30208
+  - Security patch verified working, application tested and confirmed operational
+  - Build tool vulnerability resolved, development and production processes secured
+
 - ✅ **January 24, 2025**: Successfully completed migration from Lovable to Replit
   - Migrated from React Router to Wouter for better Replit compatibility
   - Replaced Supabase with PostgreSQL/Drizzle ORM backend
