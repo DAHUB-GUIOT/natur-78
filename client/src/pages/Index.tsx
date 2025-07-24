@@ -43,9 +43,9 @@ const Index = () => {
         <HomeBanner />
         <FeaturedArticles />
         
-        <Hero />
-        
         <MainPortals />
+        
+        <Hero />
         
         <div id="about">
           <About />
