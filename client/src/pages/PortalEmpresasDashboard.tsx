@@ -307,55 +307,53 @@ const PortalEmpresasDashboard = () => {
 
       case "empresas":
         return (
-          <div className="space-y-6">
+          <div className="space-y-4">
             <div className="flex justify-between items-center">
-              <h2 className="text-2xl font-bold text-white">Buscador de Empresas</h2>
-              <div className="flex space-x-2">
-                <Button variant="outline" size="sm" className="border-white/30 text-white hover:bg-white/20">
-                  <Filter className="w-4 h-4 mr-2" />
-                  Filtros
-                </Button>
-              </div>
+              <h2 className="text-xl font-bold text-white">Buscador de Empresas</h2>
+              <Button variant="outline" size="sm" className="border-white/30 text-white hover:bg-white/20">
+                <Filter className="w-3 h-3 mr-1" />
+                Filtros
+              </Button>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
               {companies.map((company) => (
                 <Card key={company.id} className="backdrop-blur-xl bg-white/10 border border-white/30 hover:bg-white/20 transition-all duration-200">
-                  <CardContent className="p-6">
-                    <div className="flex items-start space-x-4">
-                      <Avatar className="w-16 h-16 ring-2 ring-white/30">
+                  <CardContent className="p-3">
+                    <div className="flex items-start space-x-2">
+                      <Avatar className="w-10 h-10 ring-1 ring-white/30">
                         <AvatarImage src={company.image} />
-                        <AvatarFallback className="bg-green-500 text-white">{company.name[0]}</AvatarFallback>
+                        <AvatarFallback className="bg-green-500 text-white text-xs">{company.name[0]}</AvatarFallback>
                       </Avatar>
                       
                       <div className="flex-1 min-w-0">
-                        <div className="flex items-center space-x-2 mb-1">
-                          <h3 className="font-semibold text-white truncate">{company.name}</h3>
+                        <div className="flex items-center space-x-1 mb-1">
+                          <h3 className="font-semibold text-sm text-white truncate">{company.name}</h3>
                           {company.verified && (
-                            <Badge className="text-xs bg-green-600 text-white">
-                              Verificado
+                            <Badge className="text-xs bg-green-600 text-white px-1 py-0">
+                              ✓
                             </Badge>
                           )}
                         </div>
                         
-                        <p className="text-sm text-white/80 mb-2">{company.category}</p>
+                        <p className="text-xs text-white/80 mb-1">{company.category}</p>
                         
-                        <div className="flex items-center text-sm text-white/80 mb-3">
-                          <MapPin className="w-4 h-4 mr-1" />
+                        <div className="flex items-center text-xs text-white/80 mb-2">
+                          <MapPin className="w-3 h-3 mr-1" />
                           {company.location}
                         </div>
                         
                         <div className="flex items-center justify-between">
                           <div className="flex items-center space-x-1">
-                            <Star className="w-4 h-4 text-yellow-400 fill-current" />
-                            <span className="text-sm font-medium text-white">{company.rating}</span>
-                            <span className="text-sm text-white/70">({company.reviews})</span>
+                            <Star className="w-3 h-3 text-yellow-400 fill-current" />
+                            <span className="text-xs font-medium text-white">{company.rating}</span>
+                            <span className="text-xs text-white/70">({company.reviews})</span>
                           </div>
-                          
-                          <div className="flex space-x-2">
-                            <Button size="sm" variant="outline" className="border-white/30 text-white hover:bg-white/20">Ver perfil</Button>
-                            <Button size="sm" className="bg-green-600 hover:bg-green-700 text-white">Chatear</Button>
-                          </div>
+                        </div>
+                        
+                        <div className="flex space-x-1 mt-2">
+                          <Button size="sm" variant="outline" className="border-white/30 text-white hover:bg-white/20 text-xs h-6 flex-1">Ver</Button>
+                          <Button size="sm" className="bg-green-600 hover:bg-green-700 text-white text-xs h-6 flex-1">Chat</Button>
                         </div>
                       </div>
                     </div>
@@ -371,34 +369,149 @@ const PortalEmpresasDashboard = () => {
 
       case "mensajes":
         return (
-          <div className="space-y-6">
-            <h2 className="text-2xl font-bold text-white">Mensajes</h2>
-            <Card className="backdrop-blur-xl bg-white/10 border border-white/30">
-              <CardContent className="p-6">
-                <div className="bg-white/5 rounded-lg flex items-center justify-center h-96">
-                  <div className="text-center text-white">
-                    <MessageCircle className="w-16 h-16 mx-auto mb-4" />
-                    <p className="text-lg font-medium">Sistema de Mensajería</p>
-                    <p className="text-sm text-white/80">Chat estilo WhatsApp/Telegram se implementará aquí</p>
+          <div className="space-y-4">
+            <h2 className="text-xl font-bold text-white">Mensajes</h2>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 h-96">
+              {/* Chat List */}
+              <Card className="backdrop-blur-xl bg-white/10 border border-white/30">
+                <CardContent className="p-3">
+                  <div className="space-y-2">
+                    <h3 className="text-sm font-semibold text-white border-b border-white/20 pb-2">Conversaciones</h3>
+                    {[
+                      { name: "EcoTours Colombia", message: "Hola, me interesa tu experiencia...", time: "2h", unread: 2 },
+                      { name: "Café de la Montaña", message: "Gracias por la reserva", time: "1d", unread: 0 },
+                      { name: "Verde Aventura", message: "¿Podemos programar una llamada?", time: "3d", unread: 1 }
+                    ].map((chat, index) => (
+                      <div key={index} className="flex items-center space-x-2 p-2 rounded-lg bg-white/5 hover:bg-white/10 cursor-pointer">
+                        <Avatar className="w-8 h-8">
+                          <AvatarFallback className="bg-green-500 text-white text-xs">{chat.name[0]}</AvatarFallback>
+                        </Avatar>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center justify-between">
+                            <p className="text-xs font-medium text-white truncate">{chat.name}</p>
+                            <span className="text-xs text-white/70">{chat.time}</span>
+                          </div>
+                          <p className="text-xs text-white/80 truncate">{chat.message}</p>
+                        </div>
+                        {chat.unread > 0 && (
+                          <Badge className="bg-green-600 text-white text-xs w-4 h-4 rounded-full flex items-center justify-center p-0">
+                            {chat.unread}
+                          </Badge>
+                        )}
+                      </div>
+                    ))}
                   </div>
-                </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
+              
+              {/* Chat Window */}
+              <Card className="backdrop-blur-xl bg-white/10 border border-white/30 lg:col-span-2">
+                <CardContent className="p-3 h-full flex flex-col">
+                  <div className="flex items-center space-x-2 border-b border-white/20 pb-2 mb-2">
+                    <Avatar className="w-8 h-8">
+                      <AvatarFallback className="bg-green-500 text-white text-xs">E</AvatarFallback>
+                    </Avatar>
+                    <div>
+                      <p className="text-sm font-medium text-white">EcoTours Colombia</p>
+                      <p className="text-xs text-white/70">En línea</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex-1 space-y-2 overflow-y-auto">
+                    {[
+                      { text: "Hola, me interesa mucho tu experiencia de café sostenible", sender: "other", time: "14:30" },
+                      { text: "¡Hola! Me alegra tu interés. ¿Tienes alguna pregunta específica?", sender: "me", time: "14:32" },
+                      { text: "Sí, ¿cuál es la duración exacta del tour?", sender: "other", time: "14:35" }
+                    ].map((msg, index) => (
+                      <div key={index} className={`flex ${msg.sender === 'me' ? 'justify-end' : 'justify-start'}`}>
+                        <div className={`max-w-xs px-3 py-2 rounded-lg ${msg.sender === 'me' ? 'bg-green-600' : 'bg-white/20'}`}>
+                          <p className="text-xs text-white">{msg.text}</p>
+                          <p className="text-xs text-white/70 mt-1">{msg.time}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  
+                  <div className="flex space-x-2 mt-2">
+                    <Input placeholder="Escribe un mensaje..." className="flex-1 bg-white/10 border-white/20 text-white placeholder-white/60 text-xs h-8" />
+                    <Button size="sm" className="bg-green-600 hover:bg-green-700 text-white h-8 w-8 p-0">
+                      <MessageCircle className="w-3 h-3" />
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
           </div>
         );
 
       case "estadisticas":
         return (
-          <div className="space-y-6">
-            <h2 className="text-2xl font-bold text-white">Estadísticas</h2>
-            <Card className="backdrop-blur-xl bg-white/10 border border-white/30">
-              <CardContent className="p-6">
-                <div className="bg-white/5 rounded-lg flex items-center justify-center h-96">
-                  <div className="text-center text-white">
-                    <BarChart3 className="w-16 h-16 mx-auto mb-4" />
-                    <p className="text-lg font-medium">Panel de Estadísticas</p>
-                    <p className="text-sm text-white/80">Gráficos y métricas detalladas se mostrarán aquí</p>
+          <div className="space-y-4">
+            <h2 className="text-xl font-bold text-white">Estadísticas</h2>
+            
+            {/* Quick Stats Grid */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+              {[
+                { label: "Vistas", value: "1.2K", icon: Globe, color: "blue" },
+                { label: "Reservas", value: "89", icon: Calendar, color: "green" },
+                { label: "Ingresos", value: "$2.4M", icon: DollarSign, color: "yellow" },
+                { label: "Rating", value: "4.8", icon: Star, color: "purple" }
+              ].map((stat, index) => (
+                <Card key={index} className="backdrop-blur-xl bg-white/10 border border-white/30">
+                  <CardContent className="p-3">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-xs text-white/80">{stat.label}</p>
+                        <p className="text-lg font-bold text-white">{stat.value}</p>
+                      </div>
+                      <div className={`w-8 h-8 bg-${stat.color}-100 rounded-lg flex items-center justify-center`}>
+                        <stat.icon className={`w-4 h-4 text-${stat.color}-600`} />
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+            
+            {/* Charts Grid */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+              <Card className="backdrop-blur-xl bg-white/10 border border-white/30">
+                <CardContent className="p-3">
+                  <h3 className="text-sm font-semibold text-white mb-3">Reservas por Mes</h3>
+                  <div className="bg-white/5 rounded-lg flex items-center justify-center h-32">
+                    <BarChart3 className="w-8 h-8 text-white/50" />
                   </div>
+                </CardContent>
+              </Card>
+              
+              <Card className="backdrop-blur-xl bg-white/10 border border-white/30">
+                <CardContent className="p-3">
+                  <h3 className="text-sm font-semibold text-white mb-3">Ingresos Mensuales</h3>
+                  <div className="bg-white/5 rounded-lg flex items-center justify-center h-32">
+                    <DollarSign className="w-8 h-8 text-white/50" />
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+            
+            {/* Recent Performance */}
+            <Card className="backdrop-blur-xl bg-white/10 border border-white/30">
+              <CardContent className="p-3">
+                <h3 className="text-sm font-semibold text-white mb-3">Rendimiento Reciente</h3>
+                <div className="space-y-2">
+                  {[
+                    { experience: "Tour de Café Sostenible", views: 245, bookings: 12, revenue: "$1,020" },
+                    { experience: "Senderismo Ecológico", views: 189, bookings: 8, revenue: "$640" },
+                    { experience: "Gastronomía Local", views: 156, bookings: 15, revenue: "$1,275" }
+                  ].map((item, index) => (
+                    <div key={index} className="flex items-center justify-between p-2 bg-white/5 rounded-lg">
+                      <div>
+                        <p className="text-xs font-medium text-white">{item.experience}</p>
+                        <p className="text-xs text-white/70">{item.views} vistas • {item.bookings} reservas</p>
+                      </div>
+                      <p className="text-xs font-bold text-green-400">{item.revenue}</p>
+                    </div>
+                  ))}
                 </div>
               </CardContent>
             </Card>
@@ -407,21 +520,19 @@ const PortalEmpresasDashboard = () => {
 
       case "ajustes":
         return (
-          <div className="space-y-6">
-            <h2 className="text-2xl font-bold text-white">Ajustes</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-4">
+            <h2 className="text-xl font-bold text-white">Ajustes</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
               <Card className="backdrop-blur-xl bg-white/10 border border-white/30">
-                <CardHeader>
-                  <CardTitle className="text-lg font-semibold text-white">Perfil</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <Button variant="outline" className="w-full justify-start border-white/30 text-white hover:bg-white/20">
-                      <User className="w-4 h-4 mr-2" />
+                <CardContent className="p-3">
+                  <h3 className="text-sm font-semibold text-white mb-3">Perfil</h3>
+                  <div className="space-y-2">
+                    <Button variant="outline" size="sm" className="w-full justify-start border-white/30 text-white hover:bg-white/20 text-xs h-8">
+                      <User className="w-3 h-3 mr-2" />
                       Editar perfil
                     </Button>
-                    <Button variant="outline" className="w-full justify-start border-white/30 text-white hover:bg-white/20">
-                      <Settings className="w-4 h-4 mr-2" />
+                    <Button variant="outline" size="sm" className="w-full justify-start border-white/30 text-white hover:bg-white/20 text-xs h-8">
+                      <Settings className="w-3 h-3 mr-2" />
                       Cambiar contraseña
                     </Button>
                   </div>
@@ -429,23 +540,62 @@ const PortalEmpresasDashboard = () => {
               </Card>
               
               <Card className="backdrop-blur-xl bg-white/10 border border-white/30">
-                <CardHeader>
-                  <CardTitle className="text-lg font-semibold text-white">Configuración</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <Button variant="outline" className="w-full justify-start border-white/30 text-white hover:bg-white/20">
-                      <DollarSign className="w-4 h-4 mr-2" />
+                <CardContent className="p-3">
+                  <h3 className="text-sm font-semibold text-white mb-3">Pagos</h3>
+                  <div className="space-y-2">
+                    <Button variant="outline" size="sm" className="w-full justify-start border-white/30 text-white hover:bg-white/20 text-xs h-8">
+                      <DollarSign className="w-3 h-3 mr-2" />
                       Métodos de pago
                     </Button>
-                    <Button variant="outline" className="w-full justify-start border-white/30 text-white hover:bg-white/20">
-                      <Bell className="w-4 h-4 mr-2" />
-                      Notificaciones
+                    <Button variant="outline" size="sm" className="w-full justify-start border-white/30 text-white hover:bg-white/20 text-xs h-8">
+                      <BarChart3 className="w-3 h-3 mr-2" />
+                      Facturación
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+              
+              <Card className="backdrop-blur-xl bg-white/10 border border-white/30">
+                <CardContent className="p-3">
+                  <h3 className="text-sm font-semibold text-white mb-3">Notificaciones</h3>
+                  <div className="space-y-2">
+                    <Button variant="outline" size="sm" className="w-full justify-start border-white/30 text-white hover:bg-white/20 text-xs h-8">
+                      <Bell className="w-3 h-3 mr-2" />
+                      Configurar
+                    </Button>
+                    <Button variant="outline" size="sm" className="w-full justify-start border-white/30 text-white hover:bg-white/20 text-xs h-8">
+                      <MessageCircle className="w-3 h-3 mr-2" />
+                      Mensajes
                     </Button>
                   </div>
                 </CardContent>
               </Card>
             </div>
+            
+            {/* Quick Settings */}
+            <Card className="backdrop-blur-xl bg-white/10 border border-white/30">
+              <CardContent className="p-3">
+                <h3 className="text-sm font-semibold text-white mb-3">Configuración Rápida</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  <div className="space-y-2">
+                    <label className="text-xs text-white/80">Modo de Disponibilidad</label>
+                    <select className="w-full bg-white/10 border border-white/30 text-white text-xs rounded-lg p-2">
+                      <option>Disponible</option>
+                      <option>Ocupado</option>
+                      <option>Ausente</option>
+                    </select>
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-xs text-white/80">Idioma</label>
+                    <select className="w-full bg-white/10 border border-white/30 text-white text-xs rounded-lg p-2">
+                      <option>Español</option>
+                      <option>English</option>
+                      <option>Português</option>
+                    </select>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
           </div>
         );
 
