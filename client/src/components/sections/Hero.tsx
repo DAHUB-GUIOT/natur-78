@@ -40,52 +40,51 @@ export function Hero() {
       </nav>
       
       {/* Main Content */}
-      <div className="relative z-10 flex items-center min-h-screen px-6 sm:px-8 md:px-20">
-        <div className="max-w-7xl mx-auto w-full">
+      <div className="relative z-10 flex items-center justify-center min-h-screen px-4">
+        <div className="max-w-4xl mx-auto text-center">
           {/* Main Title */}
-          <h1 className="text-7xl sm:text-8xl md:text-9xl lg:text-[10rem] xl:text-[12rem] font-black text-emerald-300 mb-6 font-gasoek tracking-wide leading-none">
+          <h1 className="text-6xl md:text-8xl font-bold text-green-800 mb-6 font-gasoek tracking-wide">
             NATUR
           </h1>
           
           {/* Subtitle */}
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-8 max-w-3xl leading-tight font-jakarta">
-            Todo sobre turismo sostenible
-            <br />
-            <span className="text-emerald-300">y más</span>
+          <h2 className="text-2xl md:text-3xl text-green-700 mb-8 font-medium">
+            Plataforma de Turismo Sostenible
           </h2>
+          <p className="text-lg md:text-xl text-white mb-12 max-w-3xl mx-auto leading-relaxed">
+            Conectamos emprendedores, viajeros e inversores para crear experiencias de turismo consciente y regenerativo
+          </p>
           
-          {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 mb-8 max-w-2xl">
+          {/* Portal Buttons */}
+          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-12">
             <Link to="/auth/empresas">
               <Button 
                 size="lg" 
-                className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-lg px-8 py-4 rounded-lg shadow-xl flex items-center justify-center w-full sm:w-auto min-w-[200px]"
+                className="bg-black hover:bg-gray-800 text-white font-bold text-xl px-12 py-6 rounded-full shadow-2xl transform hover:scale-105 transition-all duration-300"
               >
-                <Ticket className="w-6 h-6 mr-3" />
-                PORTAL EMPRESAS
+                Portal Empresas
               </Button>
             </Link>
             
-            <Link to="/mapa">
+            <Link to="/auth/consentidos">
               <Button 
                 size="lg" 
-                variant="outline"
-                className="border-2 border-white text-white hover:bg-white hover:text-emerald-800 font-bold text-lg px-8 py-4 rounded-lg backdrop-blur-sm flex items-center justify-center w-full sm:w-auto min-w-[200px]"
+                className="bg-green-600 hover:bg-green-700 text-white font-bold text-xl px-12 py-6 rounded-full shadow-2xl transform hover:scale-105 transition-all duration-300"
               >
-                <Calendar className="w-6 h-6 mr-3" />
-                EXPERIENCIAS
+                Con-Sentidos
               </Button>
             </Link>
           </div>
           
-          {/* Secondary Link */}
-          <div className="text-left">
-            <Link to="/auth/consentidos">
+          {/* Quick Access */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <Link to="/mapa">
               <Button 
-                variant="link" 
-                className="text-emerald-300 hover:text-emerald-200 font-medium text-lg underline p-0 h-auto"
+                variant="outline" 
+                size="lg"
+                className="border-2 border-green-600 text-green-700 hover:bg-green-50 font-medium text-lg px-8 py-4"
               >
-                ¿Eres viajero consciente? Únete a Con-Sentidos →
+                Explorar Experiencias
               </Button>
             </Link>
           </div>
