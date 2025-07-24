@@ -310,11 +310,11 @@ const SubcategoryStep = ({ category, onSubcategorySelect, onBack }: SubcategoryS
         <Button 
           variant="ghost" 
           onClick={onBack}
-          className="text-[#FCF8EE] hover:text-[#EDFF60] hover:bg-transparent p-0 mr-4"
+          className="text-black hover:text-green-700 hover:bg-transparent p-0 mr-4"
         >
           <ArrowLeft className="h-5 w-5" />
         </Button>
-        <h2 className="text-2xl font-gasoek text-[#EDFF60] tracking-wide uppercase">
+        <h2 className="text-2xl font-gasoek text-black tracking-wide uppercase font-bold">
           {title}
         </h2>
       </div>
@@ -323,24 +323,24 @@ const SubcategoryStep = ({ category, onSubcategorySelect, onBack }: SubcategoryS
         {subcategories.map((subcategory) => (
           <div
             key={subcategory.id}
-            className="p-4 border rounded-lg cursor-pointer transition-all duration-300 border-[#FCF8EE]/20 hover:border-[#EDFF60]/50"
+            className="p-6 border-2 border-green-600 bg-white rounded-lg cursor-pointer transition-all duration-300 hover:border-green-700 hover:shadow-xl"
             onClick={() => onSubcategorySelect(subcategory.id)}
           >
             <div className="flex items-start gap-4">
-              <div className="text-[#EDFF60] mt-1">
+              <div className="text-green-600 mt-1">
                 {subcategory.icon}
               </div>
               <div>
-                <h3 className="text-[#FCF8EE] font-semibold text-lg">
+                <h3 className="text-black font-bold text-lg">
                   {subcategory.title}
                 </h3>
-                <ul className="mt-2 space-y-1">
+                <ul className="mt-3 space-y-2">
                   {subcategory.description.map((item, index) => (
                     <li
                       key={index}
-                      className="text-[#FCF8EE]/80 text-sm flex items-center gap-2"
+                      className="text-black font-medium text-sm flex items-center gap-2"
                     >
-                      <span className="w-1 h-1 bg-[#EDFF60] rounded-full"></span>
+                      <span className="w-2 h-2 bg-green-600 rounded-full"></span>
                       {item}
                     </li>
                   ))}
