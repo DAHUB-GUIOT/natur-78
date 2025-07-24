@@ -69,7 +69,7 @@ const Auth = ({ type }: AuthProps) => {
     
     // For existing users, redirect to their dashboards
     if (isEmpresas) {
-      setLocation('/experiencias');
+      setLocation('/portal-empresas');
     } else {
       setLocation('/mapa'); // Marketplace for travelers
     }

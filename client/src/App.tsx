@@ -22,6 +22,7 @@ import Perfil from "./pages/Perfil";
 import PublicProfile from "./pages/PublicProfile";
 import AdminOptimized from "./pages/AdminOptimized";
 import Dashboard from "./pages/Dashboard";
+import PortalEmpresasDashboard from "./pages/PortalEmpresasDashboard";
 import MapaPublicoOptimized from "./pages/MapaPublicoOptimized";
 import { AuthProvider } from "./contexts/AuthContext";
 
@@ -58,6 +59,7 @@ const App = () => (
               <MainLayout><AdminOptimized /></MainLayout>
             </Route>
             <Route path="/dashboard" component={Dashboard} />
+            <Route path="/portal-empresas" component={PortalEmpresasDashboard} />
             <Route path="/mapa" component={MapaPublicoOptimized} />
             <Route path="/plataforma">
               <MainLayout><Platform /></MainLayout>

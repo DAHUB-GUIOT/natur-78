@@ -162,13 +162,13 @@ const RegistrationForm = () => {
         // Show toast notification
         toast({
           title: "Registro exitoso",
-          description: "Tus datos han sido guardados. Te redirigiremos a tu perfil.",
+          description: "Tus datos han sido guardados. Te redirigiremos a tu dashboard empresarial.",
           variant: "default",
         });
         
-        // After a short delay, redirect to profile page
+        // After a short delay, redirect to Portal Empresas dashboard
         setTimeout(() => {
-          setLocation('/perfil');
+          setLocation('/portal-empresas');
         }, 3000);
       } else {
         throw new Error("No se pudo obtener el ID de usuario");

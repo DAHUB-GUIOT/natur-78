@@ -1,0 +1,174 @@
+Diseña un dashboard limpio, moderno y funcional para empresas registradas en una plataforma de experiencias turísticas.
+
+El estilo debe ser blanco, minimalista, con bordes suaves, íconos modernos, fuentes sin serifas (tipo Inter, SF Pro o Poppins) y animaciones ligeras (inspiración: Notion, Airbnb, LinkedIn, Stripe Dashboard).
+
+🎨 ESTRUCTURA GENERAL (LAYOUT)
+Pantalla principal dividida en:
+
+🔝 Top Bar (Barra superior):
+
+Logotipo de la plataforma (izquierda)
+
+Botón de búsqueda global
+
+Icono de notificaciones 🔔
+
+Icono de mensajes 💬
+
+Perfil de usuario (foto circular + menú desplegable: Perfil, Ajustes, Cerrar sesión)
+
+📂 Sidebar (Barra lateral - izquierda):
+Íconos simples con texto ocultable, tipo Notion. Opcional modo colapsable.
+
+🏠 Inicio
+
+🗺️ Mapa (con Mapbox)
+
+📇 Empresas / Perfiles
+
+🌟 Experiencias
+
+💬 Mensajes
+
+📊 Estadísticas
+
+⚙️ Ajustes
+
+🗺️ SECCIÓN MAPA (Mapbox embebido)
+Usa Mapbox para mostrar negocios en el mapa.
+
+Marcadores personalizados con íconos de categorías (gastronomía, cultura, aventura, etc.)
+
+Al hacer clic en un marcador, aparece una tarjeta de vista previa:
+
+Nombre de la empresa
+
+Categoría
+
+Miniatura
+
+Botón "Ver perfil" o "Chatear"
+
+🔍 BUSCADOR AL ESTILO LINKEDIN
+Campo de búsqueda flotante o en topbar
+
+Puedes buscar por:
+
+Nombre
+
+Categoría
+
+Ubicación
+
+Tags
+
+Resultados tipo cards:
+
+Imagen
+
+Nombre
+
+Reseñas
+
+Botones: Ver perfil, Chatear
+
+💬 MENSAJERÍA ESTILO WHATSAPP / TELEGRAM
+Lista de contactos recientes a la izquierda
+
+Chat activo a la derecha
+
+Soporta:
+
+Texto, emojis, archivos adjuntos
+
+Estados de mensaje: enviado, leído, recibido
+
+Vista de perfil del otro usuario
+
+Puede incluir chat grupal
+
+➕ BOTÓN FLOTANTE: CREAR EXPERIENCIA
+Circular, en esquina inferior derecha (color vibrante: azul o verde)
+
+Al hacer clic:
+
+Abre un formulario tipo modal o pantalla lateral
+
+Campos del formulario:
+
+📸 Imagen principal o video corto
+
+🎫 Título
+
+🧠 Subtítulo emocional (opcional)
+
+🗂️ Categoría
+
+💬 Descripción larga
+
+🗺️ Ubicación (con selección en Mapbox)
+
+💰 Precio (por persona o por grupo)
+
+📆 Fecha y hora
+
+🌐 Idioma
+
+🎥 Video promocional (opcional)
+
+👥 Cupos disponibles
+
+♿ Accesibilidad / pet-friendly / eco-friendly (checkboxes)
+
+Botón: “Publicar experiencia”
+
+🌟 VISUALIZACIÓN DE EXPERIENCIAS (CARDS/BANNERS)
+Cada experiencia publicada debe mostrarse en una tarjeta visual como:
+
+Imagen principal (auto recortada)
+
+Título
+
+Subtítulo
+
+Ubicación (pin + mapa)
+
+Categoría
+
+Fecha y hora
+
+Precio
+
+Avatar del anfitrión
+
+Reseñas ⭐⭐⭐⭐⭐
+
+Idiomas disponibles
+
+Duración estimada
+
+Tags (accesible, ecológica, etc.)
+
+Botones:
+
+“Ver más”
+
+“Reservar”
+
+“Compartir”
+
+“Guardar”
+
+⚙️ AJUSTES DE USUARIO
+Sección donde se puede:
+
+Editar perfil
+
+Cambiar contraseña
+
+Configurar métodos de pago o cobro
+
+Gestionar notificaciones
+
+Eliminar cuenta
+
