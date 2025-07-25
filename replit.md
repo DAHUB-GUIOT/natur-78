@@ -10,6 +10,11 @@ This is a full-stack web application for Festival NATUR (www.festivalnatur.com),
 
 ## Recent Changes
 
+- ✅ **January 25, 2025**: UI Clean-up - Removed WhatsApp Branding Text
+  - **REMOVED**: "WhatsApp Business para Empresas" text from messaging interface
+  - **REMOVED**: "Selecciona una conversación para empezar a chatear" text
+  - **UPDATED**: Cleaner messaging interface with just the visual icon, no text labels
+
 - ✅ **January 25, 2025**: Demo Data Successfully Created with Business Users and Festival NATUR
   - **NEW**: Created comprehensive seed data script with proper foreign key constraint handling
   - **NEW**: Added two business users: dahub.tech@gmail.com (password: dahub123) and tripcol.tour@gmail.com (password: tripcol123)

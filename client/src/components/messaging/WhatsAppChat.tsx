@@ -604,12 +604,7 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ currentUserId, onClo
             <div className="w-72 h-72 mx-auto mb-4 bg-[#233138] rounded-full flex items-center justify-center">
               <MessageCircle className="h-32 w-32 text-gray-500" />
             </div>
-            <h3 className="text-2xl font-light text-gray-300 mb-2">
-              WhatsApp Business para Empresas
-            </h3>
-            <p className="text-gray-400">
-              Selecciona una conversación para empezar a chatear
-            </p>
+
           </div>
         </div>
       )}
