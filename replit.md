@@ -10,6 +10,17 @@ This is a full-stack web application for Festival NATUR (www.festivalnatur.com),
 
 ## Recent Changes
 
+- ✅ **January 25, 2025**: Demo Data Successfully Created with Business Users and Festival NATUR
+  - **NEW**: Created comprehensive seed data script with proper foreign key constraint handling
+  - **NEW**: Added two business users: dahub.tech@gmail.com (password: dahub123) and tripcol.tour@gmail.com (password: tripcol123)
+  - **NEW**: Generated 6 authentic Colombian tourism experiences across cultura, aventura, gastronomía, educativo, and naturaleza categories
+  - **NEW**: Added Festival NATUR 2025 event at Centro de Felicidad Chapinero (March 15-17, 2025)
+  - **NEW**: Implemented data cleanup functionality to handle existing data before seeding
+  - **NEW**: Fixed database schema compatibility issues in seed data (JSON location format, proper field names)
+  - **NEW**: Both companies have verified status with complete profiles and business information
+  - **NEW**: Experiences include detailed pricing, accessibility info, languages, and operational details
+  - **NEW**: Demo accounts ready for testing B2B messaging, experience management, and marketplace features
+
 - ✅ **January 25, 2025**: Complete Admin Dashboard Implementation with Database Fixes
   - **NEW**: Created comprehensive admin API endpoints for user management, experience approval, and platform statistics
   - **NEW**: Implemented role-based authentication with admin middleware protection
