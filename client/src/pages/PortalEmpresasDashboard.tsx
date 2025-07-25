@@ -350,58 +350,37 @@ const PortalEmpresasDashboard = () => {
 
       case "mensajes":
         return (
-          <div className="space-y-4">
+          <div className="space-y-4 bg-gray-100 rounded-lg p-6">
             <div className="mb-6">
-              <h2 className="text-2xl font-bold text-white mb-2">Mensajes entre Empresas</h2>
-              <p className="text-gray-300 text-sm">Comunícate con otras empresas, proveedores y socios de la plataforma</p>
+              <h2 className="text-2xl font-bold text-gray-900 mb-2">Mensajes entre Empresas</h2>
+              <p className="text-gray-600 text-sm">Comunícate con otras empresas, proveedores y socios de la plataforma</p>
             </div>
             
             {/* Company Communication Tags */}
             <div className="flex flex-wrap gap-2 mb-4">
-              <Badge className="bg-blue-600/20 text-blue-400 border border-blue-600/30">
+              <Badge className="bg-blue-100 text-blue-700 border border-blue-200">
                 <Building2 className="w-3 h-3 mr-1" />
                 Comunicación B2B
               </Badge>
-              <Badge className="bg-green-600/20 text-green-400 border border-green-600/30">
+              <Badge className="bg-green-100 text-green-700 border border-green-200">
                 <Users className="w-3 h-3 mr-1" />
                 Red de Empresas
               </Badge>
-              <Badge className="bg-purple-600/20 text-purple-400 border border-purple-600/30">
+              <Badge className="bg-purple-100 text-purple-700 border border-purple-200">
                 <Handshake className="w-3 h-3 mr-1" />
                 Colaboraciones
               </Badge>
             </div>
 
-            {/* Quick Message Templates */}
-            <Card className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30 mb-4">
-              <CardContent className="p-4">
-                <p className="text-sm text-gray-300 mb-3">Iniciar conversación sobre:</p>
-                <div className="flex flex-wrap gap-2">
-                  <Button size="sm" variant="outline" className="text-xs border-gray-600/50 text-gray-300 hover:bg-gray-700/50">
-                    🤝 Propuesta de colaboración
-                  </Button>
-                  <Button size="sm" variant="outline" className="text-xs border-gray-600/50 text-gray-300 hover:bg-gray-700/50">
-                    📦 Solicitud de servicios
-                  </Button>
-                  <Button size="sm" variant="outline" className="text-xs border-gray-600/50 text-gray-300 hover:bg-gray-700/50">
-                    💼 Oportunidad de negocio
-                  </Button>
-                  <Button size="sm" variant="outline" className="text-xs border-gray-600/50 text-gray-300 hover:bg-gray-700/50">
-                    🎯 Consulta sobre experiencias
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-
             {currentUser?.user?.id ? (
-              <div className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30 rounded-lg p-1">
+              <div className="bg-white rounded-lg shadow-sm">
                 <MessageCenter currentUserId={currentUser.user.id} />
               </div>
             ) : (
-              <div className="flex items-center justify-center h-96 backdrop-blur-xl bg-gray-900/40 border border-gray-600/30 rounded-lg">
+              <div className="flex items-center justify-center h-96 bg-white rounded-lg shadow-sm">
                 <div className="text-center">
-                  <Building2 className="w-16 h-16 text-gray-500 mx-auto mb-4" />
-                  <p className="text-gray-400">Inicia sesión para comunicarte con otras empresas</p>
+                  <Building2 className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+                  <p className="text-gray-500">Inicia sesión para comunicarte con otras empresas</p>
                 </div>
               </div>
             )}

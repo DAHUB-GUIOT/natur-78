@@ -172,10 +172,16 @@ export const MessageCenter: React.FC<MessageCenterProps> = ({ currentUserId, pre
                   >
                     <div className="flex items-center gap-3">
                       <Avatar>
-                        <AvatarFallback>U{otherUserId}</AvatarFallback>
+                        <AvatarFallback className="bg-green-600 text-white">
+                          {otherUserId === 10 ? 'ET' : otherUserId === 11 ? 'CM' : `U${otherUserId}`}
+                        </AvatarFallback>
                       </Avatar>
                       <div className="flex-1 min-w-0">
-                        <p className="font-medium truncate">Usuario {otherUserId}</p>
+                        <p className="font-medium truncate">
+                          {otherUserId === 10 ? 'EcoTours Colombia' : 
+                           otherUserId === 11 ? 'Café de la Montaña' : 
+                           `Usuario ${otherUserId}`}
+                        </p>
                         <p className="text-sm text-gray-500 truncate">
                           {new Date(conversation.lastActivity).toLocaleDateString()}
                         </p>
@@ -204,7 +210,18 @@ export const MessageCenter: React.FC<MessageCenterProps> = ({ currentUserId, pre
               <ChevronLeft className="h-5 w-5" />
             </Button>
             <div className="flex-1">
-              <h3 className="font-semibold">Conversación</h3>
+              <h3 className="font-semibold">
+                {(() => {
+                  const conversation = conversations.find((c: Conversation) => c.id === selectedConversation);
+                  if (!conversation) return 'Conversación';
+                  const otherUserId = conversation.participant1Id === currentUserId 
+                    ? conversation.participant2Id 
+                    : conversation.participant1Id;
+                  return otherUserId === 10 ? 'EcoTours Colombia' : 
+                         otherUserId === 11 ? 'Café de la Montaña' : 
+                         `Usuario ${otherUserId}`;
+                })()}
+              </h3>
             </div>
           </div>
 
