@@ -209,10 +209,10 @@ const PortalEmpresasDashboard = () => {
                       className="w-full h-32 object-cover"
                     />
                     <div className="absolute top-2 right-2 space-y-1">
-                      <Button size="sm" variant="secondary" className="w-6 h-6 p-0 bg-white/20 backdrop-blur-md text-white hover:bg-white/30">
+                      <Button size="sm" variant="secondary" className="w-6 h-6 p-0 bg-gray-700/80 backdrop-blur-md text-white hover:bg-gray-600/80">
                         <Heart className="w-3 h-3" />
                       </Button>
-                      <Button size="sm" variant="secondary" className="w-6 h-6 p-0 bg-white/20 backdrop-blur-md text-white hover:bg-white/30">
+                      <Button size="sm" variant="secondary" className="w-6 h-6 p-0 bg-gray-700/80 backdrop-blur-md text-white hover:bg-gray-600/80">
                         <Share className="w-3 h-3" />
                       </Button>
                     </div>
@@ -266,7 +266,7 @@ const PortalEmpresasDashboard = () => {
                         <Link href={`/experiencia/${experience.id}`} className="flex-1">
                           <Button size="sm" className="w-full bg-green-600 hover:bg-green-700 text-white text-xs h-6">Ver</Button>
                         </Link>
-                        <Button size="sm" variant="outline" className="border-white/30 text-white hover:bg-white/20 h-6 w-6 p-0">
+                        <Button size="sm" variant="outline" className="border-gray-500/50 text-gray-300 hover:bg-gray-700/50 h-6 w-6 p-0">
                           <Edit className="w-3 h-3" />
                         </Button>
                       </div>
@@ -283,7 +283,7 @@ const PortalEmpresasDashboard = () => {
           <div className="space-y-4">
             <div className="flex justify-between items-center">
               <h2 className="text-xl font-bold text-white">Buscador de Empresas</h2>
-              <Button variant="outline" size="sm" className="border-white/30 text-white hover:bg-white/20">
+              <Button variant="outline" size="sm" className="border-gray-500/50 text-gray-300 hover:bg-gray-700/50">
                 <Filter className="w-3 h-3 mr-1" />
                 Filtros
               </Button>
@@ -325,7 +325,7 @@ const PortalEmpresasDashboard = () => {
                         </div>
                         
                         <div className="flex space-x-1 mt-2">
-                          <Button size="sm" variant="outline" className="border-white/30 text-white hover:bg-white/20 text-xs h-6 flex-1">Ver</Button>
+                          <Button size="sm" variant="outline" className="border-gray-500/50 text-gray-300 hover:bg-gray-700/50 text-xs h-6 flex-1">Ver</Button>
                           <Button size="sm" className="bg-green-600 hover:bg-green-700 text-white text-xs h-6 flex-1">Chat</Button>
                         </div>
                       </div>
@@ -406,7 +406,7 @@ const PortalEmpresasDashboard = () => {
                   </div>
                   
                   <div className="flex space-x-2 mt-2">
-                    <Input placeholder="Escribe un mensaje..." className="flex-1 bg-white/10 border-white/20 text-white placeholder-white/60 text-xs h-8" />
+                    <Input placeholder="Escribe un mensaje..." className="flex-1 bg-gray-700/80 border-gray-500/50 text-gray-200 placeholder-gray-400 text-xs h-8" />
                     <Button size="sm" className="bg-green-600 hover:bg-green-700 text-white h-8 w-8 p-0">
                       <MessageCircle className="w-3 h-3" />
                     </Button>
@@ -500,11 +500,11 @@ const PortalEmpresasDashboard = () => {
                 <CardContent className="p-3">
                   <h3 className="text-sm font-semibold text-white mb-3">Perfil</h3>
                   <div className="space-y-2">
-                    <Button variant="outline" size="sm" className="w-full justify-start border-white/30 text-white hover:bg-white/20 text-xs h-8">
+                    <Button variant="outline" size="sm" className="w-full justify-start border-gray-500/50 text-gray-300 hover:bg-gray-700/50 text-xs h-8">
                       <User className="w-3 h-3 mr-2" />
                       Editar perfil
                     </Button>
-                    <Button variant="outline" size="sm" className="w-full justify-start border-white/30 text-white hover:bg-white/20 text-xs h-8">
+                    <Button variant="outline" size="sm" className="w-full justify-start border-gray-500/50 text-gray-300 hover:bg-gray-700/50 text-xs h-8">
                       <Settings className="w-3 h-3 mr-2" />
                       Cambiar contraseña
                     </Button>
@@ -516,11 +516,11 @@ const PortalEmpresasDashboard = () => {
                 <CardContent className="p-3">
                   <h3 className="text-sm font-semibold text-white mb-3">Pagos</h3>
                   <div className="space-y-2">
-                    <Button variant="outline" size="sm" className="w-full justify-start border-white/30 text-white hover:bg-white/20 text-xs h-8">
+                    <Button variant="outline" size="sm" className="w-full justify-start border-gray-500/50 text-gray-300 hover:bg-gray-700/50 text-xs h-8">
                       <DollarSign className="w-3 h-3 mr-2" />
                       Métodos de pago
                     </Button>
-                    <Button variant="outline" size="sm" className="w-full justify-start border-white/30 text-white hover:bg-white/20 text-xs h-8">
+                    <Button variant="outline" size="sm" className="w-full justify-start border-gray-500/50 text-gray-300 hover:bg-gray-700/50 text-xs h-8">
                       <BarChart3 className="w-3 h-3 mr-2" />
                       Facturación
                     </Button>
@@ -532,11 +532,11 @@ const PortalEmpresasDashboard = () => {
                 <CardContent className="p-3">
                   <h3 className="text-sm font-semibold text-white mb-3">Notificaciones</h3>
                   <div className="space-y-2">
-                    <Button variant="outline" size="sm" className="w-full justify-start border-white/30 text-white hover:bg-white/20 text-xs h-8">
+                    <Button variant="outline" size="sm" className="w-full justify-start border-gray-500/50 text-gray-300 hover:bg-gray-700/50 text-xs h-8">
                       <Bell className="w-3 h-3 mr-2" />
                       Configurar
                     </Button>
-                    <Button variant="outline" size="sm" className="w-full justify-start border-white/30 text-white hover:bg-white/20 text-xs h-8">
+                    <Button variant="outline" size="sm" className="w-full justify-start border-gray-500/50 text-gray-300 hover:bg-gray-700/50 text-xs h-8">
                       <MessageCircle className="w-3 h-3 mr-2" />
                       Mensajes
                     </Button>
@@ -552,7 +552,7 @@ const PortalEmpresasDashboard = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   <div className="space-y-2">
                     <label className="text-xs text-white/80">Modo de Disponibilidad</label>
-                    <select className="w-full bg-white/10 border border-white/30 text-white text-xs rounded-lg p-2">
+                    <select className="w-full bg-gray-700/80 border border-gray-500/50 text-gray-200 text-xs rounded-lg p-2">
                       <option>Disponible</option>
                       <option>Ocupado</option>
                       <option>Ausente</option>
@@ -560,7 +560,7 @@ const PortalEmpresasDashboard = () => {
                   </div>
                   <div className="space-y-2">
                     <label className="text-xs text-white/80">Idioma</label>
-                    <select className="w-full bg-white/10 border border-white/30 text-white text-xs rounded-lg p-2">
+                    <select className="w-full bg-gray-700/80 border border-gray-500/50 text-gray-200 text-xs rounded-lg p-2">
                       <option>Español</option>
                       <option>English</option>
                       <option>Português</option>
