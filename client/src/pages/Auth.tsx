@@ -261,8 +261,80 @@ const Auth = ({ type }: AuthProps) => {
                             button.textContent = 'Conectando...';
                             button.disabled = true;
                           }
-                          // Try direct approach first
-                          window.location.href = '/api/auth/google';
+                          
+                          // Use popup to avoid iframe blocking
+                          const popup = window.open(
+                            '/api/auth/google?popup=true',
+                            'google-auth',
+                            'width=500,height=600,scrollbars=yes,resizable=yes,menubar=no,toolbar=no,status=no'
+                          );
+
+                          if (!popup) {
+                            alert('Popup bloqueado. Por favor, habilita popups para este sitio.');
+                            if (button) {
+                              button.textContent = 'Continuar con Google';
+                              button.disabled = false;
+                            }
+                            return;
+                          }
+
+                          // Listen for messages from popup
+                          const messageHandler = (event: MessageEvent) => {
+                            if (event.origin !== window.location.origin) return;
+                            
+                            if (event.data.type === 'GOOGLE_AUTH_SUCCESS') {
+                              window.removeEventListener('message', messageHandler);
+                              clearInterval(checkAuth);
+                              if (button) {
+                                button.textContent = 'Continuar con Google';
+                                button.disabled = false;
+                              }
+                              // Redirect to dashboard
+                              window.location.href = '/portal-empresas?auth=success';
+                            }
+                          };
+                          
+                          window.addEventListener('message', messageHandler);
+
+                          // Listen for authentication completion
+                          const checkAuth = setInterval(() => {
+                            try {
+                              if (popup.closed) {
+                                clearInterval(checkAuth);
+                                window.removeEventListener('message', messageHandler);
+                                if (button) {
+                                  button.textContent = 'Continuar con Google';
+                                  button.disabled = false;
+                                }
+                                // Check if authentication was successful by trying to access a protected route
+                                fetch('/api/auth/me')
+                                  .then(res => res.json())
+                                  .then(data => {
+                                    if (data.user) {
+                                      window.location.href = '/portal-empresas?auth=success';
+                                    }
+                                  })
+                                  .catch(() => {
+                                    // Authentication failed, stay on current page
+                                  });
+                              }
+                            } catch (e) {
+                              // Cross-origin error, popup is still open
+                            }
+                          }, 1000);
+
+                          // Timeout after 5 minutes
+                          setTimeout(() => {
+                            if (!popup.closed) {
+                              popup.close();
+                              clearInterval(checkAuth);
+                              window.removeEventListener('message', messageHandler);
+                              if (button) {
+                                button.textContent = 'Continuar con Google';
+                                button.disabled = false;
+                              }
+                            }
+                          }, 300000);
                         }}
                       >
                         <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24">

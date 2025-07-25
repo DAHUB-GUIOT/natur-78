@@ -104,8 +104,13 @@ export function setupGoogleAuth(app: Express) {
       if (req.query.popup === 'true') {
         res.send(`
           <script>
-            window.opener.postMessage({type: 'GOOGLE_AUTH_SUCCESS'}, '*');
-            window.close();
+            try {
+              window.opener.postMessage({type: 'GOOGLE_AUTH_SUCCESS', user: ${JSON.stringify(req.user)}}, '*');
+              setTimeout(() => window.close(), 1000);
+            } catch (e) {
+              console.error('Failed to communicate with parent window:', e);
+              window.close();
+            }
           </script>
         `);
       } else {
