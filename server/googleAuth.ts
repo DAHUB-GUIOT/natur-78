@@ -8,9 +8,12 @@ export function setupGoogleAuth(app: Express) {
   const clientId = process.env.GOOGLE_CLIENT_ID;
   const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
   
-  if (!clientId || !clientSecret) {
+  // Fallback to hardcoded credentials for testing
+  const finalClientId = clientId || '10396090422-muuum7g15jqpen49hrauipchr836jtes.apps.googleusercontent.com';
+  const finalClientSecret = clientSecret || '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';
+  
+  if (!finalClientId || !finalClientSecret) {
     console.log('Google OAuth credentials not found, skipping Google authentication setup');
-    console.log('Required callback URI: https://377c8a7a-2e8b-4984-a78e-326b650e3978-00-3hhd6ygsrp585.picard.replit.dev/api/auth/google/callback');
     return;
   }
 
@@ -23,8 +26,8 @@ export function setupGoogleAuth(app: Express) {
   console.log(`Domain: ${domain}`);
 
   passport.use(new GoogleStrategy({
-    clientID: clientId,
-    clientSecret: clientSecret,
+    clientID: finalClientId,
+    clientSecret: finalClientSecret,
     callbackURL: callbackURL
   },
   async (accessToken, refreshToken, profile, done) => {

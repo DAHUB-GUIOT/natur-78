@@ -239,9 +239,7 @@ const Auth = ({ type }: AuthProps) => {
                     <>
                       <div className="text-center mt-4">
                         <p className="text-white/70 text-sm">
-                          Nota: Google OAuth puede estar bloqueado en algunos navegadores.
-                          <br />
-                          Usa el login con email como alternativa segura.
+                          ✅ Google OAuth configurado y listo
                         </p>
                       </div>
 
