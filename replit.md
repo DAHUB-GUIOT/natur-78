@@ -10,6 +10,16 @@ This is a full-stack web application for Festival NATUR (www.festivalnatur.com),
 
 ## Recent Changes
 
+- ✅ **January 25, 2025**: Messaging Search Shows Real Users - TripCol and DaHub
+  - **NEW**: Added /api/messages/search-users endpoint to find real business users
+  - **NEW**: Search functionality now displays TripCol and DaHub when typing in search box
+  - **NEW**: Users can click on search results to start new conversations
+  - **NEW**: Search shows only active empresa (business) users for B2B messaging
+  - **NEW**: Real-time search filtering by name or email
+  - **NEW**: Search results display with green avatars to differentiate from existing conversations
+  - **NEW**: Click to start conversation sends initial greeting message
+  - **FIXED**: Messaging now works with real seeded users instead of mock data
+
 - ✅ **January 25, 2025**: Messaging Page Complete Light Gray Theme Redesign
   - **UPDATED**: Changed entire messaging interface from dark WhatsApp theme to light gray color scheme
   - **NEW**: Light gray backgrounds (gray-100, gray-200, gray-300, gray-400) throughout messaging UI

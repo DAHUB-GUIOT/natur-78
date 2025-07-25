@@ -480,6 +480,51 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Search users for messaging
+  app.get("/api/messages/search-users", async (req, res) => {
+    try {
+      if (!req.session.userId) {
+        return res.status(401).json({ error: "Not authenticated" });
+      }
+
+      const { query } = req.query;
+      
+      // Get all users with role 'empresa' for B2B messaging
+      const users = await storage.getAllUsers();
+      const empresaUsers = users.filter(user => 
+        user.role === 'empresa' && 
+        user.id !== req.session.userId &&
+        user.isActive
+      );
+
+      // Filter by search query if provided
+      let filteredUsers = empresaUsers;
+      if (query && typeof query === 'string') {
+        const searchQuery = query.toLowerCase();
+        filteredUsers = empresaUsers.filter(user => {
+          const fullName = `${user.firstName || ''} ${user.lastName || ''}`.toLowerCase();
+          const email = user.email.toLowerCase();
+          return fullName.includes(searchQuery) || email.includes(searchQuery);
+        });
+      }
+
+      // Return user info suitable for messaging
+      const userResults = filteredUsers.map(user => ({
+        id: user.id,
+        email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        profilePicture: user.profilePicture,
+        role: user.role
+      }));
+
+      res.json(userResults);
+    } catch (error) {
+      console.error("Search users error:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+
   // Enhanced conversations endpoint with user details
   app.get("/api/messages/conversations/enhanced", async (req, res) => {
     try {

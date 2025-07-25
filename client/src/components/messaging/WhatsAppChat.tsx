@@ -92,6 +92,12 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ currentUserId, onClo
     enabled: !!currentUserId,
   });
 
+  // Fetch users for search
+  const { data: searchUsers = [] } = useQuery<User[]>({
+    queryKey: ['/api/messages/search-users', searchQuery],
+    enabled: !!currentUserId && searchQuery.length > 0,
+  });
+
   // Fetch messages for selected conversation
   const { data: messages = [], refetch: refetchMessages } = useQuery<Message[]>({
     queryKey: [`/api/messages/${selectedConversation}`],
@@ -315,8 +321,61 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ currentUserId, onClo
           </div>
         </div>
 
-        {/* Conversations */}
+        {/* Conversations and Search Results */}
         <ScrollArea className="flex-1">
+          {/* Search Results */}
+          {searchQuery && searchUsers.length > 0 && (
+            <>
+              <div className="px-3 py-2 bg-gray-300/50">
+                <p className="text-xs font-semibold text-white">Usuarios disponibles</p>
+              </div>
+              {searchUsers.map((user) => (
+                <div
+                  key={`search-${user.id}`}
+                  onClick={async () => {
+                    // Start a new conversation
+                    try {
+                      const response = await apiRequest('/api/messages', {
+                        method: 'POST',
+                        body: JSON.stringify({
+                          receiverId: user.id,
+                          content: `Hola ${user.firstName}, me gustaría conectar contigo.`
+                        }),
+                      });
+                      queryClient.invalidateQueries({ queryKey: ['/api/messages/conversations/enhanced'] });
+                      setSearchQuery('');
+                    } catch (error) {
+                      toast({
+                        title: "Error",
+                        description: "No se pudo iniciar la conversación",
+                        variant: "destructive",
+                      });
+                    }
+                  }}
+                  className="flex items-center px-3 py-2 hover:bg-gray-300 cursor-pointer transition-colors border-b border-gray-300"
+                >
+                  <Avatar className="h-12 w-12 mr-3">
+                    <AvatarImage src={user.profilePicture} />
+                    <AvatarFallback className="bg-green-600 text-white">
+                      {user.firstName?.[0]}{user.lastName?.[0]}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="flex-1">
+                    <p className="font-medium text-white">
+                      {user.firstName} {user.lastName}
+                    </p>
+                    <p className="text-sm text-white/70">{user.email}</p>
+                    <p className="text-xs text-green-400">Click para iniciar conversación</p>
+                  </div>
+                </div>
+              ))}
+              <div className="px-3 py-2 bg-gray-300/50 mt-2">
+                <p className="text-xs font-semibold text-white">Conversaciones activas</p>
+              </div>
+            </>
+          )}
+
+          {/* Existing Conversations */}
           {filteredConversations.map((conversation) => {
             const user = conversation.otherUser;
             const isSelected = conversation.id === selectedConversation;
