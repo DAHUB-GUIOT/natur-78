@@ -283,27 +283,27 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ currentUserId, onClo
 
   if (conversationsLoading) {
     return (
-      <div className="flex items-center justify-center h-screen bg-gray-200">
+      <div className="flex items-center justify-center h-screen bg-transparent backdrop-blur-xl">
         <div className="text-white">Cargando conversaciones...</div>
       </div>
     );
   }
 
   return (
-    <div className="flex h-screen bg-gray-200">
+    <div className="flex h-screen bg-transparent">
       {/* Conversations List */}
       <div className={cn(
-        "w-full md:w-96 bg-gray-200 border-r border-gray-300 flex flex-col",
+        "w-full md:w-96 backdrop-blur-xl bg-white/10 border-r border-white/20 flex flex-col",
         selectedConversation && "hidden md:flex"
       )}>
         {/* Header */}
-        <div className="bg-gray-300 px-4 py-3">
+        <div className="backdrop-blur-xl bg-white/20 px-4 py-3">
           <div className="flex items-center justify-between mb-3">
             <h2 className="text-xl font-semibold text-white">Mensajes B2B</h2>
             <Button
               size="icon"
               variant="ghost"
-              className="text-white hover:bg-gray-400"
+              className="text-white hover:bg-white/20"
               onClick={onClose}
             >
               <X className="h-5 w-5" />
@@ -316,7 +316,7 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ currentUserId, onClo
               placeholder="Buscar empresas o contactos..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10 bg-gray-400/50 border-gray-400 text-white placeholder-white/70"
+              className="pl-10 backdrop-blur-xl bg-white/10 border-white/20 text-white placeholder-white/70"
             />
           </div>
         </div>
@@ -326,7 +326,7 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ currentUserId, onClo
           {/* Search Results */}
           {searchQuery && searchUsers.length > 0 && (
             <>
-              <div className="px-3 py-2 bg-gray-300/50">
+              <div className="px-3 py-2 backdrop-blur-xl bg-white/10">
                 <p className="text-xs font-semibold text-white">Usuarios disponibles</p>
               </div>
               {searchUsers.map((user) => (
@@ -352,7 +352,7 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ currentUserId, onClo
                       });
                     }
                   }}
-                  className="flex items-center px-3 py-2 hover:bg-gray-300 cursor-pointer transition-colors border-b border-gray-300"
+                  className="flex items-center px-3 py-2 hover:bg-white/20 cursor-pointer transition-colors border-b border-white/10"
                 >
                   <Avatar className="h-12 w-12 mr-3">
                     <AvatarImage src={user.profilePicture} />
@@ -369,7 +369,7 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ currentUserId, onClo
                   </div>
                 </div>
               ))}
-              <div className="px-3 py-2 bg-gray-300/50 mt-2">
+              <div className="px-3 py-2 backdrop-blur-xl bg-white/10 mt-2">
                 <p className="text-xs font-semibold text-white">Conversaciones activas</p>
               </div>
             </>
@@ -385,13 +385,13 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ currentUserId, onClo
                 key={conversation.id}
                 onClick={() => setSelectedConversation(conversation.id)}
                 className={cn(
-                  "flex items-center px-3 py-2 hover:bg-gray-300 cursor-pointer transition-colors",
-                  isSelected && "bg-gray-400/50"
+                  "flex items-center px-3 py-2 hover:bg-white/20 cursor-pointer transition-colors",
+                  isSelected && "bg-white/10"
                 )}
               >
                 <Avatar className="h-12 w-12 mr-3">
                   <AvatarImage src={user?.profilePicture} />
-                  <AvatarFallback className="bg-gray-400 text-white">
+                  <AvatarFallback className="bg-white/20 text-white">
                     {user?.firstName?.[0]}{user?.lastName?.[0]}
                   </AvatarFallback>
                 </Avatar>
@@ -423,21 +423,21 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ currentUserId, onClo
 
       {/* Chat Area */}
       {selectedConversation ? (
-        <div className="flex-1 flex flex-col bg-gray-200">
+        <div className="flex-1 flex flex-col bg-transparent">
           {/* Chat Header */}
-          <div className="bg-gray-300 px-4 py-3 flex items-center justify-between">
+          <div className="backdrop-blur-xl bg-white/20 px-4 py-3 flex items-center justify-between">
             <div className="flex items-center">
               <Button
                 size="icon"
                 variant="ghost"
-                className="md:hidden text-white hover:bg-gray-400 mr-2"
+                className="md:hidden text-white hover:bg-white/20 mr-2"
                 onClick={() => setSelectedConversation(null)}
               >
                 <ArrowLeft className="h-5 w-5" />
               </Button>
               <Avatar className="h-10 w-10 mr-3">
                 <AvatarImage src={otherUser?.profilePicture} />
-                <AvatarFallback className="bg-gray-400 text-white">
+                <AvatarFallback className="bg-white/20 text-white">
                   {otherUser?.firstName?.[0]}{otherUser?.lastName?.[0]}
                 </AvatarFallback>
               </Avatar>
@@ -458,23 +458,23 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ currentUserId, onClo
               </div>
             </div>
             <div className="flex items-center gap-3">
-              <Button size="icon" variant="ghost" className="text-white hover:bg-gray-400">
+              <Button size="icon" variant="ghost" className="text-white hover:bg-white/20">
                 <Video className="h-5 w-5" />
               </Button>
-              <Button size="icon" variant="ghost" className="text-white hover:bg-gray-400">
+              <Button size="icon" variant="ghost" className="text-white hover:bg-white/20">
                 <Phone className="h-5 w-5" />
               </Button>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button size="icon" variant="ghost" className="text-white hover:bg-gray-400">
+                  <Button size="icon" variant="ghost" className="text-white hover:bg-white/20">
                     <MoreVertical className="h-5 w-5" />
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent className="bg-gray-400 text-white border-gray-500">
-                  <DropdownMenuItem>Ver perfil</DropdownMenuItem>
-                  <DropdownMenuItem>Silenciar notificaciones</DropdownMenuItem>
-                  <DropdownMenuItem>Vaciar chat</DropdownMenuItem>
-                  <DropdownMenuItem className="text-red-300">Bloquear</DropdownMenuItem>
+                <DropdownMenuContent className="backdrop-blur-xl bg-white/20 text-white border-white/20">
+                  <DropdownMenuItem className="hover:bg-white/20">Ver perfil</DropdownMenuItem>
+                  <DropdownMenuItem className="hover:bg-white/20">Silenciar notificaciones</DropdownMenuItem>
+                  <DropdownMenuItem className="hover:bg-white/20">Vaciar chat</DropdownMenuItem>
+                  <DropdownMenuItem className="text-red-300 hover:bg-white/20">Bloquear</DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
@@ -482,7 +482,7 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ currentUserId, onClo
 
           {/* Messages */}
           <ScrollArea 
-            className="flex-1 px-4 py-2 bg-gray-200"
+            className="flex-1 px-4 py-2 backdrop-blur-xl bg-white/5"
           >
             {messages.map((message, index) => {
               const isOwn = message.senderId === currentUserId;
@@ -494,7 +494,7 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ currentUserId, onClo
                 <React.Fragment key={message.id}>
                   {showDate && (
                     <div className="flex justify-center my-2">
-                      <span className="bg-gray-300 text-white text-xs px-3 py-1 rounded-full">
+                      <span className="backdrop-blur-xl bg-white/20 text-white text-xs px-3 py-1 rounded-full">
                         {isToday(new Date(message.createdAt)) 
                           ? 'Hoy' 
                           : isYesterday(new Date(message.createdAt))
@@ -513,7 +513,7 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ currentUserId, onClo
                     <div
                       className={cn(
                         "relative max-w-[70%] px-3 py-2 rounded-lg group",
-                        isOwn ? "bg-green-600" : "bg-gray-300"
+                        isOwn ? "bg-green-600" : "backdrop-blur-xl bg-white/20"
                       )}
                     >
                       {/* Message Actions */}
@@ -521,12 +521,12 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ currentUserId, onClo
                         "absolute top-0 opacity-0 group-hover:opacity-100 transition-opacity",
                         isOwn ? "-left-20" : "-right-20"
                       )}>
-                        <div className="flex items-center gap-1 bg-gray-400 rounded-lg p-1">
+                        <div className="flex items-center gap-1 backdrop-blur-xl bg-white/20 rounded-lg p-1">
                           {isOwn && (
                             <Button
                               size="icon"
                               variant="ghost"
-                              className="h-6 w-6 text-white hover:bg-gray-500"
+                              className="h-6 w-6 text-white hover:bg-white/20"
                               onClick={() => handleEditMessage(message)}
                             >
                               <Edit2 className="h-3 w-3" />
@@ -535,7 +535,7 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ currentUserId, onClo
                           <Button
                             size="icon"
                             variant="ghost"
-                            className="h-6 w-6 text-white hover:bg-gray-500"
+                            className="h-6 w-6 text-white hover:bg-white/20"
                             onClick={() => setReplyingToMessage(message)}
                           >
                             <ArrowLeft className="h-3 w-3 rotate-180" />
@@ -544,7 +544,7 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ currentUserId, onClo
                             <Button
                               size="icon"
                               variant="ghost"
-                              className="h-6 w-6 text-white hover:bg-gray-500"
+                              className="h-6 w-6 text-white hover:bg-white/20"
                               onClick={() => deleteMessageMutation.mutate(message.id)}
                             >
                               <Trash2 className="h-3 w-3" />
@@ -583,7 +583,7 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ currentUserId, onClo
 
           {/* Reply Preview */}
           {replyingToMessage && (
-            <div className="bg-gray-300 px-4 py-2 flex items-center justify-between">
+            <div className="backdrop-blur-xl bg-white/20 px-4 py-2 flex items-center justify-between">
               <div className="flex-1">
                 <p className="text-xs text-green-400 font-semibold">Respondiendo a</p>
                 <p className="text-sm text-white truncate">{replyingToMessage.content}</p>
@@ -591,7 +591,7 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ currentUserId, onClo
               <Button
                 size="icon"
                 variant="ghost"
-                className="text-white hover:bg-gray-400"
+                className="text-white hover:bg-white/20"
                 onClick={() => setReplyingToMessage(null)}
               >
                 <X className="h-4 w-4" />
@@ -601,14 +601,14 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ currentUserId, onClo
 
           {/* Edit Preview */}
           {editingMessageId && (
-            <div className="bg-gray-300 px-4 py-2 flex items-center justify-between">
+            <div className="backdrop-blur-xl bg-white/20 px-4 py-2 flex items-center justify-between">
               <div className="flex-1">
                 <p className="text-xs text-green-400 font-semibold">Editando mensaje</p>
               </div>
               <Button
                 size="icon"
                 variant="ghost"
-                className="text-white hover:bg-gray-400"
+                className="text-white hover:bg-white/20"
                 onClick={cancelEdit}
               >
                 <X className="h-4 w-4" />
@@ -617,11 +617,11 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ currentUserId, onClo
           )}
 
           {/* Input Area */}
-          <div className="bg-gray-300 px-4 py-3 flex items-center gap-3">
-            <Button size="icon" variant="ghost" className="text-white hover:bg-gray-400">
+          <div className="backdrop-blur-xl bg-white/20 px-4 py-3 flex items-center gap-3">
+            <Button size="icon" variant="ghost" className="text-white hover:bg-white/20">
               <Paperclip className="h-5 w-5" />
             </Button>
-            <Button size="icon" variant="ghost" className="text-white hover:bg-gray-400">
+            <Button size="icon" variant="ghost" className="text-white hover:bg-white/20">
               <Smile className="h-5 w-5" />
             </Button>
             <Input
@@ -630,7 +630,7 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ currentUserId, onClo
               value={messageContent}
               onChange={(e) => setMessageContent(e.target.value)}
               onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
-              className="flex-1 bg-gray-400/50 border-gray-400 text-white placeholder-white/70"
+              className="flex-1 backdrop-blur-xl bg-white/10 border-white/20 text-white placeholder-white/70"
             />
             {messageContent.trim() ? (
               <Button
@@ -646,7 +646,7 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ currentUserId, onClo
                 size="icon"
                 variant="ghost"
                 className={cn(
-                  "text-white hover:bg-gray-400",
+                  "text-white hover:bg-white/20",
                   isRecording && "text-red-400"
                 )}
                 onClick={() => setIsRecording(!isRecording)}
@@ -657,13 +657,13 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ currentUserId, onClo
           </div>
         </div>
       ) : (
-        <div className="flex-1 flex items-center justify-center bg-gray-200">
+        <div className="flex-1 flex items-center justify-center bg-transparent backdrop-blur-xl">
           <div className="text-center">
-            <div className="w-72 h-72 mx-auto mb-4 bg-gray-300 rounded-full flex items-center justify-center">
+            <div className="w-72 h-72 mx-auto mb-4 backdrop-blur-xl bg-white/20 rounded-full flex items-center justify-center">
               <MessageCircle className="h-32 w-32 text-white" />
             </div>
-            <h3 className="text-xl font-semibold text-gray-600 mb-2">Selecciona una conversación</h3>
-            <p className="text-gray-500">Elige una empresa para comenzar a chatear</p>
+            <h3 className="text-xl font-semibold text-white mb-2">Selecciona una conversación</h3>
+            <p className="text-white/70">Elige una empresa para comenzar a chatear</p>
           </div>
         </div>
       )}
