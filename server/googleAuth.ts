@@ -8,7 +8,7 @@ export function setupGoogleAuth(app: Express) {
   const clientId = process.env.GOOGLE_CLIENT_ID;
   const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
   
-  // Fallback to hardcoded credentials for testing
+  // Use the correct credentials from your new Google OAuth app
   const finalClientId = clientId || '10396090422-muuum7g15jqpen49hrauipchr836jtes.apps.googleusercontent.com';
   const finalClientSecret = clientSecret || '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';
   
@@ -24,6 +24,7 @@ export function setupGoogleAuth(app: Express) {
 
   console.log(`Google OAuth Callback URL: ${callbackURL}`);
   console.log(`Domain: ${domain}`);
+  console.log(`Using Client ID: ${finalClientId}`);
 
   passport.use(new GoogleStrategy({
     clientID: finalClientId,

@@ -1,0 +1,31 @@
+# Google OAuth Debug Information
+
+## Error: redirect_uri_mismatch
+
+This error occurs when the redirect URI in your Google Cloud Console doesn't exactly match what the application is sending.
+
+## Current Configuration:
+- Client ID: 10396090422-muuum7g15jqpen49hrauipchr836jtes.apps.googleusercontent.com
+- Client Secret: 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
+- Domain: 377c8a7a-2e8b-4984-a78e-326b650e3978-00-3hhd6ygsrp585.picard.replit.dev
+
+## Required Redirect URI for Google Cloud Console:
+Add this EXACT URI to your Google Cloud Console → Credentials → OAuth 2.0 Client IDs:
+
+https://377c8a7a-2e8b-4984-a78e-326b650e3978-00-3hhd6ygsrp585.picard.replit.dev/api/auth/google/callback
+
+## Steps to Fix:
+1. Go to Google Cloud Console: https://console.cloud.google.com/
+2. Navigate to APIs & Services → Credentials
+3. Click on your OAuth 2.0 Client ID: 10396090422-muuum7g15jqpen49hrauipchr836jtes.apps.googleusercontent.com
+4. In "Authorized redirect URIs" section, add:
+   https://377c8a7a-2e8b-4984-a78e-326b650e3978-00-3hhd6ygsrp585.picard.replit.dev/api/auth/google/callback
+5. Save the changes
+6. Wait 5-10 minutes for Google to propagate the changes
+
+## Current Status:
+- Authentication endpoint working (responding in ~23ms)
+- Client ID correctly configured
+- Waiting for redirect URI to be added to Google Cloud Console
+
+Note: The redirect URI must match EXACTLY - including https://, the domain, and the path.
