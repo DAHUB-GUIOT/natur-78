@@ -189,17 +189,7 @@ export default function PortalViajeros() {
             </div>
           </div>
           
-          <div className="flex-1 max-w-md mx-8">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-white/70" />
-              <Input 
-                placeholder="Buscar experiencias, destinos, actividades..." 
-                className="pl-10 bg-white/10 border-white/20 text-white placeholder-white/60 backdrop-blur-md"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-            </div>
-          </div>
+          
           
           <div className="flex items-center space-x-4">
             <Button variant="ghost" size="sm" className="relative text-white hover:bg-white/20">
