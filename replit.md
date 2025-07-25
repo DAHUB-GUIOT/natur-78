@@ -10,6 +10,10 @@ This is a full-stack web application for Festival NATUR (www.festivalnatur.com),
 
 ## Recent Changes
 
+- ✅ **January 25, 2025**: About Section Border Removal
+  - **FIXED**: Removed border from text container in About section as requested by user
+  - **UPDATED**: Cleaned up glassmorphism design by removing border-[#191C0F]/10 class
+
 - ✅ **January 25, 2025**: Portal Viajeros Enhanced with Separate Pages and Sample Experiences
   - **NEW**: Added "Mapa" button to show clean map view with only background and experience markers
   - **NEW**: Created 3 sample Colombian experiences: El Cocuy trekking, Nuquí whale watching, Cartagena food tour
