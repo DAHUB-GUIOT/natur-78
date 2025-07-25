@@ -79,7 +79,7 @@ export function Hero() {
             <div className="flex flex-col gap-3 max-w-xs">
               <Link to="/tickets">
                 <Button 
-                  size="md" 
+                  size="lg" 
                   className="text-black font-bold text-sm px-6 py-3 rounded-lg shadow-lg flex items-center justify-center w-full hover:opacity-90"
                   style={{ backgroundColor: '#EDFF60' }}
                 >
@@ -90,8 +90,8 @@ export function Hero() {
               
               <Link to="/agenda">
                 <Button 
-                  size="md" 
-                  className="bg-white hover:bg-yellow-50 text-black font-bold text-sm px-6 py-3 rounded-lg shadow-lg flex items-center justify-center w-full"
+                  size="lg" 
+                  className="bg-black hover:bg-gray-800 text-white font-bold text-sm px-6 py-3 rounded-lg shadow-lg flex items-center justify-center w-full"
                 >
                   <Calendar className="w-4 h-4 mr-2" />
                   AGENDA
@@ -100,7 +100,7 @@ export function Hero() {
               
               <Link to="/mapa">
                 <Button 
-                  size="md" 
+                  size="lg" 
                   className="bg-white hover:bg-yellow-50 text-black font-bold text-sm px-6 py-3 rounded-lg shadow-lg flex items-center justify-center w-full"
                 >
                   <Calendar className="w-4 h-4 mr-2" />

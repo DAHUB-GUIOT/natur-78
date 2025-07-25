@@ -225,10 +225,10 @@ const PortalEmpresasDashboard = () => {
                     <div className="space-y-2">
                       <div>
                         <h3 className="font-semibold text-sm text-white mb-1">{experience.title}</h3>
-                        <p className="text-white/80 text-xs line-clamp-2">{experience.subtitle}</p>
+                        <p className="text-gray-200 text-xs line-clamp-2">{experience.subtitle}</p>
                       </div>
                       
-                      <div className="flex items-center text-xs text-white/80">
+                      <div className="flex items-center text-xs text-gray-200">
                         <MapPin className="w-3 h-3 mr-1" />
                         {experience.location}
                       </div>
@@ -239,7 +239,7 @@ const PortalEmpresasDashboard = () => {
                             <AvatarImage src={experience.hostAvatar} />
                             <AvatarFallback className="bg-green-500 text-white text-xs">{experience.host[0]}</AvatarFallback>
                           </Avatar>
-                          <span className="text-xs text-white/80 truncate">{experience.host}</span>
+                          <span className="text-xs text-gray-200 truncate">{experience.host}</span>
                         </div>
                         <div className="flex items-center space-x-1">
                           <Star className="w-3 h-3 text-yellow-400 fill-current" />
@@ -250,7 +250,7 @@ const PortalEmpresasDashboard = () => {
                       <div className="flex items-center justify-between">
                         <div className="flex space-x-1">
                           {experience.tags?.slice(0, 2).map((tag: string) => (
-                            <Badge key={tag} className="bg-white/20 text-white text-xs backdrop-blur-md px-1 py-0">
+                            <Badge key={tag} className="bg-gray-700/80 text-gray-200 text-xs backdrop-blur-md px-1 py-0">
                               {tag}
                             </Badge>
                           ))}
@@ -309,9 +309,9 @@ const PortalEmpresasDashboard = () => {
                           )}
                         </div>
                         
-                        <p className="text-xs text-white/80 mb-1">{company.category}</p>
+                        <p className="text-xs text-gray-200 mb-1">{company.category}</p>
                         
-                        <div className="flex items-center text-xs text-white/80 mb-2">
+                        <div className="flex items-center text-xs text-gray-200 mb-2">
                           <MapPin className="w-3 h-3 mr-1" />
                           {company.location}
                         </div>
@@ -320,7 +320,7 @@ const PortalEmpresasDashboard = () => {
                           <div className="flex items-center space-x-1">
                             <Star className="w-3 h-3 text-yellow-400 fill-current" />
                             <span className="text-xs font-medium text-white">{company.rating}</span>
-                            <span className="text-xs text-white/70">({company.reviews})</span>
+                            <span className="text-xs text-gray-300">({company.reviews})</span>
                           </div>
                         </div>
                         
@@ -362,9 +362,9 @@ const PortalEmpresasDashboard = () => {
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center justify-between">
                             <p className="text-xs font-medium text-white truncate">{chat.name}</p>
-                            <span className="text-xs text-white/70">{chat.time}</span>
+                            <span className="text-xs text-gray-300">{chat.time}</span>
                           </div>
-                          <p className="text-xs text-white/80 truncate">{chat.message}</p>
+                          <p className="text-xs text-gray-200 truncate">{chat.message}</p>
                         </div>
                         {chat.unread > 0 && (
                           <Badge className="bg-green-600 text-white text-xs w-4 h-4 rounded-full flex items-center justify-center p-0">
@@ -386,7 +386,7 @@ const PortalEmpresasDashboard = () => {
                     </Avatar>
                     <div>
                       <p className="text-sm font-medium text-white">EcoTours Colombia</p>
-                      <p className="text-xs text-white/70">En línea</p>
+                      <p className="text-xs text-gray-300">En línea</p>
                     </div>
                   </div>
                   
@@ -399,14 +399,14 @@ const PortalEmpresasDashboard = () => {
                       <div key={index} className={`flex ${msg.sender === 'me' ? 'justify-end' : 'justify-start'}`}>
                         <div className={`max-w-xs px-3 py-2 rounded-lg ${msg.sender === 'me' ? 'bg-green-600' : 'bg-white/20'}`}>
                           <p className="text-xs text-white">{msg.text}</p>
-                          <p className="text-xs text-white/70 mt-1">{msg.time}</p>
+                          <p className="text-xs text-gray-300 mt-1">{msg.time}</p>
                         </div>
                       </div>
                     ))}
                   </div>
                   
                   <div className="flex space-x-2 mt-2">
-                    <Input placeholder="Escribe un mensaje..." className="flex-1 bg-gray-700/80 border-gray-500/50 text-gray-200 placeholder-gray-400 text-xs h-8" />
+                    <Input placeholder="Escribe un mensaje..." className="flex-1 bg-gray-700/80 border-gray-500/50 text-white placeholder-gray-400 text-xs h-8" />
                     <Button size="sm" className="bg-green-600 hover:bg-green-700 text-white h-8 w-8 p-0">
                       <MessageCircle className="w-3 h-3" />
                     </Button>
@@ -434,7 +434,7 @@ const PortalEmpresasDashboard = () => {
                   <CardContent className="p-3">
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-xs text-white/80">{stat.label}</p>
+                        <p className="text-xs text-gray-200">{stat.label}</p>
                         <p className="text-lg font-bold text-white">{stat.value}</p>
                       </div>
                       <div className={`w-8 h-8 bg-${stat.color}-100 rounded-lg flex items-center justify-center`}>
@@ -480,7 +480,7 @@ const PortalEmpresasDashboard = () => {
                     <div key={index} className="flex items-center justify-between p-2 bg-white/5 rounded-lg">
                       <div>
                         <p className="text-xs font-medium text-white">{item.experience}</p>
-                        <p className="text-xs text-white/70">{item.views} vistas • {item.bookings} reservas</p>
+                        <p className="text-xs text-gray-300">{item.views} vistas • {item.bookings} reservas</p>
                       </div>
                       <p className="text-xs font-bold text-green-400">{item.revenue}</p>
                     </div>
@@ -551,7 +551,7 @@ const PortalEmpresasDashboard = () => {
                 <h3 className="text-sm font-semibold text-white mb-3">Configuración Rápida</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   <div className="space-y-2">
-                    <label className="text-xs text-white/80">Modo de Disponibilidad</label>
+                    <label className="text-xs text-gray-200">Modo de Disponibilidad</label>
                     <select className="w-full bg-gray-700/80 border border-gray-500/50 text-gray-200 text-xs rounded-lg p-2">
                       <option>Disponible</option>
                       <option>Ocupado</option>
@@ -559,7 +559,7 @@ const PortalEmpresasDashboard = () => {
                     </select>
                   </div>
                   <div className="space-y-2">
-                    <label className="text-xs text-white/80">Idioma</label>
+                    <label className="text-xs text-gray-200">Idioma</label>
                     <select className="w-full bg-gray-700/80 border border-gray-500/50 text-gray-200 text-xs rounded-lg p-2">
                       <option>Español</option>
                       <option>English</option>
