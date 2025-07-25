@@ -95,57 +95,57 @@ const PortalEmpresasDashboard = () => {
           <div className="space-y-6">
             {/* Compact Stats Cards */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
-              <Card className="bg-white border border-gray-200 hover:shadow-md transition-shadow">
+              <Card className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30 hover:bg-gray-800/50 transition-all">
                 <CardContent className="p-3">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-xs text-gray-600 font-medium">Experiencias Activas</p>
-                      <p className="text-xl font-bold text-gray-900">12</p>
+                      <p className="text-xs text-white font-medium">Experiencias Activas</p>
+                      <p className="text-xl font-bold text-white">12</p>
                     </div>
-                    <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
-                      <Star className="w-4 h-4 text-blue-600" />
+                    <div className="w-8 h-8 bg-blue-600/20 rounded-lg flex items-center justify-center">
+                      <Star className="w-4 h-4 text-blue-400" />
                     </div>
                   </div>
                 </CardContent>
               </Card>
               
-              <Card className="bg-white border border-gray-200 hover:shadow-md transition-shadow">
+              <Card className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30 hover:bg-gray-800/50 transition-all">
                 <CardContent className="p-3">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-xs text-gray-600 font-medium">Reservas del Mes</p>
-                      <p className="text-xl font-bold text-gray-900">89</p>
+                      <p className="text-xs text-white font-medium">Reservas del Mes</p>
+                      <p className="text-xl font-bold text-white">89</p>
                     </div>
-                    <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
-                      <Calendar className="w-4 h-4 text-green-600" />
+                    <div className="w-8 h-8 bg-green-600/20 rounded-lg flex items-center justify-center">
+                      <Calendar className="w-4 h-4 text-green-400" />
                     </div>
                   </div>
                 </CardContent>
               </Card>
               
-              <Card className="bg-white border border-gray-200 hover:shadow-md transition-shadow">
+              <Card className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30 hover:bg-gray-800/50 transition-all">
                 <CardContent className="p-3">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-xs text-gray-600 font-medium">Ingresos</p>
-                      <p className="text-xl font-bold text-gray-900">$2.4M</p>
+                      <p className="text-xs text-white font-medium">Ingresos</p>
+                      <p className="text-xl font-bold text-white">$2.4M</p>
                     </div>
-                    <div className="w-8 h-8 bg-yellow-100 rounded-lg flex items-center justify-center">
-                      <DollarSign className="w-4 h-4 text-yellow-600" />
+                    <div className="w-8 h-8 bg-yellow-600/20 rounded-lg flex items-center justify-center">
+                      <DollarSign className="w-4 h-4 text-yellow-400" />
                     </div>
                   </div>
                 </CardContent>
               </Card>
               
-              <Card className="bg-white border border-gray-200 hover:shadow-md transition-shadow">
+              <Card className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30 hover:bg-gray-800/50 transition-all">
                 <CardContent className="p-3">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-xs text-gray-600 font-medium">Clientes Nuevos</p>
-                      <p className="text-xl font-bold text-gray-900">24</p>
+                      <p className="text-xs text-white font-medium">Clientes Nuevos</p>
+                      <p className="text-xl font-bold text-white">24</p>
                     </div>
-                    <div className="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
-                      <Users className="w-4 h-4 text-purple-600" />
+                    <div className="w-8 h-8 bg-purple-600/20 rounded-lg flex items-center justify-center">
+                      <Users className="w-4 h-4 text-purple-400" />
                     </div>
                   </div>
                 </CardContent>
@@ -153,29 +153,29 @@ const PortalEmpresasDashboard = () => {
             </div>
 
             {/* Recent Activity */}
-            <Card className="bg-white border border-gray-200">
+            <Card className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30">
               <CardHeader>
-                <CardTitle className="text-lg font-semibold text-gray-900">Actividad Reciente</CardTitle>
+                <CardTitle className="text-lg font-semibold text-white">Actividad Reciente</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  <div className="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg">
-                    <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
-                      <Star className="w-5 h-5 text-blue-600" />
+                  <div className="flex items-center space-x-4 p-4 bg-gray-800/30 rounded-lg">
+                    <div className="w-10 h-10 bg-blue-600/20 rounded-full flex items-center justify-center">
+                      <Star className="w-5 h-5 text-blue-400" />
                     </div>
                     <div className="flex-1">
-                      <p className="font-medium text-gray-900">Nueva reserva para "Tour de Café Sostenible"</p>
-                      <p className="text-sm text-gray-600">Hace 2 horas</p>
+                      <p className="font-medium text-white">Nueva reserva para "Tour de Café Sostenible"</p>
+                      <p className="text-sm text-gray-300">Hace 2 horas</p>
                     </div>
                   </div>
                   
-                  <div className="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg">
-                    <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
-                      <MessageCircle className="w-5 h-5 text-green-600" />
+                  <div className="flex items-center space-x-4 p-4 bg-gray-800/30 rounded-lg">
+                    <div className="w-10 h-10 bg-green-600/20 rounded-full flex items-center justify-center">
+                      <MessageCircle className="w-5 h-5 text-green-400" />
                     </div>
                     <div className="flex-1">
-                      <p className="font-medium text-gray-900">Nuevo mensaje de EcoTours Colombia</p>
-                      <p className="text-sm text-gray-600">Hace 1 día</p>
+                      <p className="font-medium text-white">Nuevo mensaje de EcoTours Colombia</p>
+                      <p className="text-sm text-gray-300">Hace 1 día</p>
                     </div>
                   </div>
                 </div>
@@ -201,7 +201,7 @@ const PortalEmpresasDashboard = () => {
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
               {(experiences as any[]).map((experience: any) => (
-                <Card key={experience.id} className="backdrop-blur-xl bg-white/10 border border-white/30 hover:bg-white/20 transition-all duration-200 overflow-hidden">
+                <Card key={experience.id} className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30 hover:bg-gray-800/50 transition-all duration-200 overflow-hidden">
                   <div className="relative">
                     <img 
                       src={experience.image} 
@@ -216,7 +216,7 @@ const PortalEmpresasDashboard = () => {
                         <Share className="w-3 h-3" />
                       </Button>
                     </div>
-                    <Badge className="absolute top-2 left-2 bg-green-600 text-white text-xs">
+                    <Badge className="absolute top-2 left-2 bg-green-600/80 text-white text-xs backdrop-blur-sm">
                       {experience.category}
                     </Badge>
                   </div>
@@ -291,12 +291,12 @@ const PortalEmpresasDashboard = () => {
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
               {companies.map((company) => (
-                <Card key={company.id} className="backdrop-blur-xl bg-white/10 border border-white/30 hover:bg-white/20 transition-all duration-200">
+                <Card key={company.id} className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30 hover:bg-gray-800/50 transition-all duration-200">
                   <CardContent className="p-3">
                     <div className="flex items-start space-x-2">
-                      <Avatar className="w-10 h-10 ring-1 ring-white/30">
+                      <Avatar className="w-10 h-10 ring-1 ring-gray-600/50">
                         <AvatarImage src={company.image} />
-                        <AvatarFallback className="bg-green-500 text-white text-xs">{company.name[0]}</AvatarFallback>
+                        <AvatarFallback className="bg-green-600/80 text-white text-xs">{company.name[0]}</AvatarFallback>
                       </Avatar>
                       
                       <div className="flex-1 min-w-0">
@@ -325,8 +325,8 @@ const PortalEmpresasDashboard = () => {
                         </div>
                         
                         <div className="flex space-x-1 mt-2">
-                          <Button size="sm" variant="outline" className="border-gray-500/50 text-gray-300 hover:bg-gray-700/50 text-xs h-6 flex-1">Ver</Button>
-                          <Button size="sm" className="bg-green-600 hover:bg-green-700 text-white text-xs h-6 flex-1">Chat</Button>
+                          <Button size="sm" variant="outline" className="border-gray-600/50 text-gray-300 hover:bg-gray-700/50 text-xs h-6 flex-1 backdrop-blur-sm">Ver</Button>
+                          <Button size="sm" className="bg-green-600/80 hover:bg-green-700/80 text-white text-xs h-6 flex-1 backdrop-blur-sm">Chat</Button>
                         </div>
                       </div>
                     </div>
@@ -346,18 +346,18 @@ const PortalEmpresasDashboard = () => {
             <h2 className="text-xl font-bold text-white">Mensajes</h2>
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 h-96">
               {/* Chat List */}
-              <Card className="backdrop-blur-xl bg-white/10 border border-white/30">
+              <Card className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30">
                 <CardContent className="p-3">
                   <div className="space-y-2">
-                    <h3 className="text-sm font-semibold text-white border-b border-white/20 pb-2">Conversaciones</h3>
+                    <h3 className="text-sm font-semibold text-white border-b border-gray-600/30 pb-2">Conversaciones</h3>
                     {[
                       { name: "EcoTours Colombia", message: "Hola, me interesa tu experiencia...", time: "2h", unread: 2 },
                       { name: "Café de la Montaña", message: "Gracias por la reserva", time: "1d", unread: 0 },
                       { name: "Verde Aventura", message: "¿Podemos programar una llamada?", time: "3d", unread: 1 }
                     ].map((chat, index) => (
-                      <div key={index} className="flex items-center space-x-2 p-2 rounded-lg bg-white/5 hover:bg-white/10 cursor-pointer">
+                      <div key={index} className="flex items-center space-x-2 p-2 rounded-lg bg-gray-800/30 hover:bg-gray-700/40 cursor-pointer">
                         <Avatar className="w-8 h-8">
-                          <AvatarFallback className="bg-green-500 text-white text-xs">{chat.name[0]}</AvatarFallback>
+                          <AvatarFallback className="bg-green-600/80 text-white text-xs">{chat.name[0]}</AvatarFallback>
                         </Avatar>
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center justify-between">
@@ -367,7 +367,7 @@ const PortalEmpresasDashboard = () => {
                           <p className="text-xs text-gray-200 truncate">{chat.message}</p>
                         </div>
                         {chat.unread > 0 && (
-                          <Badge className="bg-green-600 text-white text-xs w-4 h-4 rounded-full flex items-center justify-center p-0">
+                          <Badge className="bg-green-600/80 text-white text-xs w-4 h-4 rounded-full flex items-center justify-center p-0 backdrop-blur-sm">
                             {chat.unread}
                           </Badge>
                         )}
@@ -378,11 +378,11 @@ const PortalEmpresasDashboard = () => {
               </Card>
               
               {/* Chat Window */}
-              <Card className="backdrop-blur-xl bg-white/10 border border-white/30 lg:col-span-2">
+              <Card className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30 lg:col-span-2">
                 <CardContent className="p-3 h-full flex flex-col">
-                  <div className="flex items-center space-x-2 border-b border-white/20 pb-2 mb-2">
+                  <div className="flex items-center space-x-2 border-b border-gray-600/30 pb-2 mb-2">
                     <Avatar className="w-8 h-8">
-                      <AvatarFallback className="bg-green-500 text-white text-xs">E</AvatarFallback>
+                      <AvatarFallback className="bg-green-600/80 text-white text-xs">E</AvatarFallback>
                     </Avatar>
                     <div>
                       <p className="text-sm font-medium text-white">EcoTours Colombia</p>
@@ -397,7 +397,7 @@ const PortalEmpresasDashboard = () => {
                       { text: "Sí, ¿cuál es la duración exacta del tour?", sender: "other", time: "14:35" }
                     ].map((msg, index) => (
                       <div key={index} className={`flex ${msg.sender === 'me' ? 'justify-end' : 'justify-start'}`}>
-                        <div className={`max-w-xs px-3 py-2 rounded-lg ${msg.sender === 'me' ? 'bg-green-600' : 'bg-white/20'}`}>
+                        <div className={`max-w-xs px-3 py-2 rounded-lg ${msg.sender === 'me' ? 'bg-green-600/80 backdrop-blur-sm' : 'bg-gray-800/40 backdrop-blur-sm'}`}>
                           <p className="text-xs text-white">{msg.text}</p>
                           <p className="text-xs text-gray-300 mt-1">{msg.time}</p>
                         </div>
@@ -406,8 +406,8 @@ const PortalEmpresasDashboard = () => {
                   </div>
                   
                   <div className="flex space-x-2 mt-2">
-                    <Input placeholder="Escribe un mensaje..." className="flex-1 bg-gray-700/80 border-gray-500/50 text-white placeholder-gray-400 text-xs h-8" />
-                    <Button size="sm" className="bg-green-600 hover:bg-green-700 text-white h-8 w-8 p-0">
+                    <Input placeholder="Escribe un mensaje..." className="flex-1 bg-gray-800/50 border-gray-600/50 text-white placeholder-gray-400 text-xs h-8 backdrop-blur-sm" />
+                    <Button size="sm" className="bg-green-600/80 hover:bg-green-700/80 text-white h-8 w-8 p-0 backdrop-blur-sm">
                       <MessageCircle className="w-3 h-3" />
                     </Button>
                   </div>
@@ -430,15 +430,15 @@ const PortalEmpresasDashboard = () => {
                 { label: "Ingresos", value: "$2.4M", icon: DollarSign, color: "yellow" },
                 { label: "Rating", value: "4.8", icon: Star, color: "purple" }
               ].map((stat, index) => (
-                <Card key={index} className="backdrop-blur-xl bg-white/10 border border-white/30">
+                <Card key={index} className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30">
                   <CardContent className="p-3">
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-xs text-gray-200">{stat.label}</p>
+                        <p className="text-xs text-white">{stat.label}</p>
                         <p className="text-lg font-bold text-white">{stat.value}</p>
                       </div>
-                      <div className={`w-8 h-8 bg-${stat.color}-100 rounded-lg flex items-center justify-center`}>
-                        <stat.icon className={`w-4 h-4 text-${stat.color}-600`} />
+                      <div className={`w-8 h-8 bg-${stat.color}-600/20 rounded-lg flex items-center justify-center backdrop-blur-sm`}>
+                        <stat.icon className={`w-4 h-4 text-${stat.color}-400`} />
                       </div>
                     </div>
                   </CardContent>
@@ -496,15 +496,15 @@ const PortalEmpresasDashboard = () => {
           <div className="space-y-4">
             <h2 className="text-xl font-bold text-white">Ajustes</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-              <Card className="backdrop-blur-xl bg-white/10 border border-white/30">
+              <Card className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30">
                 <CardContent className="p-3">
                   <h3 className="text-sm font-semibold text-white mb-3">Perfil</h3>
                   <div className="space-y-2">
-                    <Button variant="outline" size="sm" className="w-full justify-start border-gray-500/50 text-gray-300 hover:bg-gray-700/50 text-xs h-8">
+                    <Button variant="outline" size="sm" className="w-full justify-start border-gray-600/50 text-white hover:bg-gray-700/50 text-xs h-8 backdrop-blur-sm">
                       <User className="w-3 h-3 mr-2" />
                       Editar perfil
                     </Button>
-                    <Button variant="outline" size="sm" className="w-full justify-start border-gray-500/50 text-gray-300 hover:bg-gray-700/50 text-xs h-8">
+                    <Button variant="outline" size="sm" className="w-full justify-start border-gray-600/50 text-white hover:bg-gray-700/50 text-xs h-8 backdrop-blur-sm">
                       <Settings className="w-3 h-3 mr-2" />
                       Cambiar contraseña
                     </Button>
@@ -512,15 +512,15 @@ const PortalEmpresasDashboard = () => {
                 </CardContent>
               </Card>
               
-              <Card className="backdrop-blur-xl bg-white/10 border border-white/30">
+              <Card className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30">
                 <CardContent className="p-3">
                   <h3 className="text-sm font-semibold text-white mb-3">Pagos</h3>
                   <div className="space-y-2">
-                    <Button variant="outline" size="sm" className="w-full justify-start border-gray-500/50 text-gray-300 hover:bg-gray-700/50 text-xs h-8">
+                    <Button variant="outline" size="sm" className="w-full justify-start border-gray-600/50 text-white hover:bg-gray-700/50 text-xs h-8 backdrop-blur-sm">
                       <DollarSign className="w-3 h-3 mr-2" />
                       Métodos de pago
                     </Button>
-                    <Button variant="outline" size="sm" className="w-full justify-start border-gray-500/50 text-gray-300 hover:bg-gray-700/50 text-xs h-8">
+                    <Button variant="outline" size="sm" className="w-full justify-start border-gray-600/50 text-white hover:bg-gray-700/50 text-xs h-8 backdrop-blur-sm">
                       <BarChart3 className="w-3 h-3 mr-2" />
                       Facturación
                     </Button>
@@ -528,15 +528,15 @@ const PortalEmpresasDashboard = () => {
                 </CardContent>
               </Card>
               
-              <Card className="backdrop-blur-xl bg-white/10 border border-white/30">
+              <Card className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30">
                 <CardContent className="p-3">
                   <h3 className="text-sm font-semibold text-white mb-3">Notificaciones</h3>
                   <div className="space-y-2">
-                    <Button variant="outline" size="sm" className="w-full justify-start border-gray-500/50 text-gray-300 hover:bg-gray-700/50 text-xs h-8">
+                    <Button variant="outline" size="sm" className="w-full justify-start border-gray-600/50 text-white hover:bg-gray-700/50 text-xs h-8 backdrop-blur-sm">
                       <Bell className="w-3 h-3 mr-2" />
                       Configurar
                     </Button>
-                    <Button variant="outline" size="sm" className="w-full justify-start border-gray-500/50 text-gray-300 hover:bg-gray-700/50 text-xs h-8">
+                    <Button variant="outline" size="sm" className="w-full justify-start border-gray-600/50 text-white hover:bg-gray-700/50 text-xs h-8 backdrop-blur-sm">
                       <MessageCircle className="w-3 h-3 mr-2" />
                       Mensajes
                     </Button>
@@ -546,21 +546,21 @@ const PortalEmpresasDashboard = () => {
             </div>
             
             {/* Quick Settings */}
-            <Card className="backdrop-blur-xl bg-white/10 border border-white/30">
+            <Card className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30">
               <CardContent className="p-3">
                 <h3 className="text-sm font-semibold text-white mb-3">Configuración Rápida</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   <div className="space-y-2">
-                    <label className="text-xs text-gray-200">Modo de Disponibilidad</label>
-                    <select className="w-full bg-gray-700/80 border border-gray-500/50 text-gray-200 text-xs rounded-lg p-2">
+                    <label className="text-xs text-white">Modo de Disponibilidad</label>
+                    <select className="w-full bg-gray-800/50 border border-gray-600/50 text-white text-xs rounded-lg p-2 backdrop-blur-sm">
                       <option>Disponible</option>
                       <option>Ocupado</option>
                       <option>Ausente</option>
                     </select>
                   </div>
                   <div className="space-y-2">
-                    <label className="text-xs text-gray-200">Idioma</label>
-                    <select className="w-full bg-gray-700/80 border border-gray-500/50 text-gray-200 text-xs rounded-lg p-2">
+                    <label className="text-xs text-white">Idioma</label>
+                    <select className="w-full bg-gray-800/50 border border-gray-600/50 text-white text-xs rounded-lg p-2 backdrop-blur-sm">
                       <option>Español</option>
                       <option>English</option>
                       <option>Português</option>
@@ -651,15 +651,15 @@ const PortalEmpresasDashboard = () => {
         </header>
         
         {/* Compact glassmorphism sidebar for map view */}
-        <div className="absolute top-24 left-4 z-50 w-52 backdrop-blur-xl bg-black/20 border border-white/30 rounded-xl shadow-2xl">
-          <div className="p-3 border-b border-white/20">
+        <div className="absolute top-24 left-4 z-50 w-52 backdrop-blur-xl bg-gray-900/40 border border-gray-600/30 rounded-xl shadow-2xl">
+          <div className="p-3 border-b border-gray-600/30">
             <div className="flex items-center space-x-2">
-              <div className="w-6 h-6 bg-gradient-to-br from-green-400 to-green-600 rounded-lg flex items-center justify-center shadow-lg">
+              <div className="w-6 h-6 bg-green-600/80 rounded-lg flex items-center justify-center shadow-lg backdrop-blur-sm">
                 <span className="text-white font-bold text-xs">N</span>
               </div>
               <span className="text-lg font-bold text-white tracking-wide">NATUR</span>
             </div>
-            <p className="text-white/70 text-xs mt-1">Portal Empresas</p>
+            <p className="text-gray-300 text-xs mt-1">Portal Empresas</p>
           </div>
           
           <nav className="p-2 space-y-0.5">
@@ -671,8 +671,8 @@ const PortalEmpresasDashboard = () => {
                   onClick={() => setActiveSection(item.id)}
                   className={`w-full flex items-center space-x-2 px-3 py-2 rounded-lg transition-all duration-200 ${
                     activeSection === item.id 
-                      ? 'bg-gradient-to-r from-green-500/30 to-green-400/30 text-white shadow-lg border border-green-400/30' 
-                      : 'text-white/90 hover:bg-white/10 hover:text-white hover:shadow-md'
+                      ? 'bg-green-600/30 text-white shadow-lg border border-green-400/30 backdrop-blur-sm' 
+                      : 'text-gray-200 hover:bg-gray-700/30 hover:text-white hover:shadow-md'
                   }`}
                 >
                   <Icon className="w-4 h-4" />
@@ -683,15 +683,15 @@ const PortalEmpresasDashboard = () => {
           </nav>
           
           {/* Compact user profile section */}
-          <div className="p-2 border-t border-white/20">
-            <div className="flex items-center space-x-2 px-3 py-2 rounded-lg bg-white/5">
-              <Avatar className="w-6 h-6 ring-1 ring-white/30">
+          <div className="p-2 border-t border-gray-600/30">
+            <div className="flex items-center space-x-2 px-3 py-2 rounded-lg bg-gray-800/30 backdrop-blur-sm">
+              <Avatar className="w-6 h-6 ring-1 ring-gray-600/50">
                 <AvatarImage src="/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg" />
-                <AvatarFallback className="bg-green-500 text-white text-xs">U</AvatarFallback>
+                <AvatarFallback className="bg-green-600/80 text-white text-xs">U</AvatarFallback>
               </Avatar>
               <div className="flex-1 min-w-0">
                 <p className="text-white font-medium text-xs truncate">Usuario</p>
-                <p className="text-white/70 text-xs">Empresa</p>
+                <p className="text-gray-300 text-xs">Empresa</p>
               </div>
             </div>
           </div>
@@ -771,15 +771,15 @@ const PortalEmpresasDashboard = () => {
         </header>
 
       {/* Compact glassmorphism sidebar for all pages */}
-      <div className="absolute top-24 left-4 z-50 w-52 backdrop-blur-xl bg-black/20 border border-white/30 rounded-xl shadow-2xl">
-        <div className="p-3 border-b border-white/20">
+      <div className="absolute top-24 left-4 z-50 w-52 backdrop-blur-xl bg-gray-900/40 border border-gray-600/30 rounded-xl shadow-2xl">
+        <div className="p-3 border-b border-gray-600/30">
           <div className="flex items-center space-x-2">
-            <div className="w-6 h-6 bg-gradient-to-br from-green-400 to-green-600 rounded-lg flex items-center justify-center shadow-lg">
+            <div className="w-6 h-6 bg-green-600/80 rounded-lg flex items-center justify-center shadow-lg backdrop-blur-sm">
               <span className="text-white font-bold text-xs">N</span>
             </div>
             <span className="text-lg font-bold text-white tracking-wide">NATUR</span>
           </div>
-          <p className="text-white/70 text-xs mt-1">Portal Empresas</p>
+          <p className="text-gray-300 text-xs mt-1">Portal Empresas</p>
         </div>
         
         <nav className="p-2 space-y-0.5">
@@ -791,8 +791,8 @@ const PortalEmpresasDashboard = () => {
                 onClick={() => setActiveSection(item.id)}
                 className={`w-full flex items-center space-x-2 px-3 py-2 rounded-lg transition-all duration-200 ${
                   activeSection === item.id 
-                    ? 'bg-gradient-to-r from-green-500/30 to-green-400/30 text-white shadow-lg border border-green-400/30' 
-                    : 'text-white/90 hover:bg-white/10 hover:text-white hover:shadow-md'
+                    ? 'bg-green-600/30 text-white shadow-lg border border-green-400/30 backdrop-blur-sm' 
+                    : 'text-gray-200 hover:bg-gray-700/30 hover:text-white hover:shadow-md'
                 }`}
               >
                 <Icon className="w-4 h-4" />
@@ -803,15 +803,15 @@ const PortalEmpresasDashboard = () => {
         </nav>
         
         {/* Compact user profile section */}
-        <div className="p-2 border-t border-white/20">
-          <div className="flex items-center space-x-2 px-3 py-2 rounded-lg bg-white/5">
-            <Avatar className="w-6 h-6 ring-1 ring-white/30">
+        <div className="p-2 border-t border-gray-600/30">
+          <div className="flex items-center space-x-2 px-3 py-2 rounded-lg bg-gray-800/30 backdrop-blur-sm">
+            <Avatar className="w-6 h-6 ring-1 ring-gray-600/50">
               <AvatarImage src="/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg" />
-              <AvatarFallback className="bg-green-500 text-white text-xs">U</AvatarFallback>
+              <AvatarFallback className="bg-green-600/80 text-white text-xs">U</AvatarFallback>
             </Avatar>
             <div className="flex-1 min-w-0">
               <p className="text-white font-medium text-xs truncate">Usuario</p>
-              <p className="text-white/70 text-xs">Empresa</p>
+              <p className="text-gray-300 text-xs">Empresa</p>
             </div>
           </div>
         </div>
@@ -819,7 +819,7 @@ const PortalEmpresasDashboard = () => {
 
       {/* Compact main content with glassmorphism background (except for map) */}
       {activeSection !== "mapa" && (
-        <main className="absolute top-24 left-60 right-4 bottom-4 z-40 backdrop-blur-xl bg-black/20 border border-white/30 rounded-xl shadow-2xl overflow-hidden">
+        <main className="absolute top-24 left-60 right-4 bottom-4 z-40 backdrop-blur-xl bg-gray-900/40 border border-gray-600/30 rounded-xl shadow-2xl overflow-hidden">
           <div className="h-full overflow-y-auto p-4">
             {renderContent()}
           </div>
