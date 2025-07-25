@@ -229,3 +229,93 @@ export type InsertUserProfile = z.infer<typeof insertUserProfileSchema>;
 export type UserProfile = typeof userProfiles.$inferSelect;
 export type InsertExperience = z.infer<typeof insertExperienceSchema>;
 export type Experience = typeof experiences.$inferSelect;
+
+// Messages table - for communication between users
+export const messages = pgTable("messages", {
+  id: serial("id").primaryKey(),
+  senderId: integer("sender_id").references(() => users.id).notNull(),
+  receiverId: integer("receiver_id").references(() => users.id).notNull(),
+  experienceId: integer("experience_id").references(() => experiences.id), // Optional reference to experience
+  subject: text("subject"),
+  content: text("content").notNull(),
+  isRead: boolean("is_read").default(false),
+  messageType: text("message_type").default("direct"), // direct, inquiry, booking
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+// Conversations table - to group messages between users
+export const conversations = pgTable("conversations", {
+  id: serial("id").primaryKey(),
+  participant1Id: integer("participant1_id").references(() => users.id).notNull(),
+  participant2Id: integer("participant2_id").references(() => users.id).notNull(),
+  lastMessageId: integer("last_message_id").references(() => messages.id),
+  lastActivity: timestamp("last_activity").defaultNow().notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+// Company profiles table - for business-specific information
+export const companies = pgTable("companies", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  companyName: text("company_name").notNull(),
+  businessType: text("business_type"), // tour_operator, hotel, restaurant, etc.
+  description: text("description"),
+  website: text("website"),
+  phone: text("phone"),
+  address: text("address"),
+  city: text("city"),
+  department: text("department"),
+  country: text("country").default("Colombia"),
+  coordinates: jsonb("coordinates"), // {lat, lng}
+  certifications: text("certifications").array(),
+  services: text("services").array(),
+  logo: text("logo"),
+  coverImage: text("cover_image"),
+  isVerified: boolean("is_verified").default(false),
+  rating: integer("rating").default(0),
+  totalReviews: integer("total_reviews").default(0),
+  status: text("status").default("active"), // active, inactive, suspended
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+export const insertMessageSchema = createInsertSchema(messages).omit({
+  id: true,
+  createdAt: true,
+}).extend({
+  experienceId: z.number().optional().nullable(),
+  subject: z.string().optional().nullable(),
+});
+
+export const insertConversationSchema = createInsertSchema(conversations).omit({
+  id: true,
+  createdAt: true,
+  lastActivity: true,
+}).extend({
+  lastMessageId: z.number().optional().nullable(),
+});
+
+export const insertCompanySchema = createInsertSchema(companies).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+}).extend({
+  businessType: z.string().optional().nullable(),
+  description: z.string().optional().nullable(),
+  website: z.string().optional().nullable(),
+  phone: z.string().optional().nullable(),
+  address: z.string().optional().nullable(),
+  city: z.string().optional().nullable(),
+  department: z.string().optional().nullable(),
+  certifications: z.array(z.string()).optional().nullable(),
+  services: z.array(z.string()).optional().nullable(),
+  logo: z.string().optional().nullable(),
+  coverImage: z.string().optional().nullable(),
+});
+
+export type InsertMessage = z.infer<typeof insertMessageSchema>;
+export type Message = typeof messages.$inferSelect;
+export type InsertConversation = z.infer<typeof insertConversationSchema>;
+export type Conversation = typeof conversations.$inferSelect;
+export type InsertCompany = z.infer<typeof insertCompanySchema>;
+export type Company = typeof companies.$inferSelect;

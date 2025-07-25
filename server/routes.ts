@@ -1,7 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { insertUserSchema, insertUserProfileSchema, insertExperienceSchema } from "@shared/schema";
+import { insertUserSchema, insertUserProfileSchema, insertExperienceSchema, insertMessageSchema, insertConversationSchema, insertCompanySchema } from "@shared/schema";
 import { z } from "zod";
 import passport from 'passport';
 import { setupGoogleAuth } from './googleAuth';
@@ -288,6 +288,168 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ error: "Invalid input", details: error.errors });
       }
       console.error("Update experience error:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+
+  // Duplicate experience
+  app.post("/api/experiences/:id/duplicate", async (req, res) => {
+    try {
+      if (!req.session.userId) {
+        return res.status(401).json({ error: "Not authenticated" });
+      }
+
+      const id = parseInt(req.params.id);
+      const duplicatedExperience = await storage.duplicateExperience(id, req.session.userId);
+      res.status(201).json(duplicatedExperience);
+    } catch (error) {
+      console.error("Duplicate experience error:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+
+  // Get all experiences (public)
+  app.get("/api/experiences/public", async (req, res) => {
+    try {
+      const experiences = await storage.getAllExperiences();
+      res.json(experiences);
+    } catch (error) {
+      console.error("Get all experiences error:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+
+  // Company routes
+  app.get("/api/companies", async (req, res) => {
+    try {
+      const companies = await storage.getAllCompanies();
+      res.json(companies);
+    } catch (error) {
+      console.error("Get companies error:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+
+  app.get("/api/companies/me", async (req, res) => {
+    try {
+      if (!req.session.userId) {
+        return res.status(401).json({ error: "Not authenticated" });
+      }
+
+      const company = await storage.getCompany(req.session.userId);
+      res.json(company);
+    } catch (error) {
+      console.error("Get company error:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+
+  app.post("/api/companies", async (req, res) => {
+    try {
+      if (!req.session.userId) {
+        return res.status(401).json({ error: "Not authenticated" });
+      }
+
+      const companyData = insertCompanySchema.parse({
+        ...req.body,
+        userId: req.session.userId
+      });
+
+      const company = await storage.createCompany(companyData);
+      res.status(201).json(company);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        console.error("Validation error:", error.errors);
+        return res.status(400).json({ error: "Invalid input", details: error.errors });
+      }
+      console.error("Create company error:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+
+  app.put("/api/companies/me", async (req, res) => {
+    try {
+      if (!req.session.userId) {
+        return res.status(401).json({ error: "Not authenticated" });
+      }
+
+      const companyData = insertCompanySchema.partial().parse(req.body);
+      const company = await storage.updateCompany(req.session.userId, companyData);
+      res.json(company);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        console.error("Validation error:", error.errors);
+        return res.status(400).json({ error: "Invalid input", details: error.errors });
+      }
+      console.error("Update company error:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+
+  // Message routes
+  app.get("/api/messages/conversations", async (req, res) => {
+    try {
+      if (!req.session.userId) {
+        return res.status(401).json({ error: "Not authenticated" });
+      }
+
+      const conversations = await storage.getConversations(req.session.userId);
+      res.json(conversations);
+    } catch (error) {
+      console.error("Get conversations error:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+
+  app.get("/api/messages/:conversationId", async (req, res) => {
+    try {
+      if (!req.session.userId) {
+        return res.status(401).json({ error: "Not authenticated" });
+      }
+
+      const conversationId = parseInt(req.params.conversationId);
+      const messages = await storage.getMessages(conversationId);
+      res.json(messages);
+    } catch (error) {
+      console.error("Get messages error:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+
+  app.post("/api/messages", async (req, res) => {
+    try {
+      if (!req.session.userId) {
+        return res.status(401).json({ error: "Not authenticated" });
+      }
+
+      const messageData = insertMessageSchema.parse({
+        ...req.body,
+        senderId: req.session.userId
+      });
+
+      const message = await storage.sendMessage(messageData);
+      res.status(201).json(message);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        console.error("Validation error:", error.errors);
+        return res.status(400).json({ error: "Invalid input", details: error.errors });
+      }
+      console.error("Send message error:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+
+  app.put("/api/messages/:messageId/read", async (req, res) => {
+    try {
+      if (!req.session.userId) {
+        return res.status(401).json({ error: "Not authenticated" });
+      }
+
+      const messageId = parseInt(req.params.messageId);
+      await storage.markMessageAsRead(messageId);
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Mark message as read error:", error);
       res.status(500).json({ error: "Internal server error" });
     }
   });

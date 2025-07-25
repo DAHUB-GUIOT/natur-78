@@ -1,6 +1,6 @@
-import { users, userProfiles, experiences, type User, type InsertUser, type UserProfile, type InsertUserProfile, type Experience, type InsertExperience } from "@shared/schema";
+import { users, userProfiles, experiences, messages, conversations, companies, type User, type InsertUser, type UserProfile, type InsertUserProfile, type Experience, type InsertExperience, type Message, type InsertMessage, type Conversation, type InsertConversation, type Company, type InsertCompany } from "@shared/schema";
 import { db } from "./db";
-import { eq } from "drizzle-orm";
+import { eq, desc, or, and } from "drizzle-orm";
 
 // Storage interface with all CRUD methods needed
 export interface IStorage {
@@ -18,9 +18,24 @@ export interface IStorage {
   
   // Experience methods
   getExperiences(userId: number): Promise<Experience[]>;
+  getAllExperiences(): Promise<Experience[]>;
   createExperience(experience: InsertExperience): Promise<Experience>;
   updateExperience(id: number, experience: Partial<InsertExperience>): Promise<Experience>;
   getExperience(id: number): Promise<Experience | undefined>;
+  duplicateExperience(id: number, userId: number): Promise<Experience>;
+  
+  // Message methods
+  getMessages(conversationId: number): Promise<Message[]>;
+  sendMessage(message: InsertMessage): Promise<Message>;
+  getConversations(userId: number): Promise<Conversation[]>;
+  createConversation(conversation: InsertConversation): Promise<Conversation>;
+  markMessageAsRead(messageId: number): Promise<void>;
+  
+  // Company methods
+  getCompany(userId: number): Promise<Company | undefined>;
+  createCompany(company: InsertCompany): Promise<Company>;
+  updateCompany(userId: number, company: Partial<InsertCompany>): Promise<Company>;
+  getAllCompanies(): Promise<Company[]>;
 }
 
 export class MemStorage implements IStorage {
@@ -224,6 +239,115 @@ export class MemStorage implements IStorage {
   async getExperience(id: number): Promise<Experience | undefined> {
     return this.experiences.get(id);
   }
+
+  async getAllExperiences(): Promise<Experience[]> {
+    return Array.from(this.experiences.values());
+  }
+
+  async duplicateExperience(id: number, userId: number): Promise<Experience> {
+    const originalExperience = this.experiences.get(id);
+    if (!originalExperience) {
+      throw new Error("Experience not found");
+    }
+
+    const duplicatedExperience = {
+      ...originalExperience,
+      id: this.currentId++,
+      userId: userId,
+      title: `${originalExperience.title} (Copia)`,
+      status: "draft",
+      createdAt: new Date(),
+      updatedAt: new Date()
+    };
+
+    this.experiences.set(duplicatedExperience.id, duplicatedExperience);
+    return duplicatedExperience;
+  }
+
+  // Message methods (memory storage)
+  async getMessages(conversationId: number): Promise<Message[]> {
+    // For memory storage, we'll store messages with conversation reference
+    return [];
+  }
+
+  async sendMessage(messageData: InsertMessage): Promise<Message> {
+    const id = this.currentId++;
+    const message: Message = {
+      id,
+      senderId: messageData.senderId,
+      receiverId: messageData.receiverId,
+      experienceId: messageData.experienceId || null,
+      subject: messageData.subject || null,
+      content: messageData.content,
+      isRead: messageData.isRead || false,
+      messageType: messageData.messageType || "direct",
+      createdAt: new Date()
+    };
+    return message;
+  }
+
+  async getConversations(userId: number): Promise<Conversation[]> {
+    return [];
+  }
+
+  async createConversation(conversationData: InsertConversation): Promise<Conversation> {
+    const id = this.currentId++;
+    const conversation: Conversation = {
+      id,
+      participant1Id: conversationData.participant1Id,
+      participant2Id: conversationData.participant2Id,
+      lastMessageId: conversationData.lastMessageId || null,
+      lastActivity: new Date(),
+      createdAt: new Date()
+    };
+    return conversation;
+  }
+
+  async markMessageAsRead(messageId: number): Promise<void> {
+    // Implementation for memory storage
+  }
+
+  // Company methods (memory storage)
+  async getCompany(userId: number): Promise<Company | undefined> {
+    return undefined;
+  }
+
+  async createCompany(companyData: InsertCompany): Promise<Company> {
+    const id = this.currentId++;
+    const company: Company = {
+      id,
+      userId: companyData.userId,
+      companyName: companyData.companyName,
+      businessType: companyData.businessType || null,
+      description: companyData.description || null,
+      website: companyData.website || null,
+      phone: companyData.phone || null,
+      address: companyData.address || null,
+      city: companyData.city || null,
+      department: companyData.department || null,
+      country: companyData.country || "Colombia",
+      coordinates: companyData.coordinates || null,
+      certifications: companyData.certifications || null,
+      services: companyData.services || null,
+      logo: companyData.logo || null,
+      coverImage: companyData.coverImage || null,
+      isVerified: companyData.isVerified || false,
+      rating: companyData.rating || 0,
+      totalReviews: companyData.totalReviews || 0,
+      status: companyData.status || "active",
+      createdAt: new Date(),
+      updatedAt: new Date()
+    };
+    return company;
+  }
+
+  async updateCompany(userId: number, companyData: Partial<InsertCompany>): Promise<Company> {
+    throw new Error("Company not found");
+  }
+
+  async getAllCompanies(): Promise<Company[]> {
+    return [];
+  }
 }
 
 export class DatabaseStorage implements IStorage {
@@ -313,6 +437,105 @@ export class DatabaseStorage implements IStorage {
   async getExperience(id: number): Promise<Experience | undefined> {
     const result = await db.select().from(experiences).where(eq(experiences.id, id)).limit(1);
     return result[0];
+  }
+
+  async getAllExperiences(): Promise<Experience[]> {
+    const result = await db.select().from(experiences).orderBy(desc(experiences.createdAt));
+    return result;
+  }
+
+  async duplicateExperience(id: number, userId: number): Promise<Experience> {
+    const originalExperience = await this.getExperience(id);
+    if (!originalExperience) {
+      throw new Error("Experience not found");
+    }
+
+    const duplicatedData = {
+      ...originalExperience,
+      userId: userId,
+      title: `${originalExperience.title} (Copia)`,
+      status: "draft" as const,
+    };
+
+    // Remove fields that shouldn't be duplicated
+    delete (duplicatedData as any).id;
+    delete (duplicatedData as any).createdAt;
+    delete (duplicatedData as any).updatedAt;
+
+    const result = await db.insert(experiences).values(duplicatedData).returning();
+    return result[0];
+  }
+
+  // Message methods (database storage)
+  async getMessages(conversationId: number): Promise<Message[]> {
+    const result = await db.select().from(messages)
+      .leftJoin(conversations, eq(messages.senderId, conversations.participant1Id))
+      .where(
+        or(
+          eq(conversations.id, conversationId),
+          eq(conversations.id, conversationId)
+        )
+      )
+      .orderBy(desc(messages.createdAt));
+    return result.map(row => row.messages);
+  }
+
+  async sendMessage(messageData: InsertMessage): Promise<Message> {
+    const result = await db.insert(messages).values(messageData).returning();
+    return result[0];
+  }
+
+  async getConversations(userId: number): Promise<Conversation[]> {
+    const result = await db.select().from(conversations)
+      .where(
+        or(
+          eq(conversations.participant1Id, userId),
+          eq(conversations.participant2Id, userId)
+        )
+      )
+      .orderBy(desc(conversations.lastActivity));
+    return result;
+  }
+
+  async createConversation(conversationData: InsertConversation): Promise<Conversation> {
+    const result = await db.insert(conversations).values(conversationData).returning();
+    return result[0];
+  }
+
+  async markMessageAsRead(messageId: number): Promise<void> {
+    await db.update(messages)
+      .set({ isRead: true })
+      .where(eq(messages.id, messageId));
+  }
+
+  // Company methods (database storage)
+  async getCompany(userId: number): Promise<Company | undefined> {
+    const result = await db.select().from(companies).where(eq(companies.userId, userId)).limit(1);
+    return result[0];
+  }
+
+  async createCompany(companyData: InsertCompany): Promise<Company> {
+    const result = await db.insert(companies).values(companyData).returning();
+    return result[0];
+  }
+
+  async updateCompany(userId: number, companyData: Partial<InsertCompany>): Promise<Company> {
+    const result = await db
+      .update(companies)
+      .set({ ...companyData, updatedAt: new Date() })
+      .where(eq(companies.userId, userId))
+      .returning();
+      
+    if (result.length === 0) {
+      throw new Error('Company not found');
+    }
+    
+    return result[0];
+  }
+
+  async getAllCompanies(): Promise<Company[]> {
+    const result = await db.select().from(companies).where(eq(companies.status, "active"));
+    return result;
   }
 }
 
