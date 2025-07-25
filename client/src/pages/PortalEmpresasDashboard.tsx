@@ -39,6 +39,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { InteractiveMap } from "@/components/dashboard/InteractiveMap";
 import ExperienceForm from "@/components/dashboard/ExperienceForm";
+import ProfileSection from "@/components/dashboard/ProfileSection";
 import { Link } from "wouter";
 
 const PortalEmpresasDashboard = () => {
@@ -58,6 +59,7 @@ const PortalEmpresasDashboard = () => {
     { id: "experiencias", label: "Experiencias", icon: Star },
     { id: "mensajes", label: "Mensajes", icon: MessageCircle },
     { id: "estadisticas", label: "Estadísticas", icon: BarChart3 },
+    { id: "perfil", label: "Mi Perfil", icon: User },
     { id: "ajustes", label: "Ajustes", icon: Settings },
   ];
 
@@ -569,6 +571,9 @@ const PortalEmpresasDashboard = () => {
             </Card>
           </div>
         );
+
+      case "perfil":
+        return <ProfileSection />;
 
       default:
         return <div>Sección no encontrada</div>;

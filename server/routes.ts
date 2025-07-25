@@ -184,6 +184,34 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Update user profile
+  app.put("/api/profiles/:userId", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const updates = req.body;
+      
+      const updatedProfile = await storage.updateUserProfile(userId, updates);
+      res.json(updatedProfile);
+    } catch (error) {
+      console.error("Update profile error:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+
+  // Update company by user ID
+  app.put("/api/companies/user/:userId", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const updates = req.body;
+      
+      const updatedCompany = await storage.updateCompany(userId, updates);
+      res.json(updatedCompany);
+    } catch (error) {
+      console.error("Update company error:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+
   // Get experiences by user ID
   app.get("/api/experiences/user/:userId", async (req, res) => {
     try {
