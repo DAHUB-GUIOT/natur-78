@@ -35,16 +35,62 @@ interface Experience {
 }
 
 export default function PortalViajeros() {
-  const [activeSection, setActiveSection] = useState("experiencias");
+  const [activeSection, setActiveSection] = useState("mapa");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("todos");
 
-  // Fetch experiences
-  const { data: experiences = [], isLoading } = useQuery<Experience[]>({
+  // Sample experiences for the map
+  const sampleExperiences = [
+    {
+      id: 1,
+      title: "Caminata Ecológica en el Cocuy",
+      description: "Explora los picos nevados y lagunas cristalinas del Parque Nacional Natural El Cocuy",
+      adultPricePvp: "120000",
+      duration: "3 días",
+      type: "aventura",
+      status: "approved",
+      isActive: true,
+      userId: 1,
+      createdAt: "2025-01-25",
+      location: { lat: 6.3910, lng: -72.3474 }
+    },
+    {
+      id: 2,
+      title: "Avistamiento de Ballenas en Nuquí",
+      description: "Observa ballenas jorobadas en su migración natural por el Pacífico colombiano",
+      adultPricePvp: "180000",
+      duration: "1 día",
+      type: "naturaleza",
+      status: "approved",
+      isActive: true,
+      userId: 2,
+      createdAt: "2025-01-25",
+      location: { lat: 5.7069, lng: -77.2719 }
+    },
+    {
+      id: 3,
+      title: "Tour Gastronómico en Cartagena",
+      description: "Descubre los sabores tradicionales de la cocina caribeña en el casco histórico",
+      adultPricePvp: "85000",
+      duration: "4 horas",
+      type: "gastronomia",
+      status: "approved",
+      isActive: true,
+      userId: 3,
+      createdAt: "2025-01-25",
+      location: { lat: 10.3932, lng: -75.4832 }
+    }
+  ];
+
+  // Fetch experiences from API and combine with samples
+  const { data: apiExperiences = [], isLoading } = useQuery<Experience[]>({
     queryKey: ["/api/experiences"],
   });
 
+  const experiences = [...sampleExperiences, ...apiExperiences];
+
   const sidebarItems = [
+    { id: "mapa", label: "Mapa", icon: MapPin },
     { id: "experiencias", label: "Experiencias", icon: Compass },
     { id: "favoritos", label: "Favoritos", icon: Heart },
     { id: "reservas", label: "Reservas", icon: Calendar },
@@ -204,24 +250,7 @@ export default function PortalViajeros() {
         </div>
       </header>
 
-      {/* Map Legend */}
-      <div className="absolute top-24 right-6 bg-gray-900/80 backdrop-blur-md rounded-lg p-3 border border-gray-600/30 z-40">
-        <h4 className="text-white text-sm font-semibold mb-2">Leyenda</h4>
-        <div className="space-y-1">
-          <div className="flex items-center space-x-2">
-            <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-            <span className="text-xs text-gray-300">Experiencias disponibles</span>
-          </div>
-          <div className="flex items-center space-x-2">
-            <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
-            <span className="text-xs text-gray-300">Proveedores verificados</span>
-          </div>
-          <div className="flex items-center space-x-2">
-            <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-            <span className="text-xs text-gray-300">Promociones especiales</span>
-          </div>
-        </div>
-      </div>
+
 
       {/* Compact glassmorphism sidebar for travelers */}
       <div className="absolute top-24 left-4 z-50 w-52 backdrop-blur-xl bg-gray-900/40 border border-gray-600/30 rounded-xl shadow-2xl">
@@ -271,6 +300,52 @@ export default function PortalViajeros() {
       </div>
 
       {/* Content overlay based on active section */}
+      {activeSection === "mapa" && (
+        <div className="absolute top-24 right-6 bg-gray-900/80 backdrop-blur-md rounded-lg p-4 border border-gray-600/30 z-40 max-w-sm">
+          <h3 className="text-white text-lg font-semibold mb-3">Experiencias en el Mapa</h3>
+          <div className="space-y-2 mb-4">
+            <div className="flex items-center space-x-2">
+              <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+              <span className="text-xs text-gray-300">{filteredExperiences.length} experiencias disponibles</span>
+            </div>
+            <div className="flex items-center space-x-2">
+              <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
+              <span className="text-xs text-gray-300">Proveedores verificados</span>
+            </div>
+            <div className="flex items-center space-x-2">
+              <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+              <span className="text-xs text-gray-300">Promociones especiales</span>
+            </div>
+          </div>
+          
+          {/* Category Filters for map */}
+          <div className="mb-4">
+            <h4 className="text-white text-sm font-medium mb-2">Filtrar por categoría:</h4>
+            <div className="flex flex-wrap gap-1">
+              {categories.slice(0, 4).map((category) => (
+                <Button
+                  key={category}
+                  variant={selectedCategory === category ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => setSelectedCategory(category)}
+                  className={`text-xs h-6 px-2 ${
+                    selectedCategory === category
+                      ? "bg-green-600/80 text-white border-green-500/50"
+                      : "border-gray-600/50 text-gray-300 hover:bg-gray-700/50 hover:text-white"
+                  }`}
+                >
+                  {category.charAt(0).toUpperCase() + category.slice(1)}
+                </Button>
+              ))}
+            </div>
+          </div>
+          
+          <p className="text-gray-400 text-xs">
+            Haz clic en los marcadores del mapa para ver detalles de cada experiencia
+          </p>
+        </div>
+      )}
+
       {activeSection === "experiencias" && (
         <div className="absolute top-24 left-60 right-4 bottom-4 z-40 backdrop-blur-xl bg-gray-900/40 border border-gray-600/30 rounded-xl shadow-2xl overflow-hidden">
           <div className="h-full overflow-y-auto p-4">
