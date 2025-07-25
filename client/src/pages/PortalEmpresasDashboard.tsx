@@ -56,9 +56,11 @@ const PortalEmpresasDashboard = () => {
   });
 
   // Fetch current user data
-  const { data: currentUser } = useQuery({
+  const { data: currentUser, isLoading: userLoading, refetch: refetchUser } = useQuery({
     queryKey: ['/api/auth/me'],
     retry: false,
+    refetchOnWindowFocus: true,
+    refetchOnMount: true,
   });
 
   const sidebarItems = [
@@ -372,7 +374,11 @@ const PortalEmpresasDashboard = () => {
               </Badge>
             </div>
 
-            {currentUser?.user?.id ? (
+            {userLoading ? (
+              <div className="flex items-center justify-center h-96 bg-white rounded-lg shadow-sm">
+                <p className="text-gray-500">Cargando mensajes...</p>
+              </div>
+            ) : currentUser?.user?.id ? (
               <div className="bg-white rounded-lg shadow-sm">
                 <MessageCenter currentUserId={currentUser.user.id} />
               </div>
@@ -380,7 +386,13 @@ const PortalEmpresasDashboard = () => {
               <div className="flex items-center justify-center h-96 bg-white rounded-lg shadow-sm">
                 <div className="text-center">
                   <Building2 className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-                  <p className="text-gray-500">Inicia sesión para comunicarte con otras empresas</p>
+                  <p className="text-gray-500 mb-4">Inicia sesión para comunicarte con otras empresas</p>
+                  <Button 
+                    onClick={() => refetchUser()} 
+                    className="bg-green-600 hover:bg-green-700 text-white"
+                  >
+                    Recargar datos de usuario
+                  </Button>
                 </div>
               </div>
             )}
