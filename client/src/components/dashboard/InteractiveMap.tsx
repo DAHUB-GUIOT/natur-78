@@ -126,13 +126,57 @@ export const InteractiveMap = ({ experiences = [], selectedCategory, showMarkers
 
     map.current = new mapboxgl.Map({
       container: mapContainer.current!,
-      style: 'mapbox://styles/mapbox/light-v11',
+      style: 'mapbox://styles/mapbox/outdoors-v12',
       center: [-74.0721, 4.7110], // Bogotá, Colombia
-      zoom: 4
+      zoom: 5,
+      pitch: 60, // 3D view angle
+      bearing: -17.6, // Rotation angle
+      projection: 'globe' // Enable 3D globe
     });
 
     // Add navigation controls
     map.current.addControl(new mapboxgl.NavigationControl(), 'top-right');
+    
+    // Add fullscreen control
+    map.current.addControl(new mapboxgl.FullscreenControl(), 'top-right');
+    
+    // Add scale control
+    map.current.addControl(new mapboxgl.ScaleControl(), 'bottom-left');
+    
+    // Add 3D terrain
+    map.current.on('style.load', () => {
+      // Add terrain source
+      map.current!.addSource('mapbox-dem', {
+        'type': 'raster-dem',
+        'url': 'mapbox://mapbox.mapbox-terrain-dem-v1',
+        'tileSize': 512,
+        'maxzoom': 14
+      });
+      
+      // Add the terrain layer
+      map.current!.setTerrain({ 'source': 'mapbox-dem', 'exaggeration': 1.5 });
+      
+      // Add sky layer for realistic atmosphere
+      map.current!.addLayer({
+        'id': 'sky',
+        'type': 'sky',
+        'paint': {
+          'sky-type': 'atmosphere',
+          'sky-atmosphere-sun': [0.0, 90.0],
+          'sky-atmosphere-sun-intensity': 15,
+          'sky-atmosphere-color': 'rgb(135, 206, 235)'
+        }
+      });
+      
+      // Add fog for depth and realism
+      map.current!.setFog({
+        'color': 'rgb(186, 210, 235)', // Bluish-gray fog
+        'high-color': 'rgb(36, 92, 223)', // Upper atmosphere color
+        'horizon-blend': 0.02, // Blend between fog and sky
+        'space-color': 'rgb(11, 11, 25)', // Color of atmosphere in space
+        'star-intensity': 0.6 // Stars visibility
+      });
+    });
 
     return () => {
       if (map.current) {
@@ -236,26 +280,26 @@ export const InteractiveMap = ({ experiences = [], selectedCategory, showMarkers
   const getMarkerIconColor = (type: string) => {
     switch (type) {
       case 'startup':
-        return 'text-blue-500';
+        return 'text-emerald-400';
       case 'investor':
         return 'text-green-500';
       case 'ecosystem':
-        return 'text-emerald-500';
+        return 'text-lime-500';
       default:
-        return 'text-gray-500';
+        return 'text-green-400';
     }
   };
 
   const getCompanyIcon = (type: string) => {
     switch (type) {
       case 'startup':
-        return <Zap className="h-4 w-4 text-blue-500" />;
+        return <Zap className="h-4 w-4 text-emerald-400" />;
       case 'investor':
         return <Building className="h-4 w-4 text-green-500" />;
       case 'ecosystem':
-        return <Leaf className="h-4 w-4 text-emerald-500" />;
+        return <Leaf className="h-4 w-4 text-lime-500" />;
       default:
-        return <Globe className="h-4 w-4 text-gray-500" />;
+        return <Globe className="h-4 w-4 text-green-400" />;
     }
   };
 

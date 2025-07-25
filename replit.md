@@ -10,6 +10,17 @@ This is a full-stack web application for Festival NATUR (www.festivalnatur.com),
 
 ## Recent Changes
 
+- ✅ **January 25, 2025**: Maps Enhanced to Realistic 3D Green Terrain
+  - **NEW**: Updated all maps to use Mapbox outdoors-v12 style for natural green appearance
+  - **NEW**: Enabled 3D terrain with 1.5x exaggeration for dramatic topography
+  - **NEW**: Added realistic sky layer with atmosphere rendering
+  - **NEW**: Implemented fog effects for depth and realism
+  - **NEW**: Set 60-degree pitch angle for immersive 3D viewing
+  - **NEW**: Added globe projection for Earth curvature effect
+  - **NEW**: Included fullscreen control for expanded viewing
+  - **NEW**: Updated all marker colors to green nature theme (emerald, lime, green)
+  - **NEW**: Enhanced map controls with scale indicator and navigation
+
 - ✅ **January 25, 2025**: Messaging Search Shows Real Users - TripCol and DaHub
   - **NEW**: Added /api/messages/search-users endpoint to find real business users
   - **NEW**: Search functionality now displays TripCol and DaHub when typing in search box
