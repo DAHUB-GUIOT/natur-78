@@ -134,11 +134,22 @@ export const InteractiveMap = () => {
     filteredCompanies.forEach((company) => {
       const el = document.createElement('div');
       el.className = 'mapbox-marker';
-      el.innerHTML = `
-        <div class="bg-white rounded-full p-2 shadow-lg border-2 border-green-500 cursor-pointer hover:scale-110 transition-transform">
-          ${getMarkerIcon(company.type)}
-        </div>
-      `;
+      
+      // Create safe DOM structure
+      const markerContainer = document.createElement('div');
+      markerContainer.className = 'bg-white rounded-full p-2 shadow-lg border-2 border-green-500 cursor-pointer hover:scale-110 transition-transform';
+      
+      const iconContainer = document.createElement('div');
+      iconContainer.className = 'w-4 h-4';
+      
+      // Safely set icon based on company type
+      const iconText = getMarkerIconText(company.type);
+      const iconColor = getMarkerIconColor(company.type);
+      iconContainer.textContent = iconText;
+      iconContainer.className += ` ${iconColor}`;
+      
+      markerContainer.appendChild(iconContainer);
+      el.appendChild(markerContainer);
       
       el.addEventListener('click', () => {
         setSelectedCompany(company);
@@ -150,16 +161,29 @@ export const InteractiveMap = () => {
     });
   }, [filteredCompanies]);
 
-  const getMarkerIcon = (type: string) => {
+  const getMarkerIconText = (type: string) => {
     switch (type) {
       case 'startup':
-        return '<div class="w-4 h-4 text-blue-500">⚡</div>';
+        return '⚡';
       case 'investor':
-        return '<div class="w-4 h-4 text-green-500">🏢</div>';
+        return '🏢';
       case 'ecosystem':
-        return '<div class="w-4 h-4 text-emerald-500">🌱</div>';
+        return '🌱';
       default:
-        return '<div class="w-4 h-4 text-gray-500">🌐</div>';
+        return '🌐';
+    }
+  };
+
+  const getMarkerIconColor = (type: string) => {
+    switch (type) {
+      case 'startup':
+        return 'text-blue-500';
+      case 'investor':
+        return 'text-green-500';
+      case 'ecosystem':
+        return 'text-emerald-500';
+      default:
+        return 'text-gray-500';
     }
   };
 
