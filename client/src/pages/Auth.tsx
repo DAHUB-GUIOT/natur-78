@@ -72,7 +72,7 @@ const Auth = ({ type }: AuthProps) => {
     if (isEmpresas) {
       setLocation('/portal-empresas');
     } else {
-      setLocation('/mapa'); // Marketplace for travelers
+      setLocation('/portal-viajeros'); // Marketplace for travelers
     }
   };
 

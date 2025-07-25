@@ -263,7 +263,7 @@ const ConSentidosRegister = () => {
               {/* Submit Button */}
               <div className="pt-6 border-t-2" style={{ borderColor: '#EDFF60' }}>
                 <div className="flex flex-col sm:flex-row gap-4 justify-between items-center">
-                  <Link to="/mapa">
+                  <Link to="/portal-viajeros">
                     <Button variant="ghost" className="hover:bg-white/20" style={{ color: '#EDFF60' }}>
                       ← Explorar sin registrarse
                     </Button>

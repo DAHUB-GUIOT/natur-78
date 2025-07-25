@@ -36,7 +36,7 @@ const NotFound = () => {
             </Button>
           </Link>
           
-          <Link to="/mapa">
+          <Link to="/portal-viajeros">
             <Button variant="outline" className="w-full border-green-200 text-green-700 hover:bg-green-50">
               <MapPin className="mr-2 h-4 w-4" />
               Explorar experiencias

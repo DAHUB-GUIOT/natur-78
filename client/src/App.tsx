@@ -66,7 +66,7 @@ const App = () => (
             <Route path="/portal-empresas" component={PortalEmpresasDashboard} />
             <Route path="/portal-viajeros" component={PortalViajeros} />
             <Route path="/experiencia/:id" component={ExperienceDetail} />
-            <Route path="/mapa" component={MapaPublicoOptimized} />
+            <Route path="/mapa" component={PortalViajeros} />
             <Route path="/plataforma" component={UnifiedPlatform} />
             <Route path="/perfil/:userId" component={UserProfile} />
             <Route path="/agenda">

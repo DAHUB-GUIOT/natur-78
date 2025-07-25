@@ -29,7 +29,7 @@ export function TopButtons() {
           Registro
         </Button>
       </Link>
-      <Link to="/mapa">
+      <Link to="/portal-viajeros">
         <Button 
           className="bg-[#EDFF60] text-[#191C0F] hover:bg-[#CEDD9F] h-8 px-2 text-xs font-medium touch-manipulation"
         >
