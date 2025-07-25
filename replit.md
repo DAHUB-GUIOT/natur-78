@@ -10,6 +10,21 @@ This is a full-stack web application for Festival NATUR (www.festivalnatur.com),
 
 ## Recent Changes
 
+- ✅ **January 25, 2025**: NEW Portal Viajeros Marketplace Implementation
+  - **NEW**: Created comprehensive PortalViajeros.tsx marketplace for travelers based on Portal Empresas design
+  - **NEW**: Implemented experience browsing with category filters (aventura, naturaleza, cultura, gastronomía, etc.)
+  - **NEW**: Added marketplace-focused sidebar with favorites, reservations, and category navigation
+  - **NEW**: Created traveler-specific interface with soft gray glassmorphism design consistent with Portal Empresas
+  - **NEW**: Integrated real-time experience search and filtering functionality
+  - **NEW**: Added stats dashboard showing available experiences, providers, ratings, and average pricing
+  - **NEW**: Implemented experience cards with pricing, ratings, duration, and booking actions
+  - **NEW**: Created dedicated route /portal-viajeros with full map background integration
+  - **NEW**: Updated Hero component to redirect EXPERIENCIAS button to new Portal Viajeros
+  - **NEW**: Fixed Google OAuth authentication by making password column nullable in database
+  - **NEW**: Portal Viajeros serves as marketplace counterpart to Portal Empresas creation interface
+  - **NEW**: Travelers can now browse, filter, favorite, and book experiences created by companies
+  - **NEW**: Consistent white fonts on soft gray backgrounds throughout traveler interface
+
 - ✅ **January 25, 2025**: Complete Business Logic Implementation with Messaging & Unified Platform
   - **NEW**: Implemented comprehensive messaging system between users with real-time communication
   - **NEW**: Added companies database table and API for business profile management

@@ -98,7 +98,7 @@ export function Hero() {
                 </Button>
               </Link>
               
-              <Link to="/mapa">
+              <Link to="/portal-viajeros">
                 <Button 
                   size="lg" 
                   className="bg-white hover:bg-yellow-50 text-black font-bold text-sm px-6 py-3 rounded-lg shadow-lg flex items-center justify-center w-full"

@@ -23,6 +23,7 @@ import PublicProfile from "./pages/PublicProfile";
 import AdminOptimized from "./pages/AdminOptimized";
 import Dashboard from "./pages/Dashboard";
 import PortalEmpresasDashboard from "./pages/PortalEmpresasDashboard";
+import PortalViajeros from "./pages/PortalViajeros";
 import ExperienceDetail from "./pages/ExperienceDetail";
 import MapaPublicoOptimized from "./pages/MapaPublicoOptimized";
 import UnifiedPlatform from "./pages/UnifiedPlatform";
@@ -63,6 +64,7 @@ const App = () => (
             </Route>
             <Route path="/dashboard" component={Dashboard} />
             <Route path="/portal-empresas" component={PortalEmpresasDashboard} />
+            <Route path="/portal-viajeros" component={PortalViajeros} />
             <Route path="/experiencia/:id" component={ExperienceDetail} />
             <Route path="/mapa" component={MapaPublicoOptimized} />
             <Route path="/plataforma" component={UnifiedPlatform} />
