@@ -28,7 +28,7 @@ export function About() {
             </h1>
           </div>
           <div className="w-full md:w-[60%] md:ml-5 max-md:w-full max-md:ml-0">
-            <div className="bg-white/20 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-[#191C0F]/10">
+            <div className="backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-[#191C0F]/10 bg-[#ffffff00] text-[#00000000]">
               <p className="text-[#191C0F] text-sm sm:text-base md:text-lg font-medium leading-6 sm:leading-7 md:leading-8 tracking-[-0.1px] max-md:max-w-full font-jakarta">
                 Nacemos con la convicción de que viajar puede ser un acto de conservación, aprendizaje y regeneración. Promovemos un turismo que protege la biodiversidad, honra las culturas locales y genera bienestar para comunidades y territorios.
               </p>
