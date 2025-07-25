@@ -75,14 +75,14 @@ export class MemStorage implements IStorage {
       id,
       email: insertUser.email,
       password: insertUser.password || null,
-      googleId: null,
-      firstName: null,
-      lastName: null,
-      profilePicture: null,
-      authProvider: "local",
-      role: "viajero",
-      isActive: true,
-      emailVerified: false,
+      googleId: insertUser.googleId || null,
+      firstName: insertUser.firstName || null,
+      lastName: insertUser.lastName || null,
+      profilePicture: insertUser.profilePicture || null,
+      authProvider: insertUser.authProvider || "local",
+      role: insertUser.role || "viajero",
+      isActive: insertUser.isActive ?? true,
+      emailVerified: insertUser.emailVerified ?? false,
       createdAt: new Date(),
       updatedAt: new Date()
     };
@@ -101,7 +101,7 @@ export class MemStorage implements IStorage {
       lastName: userData.lastName,
       profilePicture: userData.profilePicture,
       authProvider: "google",
-      role: "viajero",
+      role: userData.role || "empresa", // Default to empresa for Google users
       isActive: true,
       emailVerified: true, // Google users are automatically verified
       createdAt: new Date(),
@@ -261,12 +261,12 @@ export class MemStorage implements IStorage {
       throw new Error("Experience not found");
     }
 
-    const duplicatedExperience = {
+    const duplicatedExperience: Experience = {
       ...originalExperience,
       id: this.currentId++,
       userId: userId,
       title: `${originalExperience.title} (Copia)`,
-      status: "pendiente",
+      status: "pendiente" as const,
       createdAt: new Date(),
       updatedAt: new Date()
     };

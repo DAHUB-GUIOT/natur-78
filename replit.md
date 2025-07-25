@@ -10,6 +10,15 @@ This is a full-stack web application for Festival NATUR (www.festivalnatur.com),
 
 ## Recent Changes
 
+- ✅ **January 25, 2025**: Real Users Always Created Properly After Registration
+  - **NEW**: Updated registration endpoint to set firstName, lastName from email if not provided
+  - **NEW**: Registration now sets role based on userType parameter (empresa/viajero)
+  - **NEW**: All new users are created with isActive: true
+  - **NEW**: Google OAuth users default to 'empresa' role so they appear in B2B searches
+  - **NEW**: Updated createUser method to accept all user fields
+  - **NEW**: Registered users now appear in message search just like TripCol and DaHub
+  - **FIXED**: New registrations create complete user records that can be found and messaged
+
 - ✅ **January 25, 2025**: Maps Enhanced to Realistic 3D Green Terrain
   - **NEW**: Updated all maps to use Mapbox outdoors-v12 style for natural green appearance
   - **NEW**: Enabled 3D terrain with 1.5x exaggeration for dramatic topography

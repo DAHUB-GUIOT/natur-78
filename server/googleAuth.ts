@@ -52,10 +52,12 @@ export function setupGoogleAuth(app: Express) {
         const userData = {
           email: profile.emails?.[0]?.value || '',
           googleId: profile.id,
-          firstName: profile.name?.givenName || null,
-          lastName: profile.name?.familyName || null,
+          firstName: profile.name?.givenName || profile.displayName?.split(' ')[0] || 'User',
+          lastName: profile.name?.familyName || profile.displayName?.split(' ')[1] || 'Google',
           profilePicture: profile.photos?.[0]?.value || null,
-          authProvider: 'google' as const
+          authProvider: 'google' as const,
+          role: 'empresa' as const, // Default to empresa for Google users
+          isActive: true
         };
         
         user = await storage.createGoogleUser(userData);

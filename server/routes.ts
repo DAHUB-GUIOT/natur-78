@@ -67,7 +67,28 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/auth/register", async (req, res) => {
     try {
-      const userData = insertUserSchema.parse(req.body);
+      // Extract first and last name from email if not provided
+      const email = req.body.email;
+      let firstName = req.body.firstName;
+      let lastName = req.body.lastName;
+      
+      if (!firstName || !lastName) {
+        const emailName = email.split('@')[0];
+        const nameParts = emailName.split('.');
+        firstName = firstName || nameParts[0] || emailName;
+        lastName = lastName || nameParts[1] || 'User';
+      }
+      
+      // Determine role based on registration path or default to 'viajero'
+      const role = req.body.role || req.body.userType || 'viajero';
+      
+      const userData = insertUserSchema.parse({
+        ...req.body,
+        firstName: firstName.charAt(0).toUpperCase() + firstName.slice(1),
+        lastName: lastName.charAt(0).toUpperCase() + lastName.slice(1),
+        role: role,
+        isActive: true
+      });
       
       // Check if user already exists
       const existingUser = await storage.getUserByEmail(userData.email);
@@ -80,7 +101,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Auto-login after registration
       req.session.userId = user.id;
       
-      res.status(201).json({ user: { id: user.id, email: user.email } });
+      res.status(201).json({ user: { id: user.id, email: user.email, role: user.role } });
     } catch (error) {
       if (error instanceof z.ZodError) {
         return res.status(400).json({ error: "Invalid input", details: error.errors });
