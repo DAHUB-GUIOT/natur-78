@@ -21,6 +21,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Setup Google OAuth with routes
   setupGoogleAuth(app);
 
+  // Add CORS headers for OAuth
+  app.use('/api/auth/google*', (req, res, next) => {
+    res.header('Access-Control-Allow-Origin', req.headers.origin);
+    res.header('Access-Control-Allow-Credentials', 'true');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    next();
+  });
+
   // Google OAuth routes are now handled in setupGoogleAuth
 
   // Authentication routes

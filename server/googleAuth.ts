@@ -19,7 +19,7 @@ export function setupGoogleAuth(app: Express) {
     : `https://${domain}/api/auth/google/callback`;
 
   console.log(`Google OAuth Callback URL: ${callbackURL}`);
-  console.log(`Add this URL to your Google Cloud Console authorized redirect URIs: ${callbackURL}`);
+  console.log(`Domain: ${domain}`);
 
   passport.use(new GoogleStrategy({
     clientID: clientId,
@@ -81,18 +81,31 @@ export function setupGoogleAuth(app: Express) {
     }
   });
 
-  // Google auth routes
-  app.get('/api/auth/google',
-    passport.authenticate('google', { scope: ['profile', 'email'] })
-  );
+  // Google auth routes with better error handling
+  app.get('/api/auth/google', (req, res, next) => {
+    console.log('Initiating Google OAuth flow');
+    passport.authenticate('google', { 
+      scope: ['profile', 'email'],
+      prompt: 'select_account'
+    })(req, res, next);
+  });
 
   app.get('/api/auth/google/callback',
     passport.authenticate('google', { failureRedirect: '/auth/empresas?error=auth_failed' }),
     (req, res) => {
       console.log('Google OAuth callback successful, user authenticated');
       console.log('User:', req.user);
-      // Successful authentication, redirect to Portal Empresas dashboard
-      res.redirect('/portal-empresas?auth=success');
+      // Successful authentication, close popup or redirect
+      if (req.query.popup === 'true') {
+        res.send(`
+          <script>
+            window.opener.postMessage({type: 'GOOGLE_AUTH_SUCCESS'}, '*');
+            window.close();
+          </script>
+        `);
+      } else {
+        res.redirect('/portal-empresas?auth=success');
+      }
     }
   );
 

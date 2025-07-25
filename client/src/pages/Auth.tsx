@@ -237,6 +237,14 @@ const Auth = ({ type }: AuthProps) => {
 
                   {isEmpresas && (
                     <>
+                      <div className="text-center mt-4">
+                        <p className="text-white/70 text-sm">
+                          Nota: Google OAuth puede estar bloqueado en algunos navegadores.
+                          <br />
+                          Usa el login con email como alternativa segura.
+                        </p>
+                      </div>
+
                       <div className="relative my-6">
                         <div className="absolute inset-0 flex items-center">
                           <span className="w-full border-t border-white/30" />
@@ -250,12 +258,12 @@ const Auth = ({ type }: AuthProps) => {
                         type="button"
                         className="w-full bg-white text-gray-700 border border-gray-300 hover:bg-gray-50 shadow-sm py-4 font-medium text-lg transition-all duration-200"
                         onClick={() => {
-                          // Add loading state and optimized redirect
                           const button = document.activeElement as HTMLButtonElement;
                           if (button) {
                             button.textContent = 'Conectando...';
                             button.disabled = true;
                           }
+                          // Try direct approach first
                           window.location.href = '/api/auth/google';
                         }}
                       >
