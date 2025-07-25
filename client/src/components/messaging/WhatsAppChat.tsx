@@ -277,27 +277,27 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ currentUserId, onClo
 
   if (conversationsLoading) {
     return (
-      <div className="flex items-center justify-center h-screen bg-[#111b21]">
+      <div className="flex items-center justify-center h-screen bg-gray-200">
         <div className="text-white">Cargando conversaciones...</div>
       </div>
     );
   }
 
   return (
-    <div className="flex h-screen bg-[#111b21]">
+    <div className="flex h-screen bg-gray-200">
       {/* Conversations List */}
       <div className={cn(
-        "w-full md:w-96 bg-[#111b21] border-r border-gray-800 flex flex-col",
+        "w-full md:w-96 bg-gray-200 border-r border-gray-300 flex flex-col",
         selectedConversation && "hidden md:flex"
       )}>
         {/* Header */}
-        <div className="bg-[#202c33] px-4 py-3">
+        <div className="bg-gray-300 px-4 py-3">
           <div className="flex items-center justify-between mb-3">
             <h2 className="text-xl font-semibold text-white">Mensajes B2B</h2>
             <Button
               size="icon"
               variant="ghost"
-              className="text-gray-400 hover:text-white"
+              className="text-white hover:bg-gray-400"
               onClick={onClose}
             >
               <X className="h-5 w-5" />
@@ -305,12 +305,12 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ currentUserId, onClo
           </div>
           {/* Search */}
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/70 h-4 w-4" />
             <Input
               placeholder="Buscar empresas o contactos..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10 bg-[#2a3942] border-none text-white placeholder-gray-400"
+              className="pl-10 bg-gray-400/50 border-gray-400 text-white placeholder-white/70"
             />
           </div>
         </div>
@@ -326,13 +326,13 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ currentUserId, onClo
                 key={conversation.id}
                 onClick={() => setSelectedConversation(conversation.id)}
                 className={cn(
-                  "flex items-center px-3 py-2 hover:bg-[#202c33] cursor-pointer transition-colors",
-                  isSelected && "bg-[#2a3942]"
+                  "flex items-center px-3 py-2 hover:bg-gray-300 cursor-pointer transition-colors",
+                  isSelected && "bg-gray-400/50"
                 )}
               >
                 <Avatar className="h-12 w-12 mr-3">
                   <AvatarImage src={user?.profilePicture} />
-                  <AvatarFallback className="bg-gray-600 text-white">
+                  <AvatarFallback className="bg-gray-400 text-white">
                     {user?.firstName?.[0]}{user?.lastName?.[0]}
                   </AvatarFallback>
                 </Avatar>
@@ -341,16 +341,16 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ currentUserId, onClo
                     <p className="font-medium text-white truncate">
                       {user?.firstName} {user?.lastName}
                     </p>
-                    <span className="text-xs text-gray-400">
+                    <span className="text-xs text-white/70">
                       {formatMessageTime(conversation.lastActivity)}
                     </span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <p className="text-sm text-gray-400 truncate">
+                    <p className="text-sm text-white/70 truncate">
                       {user?.email}
                     </p>
                     {conversation.unreadCount && conversation.unreadCount > 0 && (
-                      <Badge className="bg-[#00a884] text-white text-xs h-5 min-w-[20px] px-1">
+                      <Badge className="bg-green-600 text-white text-xs h-5 min-w-[20px] px-1">
                         {conversation.unreadCount}
                       </Badge>
                     )}
@@ -364,21 +364,21 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ currentUserId, onClo
 
       {/* Chat Area */}
       {selectedConversation ? (
-        <div className="flex-1 flex flex-col bg-[#0b141a]">
+        <div className="flex-1 flex flex-col bg-gray-100">
           {/* Chat Header */}
-          <div className="bg-[#202c33] px-4 py-3 flex items-center justify-between">
+          <div className="bg-gray-300 px-4 py-3 flex items-center justify-between">
             <div className="flex items-center">
               <Button
                 size="icon"
                 variant="ghost"
-                className="md:hidden text-gray-400 hover:text-white mr-2"
+                className="md:hidden text-white hover:bg-gray-400 mr-2"
                 onClick={() => setSelectedConversation(null)}
               >
                 <ArrowLeft className="h-5 w-5" />
               </Button>
               <Avatar className="h-10 w-10 mr-3">
                 <AvatarImage src={otherUser?.profilePicture} />
-                <AvatarFallback className="bg-gray-600 text-white">
+                <AvatarFallback className="bg-gray-400 text-white">
                   {otherUser?.firstName?.[0]}{otherUser?.lastName?.[0]}
                 </AvatarFallback>
               </Avatar>
@@ -386,36 +386,36 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ currentUserId, onClo
                 <p className="font-medium text-white">
                   {otherUser?.firstName} {otherUser?.lastName}
                 </p>
-                <p className="text-xs text-gray-400">
+                <p className="text-xs text-white/70">
                   {otherUser?.isOnline ? (
-                    <span className="text-[#00a884]">En línea</span>
+                    <span className="text-green-400">En línea</span>
                   ) : (
                     formatLastSeen(otherUser?.lastSeen)
                   )}
                   {otherUser?.isTyping && (
-                    <span className="text-[#00a884]"> • escribiendo...</span>
+                    <span className="text-green-400"> • escribiendo...</span>
                   )}
                 </p>
               </div>
             </div>
             <div className="flex items-center gap-3">
-              <Button size="icon" variant="ghost" className="text-gray-400 hover:text-white">
+              <Button size="icon" variant="ghost" className="text-white hover:bg-gray-400">
                 <Video className="h-5 w-5" />
               </Button>
-              <Button size="icon" variant="ghost" className="text-gray-400 hover:text-white">
+              <Button size="icon" variant="ghost" className="text-white hover:bg-gray-400">
                 <Phone className="h-5 w-5" />
               </Button>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button size="icon" variant="ghost" className="text-gray-400 hover:text-white">
+                  <Button size="icon" variant="ghost" className="text-white hover:bg-gray-400">
                     <MoreVertical className="h-5 w-5" />
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent className="bg-[#233138] text-white border-gray-700">
+                <DropdownMenuContent className="bg-gray-400 text-white border-gray-500">
                   <DropdownMenuItem>Ver perfil</DropdownMenuItem>
                   <DropdownMenuItem>Silenciar notificaciones</DropdownMenuItem>
                   <DropdownMenuItem>Vaciar chat</DropdownMenuItem>
-                  <DropdownMenuItem className="text-red-400">Bloquear</DropdownMenuItem>
+                  <DropdownMenuItem className="text-red-300">Bloquear</DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
@@ -423,8 +423,7 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ currentUserId, onClo
 
           {/* Messages */}
           <ScrollArea 
-            className="flex-1 px-4 py-2"
-            style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg width="40" height="40" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="%232a3942" fill-opacity="0.3"%3E%3Cpath d="M0 40L40 0H20L0 20M40 40V20L20 40"/%3E%3C/g%3E%3C/svg%3E")' }}
+            className="flex-1 px-4 py-2 bg-gray-100"
           >
             {messages.map((message, index) => {
               const isOwn = message.senderId === currentUserId;
@@ -436,7 +435,7 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ currentUserId, onClo
                 <React.Fragment key={message.id}>
                   {showDate && (
                     <div className="flex justify-center my-2">
-                      <span className="bg-[#1f2c34] text-gray-400 text-xs px-3 py-1 rounded-full">
+                      <span className="bg-gray-300 text-white text-xs px-3 py-1 rounded-full">
                         {isToday(new Date(message.createdAt)) 
                           ? 'Hoy' 
                           : isYesterday(new Date(message.createdAt))
@@ -455,7 +454,7 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ currentUserId, onClo
                     <div
                       className={cn(
                         "relative max-w-[70%] px-3 py-2 rounded-lg group",
-                        isOwn ? "bg-[#005c4b]" : "bg-[#202c33]"
+                        isOwn ? "bg-green-600" : "bg-gray-300"
                       )}
                     >
                       {/* Message Actions */}
@@ -463,12 +462,12 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ currentUserId, onClo
                         "absolute top-0 opacity-0 group-hover:opacity-100 transition-opacity",
                         isOwn ? "-left-20" : "-right-20"
                       )}>
-                        <div className="flex items-center gap-1 bg-[#202c33] rounded-lg p-1">
+                        <div className="flex items-center gap-1 bg-gray-400 rounded-lg p-1">
                           {isOwn && (
                             <Button
                               size="icon"
                               variant="ghost"
-                              className="h-6 w-6 text-gray-400 hover:text-white"
+                              className="h-6 w-6 text-white hover:bg-gray-500"
                               onClick={() => handleEditMessage(message)}
                             >
                               <Edit2 className="h-3 w-3" />
@@ -477,7 +476,7 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ currentUserId, onClo
                           <Button
                             size="icon"
                             variant="ghost"
-                            className="h-6 w-6 text-gray-400 hover:text-white"
+                            className="h-6 w-6 text-white hover:bg-gray-500"
                             onClick={() => setReplyingToMessage(message)}
                           >
                             <ArrowLeft className="h-3 w-3 rotate-180" />
@@ -486,7 +485,7 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ currentUserId, onClo
                             <Button
                               size="icon"
                               variant="ghost"
-                              className="h-6 w-6 text-gray-400 hover:text-white"
+                              className="h-6 w-6 text-white hover:bg-gray-500"
                               onClick={() => deleteMessageMutation.mutate(message.id)}
                             >
                               <Trash2 className="h-3 w-3" />
@@ -499,18 +498,18 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ currentUserId, onClo
                         {message.content}
                       </p>
                       <div className="flex items-center justify-end gap-1 mt-1">
-                        <span className="text-[10px] text-gray-400">
+                        <span className="text-[10px] text-white/80">
                           {formatMessageTime(message.createdAt)}
                         </span>
                         {message.isEdited && (
-                          <span className="text-[10px] text-gray-400">editado</span>
+                          <span className="text-[10px] text-white/80">editado</span>
                         )}
                         {isOwn && (
                           <span className="text-xs">
                             {message.isRead ? (
-                              <CheckCheck className="h-4 w-4 text-[#53bdeb]" />
+                              <CheckCheck className="h-4 w-4 text-blue-300" />
                             ) : (
-                              <Check className="h-4 w-4 text-gray-400" />
+                              <Check className="h-4 w-4 text-white/70" />
                             )}
                           </span>
                         )}
@@ -525,15 +524,15 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ currentUserId, onClo
 
           {/* Reply Preview */}
           {replyingToMessage && (
-            <div className="bg-[#202c33] px-4 py-2 flex items-center justify-between">
+            <div className="bg-gray-300 px-4 py-2 flex items-center justify-between">
               <div className="flex-1">
-                <p className="text-xs text-[#00a884]">Respondiendo a</p>
-                <p className="text-sm text-gray-400 truncate">{replyingToMessage.content}</p>
+                <p className="text-xs text-green-400 font-semibold">Respondiendo a</p>
+                <p className="text-sm text-white truncate">{replyingToMessage.content}</p>
               </div>
               <Button
                 size="icon"
                 variant="ghost"
-                className="text-gray-400 hover:text-white"
+                className="text-white hover:bg-gray-400"
                 onClick={() => setReplyingToMessage(null)}
               >
                 <X className="h-4 w-4" />
@@ -543,14 +542,14 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ currentUserId, onClo
 
           {/* Edit Preview */}
           {editingMessageId && (
-            <div className="bg-[#202c33] px-4 py-2 flex items-center justify-between">
+            <div className="bg-gray-300 px-4 py-2 flex items-center justify-between">
               <div className="flex-1">
-                <p className="text-xs text-[#00a884]">Editando mensaje</p>
+                <p className="text-xs text-green-400 font-semibold">Editando mensaje</p>
               </div>
               <Button
                 size="icon"
                 variant="ghost"
-                className="text-gray-400 hover:text-white"
+                className="text-white hover:bg-gray-400"
                 onClick={cancelEdit}
               >
                 <X className="h-4 w-4" />
@@ -559,11 +558,11 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ currentUserId, onClo
           )}
 
           {/* Input Area */}
-          <div className="bg-[#202c33] px-4 py-3 flex items-center gap-3">
-            <Button size="icon" variant="ghost" className="text-gray-400 hover:text-white">
+          <div className="bg-gray-300 px-4 py-3 flex items-center gap-3">
+            <Button size="icon" variant="ghost" className="text-white hover:bg-gray-400">
               <Paperclip className="h-5 w-5" />
             </Button>
-            <Button size="icon" variant="ghost" className="text-gray-400 hover:text-white">
+            <Button size="icon" variant="ghost" className="text-white hover:bg-gray-400">
               <Smile className="h-5 w-5" />
             </Button>
             <Input
@@ -572,13 +571,13 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ currentUserId, onClo
               value={messageContent}
               onChange={(e) => setMessageContent(e.target.value)}
               onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
-              className="flex-1 bg-[#2a3942] border-none text-white placeholder-gray-400"
+              className="flex-1 bg-gray-400/50 border-gray-400 text-white placeholder-white/70"
             />
             {messageContent.trim() ? (
               <Button
                 size="icon"
                 onClick={handleSendMessage}
-                className="bg-[#00a884] hover:bg-[#00957a] text-white"
+                className="bg-green-600 hover:bg-green-700 text-white"
                 disabled={sendMessageMutation.isPending}
               >
                 <Send className="h-5 w-5" />
@@ -588,8 +587,8 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ currentUserId, onClo
                 size="icon"
                 variant="ghost"
                 className={cn(
-                  "text-gray-400 hover:text-white",
-                  isRecording && "text-red-500"
+                  "text-white hover:bg-gray-400",
+                  isRecording && "text-red-400"
                 )}
                 onClick={() => setIsRecording(!isRecording)}
               >
@@ -599,12 +598,13 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ currentUserId, onClo
           </div>
         </div>
       ) : (
-        <div className="flex-1 flex items-center justify-center bg-[#0b141a]">
+        <div className="flex-1 flex items-center justify-center bg-gray-100">
           <div className="text-center">
-            <div className="w-72 h-72 mx-auto mb-4 bg-[#233138] rounded-full flex items-center justify-center">
-              <MessageCircle className="h-32 w-32 text-gray-500" />
+            <div className="w-72 h-72 mx-auto mb-4 bg-gray-300 rounded-full flex items-center justify-center">
+              <MessageCircle className="h-32 w-32 text-white" />
             </div>
-
+            <h3 className="text-xl font-semibold text-gray-500 mb-2">Selecciona una conversación</h3>
+            <p className="text-gray-400">Elige una empresa para comenzar a chatear</p>
           </div>
         </div>
       )}

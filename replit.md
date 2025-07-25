@@ -10,6 +10,18 @@ This is a full-stack web application for Festival NATUR (www.festivalnatur.com),
 
 ## Recent Changes
 
+- ✅ **January 25, 2025**: Messaging Page Complete Light Gray Theme Redesign
+  - **UPDATED**: Changed entire messaging interface from dark WhatsApp theme to light gray color scheme
+  - **NEW**: Light gray backgrounds (gray-100, gray-200, gray-300, gray-400) throughout messaging UI
+  - **NEW**: All text changed to white for high contrast on gray backgrounds
+  - **NEW**: Updated conversation list with gray-200 background and white text
+  - **NEW**: Chat area now uses gray-100 background with gray-300 message bubbles
+  - **NEW**: Own messages use green-600 background for brand consistency
+  - **NEW**: Input area redesigned with gray-300 background and white text placeholders
+  - **NEW**: Empty state uses light gray theme with instructional text
+  - **NEW**: Hover states updated to work with new light gray color palette
+  - **NEW**: Removed dark WhatsApp branding colors (#111b21, #202c33, etc.)
+
 - ✅ **January 25, 2025**: Twitter/X-Style Profile with Integrated Statistics and Glassmorphism Design
   - **REMOVED**: Estadísticas section from sidebar navigation completely
   - **NEW**: Created TwitterProfileSection.tsx with modern Twitter/X-inspired design
