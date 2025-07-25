@@ -28,6 +28,8 @@ This is a full-stack web application for Festival NATUR (www.festivalnatur.com),
   - **NEW**: Updated all navigation links and references to point to new Portal Viajeros
   - **NEW**: EXPERIENCIAS button, auth redirects, and 404 page now direct to Portal Viajeros
   - **NEW**: Unified experience browsing interface replacing scattered map implementations
+  - **NEW**: Simplified Portal Viajeros sidebar to only show "Mapa", "Favoritos", "Reservas"
+  - **NEW**: Removed title from Portal Viajeros top bar for cleaner interface
 
 - ✅ **January 25, 2025**: Complete Business Logic Implementation with Messaging & Unified Platform
   - **NEW**: Implemented comprehensive messaging system between users with real-time communication

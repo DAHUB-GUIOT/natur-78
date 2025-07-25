@@ -45,16 +45,9 @@ export default function PortalViajeros() {
   });
 
   const sidebarItems = [
-    { id: "experiencias", label: "Experiencias", icon: Compass },
-    { id: "aventura", label: "Aventura", icon: Mountain },
-    { id: "naturaleza", label: "Naturaleza", icon: TreePine },
-    { id: "cultura", label: "Cultura", icon: Building },
-    { id: "gastronomia", label: "Gastronomía", icon: Utensils },
-    { id: "acuaticas", label: "Acuáticas", icon: Waves },
-    { id: "transporte", label: "Transporte", icon: Car },
-    { id: "hospedaje", label: "Hospedaje", icon: Hotel },
+    { id: "experiencias", label: "Mapa", icon: MapPin },
     { id: "favoritos", label: "Favoritos", icon: Heart },
-    { id: "reservas", label: "Mis Reservas", icon: Calendar },
+    { id: "reservas", label: "Reservas", icon: Calendar },
   ];
 
   const categories = [
@@ -248,8 +241,6 @@ export default function PortalViajeros() {
               </div>
               <span className="text-xl font-bold text-white tracking-wide">NATUR</span>
             </div>
-            <div className="h-6 w-px bg-white/30"></div>
-            <h2 className="text-lg font-semibold text-white">Marketplace de Experiencias</h2>
           </div>
           
           <div className="flex-1 max-w-md mx-8">
