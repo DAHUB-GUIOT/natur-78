@@ -5,11 +5,12 @@ import type { Express } from 'express';
 
 export function setupGoogleAuth(app: Express) {
   // Check for Google OAuth credentials
-  const clientId = process.env.GOOGLE_CLIENT_ID || '10396090422-ae986k6fos1kolgv6gh7brijgc8saakr.apps.googleusercontent.com';
-  const clientSecret = process.env.GOOGLE_CLIENT_SECRET || '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';
+  const clientId = process.env.GOOGLE_CLIENT_ID;
+  const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
   
   if (!clientId || !clientSecret) {
     console.log('Google OAuth credentials not found, skipping Google authentication setup');
+    console.log('Required callback URI: https://377c8a7a-2e8b-4984-a78e-326b650e3978-00-3hhd6ygsrp585.picard.replit.dev/api/auth/google/callback');
     return;
   }
 
