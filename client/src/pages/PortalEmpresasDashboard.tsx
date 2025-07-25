@@ -24,7 +24,8 @@ import {
   User,
   LogOut,
   Edit,
-  Handshake
+  Handshake,
+  ShieldCheck
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -71,6 +72,7 @@ const PortalEmpresasDashboard = () => {
     { id: "estadisticas", label: "Estadísticas", icon: BarChart3 },
     { id: "perfil", label: "Mi Perfil", icon: User },
     { id: "ajustes", label: "Ajustes", icon: Settings },
+    ...(currentUser?.user?.role === 'admin' ? [{ id: "admin", label: "Admin Panel", icon: ShieldCheck }] : [])
   ];
 
 
@@ -650,7 +652,13 @@ const PortalEmpresasDashboard = () => {
               return (
                 <button
                   key={item.id}
-                  onClick={() => setActiveSection(item.id)}
+                  onClick={() => {
+                    if (item.id === 'admin') {
+                      window.location.href = '/admin';
+                    } else {
+                      setActiveSection(item.id);
+                    }
+                  }}
                   className={`w-full flex items-center space-x-2 px-3 py-2 rounded-lg transition-all duration-200 ${
                     activeSection === item.id 
                       ? 'bg-green-600/30 text-white shadow-lg border border-green-400/30 backdrop-blur-sm' 

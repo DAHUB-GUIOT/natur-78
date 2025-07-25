@@ -1,6 +1,24 @@
-import { pgTable, text, serial, integer, boolean, timestamp, jsonb } from "drizzle-orm/pg-core";
+import { pgTable, text, serial, integer, boolean, timestamp, jsonb, pgEnum } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
+
+// User role enum
+export const userRoleEnum = pgEnum("user_role", ["viajero", "empresa", "admin"]);
+
+// Experience category enum
+export const experienceCategoryEnum = pgEnum("experience_category", [
+  "aventura",
+  "naturaleza",
+  "cultura",
+  "gastronomia",
+  "bienestar",
+  "educacion",
+  "rural",
+  "ecoturismo"
+]);
+
+// Experience status enum
+export const experienceStatusEnum = pgEnum("experience_status", ["pendiente", "aprobado", "rechazado", "archivado"]);
 
 // Users table - main authentication
 export const users = pgTable("users", {
@@ -12,6 +30,9 @@ export const users = pgTable("users", {
   lastName: text("last_name"),
   profilePicture: text("profile_picture"),
   authProvider: text("auth_provider").notNull().default("local"), // 'local' or 'google'
+  role: userRoleEnum("role").default("viajero").notNull(),
+  isActive: boolean("is_active").default(true).notNull(),
+  emailVerified: boolean("email_verified").default(false).notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
@@ -134,6 +155,7 @@ export const experiences = pgTable("experiences", {
   title: text("title").notNull(),
   modality: text("modality"),
   type: text("type").notNull().default("regular"), // regular, shared, private
+  location: jsonb("location"), // { lat, lng, address, city, region }
   
   // Pricing (stored as strings to handle currency formatting)
   adultPriceNet: text("adult_price_net"),
@@ -182,8 +204,12 @@ export const experiences = pgTable("experiences", {
   // Passenger Data Required
   passengerDataRequired: jsonb("passenger_data_required"),
   
+  // Category and subcategory
+  category: experienceCategoryEnum("category").notNull(),
+  subcategory: text("subcategory"), // Specific subcategories within main category
+  
   // Status and metadata
-  status: text("status").default("draft"), // draft, pending, approved, rejected
+  status: experienceStatusEnum("status").default("pendiente"),
   isActive: boolean("is_active").default(true),
   
   createdAt: timestamp("created_at").defaultNow().notNull(),
@@ -313,9 +339,63 @@ export const insertCompanySchema = createInsertSchema(companies).omit({
   coverImage: z.string().optional().nullable(),
 });
 
+// Admin activity logs table
+export const adminLogs = pgTable("admin_logs", {
+  id: serial("id").primaryKey(),
+  adminId: integer("admin_id").references(() => users.id).notNull(),
+  action: text("action").notNull(), // approve_experience, reject_experience, delete_user, etc.
+  targetType: text("target_type").notNull(), // experience, user, company
+  targetId: integer("target_id").notNull(),
+  details: jsonb("details"), // Additional action details
+  ipAddress: text("ip_address"),
+  userAgent: text("user_agent"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+// Platform statistics table
+export const platformStats = pgTable("platform_stats", {
+  id: serial("id").primaryKey(),
+  date: timestamp("date").notNull(),
+  totalUsers: integer("total_users").default(0),
+  totalCompanies: integer("total_companies").default(0),
+  totalExperiences: integer("total_experiences").default(0),
+  totalBookings: integer("total_bookings").default(0),
+  totalRevenue: text("total_revenue").default("0"),
+  activeUsers: integer("active_users").default(0),
+  newUsersToday: integer("new_users_today").default(0),
+  pendingApprovals: integer("pending_approvals").default(0),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+// Bookings table
+export const bookings = pgTable("bookings", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  experienceId: integer("experience_id").references(() => experiences.id).notNull(),
+  companyId: integer("company_id").references(() => companies.id),
+  bookingDate: timestamp("booking_date").notNull(),
+  experienceDate: timestamp("experience_date").notNull(),
+  adults: integer("adults").default(1),
+  children: integer("children").default(0),
+  infants: integer("infants").default(0),
+  totalPrice: text("total_price").notNull(),
+  status: text("status").default("pending"), // pending, confirmed, cancelled, completed
+  paymentMethod: text("payment_method"),
+  paymentStatus: text("payment_status").default("pending"), // pending, paid, refunded
+  specialRequests: text("special_requests"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
 export type InsertMessage = z.infer<typeof insertMessageSchema>;
 export type Message = typeof messages.$inferSelect;
 export type InsertConversation = z.infer<typeof insertConversationSchema>;
 export type Conversation = typeof conversations.$inferSelect;
 export type InsertCompany = z.infer<typeof insertCompanySchema>;
 export type Company = typeof companies.$inferSelect;
+export type InsertAdminLog = typeof adminLogs.$inferInsert;
+export type AdminLog = typeof adminLogs.$inferSelect;
+export type InsertPlatformStat = typeof platformStats.$inferInsert;
+export type PlatformStat = typeof platformStats.$inferSelect;
+export type InsertBooking = typeof bookings.$inferInsert;
+export type Booking = typeof bookings.$inferSelect;

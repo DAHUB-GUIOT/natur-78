@@ -10,6 +10,8 @@ export interface IStorage {
   getUserByGoogleId(googleId: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
   createGoogleUser(userData: any): Promise<User>;
+  getAllUsers(): Promise<User[]>;
+  updateUser(id: number, data: Partial<InsertUser>): Promise<User>;
   
   // User profile methods
   getUserProfile(userId: number): Promise<UserProfile | undefined>;
@@ -78,6 +80,9 @@ export class MemStorage implements IStorage {
       lastName: null,
       profilePicture: null,
       authProvider: "local",
+      role: "viajero",
+      isActive: true,
+      emailVerified: false,
       createdAt: new Date(),
       updatedAt: new Date()
     };
@@ -96,6 +101,9 @@ export class MemStorage implements IStorage {
       lastName: userData.lastName,
       profilePicture: userData.profilePicture,
       authProvider: "google",
+      role: "viajero",
+      isActive: true,
+      emailVerified: true, // Google users are automatically verified
       createdAt: new Date(),
       updatedAt: new Date()
     };
@@ -179,7 +187,10 @@ export class MemStorage implements IStorage {
       userId: experienceData.userId,
       title: experienceData.title,
       type: experienceData.type || "regular",
-      status: experienceData.status || "draft",
+      status: experienceData.status || "pendiente",
+      category: experienceData.category,
+      subcategory: experienceData.subcategory || null,
+      location: experienceData.location || null,
       isActive: experienceData.isActive || true,
       modality: experienceData.modality || null,
       adultPriceNet: experienceData.adultPriceNet || null,
@@ -255,7 +266,7 @@ export class MemStorage implements IStorage {
       id: this.currentId++,
       userId: userId,
       title: `${originalExperience.title} (Copia)`,
-      status: "draft",
+      status: "pendiente",
       createdAt: new Date(),
       updatedAt: new Date()
     };
@@ -284,6 +295,20 @@ export class MemStorage implements IStorage {
       createdAt: new Date()
     };
     return message;
+  }
+
+  async getAllUsers(): Promise<User[]> {
+    return Array.from(this.users.values());
+  }
+
+  async updateUser(id: number, data: Partial<InsertUser>): Promise<User> {
+    const user = this.users.get(id);
+    if (!user) {
+      throw new Error("User not found");
+    }
+    const updatedUser = { ...user, ...data, updatedAt: new Date() };
+    this.users.set(id, updatedUser);
+    return updatedUser;
   }
 
   async getConversations(userId: number): Promise<Conversation[]> {
@@ -454,7 +479,7 @@ export class DatabaseStorage implements IStorage {
       ...originalExperience,
       userId: userId,
       title: `${originalExperience.title} (Copia)`,
-      status: "draft" as const,
+      status: "pendiente" as const,
     };
 
     // Remove fields that shouldn't be duplicated
@@ -536,6 +561,25 @@ export class DatabaseStorage implements IStorage {
   async getAllCompanies(): Promise<Company[]> {
     const result = await db.select().from(companies).where(eq(companies.status, "active"));
     return result;
+  }
+
+  async getAllUsers(): Promise<User[]> {
+    const result = await db.select().from(users).orderBy(desc(users.createdAt));
+    return result;
+  }
+
+  async updateUser(id: number, data: Partial<InsertUser>): Promise<User> {
+    const result = await db
+      .update(users)
+      .set({ ...data, updatedAt: new Date() })
+      .where(eq(users.id, id))
+      .returning();
+      
+    if (result.length === 0) {
+      throw new Error('User not found');
+    }
+    
+    return result[0];
   }
 }
 

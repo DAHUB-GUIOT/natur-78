@@ -1,15 +1,25 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { insertUserSchema, insertUserProfileSchema, insertExperienceSchema, insertMessageSchema, insertConversationSchema, insertCompanySchema } from "@shared/schema";
+import { db } from "./db";
+import { insertUserSchema, insertUserProfileSchema, insertExperienceSchema, insertMessageSchema, insertConversationSchema, insertCompanySchema, adminLogs } from "@shared/schema";
 import { z } from "zod";
 import passport from 'passport';
 import { setupGoogleAuth } from './googleAuth';
+import { desc } from "drizzle-orm";
 
-// Extend Express Request type to include session
+// Extend Express Request type to include session and admin user
 declare module 'express-session' {
   interface SessionData {
     userId: number;
+  }
+}
+
+declare global {
+  namespace Express {
+    interface Request {
+      adminUser?: any;
+    }
   }
 }
 
@@ -111,7 +121,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
           firstName: user.firstName,
           lastName: user.lastName,
           profilePicture: user.profilePicture,
-          authProvider: user.authProvider
+          authProvider: user.authProvider,
+          role: user.role
         } 
       });
     } catch (error) {
@@ -518,6 +529,196 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json({ success: true });
     } catch (error) {
       console.error("Mark message as read error:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+
+  // Admin routes
+  // Middleware to check if user is admin
+  const isAdmin = async (req: any, res: any, next: any) => {
+    try {
+      const userId = req.session.userId || (req.user as any)?.id;
+      if (!userId) {
+        return res.status(401).json({ error: "Not authenticated" });
+      }
+
+      const user = await storage.getUser(userId);
+      if (!user || user.role !== 'admin') {
+        return res.status(403).json({ error: "Forbidden: Admin access required" });
+      }
+
+      req.adminUser = user;
+      next();
+    } catch (error) {
+      console.error("Admin middleware error:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  };
+
+  // Get platform statistics
+  app.get("/api/admin/stats", isAdmin, async (req, res) => {
+    try {
+      const users = await storage.getAllUsers();
+      const experiences = await storage.getAllExperiences();
+      const companies = await storage.getAllCompanies();
+
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      const stats = {
+        totalUsers: users.length,
+        newUsersToday: users.filter(u => new Date(u.createdAt) >= today).length,
+        totalCompanies: companies.length,
+        activeCompanies: companies.filter(c => c.isVerified).length,
+        totalExperiences: experiences.length,
+        pendingApprovals: experiences.filter(e => e.status === 'pendiente').length,
+        totalRevenue: '0', // Placeholder - would calculate from bookings
+        totalBookings: 0, // Placeholder - would count bookings
+      };
+
+      res.json(stats);
+    } catch (error) {
+      console.error("Admin stats error:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+
+  // Get all users
+  app.get("/api/admin/users", isAdmin, async (req, res) => {
+    try {
+      const users = await storage.getAllUsers();
+      res.json(users);
+    } catch (error) {
+      console.error("Admin get users error:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+
+  // Update user role
+  app.patch("/api/admin/users/:userId/role", isAdmin, async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const { role } = req.body;
+
+      if (!['viajero', 'empresa', 'admin'].includes(role)) {
+        return res.status(400).json({ error: "Invalid role" });
+      }
+
+      const updatedUser = await storage.updateUser(userId, { role });
+
+      // Log admin action
+      await db.insert(adminLogs).values({
+        adminId: req.adminUser.id,
+        action: `Updated user role to ${role}`,
+        targetType: 'user',
+        targetId: userId,
+        details: { oldRole: req.adminUser.role, newRole: role }
+      });
+
+      res.json(updatedUser);
+    } catch (error) {
+      console.error("Admin update user role error:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+
+  // Update user status
+  app.patch("/api/admin/users/:userId/status", isAdmin, async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const { isActive } = req.body;
+
+      const updatedUser = await storage.updateUser(userId, { isActive });
+
+      // Log admin action
+      await db.insert(adminLogs).values({
+        adminId: req.adminUser.id,
+        action: isActive ? 'Activated user' : 'Deactivated user',
+        targetType: 'user',
+        targetId: userId,
+        details: { isActive }
+      });
+
+      res.json(updatedUser);
+    } catch (error) {
+      console.error("Admin update user status error:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+
+  // Get all experiences (admin view)
+  app.get("/api/admin/experiences", isAdmin, async (req, res) => {
+    try {
+      const experiences = await storage.getAllExperiences();
+      res.json(experiences);
+    } catch (error) {
+      console.error("Admin get experiences error:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+
+  // Update experience status
+  app.patch("/api/admin/experiences/:experienceId/status", isAdmin, async (req, res) => {
+    try {
+      const experienceId = parseInt(req.params.experienceId);
+      const { status } = req.body;
+
+      if (!['pendiente', 'aprobado', 'rechazado', 'archivado'].includes(status)) {
+        return res.status(400).json({ error: "Invalid status" });
+      }
+
+      const updatedExperience = await storage.updateExperience(experienceId, { status });
+
+      // Log admin action
+      await db.insert(adminLogs).values({
+        adminId: req.adminUser.id,
+        action: `Updated experience status to ${status}`,
+        targetType: 'experience',
+        targetId: experienceId,
+        details: { status }
+      });
+
+      res.json(updatedExperience);
+    } catch (error) {
+      console.error("Admin update experience status error:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+
+  // Delete experience
+  app.delete("/api/admin/experiences/:experienceId", isAdmin, async (req, res) => {
+    try {
+      const experienceId = parseInt(req.params.experienceId);
+      
+      // For now, archive instead of delete
+      const updatedExperience = await storage.updateExperience(experienceId, { 
+        status: 'archivado',
+        isActive: false 
+      });
+
+      // Log admin action
+      await db.insert(adminLogs).values({
+        adminId: req.adminUser.id,
+        action: 'Deleted experience',
+        targetType: 'experience',
+        targetId: experienceId,
+        details: { archived: true }
+      });
+
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Admin delete experience error:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+
+  // Get admin logs
+  app.get("/api/admin/logs", isAdmin, async (req, res) => {
+    try {
+      const logs = await db.select().from(adminLogs).orderBy(desc(adminLogs.createdAt)).limit(100);
+      res.json(logs);
+    } catch (error) {
+      console.error("Admin get logs error:", error);
       res.status(500).json({ error: "Internal server error" });
     }
   });

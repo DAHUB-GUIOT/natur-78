@@ -21,6 +21,7 @@ import ExperienciasOptimized from "./pages/ExperienciasOptimized";
 import Perfil from "./pages/Perfil";
 import PublicProfile from "./pages/PublicProfile";
 import AdminOptimized from "./pages/AdminOptimized";
+import AdminDashboard from "./pages/AdminDashboard";
 import Dashboard from "./pages/Dashboard";
 import PortalEmpresasDashboard from "./pages/PortalEmpresasDashboard";
 import PortalViajeros from "./pages/PortalViajeros";
@@ -59,7 +60,8 @@ const App = () => (
             <Route path="/perfil/:username">
               <MainLayout><PublicProfile /></MainLayout>
             </Route>
-            <Route path="/admin">
+            <Route path="/admin" component={AdminDashboard} />
+            <Route path="/admin-legacy">
               <MainLayout><AdminOptimized /></MainLayout>
             </Route>
             <Route path="/dashboard" component={Dashboard} />
