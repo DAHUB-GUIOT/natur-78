@@ -45,7 +45,7 @@ export default function PortalViajeros() {
   });
 
   const sidebarItems = [
-    { id: "experiencias", label: "Mapa", icon: MapPin },
+    { id: "experiencias", label: "Experiencias", icon: Compass },
     { id: "favoritos", label: "Favoritos", icon: Heart },
     { id: "reservas", label: "Reservas", icon: Calendar },
   ];
@@ -117,109 +117,7 @@ export default function PortalViajeros() {
     </Card>
   );
 
-  const renderContent = () => {
-    switch (activeSection) {
-      case "experiencias":
-        return (
-          <div className="space-y-4">
-            {/* Category Filters */}
-            <div className="flex flex-wrap gap-2 mb-4">
-              {categories.map((category) => (
-                <Button
-                  key={category}
-                  variant={selectedCategory === category ? "default" : "outline"}
-                  size="sm"
-                  onClick={() => setSelectedCategory(category)}
-                  className={`text-xs h-7 ${
-                    selectedCategory === category
-                      ? "bg-green-600/80 text-white border-green-500/50"
-                      : "border-gray-600/50 text-gray-300 hover:bg-gray-700/50 hover:text-white"
-                  }`}
-                >
-                  {category.charAt(0).toUpperCase() + category.slice(1).replace(/([A-Z])/g, ' $1')}
-                </Button>
-              ))}
-            </div>
 
-
-
-            {/* Stats */}
-            <div className="grid grid-cols-4 gap-3 mb-4">
-              <Card className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30">
-                <CardContent className="p-3 text-center">
-                  <div className="text-lg font-bold text-white">{filteredExperiences.length}</div>
-                  <div className="text-xs text-gray-300">Experiencias</div>
-                </CardContent>
-              </Card>
-              <Card className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30">
-                <CardContent className="p-3 text-center">
-                  <div className="text-lg font-bold text-white">156</div>
-                  <div className="text-xs text-gray-300">Proveedores</div>
-                </CardContent>
-              </Card>
-              <Card className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30">
-                <CardContent className="p-3 text-center">
-                  <div className="text-lg font-bold text-white">4.8</div>
-                  <div className="text-xs text-gray-300">Calificación</div>
-                </CardContent>
-              </Card>
-              <Card className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30">
-                <CardContent className="p-3 text-center">
-                  <div className="text-lg font-bold text-white">$85</div>
-                  <div className="text-xs text-gray-300">Precio Prom.</div>
-                </CardContent>
-              </Card>
-            </div>
-
-            {/* Experience Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {isLoading ? (
-                Array.from({ length: 6 }).map((_, i) => (
-                  <Card key={i} className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30 animate-pulse">
-                    <CardContent className="p-4">
-                      <div className="h-4 bg-gray-700/50 rounded mb-2"></div>
-                      <div className="h-3 bg-gray-700/50 rounded mb-3"></div>
-                      <div className="flex justify-between">
-                        <div className="h-3 bg-gray-700/50 rounded w-16"></div>
-                        <div className="h-3 bg-gray-700/50 rounded w-20"></div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))
-              ) : filteredExperiences.length > 0 ? (
-                filteredExperiences.map(renderExperienceCard)
-              ) : (
-                <div className="col-span-full text-center py-12">
-                  <Compass className="w-12 h-12 text-gray-500 mx-auto mb-4" />
-                  <p className="text-gray-400">No se encontraron experiencias en esta categoría</p>
-                </div>
-              )}
-            </div>
-          </div>
-        );
-
-      case "favoritos":
-        return (
-          <div className="text-center py-12">
-            <Heart className="w-12 h-12 text-gray-500 mx-auto mb-4" />
-            <p className="text-gray-400 mb-2">Aún no tienes experiencias favoritas</p>
-            <p className="text-gray-500 text-sm">Explora y guarda las experiencias que más te gusten</p>
-          </div>
-        );
-
-      case "reservas":
-        return (
-          <div className="text-center py-12">
-            <Calendar className="w-12 h-12 text-gray-500 mx-auto mb-4" />
-            <p className="text-gray-400 mb-2">No tienes reservas activas</p>
-            <p className="text-gray-500 text-sm">Cuando realices una reserva, aparecerá aquí</p>
-          </div>
-        );
-
-      default:
-        return <div className="text-white">Sección no encontrada</div>;
-    }
-  };
 
   return (
     <div className="h-screen w-full relative overflow-hidden">
@@ -372,6 +270,124 @@ export default function PortalViajeros() {
         </div>
       </div>
 
+      {/* Content overlay based on active section */}
+      {activeSection === "experiencias" && (
+        <div className="absolute top-24 left-60 right-4 bottom-4 z-40 backdrop-blur-xl bg-gray-900/40 border border-gray-600/30 rounded-xl shadow-2xl overflow-hidden">
+          <div className="h-full overflow-y-auto p-4">
+            <div className="space-y-4">
+              {/* Category Filters */}
+              <div className="flex flex-wrap gap-2 mb-4">
+                {categories.map((category) => (
+                  <Button
+                    key={category}
+                    variant={selectedCategory === category ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => setSelectedCategory(category)}
+                    className={`text-xs h-7 ${
+                      selectedCategory === category
+                        ? "bg-green-600/80 text-white border-green-500/50"
+                        : "border-gray-600/50 text-gray-300 hover:bg-gray-700/50 hover:text-white"
+                    }`}
+                  >
+                    {category.charAt(0).toUpperCase() + category.slice(1).replace(/([A-Z])/g, ' $1')}
+                  </Button>
+                ))}
+              </div>
+
+              {/* Stats */}
+              <div className="grid grid-cols-4 gap-3 mb-4">
+                <Card className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30">
+                  <CardContent className="p-3 text-center">
+                    <div className="text-lg font-bold text-white">{filteredExperiences.length}</div>
+                    <div className="text-xs text-gray-300">Experiencias</div>
+                  </CardContent>
+                </Card>
+                <Card className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30">
+                  <CardContent className="p-3 text-center">
+                    <div className="text-lg font-bold text-white">156</div>
+                    <div className="text-xs text-gray-300">Proveedores</div>
+                  </CardContent>
+                </Card>
+                <Card className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30">
+                  <CardContent className="p-3 text-center">
+                    <div className="text-lg font-bold text-white">4.8</div>
+                    <div className="text-xs text-gray-300">Calificación</div>
+                  </CardContent>
+                </Card>
+                <Card className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30">
+                  <CardContent className="p-3 text-center">
+                    <div className="text-lg font-bold text-white">$85</div>
+                    <div className="text-xs text-gray-300">Precio Prom.</div>
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* Experience Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {isLoading ? (
+                  Array.from({ length: 6 }).map((_, i) => (
+                    <Card key={i} className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30 animate-pulse">
+                      <CardContent className="p-4">
+                        <div className="h-4 bg-gray-700/50 rounded mb-2"></div>
+                        <div className="h-3 bg-gray-700/50 rounded mb-3"></div>
+                        <div className="flex justify-between">
+                          <div className="h-3 bg-gray-700/50 rounded w-16"></div>
+                          <div className="h-3 bg-gray-700/50 rounded w-20"></div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))
+                ) : filteredExperiences.length > 0 ? (
+                  filteredExperiences.map(renderExperienceCard)
+                ) : (
+                  <div className="col-span-full text-center py-12">
+                    <Compass className="w-12 h-12 text-gray-500 mx-auto mb-4" />
+                    <p className="text-gray-400">No se encontraron experiencias en esta categoría</p>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {activeSection === "favoritos" && (
+        <div className="absolute top-24 left-60 right-4 bottom-4 z-40 backdrop-blur-xl bg-gray-900/40 border border-gray-600/30 rounded-xl shadow-2xl overflow-hidden">
+          <div className="h-full overflow-y-auto p-4">
+            <div className="text-center py-12">
+              <Heart className="w-16 h-16 text-gray-500 mx-auto mb-4" />
+              <h2 className="text-2xl font-bold text-white mb-2">Experiencias Favoritas</h2>
+              <p className="text-gray-400 mb-4">Aún no tienes experiencias favoritas</p>
+              <p className="text-gray-500 text-sm mb-6">Explora el mapa y guarda las experiencias que más te gusten haciendo clic en el corazón</p>
+              <Button 
+                onClick={() => setActiveSection("experiencias")}
+                className="bg-green-600/80 hover:bg-green-600 text-white"
+              >
+                Explorar Experiencias
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {activeSection === "reservas" && (
+        <div className="absolute top-24 left-60 right-4 bottom-4 z-40 backdrop-blur-xl bg-gray-900/40 border border-gray-600/30 rounded-xl shadow-2xl overflow-hidden">
+          <div className="h-full overflow-y-auto p-4">
+            <div className="text-center py-12">
+              <Calendar className="w-16 h-16 text-gray-500 mx-auto mb-4" />
+              <h2 className="text-2xl font-bold text-white mb-2">Mis Reservas</h2>
+              <p className="text-gray-400 mb-4">No tienes reservas activas</p>
+              <p className="text-gray-500 text-sm mb-6">Cuando realices una reserva, aparecerá aquí con todos los detalles de tu experiencia</p>
+              <Button 
+                onClick={() => setActiveSection("experiencias")}
+                className="bg-green-600/80 hover:bg-green-600 text-white"
+              >
+                Reservar Experiencia
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
       
     </div>
   );
