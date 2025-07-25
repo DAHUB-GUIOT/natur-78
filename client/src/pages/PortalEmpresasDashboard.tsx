@@ -43,6 +43,7 @@ import { InteractiveMap } from "@/components/dashboard/InteractiveMap";
 import ExperienceForm from "@/components/dashboard/ExperienceForm";
 import ProfileSection from "@/components/dashboard/ProfileSection";
 import { MessageCenter } from "@/components/messaging/MessageCenter";
+import { WhatsAppChat } from "@/components/messaging/WhatsAppChat";
 import { Link } from "wouter";
 
 const PortalEmpresasDashboard = () => {
@@ -72,7 +73,7 @@ const PortalEmpresasDashboard = () => {
     { id: "estadisticas", label: "Estadísticas", icon: BarChart3 },
     { id: "perfil", label: "Mi Perfil", icon: User },
     { id: "ajustes", label: "Ajustes", icon: Settings },
-    ...(currentUser?.user?.role === 'admin' ? [{ id: "admin", label: "Admin Panel", icon: ShieldCheck }] : [])
+    ...((currentUser as any)?.user?.role === 'admin' ? [{ id: "admin", label: "Admin Panel", icon: ShieldCheck }] : [])
   ];
 
 
@@ -354,50 +355,11 @@ const PortalEmpresasDashboard = () => {
 
       case "mensajes":
         return (
-          <div className="space-y-4 bg-gray-100 rounded-lg p-6">
-            <div className="mb-6">
-              <h2 className="text-2xl font-bold text-gray-900 mb-2">Mensajes entre Empresas</h2>
-              <p className="text-gray-600 text-sm">Comunícate con otras empresas, proveedores y socios de la plataforma</p>
-            </div>
-            
-            {/* Company Communication Tags */}
-            <div className="flex flex-wrap gap-2 mb-4">
-              <Badge className="bg-blue-100 text-blue-700 border border-blue-200">
-                <Building2 className="w-3 h-3 mr-1" />
-                Comunicación B2B
-              </Badge>
-              <Badge className="bg-green-100 text-green-700 border border-green-200">
-                <Users className="w-3 h-3 mr-1" />
-                Red de Empresas
-              </Badge>
-              <Badge className="bg-purple-100 text-purple-700 border border-purple-200">
-                <Handshake className="w-3 h-3 mr-1" />
-                Colaboraciones
-              </Badge>
-            </div>
-
-            {userLoading ? (
-              <div className="flex items-center justify-center h-96 bg-white rounded-lg shadow-sm">
-                <p className="text-gray-500">Cargando mensajes...</p>
-              </div>
-            ) : currentUser?.user?.id ? (
-              <div className="bg-white rounded-lg shadow-sm">
-                <MessageCenter currentUserId={currentUser.user.id} />
-              </div>
-            ) : (
-              <div className="flex items-center justify-center h-96 bg-white rounded-lg shadow-sm">
-                <div className="text-center">
-                  <Building2 className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-                  <p className="text-gray-500 mb-4">Inicia sesión para comunicarte con otras empresas</p>
-                  <Button 
-                    onClick={() => refetchUser()} 
-                    className="bg-green-600 hover:bg-green-700 text-white"
-                  >
-                    Recargar datos de usuario
-                  </Button>
-                </div>
-              </div>
-            )}
+          <div className="h-full">
+            <WhatsAppChat 
+              currentUserId={(currentUser as any)?.user?.id} 
+              onClose={() => setActiveSection('inicio')}
+            />
           </div>
         );
 

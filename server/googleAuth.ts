@@ -60,8 +60,38 @@ export function setupGoogleAuth(app: Express) {
         
         user = await storage.createGoogleUser(userData);
         console.log('New Google user created:', user.id);
+        
+        // Auto-create user profile with Google data
+        const profileData = {
+          userId: user.id,
+          fullName: profile.displayName || `${profile.name?.givenName || ''} ${profile.name?.familyName || ''}`.trim(),
+          userCategory: 'startup', // Default category
+          phone: '', // User can update later
+          whatsapp: '', // User can update later
+          website: '', // User can update later
+          linkedin: '', // User can update later
+          bio: `${profile.displayName} - Nuevo miembro de Festival NATUR`, // Default bio
+          description: '',
+        };
+        
+        try {
+          await storage.createUserProfile(profileData);
+          console.log('Auto-created user profile from Google data');
+        } catch (error) {
+          console.error('Failed to create user profile:', error);
+        }
       } else {
         console.log('Existing user found:', user.id);
+        
+        // Update user's Google ID and profile picture if missing
+        if (!user.googleId || !user.profilePicture) {
+          await storage.updateUser(user.id, {
+            googleId: user.googleId || profile.id,
+            profilePicture: user.profilePicture || profile.photos?.[0]?.value || null,
+            firstName: user.firstName || profile.name?.givenName || null,
+            lastName: user.lastName || profile.name?.familyName || null,
+          });
+        }
       }
       
       return done(null, user);

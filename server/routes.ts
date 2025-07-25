@@ -480,6 +480,53 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Enhanced conversations endpoint with user details
+  app.get("/api/messages/conversations/enhanced", async (req, res) => {
+    try {
+      if (!req.session.userId) {
+        return res.status(401).json({ error: "Not authenticated" });
+      }
+
+      const conversations = await storage.getConversations(req.session.userId);
+      
+      // Enhance conversations with user details
+      const enhancedConversations = await Promise.all(
+        conversations.map(async (conv) => {
+          const otherUserId = conv.participant1Id === req.session.userId 
+            ? conv.participant2Id 
+            : conv.participant1Id;
+          
+          const otherUser = await storage.getUser(otherUserId);
+          
+          // Count unread messages
+          const messages = await storage.getMessages(conv.id);
+          const unreadCount = messages.filter(
+            msg => msg.receiverId === req.session.userId && !msg.isRead
+          ).length;
+          
+          return {
+            ...conv,
+            otherUser: otherUser ? {
+              id: otherUser.id,
+              email: otherUser.email,
+              firstName: otherUser.firstName,
+              lastName: otherUser.lastName,
+              profilePicture: otherUser.profilePicture,
+              isOnline: false, // Would need real-time tracking
+              lastSeen: otherUser.updatedAt
+            } : null,
+            unreadCount
+          };
+        })
+      );
+      
+      res.json(enhancedConversations);
+    } catch (error) {
+      console.error("Get enhanced conversations error:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+
   app.get("/api/messages/:conversationId", async (req, res) => {
     try {
       if (!req.session.userId) {
