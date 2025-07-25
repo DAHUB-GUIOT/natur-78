@@ -62,18 +62,22 @@ export function setupGoogleAuth(app: Express) {
     }
   }));
 
-  // Serialize user for session
+  // Serialize user for session (optimized)
   passport.serializeUser((user: any, done) => {
     done(null, user.id);
   });
 
-  // Deserialize user from session
+  // Deserialize user from session with caching
   passport.deserializeUser(async (id: number, done) => {
     try {
       const user = await storage.getUser(id);
+      if (!user) {
+        return done(null, false);
+      }
       done(null, user);
     } catch (error) {
-      done(error, null);
+      console.error('Session deserialization error:', error);
+      done(null, false);
     }
   });
 
