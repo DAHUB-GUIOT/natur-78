@@ -149,9 +149,49 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(404).json({ error: "Profile not found" });
       }
 
+      // Get user info to include in response
+      const user = await storage.getUser(userId);
+      if (user) {
+        (profile as any).user = {
+          email: user.email,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          profilePicture: user.profilePicture
+        };
+      }
+
       res.json(profile);
     } catch (error) {
       console.error("Get profile error:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+
+  // Get company by user ID
+  app.get("/api/companies/user/:userId", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const company = await storage.getCompany(userId);
+      
+      if (!company) {
+        return res.status(404).json({ error: "Company not found" });
+      }
+
+      res.json(company);
+    } catch (error) {
+      console.error("Get company by user error:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+
+  // Get experiences by user ID
+  app.get("/api/experiences/user/:userId", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const experiences = await storage.getExperiences(userId);
+      res.json(experiences);
+    } catch (error) {
+      console.error("Get user experiences error:", error);
       res.status(500).json({ error: "Internal server error" });
     }
   });

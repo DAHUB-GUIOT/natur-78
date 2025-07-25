@@ -26,6 +26,7 @@ import PortalEmpresasDashboard from "./pages/PortalEmpresasDashboard";
 import ExperienceDetail from "./pages/ExperienceDetail";
 import MapaPublicoOptimized from "./pages/MapaPublicoOptimized";
 import UnifiedPlatform from "./pages/UnifiedPlatform";
+import UserProfile from "./pages/UserProfile";
 import { AuthProvider } from "./contexts/AuthContext";
 
 // Create QueryClient outside component to prevent recreation on renders
@@ -65,6 +66,7 @@ const App = () => (
             <Route path="/experiencia/:id" component={ExperienceDetail} />
             <Route path="/mapa" component={MapaPublicoOptimized} />
             <Route path="/plataforma" component={UnifiedPlatform} />
+            <Route path="/perfil/:userId" component={UserProfile} />
             <Route path="/agenda">
               <MainLayout><Agenda /></MainLayout>
             </Route>
