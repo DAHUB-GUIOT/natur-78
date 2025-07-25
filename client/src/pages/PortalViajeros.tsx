@@ -372,12 +372,7 @@ export default function PortalViajeros() {
         </div>
       </div>
 
-      {/* Main content area */}
-      <main className="absolute top-24 left-60 right-4 bottom-4 z-40 backdrop-blur-xl bg-gray-900/40 border border-gray-600/30 rounded-xl shadow-2xl overflow-hidden">
-        <div className="h-full overflow-y-auto p-4">
-          {renderContent()}
-        </div>
-      </main>
+      
     </div>
   );
 }
