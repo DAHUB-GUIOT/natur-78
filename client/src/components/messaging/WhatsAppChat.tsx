@@ -364,7 +364,7 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ currentUserId, onClo
 
       {/* Chat Area */}
       {selectedConversation ? (
-        <div className="flex-1 flex flex-col bg-gray-100">
+        <div className="flex-1 flex flex-col bg-gray-200">
           {/* Chat Header */}
           <div className="bg-gray-300 px-4 py-3 flex items-center justify-between">
             <div className="flex items-center">
@@ -423,7 +423,7 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ currentUserId, onClo
 
           {/* Messages */}
           <ScrollArea 
-            className="flex-1 px-4 py-2 bg-gray-100"
+            className="flex-1 px-4 py-2 bg-gray-200"
           >
             {messages.map((message, index) => {
               const isOwn = message.senderId === currentUserId;
@@ -598,13 +598,13 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ currentUserId, onClo
           </div>
         </div>
       ) : (
-        <div className="flex-1 flex items-center justify-center bg-gray-100">
+        <div className="flex-1 flex items-center justify-center bg-gray-200">
           <div className="text-center">
             <div className="w-72 h-72 mx-auto mb-4 bg-gray-300 rounded-full flex items-center justify-center">
               <MessageCircle className="h-32 w-32 text-white" />
             </div>
-            <h3 className="text-xl font-semibold text-gray-500 mb-2">Selecciona una conversación</h3>
-            <p className="text-gray-400">Elige una empresa para comenzar a chatear</p>
+            <h3 className="text-xl font-semibold text-gray-600 mb-2">Selecciona una conversación</h3>
+            <p className="text-gray-500">Elige una empresa para comenzar a chatear</p>
           </div>
         </div>
       )}
