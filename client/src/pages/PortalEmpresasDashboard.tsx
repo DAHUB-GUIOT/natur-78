@@ -40,6 +40,7 @@ import {
 import { InteractiveMap } from "@/components/dashboard/InteractiveMap";
 import ExperienceForm from "@/components/dashboard/ExperienceForm";
 import ProfileSection from "@/components/dashboard/ProfileSection";
+import { MessageCenter } from "@/components/messaging/MessageCenter";
 import { Link } from "wouter";
 
 const PortalEmpresasDashboard = () => {
@@ -50,6 +51,12 @@ const PortalEmpresasDashboard = () => {
   // Fetch experiences data
   const { data: experiences = [], isLoading: experiencesLoading } = useQuery({
     queryKey: ['/api/experiences'],
+    retry: false,
+  });
+
+  // Fetch current user data
+  const { data: currentUser } = useQuery({
+    queryKey: ['/api/auth/me'],
     retry: false,
   });
 
@@ -343,77 +350,14 @@ const PortalEmpresasDashboard = () => {
       case "mensajes":
         return (
           <div className="space-y-4">
-            <h2 className="text-xl font-bold text-white">Mensajes</h2>
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 h-96">
-              {/* Chat List */}
-              <Card className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30">
-                <CardContent className="p-3">
-                  <div className="space-y-2">
-                    <h3 className="text-sm font-semibold text-white border-b border-gray-600/30 pb-2">Conversaciones</h3>
-                    {[
-                      { name: "EcoTours Colombia", message: "Hola, me interesa tu experiencia...", time: "2h", unread: 2 },
-                      { name: "Café de la Montaña", message: "Gracias por la reserva", time: "1d", unread: 0 },
-                      { name: "Verde Aventura", message: "¿Podemos programar una llamada?", time: "3d", unread: 1 }
-                    ].map((chat, index) => (
-                      <div key={index} className="flex items-center space-x-2 p-2 rounded-lg bg-gray-800/30 hover:bg-gray-700/40 cursor-pointer">
-                        <Avatar className="w-8 h-8">
-                          <AvatarFallback className="bg-green-600/80 text-white text-xs">{chat.name[0]}</AvatarFallback>
-                        </Avatar>
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center justify-between">
-                            <p className="text-xs font-medium text-white truncate">{chat.name}</p>
-                            <span className="text-xs text-gray-300">{chat.time}</span>
-                          </div>
-                          <p className="text-xs text-gray-200 truncate">{chat.message}</p>
-                        </div>
-                        {chat.unread > 0 && (
-                          <Badge className="bg-green-600/80 text-white text-xs w-4 h-4 rounded-full flex items-center justify-center p-0 backdrop-blur-sm">
-                            {chat.unread}
-                          </Badge>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-              
-              {/* Chat Window */}
-              <Card className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30 lg:col-span-2">
-                <CardContent className="p-3 h-full flex flex-col">
-                  <div className="flex items-center space-x-2 border-b border-gray-600/30 pb-2 mb-2">
-                    <Avatar className="w-8 h-8">
-                      <AvatarFallback className="bg-green-600/80 text-white text-xs">E</AvatarFallback>
-                    </Avatar>
-                    <div>
-                      <p className="text-sm font-medium text-white">EcoTours Colombia</p>
-                      <p className="text-xs text-gray-300">En línea</p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex-1 space-y-2 overflow-y-auto">
-                    {[
-                      { text: "Hola, me interesa mucho tu experiencia de café sostenible", sender: "other", time: "14:30" },
-                      { text: "¡Hola! Me alegra tu interés. ¿Tienes alguna pregunta específica?", sender: "me", time: "14:32" },
-                      { text: "Sí, ¿cuál es la duración exacta del tour?", sender: "other", time: "14:35" }
-                    ].map((msg, index) => (
-                      <div key={index} className={`flex ${msg.sender === 'me' ? 'justify-end' : 'justify-start'}`}>
-                        <div className={`max-w-xs px-3 py-2 rounded-lg ${msg.sender === 'me' ? 'bg-green-600/80 backdrop-blur-sm' : 'bg-gray-800/40 backdrop-blur-sm'}`}>
-                          <p className="text-xs text-white">{msg.text}</p>
-                          <p className="text-xs text-gray-300 mt-1">{msg.time}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                  
-                  <div className="flex space-x-2 mt-2">
-                    <Input placeholder="Escribe un mensaje..." className="flex-1 bg-gray-800/50 border-gray-600/50 text-white placeholder-gray-400 text-xs h-8 backdrop-blur-sm" />
-                    <Button size="sm" className="bg-green-600/80 hover:bg-green-700/80 text-white h-8 w-8 p-0 backdrop-blur-sm">
-                      <MessageCircle className="w-3 h-3" />
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
+            <h2 className="text-xl font-bold text-white mb-4">Mensajes</h2>
+            {currentUser?.user?.id ? (
+              <MessageCenter currentUserId={currentUser.user.id} />
+            ) : (
+              <div className="flex items-center justify-center h-96">
+                <p className="text-gray-400">Cargando mensajes...</p>
+              </div>
+            )}
           </div>
         );
 
