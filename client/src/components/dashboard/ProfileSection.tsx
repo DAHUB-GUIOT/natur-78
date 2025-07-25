@@ -292,7 +292,7 @@ export default function ProfileSection() {
                     )}
                   </div>
                   {profile?.bio && (
-                    <p className="text-white/80 mt-2 max-w-2xl">{profile.bio}</p>
+                    <p className="text-gray-200 mt-2 max-w-2xl">{profile.bio}</p>
                   )}
                 </div>
                 
@@ -306,7 +306,7 @@ export default function ProfileSection() {
                 </Button>
               </div>
 
-              <div className="flex items-center gap-6 mt-4 text-sm text-white/70">
+              <div className="flex items-center gap-6 mt-4 text-sm text-gray-300">
                 {profile?.city && (
                   <div className="flex items-center gap-1">
                     <MapPin className="h-4 w-4" />
