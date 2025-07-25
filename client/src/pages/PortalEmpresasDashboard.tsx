@@ -42,6 +42,7 @@ import {
 import { InteractiveMap } from "@/components/dashboard/InteractiveMap";
 import ExperienceForm from "@/components/dashboard/ExperienceForm";
 import ProfileSection from "@/components/dashboard/ProfileSection";
+import TwitterProfileSection from "@/components/profile/TwitterProfileSection";
 import { MessageCenter } from "@/components/messaging/MessageCenter";
 import { WhatsAppChat } from "@/components/messaging/WhatsAppChat";
 import { Link } from "wouter";
@@ -70,7 +71,6 @@ const PortalEmpresasDashboard = () => {
     { id: "empresas", label: "Buscador", icon: Building2 },
     { id: "experiencias", label: "Experiencias", icon: Star },
     { id: "mensajes", label: "Mensajes", icon: MessageCircle },
-    { id: "estadisticas", label: "Estadísticas", icon: BarChart3 },
     { id: "perfil", label: "Mi Perfil", icon: User },
     { id: "ajustes", label: "Ajustes", icon: Settings },
     ...((currentUser as any)?.user?.role === 'admin' ? [{ id: "admin", label: "Admin Panel", icon: ShieldCheck }] : [])
@@ -363,80 +363,6 @@ const PortalEmpresasDashboard = () => {
           </div>
         );
 
-      case "estadisticas":
-        return (
-          <div className="space-y-4">
-            <h2 className="text-xl font-bold text-white">Estadísticas</h2>
-            
-            {/* Quick Stats Grid */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-              {[
-                { label: "Vistas", value: "1.2K", icon: Globe, color: "blue" },
-                { label: "Reservas", value: "89", icon: Calendar, color: "green" },
-                { label: "Ingresos", value: "$2.4M", icon: DollarSign, color: "yellow" },
-                { label: "Rating", value: "4.8", icon: Star, color: "purple" }
-              ].map((stat, index) => (
-                <Card key={index} className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30">
-                  <CardContent className="p-3">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="text-xs text-white">{stat.label}</p>
-                        <p className="text-lg font-bold text-white">{stat.value}</p>
-                      </div>
-                      <div className={`w-8 h-8 bg-${stat.color}-600/20 rounded-lg flex items-center justify-center backdrop-blur-sm`}>
-                        <stat.icon className={`w-4 h-4 text-${stat.color}-400`} />
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-            
-            {/* Charts Grid */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
-              <Card className="backdrop-blur-xl bg-white/10 border border-white/30">
-                <CardContent className="p-3">
-                  <h3 className="text-sm font-semibold text-white mb-3">Reservas por Mes</h3>
-                  <div className="bg-white/5 rounded-lg flex items-center justify-center h-32">
-                    <BarChart3 className="w-8 h-8 text-white/50" />
-                  </div>
-                </CardContent>
-              </Card>
-              
-              <Card className="backdrop-blur-xl bg-white/10 border border-white/30">
-                <CardContent className="p-3">
-                  <h3 className="text-sm font-semibold text-white mb-3">Ingresos Mensuales</h3>
-                  <div className="bg-white/5 rounded-lg flex items-center justify-center h-32">
-                    <DollarSign className="w-8 h-8 text-white/50" />
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-            
-            {/* Recent Performance */}
-            <Card className="backdrop-blur-xl bg-white/10 border border-white/30">
-              <CardContent className="p-3">
-                <h3 className="text-sm font-semibold text-white mb-3">Rendimiento Reciente</h3>
-                <div className="space-y-2">
-                  {[
-                    { experience: "Tour de Café Sostenible", views: 245, bookings: 12, revenue: "$1,020" },
-                    { experience: "Senderismo Ecológico", views: 189, bookings: 8, revenue: "$640" },
-                    { experience: "Gastronomía Local", views: 156, bookings: 15, revenue: "$1,275" }
-                  ].map((item, index) => (
-                    <div key={index} className="flex items-center justify-between p-2 bg-white/5 rounded-lg">
-                      <div>
-                        <p className="text-xs font-medium text-white">{item.experience}</p>
-                        <p className="text-xs text-gray-300">{item.views} vistas • {item.bookings} reservas</p>
-                      </div>
-                      <p className="text-xs font-bold text-green-400">{item.revenue}</p>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        );
-
       case "ajustes":
         return (
           <div className="space-y-4">
@@ -519,7 +445,7 @@ const PortalEmpresasDashboard = () => {
         );
 
       case "perfil":
-        return <ProfileSection />;
+        return <TwitterProfileSection />;
 
       default:
         return <div>Sección no encontrada</div>;

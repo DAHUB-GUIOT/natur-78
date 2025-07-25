@@ -10,6 +10,18 @@ This is a full-stack web application for Festival NATUR (www.festivalnatur.com),
 
 ## Recent Changes
 
+- ✅ **January 25, 2025**: Twitter/X-Style Profile with Integrated Statistics and Glassmorphism Design
+  - **REMOVED**: Estadísticas section from sidebar navigation completely
+  - **NEW**: Created TwitterProfileSection.tsx with modern Twitter/X-inspired design
+  - **NEW**: Glassmorphism aesthetic with semi-transparent backgrounds and frosted glass effects
+  - **NEW**: Profile header with cover photo, avatar, and verified badge support
+  - **NEW**: Integrated business statistics directly into profile (experiencias, vistas, reservas, ingresos, rating)
+  - **NEW**: Twitter-style activity feed with posts, interactions, and engagement metrics
+  - **NEW**: White sans-serif typography throughout for modern clean look
+  - **NEW**: Profile tabs for Posts, Respuestas, Medios, Me gusta following Twitter UX pattern
+  - **NEW**: All stats now displayed in clean rounded cards with hover effects
+  - **UPDATED**: Mi Perfil section now uses TwitterProfileSection instead of old ProfileSection
+
 - ✅ **January 25, 2025**: UI Clean-up - Removed WhatsApp Branding Text
   - **REMOVED**: "WhatsApp Business para Empresas" text from messaging interface
   - **REMOVED**: "Selecciona una conversación para empezar a chatear" text
