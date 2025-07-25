@@ -102,11 +102,9 @@ export default function PortalViajeros() {
   ];
 
   const filteredExperiences = experiences.filter((exp: Experience) => {
-    const matchesSearch = exp.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         exp.description?.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesCategory = selectedCategory === "todos" || 
                            exp.type?.toLowerCase() === selectedCategory;
-    return matchesSearch && matchesCategory && exp.status === "approved" && exp.isActive;
+    return matchesCategory && exp.status === "approved" && exp.isActive;
   });
 
   const renderExperienceCard = (experience: Experience) => (

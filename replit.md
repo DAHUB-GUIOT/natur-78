@@ -10,6 +10,16 @@ This is a full-stack web application for Festival NATUR (www.festivalnatur.com),
 
 ## Recent Changes
 
+- ✅ **January 25, 2025**: Portal Viajeros Enhanced with Separate Pages and Sample Experiences
+  - **NEW**: Added "Mapa" button to show clean map view with only background and experience markers
+  - **NEW**: Created 3 sample Colombian experiences: El Cocuy trekking, Nuquí whale watching, Cartagena food tour
+  - **NEW**: Implemented separate overlay pages for Experiencias, Favoritos, and Reservas sections
+  - **NEW**: Removed search input from top navigation for cleaner header design
+  - **NEW**: Added floating info panel for map view with legend and category filters
+  - **NEW**: Enhanced glassmorphism design with transparent overlays over interactive map background
+  - **NEW**: Default view now shows "Mapa" section with immersive full-screen map experience
+  - **FIXED**: Google OAuth redirect URI mismatch identified - requires Google Cloud Console update
+
 - ✅ **January 25, 2025**: NEW Portal Viajeros Marketplace Implementation
   - **NEW**: Created comprehensive PortalViajeros.tsx marketplace for travelers based on Portal Empresas design
   - **NEW**: Implemented experience browsing with category filters (aventura, naturaleza, cultura, gastronomía, etc.)

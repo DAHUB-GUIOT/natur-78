@@ -17,7 +17,11 @@ export function setupGoogleAuth(app: Express) {
     return;
   }
 
-  const domain = process.env.REPLIT_DOMAINS?.split(',')[0] || 'localhost:5000';
+  // Get the current domain from environment or headers
+  const replitDomain = process.env.REPLIT_DOMAINS?.split(',')[0];
+  const domain = replitDomain || 'localhost:5000';
+  
+  // Ensure we use the correct protocol and domain for Replit
   const callbackURL = domain.includes('localhost') 
     ? `http://${domain}/api/auth/google/callback`
     : `https://${domain}/api/auth/google/callback`;
