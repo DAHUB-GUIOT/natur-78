@@ -239,9 +239,7 @@ const Auth = ({ type }: AuthProps) => {
                     <>
                       <div className="text-center mt-4">
                         <p className="text-white/70 text-sm">
-                          📝 Verificando configuración OAuth...
-                          <br />
-                          <span className="text-xs">Callback: .../api/auth/google/callback</span>
+                          ✅ Google OAuth listo para probar
                         </p>
                       </div>
 
