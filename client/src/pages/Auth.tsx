@@ -8,6 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/components/ui/use-toast";
 import { Building2, MapPin, Mail, Lock, User, ArrowLeft } from "lucide-react";
 import { Link, useLocation } from "wouter";
+import { GoogleAuthButton } from "@/components/GoogleAuthButton";
 
 interface AuthProps {
   type: 'empresas' | 'consentidos';
@@ -48,12 +49,12 @@ const Auth = ({ type }: AuthProps) => {
       title: 'Con-Sentidos',
       subtitle: 'Acceso para viajeros conscientes y exploradores sostenibles',
       icon: MapPin,
-      color: 'green',
-      bgColor: 'bg-green-50',
-      borderColor: 'border-green-200',
-      iconColor: 'text-green-600',
-      buttonColor: 'bg-green-600 hover:bg-green-700',
-      focusColor: 'focus:border-green-500 focus:ring-green-500'
+      color: 'yellow',
+      bgColor: 'bg-yellow-50',
+      borderColor: 'border-yellow-200',
+      iconColor: 'text-yellow-600',
+      buttonColor: 'bg-yellow-500 hover:bg-yellow-600',
+      focusColor: 'focus:border-yellow-500 focus:ring-yellow-500'
     }
   };
 
@@ -137,11 +138,11 @@ const Auth = ({ type }: AuthProps) => {
           {/* Title Section */}
           <div className="text-center mb-8">
             <div className="flex items-center justify-center mb-6">
-              <div className="w-16 h-16 rounded-full flex items-center justify-center" style={{ backgroundColor: isEmpresas ? '#EDFF60' : 'transparent', border: isEmpresas ? 'none' : '2px solid #10B981' }}>
-                <IconComponent className="w-8 h-8" style={{ color: isEmpresas ? '#000' : '#10B981' }} />
+              <div className="w-16 h-16 rounded-full flex items-center justify-center" style={{ backgroundColor: isEmpresas ? '#EDFF60' : '#EDFF60', border: isEmpresas ? 'none' : 'none' }}>
+                <IconComponent className="w-8 h-8" style={{ color: isEmpresas ? '#000' : '#000' }} />
               </div>
             </div>
-            <h1 className="text-3xl md:text-4xl font-bold mb-4 font-gasoek tracking-wide" style={{ color: isEmpresas ? '#EDFF60' : '#10B981' }}>
+            <h1 className="text-3xl md:text-4xl font-bold mb-4 font-gasoek tracking-wide" style={{ color: isEmpresas ? '#EDFF60' : '#EDFF60' }}>
               {currentConfig.title.toUpperCase()}
             </h1>
             <p className="text-lg text-white max-w-2xl mx-auto font-medium">
@@ -150,16 +151,16 @@ const Auth = ({ type }: AuthProps) => {
           </div>
 
           {/* Auth Form - Transparent with colored outlines */}
-          <Card className="shadow-2xl backdrop-blur-md bg-white/10 border-2" style={{ borderColor: isEmpresas ? '#EDFF60' : '#10B981' }}>
-            <CardHeader className="backdrop-blur-md bg-white/5 border-b-2" style={{ borderColor: isEmpresas ? '#EDFF60' : '#10B981' }}>
+          <Card className="shadow-2xl backdrop-blur-md bg-white/10 border-2" style={{ borderColor: isEmpresas ? '#EDFF60' : '#EDFF60' }}>
+            <CardHeader className="backdrop-blur-md bg-white/5 border-b-2" style={{ borderColor: isEmpresas ? '#EDFF60' : '#EDFF60' }}>
               <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as 'login' | 'register')}>
                 <TabsList className="grid w-full grid-cols-2 bg-white/20">
                   <TabsTrigger 
                     value="login" 
                     className="font-bold data-[state=active]:bg-white/20"
                     style={{ 
-                      color: isEmpresas ? '#EDFF60' : '#10B981',
-                      borderColor: isEmpresas ? '#EDFF60' : '#10B981'
+                      color: isEmpresas ? '#EDFF60' : '#EDFF60',
+                      borderColor: isEmpresas ? '#EDFF60' : '#EDFF60'
                     }}
                   >
                     Iniciar Sesión
@@ -168,8 +169,8 @@ const Auth = ({ type }: AuthProps) => {
                     value="register" 
                     className="font-bold data-[state=active]:bg-white/20"
                     style={{ 
-                      color: isEmpresas ? '#EDFF60' : '#10B981',
-                      borderColor: isEmpresas ? '#EDFF60' : '#10B981'
+                      color: isEmpresas ? '#EDFF60' : '#EDFF60',
+                      borderColor: isEmpresas ? '#EDFF60' : '#EDFF60'
                     }}
                   >
                     Registrarse
@@ -184,18 +185,18 @@ const Auth = ({ type }: AuthProps) => {
               <TabsContent value="login">
                 <form onSubmit={handleLogin} className="space-y-4">
                   <div className="space-y-3">
-                    <Label htmlFor="login-email" className="font-bold text-lg" style={{ color: isEmpresas ? '#EDFF60' : '#10B981' }}>
+                    <Label htmlFor="login-email" className="font-bold text-lg" style={{ color: isEmpresas ? '#EDFF60' : '#EDFF60' }}>
                       Correo electrónico
                     </Label>
                     <div className="relative">
-                      <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5" style={{ color: isEmpresas ? '#EDFF60' : '#10B981' }} />
+                      <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5" style={{ color: isEmpresas ? '#EDFF60' : '#EDFF60' }} />
                       <Input
                         id="login-email"
                         type="email"
                         value={loginData.email}
                         onChange={(e) => setLoginData(prev => ({ ...prev, email: e.target.value }))}
                         className="pl-12 border-2 bg-white/10 backdrop-blur-sm text-white font-medium text-lg p-4 placeholder-white/60"
-                        style={{ borderColor: isEmpresas ? '#EDFF60' : '#10B981' }}
+                        style={{ borderColor: isEmpresas ? '#EDFF60' : '#EDFF60' }}
                         placeholder="tu@email.com"
                         required
                       />
@@ -203,18 +204,18 @@ const Auth = ({ type }: AuthProps) => {
                   </div>
 
                   <div className="space-y-3">
-                    <Label htmlFor="login-password" className="font-bold text-lg" style={{ color: isEmpresas ? '#EDFF60' : '#10B981' }}>
+                    <Label htmlFor="login-password" className="font-bold text-lg" style={{ color: isEmpresas ? '#EDFF60' : '#EDFF60' }}>
                       Contraseña
                     </Label>
                     <div className="relative">
-                      <Lock className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5" style={{ color: isEmpresas ? '#EDFF60' : '#10B981' }} />
+                      <Lock className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5" style={{ color: isEmpresas ? '#EDFF60' : '#EDFF60' }} />
                       <Input
                         id="login-password"
                         type="password"
                         value={loginData.password}
                         onChange={(e) => setLoginData(prev => ({ ...prev, password: e.target.value }))}
                         className="pl-12 border-2 bg-white/10 backdrop-blur-sm text-white font-medium text-lg p-4 placeholder-white/60"
-                        style={{ borderColor: isEmpresas ? '#EDFF60' : '#10B981' }}
+                        style={{ borderColor: isEmpresas ? '#EDFF60' : '#EDFF60' }}
                         placeholder="••••••••"
                         required
                       />
@@ -222,7 +223,7 @@ const Auth = ({ type }: AuthProps) => {
                   </div>
 
                   <div className="flex items-center justify-between text-sm">
-                    <a href="#" className="hover:underline" style={{ color: isEmpresas ? '#EDFF60' : '#10B981' }}>
+                    <a href="#" className="hover:underline" style={{ color: isEmpresas ? '#EDFF60' : '#EDFF60' }}>
                       ¿Olvidaste tu contraseña?
                     </a>
                   </div>
@@ -230,16 +231,17 @@ const Auth = ({ type }: AuthProps) => {
                   <Button
                     type="submit"
                     className="w-full text-black py-4 font-bold text-lg shadow-xl hover:opacity-90"
-                    style={{ backgroundColor: isEmpresas ? '#EDFF60' : '#10B981' }}
+                    style={{ backgroundColor: isEmpresas ? '#EDFF60' : '#EDFF60' }}
                   >
                     Iniciar Sesión
                   </Button>
 
-                  {isEmpresas && (
+                  {/* Google Auth for both portals */}
+                  {(isEmpresas || !isEmpresas) && (
                     <>
                       <div className="text-center mt-4">
                         <p className="text-white/70 text-sm">
-                          ✅ Google OAuth listo para probar
+                          ✅ Google OAuth listo para {isEmpresas ? 'empresas' : 'viajeros'}
                         </p>
                       </div>
 
@@ -289,8 +291,8 @@ const Auth = ({ type }: AuthProps) => {
                                 button.textContent = 'Continuar con Google';
                                 button.disabled = false;
                               }
-                              // Redirect to dashboard
-                              window.location.href = '/portal-empresas?auth=success';
+                              // Redirect to appropriate dashboard
+                              window.location.href = isEmpresas ? '/portal-empresas?auth=success' : '/mapa?auth=success';
                             }
                           };
                           
@@ -311,7 +313,7 @@ const Auth = ({ type }: AuthProps) => {
                                   .then(res => res.json())
                                   .then(data => {
                                     if (data.user) {
-                                      window.location.href = '/portal-empresas?auth=success';
+                                      window.location.href = isEmpresas ? '/portal-empresas?auth=success' : '/mapa?auth=success';
                                     }
                                   })
                                   .catch(() => {
@@ -354,18 +356,18 @@ const Auth = ({ type }: AuthProps) => {
               <TabsContent value="register">
                 <form onSubmit={handleRegister} className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="register-name" className="font-medium" style={{ color: isEmpresas ? '#EDFF60' : '#10B981' }}>
+                    <Label htmlFor="register-name" className="font-medium" style={{ color: isEmpresas ? '#EDFF60' : '#EDFF60' }}>
                       Nombre completo
                     </Label>
                     <div className="relative">
-                      <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4" style={{ color: isEmpresas ? '#EDFF60' : '#10B981' }} />
+                      <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4" style={{ color: isEmpresas ? '#EDFF60' : '#EDFF60' }} />
                       <Input
                         id="register-name"
                         type="text"
                         value={registerData.name}
                         onChange={(e) => setRegisterData(prev => ({ ...prev, name: e.target.value }))}
                         className="pl-10 border-2 bg-white/10 backdrop-blur-sm text-white font-medium placeholder-white/60"
-                        style={{ borderColor: isEmpresas ? '#EDFF60' : '#10B981' }}
+                        style={{ borderColor: isEmpresas ? '#EDFF60' : '#EDFF60' }}
                         placeholder="Tu nombre completo"
                         required
                       />
@@ -373,18 +375,18 @@ const Auth = ({ type }: AuthProps) => {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="register-email" className="font-medium" style={{ color: isEmpresas ? '#EDFF60' : '#10B981' }}>
+                    <Label htmlFor="register-email" className="font-medium" style={{ color: isEmpresas ? '#EDFF60' : '#EDFF60' }}>
                       Correo electrónico
                     </Label>
                     <div className="relative">
-                      <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4" style={{ color: isEmpresas ? '#EDFF60' : '#10B981' }} />
+                      <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4" style={{ color: isEmpresas ? '#EDFF60' : '#EDFF60' }} />
                       <Input
                         id="register-email"
                         type="email"
                         value={registerData.email}
                         onChange={(e) => setRegisterData(prev => ({ ...prev, email: e.target.value }))}
                         className="pl-10 border-2 bg-white/10 backdrop-blur-sm text-white font-medium placeholder-white/60"
-                        style={{ borderColor: isEmpresas ? '#EDFF60' : '#10B981' }}
+                        style={{ borderColor: isEmpresas ? '#EDFF60' : '#EDFF60' }}
                         placeholder="tu@email.com"
                         required
                       />
@@ -392,18 +394,18 @@ const Auth = ({ type }: AuthProps) => {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="register-password" className="font-medium" style={{ color: isEmpresas ? '#EDFF60' : '#10B981' }}>
+                    <Label htmlFor="register-password" className="font-medium" style={{ color: isEmpresas ? '#EDFF60' : '#EDFF60' }}>
                       Contraseña
                     </Label>
                     <div className="relative">
-                      <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4" style={{ color: isEmpresas ? '#EDFF60' : '#10B981' }} />
+                      <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4" style={{ color: isEmpresas ? '#EDFF60' : '#EDFF60' }} />
                       <Input
                         id="register-password"
                         type="password"
                         value={registerData.password}
                         onChange={(e) => setRegisterData(prev => ({ ...prev, password: e.target.value }))}
                         className="pl-10 border-2 bg-white/10 backdrop-blur-sm text-white font-medium placeholder-white/60"
-                        style={{ borderColor: isEmpresas ? '#EDFF60' : '#10B981' }}
+                        style={{ borderColor: isEmpresas ? '#EDFF60' : '#EDFF60' }}
                         placeholder="••••••••"
                         required
                       />
@@ -411,18 +413,18 @@ const Auth = ({ type }: AuthProps) => {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="confirm-password" className="font-medium" style={{ color: isEmpresas ? '#EDFF60' : '#10B981' }}>
+                    <Label htmlFor="confirm-password" className="font-medium" style={{ color: isEmpresas ? '#EDFF60' : '#EDFF60' }}>
                       Confirmar contraseña
                     </Label>
                     <div className="relative">
-                      <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4" style={{ color: isEmpresas ? '#EDFF60' : '#10B981' }} />
+                      <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4" style={{ color: isEmpresas ? '#EDFF60' : '#EDFF60' }} />
                       <Input
                         id="confirm-password"
                         type="password"
                         value={registerData.confirmPassword}
                         onChange={(e) => setRegisterData(prev => ({ ...prev, confirmPassword: e.target.value }))}
                         className="pl-10 border-2 bg-white/10 backdrop-blur-sm text-white font-medium placeholder-white/60"
-                        style={{ borderColor: isEmpresas ? '#EDFF60' : '#10B981' }}
+                        style={{ borderColor: isEmpresas ? '#EDFF60' : '#EDFF60' }}
                         placeholder="••••••••"
                         required
                       />
@@ -432,7 +434,7 @@ const Auth = ({ type }: AuthProps) => {
                   <Button
                     type="submit"
                     className="w-full text-black py-3 font-medium hover:opacity-90"
-                    style={{ backgroundColor: isEmpresas ? '#EDFF60' : '#10B981' }}
+                    style={{ backgroundColor: isEmpresas ? '#EDFF60' : '#EDFF60' }}
                   >
                     Crear Cuenta
                   </Button>
@@ -447,14 +449,14 @@ const Auth = ({ type }: AuthProps) => {
             {isEmpresas ? (
               <p style={{ color: '#EDFF60' }}>
                 ¿Eres un viajero?{" "}
-                <Link to="/auth/consentidos" className="hover:underline font-medium" style={{ color: '#10B981' }}>
+                <Link to="/auth/consentidos" className="hover:underline font-medium" style={{ color: '#EDFF60' }}>
                   Únete a Con-Sentidos
                 </Link>
               </p>
             ) : (
-              <p style={{ color: '#10B981' }}>
+              <p style={{ color: '#EDFF60' }}>
                 ¿Tienes una empresa?{" "}
-                <Link to="/auth/empresas" className="hover:underline font-medium" style={{ color: '#EDFF60' }}>
+                <Link to="/auth/empresas" className="hover:underline font-medium" style={{ color: '#10B981' }}>
                   Accede al Portal Empresas
                 </Link>
               </p>
