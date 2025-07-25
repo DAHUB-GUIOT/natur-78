@@ -9,13 +9,15 @@ app.use(express.urlencoded({ extended: false }));
 
 // Configure session middleware
 app.use(session({
-  secret: process.env.SESSION_SECRET || 'your-secret-key',
+  secret: process.env.SESSION_SECRET || 'festival-natur-secret-key-2025',
   resave: false,
   saveUninitialized: false,
+  name: 'sessionId',
   cookie: {
     secure: false, // Set to true in production with HTTPS
     httpOnly: true,
-    maxAge: 24 * 60 * 60 * 1000 // 24 hours
+    maxAge: 24 * 60 * 60 * 1000, // 24 hours
+    sameSite: 'lax'
   }
 }));
 
