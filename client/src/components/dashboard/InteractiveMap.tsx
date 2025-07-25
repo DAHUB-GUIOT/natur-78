@@ -77,7 +77,27 @@ const companies = [
   }
 ];
 
-export const InteractiveMap = () => {
+interface Experience {
+  id: number;
+  title: string;
+  description: string;
+  adultPricePvp: string;
+  duration: string;
+  type: string;
+  status: string;
+  isActive: boolean;
+  userId: number;
+  createdAt: string;
+}
+
+interface InteractiveMapProps {
+  experiences?: Experience[];
+  selectedCategory?: string;
+  showMarkers?: boolean;
+  onMarkerClick?: (experience: Experience) => void;
+}
+
+export const InteractiveMap = ({ experiences = [], selectedCategory, showMarkers = false, onMarkerClick }: InteractiveMapProps) => {
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<mapboxgl.Map | null>(null);
   const [selectedFilter, setSelectedFilter] = useState('all');
@@ -122,7 +142,7 @@ export const InteractiveMap = () => {
     };
   }, []);
 
-  // Update markers when filtered companies change
+  // Update markers when filtered companies or experiences change
   useEffect(() => {
     if (!map.current) return;
 
@@ -130,36 +150,75 @@ export const InteractiveMap = () => {
     const existingMarkers = document.querySelectorAll('.mapbox-marker');
     existingMarkers.forEach(marker => marker.remove());
 
-    // Add markers for filtered companies
-    filteredCompanies.forEach((company) => {
-      const el = document.createElement('div');
-      el.className = 'mapbox-marker';
-      
-      // Create safe DOM structure
-      const markerContainer = document.createElement('div');
-      markerContainer.className = 'bg-white rounded-full p-2 shadow-lg border-2 border-green-500 cursor-pointer hover:scale-110 transition-transform';
-      
-      const iconContainer = document.createElement('div');
-      iconContainer.className = 'w-4 h-4';
-      
-      // Safely set icon based on company type
-      const iconText = getMarkerIconText(company.type);
-      const iconColor = getMarkerIconColor(company.type);
-      iconContainer.textContent = iconText;
-      iconContainer.className += ` ${iconColor}`;
-      
-      markerContainer.appendChild(iconContainer);
-      el.appendChild(markerContainer);
-      
-      el.addEventListener('click', () => {
-        setSelectedCompany(company);
+    if (showMarkers && experiences.length > 0) {
+      // Add markers for experiences
+      experiences.forEach((experience, index) => {
+        const el = document.createElement('div');
+        el.className = 'mapbox-marker';
+        
+        // Create experience marker
+        const markerContainer = document.createElement('div');
+        markerContainer.className = 'bg-green-500 rounded-full p-2 shadow-lg border-2 border-white cursor-pointer hover:scale-110 transition-transform';
+        
+        const iconContainer = document.createElement('div');
+        iconContainer.className = 'w-4 h-4 text-white font-bold text-xs flex items-center justify-center';
+        iconContainer.textContent = (index + 1).toString();
+        
+        markerContainer.appendChild(iconContainer);
+        el.appendChild(markerContainer);
+        
+        el.addEventListener('click', () => {
+          if (onMarkerClick) {
+            onMarkerClick(experience);
+          }
+        });
+        
+        // Random positions around Colombia for demo
+        const baseLatLng = [
+          { lat: 4.7110, lng: -74.0721 }, // Bogotá
+          { lat: 6.2442, lng: -75.5812 }, // Medellín
+          { lat: 10.4236, lng: -75.5378 }, // Cartagena
+          { lat: 3.4516, lng: -76.5320 }, // Cali
+          { lat: 7.1193, lng: -73.1227 }, // Bucaramanga
+        ];
+        const position = baseLatLng[index % baseLatLng.length];
+        
+        new mapboxgl.Marker(el)
+          .setLngLat([position.lng, position.lat])
+          .addTo(map.current!);
       });
+    } else {
+      // Add markers for filtered companies (original functionality)
+      filteredCompanies.forEach((company) => {
+        const el = document.createElement('div');
+        el.className = 'mapbox-marker';
+        
+        // Create safe DOM structure
+        const markerContainer = document.createElement('div');
+        markerContainer.className = 'bg-white rounded-full p-2 shadow-lg border-2 border-green-500 cursor-pointer hover:scale-110 transition-transform';
+        
+        const iconContainer = document.createElement('div');
+        iconContainer.className = 'w-4 h-4';
+        
+        // Safely set icon based on company type
+        const iconText = getMarkerIconText(company.type);
+        const iconColor = getMarkerIconColor(company.type);
+        iconContainer.textContent = iconText;
+        iconContainer.className += ` ${iconColor}`;
+        
+        markerContainer.appendChild(iconContainer);
+        el.appendChild(markerContainer);
+        
+        el.addEventListener('click', () => {
+          setSelectedCompany(company);
+        });
 
-      new mapboxgl.Marker(el)
-        .setLngLat([company.location.lng, company.location.lat])
-        .addTo(map.current!);
-    });
-  }, [filteredCompanies]);
+        new mapboxgl.Marker(el)
+          .setLngLat([company.location.lng, company.location.lat])
+          .addTo(map.current!);
+      });
+    }
+  }, [filteredCompanies, experiences, showMarkers, onMarkerClick]);
 
   const getMarkerIconText = (type: string) => {
     switch (type) {

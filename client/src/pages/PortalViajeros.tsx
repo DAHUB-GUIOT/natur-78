@@ -120,16 +120,9 @@ export default function PortalViajeros() {
   const renderContent = () => {
     switch (activeSection) {
       case "experiencias":
-      case "aventura":
-      case "naturaleza":
-      case "cultura":
-      case "gastronomia":
-      case "acuaticas":
-      case "transporte":
-      case "hospedaje":
         return (
           <div className="space-y-4">
-            {/* Filters */}
+            {/* Category Filters */}
             <div className="flex flex-wrap gap-2 mb-4">
               {categories.map((category) => (
                 <Button
@@ -147,6 +140,41 @@ export default function PortalViajeros() {
                 </Button>
               ))}
             </div>
+
+            {/* Interactive Map with Markers */}
+            <Card className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30">
+              <CardContent className="p-0">
+                <div className="h-96 w-full relative overflow-hidden rounded-lg">
+                  <InteractiveMap 
+                    experiences={filteredExperiences}
+                    selectedCategory={selectedCategory}
+                    showMarkers={true}
+                    onMarkerClick={(experience) => {
+                      console.log('Experience clicked:', experience);
+                    }}
+                  />
+                  
+                  {/* Map Legend */}
+                  <div className="absolute top-4 right-4 bg-gray-900/80 backdrop-blur-md rounded-lg p-3 border border-gray-600/30">
+                    <h4 className="text-white text-sm font-semibold mb-2">Leyenda</h4>
+                    <div className="space-y-1">
+                      <div className="flex items-center space-x-2">
+                        <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                        <span className="text-xs text-gray-300">Experiencias disponibles</span>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
+                        <span className="text-xs text-gray-300">Proveedores verificados</span>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                        <span className="text-xs text-gray-300">Promociones especiales</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
 
             {/* Stats */}
             <div className="grid grid-cols-4 gap-3 mb-4">

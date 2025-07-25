@@ -30,6 +30,9 @@ This is a full-stack web application for Festival NATUR (www.festivalnatur.com),
   - **NEW**: Unified experience browsing interface replacing scattered map implementations
   - **NEW**: Simplified Portal Viajeros sidebar to only show "Mapa", "Favoritos", "Reservas"
   - **NEW**: Removed title from Portal Viajeros top bar for cleaner interface
+  - **NEW**: Added interactive map with experience markers and category filtering in Mapa section
+  - **NEW**: Implemented clickable markers positioned across Colombian cities (Bogotá, Medellín, Cartagena, etc.)
+  - **NEW**: Added map legend and real-time stats dashboard for filtered experiences
 
 - ✅ **January 25, 2025**: Complete Business Logic Implementation with Messaging & Unified Platform
   - **NEW**: Implemented comprehensive messaging system between users with real-time communication
