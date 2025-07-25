@@ -31,9 +31,11 @@ interface Conversation {
 
 interface MessageCenterProps {
   currentUserId: number;
+  preSelectedUserId?: number;
+  compact?: boolean;
 }
 
-export const MessageCenter: React.FC<MessageCenterProps> = ({ currentUserId }) => {
+export const MessageCenter: React.FC<MessageCenterProps> = ({ currentUserId, preSelectedUserId, compact = false }) => {
   const [selectedConversation, setSelectedConversation] = useState<number | null>(null);
   const [messageContent, setMessageContent] = useState('');
   const { toast } = useToast();
@@ -43,6 +45,19 @@ export const MessageCenter: React.FC<MessageCenterProps> = ({ currentUserId }) =
     queryKey: ['/api/messages/conversations'],
     enabled: !!currentUserId,
   });
+
+  // Auto-select conversation if preSelectedUserId is provided
+  useEffect(() => {
+    if (preSelectedUserId && conversations.length > 0) {
+      const conversation = conversations.find(conv => 
+        (conv.participant1Id === currentUserId && conv.participant2Id === preSelectedUserId) ||
+        (conv.participant2Id === currentUserId && conv.participant1Id === preSelectedUserId)
+      );
+      if (conversation) {
+        setSelectedConversation(conversation.id);
+      }
+    }
+  }, [preSelectedUserId, conversations, currentUserId]);
 
   // Fetch messages for selected conversation
   const { data: messages = [], refetch: refetchMessages } = useQuery<Message[]>({
@@ -125,9 +140,10 @@ export const MessageCenter: React.FC<MessageCenterProps> = ({ currentUserId }) =
   }
 
   return (
-    <div className="h-[600px] flex bg-white rounded-lg shadow-sm border">
+    <div className={`${compact ? 'h-full' : 'h-[600px]'} flex bg-white rounded-lg ${compact ? '' : 'shadow-sm border'}`}>
       {/* Conversations List */}
-      <div className={`${selectedConversation ? 'hidden md:block' : 'block'} w-full md:w-1/3 border-r`}>
+      {!compact && (
+        <div className={`${selectedConversation ? 'hidden md:block' : 'block'} w-full md:w-1/3 border-r`}>
         <div className="p-4 border-b">
           <h2 className="text-lg font-semibold flex items-center gap-2">
             <MessageSquare className="h-5 w-5" />
@@ -172,6 +188,7 @@ export const MessageCenter: React.FC<MessageCenterProps> = ({ currentUserId }) =
           )}
         </ScrollArea>
       </div>
+      )}
 
       {/* Messages View */}
       {selectedConversation ? (

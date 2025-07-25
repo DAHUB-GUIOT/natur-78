@@ -4,7 +4,7 @@ import {
   Search, User, Bell, MessageCircle, Heart, Filter, MapPin, 
   Star, Calendar, Clock, Users, DollarSign, Camera, Share2,
   BookOpen, Compass, Mountain, Waves, TreePine, Building,
-  Utensils, Car, Plane, Hotel, ShoppingBag, LogOut, Settings
+  Utensils, Car, Plane, Hotel, ShoppingBag, LogOut, Settings, Plus
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -19,7 +19,10 @@ import {
   DropdownMenuSeparator 
 } from "@/components/ui/dropdown-menu";
 import { InteractiveMap } from "@/components/dashboard/InteractiveMap";
+import { MessageCenter } from "@/components/messaging/MessageCenter";
 import { useQuery } from "@tanstack/react-query";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
 
 interface Experience {
   id: number;
@@ -38,6 +41,12 @@ export default function PortalViajeros() {
   const [activeSection, setActiveSection] = useState("mapa");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("todos");
+  const [showBookingModal, setShowBookingModal] = useState(false);
+  const [showChat, setShowChat] = useState(false);
+  const [selectedExperience, setSelectedExperience] = useState<Experience | null>(null);
+  const [bookingDate, setBookingDate] = useState("");
+  const [bookingGuests, setBookingGuests] = useState("1");
+  const [chatReceiverId, setChatReceiverId] = useState<number | null>(null);
 
   // Sample experiences for the map
   const sampleExperiences = [
@@ -87,6 +96,12 @@ export default function PortalViajeros() {
     queryKey: ["/api/experiences"],
   });
 
+  // Fetch current user
+  const { data: currentUser } = useQuery<{ user: { id: number; email: string } }>({
+    queryKey: ['/api/auth/me'],
+    retry: false,
+  });
+
   const experiences = [...sampleExperiences, ...apiExperiences];
 
   const sidebarItems = [
@@ -94,6 +109,7 @@ export default function PortalViajeros() {
     { id: "experiencias", label: "Experiencias", icon: Compass },
     { id: "favoritos", label: "Favoritos", icon: Heart },
     { id: "reservas", label: "Reservas", icon: Calendar },
+    { id: "mensajes", label: "Mensajes", icon: MessageCircle },
   ];
 
   const categories = [
@@ -106,6 +122,17 @@ export default function PortalViajeros() {
                            exp.type?.toLowerCase() === selectedCategory;
     return matchesCategory && exp.status === "approved" && exp.isActive;
   });
+
+  const handleBookExperience = (experience: Experience) => {
+    setSelectedExperience(experience);
+    setShowBookingModal(true);
+  };
+
+  const handleChatWithHost = (experience: Experience) => {
+    setChatReceiverId(experience.userId);
+    setSelectedExperience(experience);
+    setShowChat(true);
+  };
 
   const renderExperienceCard = (experience: Experience) => (
     <Card key={experience.id} className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30 hover:bg-gray-800/50 transition-all duration-200 cursor-pointer group">
@@ -147,13 +174,22 @@ export default function PortalViajeros() {
             <span className="text-gray-400 text-xs font-normal ml-1">por persona</span>
           </div>
           <div className="flex space-x-1">
-            <Button size="sm" variant="outline" className="border-gray-600/50 text-white hover:bg-gray-700/50 text-xs h-7 px-2">
+            <Button 
+              size="sm" 
+              variant="outline" 
+              onClick={() => handleChatWithHost(experience)}
+              className="border-gray-600/50 text-white hover:bg-gray-700/50 text-xs h-7 px-2"
+            >
               <MessageCircle className="w-3 h-3 mr-1" />
-              Consultar
+              Chat
             </Button>
-            <Button size="sm" className="bg-green-600/80 hover:bg-green-600 text-white text-xs h-7 px-2">
-              <Calendar className="w-3 h-3 mr-1" />
-              Reservar
+            <Button 
+              size="sm" 
+              onClick={() => handleBookExperience(experience)}
+              className="bg-green-600/80 hover:bg-green-600 text-white text-xs h-7 px-2"
+            >
+              <ShoppingBag className="w-3 h-3 mr-1" />
+              Comprar
             </Button>
           </div>
         </div>
@@ -451,6 +487,128 @@ export default function PortalViajeros() {
           </div>
         </div>
       )}
+
+      {activeSection === "mensajes" && (
+        <div className="absolute top-24 left-60 right-4 bottom-4 z-40 backdrop-blur-xl bg-gray-900/40 border border-gray-600/30 rounded-xl shadow-2xl overflow-hidden">
+          <div className="h-full overflow-y-auto p-4">
+            <h2 className="text-xl font-bold text-white mb-4">Mensajes</h2>
+            {currentUser?.user?.id ? (
+              <MessageCenter currentUserId={currentUser.user.id} />
+            ) : (
+              <div className="text-center py-12">
+                <MessageCircle className="w-16 h-16 text-gray-500 mx-auto mb-4" />
+                <p className="text-gray-400">Inicia sesión para ver tus mensajes</p>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Booking Modal */}
+      <Dialog open={showBookingModal} onOpenChange={setShowBookingModal}>
+        <DialogContent className="bg-gray-900 border border-gray-700 text-white">
+          <DialogHeader>
+            <DialogTitle>Reservar Experiencia</DialogTitle>
+            <DialogDescription className="text-gray-400">
+              {selectedExperience?.title}
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4 mt-4">
+            <div>
+              <Label htmlFor="date" className="text-white">Fecha</Label>
+              <Input
+                id="date"
+                type="date"
+                value={bookingDate}
+                onChange={(e) => setBookingDate(e.target.value)}
+                className="bg-gray-800 border-gray-700 text-white"
+              />
+            </div>
+            <div>
+              <Label htmlFor="guests" className="text-white">Número de personas</Label>
+              <Input
+                id="guests"
+                type="number"
+                min="1"
+                value={bookingGuests}
+                onChange={(e) => setBookingGuests(e.target.value)}
+                className="bg-gray-800 border-gray-700 text-white"
+              />
+            </div>
+            <div className="border-t border-gray-700 pt-4">
+              <div className="flex justify-between text-sm mb-2">
+                <span className="text-gray-400">Precio por persona</span>
+                <span className="text-white">${selectedExperience?.adultPricePvp || "0"}</span>
+              </div>
+              <div className="flex justify-between font-bold">
+                <span className="text-white">Total</span>
+                <span className="text-green-400">
+                  ${(parseInt(selectedExperience?.adultPricePvp || "0") * parseInt(bookingGuests)).toLocaleString()}
+                </span>
+              </div>
+            </div>
+            <div className="flex gap-2">
+              <Button 
+                variant="outline" 
+                onClick={() => setShowBookingModal(false)}
+                className="flex-1 border-gray-700 text-white hover:bg-gray-800"
+              >
+                Cancelar
+              </Button>
+              <Button 
+                onClick={() => {
+                  alert(`¡Reserva confirmada para ${selectedExperience?.title}!`);
+                  setShowBookingModal(false);
+                }}
+                className="flex-1 bg-green-600 hover:bg-green-700 text-white"
+              >
+                Confirmar Compra
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Chat Modal */}
+      {showChat && chatReceiverId && (
+        <div className="fixed bottom-4 right-4 w-96 h-[500px] bg-gray-900 border border-gray-700 rounded-lg shadow-2xl z-50">
+          <div className="flex items-center justify-between p-4 border-b border-gray-700">
+            <h3 className="text-white font-semibold">Chat con proveedor</h3>
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              onClick={() => setShowChat(false)}
+              className="text-gray-400 hover:text-white"
+            >
+              ✕
+            </Button>
+          </div>
+          <div className="h-[calc(100%-64px)] overflow-hidden">
+            {currentUser?.user?.id ? (
+              <MessageCenter 
+                currentUserId={currentUser.user.id} 
+                preSelectedUserId={chatReceiverId}
+                compact={true}
+              />
+            ) : (
+              <div className="flex items-center justify-center h-full">
+                <p className="text-gray-400">Inicia sesión para chatear</p>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Floating Action Button - Upload Experience */}
+      <Link href="/portal-empresas">
+        <Button
+          className="fixed bottom-8 right-8 bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-black font-semibold shadow-2xl z-40"
+          size="lg"
+        >
+          <Plus className="w-5 h-5 mr-2" />
+          Subir Experiencia
+        </Button>
+      </Link>
       
     </div>
   );
