@@ -141,40 +141,7 @@ export default function PortalViajeros() {
               ))}
             </div>
 
-            {/* Interactive Map with Markers */}
-            <Card className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30">
-              <CardContent className="p-0">
-                <div className="h-96 w-full relative overflow-hidden rounded-lg">
-                  <InteractiveMap 
-                    experiences={filteredExperiences}
-                    selectedCategory={selectedCategory}
-                    showMarkers={true}
-                    onMarkerClick={(experience) => {
-                      console.log('Experience clicked:', experience);
-                    }}
-                  />
-                  
-                  {/* Map Legend */}
-                  <div className="absolute top-4 right-4 bg-gray-900/80 backdrop-blur-md rounded-lg p-3 border border-gray-600/30">
-                    <h4 className="text-white text-sm font-semibold mb-2">Leyenda</h4>
-                    <div className="space-y-1">
-                      <div className="flex items-center space-x-2">
-                        <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                        <span className="text-xs text-gray-300">Experiencias disponibles</span>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
-                        <span className="text-xs text-gray-300">Proveedores verificados</span>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-                        <span className="text-xs text-gray-300">Promociones especiales</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+
 
             {/* Stats */}
             <div className="grid grid-cols-4 gap-3 mb-4">
@@ -256,8 +223,15 @@ export default function PortalViajeros() {
 
   return (
     <div className="h-screen w-full relative overflow-hidden">
-      {/* Full-screen map as background */}
-      <InteractiveMap />
+      {/* Full-screen map as background with experience markers */}
+      <InteractiveMap 
+        experiences={filteredExperiences}
+        selectedCategory={selectedCategory}
+        showMarkers={true}
+        onMarkerClick={(experience) => {
+          console.log('Experience clicked:', experience);
+        }}
+      />
       
       {/* Top Navigation */}
       <header className="absolute top-0 left-0 right-0 bg-green-600 border-b border-green-700 shadow-lg px-6 py-4 z-40 backdrop-blur-md bg-green-600/95">
@@ -331,6 +305,25 @@ export default function PortalViajeros() {
           </div>
         </div>
       </header>
+
+      {/* Map Legend */}
+      <div className="absolute top-24 right-6 bg-gray-900/80 backdrop-blur-md rounded-lg p-3 border border-gray-600/30 z-40">
+        <h4 className="text-white text-sm font-semibold mb-2">Leyenda</h4>
+        <div className="space-y-1">
+          <div className="flex items-center space-x-2">
+            <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+            <span className="text-xs text-gray-300">Experiencias disponibles</span>
+          </div>
+          <div className="flex items-center space-x-2">
+            <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
+            <span className="text-xs text-gray-300">Proveedores verificados</span>
+          </div>
+          <div className="flex items-center space-x-2">
+            <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+            <span className="text-xs text-gray-300">Promociones especiales</span>
+          </div>
+        </div>
+      </div>
 
       {/* Compact glassmorphism sidebar for travelers */}
       <div className="absolute top-24 left-4 z-50 w-52 backdrop-blur-xl bg-gray-900/40 border border-gray-600/30 rounded-xl shadow-2xl">
