@@ -450,20 +450,10 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ currentUserId, onClo
       )}>
         {/* Header */}
         <div className="backdrop-blur-xl bg-white/20 px-4 py-3">
-          <div className="flex items-center justify-between mb-3">
-            <div className="flex items-center gap-2">
-              <h2 className="text-xl font-semibold text-white">Mensajes B2B</h2>
-              <div className={`w-2 h-2 rounded-full ${isConnected ? 'bg-green-400' : 'bg-red-400'}`} 
-                   title={isConnected ? 'Conectado' : 'Desconectado'} />
-            </div>
-            <Button
-              size="icon"
-              variant="ghost"
-              className="text-white hover:bg-white/20"
-              onClick={onClose}
-            >
-              <X className="h-5 w-5" />
-            </Button>
+          <div className="flex items-center gap-2 mb-3">
+            <h2 className="text-xl font-semibold text-white">Mensajes B2B</h2>
+            <div className={`w-2 h-2 rounded-full ${isConnected ? 'bg-green-400' : 'bg-red-400'}`} 
+                 title={isConnected ? 'Conectado' : 'Desconectado'} />
           </div>
           {/* Search */}
           <div className="relative">
