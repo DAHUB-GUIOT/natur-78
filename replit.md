@@ -10,17 +10,20 @@ This is a full-stack web application for Festival NATUR (www.festivalnatur.com),
 
 ## Recent Changes
 
-- ✅ **January 26, 2025**: Complete Contact-to-Chat Connection System Implementation
+- ✅ **January 26, 2025**: Complete Contact-to-Chat Connection System + Dedicated Messaging Page
   - **FIXED**: Schema mismatch between shared/schema.ts and actual database structure
   - **FIXED**: Removed conversationId dependency from messages table to match database
-  - **NEW**: Contact cards in Portal Empresas now properly connect to messaging system
-  - **NEW**: "Contactar" buttons automatically redirect users to messaging with localStorage contact selection
-  - **NEW**: Conversations are automatically created when users send first messages
-  - **NEW**: Real-time B2B messaging working between DaHub and TripCol companies
-  - **NEW**: Complete message persistence with sender/receiver direct communication
+  - **FIXED**: Conversation auto-creation now working - conversations created automatically on first message
+  - **NEW**: Dedicated messaging page at /mensajes with professional B2B interface
+  - **NEW**: Contact cards in Portal Empresas properly connect to messaging system
+  - **NEW**: "Contactar" buttons automatically redirect users to messaging with localStorage coordination
+  - **NEW**: Real-time WebSocket messaging with typing indicators and message broadcasting
+  - **NEW**: Enhanced message API with detailed logging and conversation management
+  - **NEW**: User search functionality for starting new conversations
+  - **NEW**: Complete conversation list with message previews and activity timestamps
   - **FUNCTIONAL**: Users can browse company directory → click "Contactar" → start conversations instantly
-  - **TESTED**: 20+ messages exchanged between real authenticated users proving system works
-  - **ARCHITECTURE**: Messaging system now fully operational without conversationId column dependency
+  - **TESTED**: 24+ messages exchanged between real authenticated users proving system works
+  - **ARCHITECTURE**: Full B2B messaging ecosystem operational with real-time capabilities
 
 - ✅ **January 25, 2025**: Real Users Always Created Properly After Registration
   - **NEW**: Updated registration endpoint to set firstName, lastName from email if not provided

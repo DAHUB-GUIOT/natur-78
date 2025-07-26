@@ -30,6 +30,7 @@ import MapaPublicoOptimized from "./pages/MapaPublicoOptimized";
 import UnifiedPlatform from "./pages/UnifiedPlatform";
 import UserProfile from "./pages/UserProfile";
 import CompanyProfile from "./pages/CompanyProfile";
+import MessagingPage from "./pages/MessagingPage";
 import { AuthProvider } from "./contexts/AuthContext";
 
 // Create QueryClient outside component to prevent recreation on renders
@@ -73,6 +74,7 @@ const App = () => (
             <Route path="/plataforma" component={UnifiedPlatform} />
             <Route path="/perfil/:userId" component={UserProfile} />
             <Route path="/empresa/:companyId" component={CompanyProfile} />
+            <Route path="/mensajes" component={MessagingPage} />
             <Route path="/agenda">
               <MainLayout><Agenda /></MainLayout>
             </Route>

@@ -622,22 +622,49 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(401).json({ error: "Not authenticated" });
       }
 
-      // Check if conversation exists between these users
-      const existingConversations = await storage.getConversations(req.session.userId);
-      let conversation = existingConversations.find(conv => 
-        (conv.participant1Id === req.session.userId && conv.participant2Id === req.body.receiverId) ||
-        (conv.participant2Id === req.session.userId && conv.participant1Id === req.body.receiverId)
-      );
+      console.log("Sending message:", { 
+        senderId: req.session.userId, 
+        receiverId: req.body.receiverId, 
+        content: req.body.content?.substring(0, 50) 
+      });
 
-      // Create conversation if it doesn't exist
-      if (!conversation) {
-        conversation = await storage.createConversation({
-          participant1Id: req.session.userId,
-          participant2Id: req.body.receiverId
-        });
+      // First, create or find conversation
+      let conversation;
+      
+      // Check if conversation already exists
+      const existingConversations = await db.select()
+        .from(conversations)
+        .where(
+          or(
+            and(
+              eq(conversations.participant1Id, req.session.userId),
+              eq(conversations.participant2Id, req.body.receiverId)
+            ),
+            and(
+              eq(conversations.participant1Id, req.body.receiverId),
+              eq(conversations.participant2Id, req.session.userId)
+            )
+          )
+        );
+
+      if (existingConversations.length > 0) {
+        conversation = existingConversations[0];
+        console.log("Found existing conversation:", conversation.id);
+      } else {
+        // Create new conversation
+        const newConversations = await db.insert(conversations)
+          .values({
+            participant1Id: req.session.userId,
+            participant2Id: req.body.receiverId,
+            lastActivity: new Date()
+          })
+          .returning();
+        
+        conversation = newConversations[0];
+        console.log("Created new conversation:", conversation.id);
       }
 
-      // Parse message data without conversationId since DB doesn't have that column
+      // Parse message data
       const messageData = {
         senderId: req.session.userId,
         receiverId: req.body.receiverId,
@@ -647,8 +674,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       // Send the message
       const message = await storage.sendMessage(messageData);
+      console.log("Message sent:", message.id);
       
-      // Update conversation's last activity
+      // Update conversation's last activity and message
       await db.update(conversations)
         .set({ 
           lastActivity: new Date(),
@@ -661,14 +689,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
         (httpServer as any).broadcastMessage(message, messageData.receiverId);
       }
 
-      res.status(201).json(message);
+      res.status(201).json({
+        ...message,
+        conversationId: conversation.id,
+        conversationCreated: existingConversations.length === 0
+      });
     } catch (error) {
       if (error instanceof z.ZodError) {
         console.error("Validation error:", error.errors);
         return res.status(400).json({ error: "Invalid input", details: error.errors });
       }
       console.error("Send message error:", error);
-      res.status(500).json({ error: "Internal server error" });
+      res.status(500).json({ error: "Internal server error", details: error.message });
     }
   });
 
