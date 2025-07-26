@@ -309,9 +309,11 @@ export const insertMessageSchema = createInsertSchema(messages).omit({
   id: true,
   createdAt: true,
 }).extend({
-  conversationId: z.number(),
-  experienceId: z.number().optional().nullable(),
+  // Make optional fields explicitly partial
   subject: z.string().optional().nullable(),
+  experienceId: z.number().optional().nullable(),
+  isRead: z.boolean().optional(),
+  messageType: z.string().optional().nullable(),
 });
 
 export const insertConversationSchema = createInsertSchema(conversations).omit({

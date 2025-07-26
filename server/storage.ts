@@ -285,7 +285,6 @@ export class MemStorage implements IStorage {
     const id = this.currentId++;
     const message: Message = {
       id,
-      conversationId: messageData.conversationId,
       senderId: messageData.senderId,
       receiverId: messageData.receiverId,
       experienceId: messageData.experienceId || null,
