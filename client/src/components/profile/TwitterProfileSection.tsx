@@ -77,7 +77,7 @@ const TwitterProfileSection = () => {
             <Avatar className="w-32 h-32 border-4 border-black/50 backdrop-blur-xl">
               <AvatarImage src="/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg" />
               <AvatarFallback className="bg-green-600 text-white text-3xl font-bold">
-                {(profile as any)?.name?.charAt(0) || 'N'}
+                {(profile as any)?.name?.charAt(0) || 'D'}
               </AvatarFallback>
             </Avatar>
           </div>
@@ -97,17 +97,17 @@ const TwitterProfileSection = () => {
           <div className="mt-4 space-y-4">
             <div>
               <div className="flex items-center gap-2">
-                <h1 className="text-2xl font-bold text-white">{(profile as any)?.name || 'Festival NATUR'}</h1>
+                <h1 className="text-2xl font-bold text-white">{(profile as any)?.name || 'DaHub'}</h1>
                 {(profile as any)?.isVerified && (
                   <Verified className="w-6 h-6 text-blue-400 fill-blue-400" />
                 )}
               </div>
-              <p className="text-white/60">@{(currentUser as any)?.user?.email?.split('@')[0] || 'festivalnatur'}</p>
+              <p className="text-white/60">@{(currentUser as any)?.user?.email?.split('@')[0] || 'dahub'}</p>
             </div>
 
             {/* Bio */}
             <p className="text-white text-sm leading-relaxed">
-              {(profile as any)?.bio || 'Plataforma líder en turismo sostenible y regenerativo. Conectamos viajeros conscientes con experiencias transformadoras.'}
+              {(profile as any)?.bio || 'Empresa de tecnología especializada en desarrollo de plataformas digitales. Creadores de Festival NATUR - conectando el turismo sostenible con la innovación.'}
             </p>
 
             {/* Info row */}
@@ -119,7 +119,7 @@ const TwitterProfileSection = () => {
               <div className="flex items-center gap-1">
                 <LinkIcon className="w-4 h-4" />
                 <a href={(profile as any)?.website || '#'} className="hover:text-white transition-colors">
-                  {(profile as any)?.website?.replace('https://', '') || 'festivalnatur.com'}
+                  {(profile as any)?.website?.replace('https://', '') || 'dahub.tech'}
                 </a>
               </div>
               <div className="flex items-center gap-1">
