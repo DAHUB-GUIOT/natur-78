@@ -86,6 +86,22 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ currentUserId, onClo
   const inputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
 
+  // Check for stored contact to start chat with
+  useEffect(() => {
+    const startChatWith = localStorage.getItem('startChatWith');
+    if (startChatWith) {
+      // Set search query to find the user
+      const companyId = startChatWith;
+      if (companyId === 'tripcol') {
+        setSearchQuery('tripcol'); // Search by email prefix
+      } else if (companyId === 'dahub') {
+        setSearchQuery('dahub'); // Search by email prefix
+      }
+      // Clear the stored contact
+      localStorage.removeItem('startChatWith');
+    }
+  }, []);
+
   // Fetch conversations with user details
   const { data: conversations = [], isLoading: conversationsLoading } = useQuery<Conversation[]>({
     queryKey: ['/api/messages/conversations/enhanced'],
@@ -339,10 +355,11 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ currentUserId, onClo
                         method: 'POST',
                         body: JSON.stringify({
                           receiverId: user.id,
-                          content: `Hola ${user.firstName}, me gustaría conectar contigo.`
+                          content: `Hola ${user.firstName || user.email.split('@')[0]}, me gustaría conectar contigo para explorar oportunidades de colaboración.`
                         }),
                       });
                       queryClient.invalidateQueries({ queryKey: ['/api/messages/conversations/enhanced'] });
+                      setSearchQuery(''); // Clear search after starting chat
                       setSearchQuery('');
                     } catch (error) {
                       toast({

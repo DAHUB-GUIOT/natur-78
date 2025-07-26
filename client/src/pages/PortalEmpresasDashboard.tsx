@@ -446,11 +446,24 @@ const PortalEmpresasDashboard = () => {
                       
                       {/* Action buttons */}
                       <div className="flex space-x-2 pt-2">
-                        <Button size="sm" variant="outline" className="border-gray-600/50 text-gray-300 hover:bg-gray-700/50 text-xs h-8 flex-1 backdrop-blur-sm">
+                        <Button 
+                          size="sm" 
+                          variant="outline" 
+                          className="border-gray-600/50 text-gray-300 hover:bg-gray-700/50 text-xs h-8 flex-1 backdrop-blur-sm"
+                          onClick={() => window.location.href = `/empresa/${company.id}`}
+                        >
                           <User className="w-3 h-3 mr-1" />
                           Ver Perfil
                         </Button>
-                        <Button size="sm" className="bg-green-600/80 hover:bg-green-700/80 text-white text-xs h-8 flex-1 backdrop-blur-sm">
+                        <Button 
+                          size="sm" 
+                          className="bg-green-600/80 hover:bg-green-700/80 text-white text-xs h-8 flex-1 backdrop-blur-sm"
+                          onClick={() => {
+                            setActiveSection('mensajes');
+                            // Store the contact to start a chat with
+                            localStorage.setItem('startChatWith', company.id.toString());
+                          }}
+                        >
                           <MessageCircle className="w-3 h-3 mr-1" />
                           Contactar
                         </Button>
