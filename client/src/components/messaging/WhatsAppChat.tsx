@@ -75,7 +75,7 @@ interface WhatsAppChatProps {
   onClose?: () => void;
 }
 
-export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ currentUserId, onClose }) => {
+const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ currentUserId, onClose }) => {
   const [selectedConversation, setSelectedConversation] = useState<number | null>(null);
   const [messageContent, setMessageContent] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
@@ -854,4 +854,6 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ currentUserId, onClo
       )}
     </div>
   );
-};
+}
+
+export default WhatsAppChat;

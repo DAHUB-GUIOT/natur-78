@@ -44,7 +44,7 @@ import ExperienceForm from "@/components/dashboard/ExperienceForm";
 import ProfileSection from "@/components/dashboard/ProfileSection";
 import TwitterProfileSection from "@/components/profile/TwitterProfileSection";
 import { MessageCenter } from "@/components/messaging/MessageCenter";
-import { WhatsAppChat } from "@/components/messaging/WhatsAppChat";
+import WhatsAppChat from "@/components/messaging/WhatsAppChat";
 import { Link } from "wouter";
 
 const PortalEmpresasDashboard = () => {
