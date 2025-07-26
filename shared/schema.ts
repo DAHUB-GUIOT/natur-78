@@ -256,9 +256,20 @@ export type UserProfile = typeof userProfiles.$inferSelect;
 export type InsertExperience = z.infer<typeof insertExperienceSchema>;
 export type Experience = typeof experiences.$inferSelect;
 
+// Conversations table - to group messages between users (defined first)
+export const conversations = pgTable("conversations", {
+  id: serial("id").primaryKey(),
+  participant1Id: integer("participant1_id").references(() => users.id).notNull(),
+  participant2Id: integer("participant2_id").references(() => users.id).notNull(),
+  lastMessageId: integer("last_message_id"), // Will add reference after messages table
+  lastActivity: timestamp("last_activity").defaultNow().notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
 // Messages table - for communication between users
 export const messages = pgTable("messages", {
   id: serial("id").primaryKey(),
+  conversationId: integer("conversation_id").references(() => conversations.id).notNull(), // Link to conversation
   senderId: integer("sender_id").references(() => users.id).notNull(),
   receiverId: integer("receiver_id").references(() => users.id).notNull(),
   experienceId: integer("experience_id").references(() => experiences.id), // Optional reference to experience
@@ -266,16 +277,6 @@ export const messages = pgTable("messages", {
   content: text("content").notNull(),
   isRead: boolean("is_read").default(false),
   messageType: text("message_type").default("direct"), // direct, inquiry, booking
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-});
-
-// Conversations table - to group messages between users
-export const conversations = pgTable("conversations", {
-  id: serial("id").primaryKey(),
-  participant1Id: integer("participant1_id").references(() => users.id).notNull(),
-  participant2Id: integer("participant2_id").references(() => users.id).notNull(),
-  lastMessageId: integer("last_message_id").references(() => messages.id),
-  lastActivity: timestamp("last_activity").defaultNow().notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
@@ -309,6 +310,7 @@ export const insertMessageSchema = createInsertSchema(messages).omit({
   id: true,
   createdAt: true,
 }).extend({
+  conversationId: z.number(),
   experienceId: z.number().optional().nullable(),
   subject: z.string().optional().nullable(),
 });

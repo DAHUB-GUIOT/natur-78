@@ -615,25 +615,27 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(401).json({ error: "Not authenticated" });
       }
 
-      const messageData = insertMessageSchema.parse({
-        ...req.body,
-        senderId: req.session.userId
-      });
-
       // Check if conversation exists between these users
       const existingConversations = await storage.getConversations(req.session.userId);
       let conversation = existingConversations.find(conv => 
-        (conv.participant1Id === req.session.userId && conv.participant2Id === messageData.receiverId) ||
-        (conv.participant2Id === req.session.userId && conv.participant1Id === messageData.receiverId)
+        (conv.participant1Id === req.session.userId && conv.participant2Id === req.body.receiverId) ||
+        (conv.participant2Id === req.session.userId && conv.participant1Id === req.body.receiverId)
       );
 
       // Create conversation if it doesn't exist
       if (!conversation) {
         conversation = await storage.createConversation({
           participant1Id: req.session.userId,
-          participant2Id: messageData.receiverId
+          participant2Id: req.body.receiverId
         });
       }
+
+      // Parse message data with conversationId
+      const messageData = insertMessageSchema.parse({
+        ...req.body,
+        senderId: req.session.userId,
+        conversationId: conversation.id
+      });
 
       // Send the message
       const message = await storage.sendMessage(messageData);
@@ -645,6 +647,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
           lastMessageId: message.id 
         })
         .where(eq(conversations.id, conversation.id));
+
+      // Broadcast to connected WebSocket clients
+      if ((httpServer as any).broadcastMessage) {
+        (httpServer as any).broadcastMessage(message, messageData.receiverId);
+      }
 
       res.status(201).json(message);
     } catch (error) {
@@ -923,7 +930,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
     ws.on('close', () => {
       // Remove user from connected users
-      for (const [userId, socket] of connectedUsers.entries()) {
+      for (const [userId, socket] of Array.from(connectedUsers.entries())) {
         if (socket === ws) {
           connectedUsers.delete(userId);
           console.log(`User ${userId} disconnected from WebSocket`);

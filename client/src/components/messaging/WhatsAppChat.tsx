@@ -116,17 +116,19 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ currentUserId, onClo
           const data = JSON.parse(event.data);
           
           if (data.type === 'new_message') {
-            // Refresh messages when new message arrives
+            // Refresh conversations and messages
             queryClient.invalidateQueries({ queryKey: ['/api/messages/conversations/enhanced'] });
             if (selectedConversation) {
               queryClient.invalidateQueries({ queryKey: [`/api/messages/${selectedConversation}`] });
             }
             
-            // Show toast notification for new message
-            toast({
-              title: "Nuevo mensaje",
-              description: `${data.message.content.substring(0, 50)}...`,
-            });
+            // Show toast notification for new message if not from current user
+            if (data.message && data.message.senderId !== currentUserId) {
+              toast({
+                title: "Nuevo mensaje",
+                description: `${data.message.content.substring(0, 50)}...`,
+              });
+            }
           } else if (data.type === 'typing') {
             // Handle typing indicators
             if (data.isTyping) {
@@ -147,6 +149,15 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ currentUserId, onClo
       ws.onclose = () => {
         console.log('Disconnected from WebSocket');
         setIsConnected(false);
+        
+        // Attempt to reconnect after 3 seconds
+        setTimeout(() => {
+          if (currentUserId) {
+            console.log('Attempting WebSocket reconnection...');
+            // This will trigger the useEffect again
+            setIsConnected(false);
+          }
+        }, 3000);
       };
 
       ws.onerror = (error) => {
@@ -156,14 +167,15 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ currentUserId, onClo
 
     } catch (error) {
       console.error('Failed to create WebSocket connection:', error);
+      setIsConnected(false);
     }
 
     return () => {
-      if (wsRef.current) {
+      if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
         wsRef.current.close();
       }
     };
-  }, [currentUserId, selectedConversation, toast]);
+  }, [currentUserId, toast]);
 
   // Check for stored contact to start chat with
   useEffect(() => {
@@ -194,10 +206,11 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ currentUserId, onClo
   });
 
   // Fetch messages for selected conversation
-  const { data: messages = [], refetch: refetchMessages } = useQuery<Message[]>({
+  const { data: messages = [], refetch: refetchMessages, isLoading: messagesLoading } = useQuery<Message[]>({
     queryKey: [`/api/messages/${selectedConversation}`],
     enabled: !!selectedConversation,
-    refetchInterval: 5000, // Poll for new messages
+    refetchInterval: isConnected ? 30000 : 5000, // Poll less frequently if WebSocket is connected
+    refetchOnWindowFocus: true,
   });
 
   // Get other user in conversation
@@ -438,7 +451,11 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ currentUserId, onClo
         {/* Header */}
         <div className="backdrop-blur-xl bg-white/20 px-4 py-3">
           <div className="flex items-center justify-between mb-3">
-            <h2 className="text-xl font-semibold text-white">Mensajes B2B</h2>
+            <div className="flex items-center gap-2">
+              <h2 className="text-xl font-semibold text-white">Mensajes B2B</h2>
+              <div className={`w-2 h-2 rounded-full ${isConnected ? 'bg-green-400' : 'bg-red-400'}`} 
+                   title={isConnected ? 'Conectado' : 'Desconectado'} />
+            </div>
             <Button
               size="icon"
               variant="ghost"
@@ -481,7 +498,24 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ currentUserId, onClo
                           content: `Hola ${user.firstName || user.email.split('@')[0]}, me gustaría conectar contigo para explorar oportunidades de colaboración.`
                         }),
                       });
+                      
+                      // Refresh conversations and messages
                       queryClient.invalidateQueries({ queryKey: ['/api/messages/conversations/enhanced'] });
+                      
+                      // Get the updated conversations to find the new one
+                      const updatedConversations = await queryClient.fetchQuery({
+                        queryKey: ['/api/messages/conversations/enhanced']
+                      });
+                      
+                      // Find the conversation with this user
+                      const newConversation = (updatedConversations as any[]).find((conv: any) => 
+                        conv.otherUser?.id === user.id
+                      );
+                      
+                      if (newConversation) {
+                        setSelectedConversation(newConversation.id);
+                      }
+                      
                       setSearchQuery(''); // Clear search after starting chat
                       
                       // Show success message
@@ -490,6 +524,7 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ currentUserId, onClo
                         description: `Ahora puedes chatear con ${user.firstName || user.email.split('@')[0]}`,
                       });
                     } catch (error) {
+                      console.error('Error starting conversation:', error);
                       toast({
                         title: "Error",
                         description: "No se pudo iniciar la conversación",
@@ -804,9 +839,7 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ currentUserId, onClo
       ) : (
         <div className="flex-1 flex items-center justify-center bg-transparent backdrop-blur-xl">
           <div className="text-center">
-            <div className="w-72 h-72 mx-auto mb-4 backdrop-blur-xl bg-white/20 rounded-full flex items-center justify-center">
-              <MessageCircle className="h-32 w-32 text-white" />
-            </div>
+            <MessageCircle className="h-32 w-32 text-white mx-auto mb-4" />
             <h3 className="text-xl font-semibold text-white mb-2">Selecciona una conversación</h3>
             <p className="text-white/70">Elige una empresa para comenzar a chatear</p>
           </div>

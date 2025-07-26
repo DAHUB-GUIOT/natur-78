@@ -285,6 +285,7 @@ export class MemStorage implements IStorage {
     const id = this.currentId++;
     const message: Message = {
       id,
+      conversationId: messageData.conversationId,
       senderId: messageData.senderId,
       receiverId: messageData.receiverId,
       experienceId: messageData.experienceId || null,
@@ -493,31 +494,9 @@ export class DatabaseStorage implements IStorage {
 
   // Message methods (database storage)  
   async getMessages(conversationId: number): Promise<Message[]> {
-    // First, get the conversation to find participant IDs
-    const conversation = await db.select().from(conversations)
-      .where(eq(conversations.id, conversationId))
-      .limit(1);
-    
-    if (conversation.length === 0) {
-      return [];
-    }
-    
-    const conv = conversation[0];
-    
-    // Get messages between the two participants
+    // Get messages directly by conversationId
     const result = await db.select().from(messages)
-      .where(
-        or(
-          and(
-            eq(messages.senderId, conv.participant1Id),
-            eq(messages.receiverId, conv.participant2Id)
-          ),
-          and(
-            eq(messages.senderId, conv.participant2Id),
-            eq(messages.receiverId, conv.participant1Id)
-          )
-        )
-      )
+      .where(eq(messages.conversationId, conversationId))
       .orderBy(messages.createdAt); // Order by creation time ASC for chronological display
     
     return result;
