@@ -82,9 +82,88 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ currentUserId, onClo
   const [isRecording, setIsRecording] = useState(false);
   const [editingMessageId, setEditingMessageId] = useState<number | null>(null);
   const [replyingToMessage, setReplyingToMessage] = useState<Message | null>(null);
+  const [isConnected, setIsConnected] = useState(false);
+  const [typingUsers, setTypingUsers] = useState<Set<number>>(new Set());
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const wsRef = useRef<WebSocket | null>(null);
+  const typingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const { toast } = useToast();
+
+  // WebSocket connection for real-time messaging
+  useEffect(() => {
+    if (!currentUserId) return;
+
+    const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
+    const wsUrl = `${protocol}//${window.location.host}/ws`;
+    
+    try {
+      const ws = new WebSocket(wsUrl);
+      wsRef.current = ws;
+
+      ws.onopen = () => {
+        console.log('Connected to WebSocket');
+        setIsConnected(true);
+        // Authenticate with the WebSocket server
+        ws.send(JSON.stringify({
+          type: 'authenticate',
+          userId: currentUserId
+        }));
+      };
+
+      ws.onmessage = (event) => {
+        try {
+          const data = JSON.parse(event.data);
+          
+          if (data.type === 'new_message') {
+            // Refresh messages when new message arrives
+            queryClient.invalidateQueries({ queryKey: ['/api/messages/conversations/enhanced'] });
+            if (selectedConversation) {
+              queryClient.invalidateQueries({ queryKey: [`/api/messages/${selectedConversation}`] });
+            }
+            
+            // Show toast notification for new message
+            toast({
+              title: "Nuevo mensaje",
+              description: `${data.message.content.substring(0, 50)}...`,
+            });
+          } else if (data.type === 'typing') {
+            // Handle typing indicators
+            if (data.isTyping) {
+              setTypingUsers(prev => new Set(prev).add(data.senderId));
+            } else {
+              setTypingUsers(prev => {
+                const newSet = new Set(prev);
+                newSet.delete(data.senderId);
+                return newSet;
+              });
+            }
+          }
+        } catch (error) {
+          console.error('Error parsing WebSocket message:', error);
+        }
+      };
+
+      ws.onclose = () => {
+        console.log('Disconnected from WebSocket');
+        setIsConnected(false);
+      };
+
+      ws.onerror = (error) => {
+        console.error('WebSocket error:', error);
+        setIsConnected(false);
+      };
+
+    } catch (error) {
+      console.error('Failed to create WebSocket connection:', error);
+    }
+
+    return () => {
+      if (wsRef.current) {
+        wsRef.current.close();
+      }
+    };
+  }, [currentUserId, selectedConversation, toast]);
 
   // Check for stored contact to start chat with
   useEffect(() => {
@@ -246,6 +325,44 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ currentUserId, onClo
     }
   };
 
+  // Send typing indicator
+  const sendTypingIndicator = (isTyping: boolean, recipientId: number) => {
+    if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
+      wsRef.current.send(JSON.stringify({
+        type: 'typing',
+        senderId: currentUserId,
+        recipientId,
+        isTyping
+      }));
+    }
+  };
+
+  // Handle input change with typing indicator
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setMessageContent(value);
+
+    // Send typing indicator
+    const conversation = conversations.find(c => c.id === selectedConversation);
+    if (conversation) {
+      const recipientId = conversation.participant1Id === currentUserId 
+        ? conversation.participant2Id 
+        : conversation.participant1Id;
+      
+      sendTypingIndicator(true, recipientId);
+      
+      // Clear previous timeout
+      if (typingTimeoutRef.current) {
+        clearTimeout(typingTimeoutRef.current);
+      }
+      
+      // Stop typing indicator after 2 seconds of no typing
+      typingTimeoutRef.current = setTimeout(() => {
+        sendTypingIndicator(false, recipientId);
+      }, 2000);
+    }
+  };
+
   // Handle send message
   const handleSendMessage = () => {
     if (!messageContent.trim() || !selectedConversation) return;
@@ -256,6 +373,12 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ currentUserId, onClo
     const receiverId = conversation.participant1Id === currentUserId 
       ? conversation.participant2Id 
       : conversation.participant1Id;
+
+    // Stop typing indicator
+    sendTypingIndicator(false, receiverId);
+    if (typingTimeoutRef.current) {
+      clearTimeout(typingTimeoutRef.current);
+    }
 
     if (editingMessageId) {
       editMessageMutation.mutate({
@@ -360,7 +483,12 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ currentUserId, onClo
                       });
                       queryClient.invalidateQueries({ queryKey: ['/api/messages/conversations/enhanced'] });
                       setSearchQuery(''); // Clear search after starting chat
-                      setSearchQuery('');
+                      
+                      // Show success message
+                      toast({
+                        title: "Conversación iniciada",
+                        description: `Ahora puedes chatear con ${user.firstName || user.email.split('@')[0]}`,
+                      });
                     } catch (error) {
                       toast({
                         title: "Error",
@@ -645,7 +773,7 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ currentUserId, onClo
               ref={inputRef}
               placeholder="Escribe un mensaje"
               value={messageContent}
-              onChange={(e) => setMessageContent(e.target.value)}
+              onChange={handleInputChange}
               onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
               className="flex-1 backdrop-blur-xl bg-white/10 border-white/20 text-white placeholder-white/70"
             />

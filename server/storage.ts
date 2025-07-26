@@ -491,18 +491,36 @@ export class DatabaseStorage implements IStorage {
     return result[0];
   }
 
-  // Message methods (database storage)
+  // Message methods (database storage)  
   async getMessages(conversationId: number): Promise<Message[]> {
+    // First, get the conversation to find participant IDs
+    const conversation = await db.select().from(conversations)
+      .where(eq(conversations.id, conversationId))
+      .limit(1);
+    
+    if (conversation.length === 0) {
+      return [];
+    }
+    
+    const conv = conversation[0];
+    
+    // Get messages between the two participants
     const result = await db.select().from(messages)
-      .leftJoin(conversations, eq(messages.senderId, conversations.participant1Id))
       .where(
         or(
-          eq(conversations.id, conversationId),
-          eq(conversations.id, conversationId)
+          and(
+            eq(messages.senderId, conv.participant1Id),
+            eq(messages.receiverId, conv.participant2Id)
+          ),
+          and(
+            eq(messages.senderId, conv.participant2Id),
+            eq(messages.receiverId, conv.participant1Id)
+          )
         )
       )
-      .orderBy(desc(messages.createdAt));
-    return result.map(row => row.messages);
+      .orderBy(messages.createdAt); // Order by creation time ASC for chronological display
+    
+    return result;
   }
 
   async sendMessage(messageData: InsertMessage): Promise<Message> {

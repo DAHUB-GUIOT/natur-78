@@ -1,12 +1,13 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
+import { WebSocketServer, WebSocket } from 'ws';
 import { storage } from "./storage";
 import { db } from "./db";
-import { insertUserSchema, insertUserProfileSchema, insertExperienceSchema, insertMessageSchema, insertConversationSchema, insertCompanySchema, adminLogs } from "@shared/schema";
+import { insertUserSchema, insertUserProfileSchema, insertExperienceSchema, insertMessageSchema, insertConversationSchema, insertCompanySchema, adminLogs, conversations } from "@shared/schema";
 import { z } from "zod";
 import passport from 'passport';
 import { setupGoogleAuth } from './googleAuth';
-import { desc } from "drizzle-orm";
+import { desc, eq, and, or } from "drizzle-orm";
 
 // Extend Express Request type to include session and admin user
 declare module 'express-session' {
@@ -619,7 +620,32 @@ export async function registerRoutes(app: Express): Promise<Server> {
         senderId: req.session.userId
       });
 
+      // Check if conversation exists between these users
+      const existingConversations = await storage.getConversations(req.session.userId);
+      let conversation = existingConversations.find(conv => 
+        (conv.participant1Id === req.session.userId && conv.participant2Id === messageData.receiverId) ||
+        (conv.participant2Id === req.session.userId && conv.participant1Id === messageData.receiverId)
+      );
+
+      // Create conversation if it doesn't exist
+      if (!conversation) {
+        conversation = await storage.createConversation({
+          participant1Id: req.session.userId,
+          participant2Id: messageData.receiverId
+        });
+      }
+
+      // Send the message
       const message = await storage.sendMessage(messageData);
+      
+      // Update conversation's last activity
+      await db.update(conversations)
+        .set({ 
+          lastActivity: new Date(),
+          lastMessageId: message.id 
+        })
+        .where(eq(conversations.id, conversation.id));
+
       res.status(201).json(message);
     } catch (error) {
       if (error instanceof z.ZodError) {
@@ -861,6 +887,65 @@ export async function registerRoutes(app: Express): Promise<Server> {
   }
 
   const httpServer = createServer(app);
+
+  // Add WebSocket server for real-time messaging  
+  const wss = new WebSocketServer({ server: httpServer, path: '/ws' });
+
+  // Store active connections by user ID
+  const connectedUsers = new Map<number, WebSocket>();
+
+  wss.on('connection', (ws: WebSocket, req) => {
+    console.log('New WebSocket connection');
+    
+    ws.on('message', (message: string) => {
+      try {
+        const data = JSON.parse(message);
+        
+        if (data.type === 'authenticate') {
+          // Store user connection
+          connectedUsers.set(data.userId, ws);
+          console.log(`User ${data.userId} connected via WebSocket`);
+        } else if (data.type === 'typing') {
+          // Forward typing indicator to recipient
+          const recipientWs = connectedUsers.get(data.recipientId);
+          if (recipientWs && recipientWs.readyState === WebSocket.OPEN) {
+            recipientWs.send(JSON.stringify({
+              type: 'typing',
+              senderId: data.senderId,
+              isTyping: data.isTyping
+            }));
+          }
+        }
+      } catch (error) {
+        console.error('WebSocket message error:', error);
+      }
+    });
+
+    ws.on('close', () => {
+      // Remove user from connected users
+      for (const [userId, socket] of connectedUsers.entries()) {
+        if (socket === ws) {
+          connectedUsers.delete(userId);
+          console.log(`User ${userId} disconnected from WebSocket`);
+          break;
+        }
+      }
+    });
+  });
+
+  // Function to broadcast new messages to connected users
+  const broadcastMessage = (message: any, recipientId: number) => {
+    const recipientWs = connectedUsers.get(recipientId);
+    if (recipientWs && recipientWs.readyState === WebSocket.OPEN) {
+      recipientWs.send(JSON.stringify({
+        type: 'new_message',
+        message
+      }));
+    }
+  };
+
+  // Attach broadcast function to the server for use in routes
+  (httpServer as any).broadcastMessage = broadcastMessage;
 
   return httpServer;
 }
