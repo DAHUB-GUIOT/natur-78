@@ -52,6 +52,14 @@ const PortalEmpresasDashboard = () => {
   const [activeSection, setActiveSection] = useState("mapa");
   const [showExperienceForm, setShowExperienceForm] = useState(false);
 
+  // Handle hash fragment navigation for direct messaging access
+  useEffect(() => {
+    const hash = window.location.hash.replace('#', '');
+    if (hash === 'mensajes') {
+      setActiveSection('mensajes');
+    }
+  }, []);
+
   // Fetch experiences data
   const { data: experiences = [], isLoading: experiencesLoading } = useQuery({
     queryKey: ['/api/experiences'],

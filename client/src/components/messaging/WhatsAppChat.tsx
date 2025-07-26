@@ -90,6 +90,26 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ currentUserId, onClo
   const typingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const { toast } = useToast();
 
+  // Check for contact company from localStorage on mount
+  useEffect(() => {
+    const contactCompany = localStorage.getItem('contactCompany');
+    if (contactCompany) {
+      try {
+        const company = JSON.parse(contactCompany);
+        // Set search query to find the company
+        if (company.email) {
+          setSearchQuery(company.email.split('@')[0]); // Use part of email for search
+        } else if (company.name) {
+          setSearchQuery(company.name.toLowerCase());
+        }
+        // Clear the localStorage item
+        localStorage.removeItem('contactCompany');
+      } catch (error) {
+        console.error('Error parsing contact company:', error);
+      }
+    }
+  }, []);
+
   // WebSocket connection for real-time messaging
   useEffect(() => {
     if (!currentUserId) return;
