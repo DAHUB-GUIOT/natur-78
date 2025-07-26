@@ -3,7 +3,7 @@ import { createServer, type Server } from "http";
 import { WebSocketServer, WebSocket } from 'ws';
 import { storage } from "./storage";
 import { db } from "./db";
-import { insertUserSchema, insertUserProfileSchema, insertExperienceSchema, insertMessageSchema, insertConversationSchema, insertCompanySchema, adminLogs, conversations } from "@shared/schema";
+import { insertUserSchema, insertUserProfileSchema, insertExperienceSchema, insertMessageSchema, insertConversationSchema, insertCompanySchema, adminLogs, conversations, messages } from "@shared/schema";
 import { z } from "zod";
 import passport from 'passport';
 import { setupGoogleAuth } from './googleAuth';

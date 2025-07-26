@@ -514,9 +514,8 @@ export class DatabaseStorage implements IStorage {
   }
 
   async sendMessage(messageData: InsertMessage): Promise<Message> {
-    // Remove conversationId if it exists since current DB doesn't use it
-    const { conversationId, ...messageWithoutConversationId } = messageData as any;
-    const result = await db.insert(messages).values(messageWithoutConversationId).returning();
+    // Insert message directly without conversationId
+    const result = await db.insert(messages).values(messageData).returning();
     return result[0];
   }
 
