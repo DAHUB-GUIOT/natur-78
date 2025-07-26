@@ -565,9 +565,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
           
           const otherUser = await storage.getUser(otherUserId);
           
-          // Count unread messages
-          const messages = await storage.getMessages(conv.id);
-          const unreadCount = messages.filter(
+          // Count unread messages by querying directly
+          const messagesList = await db.select().from(messages)
+            .where(
+              or(
+                and(eq(messages.senderId, conv.participant1Id), eq(messages.receiverId, conv.participant2Id)),
+                and(eq(messages.senderId, conv.participant2Id), eq(messages.receiverId, conv.participant1Id))
+              )
+            );
+          
+          const unreadCount = messagesList.filter(
             msg => msg.receiverId === req.session.userId && !msg.isRead
           ).length;
           

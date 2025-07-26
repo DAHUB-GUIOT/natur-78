@@ -90,25 +90,40 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ currentUserId, onClo
   const typingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const { toast } = useToast();
 
-  // Check for contact company from localStorage on mount
+  // Fetch conversations first
+  const { data: conversations = [], isLoading: conversationsLoading, refetch: refetchConversations } = useQuery<Conversation[]>({
+    queryKey: ['/api/messages/conversations/enhanced'],
+    enabled: !!currentUserId,
+    refetchInterval: isConnected ? 30000 : 10000, // Refetch every 10-30 seconds
+  });
+
+  // Check for contact to start chat with from localStorage on mount
   useEffect(() => {
-    const contactCompany = localStorage.getItem('contactCompany');
-    if (contactCompany) {
-      try {
-        const company = JSON.parse(contactCompany);
-        // Set search query to find the company
-        if (company.email) {
-          setSearchQuery(company.email.split('@')[0]); // Use part of email for search
-        } else if (company.name) {
-          setSearchQuery(company.name.toLowerCase());
+    const startChatWith = localStorage.getItem('startChatWith');
+    if (startChatWith && conversations.length > 0) {
+      // Map company IDs to user IDs based on our database users
+      const companyToUserMap: { [key: string]: number } = {
+        'dahub': 21,  // Daniel Hurtado from DaHub
+        'tripcol': 22 // María González from TripCol
+      };
+      
+      const targetUserId = companyToUserMap[startChatWith];
+      if (targetUserId && targetUserId !== currentUserId) {
+        // Find existing conversation
+        const existingConv = conversations.find(conv => 
+          (conv.participant1Id === currentUserId && conv.participant2Id === targetUserId) ||
+          (conv.participant2Id === currentUserId && conv.participant1Id === targetUserId)
+        );
+        
+        if (existingConv) {
+          setSelectedConversation(existingConv.id);
         }
-        // Clear the localStorage item
-        localStorage.removeItem('contactCompany');
-      } catch (error) {
-        console.error('Error parsing contact company:', error);
       }
+      
+      // Clear the localStorage item
+      localStorage.removeItem('startChatWith');
     }
-  }, []);
+  }, [conversations, currentUserId]);
 
   // WebSocket connection for real-time messaging
   useEffect(() => {
@@ -197,27 +212,9 @@ export const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ currentUserId, onClo
     };
   }, [currentUserId, toast]);
 
-  // Check for stored contact to start chat with
-  useEffect(() => {
-    const startChatWith = localStorage.getItem('startChatWith');
-    if (startChatWith) {
-      // Set search query to find the user
-      const companyId = startChatWith;
-      if (companyId === 'tripcol') {
-        setSearchQuery('tripcol'); // Search by email prefix
-      } else if (companyId === 'dahub') {
-        setSearchQuery('dahub'); // Search by email prefix
-      }
-      // Clear the stored contact
-      localStorage.removeItem('startChatWith');
-    }
-  }, []);
 
-  // Fetch conversations with user details
-  const { data: conversations = [], isLoading: conversationsLoading } = useQuery<Conversation[]>({
-    queryKey: ['/api/messages/conversations/enhanced'],
-    enabled: !!currentUserId,
-  });
+
+
 
   // Fetch users for search
   const { data: searchUsers = [] } = useQuery<User[]>({

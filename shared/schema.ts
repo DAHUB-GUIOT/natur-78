@@ -266,10 +266,9 @@ export const conversations = pgTable("conversations", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
-// Messages table - for communication between users
+// Messages table - for communication between users (matches actual database structure)
 export const messages = pgTable("messages", {
   id: serial("id").primaryKey(),
-  conversationId: integer("conversation_id").references(() => conversations.id).notNull(), // Link to conversation
   senderId: integer("sender_id").references(() => users.id).notNull(),
   receiverId: integer("receiver_id").references(() => users.id).notNull(),
   experienceId: integer("experience_id").references(() => experiences.id), // Optional reference to experience
