@@ -494,16 +494,29 @@ export class DatabaseStorage implements IStorage {
 
   // Message methods (database storage)  
   async getMessages(conversationId: number): Promise<Message[]> {
-    // Get messages directly by conversationId
+    // Since messages table doesn't use conversation_id in current DB, 
+    // we'll get messages between two users directly
+    const conversation = await db.select().from(conversations).where(eq(conversations.id, conversationId)).limit(1);
+    if (!conversation[0]) return [];
+    
+    const { participant1Id, participant2Id } = conversation[0];
+    
     const result = await db.select().from(messages)
-      .where(eq(messages.conversationId, conversationId))
+      .where(
+        or(
+          and(eq(messages.senderId, participant1Id), eq(messages.receiverId, participant2Id)),
+          and(eq(messages.senderId, participant2Id), eq(messages.receiverId, participant1Id))
+        )
+      )
       .orderBy(messages.createdAt); // Order by creation time ASC for chronological display
     
     return result;
   }
 
   async sendMessage(messageData: InsertMessage): Promise<Message> {
-    const result = await db.insert(messages).values(messageData).returning();
+    // Remove conversationId if it exists since current DB doesn't use it
+    const { conversationId, ...messageWithoutConversationId } = messageData as any;
+    const result = await db.insert(messages).values(messageWithoutConversationId).returning();
     return result[0];
   }
 

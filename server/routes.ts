@@ -630,12 +630,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
-      // Parse message data with conversationId
-      const messageData = insertMessageSchema.parse({
-        ...req.body,
+      // Parse message data without conversationId since DB doesn't have that column
+      const messageData = {
         senderId: req.session.userId,
-        conversationId: conversation.id
-      });
+        receiverId: req.body.receiverId,
+        content: req.body.content,
+        messageType: req.body.messageType || 'direct'
+      };
 
       // Send the message
       const message = await storage.sendMessage(messageData);
