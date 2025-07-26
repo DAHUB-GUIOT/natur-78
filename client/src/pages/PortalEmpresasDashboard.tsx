@@ -84,40 +84,63 @@ const PortalEmpresasDashboard = () => {
     retry: false,
   });
 
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("todas");
+
+  const categories = [
+    { id: "todas", label: "Todas las categorías" },
+    { id: "tecnologia", label: "Tecnología" },
+    { id: "agencia-viajes", label: "Agencia de Viajes" },
+    { id: "organizacion-eventos", label: "Organización de Eventos" }
+  ];
+
   const companies = [
     {
       id: 1,
       name: "DaHub",
-      category: "Organizador de Eventos",
+      category: "Tecnología",
+      categoryId: "tecnologia",
       location: "Bogotá, Colombia",
       rating: 5.0,
       reviews: 127,
       image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg",
       verified: true,
-      description: "Organizadores de Festival NATUR. Conectamos emprendedores con inversionistas para crear proyectos de turismo regenerativo y desarrollo sostenible.",
+      description: "Empresa de tecnología especializada en diseño y desarrollo de plataformas digitales. Creadores de la plataforma Festival NATUR para conectar emprendedores de turismo sostenible.",
       founder: "Daniel Hurtado",
       website: "festivalnatur.com",
       email: "dahub.tech@gmail.com",
-      skills: ["Eventos sostenibles", "Tecnología verde", "Turismo regenerativo", "Impacto social"],
+      skills: ["Desarrollo de plataformas", "UX/UI Design", "Tecnología verde", "Sistemas de networking"],
       certifications: ["B Corp Pending", "Sello Ambiental Colombiano", "ISO 14001"]
     },
     {
       id: 2,
       name: "TripCol",
-      category: "Operador Turístico",
+      category: "Agencia de Viajes",
+      categoryId: "agencia-viajes",
       location: "Medellín, Colombia",
       rating: 4.8,
       reviews: 89,
       image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg",
       verified: true,
-      description: "Especialistas en experiencias auténticas de Colombia. Conectamos viajeros con comunidades locales para un turismo responsable y transformador.",
+      description: "Agencia de viajes especializada en turismo sostenible en Colombia. Organizadores del evento Festival NATUR y expertos en experiencias auténticas con comunidades locales.",
       founder: "Equipo TripCol",
       website: "tripcol.tours",
       email: "tripcol.tour@gmail.com",
-      skills: ["Turismo comunitario", "Experiencias auténticas", "Sostenibilidad cultural", "Guías locales"],
+      skills: ["Organización de eventos", "Turismo comunitario", "Experiencias auténticas", "Guías locales"],
       certifications: ["Certificación en Turismo Responsable", "Sello de Calidad Turística"]
     }
   ];
+
+  // Filter companies based on search and category
+  const filteredCompanies = companies.filter(company => {
+    const matchesSearch = company.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         company.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         company.skills.some(skill => skill.toLowerCase().includes(searchTerm.toLowerCase()));
+    
+    const matchesCategory = selectedCategory === "todas" || company.categoryId === selectedCategory;
+    
+    return matchesSearch && matchesCategory;
+  });
 
   const renderContent = () => {
     switch (activeSection) {
@@ -312,17 +335,59 @@ const PortalEmpresasDashboard = () => {
       case "empresas":
         return (
           <div className="space-y-4">
-            <div className="flex justify-between items-center">
-              <h2 className="text-xl font-bold text-white">Contactos</h2>
-              <Button variant="outline" size="sm" className="border-gray-500/50 text-gray-300 hover:bg-gray-700/50">
-                <Filter className="w-3 h-3 mr-1" />
-                Filtros
-              </Button>
+            <div className="flex flex-col space-y-3">
+              <div className="flex justify-between items-center">
+                <h2 className="text-xl font-bold text-white">Contactos</h2>
+                <Badge className="bg-green-600/20 text-green-300 px-3 py-1">
+                  {filteredCompanies.length} empresas
+                </Badge>
+              </div>
+              
+              {/* Search Bar */}
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-white/70" />
+                <Input 
+                  placeholder="Buscar por nombre, descripción o especialidades..." 
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="pl-10 bg-gray-800/40 border-gray-600/50 text-white placeholder-white/60 backdrop-blur-md"
+                />
+              </div>
+
+              {/* Category Filters */}
+              <div className="flex flex-wrap gap-2">
+                {categories.map((category) => (
+                  <Button
+                    key={category.id}
+                    variant={selectedCategory === category.id ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => setSelectedCategory(category.id)}
+                    className={`text-xs h-8 ${
+                      selectedCategory === category.id 
+                        ? "bg-green-600 text-white hover:bg-green-700" 
+                        : "border-gray-600/50 text-gray-300 hover:bg-gray-700/50"
+                    }`}
+                  >
+                    {category.label}
+                  </Button>
+                ))}
+              </div>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {companies.map((company) => (
-                <Card key={company.id} className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30 hover:bg-gray-800/50 transition-all duration-200">
+            {filteredCompanies.length === 0 ? (
+              <div className="text-center py-12">
+                <div className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30 rounded-lg p-8">
+                  <Building2 className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+                  <h3 className="text-lg font-semibold text-white mb-2">No se encontraron empresas</h3>
+                  <p className="text-gray-300 text-sm">
+                    {searchTerm ? `No hay resultados para "${searchTerm}"` : "No hay empresas en esta categoría"}
+                  </p>
+                </div>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {filteredCompanies.map((company) => (
+                  <Card key={company.id} className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30 hover:bg-gray-800/50 transition-all duration-200">
                   <CardContent className="p-4">
                     <div className="space-y-3">
                       {/* Header with avatar and basic info */}
@@ -392,9 +457,10 @@ const PortalEmpresasDashboard = () => {
                       </div>
                     </div>
                   </CardContent>
-                </Card>
-              ))}
-            </div>
+                  </Card>
+                ))}
+              </div>
+            )}
           </div>
         );
 
