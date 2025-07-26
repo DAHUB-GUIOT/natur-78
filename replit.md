@@ -79,6 +79,9 @@ This is a full-stack web application for Festival NATUR (www.festivalnatur.com),
   - **NEW**: Both companies have verified status with complete profiles and business information
   - **NEW**: Experiences include detailed pricing, accessibility info, languages, and operational details
   - **NEW**: Demo accounts ready for testing B2B messaging, experience management, and marketplace features
+  - **UPDATED**: DaHub profile now includes comprehensive metadata: founder name (Daniel Hurtado), Festival NATUR branding, skills, interests, support offerings
+  - **UPDATED**: DaHub company profile includes full business details: address at Centro de Felicidad Chapinero, social media, certifications, ratings
+  - **UPDATED**: DaHub experiences rebranded to Festival NATUR events including main festival (March 15-17, 2025), innovation tours, and hackathon
 
 - ✅ **January 25, 2025**: Complete Admin Dashboard Implementation with Database Fixes
   - **NEW**: Created comprehensive admin API endpoints for user management, experience approval, and platform statistics

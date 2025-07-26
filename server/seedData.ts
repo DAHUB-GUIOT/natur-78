@@ -47,27 +47,52 @@ async function seedData() {
     const [dahubUser] = await db.insert(users).values({
       email: 'dahub.tech@gmail.com',
       password: dahubPassword,
-      role: 'empresa'
+      role: 'empresa',
+      firstName: 'Daniel',
+      lastName: 'Hurtado',
+      isActive: true,
+      emailVerified: true
     }).returning();
 
     // Insert TripCol user
     const [tripcolUser] = await db.insert(users).values({
       email: 'tripcol.tour@gmail.com', 
       password: tripcolPassword,
-      role: 'empresa'
+      role: 'empresa',
+      firstName: 'María',
+      lastName: 'González',
+      isActive: true,
+      emailVerified: true
     }).returning();
 
     // Create user profiles
     await db.insert(userProfiles).values([
       {
         userId: dahubUser.id,
-        name: 'DaHub Tech',
+        name: 'DaHub Tech - Festival NATUR',
+        fullName: 'Daniel Hurtado',
         userCategory: 'emprendimiento',
         subcategory: 'startup_tecnologia',
-        bio: 'Innovación digital para el turismo sostenible en Colombia',
+        bio: 'Festival NATUR: Conectando innovación tecnológica con turismo regenerativo. Creamos experiencias digitales inmersivas que promueven el desarrollo sostenible y la conservación ambiental en Colombia.',
+        description: 'DaHub es el organizador principal de Festival NATUR, el evento líder en turismo sostenible y regenerativo en Colombia. Desarrollamos plataformas tecnológicas que conectan viajeros conscientes con experiencias transformadoras, utilizando AR/VR, blockchain para trazabilidad de impacto, y AI para personalización de rutas eco-turísticas.',
         location: 'Bogotá, Colombia',
-        website: 'https://dahub.tech',
-        phone: '+57 320 1234567'
+        website: 'https://festivalnatur.com',
+        phone: '+57 320 1234567',
+        whatsapp: '+57 320 1234567',
+        linkedin: 'https://linkedin.com/company/dahub-tech',
+        country: 'Colombia',
+        city: 'Bogotá',
+        foundingYear: 2021,
+        teamSize: 15,
+        supportOffered: {
+          tecnologia: ['Desarrollo de plataformas', 'Apps móviles', 'Realidad aumentada'],
+          mentoria: ['Transformación digital', 'Estrategia de producto', 'Growth hacking'],
+          recursos: ['Espacio de coworking', 'Acceso a inversionistas', 'Red de contactos']
+        },
+        skills: ['Desarrollo web', 'React', 'Node.js', 'AR/VR', 'Blockchain', 'Machine Learning', 'UX Design', 'Product Management'],
+        interests: ['Turismo regenerativo', 'Tecnología verde', 'Economía circular', 'Impacto social', 'Conservación ambiental', 'Comunidades locales'],
+        isProfileComplete: true,
+        isPublic: true
       },
       {
         userId: tripcolUser.id,
@@ -85,13 +110,22 @@ async function seedData() {
     await db.insert(companies).values([
       {
         userId: dahubUser.id,
-        companyName: 'DaHub Tech',
+        companyName: 'DaHub Tech - Festival NATUR',
         businessType: 'startup_tecnologia',
-        description: 'Plataforma tecnológica para conectar viajeros conscientes con experiencias sostenibles',
-        website: 'https://dahub.tech',
+        description: 'Organizadores de Festival NATUR - El evento más importante de turismo sostenible y regenerativo en Colombia. Desarrollamos tecnología innovadora para conectar viajeros conscientes con experiencias transformadoras que generan impacto positivo en comunidades locales y ecosistemas.',
+        website: 'https://festivalnatur.com',
         phone: '+57 320 1234567',
         city: 'Bogotá',
         department: 'Cundinamarca',
+        address: 'Centro de Felicidad Chapinero, Carrera 15 # 88-64',
+        rating: 5,
+        totalReviews: 127,
+        certifications: ['B Corp Pending', 'Sello Ambiental Colombiano', 'ISO 14001'],
+        services: ['Eventos sostenibles', 'Tecnología verde', 'Turismo regenerativo', 'Impacto social'],
+        coordinates: {
+          lat: 4.6749,
+          lng: -74.0536
+        },
         isVerified: true
       },
       {
@@ -111,57 +145,62 @@ async function seedData() {
     const dahubExperiences = [
       {
         userId: dahubUser.id,
-        title: 'Ruta Digital del Café Colombiano',
-        description: 'Experiencia inmersiva que combina tecnología AR con visitas a fincas cafeteras tradicionales',
-        type: 'Tour Tecnológico',
+        title: 'Festival NATUR 2025 - Turismo Regenerativo',
+        description: 'El evento más importante de turismo sostenible en Colombia. 3 días de conferencias, talleres, networking y experiencias inmersivas con líderes globales en sostenibilidad, tecnología verde y desarrollo comunitario.',
+        type: 'Evento Principal',
         location: JSON.stringify({
-          address: 'Eje Cafetero, Colombia',
-          lat: 4.5339,
-          lng: -75.6811,
-          city: 'Armenia',
-          region: 'Quindío'
-        }),
-        category: 'cultura' as const,
-        adultPricePvp: '120000',
-        duration: '4 horas',
-        languages: ['Español', 'Inglés'],
-        included: 'Tablet con AR, Degustación de café, Transporte, Guía especializado',
-        notIncluded: 'Almuerzo, Souvenirs',
-        wheelchairAccessible: 'yes',
-        cancellationPolicy: 'Cancelación gratuita hasta 24h antes',
-        minimumAge: '12',
-        status: 'aprobado' as const,
-        isActive: true
-      },
-      {
-        userId: dahubUser.id,
-        title: 'Smart City Tour Bogotá',
-        description: 'Recorrido por los proyectos de innovación urbana y sostenibilidad de Bogotá',
-        type: 'Tour Urbano',
-        location: JSON.stringify({
-          address: 'Bogotá, Colombia',
-          lat: 4.7110,
-          lng: -74.0721,
+          address: 'Centro de Felicidad Chapinero, Carrera 15 # 88-64',
+          lat: 4.6749,
+          lng: -74.0536,
           city: 'Bogotá',
           region: 'Cundinamarca'
         }),
         category: 'educativo' as const,
-        adultPricePvp: '85000',
-        duration: '3 horas',
-        languages: ['Español', 'Inglés'],
-        included: 'Transporte eléctrico, App guía, Refrigerio',
-        notIncluded: 'Almuerzo',
+        adultPricePvp: '350000',
+        duration: '3 días (15-17 Marzo 2025)',
+        languages: ['Español', 'Inglés', 'Portugués'],
+        included: 'Acceso completo al evento, Kit de bienvenida sostenible, Certificado de participación, Networking app, Almuerzo orgánico diario, Coffee breaks',
+        notIncluded: 'Alojamiento, Transporte, Cena',
         wheelchairAccessible: 'yes',
-        minimumPeople: '5',
-        cancellationPolicy: 'Cancelación 48h antes',
+        cancellationPolicy: 'Cancelación hasta 30 días antes con 80% reembolso',
+        minimumAge: '18',
+        operationDays: 'Viernes a Domingo',
+        operationHours: '8:00 AM - 6:00 PM',
+        meetingPoint: 'Centro de Felicidad Chapinero - Lobby principal',
         status: 'aprobado' as const,
         isActive: true
       },
       {
         userId: dahubUser.id,
-        title: 'Hackathon Turismo Sostenible',
-        description: 'Evento de innovación para crear soluciones tecnológicas al turismo responsable',
-        type: 'Evento Tech',
+        title: 'Ruta de Innovación Social - Barrios Regenerativos',
+        description: 'Conoce proyectos comunitarios que están transformando Bogotá a través del turismo regenerativo, economía circular y tecnología social',
+        type: 'Tour de Impacto',
+        location: JSON.stringify({
+          address: 'La Candelaria, Bogotá',
+          lat: 4.5981,
+          lng: -74.0758,
+          city: 'Bogotá',
+          region: 'Cundinamarca'
+        }),
+        category: 'cultura' as const,
+        adultPricePvp: '95000',
+        duration: '4 horas',
+        languages: ['Español', 'Inglés'],
+        included: 'Transporte en bicicletas eléctricas, Guía local experto, Donación a proyectos visitados, Refrigerio local',
+        notIncluded: 'Almuerzo, Seguro personal',
+        wheelchairAccessible: 'partial',
+        minimumPeople: '4',
+        cancellationPolicy: 'Cancelación gratuita hasta 48h antes',
+        hotelTransfer: true,
+        meetingPoint: 'Plaza de Bolívar - Estatua central',
+        status: 'aprobado' as const,
+        isActive: true
+      },
+      {
+        userId: dahubUser.id,
+        title: 'Tech4Tourism - Hackathon Festival NATUR',
+        description: 'Competencia de innovación tecnológica donde equipos desarrollan soluciones para los retos del turismo regenerativo en Colombia. Mentoría de expertos y premios en efectivo.',
+        type: 'Hackathon',
         location: JSON.stringify({
           address: 'Centro de Innovación, Bogotá',
           lat: 4.6097,
