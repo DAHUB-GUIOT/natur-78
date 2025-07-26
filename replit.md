@@ -83,6 +83,15 @@ This is a full-stack web application for Festival NATUR (www.festivalnatur.com),
   - **UPDATED**: DaHub company profile includes full business details: address at Centro de Felicidad Chapinero, social media, certifications, ratings
   - **UPDATED**: DaHub experiences rebranded to Festival NATUR events including main festival (March 15-17, 2025), innovation tours, and hackathon
 
+- ✅ **January 26, 2025**: Company Directory Updated to Show Real Database Users Only
+  - **RENAMED**: "Buscador de Empresas" changed to "Contactos" throughout Portal Empresas interface
+  - **REMOVED**: EcoTours Colombia and Café de la Montaña placeholder cards
+  - **NEW**: Enhanced company cards now display DaHub and TripCol with detailed business information
+  - **NEW**: Cards show founder names, specialties, descriptions, ratings, and contact details
+  - **NEW**: Improved glassmorphism design with larger cards and better information hierarchy
+  - **NEW**: Real business data including certifications, skills, and verification status
+  - **FIXED**: Company directory now connected to actual database users for authentic B2B networking
+
 - ✅ **January 25, 2025**: Complete Admin Dashboard Implementation with Database Fixes
   - **NEW**: Created comprehensive admin API endpoints for user management, experience approval, and platform statistics
   - **NEW**: Implemented role-based authentication with admin middleware protection

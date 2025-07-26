@@ -68,7 +68,7 @@ const PortalEmpresasDashboard = () => {
 
   const sidebarItems = [
     { id: "mapa", label: "Mapa", icon: Map },
-    { id: "empresas", label: "Buscador", icon: Building2 },
+    { id: "empresas", label: "Contactos", icon: Building2 },
     { id: "experiencias", label: "Experiencias", icon: Star },
     { id: "mensajes", label: "Mensajes", icon: MessageCircle },
     { id: "perfil", label: "Mi Perfil", icon: User },
@@ -78,26 +78,44 @@ const PortalEmpresasDashboard = () => {
 
 
 
+  // Fetch companies data from database
+  const { data: companiesData = [], isLoading: companiesLoading } = useQuery({
+    queryKey: ['/api/companies'],
+    retry: false,
+  });
+
   const companies = [
     {
       id: 1,
-      name: "EcoTours Colombia",
-      category: "Operador Turístico",
+      name: "DaHub",
+      category: "Organizador de Eventos",
       location: "Bogotá, Colombia",
-      rating: 4.7,
-      reviews: 234,
+      rating: 5.0,
+      reviews: 127,
       image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg",
-      verified: true
+      verified: true,
+      description: "Organizadores de Festival NATUR. Conectamos emprendedores con inversionistas para crear proyectos de turismo regenerativo y desarrollo sostenible.",
+      founder: "Daniel Hurtado",
+      website: "festivalnatur.com",
+      email: "dahub.tech@gmail.com",
+      skills: ["Eventos sostenibles", "Tecnología verde", "Turismo regenerativo", "Impacto social"],
+      certifications: ["B Corp Pending", "Sello Ambiental Colombiano", "ISO 14001"]
     },
     {
       id: 2,
-      name: "Café de la Montaña",
-      category: "Gastronomía",
-      location: "Manizales, Colombia",
-      rating: 4.9,
-      reviews: 156,
+      name: "TripCol",
+      category: "Operador Turístico",
+      location: "Medellín, Colombia",
+      rating: 4.8,
+      reviews: 89,
       image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg",
-      verified: true
+      verified: true,
+      description: "Especialistas en experiencias auténticas de Colombia. Conectamos viajeros con comunidades locales para un turismo responsable y transformador.",
+      founder: "Equipo TripCol",
+      website: "tripcol.tours",
+      email: "tripcol.tour@gmail.com",
+      skills: ["Turismo comunitario", "Experiencias auténticas", "Sostenibilidad cultural", "Guías locales"],
+      certifications: ["Certificación en Turismo Responsable", "Sello de Calidad Turística"]
     }
   ];
 
@@ -295,52 +313,82 @@ const PortalEmpresasDashboard = () => {
         return (
           <div className="space-y-4">
             <div className="flex justify-between items-center">
-              <h2 className="text-xl font-bold text-white">Buscador de Empresas</h2>
+              <h2 className="text-xl font-bold text-white">Contactos</h2>
               <Button variant="outline" size="sm" className="border-gray-500/50 text-gray-300 hover:bg-gray-700/50">
                 <Filter className="w-3 h-3 mr-1" />
                 Filtros
               </Button>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {companies.map((company) => (
                 <Card key={company.id} className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30 hover:bg-gray-800/50 transition-all duration-200">
-                  <CardContent className="p-3">
-                    <div className="flex items-start space-x-2">
-                      <Avatar className="w-10 h-10 ring-1 ring-gray-600/50">
-                        <AvatarImage src={company.image} />
-                        <AvatarFallback className="bg-green-600/80 text-white text-xs">{company.name[0]}</AvatarFallback>
-                      </Avatar>
-                      
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center space-x-1 mb-1">
-                          <h3 className="font-semibold text-sm text-white truncate">{company.name}</h3>
-                          {company.verified && (
-                            <Badge className="text-xs bg-green-600 text-white px-1 py-0">
-                              ✓
-                            </Badge>
-                          )}
-                        </div>
+                  <CardContent className="p-4">
+                    <div className="space-y-3">
+                      {/* Header with avatar and basic info */}
+                      <div className="flex items-start space-x-3">
+                        <Avatar className="w-12 h-12 ring-2 ring-green-500/30">
+                          <AvatarImage src={company.image} />
+                          <AvatarFallback className="bg-green-600/80 text-white text-sm font-bold">{company.name[0]}</AvatarFallback>
+                        </Avatar>
                         
-                        <p className="text-xs text-gray-200 mb-1">{company.category}</p>
-                        
-                        <div className="flex items-center text-xs text-gray-200 mb-2">
-                          <MapPin className="w-3 h-3 mr-1" />
-                          {company.location}
-                        </div>
-                        
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center space-x-1">
-                            <Star className="w-3 h-3 text-yellow-400 fill-current" />
-                            <span className="text-xs font-medium text-white">{company.rating}</span>
-                            <span className="text-xs text-gray-300">({company.reviews})</span>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center space-x-2 mb-1">
+                            <h3 className="font-bold text-base text-white">{company.name}</h3>
+                            {company.verified && (
+                              <Badge className="text-xs bg-green-600 text-white px-2 py-0.5">
+                                Verificado ✓
+                              </Badge>
+                            )}
+                          </div>
+                          
+                          <p className="text-sm text-green-300 font-medium">{company.category}</p>
+                          <p className="text-xs text-gray-300">Fundador: {company.founder}</p>
+                          
+                          <div className="flex items-center text-xs text-gray-200 mt-1">
+                            <MapPin className="w-3 h-3 mr-1" />
+                            {company.location}
                           </div>
                         </div>
-                        
-                        <div className="flex space-x-1 mt-2">
-                          <Button size="sm" variant="outline" className="border-gray-600/50 text-gray-300 hover:bg-gray-700/50 text-xs h-6 flex-1 backdrop-blur-sm">Ver</Button>
-                          <Button size="sm" className="bg-green-600/80 hover:bg-green-700/80 text-white text-xs h-6 flex-1 backdrop-blur-sm">Chat</Button>
+                      </div>
+
+                      {/* Description */}
+                      <p className="text-sm text-gray-200 leading-relaxed">{company.description}</p>
+
+                      {/* Skills */}
+                      <div>
+                        <p className="text-xs font-semibold text-white mb-2">Especialidades</p>
+                        <div className="flex flex-wrap gap-1">
+                          {company.skills.slice(0, 3).map((skill, index) => (
+                            <Badge key={index} className="bg-green-600/20 text-green-300 text-xs px-2 py-0.5 border border-green-500/30">
+                              {skill}
+                            </Badge>
+                          ))}
                         </div>
+                      </div>
+
+                      {/* Rating and contact info */}
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center space-x-1">
+                          <Star className="w-4 h-4 text-yellow-400 fill-current" />
+                          <span className="text-sm font-medium text-white">{company.rating}</span>
+                          <span className="text-xs text-gray-300">({company.reviews} reseñas)</span>
+                        </div>
+                        <div className="text-xs text-gray-300">
+                          {company.website}
+                        </div>
+                      </div>
+                      
+                      {/* Action buttons */}
+                      <div className="flex space-x-2 pt-2">
+                        <Button size="sm" variant="outline" className="border-gray-600/50 text-gray-300 hover:bg-gray-700/50 text-xs h-8 flex-1 backdrop-blur-sm">
+                          <User className="w-3 h-3 mr-1" />
+                          Ver Perfil
+                        </Button>
+                        <Button size="sm" className="bg-green-600/80 hover:bg-green-700/80 text-white text-xs h-8 flex-1 backdrop-blur-sm">
+                          <MessageCircle className="w-3 h-3 mr-1" />
+                          Contactar
+                        </Button>
                       </div>
                     </div>
                   </CardContent>
