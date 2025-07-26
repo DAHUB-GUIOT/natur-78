@@ -599,16 +599,7 @@ export default function PortalViajeros() {
         </div>
       )}
 
-      {/* Floating Action Button - Upload Experience */}
-      <Link href="/portal-empresas">
-        <Button
-          className="fixed bottom-8 right-8 bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-black font-semibold shadow-2xl z-40"
-          size="lg"
-        >
-          <Plus className="w-5 h-5 mr-2" />
-          Subir Experiencia
-        </Button>
-      </Link>
+      
       
     </div>
   );
