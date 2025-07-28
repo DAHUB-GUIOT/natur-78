@@ -3,7 +3,7 @@ import React from "react";
 
 export function About() {
   return (
-    <section className="bg-[#CEDD9F] flex w-full flex-col items-center justify-center px-4 sm:px-6 md:px-12 py-12 md:py-16 lg:py-20 max-md:max-w-full font-jakarta">
+    <section className="bg-[#CEDD9F] flex w-full flex-col items-center justify-center px-4 sm:px-6 md:px-12 py-12 md:py-16 lg:py-20 max-md:max-w-full font-jakarta-light">
       <div className="mb-0 w-full max-w-5xl max-md:max-w-full">
         <div className="gap-8 flex max-md:flex-col max-md:items-stretch">
           <div className="w-full md:w-[40%] max-md:w-full max-md:ml-0">
@@ -29,15 +29,15 @@ export function About() {
           </div>
           <div className="w-full md:w-[60%] md:ml-5 max-md:w-full max-md:ml-0">
             <div className="backdrop-blur-sm rounded-2xl p-6 md:p-8 bg-[#ffffff00] text-[#00000000]">
-              <p className="text-[#191C0F] text-sm sm:text-base md:text-lg font-medium leading-6 sm:leading-7 md:leading-8 tracking-[-0.1px] max-md:max-w-full font-jakarta">
+              <p className="text-[#191C0F] text-sm sm:text-base md:text-lg font-jakarta-light leading-6 sm:leading-7 md:leading-8 tracking-[-0.1px] max-md:max-w-full">
                 Nacemos con la convicción de que viajar puede ser un acto de conservación, aprendizaje y regeneración. Promovemos un turismo que protege la biodiversidad, honra las culturas locales y genera bienestar para comunidades y territorios.
               </p>
               <div className="w-full h-px bg-[#191C0F]/20 my-4"></div>
-              <p className="text-[#191C0F] text-sm sm:text-base md:text-lg font-medium leading-6 sm:leading-7 md:leading-8 tracking-[-0.1px] max-md:max-w-full font-jakarta">
+              <p className="text-[#191C0F] text-sm sm:text-base md:text-lg font-jakarta-light leading-6 sm:leading-7 md:leading-8 tracking-[-0.1px] max-md:max-w-full">
                 El turismo en Colombia debe convertirse en una herramienta para salvaguardar nuestro patrimonio natural y cultural, y sabemos que la difusión, la educación y el trabajo colectivo son las claves para lograrlo.
               </p>
               <div className="w-full h-px bg-[#191C0F]/20 my-4"></div>
-              <p className="text-[#191C0F] text-sm sm:text-base md:text-lg font-medium leading-6 sm:leading-7 md:leading-8 tracking-[-0.1px] max-md:max-w-full font-jakarta">
+              <p className="text-[#191C0F] text-sm sm:text-base md:text-lg font-jakarta-light leading-6 sm:leading-7 md:leading-8 tracking-[-0.1px] max-md:max-w-full">
                 Así nace el Festival NATUR: una plataforma donde confluyen agencias, destinos, viajeros, organizaciones, emprendedores y soñadores que creen en un modelo de turismo más consciente, humano y sostenible.
               </p>
             </div>

@@ -18,7 +18,7 @@ export function Contact() {
     href: "#",
     label: "Facebook"
   }];
-  return <section className="bg-[#191C0F] flex w-full flex-col items-center justify-center px-4 sm:px-6 md:px-12 py-12 md:py-16 lg:py-20 max-md:max-w-full font-jakarta">
+  return <section className="bg-[#191C0F] flex w-full flex-col items-center justify-center px-4 sm:px-6 md:px-12 py-12 md:py-16 lg:py-20 max-md:max-w-full font-jakarta-light">
       <div className="flex w-full max-w-4xl flex-col items-stretch">
         <h2 style={{
         letterSpacing: 1.5
@@ -35,8 +35,8 @@ export function Contact() {
         </div>
 
         <div className="backdrop-blur-sm bg-white/5 border border-[#EDFF60]/20 rounded-xl p-4 sm:p-6 text-center">
-          <p className="text-[#FCF8EE] text-xs sm:text-sm md:text-base font-jakarta mb-2">Una iniciativa de</p>
-          <div className="text-[#EDFF60] text-lg sm:text-xl md:text-2xl font-bold font-jakarta">tripCol</div>
+          <p className="text-[#FCF8EE] text-xs sm:text-sm md:text-base font-jakarta-light mb-2">Una iniciativa de</p>
+          <div className="text-[#EDFF60] text-lg sm:text-xl md:text-2xl font-jakarta-bold">tripCol</div>
         </div>
       </div>
     </section>;

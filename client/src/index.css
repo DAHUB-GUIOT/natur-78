@@ -1,5 +1,5 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Gasoek+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Gasoek+One&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -128,7 +128,8 @@
 
   body {
     @apply bg-background text-foreground overflow-x-hidden;
-    font-family: 'Inter', system-ui, sans-serif;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    font-weight: 300; /* Light variant as default */
     scroll-behavior: smooth;
   }
   
@@ -144,6 +145,32 @@
     font-weight: 400;
     letter-spacing: 2px;
     text-transform: uppercase;
+  }
+
+  /* Text utilities */
+  .font-jakarta {
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  }
+
+  .font-jakarta-light {
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    font-weight: 300;
+  }
+
+  .font-jakarta-bold {
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    font-weight: 700;
+  }
+
+  /* Default paragraph and text styling */
+  p, span, div:not(.font-gasoek):not(h1):not(h2):not(h3):not(h4):not(h5):not(h6) {
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    font-weight: 300;
+  }
+
+  /* Bold text for emphasis */
+  strong, b, .font-bold {
+    font-weight: 700;
   }
   
   section {

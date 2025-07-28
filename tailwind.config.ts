@@ -5,6 +5,12 @@ export default {
   content: ["./client/index.html", "./client/src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
+      fontFamily: {
+        'gasoek': ['Gasoek One', 'system-ui', 'sans-serif'],
+        'jakarta': ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+        'jakarta-light': ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+        'jakarta-bold': ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+      },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",

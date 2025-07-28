@@ -33,7 +33,7 @@ export function Program() {
                 </h3>
                 <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/6dd45f1f46a91f08b2a1c1c9537d3dc186db8cf6?placeholderIfAbsent=true" alt="Toggle" className={`aspect-[1] object-contain w-6 sm:w-7 md:w-8 self-stretch shrink-0 my-auto transform transition-transform ${openSection === index ? "rotate-180" : ""}`} />
               </div>
-              {openSection === index && <p className="font-jakarta mt-3 md:mt-4 text-sm sm:text-base md:text-lg font-light text-[#FCF8EE] normal-case leading-relaxed">
+              {openSection === index && <p className="font-jakarta-light mt-3 md:mt-4 text-sm sm:text-base md:text-lg text-[#FCF8EE] normal-case leading-relaxed">
                   {section.content}
                 </p>}
             </div>)}
