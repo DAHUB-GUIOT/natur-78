@@ -23,7 +23,7 @@ export function Contact() {
         <h2 style={{
         letterSpacing: 1.5
       }} className="font-gasoek text-[#CEDD9F] text-center text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-normal leading-tight uppercase tracking-wide mb-6 sm:mb-8 md:mb-10">
-          Contáctanos
+          CONTÁCTANOS
         </h2>
 
         <div className="backdrop-blur-sm bg-white/5 border border-[#CEDD9F]/20 rounded-xl p-6 sm:p-8 md:p-10 mb-6">

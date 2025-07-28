@@ -20,7 +20,7 @@ export function Location() {
             <h2 style={{
             letterSpacing: 1.5
           }} className="font-gasoek text-center text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-normal leading-tight tracking-wide uppercase mb-4 sm:mb-6 md:mb-8 text-zinc-950">
-              ¿Cuándo y dónde?
+              ¿CUÁNDO Y DÓNDE?
             </h2>
             
             <div className="backdrop-blur-sm bg-white/20 rounded-xl p-4 sm:p-6 border border-[#191C0F]/10 mb-4">

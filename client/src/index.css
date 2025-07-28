@@ -1,4 +1,6 @@
 
+@import url('https://fonts.googleapis.com/css2?family=Gasoek+One&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -131,20 +133,17 @@
   }
   
   h1, h2, h3, h4, h5, h6 {
-    @apply font-bold text-primary;
+    font-family: 'Gasoek One', system-ui, sans-serif;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 2px;
   }
 
   .font-gasoek {
-    font-family: 'Inter', system-ui, sans-serif;
-    font-weight: 100;
-    letter-spacing: 4px;
+    font-family: 'Gasoek One', system-ui, sans-serif;
+    font-weight: 400;
+    letter-spacing: 2px;
     text-transform: uppercase;
-  }
-
-  h2 {
-    @apply font-gasoek font-thin tracking-[4px] uppercase;
-    letter-spacing: 4px;
-    font-weight: 100;
   }
   
   section {

@@ -24,7 +24,7 @@ export function About() {
                 max-md:mt-0
                 tracking-wide"
             >
-              ¿Quienes somos?
+              ¿QUIENES SOMOS?
             </h1>
           </div>
           <div className="w-full md:w-[60%] md:ml-5 max-md:w-full max-md:ml-0">

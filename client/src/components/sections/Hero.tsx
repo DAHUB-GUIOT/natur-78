@@ -64,15 +64,15 @@ export function Hero() {
         <div className="max-w-7xl w-full">
           <div className="max-w-3xl">
             {/* Main Title */}
-            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black mb-3 font-gasoek tracking-wide leading-none" style={{ color: '#EDFF60' }}>
+            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-gasoek mb-3 tracking-wide leading-none" style={{ color: '#EDFF60' }}>
               NATUR
             </h1>
             
             {/* Subtitle */}
-            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-6 leading-tight max-w-xl" style={{ color: '#EDFF60' }}>
-              Todo sobre turismo sostenible
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-gasoek mb-6 leading-tight max-w-xl" style={{ color: '#EDFF60' }}>
+              TODO SOBRE TURISMO SOSTENIBLE
               <br />
-              <span style={{ color: '#EDFF60', opacity: 0.8 }}>y más</span>
+              <span style={{ color: '#EDFF60', opacity: 0.8 }}>Y MÁS</span>
             </h2>
 
             {/* Main Action Buttons - Stacked vertically like BIME */}

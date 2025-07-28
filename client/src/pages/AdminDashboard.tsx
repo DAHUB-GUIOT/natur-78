@@ -189,7 +189,7 @@ const AdminDashboard = () => {
   const renderDashboard = () => (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-3xl font-bold text-gray-900">Panel de Control</h2>
+        <h2 className="text-3xl font-gasoek text-gray-900">PANEL DE CONTROL</h2>
         <Button 
           onClick={() => refetchStats()} 
           variant="outline"
@@ -321,7 +321,7 @@ const AdminDashboard = () => {
   const renderUsers = () => (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-3xl font-bold text-gray-900">Gestión de Usuarios</h2>
+        <h2 className="text-3xl font-gasoek text-gray-900">GESTIÓN DE USUARIOS</h2>
         <div className="flex items-center gap-3">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
@@ -452,7 +452,7 @@ const AdminDashboard = () => {
   const renderExperiences = () => (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-3xl font-bold text-gray-900">Gestión de Experiencias</h2>
+        <h2 className="text-3xl font-gasoek text-gray-900">GESTIÓN DE EXPERIENCIAS</h2>
         <div className="flex items-center gap-3">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />

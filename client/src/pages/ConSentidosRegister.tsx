@@ -81,7 +81,7 @@ const ConSentidosRegister = () => {
                 <Heart className="w-8 h-8 text-black" />
               </div>
             </div>
-            <h1 className="text-3xl md:text-4xl font-bold mb-4 font-gasoek tracking-wide" style={{ color: '#EDFF60' }}>
+            <h1 className="text-3xl md:text-4xl font-gasoek mb-4 tracking-wide" style={{ color: '#EDFF60' }}>
               CON-SENTIDOS
             </h1>
             <p className="text-lg text-white max-w-2xl mx-auto font-medium">

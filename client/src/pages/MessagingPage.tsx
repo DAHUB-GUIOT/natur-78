@@ -143,7 +143,7 @@ export default function MessagingPage() {
                 Volver a Portal
               </Button>
               <div className="h-6 w-px bg-gray-300" />
-              <h1 className="text-xl font-semibold text-gray-900">Mensajes Empresariales</h1>
+              <h1 className="text-xl font-gasoek text-gray-900">MENSAJES EMPRESARIALES</h1>
             </div>
             <div className="flex items-center space-x-2">
               <Badge variant="outline" className="text-green-600 border-green-200">
@@ -165,7 +165,7 @@ export default function MessagingPage() {
               {/* Header */}
               <div className="p-4 bg-green-600 text-white">
                 <div className="flex items-center justify-between mb-4">
-                  <h1 className="text-xl font-bold">Mensajes B2B</h1>
+                  <h1 className="text-xl font-gasoek">MENSAJES B2B</h1>
                   <Button
                     size="sm"
                     variant="ghost"

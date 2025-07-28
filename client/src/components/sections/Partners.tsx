@@ -21,7 +21,7 @@ export function Partners() {
   return <section className="flex w-full flex-col items-center justify-center px-4 sm:px-6 md:px-12 py-12 md:py-16 lg:py-20 max-md:max-w-full font-jakarta bg-neutral-50">
       <div className="flex w-full max-w-6xl flex-col items-center">
         <h2 className="font-gasoek text-[#6D7A4E] text-center text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-normal leading-none uppercase mb-8 sm:mb-10 md:mb-12 tracking-wide">
-          nuestros aliados
+          NUESTROS ALIADOS
         </h2>
 
         <div className="backdrop-blur-sm bg-white/20 rounded-2xl p-4 sm:p-6 md:p-8 border border-[#6D7A4E]/10 w-full">

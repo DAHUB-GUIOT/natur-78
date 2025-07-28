@@ -21,7 +21,7 @@ export function Program() {
         fontWeight: 700,
         letterSpacing: 1.5
       }} className="font-gasoek text-[#EDFF60] text-center text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-normal leading-tight tracking-wide uppercase max-w-[90vw] mb-6 sm:mb-8 md:mb-10">
-          ¿qué vas a encontrar?
+          ¿QUÉ VAS A ENCONTRAR?
         </h2>
 
         <div className="self-stretch text-sm sm:text-base md:text-lg font-light tracking-wide leading-relaxed mt-4 sm:mt-6 md:mt-8 max-md:max-w-full">
