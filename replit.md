@@ -10,6 +10,20 @@ This is a full-stack web application for Festival NATUR (www.festivalnatur.com),
 
 ## Recent Changes
 
+- ✅ **January 28, 2025**: Complete Tourism Industry Company Categories Restructure
+  - **REPLACED**: Simple 3 categories with comprehensive 8-category sustainable tourism structure
+  - **NEW**: 🧭 Agencias u Operadores Turísticos with 8 specialized subcategories
+  - **NEW**: 🛏️ Alojamientos Sostenibles with 6 accommodation subcategories  
+  - **NEW**: 🍃 Gastronomía Sostenible with 7 food/beverage subcategories
+  - **NEW**: 🚲 Movilidad y Transporte Ecológico with 4 mobility subcategories
+  - **NEW**: 🌱 ONG y Fundaciones with 6 conservation/social subcategories
+  - **NEW**: 📚 Educación y Sensibilización Ambiental with 5 education subcategories
+  - **NEW**: 💡 Tecnología para el Turismo Sostenible with 5 tech subcategories
+  - **NEW**: 🤝 Aliados y Patrocinadores with 5 partnership subcategories
+  - **UPDATED**: Registration form SubcategoryStep.tsx with 45+ specialized business types
+  - **UPDATED**: Portal Empresas category filters to match new tourism industry structure
+  - **ARCHITECTURE**: Complete business categorization system aligned with sustainable tourism ecosystem
+
 - ✅ **January 26, 2025**: Complete Contact-to-Chat Connection System + Dedicated Messaging Page
   - **FIXED**: Schema mismatch between shared/schema.ts and actual database structure
   - **FIXED**: Removed conversationId dependency from messages table to match database

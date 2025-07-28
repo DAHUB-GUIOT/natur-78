@@ -97,9 +97,14 @@ const PortalEmpresasDashboard = () => {
 
   const categories = [
     { id: "todas", label: "Todas las categorías" },
-    { id: "tecnologia", label: "Tecnología" },
-    { id: "agencia-viajes", label: "Agencia de Viajes" },
-    { id: "organizacion-eventos", label: "Organización de Eventos" }
+    { id: "agencias-operadores", label: "🧭 Agencias u Operadores Turísticos" },
+    { id: "alojamientos", label: "🛏️ Alojamientos Sostenibles" },
+    { id: "gastronomia", label: "🍃 Gastronomía Sostenible" },
+    { id: "movilidad", label: "🚲 Movilidad y Transporte Ecológico" },
+    { id: "ong-fundaciones", label: "🌱 ONG y Fundaciones" },
+    { id: "educacion", label: "📚 Educación y Sensibilización Ambiental" },
+    { id: "tecnologia", label: "💡 Tecnología para el Turismo Sostenible" },
+    { id: "aliados", label: "🤝 Aliados y Patrocinadores" }
   ];
 
   const companies = [

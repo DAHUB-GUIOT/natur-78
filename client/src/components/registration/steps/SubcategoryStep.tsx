@@ -26,7 +26,28 @@ import {
   Compass,
   DollarSign,
   Award,
-  LineChart
+  LineChart,
+  Leaf,
+  Recycle,
+  Tent,
+  Home,
+  Apple,
+  Coffee,
+  Zap,
+  Bike,
+  Car,
+  Droplets,
+  Palette,
+  School,
+  BookOpen,
+  Monitor,
+  Smartphone,
+  BarChart3,
+  Lightbulb,
+  Shield,
+  Radio,
+  Tractor,
+  Accessibility
 } from "lucide-react";
 import { CategoryType } from "../RegistrationForm";
 
@@ -203,85 +224,433 @@ const SubcategoryStep = ({ category, onSubcategorySelect, onBack }: SubcategoryS
       break;
     case "ecosystem":
       subcategories = [
+        // 🧭 Agencias u Operadores Turísticos
         {
-          id: "agency",
+          id: "turismo-naturaleza",
+          icon: <Map className="w-5 h-5" />,
+          title: "🧭 Turismo de naturaleza y avistamiento de fauna",
+          description: [
+            "Diseño experiencias en contacto con la naturaleza",
+            "Especializado en avistamiento de fauna silvestre"
+          ]
+        },
+        {
+          id: "turismo-comunitario",
+          icon: <Users className="w-5 h-5" />,
+          title: "🧭 Turismo comunitario y con enfoque territorial",
+          description: [
+            "Trabajo con comunidades locales",
+            "Promovido experiencias territoriales auténticas"
+          ]
+        },
+        {
+          id: "turismo-rural",
+          icon: <Tractor className="w-5 h-5" />,
+          title: "🧭 Turismo rural y agroturismo",
+          description: [
+            "Ofrezco experiencias en el campo",
+            "Especializado en actividades agropecuarias"
+          ]
+        },
+        {
+          id: "turismo-cultural",
           icon: <Building2 className="w-5 h-5" />,
-          title: "Agencia de viajes",
+          title: "🧭 Turismo cultural e histórico",
           description: [
-            "Ofrezco paquetes y servicios turísticos",
-            "Quiero aparecer en la app y obtener el Sello NATUR"
+            "Promociono el patrimonio cultural",
+            "Especializado en sitios históricos y tradiciones"
           ]
         },
         {
-          id: "operator",
-          icon: <Map className="w-5 h-5" />,
-          title: "Operador turístico",
-          description: [
-            "Ofrezco experiencias sostenibles en terreno",
-            "Quiero conectar con agencias y viajeros"
-          ]
-        },
-        {
-          id: "guide",
-          icon: <Map className="w-5 h-5" />,
-          title: "Guía turístico",
-          description: [
-            "Trabajo con comunidades o naturaleza",
-            "Me interesa formarme y conectarme"
-          ]
-        },
-        {
-          id: "accommodation",
-          icon: <Hotel className="w-5 h-5" />,
-          title: "Alojamiento responsable",
-          description: [
-            "Ecohotel, hostal o alojamiento rural",
-            "Busco visibilidad y alianzas"
-          ]
-        },
-        {
-          id: "ngo",
+          id: "turismo-bienestar",
           icon: <Heart className="w-5 h-5" />,
-          title: "ONG o fundación",
+          title: "🧭 Turismo de bienestar y reconexión",
           description: [
-            "Trabajo en conservación, comunidad o cultura",
-            "Quiero compartir proyectos y alianzas"
+            "Ofrezco experiencias de wellness",
+            "Enfocado en bienestar y reconexión personal"
           ]
         },
         {
-          id: "artist",
+          id: "ecoturismo",
+          icon: <Leaf className="w-5 h-5" />,
+          title: "🧭 Ecoturismo",
+          description: [
+            "Especializado en turismo ecológico",
+            "Promovido conservación a través del turismo"
+          ]
+        },
+        {
+          id: "viajes-regenerativos",
+          icon: <Recycle className="w-5 h-5" />,
+          title: "🧭 Viajes regenerativos",
+          description: [
+            "Diseño experiencias que regeneran territorios",
+            "Enfocado en impacto positivo ambiental y social"
+          ]
+        },
+        {
+          id: "turismo-accesible",
+          icon: <Accessibility className="w-5 h-5" />,
+          title: "🧭 Operadores de turismo accesible e inclusivo",
+          description: [
+            "Especializado en turismo inclusivo",
+            "Experiencias accesibles para todas las personas"
+          ]
+        },
+        
+        // 🛏️ Alojamientos Sostenibles
+        {
+          id: "ecohoteles",
+          icon: <Hotel className="w-5 h-5" />,
+          title: "🛏️ Ecohoteles y ecolodges",
+          description: [
+            "Ofrezco hospedaje con criterios ecológicos",
+            "Especializado en alojamiento sostenible"
+          ]
+        },
+        {
+          id: "glampings",
+          icon: <Tent className="w-5 h-5" />,
+          title: "🛏️ Glampings sostenibles",
+          description: [
+            "Glamping con prácticas ambientales",
+            "Hospedaje en contacto con la naturaleza"
+          ]
+        },
+        {
+          id: "hostales-impacto",
+          icon: <Home className="w-5 h-5" />,
+          title: "🛏️ Hostales con impacto social",
+          description: [
+            "Hostal que genera impacto social positivo",
+            "Enfocado en comunidades locales"
+          ]
+        },
+        {
+          id: "hoteles-certificados",
+          icon: <Award className="w-5 h-5" />,
+          title: "🛏️ Hoteles certificados o en transición",
+          description: [
+            "Hotel con certificaciones ambientales",
+            "En proceso de transición sostenible"
+          ]
+        },
+        {
+          id: "posadas-comunitarias",
+          icon: <Users className="w-5 h-5" />,
+          title: "🛏️ Posadas comunitarias",
+          description: [
+            "Alojamiento gestionado por comunidades",
+            "Hospedaje comunitario auténtico"
+          ]
+        },
+        {
+          id: "alojamiento-rural",
+          icon: <Tractor className="w-5 h-5" />,
+          title: "🛏️ Alojamiento rural y agroturismo",
+          description: [
+            "Hospedaje en entornos rurales",
+            "Experiencias agropecuarias incluidas"
+          ]
+        },
+        
+        // 🍃 Gastronomía Sostenible
+        {
+          id: "restaurantes-locales",
           icon: <Utensils className="w-5 h-5" />,
-          title: "Artista, chef o artesano",
+          title: "🍃 Restaurantes de cocina local o ancestral",
           description: [
-            "Hago parte del turismo cultural o creativo",
-            "Quiero visibilizar mi trabajo"
+            "Especializado en cocina tradicional",
+            "Promovido sabores ancestrales y locales"
           ]
         },
         {
-          id: "educator",
-          icon: <Education className="w-5 h-5" />,
-          title: "Educador o formador",
+          id: "cocinas-comunitarias",
+          icon: <Users className="w-5 h-5" />,
+          title: "🍃 Cocinas comunitarias y soberanía alimentaria",
           description: [
-            "Trabajo en formación de turismo responsable",
-            "Busco compartir contenidos o participar en la sección educativa"
+            "Trabajo en soberanía alimentaria",
+            "Gestiono cocinas comunitarias"
           ]
         },
         {
-          id: "digital-nomad",
-          icon: <Globe className="w-5 h-5" />,
-          title: "Nómada digital",
+          id: "agroecologia",
+          icon: <Leaf className="w-5 h-5" />,
+          title: "🍃 Proyectos de agroecología y permacultura",
           description: [
-            "Trabajo de forma remota desde diferentes destinos",
-            "Busco conectar con comunidades y proyectos sostenibles"
+            "Especializado en producción agroecológica",
+            "Aplico principios de permacultura"
           ]
         },
         {
-          id: "consultant",
-          icon: <Earth className="w-5 h-5" />,
-          title: "Consultor ambiental",
+          id: "productos-organicos",
+          icon: <Apple className="w-5 h-5" />,
+          title: "🍃 Emprendimientos de productos naturales/orgánicos",
           description: [
-            "Asesoro en temas de sostenibilidad y medio ambiente",
-            "Busco expandir mi red profesional"
+            "Produzco alimentos naturales u orgánicos",
+            "Especializado en productos saludables"
+          ]
+        },
+        {
+          id: "bebidas-tradicionales",
+          icon: <Coffee className="w-5 h-5" />,
+          title: "🍃 Bebidas tradicionales y fermentos",
+          description: [
+            "Especializado en bebidas tradicionales",
+            "Produzco fermentos y bebidas ancestrales"
+          ]
+        },
+        {
+          id: "cafes-cacao",
+          icon: <Coffee className="w-5 h-5" />,
+          title: "🍃 Cafés y barras de cacao con trazabilidad",
+          description: [
+            "Especializado en café o cacao trazable",
+            "Trabajo directo con productores"
+          ]
+        },
+        {
+          id: "cocina-impacto-social",
+          icon: <Heart className="w-5 h-5" />,
+          title: "🍃 Proyectos de cocina con impacto social",
+          description: [
+            "Cocina que genera impacto social",
+            "Enfocado en transformación comunitaria"
+          ]
+        },
+        
+        // 🚲 Movilidad y Transporte Ecológico
+        {
+          id: "transporte-electrico",
+          icon: <Zap className="w-5 h-5" />,
+          title: "🚲 Transporte eléctrico (vehículos, motos, buses)",
+          description: [
+            "Ofrezco transporte eléctrico",
+            "Especializado en movilidad limpia"
+          ]
+        },
+        {
+          id: "bicicletas-cicloturismo",
+          icon: <Bike className="w-5 h-5" />,
+          title: "🚲 Servicios de bicicletas y cicloturismo",
+          description: [
+            "Especializado en cicloturismo",
+            "Ofrezco servicios de bicicletas"
+          ]
+        },
+        {
+          id: "movilidad-compartida",
+          icon: <Car className="w-5 h-5" />,
+          title: "🚲 Movilidad compartida o comunitaria",
+          description: [
+            "Gestiono sistemas de movilidad compartida",
+            "Enfocado en transporte comunitario"
+          ]
+        },
+        {
+          id: "transporte-accesible",
+          icon: <Accessibility className="w-5 h-5" />,
+          title: "🚲 Proyectos de transporte accesible y bajo impacto",
+          description: [
+            "Transporte accesible y sostenible",
+            "Bajo impacto ambiental"
+          ]
+        },
+        
+        // 🌱 ONG y Fundaciones
+        {
+          id: "conservacion-ecosistemas",
+          icon: <Leaf className="w-5 h-5" />,
+          title: "🌱 Conservación de ecosistemas y especies",
+          description: [
+            "Trabajo en conservación ambiental",
+            "Especializado en protección de especies"
+          ]
+        },
+        {
+          id: "educacion-ambiental",
+          icon: <GraduationCap className="w-5 h-5" />,
+          title: "🌱 Educación ambiental y participación comunitaria",
+          description: [
+            "Especializado en educación ambiental",
+            "Promuevo participación comunitaria"
+          ]
+        },
+        {
+          id: "desarrollo-territorial",
+          icon: <Map className="w-5 h-5" />,
+          title: "🌱 Desarrollo territorial sostenible",
+          description: [
+            "Trabajo en desarrollo territorial",
+            "Enfocado en sostenibilidad local"
+          ]
+        },
+        {
+          id: "fortalecimiento-comunidades",
+          icon: <Users className="w-5 h-5" />,
+          title: "🌱 Fortalecimiento de comunidades y saberes ancestrales",
+          description: [
+            "Fortalezco capacidades comunitarias",
+            "Protego saberes ancestrales"
+          ]
+        },
+        {
+          id: "proteccion-agua",
+          icon: <Droplets className="w-5 h-5" />,
+          title: "🌱 Protección del agua y gestión de cuencas",
+          description: [
+            "Especializado en gestión hídrica",
+            "Protección de fuentes de agua"
+          ]
+        },
+        {
+          id: "cultura-arte",
+          icon: <Palette className="w-5 h-5" />,
+          title: "🌱 Cultura, arte y transformación social",
+          description: [
+            "Uso el arte para transformación social",
+            "Trabajo en proyectos culturales"
+          ]
+        },
+        
+        // 📚 Educación y Sensibilización Ambiental
+        {
+          id: "instituciones-educativas",
+          icon: <School className="w-5 h-5" />,
+          title: "📚 Instituciones educativas con enfoque en turismo o ambiente",
+          description: [
+            "Institución educativa especializada",
+            "Enfoque en turismo o ambiente"
+          ]
+        },
+        {
+          id: "escuelas-liderazgo",
+          icon: <Users className="w-5 h-5" />,
+          title: "📚 Escuelas de liderazgo y cambio climático",
+          description: [
+            "Formo líderes en cambio climático",
+            "Especializado en liderazgo ambiental"
+          ]
+        },
+        {
+          id: "proyectos-pedagogicos",
+          icon: <BookOpen className="w-5 h-5" />,
+          title: "📚 Proyectos pedagógicos territoriales o itinerantes",
+          description: [
+            "Desarrollo proyectos pedagógicos",
+            "Educación territorial o itinerante"
+          ]
+        },
+        {
+          id: "formacion-sostenibilidad",
+          icon: <Award className="w-5 h-5" />,
+          title: "📚 Programas de formación en sostenibilidad",
+          description: [
+            "Especializado en formación en sostenibilidad",
+            "Programas educativos ambientales"
+          ]
+        },
+        {
+          id: "contenidos-educativos",
+          icon: <Monitor className="w-5 h-5" />,
+          title: "📚 Creadores de contenidos educativos",
+          description: [
+            "Creo contenidos educativos",
+            "Especializado en comunicación ambiental"
+          ]
+        },
+        
+        // 💡 Tecnología para el Turismo Sostenible
+        {
+          id: "plataformas-reservas",
+          icon: <Smartphone className="w-5 h-5" />,
+          title: "💡 Plataformas de reservas responsables",
+          description: [
+            "Desarrollo plataformas de reservas",
+            "Enfoque en turismo responsable"
+          ]
+        },
+        {
+          id: "mapas-herramientas",
+          icon: <Map className="w-5 h-5" />,
+          title: "💡 Mapas y herramientas digitales para viajeros conscientes",
+          description: [
+            "Desarrollo herramientas digitales",
+            "Para viajeros conscientes"
+          ]
+        },
+        {
+          id: "tecnologias-limpias",
+          icon: <Zap className="w-5 h-5" />,
+          title: "💡 Tecnologías limpias aplicadas al turismo",
+          description: [
+            "Desarrollo tecnologías limpias",
+            "Aplicadas al sector turístico"
+          ]
+        },
+        {
+          id: "medicion-impacto",
+          icon: <BarChart3 className="w-5 h-5" />,
+          title: "💡 Soluciones para medición de impacto",
+          description: [
+            "Desarrollo sistemas de medición",
+            "Huella hídrica, carbono, etc."
+          ]
+        },
+        {
+          id: "innovacion-social",
+          icon: <Lightbulb className="w-5 h-5" />,
+          title: "💡 Innovación social y tecnológica",
+          description: [
+            "Especializado en innovación social",
+            "Desarrollo tecnológico con impacto"
+          ]
+        },
+        
+        // 🤝 Aliados y Patrocinadores
+        {
+          id: "validadores-proceso",
+          icon: <Shield className="w-5 h-5" />,
+          title: "🤝 Validadores del proceso",
+          description: [
+            "Institución validadora",
+            "Academia, red o institución"
+          ]
+        },
+        {
+          id: "patrocinadores-principales",
+          icon: <Star className="w-5 h-5" />,
+          title: "🤝 Patrocinadores principales y co-creadores",
+          description: [
+            "Patrocinador principal",
+            "Co-creador del Festival NATUR"
+          ]
+        },
+        {
+          id: "marcas-aliadas",
+          icon: <Handshake className="w-5 h-5" />,
+          title: "🤝 Marcas aliadas con enfoque sostenible",
+          description: [
+            "Marca con enfoque sostenible",
+            "Aliada del Festival NATUR"
+          ]
+        },
+        {
+          id: "medios-comunicacion",
+          icon: <Radio className="w-5 h-5" />,
+          title: "🤝 Medios de comunicación aliados",
+          description: [
+            "Medio de comunicación aliado",
+            "Difundo turismo sostenible"
+          ]
+        },
+        {
+          id: "embajadores-voceros",
+          icon: <Users className="w-5 h-5" />,
+          title: "🤝 Embajadores y voceros del Festival",
+          description: [
+            "Embajador o vocero",
+            "Represento el Festival NATUR"
           ]
         }
       ];
