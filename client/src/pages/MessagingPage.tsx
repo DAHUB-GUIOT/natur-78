@@ -58,7 +58,7 @@ export default function MessagingPage() {
     enabled: !!currentUser?.user.id && searchQuery.length > 0,
   });
 
-  // Auto-select conversation from localStorage if set
+  // Auto-select conversation from localStorage if set, or auto-select TripCol for demo
   useEffect(() => {
     const storedContactId = localStorage.getItem('selectedContactId');
     if (storedContactId && conversations.length > 0) {
@@ -70,8 +70,17 @@ export default function MessagingPage() {
         setSelectedConversation(conversation.id);
         localStorage.removeItem('selectedContactId'); // Clear after using
       }
+    } else if (conversations.length > 0 && !selectedConversation) {
+      // Auto-select TripCol conversation for demo (user ID 22)
+      const tripcolConversation = conversations.find(conv => 
+        (conv.participant1Id === 22 && conv.participant2Id === currentUser?.user.id) ||
+        (conv.participant2Id === 22 && conv.participant1Id === currentUser?.user.id)
+      );
+      if (tripcolConversation) {
+        setSelectedConversation(tripcolConversation.id);
+      }
     }
-  }, [conversations]);
+  }, [conversations, currentUser]);
 
   const formatLastActivity = (date: string) => {
     const activityDate = new Date(date);
@@ -119,8 +128,37 @@ export default function MessagingPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100">
+      {/* Top Navigation Bar */}
+      <div className="bg-white shadow-sm border-b">
+        <div className="container mx-auto px-4 py-3">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => window.location.href = '/portal-empresas'}
+                className="text-gray-600 hover:text-gray-900"
+              >
+                <ArrowLeft className="h-4 w-4 mr-2" />
+                Volver a Portal
+              </Button>
+              <div className="h-6 w-px bg-gray-300" />
+              <h1 className="text-xl font-semibold text-gray-900">Mensajes Empresariales</h1>
+            </div>
+            <div className="flex items-center space-x-2">
+              <Badge variant="outline" className="text-green-600 border-green-200">
+                B2B Messaging
+              </Badge>
+              <Badge variant="secondary" className="text-xs">
+                {conversations.length} conversaciones
+              </Badge>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div className="container mx-auto p-4">
-        <div className="bg-white rounded-lg shadow-lg overflow-hidden" style={{ height: 'calc(100vh - 2rem)' }}>
+        <div className="bg-white rounded-lg shadow-lg overflow-hidden" style={{ height: 'calc(100vh - 8rem)' }}>
           <div className="flex h-full">
             {/* Sidebar - Conversations List */}
             <div className="w-1/3 border-r border-gray-200 flex flex-col">

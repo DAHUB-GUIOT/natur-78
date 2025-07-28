@@ -23,7 +23,24 @@ import {
   X,
   Edit2,
   Trash2,
-  MessageCircle
+  MessageCircle,
+  Heart,
+  ThumbsUp,
+  Download,
+  Play,
+  Pause,
+  Calendar,
+  Building2,
+  Star,
+  Info,
+  Settings,
+  Archive,
+  Clock,
+  Users,
+  Reply,
+  Forward,
+  Image as ImageIcon,
+  File
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { format, isToday, isYesterday } from 'date-fns';
