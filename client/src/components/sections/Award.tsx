@@ -14,9 +14,9 @@ export function Award() {
               NATUR
             </h1>
             <div className="backdrop-blur-sm bg-white/10 rounded-xl p-4 sm:p-5 border border-white/20 mb-6">
-              <div className="text-[#FCF8EE] text-xs sm:text-sm md:text-base font-jakarta font-normal tracking-wide leading-relaxed">
+              <h4 className="text-[#FCF8EE] text-xs sm:text-sm md:text-base font-unbounded-medium tracking-wide leading-relaxed">
                 MÁS QUE UN PREMIO, UN RECONOCIMIENTO QUE INSPIRA Y VISIBILIZA LO QUE MERECE MULTIPLICARSE. PORQUE OTRO TURISMO ES POSIBLE… Y YA ESTÁ PASANDO.
-              </div>
+              </h4>
             </div>
             <a href="#" className="inline-block bg-[#EDFF60] hover:bg-[#EDFF60]/90 transition text-[#191C0F] text-xs sm:text-sm font-bold py-2 px-6 sm:py-3 sm:px-8 rounded-lg shadow-md font-jakarta tracking-tight uppercase text-center">
               RESERVA TU STAND PARA PARTICIPAR

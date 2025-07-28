@@ -10,6 +10,16 @@ This is a full-stack web application for Festival NATUR (www.festivalnatur.com),
 
 ## Recent Changes
 
+- ✅ **January 28, 2025**: Typography Enhancement - H4 Headers with Unbounded Medium Font
+  - **UPDATED**: Four specific brand paragraphs converted from P to H4 tags
+  - **NEW**: Added Unbounded font family with full weight range (200-900) to Google Fonts import
+  - **NEW**: Created font-unbounded and font-unbounded-medium utility classes in CSS and Tailwind
+  - **UPDATED**: "El Festival NATUR es el punto de encuentro..." (Benefits section) to H4 with Unbounded Medium
+  - **UPDATED**: "Si haces parte de la cadena turística..." (Participation section) to H4 with Unbounded Medium  
+  - **UPDATED**: "CONÉCTATE, APRENDE, INSPÍRATE, DISFRUTA." (Program section) to H4 with Unbounded Medium
+  - **UPDATED**: "MÁS QUE UN PREMIO, UN RECONOCIMIENTO..." (Award section) to H4 with Unbounded Medium
+  - **TYPOGRAPHY**: Enhanced semantic structure and brand message hierarchy with premium Unbounded font
+
 - ✅ **January 28, 2025**: Complete Tourism Industry Company Categories Restructure
   - **REPLACED**: Simple 3 categories with comprehensive 8-category sustainable tourism structure
   - **NEW**: 🧭 Agencias u Operadores Turísticos with 8 specialized subcategories

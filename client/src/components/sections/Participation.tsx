@@ -15,9 +15,9 @@ export function Participation() {
           </h1>
 
           <div className="backdrop-blur-sm bg-white/5 border border-[#CEDD9F]/20 rounded-xl p-4 sm:p-6 lg:w-[40%]">
-            <div className="text-[#CEDD9F] font-unbounded text-xs sm:text-sm md:text-base font-light uppercase tracking-wide leading-relaxed">
+            <h4 className="text-[#CEDD9F] font-unbounded-medium text-xs sm:text-sm md:text-base tracking-wide leading-relaxed">
               Si haces parte de la cadena turística y quieres aprender del turismo con propósito, este festival es para ti
-            </div>
+            </h4>
           </div>
         </div>
 

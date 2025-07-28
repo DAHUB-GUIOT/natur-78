@@ -50,9 +50,9 @@ export function Benefits() {
         </Link>
 
         <div className="backdrop-blur-sm bg-white/5 border border-[#EDFF60]/20 rounded-xl p-4 sm:p-6 mt-6 sm:mt-8 md:mt-10 max-w-4xl">
-          <p className="text-center leading-5 sm:leading-6 md:leading-7 tracking-wide uppercase font-unbounded text-xs sm:text-sm md:text-base font-light text-[#EDFF60]">
+          <h4 className="text-center leading-5 sm:leading-6 md:leading-7 tracking-wide font-unbounded-medium text-xs sm:text-sm md:text-base text-[#EDFF60]">
             El Festival NATUR es el punto de encuentro entre la sostenibilidad, el turismo y la innovación. Aquí convergen viajeros, empresas y destinos que creen en el turismo como fuerza transformadora.
-          </p>
+          </h4>
         </div>
       </div>
     </section>;
