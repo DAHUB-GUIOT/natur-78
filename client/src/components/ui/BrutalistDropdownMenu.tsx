@@ -25,7 +25,7 @@ const menuData: MenuCategory[] = [
       { label: 'Emprendimientos Sostenibles', url: '/emprendimientos' },
       { label: 'Zona Chill', url: '/zona-chill' },
       { label: 'Foro Colombia Sostenible 2025', url: '/foro' },
-      { label: 'Zona Kinder & Coffee Party', url: '/zona-kinder' },
+      { label: '(+ VIVE NATUR)', url: '/vive-natur-plus' },
       // NATUR PRO
       { label: 'NATUR PRO', url: '/natur-pro' },
       { label: 'Cartel de Artistas', url: '/artistas' },
@@ -35,7 +35,8 @@ const menuData: MenuCategory[] = [
       { label: 'Rumba y Manifestaciones', url: '/rumba' },
       { label: 'Zona Wellness', url: '/wellness' },
       { label: 'Experiencia NATUR', url: '/experiencia' },
-      { label: 'Zona VIP', url: '/vip' }
+      { label: 'Zona VIP', url: '/vip' },
+      { label: 'Zona Kinder & Coffee Party', url: '/zona-kinder' }
     ]
   },
   {

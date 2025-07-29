@@ -20,6 +20,14 @@ This is a full-stack web application for Festival NATUR (www.festivalnatur.com),
   - **UPDATED**: "MÁS QUE UN PREMIO, UN RECONOCIMIENTO..." (Award section) to H4 with Unbounded Medium
   - **TYPOGRAPHY**: Enhanced semantic structure and brand message hierarchy with premium Unbounded font
 
+- ✅ **January 29, 2025**: Festival Menu Structure Refinement and Organization
+  - **MOVED**: "Zona Kinder & Coffee Party" from VIVE NATUR to NATUR PRO section
+  - **ADDED**: "(+ VIVE NATUR)" option to VIVE NATUR section for additional content access
+  - **REMOVED**: INFO category from left sidebar menu, keeping it only in right sidebar
+  - **SIMPLIFIED**: Left menu now focuses on 3 core categories: Festival, Noticias, Plataforma NATUR
+  - **IMPROVED**: Better organization with 7 VIVE NATUR activities and 9 NATUR PRO experiences
+  - **ENHANCED**: Menu balance with more comprehensive NATUR PRO offerings
+
 - ✅ **January 29, 2025**: Menu Semantic Structure Enhancement with H1 Tags
   - **UPDATED**: All menu category titles in sidebar now use h1 tags for proper semantic hierarchy
   - **UPDATED**: VIVE NATUR and NATUR PRO section headers updated to h1 tags
