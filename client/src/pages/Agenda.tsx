@@ -15,6 +15,7 @@ interface Session {
   image: string;
   description?: string;
   moderator?: string;
+  id: string;
 }
 
 // Agenda data structure
@@ -34,35 +35,45 @@ const agendaData = {
             title: "Charlas NATUR: Apertura del Festival",
             speakers: ["Brigitte Baptiste", "Equipo Festival NATUR"],
             type: "charla",
-            image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
+            image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            description: "Ceremonia de apertura del Festival NATUR 2025 con la participación especial de Brigitte Baptiste, reconocida bióloga y experta en biodiversidad. Un momento histórico para dar inicio a la celebración del turismo sostenible en Colombia.",
+            id: "charlas-apertura-festival"
           },
           {
             time: "10:00 - 11:30",
             title: "Rooftop + Zona de Comidas: Networking Gastronómico",
             speakers: ["Chefs Sostenibles", "Productores Locales"],
             type: "experiencia",
-            image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
+            image: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            description: "Experiencia gastronómica única en el rooftop del CEFE Chapinero. Degusta productos locales y conoce a productores sostenibles mientras disfrutas de una vista panorámica de Bogotá. Networking con enfoque en gastronomía responsable.",
+            id: "rooftop-networking-gastronomico"
           },
           {
             time: "11:30 - 13:00",
             title: "Emprendimientos Sostenibles: Showcase de Proyectos",
             speakers: ["Startups Verdes", "Emprendedores Locales"],
             type: "showcase",
-            image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
+            image: "https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            description: "Plataforma de exhibición para emprendimientos sostenibles colombianos. Conoce proyectos innovadores que están transformando el turismo y el medio ambiente. Oportunidad de networking con emprendedores y posibles inversores.",
+            id: "showcase-emprendimientos-sostenibles"
           },
           {
             time: "14:00 - 15:30",
             title: "Zona Chill: Música y Relajación",
             speakers: ["Artistas Locales", "DJs Orgánicos"],
             type: "entretenimiento",
-            image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
+            image: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            description: "Espacio de relajación con música en vivo de artistas locales comprometidos con la sostenibilidad. DJs que utilizan energía renovable y promueven mensajes ambientales a través de su arte.",
+            id: "zona-chill-musica-relajacion"
           },
           {
             time: "16:00 - 18:00",
             title: "Foro Colombia Sostenible 2025: Panel Nacional",
             speakers: ["Expertos en Sostenibilidad", "Gobierno Nacional", "Academia"],
             type: "foro",
-            image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
+            image: "https://images.unsplash.com/photo-1591115765373-5207764f72e7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            description: "Panel de alto nivel sobre el futuro de la sostenibilidad en Colombia. Participan expertos gubernamentales, académicos y líderes del sector privado para discutir políticas y estrategias hacia un desarrollo sostenible.",
+            id: "foro-colombia-sostenible-2025"
           }
         ]
       },
@@ -74,35 +85,45 @@ const agendaData = {
             title: "Charlas NATUR: Turismo Regenerativo",
             speakers: ["Expertos Internacionales", "Comunidades Locales"],
             type: "charla",
-            image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
+            image: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            description: "Conferencia magistral sobre turismo regenerativo con expertos internacionales y líderes de comunidades locales. Aprende sobre prácticas que van más allá de la sostenibilidad para regenerar ecosistemas y culturas.",
+            id: "charlas-turismo-regenerativo"
           },
           {
             time: "11:00 - 12:30",
             title: "Emprendimientos Sostenibles: Pitch Session",
             speakers: ["Emprendedores", "Inversionistas"],
             type: "pitch",
-            image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
+            image: "https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            description: "Sesión de pitches donde emprendedores sostenibles presentan sus proyectos ante inversionistas y expertos del sector. Oportunidad única para encontrar financiación y mentorías para proyectos verdes.",
+            id: "pitch-emprendimientos-sostenibles"
           },
           {
             time: "13:00 - 14:30",
             title: "Rooftop + Zona de Comidas: Almuerzo Sostenible",
             speakers: ["Restaurantes Km0", "Cocineros Tradicionales"],
             type: "gastronomia",
-            image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
+            image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            description: "Almuerzo especial preparado por restaurantes kilómetro cero y cocineros tradicionales. Degusta sabores auténticos colombianos mientras aprendes sobre cadenas alimentarias sostenibles y agricultura local.",
+            id: "almuerzo-sostenible-rooftop"
           },
           {
             time: "15:00 - 16:30",
             title: "Zona Chill: Actividades de Cierre",
             speakers: ["Artistas", "Facilitadores Wellness"],
             type: "bienestar",
-            image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
+            image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            description: "Actividades de relajación y bienestar para cerrar la experiencia VIVE NATUR. Incluye sesiones de mindfulness, yoga al aire libre y reflexiones grupales sobre el impacto del festival.",
+            id: "zona-chill-actividades-cierre"
           },
           {
             time: "17:00 - 18:00",
             title: "Ceremonia de Clausura VIVE NATUR",
             speakers: ["Equipo Festival NATUR", "Participantes"],
             type: "ceremonia",
-            image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
+            image: "https://images.unsplash.com/photo-1511578314322-379afb476865?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            description: "Ceremonia de clausura de la experiencia VIVE NATUR con reflexiones sobre los aprendizajes, compromisos adquiridos y la construcción de una red de turismo sostenible en Colombia.",
+            id: "ceremonia-clausura-vive-natur"
           }
         ]
       }
@@ -124,7 +145,8 @@ const agendaData = {
             description: "Networking privado con líderes del sector turístico y sostenibilidad",
             speakers: ["Expertos VIP", "CEOs Turismo Sostenible"],
             type: "vip",
-            image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
+            image: "https://images.unsplash.com/photo-1521017432531-fbd92d768814?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            id: "desayuno-vip-coffee-talks"
           },
           {
             time: "9:00 - 10:30",
@@ -132,7 +154,8 @@ const agendaData = {
             description: "Música en vivo y performances artísticas exclusivas para NATUR PRO",
             speakers: ["Artistas Nacionales", "Músicos Sostenibles"],
             type: "arte",
-            image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
+            image: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            id: "cartel-artistas-matutinas"
           },
           {
             time: "10:30 - 12:00",
@@ -140,7 +163,8 @@ const agendaData = {
             description: "Workshops prácticos sobre implementación de turismo regenerativo",
             speakers: ["Facilitadores Expertos", "Consultores Internacionales"],
             type: "taller",
-            image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
+            image: "https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            id: "talleres-turismo-regenerativo"
           },
           {
             time: "12:00 - 13:30",
@@ -148,7 +172,8 @@ const agendaData = {
             description: "Presentaciones de startups de turismo sostenible y networking con inversionistas",
             speakers: ["Startups Seleccionadas", "Fondos de Inversión"],
             type: "startup",
-            image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
+            image: "https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            id: "zona-startups-pitch-demo"
           },
           {
             time: "14:00 - 15:30",
@@ -156,7 +181,8 @@ const agendaData = {
             description: "Sesiones de yoga, meditación y conexión con la naturaleza",
             speakers: ["Instructores Wellness", "Terapeutas Holísticos"],
             type: "wellness",
-            image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
+            image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            id: "zona-wellness-bienestar"
           },
           {
             time: "16:00 - 17:30",
@@ -164,7 +190,8 @@ const agendaData = {
             description: "Experiencia única de turismo sostenible in situ",
             speakers: ["Guías Especializados", "Comunidades Locales"],
             type: "experiencia",
-            image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
+            image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            id: "experiencia-natur-inmersiva"
           },
           {
             time: "19:00 - 22:00",
@@ -172,7 +199,8 @@ const agendaData = {
             description: "Fiesta exclusiva con música tradicional y contemporánea",
             speakers: ["DJs", "Grupos Folclóricos"],
             type: "rumba",
-            image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
+            image: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            id: "rumba-manifestaciones-culturales"
           }
         ]
       },
@@ -186,7 +214,8 @@ const agendaData = {
             description: "Reflexiones y networking final con líderes del sector",
             speakers: ["Panelistas Destacados", "Invitados Especiales"],
             type: "vip",
-            image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
+            image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            id: "coffee-talks-vip-cierre"
           },
           {
             time: "9:00 - 10:30",
@@ -194,7 +223,8 @@ const agendaData = {
             description: "Sesiones prácticas para llevar las ideas a la realidad",
             speakers: ["Mentores Expertos", "Facilitadores"],
             type: "taller",
-            image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
+            image: "https://images.unsplash.com/photo-1515187029135-18ee286d815b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            id: "talleres-implementacion-proyectos"
           },
           {
             time: "10:30 - 12:00",
@@ -202,7 +232,8 @@ const agendaData = {
             description: "Presentaciones finales y reconocimientos a mejores proyectos",
             speakers: ["Jurado de Expertos", "Startups Finalistas"],
             type: "startup",
-            image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
+            image: "https://images.unsplash.com/photo-1475721027785-f74eccf877e2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            id: "zona-startups-demo-final"
           },
           {
             time: "12:00 - 13:30",
@@ -210,7 +241,8 @@ const agendaData = {
             description: "Actividad experimental de turismo regenerativo",
             speakers: ["Guías Especializados", "Comunidades Anfitrionas"],
             type: "experiencia",
-            image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
+            image: "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            id: "experiencia-natur-inmersion-completa"
           },
           {
             time: "14:00 - 15:30",
@@ -218,7 +250,8 @@ const agendaData = {
             description: "Mindfulness, yoga y reflexión sobre el impacto del festival",
             speakers: ["Terapeutas", "Instructores Certificados"],
             type: "wellness",
-            image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
+            image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            id: "zona-wellness-integracion"
           },
           {
             time: "16:00 - 17:30",
@@ -226,7 +259,8 @@ const agendaData = {
             description: "Conciertos y performances para concluir el festival",
             speakers: ["Artistas Principales", "Invitados Especiales"],
             type: "arte",
-            image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
+            image: "https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            id: "cartel-artistas-cierre"
           },
           {
             time: "18:00 - 22:00",
@@ -234,7 +268,8 @@ const agendaData = {
             description: "Evento exclusivo de clausura con cena de gala y rumba final",
             speakers: ["Chefs Estrella", "DJs Internacionales"],
             type: "vip",
-            image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
+            image: "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            id: "zona-vip-cena-gala"
           }
         ]
       }
@@ -256,7 +291,8 @@ const agendaData = {
             description: "Ceremonia simbólica para agradecer y proteger el agua, guiada por sabedores.",
             speakers: ["Sabedores del agua"],
             type: "ritual",
-            image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
+            image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            id: "ritual-colectivo-agua"
           },
           {
             time: "9:00 - 11:00 a.m.",
@@ -264,7 +300,8 @@ const agendaData = {
             description: "Aprende a crear bombas de vida con barro y semillas nativas para reforestar.",
             speakers: ["Facilitadores ambientales"],
             type: "taller",
-            image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
+            image: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            id: "taller-bombas-semillas"
           },
           {
             time: "11:00 a.m.",
@@ -272,7 +309,8 @@ const agendaData = {
             description: "Diseña tu ecosistema en miniatura con plantas, tierra y piedras. Te llevas tu terrario.",
             speakers: ["Jardineros urbanos"],
             type: "taller",
-            image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
+            image: "https://images.unsplash.com/photo-1485955900006-10f4d324d411?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            id: "taller-terrario"
           },
           {
             time: "10:00 a.m.",
@@ -280,7 +318,8 @@ const agendaData = {
             description: "Extrae pigmentos de plantas y estampa con elementos botánicos. Diseña tu tela inspirada en los colores de la tierra.",
             speakers: ["Artesanos textiles"],
             type: "taller",
-            image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
+            image: "https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            id: "taller-tintes-naturales"
           },
           {
             time: "11:00 a.m.",
@@ -288,7 +327,8 @@ const agendaData = {
             description: "Plegado artístico con mensajes por el agua, la vida y el territorio.",
             speakers: ["Artistas del papel"],
             type: "arte",
-            image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
+            image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            id: "origami-agua"
           },
           {
             time: "2:00 p.m.",
@@ -296,7 +336,8 @@ const agendaData = {
             description: "Toca, escucha y siente el ritmo colectivo con instrumentos de percusión.",
             speakers: ["Músicos tradicionales"],
             type: "musica",
-            image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
+            image: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            id: "circulo-tambores"
           }
         ]
       },
@@ -309,7 +350,8 @@ const agendaData = {
             description: "Conversaciones íntimas con actores del turismo y la sostenibilidad. Café en mano, sin micrófono.",
             speakers: ["Líderes del turismo sostenible"],
             type: "conversatorio",
-            image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
+            image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            id: "coffee-talks-cultural"
           },
           {
             time: "10:00 a.m.",
@@ -317,7 +359,8 @@ const agendaData = {
             description: "Rutina divertida de ejercicio físico para activar el cuerpo con causa ambiental.",
             speakers: ["Entrenadores eco-conscientes"],
             type: "actividad",
-            image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
+            image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            id: "calorias-por-planeta"
           },
           {
             time: "11:00 a.m.",
@@ -325,7 +368,8 @@ const agendaData = {
             description: "Juego interactivo con palabras, animales y símbolos del planeta.",
             speakers: ["Animadores ambientales"],
             type: "juego",
-            image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
+            image: "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            id: "bingo-ecologico"
           },
           {
             time: "12:00 p.m.",
@@ -333,7 +377,8 @@ const agendaData = {
             description: "Intercambia saberes, ropa, libros o historias sin dinero.",
             speakers: ["Facilitadores de economía circular"],
             type: "taller",
-            image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
+            image: "https://images.unsplash.com/photo-1556761175-b413da4baf72?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            id: "taller-trueque"
           },
           {
             time: "2:00 p.m.",
@@ -341,7 +386,8 @@ const agendaData = {
             description: "Clase suave de relajación en el agua, apta para todos los cuerpos.",
             speakers: ["Instructores de yoga"],
             type: "bienestar",
-            image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
+            image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            id: "yoga-acuatico"
           },
           {
             time: "6:00 p.m.",
@@ -349,7 +395,8 @@ const agendaData = {
             description: "Cerramos el día mirando las estrellas y escuchando mitos, saberes indígenas y relatos celestes sobre el agua y la vida.",
             speakers: ["Sabedores ancestrales", "Astrónomos"],
             type: "ceremonia",
-            image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
+            image: "https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            id: "observacion-cielo-cosmovisiones"
           }
         ]
       }
@@ -598,8 +645,7 @@ export function Agenda() {
                         .map((session, sessionIndex) => (
                         <Card 
                           key={sessionIndex}
-                          className="bg-black/60 backdrop-blur-sm border-2 border-white/10 hover:border-white/30 transition-all duration-500 cursor-pointer group rounded-none overflow-hidden hover:shadow-2xl hover:shadow-lime-500/20"
-                          onClick={() => setSelectedSession(session)}
+                          className="bg-black/60 backdrop-blur-sm border-2 border-white/10 hover:border-white/30 transition-all duration-500 group rounded-none overflow-hidden hover:shadow-2xl hover:shadow-lime-500/20"
                         >
                           <div className="relative overflow-hidden">
                             <img 
@@ -684,14 +730,16 @@ export function Agenda() {
                             
                             {/* Action buttons */}
                             <div className="flex gap-2 pt-4">
-                              <Button 
-                                variant="outline" 
-                                size="sm" 
-                                className="flex-1 bg-transparent border-white/20 text-white/70 hover:bg-white/10 hover:border-white/40 rounded-none font-mono text-xs tracking-wider"
-                              >
-                                <Eye className="w-3 h-3 mr-2" />
-                                VER MÁS
-                              </Button>
+                              <Link href={`/sesion/${session.id}`} className="flex-1">
+                                <Button 
+                                  variant="outline" 
+                                  size="sm" 
+                                  className="w-full bg-transparent border-white/20 text-white/70 hover:bg-white/10 hover:border-white/40 rounded-none font-mono text-xs tracking-wider"
+                                >
+                                  <Eye className="w-3 h-3 mr-2" />
+                                  VER MÁS
+                                </Button>
+                              </Link>
                             </div>
                           </CardContent>
                         </Card>

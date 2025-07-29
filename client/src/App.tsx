@@ -32,6 +32,7 @@ import UserProfile from "./pages/UserProfile";
 import CompanyProfile from "./pages/CompanyProfile";
 import MessagingPage from "./pages/MessagingPage";
 import Tickets from "./pages/Tickets";
+import SessionDetail from "./pages/SessionDetail";
 import { AuthProvider } from "./contexts/AuthContext";
 
 // Create QueryClient outside component to prevent recreation on renders
@@ -77,6 +78,7 @@ const App = () => (
             <Route path="/empresa/:companyId" component={CompanyProfile} />
             <Route path="/mensajes" component={MessagingPage} />
             <Route path="/tickets" component={Tickets} />
+            <Route path="/sesion/:sessionId" component={SessionDetail} />
             <Route path="/agenda">
               <MainLayout><Agenda /></MainLayout>
             </Route>
