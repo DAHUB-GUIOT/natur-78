@@ -188,7 +188,7 @@ export default function PortalViajeros() {
       <CardContent className="p-4">
         <div className="flex justify-between items-start mb-3">
           <div className="flex-1">
-            <h3 className="text-white font-semibold text-sm mb-1 group-hover:text-green-400 transition-colors">
+            <h3 className="text-white font-sans text-sm mb-1 group-hover:text-green-400 transition-colors">
               {experience.title}
             </h3>
             <p className="text-gray-300 text-xs line-clamp-2 mb-2">

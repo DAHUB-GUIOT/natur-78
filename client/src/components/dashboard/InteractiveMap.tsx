@@ -126,11 +126,11 @@ export const InteractiveMap = ({ experiences = [], selectedCategory, showMarkers
 
     map.current = new mapboxgl.Map({
       container: mapContainer.current!,
-      style: 'mapbox://styles/mapbox/outdoors-v12',
+      style: 'mapbox://styles/mapbox/satellite-streets-v12', // More natural satellite view
       center: [-74.0721, 4.7110], // Bogotá, Colombia
-      zoom: 5,
-      pitch: 60, // 3D view angle
-      bearing: -17.6, // Rotation angle
+      zoom: 6,
+      pitch: 70, // More dramatic 3D angle
+      bearing: -20, // Better rotation for natural view
       projection: 'globe' // Enable 3D globe
     });
 
@@ -153,8 +153,8 @@ export const InteractiveMap = ({ experiences = [], selectedCategory, showMarkers
         'maxzoom': 14
       });
       
-      // Add the terrain layer
-      map.current!.setTerrain({ 'source': 'mapbox-dem', 'exaggeration': 1.5 });
+      // Add the terrain layer with more dramatic elevation
+      map.current!.setTerrain({ 'source': 'mapbox-dem', 'exaggeration': 2.2 });
       
       // Add sky layer for realistic atmosphere
       map.current!.addLayer({
@@ -168,13 +168,13 @@ export const InteractiveMap = ({ experiences = [], selectedCategory, showMarkers
         }
       });
       
-      // Add fog for depth and realism
+      // Add natural atmospheric fog
       map.current!.setFog({
-        'color': 'rgb(186, 210, 235)', // Bluish-gray fog
-        'high-color': 'rgb(36, 92, 223)', // Upper atmosphere color
-        'horizon-blend': 0.02, // Blend between fog and sky
-        'space-color': 'rgb(11, 11, 25)', // Color of atmosphere in space
-        'star-intensity': 0.6 // Stars visibility
+        'color': 'rgb(200, 230, 200)', // Natural green-tinted fog
+        'high-color': 'rgb(120, 180, 120)', // Green atmosphere
+        'horizon-blend': 0.05, // More gradual blend
+        'space-color': 'rgb(20, 40, 20)', // Dark green space
+        'star-intensity': 0.3 // Subtle stars
       });
     });
 

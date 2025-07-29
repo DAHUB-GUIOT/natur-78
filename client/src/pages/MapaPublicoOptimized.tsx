@@ -141,8 +141,8 @@ const MapaPublicoOptimized = () => {
     return matchesSearch && matchesCategory && matchesLocation;
   });
 
-  const departments = [...new Set(experiences.map(exp => exp.department))];
-  const categories = [...new Set(experiences.map(exp => exp.category))];
+  const departments = Array.from(new Set(experiences.map(exp => exp.department)));
+  const categories = Array.from(new Set(experiences.map(exp => exp.category)));
 
   const getCategoryIcon = (category: string) => {
     switch (category) {
@@ -262,7 +262,7 @@ const MapaPublicoOptimized = () => {
                     <div className="flex-1 p-6">
                       <div className="flex items-start justify-between mb-3">
                         <div className="flex-1">
-                          <h3 className="text-xl font-semibold text-gray-900 mb-1">
+                          <h3 className="text-xl font-sans text-gray-900 mb-1">
                             {experience.title}
                           </h3>
                           <p className="text-sm text-green-600 font-medium mb-2">

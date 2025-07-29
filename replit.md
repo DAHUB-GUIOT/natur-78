@@ -21,6 +21,16 @@ This is a full-stack web application for Festival NATUR (www.festivalnatur.com),
   - **UPDATED**: All h1 fonts simplified to font-sans throughout Portal Empresas platform for consistent typography
   - **UPDATED**: Removed "Verificados" from contacts section - now simply shows "Contactos" without verification references
 
+- ✅ **January 29, 2025**: Enhanced Map with Natural 3D Terrain and Simplified Card Fonts
+  - **UPDATED**: Changed map style from outdoors to satellite-streets for more natural appearance
+  - **ENHANCED**: Increased terrain exaggeration from 1.5x to 2.2x for dramatic 3D topography
+  - **UPDATED**: Enhanced pitch angle from 60° to 70° for more immersive 3D viewing
+  - **NEW**: Green-tinted atmospheric fog for natural forest environment feel
+  - **SIMPLIFIED**: Changed all card title fonts from font-semibold/font-bold to simple font-sans
+  - **UPDATED**: Portal Viajeros, MapaPublicoOptimized, and Portal Empresas cards now use cleaner typography
+  - **IMPROVED**: More realistic 3D terrain with enhanced natural colors and atmospheric effects
+  - **FIXED**: Resolved TypeScript Set iteration errors in MapaPublicoOptimized using Array.from()
+
 - ✅ **January 29, 2025**: Conversation Management System with TripCol Integration
   - **NEW**: Implemented conversation saving and management in messaging system
   - **NEW**: Pre-populated conversation with TripCol showing previous message exchange
