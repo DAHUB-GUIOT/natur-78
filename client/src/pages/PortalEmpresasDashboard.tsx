@@ -574,6 +574,15 @@ const PortalEmpresasDashboard = () => {
         );
 
       case "mensajes":
+        console.log('Mensajes section - user:', user, 'userLoading:', userLoading);
+        if (userLoading) {
+          return (
+            <div className="flex items-center justify-center h-64">
+              <p className="text-gray-400">Cargando mensajes...</p>
+            </div>
+          );
+        }
+        
         return user ? (
           <div className="h-[calc(100vh-8rem)]">
             <ChatPage 
@@ -582,8 +591,14 @@ const PortalEmpresasDashboard = () => {
             />
           </div>
         ) : (
-          <div className="flex items-center justify-center h-64">
-            <p className="text-gray-400">Cargando mensajes...</p>
+          <div className="flex items-center justify-center h-64 flex-col space-y-4">
+            <p className="text-gray-400">Inicia sesión para acceder a los mensajes</p>
+            <Button 
+              onClick={() => window.location.href = '/portal-empresas/auth'}
+              className="bg-green-600 hover:bg-green-700"
+            >
+              Iniciar Sesión
+            </Button>
           </div>
         );
 

@@ -24,6 +24,7 @@ import AdminOptimized from "./pages/AdminOptimized";
 import AdminDashboard from "./pages/AdminDashboard";
 import Dashboard from "./pages/Dashboard";
 import PortalEmpresasDashboard from "./pages/PortalEmpresasDashboard";
+import PortalEmpresasAuth from "./pages/PortalEmpresasAuth";
 import PortalViajeros from "./pages/PortalViajeros";
 import ExperienceDetail from "./pages/ExperienceDetail";
 import MapaPublicoOptimized from "./pages/MapaPublicoOptimized";
@@ -69,6 +70,7 @@ const App = () => (
               <MainLayout><AdminOptimized /></MainLayout>
             </Route>
             <Route path="/dashboard" component={Dashboard} />
+            <Route path="/portal-empresas/auth" component={PortalEmpresasAuth} />
             <Route path="/portal-empresas" component={PortalEmpresasDashboard} />
             <Route path="/portal-viajeros" component={PortalViajeros} />
             <Route path="/experiencia/:id" component={ExperienceDetail} />
