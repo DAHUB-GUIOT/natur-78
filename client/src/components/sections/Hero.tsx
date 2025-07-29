@@ -32,7 +32,7 @@ export function Hero() {
               <Button 
                 size="sm" 
                 variant="outline"
-                className="bg-transparent border-2 text-black font-medium px-4 py-2 rounded-full backdrop-blur-sm hover:opacity-90"
+                className="bg-transparent border-2 text-black font-medium px-4 py-2 rounded-none backdrop-blur-sm hover:opacity-90"
                 style={{ borderColor: '#cad95e', color: '#cad95e' }}
               >
                 Portal Empresas
@@ -43,7 +43,7 @@ export function Hero() {
               <Button 
                 size="sm" 
                 variant="outline"
-                className="bg-transparent border-2 text-black font-medium px-4 py-2 rounded-full backdrop-blur-sm hover:opacity-90"
+                className="bg-transparent border-2 text-black font-medium px-4 py-2 rounded-none backdrop-blur-sm hover:opacity-90"
                 style={{ borderColor: '#cad95e', color: '#cad95e' }}
               >
                 Mapa Turismo Sostenible

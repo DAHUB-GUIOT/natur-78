@@ -13,13 +13,13 @@ export function Award() {
               AL PREMIO<br />
               NATUR
             </h1>
-            <div className="backdrop-blur-sm bg-white/10 rounded-xl p-4 sm:p-5 border border-white/20 mb-6">
+            <div className="backdrop-blur-sm bg-white/10 rounded-none p-4 sm:p-5 border border-white/20 mb-6">
               <h4 className="text-[#FCF8EE] text-xs sm:text-sm md:text-base tracking-wide leading-relaxed"
                   style={{ fontFamily: 'Unbounded, sans-serif', fontWeight: '300' }}>
                 MÁS QUE UN PREMIO, UN RECONOCIMIENTO QUE INSPIRA Y VISIBILIZA LO QUE MERECE MULTIPLICARSE. PORQUE OTRO TURISMO ES POSIBLE… Y YA ESTÁ PASANDO.
               </h4>
             </div>
-            <a href="#" className="inline-block bg-[#cad95e] hover:bg-[#cad95e]/90 transition text-[#191C0F] text-xs sm:text-sm font-bold py-2 px-6 sm:py-3 sm:px-8 rounded-lg shadow-md font-jakarta tracking-tight uppercase text-center">
+            <a href="#" className="inline-block bg-[#cad95e] hover:bg-[#cad95e]/90 transition text-[#191C0F] text-xs sm:text-sm font-bold py-2 px-6 sm:py-3 sm:px-8 rounded-none shadow-md font-jakarta tracking-tight uppercase text-center">
               RESERVA TU STAND PARA PARTICIPAR
             </a>
           </div>
@@ -27,13 +27,13 @@ export function Award() {
 
         {/* Right: Content */}
         <div className="w-full lg:w-1/2 flex flex-col p-4 sm:p-6 md:p-8 lg:p-10 justify-center">
-          <div className="backdrop-blur-sm bg-white/20 rounded-xl p-4 sm:p-6 border border-[#202111]/10 mb-6">
+          <div className="backdrop-blur-sm bg-white/20 rounded-none p-4 sm:p-6 border border-[#202111]/10 mb-6">
             <p className="text-[#202111] text-sm sm:text-base md:text-lg font-medium">
               El Premio NATUR nace para celebrar a las personas, empresas y territorios que están transformando el turismo en Colombia. Queremos reconocer lo valiente, lo innovador, lo auténtico y lo sostenible.
             </p>
           </div>
 
-          <div className="backdrop-blur-sm bg-white/20 rounded-xl p-4 sm:p-6 border border-[#202111]/10 mb-4">
+          <div className="backdrop-blur-sm bg-white/20 rounded-none p-4 sm:p-6 border border-[#202111]/10 mb-4">
             <h2 className="font-jakarta text-[#202111] text-base sm:text-lg md:text-xl font-bold mb-3 tracking-[0]">
               ¿QUÉ RECONOCE EL PREMIO NATUR?
             </h2>
@@ -45,7 +45,7 @@ export function Award() {
             </ul>
           </div>
 
-          <div className="backdrop-blur-sm bg-white/20 rounded-xl p-4 sm:p-6 border border-[#202111]/10 mb-4">
+          <div className="backdrop-blur-sm bg-white/20 rounded-none p-4 sm:p-6 border border-[#202111]/10 mb-4">
             <h2 className="font-jakarta text-[#202111] text-base sm:text-lg md:text-xl font-bold mb-3 tracking-[0]">
               UN JURADO CON PROPÓSITO:
             </h2>
@@ -54,11 +54,11 @@ export function Award() {
             </p>
             <div className="grid grid-cols-2 gap-2 sm:gap-3 mb-4">
               {/* Jury slots for layout visual only */}
-              {Array(4).fill(null).map((_, i) => <div key={i} className="bg-[#cad95e] h-[40px] sm:h-[50px] w-full rounded-lg"></div>)}
+              {Array(4).fill(null).map((_, i) => <div key={i} className="bg-[#cad95e] h-[40px] sm:h-[50px] w-full rounded-none"></div>)}
             </div>
           </div>
           
-          <a href="#download" className="block bg-[#cad95e] hover:bg-[#cad95e]/90 transition text-[#191C0F] text-xs sm:text-sm font-bold py-2 px-4 sm:py-3 sm:px-6 rounded-lg text-center font-jakarta tracking-tight uppercase">
+          <a href="#download" className="block bg-[#cad95e] hover:bg-[#cad95e]/90 transition text-[#191C0F] text-xs sm:text-sm font-bold py-2 px-4 sm:py-3 sm:px-6 rounded-none text-center font-jakarta tracking-tight uppercase">
             DESCARGA AQUÍ EL INSTRUCTIVO PARA PARTICIPAR
           </a>
         </div>
