@@ -89,28 +89,8 @@ const PortalEmpresasDashboard = () => {
   // Fetch all company users from database
   const { data: companiesData = [], isLoading: companiesLoading, error } = useQuery({
     queryKey: ['/api/users/companies'],
-    queryFn: async () => {
-      console.log('Making API request to /api/users/companies');
-      const response = await fetch('/api/users/companies', {
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      console.log('API response status:', response.status);
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-      }
-      const data = await response.json();
-      console.log('API response data:', data);
-      return data;
-    },
     retry: false,
   });
-
-  console.log('Final companies data:', companiesData);
-  console.log('API loading status:', companiesLoading);
-  console.log('API error:', error);
 
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("todas");
@@ -127,35 +107,23 @@ const PortalEmpresasDashboard = () => {
     { id: "aliados", label: "🤝 Aliados y Patrocinadores" }
   ];
 
-  // Use all registered company users from database
+  // Simplified company mapping for better performance
   const companies = (companiesData as any[]).map((user: any) => ({
     id: user.id,
     name: user.email === 'dahub.tech@gmail.com' ? 'DaHub' : 
           user.email === 'tripcol.tour@gmail.com' ? 'TripCol' : 
           user.email === 'info@festivalnatur.com' ? 'Festival NATUR' :
           user.firstName && user.lastName ? `${user.firstName} ${user.lastName}` : user.name,
-    category: user.category,
-    categoryId: user.category?.toLowerCase().replace(/\s+/g, '-') || "general",
-    location: user.location,
-    rating: 4.5, // Default rating for registered users
-    reviews: 0,
-    image: user.image,
-    description: user.description,
-    founder: user.founder,
-    website: null,
-    email: user.email,
-    skills: user.skills,
-    certifications: []
+    category: user.category || "Empresa",
+    location: user.location || "Colombia",
+    founder: user.founder || user.name,
+    email: user.email
   }));
 
-  // Filter companies based on search and category
+  // Optimized filtering logic
   const filteredCompanies = companies.filter((company: any) => {
-    const matchesSearch = company.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         company.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         (company.skills || []).some((skill: string) => skill.toLowerCase().includes(searchTerm.toLowerCase()));
-    
-    const matchesCategory = selectedCategory === "todas" || company.categoryId === selectedCategory;
-    
+    const matchesSearch = !searchTerm || company.name.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesCategory = selectedCategory === "todas";
     return matchesSearch && matchesCategory;
   });
 
@@ -356,7 +324,7 @@ const PortalEmpresasDashboard = () => {
               <div className="flex justify-between items-center">
                 <h2 className="text-xl font-bold text-white">Contactos</h2>
                 <Badge className="bg-green-600/20 text-green-300 px-3 py-1">
-                  {filteredCompanies.length} empresas {companiesLoading ? '(cargando...)' : ''}
+                  {filteredCompanies.length} contactos
                 </Badge>
               </div>
               
@@ -371,23 +339,9 @@ const PortalEmpresasDashboard = () => {
                 />
               </div>
 
-              {/* Category Filters */}
-              <div className="flex flex-wrap gap-2">
-                {categories.map((category) => (
-                  <Button
-                    key={category.id}
-                    variant={selectedCategory === category.id ? "default" : "outline"}
-                    size="sm"
-                    onClick={() => setSelectedCategory(category.id)}
-                    className={`text-xs h-8 ${
-                      selectedCategory === category.id 
-                        ? "bg-green-600 text-white hover:bg-green-700" 
-                        : "border-gray-600/50 text-gray-300 hover:bg-gray-700/50"
-                    }`}
-                  >
-                    {category.label}
-                  </Button>
-                ))}
+              {/* Simplified filters */}
+              <div className="text-sm text-gray-400">
+                Mostrando todos los contactos registrados
               </div>
             </div>
             
@@ -407,95 +361,41 @@ const PortalEmpresasDashboard = () => {
                   <p className="text-gray-300 text-sm">
                     {searchTerm ? `No hay resultados para "${searchTerm}"` : "No hay empresas en esta categoría"}
                   </p>
-                  <p className="text-gray-300 text-xs mt-2">
-                    API data: {JSON.stringify(companiesData)} | Error: {error ? JSON.stringify(error) : 'None'}
-                  </p>
+
                 </div>
               </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {filteredCompanies.map((company) => (
-                  <Card key={company.id} className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30 hover:bg-gray-800/50 transition-all duration-200">
-                  <CardContent className="p-4">
-                    <div className="space-y-3">
-                      {/* Header with avatar and basic info */}
-                      <div className="flex items-start space-x-3">
-                        <Avatar className="w-12 h-12 ring-2 ring-green-500/30">
-                          <AvatarImage src={company.image} />
-                          <AvatarFallback className="bg-green-600/80 text-white text-sm font-bold">{company.name[0]}</AvatarFallback>
+                  <Card key={company.id} className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30 hover:bg-gray-800/50 transition-all">
+                  <CardContent className="p-3">
+                    <div className="space-y-2">
+                      {/* Simplified header */}
+                      <div className="flex items-center space-x-3">
+                        <Avatar className="w-10 h-10">
+                          <AvatarFallback className="bg-green-600 text-white text-sm">{company.name[0]}</AvatarFallback>
                         </Avatar>
                         
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center space-x-2 mb-1">
-                            <h3 className="font-sans text-base text-white">{company.name}</h3>
-                          </div>
-                          
-                          <p className="text-sm text-green-300 font-medium">{company.category}</p>
-                          <p className="text-xs text-gray-300">{company.founder}</p>
-                          
-                          <div className="flex items-center text-xs text-gray-200 mt-1">
-                            <MapPin className="w-3 h-3 mr-1" />
-                            {company.location}
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Description */}
-                      <p className="text-sm text-gray-200 leading-relaxed">{company.description}</p>
-
-                      {/* Skills */}
-                      <div>
-                        <p className="text-xs font-sans text-white mb-2">Especialidades</p>
-                        <div className="flex flex-wrap gap-1">
-                          {company.skills.slice(0, 3).map((skill, index) => (
-                            <Badge key={index} className="bg-green-600/20 text-green-300 text-xs px-2 py-0.5 border border-green-500/30">
-                              {skill}
-                            </Badge>
-                          ))}
-                        </div>
-                      </div>
-
-                      {/* Rating and contact info */}
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-1">
-                          <Star className="w-4 h-4 text-yellow-400 fill-current" />
-                          <span className="text-sm font-medium text-white">{company.rating}</span>
-                          <span className="text-xs text-gray-300">({company.reviews} reseñas)</span>
-                        </div>
-                        <div className="text-xs text-gray-300">
-                          {company.website}
+                        <div className="flex-1">
+                          <h3 className="font-sans text-sm text-white">{company.name}</h3>
+                          <p className="text-xs text-gray-300">{company.location}</p>
                         </div>
                       </div>
                       
-                      {/* Action buttons */}
-                      <div className="flex space-x-2 pt-2">
+                      {/* Simple action buttons */}
+                      <div className="flex space-x-2">
                         <Button 
                           size="sm" 
                           variant="outline" 
-                          className="border-gray-600/50 text-gray-300 hover:bg-gray-700/50 text-xs h-8 flex-1 backdrop-blur-sm"
+                          className="border-gray-600/50 text-gray-300 hover:bg-gray-700/50 text-xs h-7 flex-1"
                           onClick={() => window.location.href = `/empresa/${company.id}`}
                         >
-                          <User className="w-3 h-3 mr-1" />
                           Ver Perfil
                         </Button>
                         <Button 
                           size="sm" 
-                          className="bg-green-600 hover:bg-green-700 text-white text-xs h-8 flex-1 backdrop-blur-sm"
-                          onClick={() => {
-                            setActiveSection("mensajes");
-                            // Auto-select TripCol or create conversation
-                            if (company.name === 'María González') {
-                              // This is TripCol user, pre-select for conversation
-                              localStorage.setItem('preSelectedCompany', JSON.stringify({
-                                id: 22,
-                                companyName: 'TripCol',
-                                userId: 22,
-                                contactEmail: 'tripcol.tour@gmail.com'
-                              }));
-                            }
-                          }}
+                          className="bg-green-600 hover:bg-green-700 text-white text-xs h-7 flex-1"
                         >
-                          <MessageCircle className="w-3 h-3 mr-1" />
                           Contactar
                         </Button>
                       </div>
