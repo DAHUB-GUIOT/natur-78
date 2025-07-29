@@ -31,6 +31,7 @@ import UnifiedPlatform from "./pages/UnifiedPlatform";
 import UserProfile from "./pages/UserProfile";
 import CompanyProfile from "./pages/CompanyProfile";
 import MessagingPage from "./pages/MessagingPage";
+import Tickets from "./pages/Tickets";
 import { AuthProvider } from "./contexts/AuthContext";
 
 // Create QueryClient outside component to prevent recreation on renders
@@ -75,6 +76,7 @@ const App = () => (
             <Route path="/perfil/:userId" component={UserProfile} />
             <Route path="/empresa/:companyId" component={CompanyProfile} />
             <Route path="/mensajes" component={MessagingPage} />
+            <Route path="/tickets" component={Tickets} />
             <Route path="/agenda">
               <MainLayout><Agenda /></MainLayout>
             </Route>
