@@ -35,6 +35,10 @@ This is a full-stack web application for Festival NATUR (www.festivalnatur.com),
   - **UPDATED**: TripCol relocated to Santa Marta coordinates (11.2408, -74.1990)
   - **UPDATED**: Festival NATUR positioned at Bogotá Chapinero CEFE (4.6533, -74.0836)
   - **ENHANCED**: Interactive map now shows three distinct Colombian business locations with real coordinates
+  - **NEW**: Beautiful green gradient markers with glassmorphism effects, enhanced shadows, and hover animations
+  - **UPDATED**: Company markers use gradient green backgrounds with emojis (🚀 for startups, 💎 for investors, 🌿 for ecosystem)
+  - **ENHANCED**: Experience markers with lime-to-emerald gradients and target icons for better visibility
+  - **IMPROVED**: Marker animations with pulse effects, scale transformations, and glowing shadows for premium appearance
 
 - ✅ **January 29, 2025**: Conversation Management System with TripCol Integration
   - **NEW**: Implemented conversation saving and management in messaging system

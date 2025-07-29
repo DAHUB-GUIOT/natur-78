@@ -178,13 +178,19 @@ export const InteractiveMap = ({ experiences = [], selectedCategory, showMarkers
         const el = document.createElement('div');
         el.className = 'mapbox-marker';
         
-        // Create experience marker
+        // Create beautiful green experience marker
         const markerContainer = document.createElement('div');
-        markerContainer.className = 'bg-green-500 rounded-full p-2 shadow-lg border-2 border-white cursor-pointer hover:scale-110 transition-transform';
+        markerContainer.className = 'bg-gradient-to-br from-lime-400 to-emerald-600 rounded-full p-3 shadow-xl border-3 border-white cursor-pointer hover:scale-125 transition-all duration-300 hover:shadow-2xl';
+        markerContainer.style.cssText = `
+          width: 36px;
+          height: 36px;
+          box-shadow: 0 6px 24px rgba(34, 197, 94, 0.5);
+          backdrop-filter: blur(6px);
+        `;
         
         const iconContainer = document.createElement('div');
-        iconContainer.className = 'w-4 h-4 text-white font-bold text-xs flex items-center justify-center';
-        iconContainer.textContent = (index + 1).toString();
+        iconContainer.className = 'w-full h-full text-white font-bold text-sm flex items-center justify-center';
+        iconContainer.textContent = '🎯';
         
         markerContainer.appendChild(iconContainer);
         el.appendChild(markerContainer);
@@ -215,18 +221,23 @@ export const InteractiveMap = ({ experiences = [], selectedCategory, showMarkers
         const el = document.createElement('div');
         el.className = 'mapbox-marker';
         
-        // Create safe DOM structure
+        // Create beautiful green marker
         const markerContainer = document.createElement('div');
-        markerContainer.className = 'bg-white rounded-full p-2 shadow-lg border-2 border-green-500 cursor-pointer hover:scale-110 transition-transform';
+        markerContainer.className = 'bg-gradient-to-br from-emerald-400 to-green-600 rounded-full p-3 shadow-xl border-3 border-white cursor-pointer hover:scale-125 transition-all duration-300 hover:shadow-2xl animate-pulse';
+        markerContainer.style.cssText = `
+          width: 40px;
+          height: 40px;
+          box-shadow: 0 8px 32px rgba(16, 185, 129, 0.4);
+          backdrop-filter: blur(8px);
+          animation: pulse 2s infinite;
+        `;
         
         const iconContainer = document.createElement('div');
-        iconContainer.className = 'w-4 h-4';
+        iconContainer.className = 'w-full h-full flex items-center justify-center text-white font-bold text-sm';
         
-        // Safely set icon based on company type
+        // Use beautiful green icons for companies
         const iconText = getMarkerIconText(company.type);
-        const iconColor = getMarkerIconColor(company.type);
         iconContainer.textContent = iconText;
-        iconContainer.className += ` ${iconColor}`;
         
         markerContainer.appendChild(iconContainer);
         el.appendChild(markerContainer);
@@ -245,26 +256,13 @@ export const InteractiveMap = ({ experiences = [], selectedCategory, showMarkers
   const getMarkerIconText = (type: string) => {
     switch (type) {
       case 'startup':
-        return '⚡';
+        return '🚀';
       case 'investor':
-        return '🏢';
+        return '💎';
       case 'ecosystem':
+        return '🌿';
+      default:
         return '🌱';
-      default:
-        return '🌐';
-    }
-  };
-
-  const getMarkerIconColor = (type: string) => {
-    switch (type) {
-      case 'startup':
-        return 'text-emerald-400';
-      case 'investor':
-        return 'text-green-500';
-      case 'ecosystem':
-        return 'text-lime-500';
-      default:
-        return 'text-green-400';
     }
   };
 
