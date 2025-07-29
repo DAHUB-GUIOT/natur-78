@@ -24,7 +24,7 @@ export function Partners() {
           NUESTROS ALIADOS
         </h2>
 
-        <div className="backdrop-blur-sm bg-white/20 rounded-2xl p-4 sm:p-6 md:p-8 border border-[#6D7A4E]/10 w-full">
+        <div className="backdrop-blur-sm bg-white/20 rounded-3xl p-4 sm:p-6 md:p-8 border border-[#6D7A4E]/10 w-full">
           <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 gap-3 sm:gap-4 justify-center items-center">
             {partnerLogos.slice(0, 7).map((logo, index) => <div key={index} className="aspect-[1.6] h-[35px] sm:h-[45px] md:h-[55px] transition-all duration-300 cursor-pointer flex items-center justify-center p-2 bg-white rounded-lg shadow-sm hover:shadow-md hover:scale-105">
                 <img src={logo} alt={`Partner ${index + 1}`} className="h-full w-full object-contain" />
@@ -38,7 +38,7 @@ export function Partners() {
           </div>
         </div>
         
-        <div className="backdrop-blur-sm bg-[#cad95e]/20 rounded-xl p-4 sm:p-6 mt-6 sm:mt-8 border border-[#6D7A4E]/10 max-w-4xl">
+        <div className="backdrop-blur-sm bg-[#cad95e]/20 rounded-3xl p-4 sm:p-6 mt-6 sm:mt-8 border border-[#6D7A4E]/10 max-w-4xl">
           <p className="text-center text-xs sm:text-sm md:text-base text-[#6D7A4E] font-medium leading-relaxed">
             Trabajamos junto a organizaciones comprometidas con el turismo sostenible y la conservación ambiental en Colombia.
           </p>

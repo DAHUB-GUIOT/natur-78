@@ -23,24 +23,24 @@ export function Location() {
               ¿CUÁNDO Y DÓNDE?
             </h2>
             
-            <div className="backdrop-blur-sm bg-white/20 rounded-xl p-4 sm:p-6 border border-[#191C0F]/10 mb-4">
+            <div className="backdrop-blur-sm bg-white/20 rounded-3xl p-4 sm:p-6 border border-[#191C0F]/10 mb-4">
               <time className="text-sm sm:text-base md:text-lg font-bold text-[#222] tracking-wide uppercase block text-center" dateTime="2025-11-22">
                 22 Y 23 DE NOVIEMBRE / 2025
               </time>
             </div>
             
             <div className="text-xs sm:text-sm md:text-base leading-relaxed text-[#13160c] font-medium space-y-3">
-              <div className="backdrop-blur-sm bg-white/20 rounded-lg p-3 sm:p-4 border border-[#191C0F]/10">
+              <div className="backdrop-blur-sm bg-white/20 rounded-3xl p-3 sm:p-4 border border-[#191C0F]/10">
                 <p>
                   El Centro de Felicidad de Chapinero será la sede del Festival NATUR 2025. Un lugar que no solo representa lo mejor de la arquitectura moderna, sino también un modelo de inclusión, cultura, bienestar y sostenibilidad.
                 </p>
               </div>
-              <div className="backdrop-blur-sm bg-white/20 rounded-lg p-3 sm:p-4 border border-[#191C0F]/10">
+              <div className="backdrop-blur-sm bg-white/20 rounded-3xl p-3 sm:p-4 border border-[#191C0F]/10">
                 <p>
                   Ubicado en el corazón de la zona financiera y gastronómica de Bogotá, el CEFE es el primer parque vertical de América Latina, con 10 pisos dedicados a la recreación, el arte, el deporte y el conocimiento.
                 </p>
               </div>
-              <div className="backdrop-blur-sm bg-white/20 rounded-lg p-3 sm:p-4 border border-[#191C0F]/10">
+              <div className="backdrop-blur-sm bg-white/20 rounded-3xl p-3 sm:p-4 border border-[#191C0F]/10">
                 <p>
                   Con un promedio de 2.000 visitantes diarios (sin contar eventos especiales), el CEFE de Chapinero es hoy uno de los espacios más dinámicos y emblemáticos de la ciudad. El Festival NATUR llega al lugar perfecto para inspirar, conectar y transformar el futuro del turismo.
                 </p>

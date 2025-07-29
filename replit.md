@@ -24,6 +24,8 @@ This is a full-stack web application for Festival NATUR (www.festivalnatur.com),
   - **NEW**: Included workshops, rituals, art activities, music sessions, and wellness activities
   - **NEW**: Added third tab "CULTURAL" to agenda interface with pink accent color theme
   - **NEW**: Enhanced filtering system to include cultural event types (rituales, talleres, arte, música, actividades, juegos, bienestar)
+  - **UPDATED**: Section containers now use 24px rounded corners (rounded-3xl) for improved design evolution
+  - **UPDATED**: Benefits, Participation, Program, Award, Location, and Partners sections all use rounded container design
   - **DESIGN**: Clean, minimal hero with logo prominence and square button aesthetic
   - **UX**: Centered layout with focused call-to-action buttons
 

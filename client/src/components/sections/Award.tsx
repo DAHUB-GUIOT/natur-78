@@ -13,7 +13,7 @@ export function Award() {
               AL PREMIO<br />
               NATUR
             </h1>
-            <div className="backdrop-blur-sm bg-white/10 rounded-none p-4 sm:p-5 border border-white/20 mb-6">
+            <div className="backdrop-blur-sm bg-white/10 rounded-3xl p-4 sm:p-5 border border-white/20 mb-6">
               <h4 className="text-[#FCF8EE] text-xs sm:text-sm md:text-base tracking-wide leading-relaxed"
                   style={{ fontFamily: 'Unbounded, sans-serif', fontWeight: '300' }}>
                 MÁS QUE UN PREMIO, UN RECONOCIMIENTO QUE INSPIRA Y VISIBILIZA LO QUE MERECE MULTIPLICARSE. PORQUE OTRO TURISMO ES POSIBLE… Y YA ESTÁ PASANDO.
@@ -27,13 +27,13 @@ export function Award() {
 
         {/* Right: Content */}
         <div className="w-full lg:w-1/2 flex flex-col p-4 sm:p-6 md:p-8 lg:p-10 justify-center">
-          <div className="backdrop-blur-sm bg-white/20 rounded-none p-4 sm:p-6 border border-[#202111]/10 mb-6">
+          <div className="backdrop-blur-sm bg-white/20 rounded-3xl p-4 sm:p-6 border border-[#202111]/10 mb-6">
             <p className="text-[#202111] text-sm sm:text-base md:text-lg font-medium">
               El Premio NATUR nace para celebrar a las personas, empresas y territorios que están transformando el turismo en Colombia. Queremos reconocer lo valiente, lo innovador, lo auténtico y lo sostenible.
             </p>
           </div>
 
-          <div className="backdrop-blur-sm bg-white/20 rounded-none p-4 sm:p-6 border border-[#202111]/10 mb-4">
+          <div className="backdrop-blur-sm bg-white/20 rounded-3xl p-4 sm:p-6 border border-[#202111]/10 mb-4">
             <h2 className="font-jakarta text-[#202111] text-base sm:text-lg md:text-xl font-bold mb-3 tracking-[0]">
               ¿QUÉ RECONOCE EL PREMIO NATUR?
             </h2>
@@ -45,7 +45,7 @@ export function Award() {
             </ul>
           </div>
 
-          <div className="backdrop-blur-sm bg-white/20 rounded-none p-4 sm:p-6 border border-[#202111]/10 mb-4">
+          <div className="backdrop-blur-sm bg-white/20 rounded-3xl p-4 sm:p-6 border border-[#202111]/10 mb-4">
             <h2 className="font-jakarta text-[#202111] text-base sm:text-lg md:text-xl font-bold mb-3 tracking-[0]">
               UN JURADO CON PROPÓSITO:
             </h2>

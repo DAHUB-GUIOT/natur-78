@@ -27,7 +27,7 @@ export function Benefits() {
       }} className="font-gasoek text-[#cad95e] text-center text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-normal leading-tight tracking-wide uppercase max-w-[90vw] mb-6 sm:mb-8 md:mb-10">¿POR QUÉ SER PARTE DE ESTA TRIBU?</h2>
         
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 w-full mt-4 sm:mt-6 md:mt-8">
-          {benefits.map((benefit, index) => <div key={index} className="backdrop-blur-sm bg-white/5 border border-[#cad95e]/20 rounded-none p-4 sm:p-5 md:p-6 hover:border-[#cad95e]/40 transition-all duration-300 hover:bg-white/10">
+          {benefits.map((benefit, index) => <div key={index} className="backdrop-blur-sm bg-white/5 border border-[#cad95e]/20 rounded-3xl p-4 sm:p-5 md:p-6 hover:border-[#cad95e]/40 transition-all duration-300 hover:bg-white/10">
               <div className="flex items-start gap-3 md:gap-4">
                 <img src={benefit.icon} alt="" className="w-8 sm:w-10 md:w-12 aspect-square object-contain shrink-0 mt-1" />
                 <div className="grow font-jakarta text-xs sm:text-sm md:text-base text-[#FCF8EE] leading-relaxed">

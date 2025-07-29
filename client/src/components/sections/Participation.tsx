@@ -25,7 +25,7 @@ export function Participation() {
         {/* Participants Grid */}
         <div className="w-full mt-8 md:mt-12 flex flex-col items-center">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 md:gap-5 w-full">
-            {PARTICIPANTS.map((label, idx) => <div key={idx} className="backdrop-blur-sm bg-white/5 border border-[#CEDD9F]/30 rounded-none text-[#CEDD9F] text-center font-jakarta text-sm sm:text-base md:text-lg font-medium px-4 py-6 sm:px-6 sm:py-8 flex items-center justify-center hover:border-[#cad95e]/60 hover:bg-white/10 transition-all duration-300">
+            {PARTICIPANTS.map((label, idx) => <div key={idx} className="backdrop-blur-sm bg-white/5 border border-[#CEDD9F]/30 rounded-3xl text-[#CEDD9F] text-center font-jakarta text-sm sm:text-base md:text-lg font-medium px-4 py-6 sm:px-6 sm:py-8 flex items-center justify-center hover:border-[#cad95e]/60 hover:bg-white/10 transition-all duration-300">
                 {label}
               </div>)}
           </div>
