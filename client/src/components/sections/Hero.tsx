@@ -19,8 +19,8 @@ export function Hero() {
       {/* Light Gradient Overlay for text readability */}
       <div className="absolute inset-0 bg-black/20"></div>
       
-      {/* Top Navigation - Fixed with Green Background */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-green-600 border-b border-green-700 shadow-lg">
+      {/* Top Navigation - Fixed with Dark Green Background */}
+      <nav className="fixed top-0 left-0 right-0 z-50 shadow-lg" style={{ backgroundColor: '#181c0d', borderBottom: '1px solid #2a2f1a' }}>
         <div className="flex items-center justify-between max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center space-x-4">
             <span className="font-bold text-2xl" style={{ color: '#EDFF60' }}>N</span>

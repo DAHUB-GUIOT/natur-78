@@ -63,7 +63,7 @@ export default function PortalViajeros() {
     return (
       <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-teal-100 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600 mx-auto mb-4"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 mx-auto mb-4" style={{ borderBottomColor: '#181c0d' }}></div>
           <p className="text-gray-600">Cargando...</p>
         </div>
       </div>
@@ -75,19 +75,19 @@ export default function PortalViajeros() {
     return (
       <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-teal-100 flex items-center justify-center">
         <div className="max-w-md mx-auto text-center p-8 bg-white rounded-lg shadow-lg">
-          <MapPin className="w-16 h-16 text-emerald-600 mx-auto mb-4" />
+          <MapPin className="w-16 h-16 mx-auto mb-4" style={{ color: '#181c0d' }} />
           <h2 className="text-2xl font-bold text-gray-800 mb-4">Acceso Requerido</h2>
           <p className="text-gray-600 mb-6">
             Para acceder al mapa interactivo de turismo sostenible, necesitas iniciar sesión o registrarte.
           </p>
           <div className="space-y-3">
             <Link to="/auth/consentidos">
-              <Button className="w-full bg-emerald-600 hover:bg-emerald-700 text-white">
+              <Button className="w-full text-white hover:opacity-90" style={{ backgroundColor: '#181c0d' }}>
                 Iniciar Sesión
               </Button>
             </Link>
             <Link to="/con-sentidos">
-              <Button variant="outline" className="w-full border-emerald-600 text-emerald-600 hover:bg-emerald-50">
+              <Button variant="outline" className="w-full hover:bg-gray-50" style={{ borderColor: '#181c0d', color: '#181c0d' }}>
                 Registrarse Gratis
               </Button>
             </Link>
@@ -591,7 +591,7 @@ export default function PortalViajeros() {
               </div>
               <div className="flex justify-between font-bold">
                 <span className="text-white">Total</span>
-                <span className="text-green-400">
+                <span style={{ color: '#EDFF60' }}>
                   ${(parseInt(selectedExperience?.adultPricePvp || "0") * parseInt(bookingGuests)).toLocaleString()}
                 </span>
               </div>
@@ -609,7 +609,8 @@ export default function PortalViajeros() {
                   alert(`¡Reserva confirmada para ${selectedExperience?.title}!`);
                   setShowBookingModal(false);
                 }}
-                className="flex-1 bg-green-600 hover:bg-green-700 text-white"
+                className="flex-1 text-white hover:opacity-90"
+                style={{ backgroundColor: '#181c0d' }}
               >
                 Confirmar Compra
               </Button>

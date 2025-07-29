@@ -54,14 +54,15 @@ export const MarketplaceFilters: React.FC<MarketplaceFiltersProps> = ({
     <Card className="p-5 h-fit sticky top-24 border border-border shadow-sm">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
-          <Filter className="h-5 w-5 text-green-700" />
+          <Filter className="h-5 w-5" style={{ color: '#181c0d' }} />
           <h2 className="text-xl font-semibold">Filtros</h2>
         </div>
         
         {hasActiveFilters && (
           <Button 
             variant="link" 
-            className="text-green-700 text-sm p-0 h-auto"
+            className="text-sm p-0 h-auto"
+            style={{ color: '#181c0d' }}
             onClick={onClearFilters}
           >
             Limpiar todos
@@ -73,7 +74,7 @@ export const MarketplaceFilters: React.FC<MarketplaceFiltersProps> = ({
 
       {/* Filtros por Tipo */}
       <div className="mb-6">
-        <h3 className="font-medium text-green-700 mb-3">Por Tipo</h3>
+        <h3 className="font-medium mb-3" style={{ color: '#181c0d' }}>Por Tipo</h3>
         <div className="flex flex-wrap gap-2">
           {tipoOptions.map(option => (
             <Button
@@ -81,9 +82,13 @@ export const MarketplaceFilters: React.FC<MarketplaceFiltersProps> = ({
               variant={isFilterActive('tipo', option.id) ? "default" : "outline"}
               className={
                 isFilterActive('tipo', option.id) 
-                  ? "bg-green-700 hover:bg-green-800 text-white border-none"
-                  : "bg-transparent border-green-200 text-foreground hover:bg-green-100/20"
+                  ? "text-white border-none hover:opacity-90"
+                  : "bg-transparent text-foreground hover:bg-gray-100/20"
               }
+              style={{
+                backgroundColor: isFilterActive('tipo', option.id) ? '#181c0d' : 'transparent',
+                borderColor: isFilterActive('tipo', option.id) ? '#181c0d' : '#d1d5db'
+              }}
               onClick={() => onFilterChange('tipo', option.id)}
               size="sm"
             >
@@ -95,7 +100,7 @@ export const MarketplaceFilters: React.FC<MarketplaceFiltersProps> = ({
 
       {/* Filtros por Región */}
       <div className="mb-6">
-        <h3 className="font-medium text-green-700 mb-3">Por Región</h3>
+        <h3 className="font-medium mb-3" style={{ color: '#181c0d' }}>Por Región</h3>
         <Accordion type="single" collapsible className="w-full">
           <AccordionItem value="regiones" className="border-b-border">
             <AccordionTrigger className="hover:no-underline">
@@ -103,7 +108,7 @@ export const MarketplaceFilters: React.FC<MarketplaceFiltersProps> = ({
                 <ArrowDown className="h-4 w-4" />
                 <span>Departamentos</span>
                 {activeFilters.region.length > 0 && (
-                  <span className="bg-green-700 text-white text-xs rounded-full px-2 py-0.5 ml-2">
+                  <span className="text-white text-xs rounded-full px-2 py-0.5 ml-2" style={{ backgroundColor: '#181c0d' }}>
                     {activeFilters.region.length}
                   </span>
                 )}
@@ -118,8 +123,8 @@ export const MarketplaceFilters: React.FC<MarketplaceFiltersProps> = ({
                       variant="ghost"
                       className={`w-full justify-start mb-1 ${
                         isFilterActive('region', location.departamento)
-                          ? "bg-green-100/30 text-foreground"
-                          : "text-muted-foreground hover:text-foreground hover:bg-green-100/20"
+                          ? "bg-gray-100 text-foreground"
+                          : "text-muted-foreground hover:text-foreground hover:bg-gray-100/30"
                       }`}
                       onClick={() => onFilterChange('region', location.departamento)}
                       size="sm"
@@ -136,7 +141,7 @@ export const MarketplaceFilters: React.FC<MarketplaceFiltersProps> = ({
 
       {/* Filtros por Impacto */}
       <div className="mb-3">
-        <h3 className="font-medium text-green-700 mb-3">Por Impacto</h3>
+        <h3 className="font-medium mb-3" style={{ color: '#181c0d' }}>Por Impacto</h3>
         <div className="flex flex-wrap gap-2">
           {impactoOptions.map(option => (
             <Button
@@ -144,9 +149,13 @@ export const MarketplaceFilters: React.FC<MarketplaceFiltersProps> = ({
               variant={isFilterActive('impacto', option.id) ? "default" : "outline"}
               className={
                 isFilterActive('impacto', option.id) 
-                  ? "bg-green-700 hover:bg-green-800 text-white border-none"
-                  : "bg-transparent border-green-200 text-foreground hover:bg-green-100/20"
+                  ? "text-white border-none hover:opacity-90"
+                  : "bg-transparent text-foreground hover:bg-gray-100/20"
               }
+              style={{
+                backgroundColor: isFilterActive('impacto', option.id) ? '#181c0d' : 'transparent',
+                borderColor: isFilterActive('impacto', option.id) ? '#181c0d' : '#d1d5db'
+              }}
               onClick={() => onFilterChange('impacto', option.id)}
               size="sm"
             >

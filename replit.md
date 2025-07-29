@@ -10,6 +10,15 @@ This is a full-stack web application for Festival NATUR (www.festivalnatur.com),
 
 ## Recent Changes
 
+- ✅ **January 29, 2025**: Header Color Updated to Dark Green (#181c0d)
+  - **UPDATED**: Changed all header backgrounds from green-600 to custom dark green color #181c0d
+  - **UPDATED**: Navigation bars in Auth.tsx and Hero.tsx now use darker, more professional color
+  - **UPDATED**: All green accent colors updated to use #181c0d throughout Portal Viajeros
+  - **UPDATED**: MarketplaceFilters component updated with new dark green color scheme
+  - **UPDATED**: Button colors, borders, and text colors changed from emerald/green classes to #181c0d
+  - **STYLE**: More brutalist, minimal aesthetic with darker header color as requested
+  - **CONSISTENCY**: All dark green elements now use unified #181c0d color across entire platform
+
 - ✅ **January 29, 2025**: Authentication Required for Interactive Map Access
   - **NEW**: Portal Viajeros now requires user authentication before accessing the map
   - **NEW**: Unauthenticated users see login prompt with options to sign in or register
