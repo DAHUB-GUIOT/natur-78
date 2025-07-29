@@ -19,7 +19,6 @@ const menuData: MenuCategory[] = [
     title: 'FESTIVAL NATUR BOGOTÁ 2025',
     subcategories: [
       // VIVE NATUR
-      { label: 'VIVE NATUR', url: '/vive-natur' },
       { label: 'Charlas NATUR (Agenda Académica)', url: '/charlas' },
       { label: 'Rooftop + Zona de Comidas', url: '/rooftop' },
       { label: 'Emprendimientos Sostenibles', url: '/emprendimientos' },
@@ -161,7 +160,7 @@ export function BrutalistDropdownMenu({ isOpen, onClose, triggerRef }: Brutalist
                       VIVE NATUR
                     </h1>
                     <ul className="space-y-3">
-                      {menuData[expandedCategory].subcategories?.slice(0, 6).map((sub, subIndex) => (
+                      {menuData[expandedCategory].subcategories?.slice(0, 5).map((sub, subIndex) => (
                         <li key={subIndex}>
                           <button
                             onClick={() => handleSubcategoryClick(sub.url)}
@@ -180,7 +179,7 @@ export function BrutalistDropdownMenu({ isOpen, onClose, triggerRef }: Brutalist
                       NATUR PRO
                     </h1>
                     <ul className="space-y-3">
-                      {menuData[expandedCategory].subcategories?.slice(6).map((sub, subIndex) => (
+                      {menuData[expandedCategory].subcategories?.slice(5).map((sub, subIndex) => (
                         <li key={subIndex}>
                           <button
                             onClick={() => handleSubcategoryClick(sub.url)}
