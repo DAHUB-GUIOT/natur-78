@@ -68,8 +68,8 @@ const PortalEmpresasDashboard = () => {
     refetchOnMount: true,
   });
 
-  // Cast currentUser to proper type
-  const user = currentUser as any;
+  // Cast currentUser to proper type - handle both direct user and nested user format
+  const user = (currentUser as any)?.user || currentUser;
 
   const sidebarItems = [
     { id: "mapa", label: "Mapa", icon: Map },
@@ -574,7 +574,7 @@ const PortalEmpresasDashboard = () => {
         );
 
       case "mensajes":
-        console.log('Mensajes section - user:', user, 'userLoading:', userLoading);
+        console.log('Mensajes section - currentUser:', currentUser, 'user:', user, 'userLoading:', userLoading);
         if (userLoading) {
           return (
             <div className="flex items-center justify-center h-64">
@@ -583,7 +583,7 @@ const PortalEmpresasDashboard = () => {
           );
         }
         
-        return user ? (
+        return user && user.id ? (
           <div className="h-[calc(100vh-8rem)]">
             <ChatPage 
               currentUserId={user.id} 
