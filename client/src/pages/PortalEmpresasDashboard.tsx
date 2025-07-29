@@ -75,7 +75,7 @@ const PortalEmpresasDashboard = () => {
     { id: "mensajes", label: "Mensajes", icon: MessageCircle },
     { id: "perfil", label: "Mi Perfil", icon: User },
     { id: "ajustes", label: "Ajustes", icon: Settings },
-    ...((currentUser as any)?.user?.role === 'admin' ? [{ id: "admin", label: "Admin Panel", icon: ShieldCheck }] : [])
+    ...(currentUser?.role === 'admin' ? [{ id: "admin", label: "Admin Panel", icon: ShieldCheck }] : [])
   ];
 
 
@@ -571,10 +571,10 @@ const PortalEmpresasDashboard = () => {
         );
 
       case "mensajes":
-        return currentUser?.user?.id ? (
+        return currentUser?.id ? (
           <div className="h-[calc(100vh-8rem)]">
             <ChatPage 
-              currentUserId={currentUser.user.id} 
+              currentUserId={currentUser.id} 
               onClose={() => setActiveSection("inicio")}
             />
           </div>
@@ -705,11 +705,21 @@ const PortalEmpresasDashboard = () => {
             <div className="flex items-center space-x-2 px-3 py-2 rounded-lg bg-gray-800/30 backdrop-blur-sm">
               <Avatar className="w-6 h-6 ring-1 ring-gray-600/50">
                 <AvatarImage src="/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg" />
-                <AvatarFallback className="bg-green-600/80 text-white text-xs">U</AvatarFallback>
+                <AvatarFallback className="bg-green-600/80 text-white text-xs">
+                  {currentUser?.firstName?.[0] || currentUser?.email?.[0]?.toUpperCase() || 'U'}
+                </AvatarFallback>
               </Avatar>
               <div className="flex-1 min-w-0">
-                <p className="text-white font-medium text-xs truncate">Usuario</p>
-                <p className="text-gray-300 text-xs">Empresa</p>
+                <p className="text-white font-medium text-xs truncate">
+                  {currentUser?.firstName && currentUser?.lastName 
+                    ? `${currentUser.firstName} ${currentUser.lastName}`
+                    : currentUser?.email || 'Usuario'
+                  }
+                </p>
+                <p className="text-gray-300 text-xs">
+                  {currentUser?.role === 'empresa' ? 'Empresa' : 
+                   currentUser?.role === 'admin' ? 'Administrador' : 'Viajero'}
+                </p>
               </div>
             </div>
           </div>
