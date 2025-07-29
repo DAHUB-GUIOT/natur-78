@@ -56,17 +56,6 @@ const menuData: MenuCategory[] = [
       { label: 'Comunidad de Viajeros', url: '/portal-viajeros' },
       { label: 'Mapa Interactivo de Experiencias', url: '/mapa' }
     ]
-  },
-  {
-    icon: 'ℹ️',
-    title: 'INFO',
-    subcategories: [
-      { label: 'Sobre Nosotros', url: '/sobre' },
-      { label: 'Contacto', url: '/contacto' },
-      { label: 'Aliados', url: '/aliados' },
-      { label: 'Preguntas Frecuentes', url: '/faq' },
-      { label: 'Términos y Condiciones', url: '/terminos' }
-    ]
   }
 ];
 
