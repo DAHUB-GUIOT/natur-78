@@ -129,17 +129,17 @@ export function BrutalistDropdownMenu({ isOpen, onClose, triggerRef }: Brutalist
               <button
                 key={index}
                 onClick={() => handleCategoryClick(index)}
-                className={`w-full text-left p-3 text-lg font-jakarta-bold uppercase tracking-wider transition-colors duration-200 ${
+                className={`w-full text-left p-2 text-sm font-jakarta uppercase tracking-wide transition-colors duration-200 ${
                   expandedCategory === index 
                     ? 'text-[#EDFF60] bg-[#1a3d1a]' 
                     : 'text-gray-400 hover:text-[#EDFF60]'
                 }`}
               >
-                <div className="flex items-center gap-3">
-                  <span className="text-2xl">{category.icon}</span>
-                  <h1>{category.title}</h1>
+                <div className="flex items-center gap-2">
+                  <span className="text-lg">{category.icon}</span>
+                  <h1 className="text-xs font-jakarta">{category.title}</h1>
                   {expandedCategory === index && (
-                    <ChevronRight className="w-4 h-4 ml-auto" />
+                    <ChevronRight className="w-3 h-3 ml-auto" />
                   )}
                 </div>
               </button>
@@ -156,15 +156,15 @@ export function BrutalistDropdownMenu({ isOpen, onClose, triggerRef }: Brutalist
                 <div className="grid grid-cols-2 gap-8 h-full">
                   {/* VIVE NATUR (Pro) Column */}
                   <div>
-                    <h1 className="text-2xl font-jakarta-bold text-[#EDFF60] px-4 py-2 uppercase tracking-wider mb-6 text-center">
+                    <h1 className="text-lg font-jakarta text-[#EDFF60] px-3 py-1 uppercase tracking-wide mb-4 text-center">
                       VIVE NATUR
                     </h1>
-                    <ul className="space-y-3">
+                    <ul className="space-y-2">
                       {menuData[expandedCategory].subcategories?.slice(0, 5).map((sub, subIndex) => (
                         <li key={subIndex}>
                           <button
                             onClick={() => handleSubcategoryClick(sub.url)}
-                            className="text-gray-300 hover:text-[#EDFF60] transition-colors duration-200 text-left block w-full"
+                            className="text-gray-300 hover:text-[#EDFF60] transition-colors duration-200 text-left block w-full text-sm font-light"
                           >
                             • {sub.label}
                           </button>
@@ -175,15 +175,15 @@ export function BrutalistDropdownMenu({ isOpen, onClose, triggerRef }: Brutalist
 
                   {/* NATUR PRO (Live) Column */}
                   <div>
-                    <h1 className="text-2xl font-jakarta-bold text-[#EDFF60] px-4 py-2 uppercase tracking-wider mb-6 text-center">
+                    <h1 className="text-lg font-jakarta text-[#EDFF60] px-3 py-1 uppercase tracking-wide mb-4 text-center">
                       NATUR PRO
                     </h1>
-                    <ul className="space-y-3">
+                    <ul className="space-y-2">
                       {menuData[expandedCategory].subcategories?.slice(5).map((sub, subIndex) => (
                         <li key={subIndex}>
                           <button
                             onClick={() => handleSubcategoryClick(sub.url)}
-                            className="text-gray-300 hover:text-[#EDFF60] transition-colors duration-200 text-left block w-full"
+                            className="text-gray-300 hover:text-[#EDFF60] transition-colors duration-200 text-left block w-full text-sm font-light"
                           >
                             • {sub.label}
                           </button>
@@ -197,15 +197,15 @@ export function BrutalistDropdownMenu({ isOpen, onClose, triggerRef }: Brutalist
               {/* Other Categories - Single Column Layout */}
               {expandedCategory !== 0 && (
                 <div className="max-w-2xl">
-                  <h1 className="text-2xl font-jakarta-bold text-[#EDFF60] uppercase tracking-wider mb-6">
+                  <h1 className="text-lg font-jakarta text-[#EDFF60] uppercase tracking-wide mb-4">
                     {menuData[expandedCategory].title}
                   </h1>
-                  <ul className="space-y-4 grid grid-cols-1 gap-3">
+                  <ul className="space-y-2 grid grid-cols-1 gap-2">
                     {menuData[expandedCategory].subcategories?.map((sub, subIndex) => (
                       <li key={subIndex}>
                         <button
                           onClick={() => handleSubcategoryClick(sub.url)}
-                          className="text-gray-300 hover:text-[#EDFF60] transition-colors duration-200 text-left block text-lg"
+                          className="text-gray-300 hover:text-[#EDFF60] transition-colors duration-200 text-left block text-sm font-light"
                         >
                           • {sub.label}
                         </button>
@@ -255,14 +255,14 @@ export function BrutalistDropdownMenu({ isOpen, onClose, triggerRef }: Brutalist
             )}
             
             {/* Info Section - Always visible */}
-            <h1 className="text-[#EDFF60] font-jakarta-bold uppercase tracking-wider mb-4">
+            <h1 className="text-[#EDFF60] font-jakarta uppercase tracking-wide mb-3 text-sm">
               INFO
             </h1>
-            <ul className="space-y-3">
+            <ul className="space-y-2">
               <li>
                 <button 
                   onClick={() => handleSubcategoryClick('/sobre')}
-                  className="text-gray-300 hover:text-[#EDFF60] transition-colors duration-200 text-left block text-sm"
+                  className="text-gray-300 hover:text-[#EDFF60] transition-colors duration-200 text-left block text-xs font-light"
                 >
                   • Sobre Nosotros
                 </button>
@@ -270,7 +270,7 @@ export function BrutalistDropdownMenu({ isOpen, onClose, triggerRef }: Brutalist
               <li>
                 <button 
                   onClick={() => handleSubcategoryClick('/contacto')}
-                  className="text-gray-300 hover:text-[#EDFF60] transition-colors duration-200 text-left block text-sm"
+                  className="text-gray-300 hover:text-[#EDFF60] transition-colors duration-200 text-left block text-xs font-light"
                 >
                   • Contacto
                 </button>
@@ -278,7 +278,7 @@ export function BrutalistDropdownMenu({ isOpen, onClose, triggerRef }: Brutalist
               <li>
                 <button 
                   onClick={() => handleSubcategoryClick('/aliados')}
-                  className="text-gray-300 hover:text-[#EDFF60] transition-colors duration-200 text-left block text-sm"
+                  className="text-gray-300 hover:text-[#EDFF60] transition-colors duration-200 text-left block text-xs font-light"
                 >
                   • Aliados
                 </button>
@@ -286,7 +286,7 @@ export function BrutalistDropdownMenu({ isOpen, onClose, triggerRef }: Brutalist
               <li>
                 <button 
                   onClick={() => handleSubcategoryClick('/faq')}
-                  className="text-gray-300 hover:text-[#EDFF60] transition-colors duration-200 text-left block text-sm"
+                  className="text-gray-300 hover:text-[#EDFF60] transition-colors duration-200 text-left block text-xs font-light"
                 >
                   • FAQ
                 </button>
@@ -294,7 +294,7 @@ export function BrutalistDropdownMenu({ isOpen, onClose, triggerRef }: Brutalist
               <li>
                 <button 
                   onClick={() => handleSubcategoryClick('/terminos')}
-                  className="text-gray-300 hover:text-[#EDFF60] transition-colors duration-200 text-left block text-sm"
+                  className="text-gray-300 hover:text-[#EDFF60] transition-colors duration-200 text-left block text-xs font-light"
                 >
                   • Términos y Condiciones
                 </button>
