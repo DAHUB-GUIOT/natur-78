@@ -32,6 +32,20 @@ This is a full-stack web application for Festival NATUR (www.festivalnatur.com),
   - **UPDATED**: Menu trigger button updated to match darker green theme
   - **ARCHITECTURE**: Complete navigation system redesign with BIME festival aesthetics and full-screen brutalist approach
 
+- ✅ **January 29, 2025**: Complete Registration System Replacement - Tourism Focus NATUR 2025
+  - **REPLACED**: Entire registration system with 8 specialized tourism categories for Festival NATUR 2025
+  - **NEW**: 🧭 Agencias u Operadores Turísticos - 8 subcategories (turismo naturaleza, comunitario, rural, cultural, bienestar, ecoturismo, viajes regenerativos, accesible)
+  - **NEW**: 🛏️ Alojamientos Sostenibles - 6 subcategories (ecohoteles, glampings, hostales impacto social, hoteles certificados, posadas comunitarias, alojamiento rural)
+  - **NEW**: 🍃 Gastronomía Sostenible - 7 subcategories (restaurantes locales, cocinas comunitarias, agroecología, productos orgánicos, bebidas tradicionales, cafés trazabilidad, cocina impacto social)
+  - **NEW**: 🚲 Movilidad y Transporte Ecológico - 4 subcategories (transporte eléctrico, bicicletas, movilidad compartida, transporte accesible)
+  - **NEW**: 🌱 ONG y Fundaciones - 6 subcategories (conservación, educación ambiental, desarrollo territorial, fortalecimiento comunidades, protección agua, cultura arte)
+  - **NEW**: 📚 Educación y Sensibilización Ambiental - 5 subcategories (instituciones educativas, escuelas liderazgo, proyectos pedagógicos, formación sostenibilidad, creadores contenidos)
+  - **NEW**: 💡 Tecnología para el Turismo Sostenible - 5 subcategories (plataformas reservas, mapas digitales, tecnologías limpias, medición impacto, innovación social)
+  - **NEW**: 🤝 Aliados y Patrocinadores - 5 subcategories (validadores proceso, patrocinadores principales, marcas aliadas, medios comunicación, embajadores)
+  - **UPDATED**: CategoryStep introduction text explains Festival NATUR 2025 purpose and directory goals
+  - **UPDATED**: All 44 specialized subcategories mapped to sustainable tourism ecosystem
+  - **ARCHITECTURE**: Complete registration system focused on sustainable and regenerative tourism participants
+
 - ✅ **January 29, 2025**: Complete Company Registration Categories Replacement
   - **REPLACED**: Entire registration system categories with new 10-category structure
   - **NEW**: 🌱 Alojamientos Sostenibles (5 subcategories): Ecohoteles, Glampings, Hostales rurales, Reservas naturales, Cabañas autosuficientes

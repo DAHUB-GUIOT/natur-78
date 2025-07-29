@@ -139,6 +139,366 @@ const SubcategoryStep = ({ category, onSubcategorySelect, onBack }: SubcategoryS
             "Turismo inclusivo especializado",
             "Experiencias accesibles para todas las personas"
           ]
+        },
+        {
+          id: "glampings",
+          icon: <Tent className="w-5 h-5" />,
+          title: "🌱 Glampings",
+          description: [
+            "Glamping con enfoque ecológico",
+            "Hospedaje en contacto con la naturaleza"
+          ]
+        },
+        {
+          id: "hostales-rurales",
+          icon: <Home className="w-5 h-5" />,
+          title: "🌱 Hostales rurales",
+          description: [
+            "Hospedaje rural sostenible",
+            "Experiencia auténtica en el campo"
+          ]
+        },
+        {
+          id: "reservas-naturales",
+          icon: <Leaf className="w-5 h-5" />,
+          title: "🌱 Reservas naturales con hospedaje",
+          description: [
+            "Alojamiento en reservas de conservación",
+            "Turismo de naturaleza y biodiversidad"
+          ]
+        },
+        {
+          id: "cabanas-autosuficientes",
+          icon: <Zap className="w-5 h-5" />,
+          title: "🌱 Cabañas autosuficientes",
+          description: [
+            "Alojamiento con energías renovables",
+            "Sistemas de autoabastecimiento sostenible"
+          ]
+        },
+
+        // 2. Agencias y Operadores de Turismo
+        {
+          id: "agencias-ecologicas",
+          icon: <Map className="w-5 h-5" />,
+          title: "🧭 Agencias de turismo ecológico",
+          description: [
+            "Tours con enfoque de conservación",
+            "Experiencias de bajo impacto ambiental"
+          ]
+        },
+        {
+          id: "tours-comunitarios",
+          icon: <Users className="w-5 h-5" />,
+          title: "🧭 Tours comunitarios o indígenas",
+          description: [
+            "Experiencias con comunidades locales",
+            "Turismo cultural y territorial"
+          ]
+        },
+        {
+          id: "turismo-cientifico",
+          icon: <BookOpen className="w-5 h-5" />,
+          title: "🧭 Turismo científico / de naturaleza",
+          description: [
+            "Experiencias educativas y de investigación",
+            "Avistamiento de fauna y flora"
+          ]
+        },
+        {
+          id: "rutas-culturales",
+          icon: <Building2 className="w-5 h-5" />,
+          title: "🧭 Rutas culturales sostenibles",
+          description: [
+            "Recorridos por patrimonio cultural",
+            "Turismo histórico responsable"
+          ]
+        },
+
+        // 3. Gastronomía Local y Sostenible
+        {
+          id: "restaurantes-km0",
+          icon: <Utensils className="w-5 h-5" />,
+          title: "🍃 Restaurantes de kilómetro cero",
+          description: [
+            "Cocina con ingredientes locales",
+            "Cadena de suministro sostenible"
+          ]
+        },
+        {
+          id: "cocinas-comunitarias",
+          icon: <Apple className="w-5 h-5" />,
+          title: "🍃 Cocinas comunitarias o tradicionales",
+          description: [
+            "Gastronomía tradicional y cultural",
+            "Recetas ancestrales y locales"
+          ]
+        },
+        {
+          id: "productos-organicos",
+          icon: <Droplets className="w-5 h-5" />,
+          title: "🍃 Productos orgánicos y locales",
+          description: [
+            "Alimentos orgánicos certificados",
+            "Producción local y sostenible"
+          ]
+        },
+        {
+          id: "cafes-sostenibles",
+          icon: <Coffee className="w-5 h-5" />,
+          title: "🍃 Cafés y bares con prácticas sostenibles",
+          description: [
+            "Establecimientos con criterios ambientales",
+            "Comercio justo y responsable"
+          ]
+        },
+
+        // 4. Movilidad y Transporte Ecológico
+        {
+          id: "alquiler-bicicletas",
+          icon: <Bike className="w-5 h-5" />,
+          title: "🚲 Alquiler de bicicletas",
+          description: [
+            "Movilidad sostenible y turística",
+            "Transporte libre de emisiones"
+          ]
+        },
+        {
+          id: "transporte-electrico",
+          icon: <Car className="w-5 h-5" />,
+          title: "🚲 Transporte eléctrico o híbrido",
+          description: [
+            "Vehículos de bajas emisiones",
+            "Movilidad ecológica turística"
+          ]
+        },
+        {
+          id: "carpooling",
+          icon: <Users className="w-5 h-5" />,
+          title: "🚲 Carpooling o transporte colaborativo",
+          description: [
+            "Transporte compartido y eficiente",
+            "Reducción de huella de carbono"
+          ]
+        },
+        {
+          id: "caminatas-guiadas",
+          icon: <Compass className="w-5 h-5" />,
+          title: "🚲 Caminatas o rutas a pie guiadas",
+          description: [
+            "Senderismo y turismo a pie",
+            "Conexión directa con la naturaleza"
+          ]
+        },
+
+        // 5. Artesanías y Productos Locales
+        {
+          id: "artesanos-locales",
+          icon: <Palette className="w-5 h-5" />,
+          title: "🎨 Artesanos locales",
+          description: [
+            "Productos artesanales tradicionales",
+            "Preservación de técnicas ancestrales"
+          ]
+        },
+        {
+          id: "cooperativas-mujeres",
+          icon: <Users className="w-5 h-5" />,
+          title: "🎨 Cooperativas de mujeres o comunidades",
+          description: [
+            "Emprendimientos colectivos sostenibles",
+            "Empoderamiento económico comunitario"
+          ]
+        },
+        {
+          id: "moda-sostenible",
+          icon: <Shield className="w-5 h-5" />,
+          title: "🎨 Moda sostenible",
+          description: [
+            "Ropa y accesorios ecológicos",
+            "Producción ética y responsable"
+          ]
+        },
+        {
+          id: "cosmetica-natural",
+          icon: <Droplets className="w-5 h-5" />,
+          title: "🎨 Cosmética natural / productos biodegradables",
+          description: [
+            "Productos de cuidado personal naturales",
+            "Ingredientes orgánicos y biodegradables"
+          ]
+        },
+
+        // 6. Educación y Sensibilización Ambiental
+        {
+          id: "escuelas-verdes",
+          icon: <School className="w-5 h-5" />,
+          title: "📚 Escuelas verdes",
+          description: [
+            "Educación ambiental y sostenibilidad",
+            "Programas pedagógicos ecológicos"
+          ]
+        },
+        {
+          id: "ongs-ambientales",
+          icon: <Heart className="w-5 h-5" />,
+          title: "📚 ONGs y fundaciones ambientales",
+          description: [
+            "Organizaciones de conservación",
+            "Proyectos de protección ambiental"
+          ]
+        },
+        {
+          id: "talleres-permacultura",
+          icon: <Leaf className="w-5 h-5" />,
+          title: "📚 Talleres y cursos (permacultura, reciclaje, bioconstrucción)",
+          description: [
+            "Formación en prácticas sostenibles",
+            "Capacitación ambiental especializada"
+          ]
+        },
+        {
+          id: "investigacion-ecologica",
+          icon: <BookOpen className="w-5 h-5" />,
+          title: "📚 Proyectos de investigación ecológica",
+          description: [
+            "Investigación científica ambiental",
+            "Estudios de biodiversidad y conservación"
+          ]
+        },
+
+        // 7. Tecnología para el Turismo Sostenible
+        {
+          id: "apps-rutas",
+          icon: <Smartphone className="w-5 h-5" />,
+          title: "💡 Apps de rutas y senderos",
+          description: [
+            "Aplicaciones de navegación ecológica",
+            "Tecnología para senderismo sostenible"
+          ]
+        },
+        {
+          id: "plataformas-reserva",
+          icon: <Monitor className="w-5 h-5" />,
+          title: "💡 Plataformas de reserva ecológica",
+          description: [
+            "Sistemas de booking sostenible",
+            "Tecnología para turismo responsable"
+          ]
+        },
+        {
+          id: "medicion-carbono",
+          icon: <BarChart3 className="w-5 h-5" />,
+          title: "💡 Herramientas de medición de huella de carbono",
+          description: [
+            "Calculadoras de impacto ambiental",
+            "Tecnología de sostenibilidad"
+          ]
+        },
+        {
+          id: "energias-renovables",
+          icon: <Lightbulb className="w-5 h-5" />,
+          title: "💡 Energías renovables para turismo",
+          description: [
+            "Soluciones energéticas sostenibles",
+            "Tecnología verde para hospedaje"
+          ]
+        },
+
+        // 8. Bienestar y Experiencias Holísticas
+        {
+          id: "centros-meditacion",
+          icon: <Heart className="w-5 h-5" />,
+          title: "🧘 Centros de meditación y yoga",
+          description: [
+            "Espacios de bienestar y reconexión",
+            "Prácticas de mindfulness en naturaleza"
+          ]
+        },
+        {
+          id: "spa-naturales",
+          icon: <Droplets className="w-5 h-5" />,
+          title: "🧘 Spa naturales o con productos orgánicos",
+          description: [
+            "Tratamientos con ingredientes naturales",
+            "Terapias holísticas sostenibles"
+          ]
+        },
+        {
+          id: "terapias-naturaleza",
+          icon: <Leaf className="w-5 h-5" />,
+          title: "🧘 Terapias en la naturaleza (baños de bosque, sonido, etc.)",
+          description: [
+            "Experiencias terapéuticas al aire libre",
+            "Sanación a través del contacto natural"
+          ]
+        },
+
+        // 9. Emprendimientos Sociales y Comunitarios
+        {
+          id: "turismo-indigena",
+          icon: <Users className="w-5 h-5" />,
+          title: "🤝 Turismo con comunidades indígenas",
+          description: [
+            "Experiencias culturales auténticas",
+            "Turismo étnico responsable"
+          ]
+        },
+        {
+          id: "empresas-b",
+          icon: <Award className="w-5 h-5" />,
+          title: "🤝 Empresas B / certificadas en sostenibilidad",
+          description: [
+            "Empresas con certificación B Corp",
+            "Negocios con triple impacto"
+          ]
+        },
+        {
+          id: "proyectos-colaborativos",
+          icon: <Network className="w-5 h-5" />,
+          title: "🤝 Proyectos colaborativos o de impacto social",
+          description: [
+            "Iniciativas de economía colaborativa",
+            "Proyectos de transformación social"
+          ]
+        },
+
+        // 10. Aliados y Patrocinadores
+        {
+          id: "instituciones-gubernamentales",
+          icon: <Building2 className="w-5 h-5" />,
+          title: "🏛️ Instituciones gubernamentales",
+          description: [
+            "Entidades del sector público",
+            "Políticas de turismo sostenible"
+          ]
+        },
+        {
+          id: "marcas-conscientes",
+          icon: <Star className="w-5 h-5" />,
+          title: "🏛️ Marcas conscientes / sostenibles",
+          description: [
+            "Empresas con propósito ambiental",
+            "Marcas comprometidas con sostenibilidad"
+          ]
+        },
+        {
+          id: "bancos-verdes",
+          icon: <DollarSign className="w-5 h-5" />,
+          title: "🏛️ Bancos o fintech verdes",
+          description: [
+            "Entidades financieras sostenibles",
+            "Productos financieros verdes"
+          ]
+        },
+        {
+          id: "fundaciones-internacionales",
+          icon: <Globe className="w-5 h-5" />,
+          title: "🏛️ Fundaciones y cooperación internacional",
+          description: [
+            "Organizaciones de desarrollo sostenible",
+            "Cooperación internacional ambiental"
+          ]
         }
       ];
       break;
@@ -198,6 +558,57 @@ const SubcategoryStep = ({ category, onSubcategorySelect, onBack }: SubcategoryS
           description: [
             "Hospedaje en entornos rurales",
             "Experiencias agropecuarias"
+          ]
+        }
+      ];
+      break;
+
+    case "sponsor":
+      subcategories = [
+        // 📚 Educación y Sensibilización Ambiental
+        {
+          id: "instituciones-educativas",
+          icon: <School className="w-5 h-5" />,
+          title: "Instituciones educativas con enfoque en turismo o ambiente",
+          description: [
+            "Universidades, colegios, institutos",
+            "Programas académicos relacionados"
+          ]
+        },
+        {
+          id: "escuelas-liderazgo",
+          icon: <Award className="w-5 h-5" />,
+          title: "Escuelas de liderazgo y cambio climático",
+          description: [
+            "Formación en liderazgo ambiental",
+            "Programas de cambio climático"
+          ]
+        },
+        {
+          id: "proyectos-pedagogicos",
+          icon: <BookOpen className="w-5 h-5" />,
+          title: "Proyectos pedagógicos territoriales o itinerantes",
+          description: [
+            "Educación territorial móvil",
+            "Pedagogía innovadora en territorio"
+          ]
+        },
+        {
+          id: "formacion-sostenibilidad",
+          icon: <GraduationCap className="w-5 h-5" />,
+          title: "Programas de formación en sostenibilidad",
+          description: [
+            "Capacitación en sostenibilidad",
+            "Programas especializados"
+          ]
+        },
+        {
+          id: "creadores-contenidos",
+          icon: <Monitor className="w-5 h-5" />,
+          title: "Creadores de contenidos educativos",
+          description: [
+            "Contenido educativo digital",
+            "Materiales pedagógicos innovadores"
           ]
         }
       ];
@@ -309,117 +720,6 @@ const SubcategoryStep = ({ category, onSubcategorySelect, onBack }: SubcategoryS
           description: [
             "Transporte inclusivo",
             "Movilidad de bajo impacto ambiental"
-          ]
-        }
-      ];
-      break;
-
-    case "ecosystem":
-      subcategories = [
-        // 🌱 ONG y Fundaciones
-        {
-          id: "conservacion-ecosistemas",
-          icon: <Leaf className="w-5 h-5" />,
-          title: "Conservación de ecosistemas y especies",
-          description: [
-            "Protección de biodiversidad",
-            "Conservación de especies en peligro"
-          ]
-        },
-        {
-          id: "educacion-ambiental-comunitaria",
-          icon: <Users className="w-5 h-5" />,
-          title: "Educación ambiental y participación comunitaria",
-          description: [
-            "Sensibilización ambiental",
-            "Participación ciudadana"
-          ]
-        },
-        {
-          id: "desarrollo-territorial",
-          icon: <MapPin className="w-5 h-5" />,
-          title: "Desarrollo territorial sostenible",
-          description: [
-            "Desarrollo local sostenible",
-            "Ordenamiento territorial"
-          ]
-        },
-        {
-          id: "fortalecimiento-comunidades",
-          icon: <Heart className="w-5 h-5" />,
-          title: "Fortalecimiento de comunidades y saberes ancestrales",
-          description: [
-            "Empoderamiento comunitario",
-            "Preservación de saberes tradicionales"
-          ]
-        },
-        {
-          id: "proteccion-agua",
-          icon: <Droplets className="w-5 h-5" />,
-          title: "Protección del agua y gestión de cuencas",
-          description: [
-            "Conservación de recursos hídricos",
-            "Manejo integral de cuencas"
-          ]
-        },
-        {
-          id: "cultura-arte",
-          icon: <Palette className="w-5 h-5" />,
-          title: "Cultura, arte y transformación social",
-          description: [
-            "Arte para el cambio social",
-            "Cultura como transformación"
-          ]
-        }
-      ];
-      break;
-
-    case "sponsor":
-      subcategories = [
-        // 📚 Educación y Sensibilización Ambiental
-        {
-          id: "instituciones-educativas",
-          icon: <School className="w-5 h-5" />,
-          title: "Instituciones educativas con enfoque en turismo o ambiente",
-          description: [
-            "Universidades, colegios, institutos",
-            "Programas académicos relacionados"
-          ]
-        },
-        {
-          id: "escuelas-liderazgo",
-          icon: <Award className="w-5 h-5" />,
-          title: "Escuelas de liderazgo y cambio climático",
-          description: [
-            "Formación en liderazgo ambiental",
-            "Programas de cambio climático"
-          ]
-        },
-        {
-          id: "proyectos-pedagogicos",
-          icon: <BookOpen className="w-5 h-5" />,
-          title: "Proyectos pedagógicos territoriales o itinerantes",
-          description: [
-            "Educación territorial móvil",
-            "Pedagogía innovadora en territorio"
-          ]
-        },
-        {
-          id: "formacion-sostenibilidad",
-          icon: <GraduationCap className="w-5 h-5" />,
-          title: "Programas de formación en sostenibilidad",
-          description: [
-            "Capacitación en sostenibilidad",
-            "Programas especializados"
-          ]
-        },
-        {
-          id: "creadores-contenidos",
-          icon: <Monitor className="w-5 h-5" />,
-          title: "Creadores de contenidos educativos",
-          description: [
-            "Contenido educativo digital",
-            "Materiales pedagógicos innovadores"
           ]
         }
       ];
