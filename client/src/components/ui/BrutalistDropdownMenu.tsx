@@ -25,9 +25,9 @@ const menuData: MenuCategory[] = [
       { label: 'Emprendimientos Sostenibles', url: '/emprendimientos' },
       { label: 'Zona Chill', url: '/zona-chill' },
       { label: 'Foro Colombia Sostenible 2025', url: '/foro' },
-      { label: '(+ VIVE NATUR)', url: '/vive-natur-plus' },
       // NATUR PRO
       { label: 'NATUR PRO', url: '/natur-pro' },
+      { label: '(+ VIVE NATUR)', url: '/vive-natur-plus' },
       { label: 'Cartel de Artistas', url: '/artistas' },
       { label: 'Talleres', url: '/talleres' },
       { label: 'Zona Startups', url: '/startups' },
@@ -161,7 +161,7 @@ export function BrutalistDropdownMenu({ isOpen, onClose, triggerRef }: Brutalist
                       VIVE NATUR
                     </h1>
                     <ul className="space-y-3">
-                      {menuData[expandedCategory].subcategories?.slice(0, 8).map((sub, subIndex) => (
+                      {menuData[expandedCategory].subcategories?.slice(0, 6).map((sub, subIndex) => (
                         <li key={subIndex}>
                           <button
                             onClick={() => handleSubcategoryClick(sub.url)}
@@ -180,7 +180,7 @@ export function BrutalistDropdownMenu({ isOpen, onClose, triggerRef }: Brutalist
                       NATUR PRO
                     </h1>
                     <ul className="space-y-3">
-                      {menuData[expandedCategory].subcategories?.slice(8).map((sub, subIndex) => (
+                      {menuData[expandedCategory].subcategories?.slice(6).map((sub, subIndex) => (
                         <li key={subIndex}>
                           <button
                             onClick={() => handleSubcategoryClick(sub.url)}
