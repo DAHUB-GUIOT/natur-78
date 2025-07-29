@@ -107,7 +107,7 @@ const LoginForm = ({ onSuccess, onCancel, showCancel = false }: LoginFormProps) 
       </div>
       
       <div className="text-right">
-        <a href="#" className="text-xs text-[#EDFF60] hover:underline">
+        <a href="#" className="text-xs text-[#cad95e] hover:underline">
           ¿Olvidaste tu contraseña?
         </a>
       </div>
@@ -126,7 +126,7 @@ const LoginForm = ({ onSuccess, onCancel, showCancel = false }: LoginFormProps) 
         
         <Button 
           type="submit" 
-          className="bg-[#EDFF60] text-[#222408] hover:bg-[#CEDD9F]"
+          className="bg-[#cad95e] text-[#222408] hover:bg-[#CEDD9F]"
           disabled={isLoading}
         >
           {isLoading ? (

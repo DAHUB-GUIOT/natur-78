@@ -262,7 +262,7 @@ const AdminSimple = () => {
                         </Badge>
                         <Badge 
                           variant="outline" 
-                          className="border-[#EDFF60]/30 text-[#EDFF60]"
+                          className="border-[#cad95e]/30 text-[#cad95e]"
                         >
                           {company.type}
                         </Badge>

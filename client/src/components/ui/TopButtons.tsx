@@ -17,13 +17,13 @@ export function TopButtons() {
       <Button 
         variant="ghost" 
         size="icon" 
-        className="text-[#FCF8EE] hover:text-[#EDFF60] hover:bg-transparent w-8 h-8 touch-manipulation"
+        className="text-[#FCF8EE] hover:text-[#cad95e] hover:bg-transparent w-8 h-8 touch-manipulation"
       >
         <Globe className="h-4 w-4" />
       </Button>
       <Link to="/registro">
         <Button 
-          className="bg-[#EDFF60] text-[#191C0F] hover:bg-[#CEDD9F] h-8 px-2 text-xs font-medium touch-manipulation"
+          className="bg-[#cad95e] text-[#191C0F] hover:bg-[#CEDD9F] h-8 px-2 text-xs font-medium touch-manipulation"
         >
           <UserPlus className="mr-1 h-3 w-3" />
           Registro
@@ -31,7 +31,7 @@ export function TopButtons() {
       </Link>
       <Link to="/portal-viajeros">
         <Button 
-          className="bg-[#EDFF60] text-[#191C0F] hover:bg-[#CEDD9F] h-8 px-2 text-xs font-medium touch-manipulation"
+          className="bg-[#cad95e] text-[#191C0F] hover:bg-[#CEDD9F] h-8 px-2 text-xs font-medium touch-manipulation"
         >
           <LogIn className="mr-1 h-3 w-3" />
           Explorar

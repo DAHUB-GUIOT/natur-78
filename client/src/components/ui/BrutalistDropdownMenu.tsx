@@ -116,15 +116,15 @@ export function BrutalistDropdownMenu({ isOpen, onClose, triggerRef }: Brutalist
   return (
     <div 
       ref={menuRef}
-      className="fixed inset-0 z-50 bg-[#0a1a0a] text-[#EDFF60] transform transition-all duration-300 ease-out"
+      className="fixed inset-0 z-50 bg-[#0a1a0a] text-[#cad95e] transform transition-all duration-300 ease-out"
       data-state={isOpen ? 'open' : 'closed'}
     >
       {/* Header */}
-      <div className="flex items-center justify-between p-6 border-b border-[#EDFF60]/20">
-        <h1 className="text-4xl font-gasoek text-[#EDFF60] tracking-wider">NATUR</h1>
+      <div className="flex items-center justify-between p-6 border-b border-[#cad95e]/20">
+        <h1 className="text-4xl font-gasoek text-[#cad95e] tracking-wider">NATUR</h1>
         <button 
           onClick={onClose}
-          className="text-[#EDFF60] hover:text-white text-2xl font-bold"
+          className="text-[#cad95e] hover:text-white text-2xl font-bold"
         >
           ×
         </button>
@@ -133,7 +133,7 @@ export function BrutalistDropdownMenu({ isOpen, onClose, triggerRef }: Brutalist
       {/* Menu Content - BIME Style Layout */}
       <div className="flex h-full">
         {/* Left Sidebar - Main Categories */}
-        <div className="w-1/4 bg-[#0f2d0f] border-r border-[#EDFF60]/20 p-6">
+        <div className="w-1/4 bg-[#0f2d0f] border-r border-[#cad95e]/20 p-6">
           <div className="space-y-4">
             {menuData.map((category, index) => (
               <button
@@ -141,8 +141,8 @@ export function BrutalistDropdownMenu({ isOpen, onClose, triggerRef }: Brutalist
                 onClick={() => handleCategoryClick(index)}
                 className={`w-full text-left p-2 text-sm font-jakarta uppercase tracking-wide transition-colors duration-200 ${
                   expandedCategory === index 
-                    ? 'text-[#EDFF60] bg-[#1a3d1a]' 
-                    : 'text-gray-400 hover:text-[#EDFF60]'
+                    ? 'text-[#cad95e] bg-[#1a3d1a]' 
+                    : 'text-gray-400 hover:text-[#cad95e]'
                 }`}
               >
                 <div className="flex items-center gap-2">
@@ -166,7 +166,7 @@ export function BrutalistDropdownMenu({ isOpen, onClose, triggerRef }: Brutalist
                 <div className="grid grid-cols-2 gap-8 h-full max-w-6xl mx-auto">
                   {/* VIVE NATUR Column */}
                   <div>
-                    <h1 className="text-lg font-jakarta text-[#EDFF60] px-3 py-1 uppercase tracking-wide mb-4 text-center">
+                    <h1 className="text-lg font-jakarta text-[#cad95e] px-3 py-1 uppercase tracking-wide mb-4 text-center">
                       VIVE NATUR
                     </h1>
                     <ul className="space-y-2">
@@ -174,7 +174,7 @@ export function BrutalistDropdownMenu({ isOpen, onClose, triggerRef }: Brutalist
                         <li key={subIndex}>
                           <button
                             onClick={() => handleSubcategoryClick(sub.url)}
-                            className="text-gray-300 hover:text-[#EDFF60] transition-colors duration-200 text-left block w-full text-sm font-light"
+                            className="text-gray-300 hover:text-[#cad95e] transition-colors duration-200 text-left block w-full text-sm font-light"
                           >
                             • {sub.label}
                           </button>
@@ -185,7 +185,7 @@ export function BrutalistDropdownMenu({ isOpen, onClose, triggerRef }: Brutalist
 
                   {/* NATUR PRO Column */}
                   <div>
-                    <h1 className="text-lg font-jakarta text-[#EDFF60] px-3 py-1 uppercase tracking-wide mb-4 text-center">
+                    <h1 className="text-lg font-jakarta text-[#cad95e] px-3 py-1 uppercase tracking-wide mb-4 text-center">
                       NATUR PRO
                     </h1>
                     <ul className="space-y-2">
@@ -193,7 +193,7 @@ export function BrutalistDropdownMenu({ isOpen, onClose, triggerRef }: Brutalist
                         <li key={subIndex}>
                           <button
                             onClick={() => handleSubcategoryClick(sub.url)}
-                            className="text-gray-300 hover:text-[#EDFF60] transition-colors duration-200 text-left block w-full text-sm font-light"
+                            className="text-gray-300 hover:text-[#cad95e] transition-colors duration-200 text-left block w-full text-sm font-light"
                           >
                             • {sub.label}
                           </button>
@@ -207,18 +207,18 @@ export function BrutalistDropdownMenu({ isOpen, onClose, triggerRef }: Brutalist
               {/* NOTICIAS Category - 3 Article Cards */}
               {expandedCategory === 1 && (
                 <div className="max-w-6xl mx-auto">
-                  <h1 className="text-2xl font-jakarta text-[#EDFF60] uppercase tracking-wide mb-6 text-center">
+                  <h1 className="text-2xl font-jakarta text-[#cad95e] uppercase tracking-wide mb-6 text-center">
                     NOTICIAS
                   </h1>
                   <div className="grid grid-cols-3 gap-6">
                     {menuData[expandedCategory].subcategories?.map((article, articleIndex) => (
-                      <div key={articleIndex} className="bg-[#0f2d0f] border border-[#EDFF60]/20 p-6 hover:border-[#EDFF60]/40 transition-colors duration-200 rounded-lg">
+                      <div key={articleIndex} className="bg-[#0f2d0f] border border-[#cad95e]/20 p-6 hover:border-[#cad95e]/40 transition-colors duration-200 rounded-lg">
                         <button
                           onClick={() => handleSubcategoryClick(article.url)}
                           className="text-left block w-full"
                         >
                           <div className="text-3xl mb-4 text-center">📰</div>
-                          <h3 className="text-[#EDFF60] text-sm font-jakarta mb-3 leading-relaxed">{article.label}</h3>
+                          <h3 className="text-[#cad95e] text-sm font-jakarta mb-3 leading-relaxed">{article.label}</h3>
                           <p className="text-gray-300 text-xs font-light">Descubre las últimas tendencias y noticias del turismo regenerativo en Colombia...</p>
                         </button>
                       </div>
@@ -230,12 +230,12 @@ export function BrutalistDropdownMenu({ isOpen, onClose, triggerRef }: Brutalist
               {/* PLATAFORMA NATUR Category - 3 Platform Cards */}
               {expandedCategory === 2 && (
                 <div className="max-w-6xl mx-auto">
-                  <h1 className="text-2xl font-jakarta text-[#EDFF60] uppercase tracking-wide mb-6 text-center">
+                  <h1 className="text-2xl font-jakarta text-[#cad95e] uppercase tracking-wide mb-6 text-center">
                     PLATAFORMA NATUR
                   </h1>
                   <div className="grid grid-cols-3 gap-6">
                     {menuData[expandedCategory].subcategories?.map((platform, platformIndex) => (
-                      <div key={platformIndex} className="bg-[#0f2d0f] border border-[#EDFF60]/20 p-8 hover:border-[#EDFF60]/40 transition-colors duration-200 text-center rounded-lg">
+                      <div key={platformIndex} className="bg-[#0f2d0f] border border-[#cad95e]/20 p-8 hover:border-[#cad95e]/40 transition-colors duration-200 text-center rounded-lg">
                         <button
                           onClick={() => handleSubcategoryClick(platform.url)}
                           className="block w-full"
@@ -245,7 +245,7 @@ export function BrutalistDropdownMenu({ isOpen, onClose, triggerRef }: Brutalist
                             {platformIndex === 1 && '🧭'}
                             {platformIndex === 2 && '🗺️'}
                           </div>
-                          <h3 className="text-[#EDFF60] text-lg font-jakarta mb-3">{platform.label}</h3>
+                          <h3 className="text-[#cad95e] text-lg font-jakarta mb-3">{platform.label}</h3>
                           <p className="text-gray-300 text-sm font-light">
                             {platformIndex === 0 && 'Conecta con empresas sostenibles y descubre oportunidades de negocio'}
                             {platformIndex === 1 && 'Descubre experiencias auténticas y conecta con comunidades locales'}
@@ -261,7 +261,7 @@ export function BrutalistDropdownMenu({ isOpen, onClose, triggerRef }: Brutalist
               {/* INFO Category - Single Column Layout */}
               {expandedCategory === 3 && (
                 <div className="max-w-2xl mx-auto">
-                  <h1 className="text-2xl font-jakarta text-[#EDFF60] uppercase tracking-wide mb-6 text-center">
+                  <h1 className="text-2xl font-jakarta text-[#cad95e] uppercase tracking-wide mb-6 text-center">
                     {menuData[expandedCategory].title}
                   </h1>
                   <ul className="space-y-3 grid grid-cols-1 gap-3">
@@ -269,7 +269,7 @@ export function BrutalistDropdownMenu({ isOpen, onClose, triggerRef }: Brutalist
                       <li key={subIndex}>
                         <button
                           onClick={() => handleSubcategoryClick(sub.url)}
-                          className="text-gray-300 hover:text-[#EDFF60] transition-colors duration-200 text-left block text-base font-light w-full p-3 border border-[#EDFF60]/10 hover:border-[#EDFF60]/30 rounded"
+                          className="text-gray-300 hover:text-[#cad95e] transition-colors duration-200 text-left block text-base font-light w-full p-3 border border-[#cad95e]/10 hover:border-[#cad95e]/30 rounded"
                         >
                           • {sub.label}
                         </button>
@@ -284,17 +284,17 @@ export function BrutalistDropdownMenu({ isOpen, onClose, triggerRef }: Brutalist
           {/* Default State - Show Main Menu */}
           {expandedCategory === null && (
             <div className="flex flex-col justify-center items-center h-full text-center">
-              <h2 className="text-3xl font-gasoek text-[#EDFF60] mb-4 uppercase tracking-wider">
+              <h2 className="text-3xl font-gasoek text-[#cad95e] mb-4 uppercase tracking-wider">
                 FESTIVAL NATUR 2025
               </h2>
               <p className="text-gray-300 text-lg mb-8 max-w-2xl">
                 Selecciona una categoría del menú lateral para explorar todas las opciones del festival de turismo sostenible más importante de Colombia.
               </p>
               <div className="grid grid-cols-2 gap-4">
-                <button className="bg-[#EDFF60] text-[#0a1a0a] px-6 py-3 font-jakarta-bold uppercase tracking-wide hover:bg-yellow-300 transition-colors">
+                <button className="bg-[#cad95e] text-[#0a1a0a] px-6 py-3 font-jakarta-bold uppercase tracking-wide hover:bg-yellow-300 transition-colors">
                   Boletos
                 </button>
-                <button className="border border-[#EDFF60] text-[#EDFF60] px-6 py-3 font-jakarta-bold uppercase tracking-wide hover:bg-[#EDFF60] hover:text-[#0a1a0a] transition-colors">
+                <button className="border border-[#cad95e] text-[#cad95e] px-6 py-3 font-jakarta-bold uppercase tracking-wide hover:bg-[#cad95e] hover:text-[#0a1a0a] transition-colors">
                   Agenda
                 </button>
               </div>

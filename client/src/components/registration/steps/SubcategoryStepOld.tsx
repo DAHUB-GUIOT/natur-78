@@ -1040,11 +1040,11 @@ const SubcategoryStep = ({ category, onSubcategorySelect, onBack }: SubcategoryS
           variant="ghost" 
           onClick={onBack}
           className="hover:bg-transparent p-0 mr-4"
-          style={{ color: '#EDFF60' }}
+          style={{ color: '#cad95e' }}
         >
           <ArrowLeft className="h-5 w-5" />
         </Button>
-        <h2 className="text-xl sm:text-2xl font-gasoek tracking-wide uppercase font-bold" style={{ color: '#EDFF60' }}>
+        <h2 className="text-xl sm:text-2xl font-gasoek tracking-wide uppercase font-bold" style={{ color: '#cad95e' }}>
           {title}
         </h2>
       </div>
@@ -1053,15 +1053,15 @@ const SubcategoryStep = ({ category, onSubcategorySelect, onBack }: SubcategoryS
         {subcategories.map((subcategory) => (
           <div
             key={subcategory.id}
-            className="p-4 sm:p-6 border-2 border-[#EDFF60] bg-transparent rounded-xl cursor-pointer transition-all duration-300 hover:border-[#EDFF60] hover:bg-[#EDFF60]/5 backdrop-blur-sm"
+            className="p-4 sm:p-6 border-2 border-[#cad95e] bg-transparent rounded-xl cursor-pointer transition-all duration-300 hover:border-[#cad95e] hover:bg-[#cad95e]/5 backdrop-blur-sm"
             onClick={() => onSubcategorySelect(subcategory.id)}
           >
             <div className="flex items-start gap-4">
-              <div className="mt-1" style={{ color: '#EDFF60' }}>
+              <div className="mt-1" style={{ color: '#cad95e' }}>
                 {subcategory.icon}
               </div>
               <div>
-                <h3 className="font-bold text-base sm:text-lg" style={{ color: '#EDFF60' }}>
+                <h3 className="font-bold text-base sm:text-lg" style={{ color: '#cad95e' }}>
                   {subcategory.title}
                 </h3>
                 <ul className="mt-3 space-y-2">
@@ -1069,9 +1069,9 @@ const SubcategoryStep = ({ category, onSubcategorySelect, onBack }: SubcategoryS
                     <li
                       key={index}
                       className="font-medium text-sm flex items-center gap-2"
-                      style={{ color: '#EDFF60' }}
+                      style={{ color: '#cad95e' }}
                     >
-                      <span className="w-2 h-2 rounded-full" style={{ backgroundColor: '#EDFF60' }}></span>
+                      <span className="w-2 h-2 rounded-full" style={{ backgroundColor: '#cad95e' }}></span>
                       {item}
                     </li>
                   ))}

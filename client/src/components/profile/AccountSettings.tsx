@@ -16,7 +16,7 @@ const AccountSettings = () => {
   
   return (
     <div className="bg-[#FCF8EE]/10 p-6 rounded-lg border border-[#FCF8EE]/10">
-      <h3 className="text-lg font-semibold text-[#EDFF60] flex items-center gap-2 mb-4">
+      <h3 className="text-lg font-semibold text-[#cad95e] flex items-center gap-2 mb-4">
         <UserCog className="h-5 w-5" />
         Ajustes de cuenta
       </h3>

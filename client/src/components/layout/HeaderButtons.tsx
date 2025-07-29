@@ -17,7 +17,7 @@ export function HeaderButtons({ showPortalButtons = false }: HeaderButtonsProps)
         <Button 
           variant="ghost" 
           size="icon" 
-          className="text-[#FCF8EE] hover:text-[#EDFF60] hover:bg-transparent w-10 h-10 touch-manipulation min-w-[44px]"
+          className="text-[#FCF8EE] hover:text-[#cad95e] hover:bg-transparent w-10 h-10 touch-manipulation min-w-[44px]"
         >
           <Globe className="h-4 w-4" />
         </Button>

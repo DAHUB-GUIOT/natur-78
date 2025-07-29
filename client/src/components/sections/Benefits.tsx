@@ -24,10 +24,10 @@ export function Benefits() {
       <div className="flex w-full max-w-6xl mx-auto flex-col items-center">
         <h2 style={{
         letterSpacing: 1.5
-      }} className="font-gasoek text-[#EDFF60] text-center text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-normal leading-tight tracking-wide uppercase max-w-[90vw] mb-6 sm:mb-8 md:mb-10">¿POR QUÉ SER PARTE DE ESTA TRIBU?</h2>
+      }} className="font-gasoek text-[#cad95e] text-center text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-normal leading-tight tracking-wide uppercase max-w-[90vw] mb-6 sm:mb-8 md:mb-10">¿POR QUÉ SER PARTE DE ESTA TRIBU?</h2>
         
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 w-full mt-4 sm:mt-6 md:mt-8">
-          {benefits.map((benefit, index) => <div key={index} className="backdrop-blur-sm bg-white/5 border border-[#EDFF60]/20 rounded-xl p-4 sm:p-5 md:p-6 hover:border-[#EDFF60]/40 transition-all duration-300 hover:bg-white/10">
+          {benefits.map((benefit, index) => <div key={index} className="backdrop-blur-sm bg-white/5 border border-[#cad95e]/20 rounded-xl p-4 sm:p-5 md:p-6 hover:border-[#cad95e]/40 transition-all duration-300 hover:bg-white/10">
               <div className="flex items-start gap-3 md:gap-4">
                 <img src={benefit.icon} alt="" className="w-8 sm:w-10 md:w-12 aspect-square object-contain shrink-0 mt-1" />
                 <div className="grow font-jakarta text-xs sm:text-sm md:text-base text-[#FCF8EE] leading-relaxed">
@@ -38,19 +38,19 @@ export function Benefits() {
         </div>
 
         <Link to="/reserva" className="
-            bg-[#EDFF60] text-black w-full max-w-[90vw] sm:max-w-[320px] 
+            bg-[#cad95e] text-black w-full max-w-[90vw] sm:max-w-[320px] 
             text-sm sm:text-base
             text-center uppercase tracking-wide font-bold
             mt-6 sm:mt-8 md:mt-10
             px-6 py-3 sm:px-8 sm:py-4 
-            hover:bg-[#EDFF60]/90 transition-all duration-300
+            hover:bg-[#cad95e]/90 transition-all duration-300
             font-unbounded rounded-lg shadow-lg
           ">
           ¡Reserva tu stand o patrocina!
         </Link>
 
         <div className="mt-6 sm:mt-8 md:mt-10 max-w-4xl">
-          <h4 className="text-center leading-5 sm:leading-6 md:leading-7 tracking-wide font-unbounded text-xs sm:text-sm md:text-base text-[#EDFF60]">
+          <h4 className="text-center leading-5 sm:leading-6 md:leading-7 tracking-wide font-unbounded text-xs sm:text-sm md:text-base text-[#cad95e]">
             El Festival NATUR es el punto de encuentro entre la sostenibilidad, el turismo y la innovación. Aquí convergen viajeros, empresas y destinos que creen en el turismo como fuerza transformadora.
           </h4>
         </div>

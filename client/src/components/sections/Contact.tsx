@@ -28,15 +28,15 @@ export function Contact() {
 
         <div className="backdrop-blur-sm bg-white/5 border border-[#CEDD9F]/20 rounded-xl p-6 sm:p-8 md:p-10 mb-6">
           <div className="flex items-center justify-center gap-4 sm:gap-6 md:gap-8 flex-wrap">
-            {socialLinks.map((link, index) => <a key={index} href={link.href} aria-label={link.label} className="backdrop-blur-sm bg-white/5 border border-[#CEDD9F]/30 rounded-full p-3 sm:p-4 text-[#CEDD9F] hover:text-[#EDFF60] hover:border-[#EDFF60]/60 hover:scale-110 transform transition-all duration-300">
+            {socialLinks.map((link, index) => <a key={index} href={link.href} aria-label={link.label} className="backdrop-blur-sm bg-white/5 border border-[#CEDD9F]/30 rounded-full p-3 sm:p-4 text-[#CEDD9F] hover:text-[#cad95e] hover:border-[#cad95e]/60 hover:scale-110 transform transition-all duration-300">
                 {link.icon}
               </a>)}
           </div>
         </div>
 
-        <div className="backdrop-blur-sm bg-white/5 border border-[#EDFF60]/20 rounded-xl p-4 sm:p-6 text-center">
+        <div className="backdrop-blur-sm bg-white/5 border border-[#cad95e]/20 rounded-xl p-4 sm:p-6 text-center">
           <p className="text-[#FCF8EE] text-xs sm:text-sm md:text-base font-jakarta-light mb-2">Una iniciativa de</p>
-          <div className="text-[#EDFF60] text-lg sm:text-xl md:text-2xl font-jakarta-bold">tripCol</div>
+          <div className="text-[#cad95e] text-lg sm:text-xl md:text-2xl font-jakarta-bold">tripCol</div>
         </div>
       </div>
     </section>;

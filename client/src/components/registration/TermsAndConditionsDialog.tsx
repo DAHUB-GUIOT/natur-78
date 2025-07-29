@@ -19,9 +19,9 @@ const TermsAndConditionsDialog = () => {
           Ver más Términos y Condiciones de Uso
         </Button>
       </DialogTrigger>
-      <DialogContent className="bg-[#222408] border-[#EDFF60]/30 text-[#FCF8EE] max-w-2xl">
+      <DialogContent className="bg-[#222408] border-[#cad95e]/30 text-[#FCF8EE] max-w-2xl">
         <DialogHeader>
-          <DialogTitle className="text-[#EDFF60] text-xl font-gasoek">
+          <DialogTitle className="text-[#cad95e] text-xl font-gasoek">
             Términos y Condiciones de Uso
           </DialogTitle>
           <DialogDescription className="text-[#FCF8EE]/70 text-sm">
@@ -38,7 +38,7 @@ const TermsAndConditionsDialog = () => {
             </p>
 
             <div className="space-y-2">
-              <h3 className="font-semibold text-[#EDFF60]">1. Uso del sitio web</h3>
+              <h3 className="font-semibold text-[#cad95e]">1. Uso del sitio web</h3>
               <p>
                 Este sitio tiene como finalidad brindar información sobre el Festival NATUR, sus actividades, convocatorias, programación y aliados. 
                 Cualquier uso indebido, reproducción no autorizada de los contenidos, o uso con fines comerciales sin previa autorización escrita, está prohibido.
@@ -46,14 +46,14 @@ const TermsAndConditionsDialog = () => {
             </div>
 
             <div className="space-y-2">
-              <h3 className="font-semibold text-[#EDFF60]">2. Tratamiento de datos personales</h3>
+              <h3 className="font-semibold text-[#cad95e]">2. Tratamiento de datos personales</h3>
               <p>
                 En cumplimiento de la Ley 1581 de 2012 y sus normas reglamentarias, informamos que los datos personales recolectados a través de formularios
                 en este sitio web serán tratados conforme a las siguientes condiciones:
               </p>
               <div className="pl-4 space-y-3 mt-2">
                 <div>
-                  <h4 className="font-medium text-[#EDFF60]/80">a. Finalidad del tratamiento</h4>
+                  <h4 className="font-medium text-[#cad95e]/80">a. Finalidad del tratamiento</h4>
                   <p>Los datos recolectados serán utilizados exclusivamente para:</p>
                   <ul className="list-disc pl-5 space-y-1 mt-1">
                     <li>Gestionar la inscripción de participantes, artistas, aliados, proveedores y público general.</li>
@@ -64,7 +64,7 @@ const TermsAndConditionsDialog = () => {
                 </div>
 
                 <div>
-                  <h4 className="font-medium text-[#EDFF60]/80">b. Responsable del tratamiento</h4>
+                  <h4 className="font-medium text-[#cad95e]/80">b. Responsable del tratamiento</h4>
                   <p>Jorge Andrés Rodríguez</p>
                   <p>Correo electrónico: festivalnatur@festivalnatur.org</p>
                   <p>Dirección: Calle 11 n 3 -25</p>
@@ -72,7 +72,7 @@ const TermsAndConditionsDialog = () => {
                 </div>
 
                 <div>
-                  <h4 className="font-medium text-[#EDFF60]/80">c. Derechos del titular de los datos</h4>
+                  <h4 className="font-medium text-[#cad95e]/80">c. Derechos del titular de los datos</h4>
                   <p>De acuerdo con la legislación colombiana, usted tiene derecho a:</p>
                   <ul className="list-disc pl-5 space-y-1 mt-1">
                     <li>Conocer, actualizar y rectificar sus datos personales.</li>
@@ -88,7 +88,7 @@ const TermsAndConditionsDialog = () => {
                 </div>
 
                 <div>
-                  <h4 className="font-medium text-[#EDFF60]/80">d. Autorización</h4>
+                  <h4 className="font-medium text-[#cad95e]/80">d. Autorización</h4>
                   <p>
                     Al diligenciar formularios en este sitio web, usted manifiesta haber sido informado sobre el tratamiento de sus datos personales 
                     y autoriza de manera libre, expresa y voluntaria el uso de los mismos conforme a las finalidades descritas.
@@ -98,7 +98,7 @@ const TermsAndConditionsDialog = () => {
             </div>
 
             <div className="space-y-2">
-              <h3 className="font-semibold text-[#EDFF60]">3. Propiedad intelectual</h3>
+              <h3 className="font-semibold text-[#cad95e]">3. Propiedad intelectual</h3>
               <p>
                 Todos los contenidos del sitio web (textos, imágenes, logos, videos, marcas) son propiedad del Festival NATUR o de sus respectivos autores 
                 y están protegidos por las normas nacionales e internacionales de derechos de autor. Está prohibida su reproducción total o parcial sin autorización previa.
@@ -106,7 +106,7 @@ const TermsAndConditionsDialog = () => {
             </div>
 
             <div className="space-y-2">
-              <h3 className="font-semibold text-[#EDFF60]">4. Modificaciones</h3>
+              <h3 className="font-semibold text-[#cad95e]">4. Modificaciones</h3>
               <p>
                 El Festival se reserva el derecho de modificar estos Términos y Condiciones en cualquier momento. 
                 Las modificaciones entrarán en vigencia desde su publicación en el sitio web.
@@ -114,7 +114,7 @@ const TermsAndConditionsDialog = () => {
             </div>
 
             <div className="space-y-2">
-              <h3 className="font-semibold text-[#EDFF60]">5. Legislación aplicable y jurisdicción</h3>
+              <h3 className="font-semibold text-[#cad95e]">5. Legislación aplicable y jurisdicción</h3>
               <p>
                 Estos Términos y Condiciones se rigen por las leyes de la República de Colombia. 
                 Cualquier controversia se resolverá ante la jurisdicción ordinaria colombiana, en la ciudad de Bogotá D.C.

@@ -38,7 +38,7 @@ export default function Reservation() {
                 <a
                   key={index}
                   href={link.href}
-                  className="bg-[#CEDD9F] p-2 sm:p-3 rounded-lg hover:bg-[#EDFF60] transition-colors"
+                  className="bg-[#CEDD9F] p-2 sm:p-3 rounded-lg hover:bg-[#cad95e] transition-colors"
                 >
                   {link.icon}
                 </a>
@@ -73,14 +73,14 @@ export default function Reservation() {
               </Label>
             </div>
             
-            <Button type="submit" className="w-full bg-[#EDFF60] text-[#222408] hover:bg-[#CEDD9F] text-base sm:text-lg font-medium py-4 sm:py-6">
+            <Button type="submit" className="w-full bg-[#cad95e] text-[#222408] hover:bg-[#CEDD9F] text-base sm:text-lg font-medium py-4 sm:py-6">
               ENVIAR
             </Button>
           </form>
         </div>
       </div>
 
-      <div className="text-[#EDFF60] text-center text-lg sm:text-xl md:text-2xl mt-12 sm:mt-16 font-gasoek tracking-wide uppercase">
+      <div className="text-[#cad95e] text-center text-lg sm:text-xl md:text-2xl mt-12 sm:mt-16 font-gasoek tracking-wide uppercase">
         SOMOS UN MOVIMIENTO, UNA FIESTA, UNA REVOLUCIÓN.
       </div>
     </div>

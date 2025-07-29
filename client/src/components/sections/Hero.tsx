@@ -23,7 +23,7 @@ export function Hero() {
       <nav className="fixed top-0 left-0 right-0 z-50 shadow-lg" style={{ backgroundColor: '#181c0d', borderBottom: '1px solid #2a2f1a' }}>
         <div className="flex items-center justify-between max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center space-x-4">
-            <span className="font-bold text-2xl" style={{ color: '#EDFF60' }}>N</span>
+            <span className="font-bold text-2xl" style={{ color: '#cad95e' }}>N</span>
           </div>
           
           {/* Portal Buttons in Top Menu */}
@@ -33,7 +33,7 @@ export function Hero() {
                 size="sm" 
                 variant="outline"
                 className="bg-transparent border-2 text-black font-medium px-4 py-2 rounded-full backdrop-blur-sm hover:opacity-90"
-                style={{ borderColor: '#EDFF60', color: '#EDFF60' }}
+                style={{ borderColor: '#cad95e', color: '#cad95e' }}
               >
                 Portal Empresas
               </Button>
@@ -44,7 +44,7 @@ export function Hero() {
                 size="sm" 
                 variant="outline"
                 className="bg-transparent border-2 text-black font-medium px-4 py-2 rounded-full backdrop-blur-sm hover:opacity-90"
-                style={{ borderColor: '#EDFF60', color: '#EDFF60' }}
+                style={{ borderColor: '#cad95e', color: '#cad95e' }}
               >
                 Mapa Turismo Sostenible
               </Button>
@@ -63,15 +63,15 @@ export function Hero() {
         <div className="max-w-7xl w-full">
           <div className="max-w-3xl">
             {/* Main Title */}
-            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-gasoek mb-3 tracking-wide leading-none" style={{ color: '#EDFF60' }}>
+            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-gasoek mb-3 tracking-wide leading-none" style={{ color: '#cad95e' }}>
               NATUR
             </h1>
             
             {/* Subtitle */}
-            <h2 className="text-xl sm:text-2xl md:text-3xl font-gasoek mb-6 leading-tight max-w-xl" style={{ color: '#EDFF60' }}>
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-gasoek mb-6 leading-tight max-w-xl" style={{ color: '#cad95e' }}>
               TODO SOBRE TURISMO SOSTENIBLE
               <br />
-              <span style={{ color: '#EDFF60', opacity: 0.8 }}>Y MÁS</span>
+              <span style={{ color: '#cad95e', opacity: 0.8 }}>Y MÁS</span>
             </h2>
 
             {/* Main Action Buttons - Stacked vertically like BIME */}
@@ -80,7 +80,7 @@ export function Hero() {
                 <Button 
                   size="lg" 
                   className="text-black font-bold text-sm px-6 py-3 rounded-lg shadow-lg flex items-center justify-center w-full hover:opacity-90"
-                  style={{ backgroundColor: '#EDFF60' }}
+                  style={{ backgroundColor: '#cad95e' }}
                 >
                   <Ticket className="w-4 h-4 mr-2" />
                   TICKETS

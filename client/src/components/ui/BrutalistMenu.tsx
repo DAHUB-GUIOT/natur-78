@@ -19,7 +19,7 @@ export function BrutalistMenu() {
       <button
         ref={triggerRef}
         onClick={toggleMenu}
-        className="relative p-3 bg-[#0a1a0a] border-2 border-[#EDFF60] hover:bg-[#EDFF60] hover:text-[#0a1a0a] text-[#EDFF60] transition-all duration-200 group"
+        className="relative p-3 bg-[#0a1a0a] border-2 border-[#cad95e] hover:bg-[#cad95e] hover:text-[#0a1a0a] text-[#cad95e] transition-all duration-200 group"
       >
         {isMenuOpen ? (
           <X className="w-6 h-6" />
@@ -29,7 +29,7 @@ export function BrutalistMenu() {
         <span className="sr-only">Abrir menú</span>
         
         {/* Brutalist accent */}
-        <div className="absolute -top-1 -right-1 w-3 h-3 bg-[#EDFF60] group-hover:bg-[#0a1a0a] transition-colors duration-200"></div>
+        <div className="absolute -top-1 -right-1 w-3 h-3 bg-[#cad95e] group-hover:bg-[#0a1a0a] transition-colors duration-200"></div>
       </button>
 
       <BrutalistDropdownMenu 

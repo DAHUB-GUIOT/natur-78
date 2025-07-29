@@ -10,7 +10,7 @@ export function Participation() {
           lineHeight: 1.1,
           fontWeight: 700,
           letterSpacing: 1.5
-        }} className="font-gasoek text-[#EDFF60] text-center lg:text-left text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-normal leading-tight tracking-wide uppercase mb-4 sm:mb-6">
+        }} className="font-gasoek text-[#cad95e] text-center lg:text-left text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-normal leading-tight tracking-wide uppercase mb-4 sm:mb-6">
             BUSCAMOS INICIATIVAS QUE HAGAN TURISMO SOSTENIBLE
           </h1>
 
@@ -24,7 +24,7 @@ export function Participation() {
         {/* Participants Grid */}
         <div className="w-full mt-8 md:mt-12 flex flex-col items-center">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 md:gap-5 w-full">
-            {PARTICIPANTS.map((label, idx) => <div key={idx} className="backdrop-blur-sm bg-white/5 border border-[#CEDD9F]/30 rounded-xl text-[#CEDD9F] text-center font-jakarta text-sm sm:text-base md:text-lg font-medium px-4 py-6 sm:px-6 sm:py-8 flex items-center justify-center hover:border-[#EDFF60]/60 hover:bg-white/10 transition-all duration-300">
+            {PARTICIPANTS.map((label, idx) => <div key={idx} className="backdrop-blur-sm bg-white/5 border border-[#CEDD9F]/30 rounded-xl text-[#CEDD9F] text-center font-jakarta text-sm sm:text-base md:text-lg font-medium px-4 py-6 sm:px-6 sm:py-8 flex items-center justify-center hover:border-[#cad95e]/60 hover:bg-white/10 transition-all duration-300">
                 {label}
               </div>)}
           </div>
@@ -32,7 +32,7 @@ export function Participation() {
 
         {/* Button */}
         <div className="w-full flex justify-center mt-8 md:mt-12">
-          <Link to="/reserva" className="w-full max-w-[400px] bg-[#EDFF60] text-[#232611] rounded-lg text-sm sm:text-base md:text-lg font-unbounded font-bold uppercase px-6 py-3 sm:px-8 sm:py-4 tracking-tight hover:bg-[#EDFF60]/90 transition-all duration-300 shadow-lg text-center" style={{
+          <Link to="/reserva" className="w-full max-w-[400px] bg-[#cad95e] text-[#232611] rounded-lg text-sm sm:text-base md:text-lg font-unbounded font-bold uppercase px-6 py-3 sm:px-8 sm:py-4 tracking-tight hover:bg-[#cad95e]/90 transition-all duration-300 shadow-lg text-center" style={{
           letterSpacing: 0
         }}>
             ¡Reserva tu stand o patrocina!

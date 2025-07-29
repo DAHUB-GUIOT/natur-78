@@ -96,7 +96,7 @@ const ProfileImageUpload = ({ type, onSuccess }: ProfileImageUploadProps) => {
       
       <Button
         type="button"
-        className={`bg-[#EDFF60]/80 text-[#222408] hover:bg-[#EDFF60] rounded-full ${type === 'profile' ? 'p-2' : 'px-3 py-2'}`}
+        className={`bg-[#cad95e]/80 text-[#222408] hover:bg-[#cad95e] rounded-full ${type === 'profile' ? 'p-2' : 'px-3 py-2'}`}
         onClick={handleClick}
         disabled={isUploading}
       >

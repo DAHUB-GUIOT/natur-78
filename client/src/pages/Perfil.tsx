@@ -36,9 +36,9 @@ const Perfil = () => {
     return (
       <div className="p-6">
         <div className="text-center py-12">
-          <h2 className="text-2xl font-gasoek text-[#EDFF60] mb-4">Acceso restringido</h2>
+          <h2 className="text-2xl font-gasoek text-[#cad95e] mb-4">Acceso restringido</h2>
           <p className="text-[#FCF8EE] mb-6">Necesitas iniciar sesión para ver tu perfil</p>
-          <Button onClick={() => setLocation('/registro')} className="bg-[#EDFF60] text-[#222408] hover:bg-[#CEDD9F]">
+          <Button onClick={() => setLocation('/registro')} className="bg-[#cad95e] text-[#222408] hover:bg-[#CEDD9F]">
             Registrarse
           </Button>
         </div>
@@ -81,29 +81,29 @@ const Perfil = () => {
         <div className="lg:w-2/3">
           <Tabs defaultValue="overview" value={activeTab} onValueChange={setActiveTab}>
             <TabsList className="bg-[#FCF8EE]/10 mb-6">
-              <TabsTrigger value="overview" className="data-[state=active]:bg-[#EDFF60] data-[state=active]:text-[#222408]">
+              <TabsTrigger value="overview" className="data-[state=active]:bg-[#cad95e] data-[state=active]:text-[#222408]">
                 Resumen
               </TabsTrigger>
-              <TabsTrigger value="activity" className="data-[state=active]:bg-[#EDFF60] data-[state=active]:text-[#222408]">
+              <TabsTrigger value="activity" className="data-[state=active]:bg-[#cad95e] data-[state=active]:text-[#222408]">
                 Actividad
               </TabsTrigger>
-              <TabsTrigger value="content" className="data-[state=active]:bg-[#EDFF60] data-[state=active]:text-[#222408]">
+              <TabsTrigger value="content" className="data-[state=active]:bg-[#cad95e] data-[state=active]:text-[#222408]">
                 Contenido
               </TabsTrigger>
-              <TabsTrigger value="settings" className="data-[state=active]:bg-[#EDFF60] data-[state=active]:text-[#222408]">
+              <TabsTrigger value="settings" className="data-[state=active]:bg-[#cad95e] data-[state=active]:text-[#222408]">
                 Ajustes
               </TabsTrigger>
             </TabsList>
             
             <TabsContent value="overview">
               <div className="space-y-6">
-                <div className="bg-gradient-to-r from-[#EDFF60]/10 to-[#EDFF60]/5 p-6 rounded-lg border border-[#EDFF60]/20">
-                  <h3 className="text-xl font-semibold text-[#EDFF60] mb-2">¡Bienvenido a tu perfil!</h3>
+                <div className="bg-gradient-to-r from-[#cad95e]/10 to-[#cad95e]/5 p-6 rounded-lg border border-[#cad95e]/20">
+                  <h3 className="text-xl font-semibold text-[#cad95e] mb-2">¡Bienvenido a tu perfil!</h3>
                   <p className="text-[#FCF8EE]/90 mb-4">
                     Estamos preparando todas las funcionalidades de la plataforma para el evento. 
                     Pronto podrás conectar con otros participantes, inscribirte en actividades y mucho más.
                   </p>
-                  <Button className="bg-[#EDFF60] text-[#222408] hover:bg-[#CEDD9F]">
+                  <Button className="bg-[#cad95e] text-[#222408] hover:bg-[#CEDD9F]">
                     Explorar la plataforma
                   </Button>
                 </div>
@@ -122,7 +122,7 @@ const Perfil = () => {
             
             <TabsContent value="settings">
               <div className="bg-[#FCF8EE]/10 p-6 rounded-lg">
-                <h3 className="text-xl font-semibold text-[#EDFF60] mb-4">Ajustes de cuenta</h3>
+                <h3 className="text-xl font-semibold text-[#cad95e] mb-4">Ajustes de cuenta</h3>
                 
                 <div className="space-y-6">
                   <div>

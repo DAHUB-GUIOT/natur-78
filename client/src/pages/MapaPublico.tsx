@@ -65,7 +65,7 @@ const MapaPublico = () => {
         <div className="container mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="font-gasoek text-3xl md:text-4xl text-[#EDFF60] uppercase">
+              <h1 className="font-gasoek text-3xl md:text-4xl text-[#cad95e] uppercase">
                 Festival NATUR
               </h1>
               <p className="text-[#FCF8EE]/80 mt-2">
@@ -74,7 +74,7 @@ const MapaPublico = () => {
             </div>
             <Button 
               onClick={() => setLocation('/registro')}
-              className="bg-[#EDFF60] text-[#222408] hover:bg-[#EDFF60]/90"
+              className="bg-[#cad95e] text-[#222408] hover:bg-[#cad95e]/90"
             >
               Conectar
             </Button>
@@ -113,7 +113,7 @@ const MapaPublico = () => {
                         </div>
                         <Badge 
                           variant="secondary" 
-                          className="bg-[#EDFF60]/20 text-[#EDFF60] border-[#EDFF60]/30"
+                          className="bg-[#cad95e]/20 text-[#cad95e] border-[#cad95e]/30"
                         >
                           {initiative.type}
                         </Badge>
@@ -129,9 +129,9 @@ const MapaPublico = () => {
           <div className="lg:col-span-2">
             <Card className="bg-[#FCF8EE]/5 border-[#FCF8EE]/20 h-96">
               <CardContent className="p-0 h-full">
-                <div className="w-full h-full bg-gradient-to-br from-[#EDFF60]/20 to-[#FCF8EE]/10 rounded-lg flex items-center justify-center">
+                <div className="w-full h-full bg-gradient-to-br from-[#cad95e]/20 to-[#FCF8EE]/10 rounded-lg flex items-center justify-center">
                   <div className="text-center">
-                    <MapPin className="h-12 w-12 text-[#EDFF60] mx-auto mb-4" />
+                    <MapPin className="h-12 w-12 text-[#cad95e] mx-auto mb-4" />
                     <h3 className="text-xl font-semibold text-[#FCF8EE] mb-2">
                       Mapa Interactivo
                     </h3>
@@ -151,7 +151,7 @@ const MapaPublico = () => {
                     {selectedInitiative.name}
                     <Badge 
                       variant="secondary" 
-                      className="bg-[#EDFF60]/20 text-[#EDFF60] border-[#EDFF60]/30"
+                      className="bg-[#cad95e]/20 text-[#cad95e] border-[#cad95e]/30"
                     >
                       {selectedInitiative.type}
                     </Badge>
@@ -182,7 +182,7 @@ const MapaPublico = () => {
                         <Badge 
                           key={index}
                           variant="outline" 
-                          className="border-[#EDFF60]/30 text-[#EDFF60]"
+                          className="border-[#cad95e]/30 text-[#cad95e]"
                         >
                           {exp}
                         </Badge>
@@ -193,7 +193,7 @@ const MapaPublico = () => {
                   <div className="flex gap-3 pt-4">
                     <Button 
                       onClick={handleContactClick}
-                      className="bg-[#EDFF60] text-[#222408] hover:bg-[#EDFF60]/90"
+                      className="bg-[#cad95e] text-[#222408] hover:bg-[#cad95e]/90"
                     >
                       <ExternalLink className="h-4 w-4 mr-2" />
                       Contactar

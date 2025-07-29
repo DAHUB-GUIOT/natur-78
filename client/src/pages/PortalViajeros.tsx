@@ -591,7 +591,7 @@ export default function PortalViajeros() {
               </div>
               <div className="flex justify-between font-bold">
                 <span className="text-white">Total</span>
-                <span style={{ color: '#EDFF60' }}>
+                <span style={{ color: '#cad95e' }}>
                   ${(parseInt(selectedExperience?.adultPricePvp || "0") * parseInt(bookingGuests)).toLocaleString()}
                 </span>
               </div>

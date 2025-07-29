@@ -10,6 +10,15 @@ This is a full-stack web application for Festival NATUR (www.festivalnatur.com),
 
 ## Recent Changes
 
+- ✅ **January 29, 2025**: Light Green Color Updated to New Accent (#cad95e)
+  - **UPDATED**: Changed all light green colors from #EDFF60 to #cad95e throughout the application
+  - **UPDATED**: Hero.tsx title, subtitle, and ticket button now use new #cad95e color
+  - **UPDATED**: Auth.tsx form elements, borders, and text use #cad95e instead of #EDFF60
+  - **UPDATED**: PortalViajeros pricing displays and accents updated to #cad95e
+  - **UPDATED**: Navigation buttons and brand elements across all components use new color
+  - **STYLE**: More refined, professional green tone that complements the dark #181c0d headers
+  - **CONSISTENCY**: All yellow-green accents now unified under #cad95e color scheme
+
 - ✅ **January 29, 2025**: Header Color Updated to Dark Green (#181c0d)
   - **UPDATED**: Changed all header backgrounds from green-600 to custom dark green color #181c0d
   - **UPDATED**: Navigation bars in Auth.tsx and Hero.tsx now use darker, more professional color

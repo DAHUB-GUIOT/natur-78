@@ -158,7 +158,7 @@ const RegistrationAuth = ({ email, onSuccess, onError }: RegistrationAuthProps) 
       
       <Button 
         type="submit" 
-        className="w-full bg-[#EDFF60] text-[#222408] hover:bg-[#CEDD9F]"
+        className="w-full bg-[#cad95e] text-[#222408] hover:bg-[#CEDD9F]"
         disabled={isLoading}
       >
         {isLoading ? (

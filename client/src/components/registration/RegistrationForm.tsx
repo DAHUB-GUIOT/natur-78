@@ -245,7 +245,7 @@ const RegistrationForm = () => {
         if (isCreatingAccount && !successMessage) {
           return (
             <div className="py-6">
-              <h2 className="text-2xl font-gasoek text-[#EDFF60] tracking-wide uppercase mb-6">
+              <h2 className="text-2xl font-gasoek text-[#cad95e] tracking-wide uppercase mb-6">
                 Crea tu cuenta en la plataforma
               </h2>
               <RegistrationAuth 
@@ -284,12 +284,12 @@ const RegistrationForm = () => {
               <div 
                 className={`w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center mb-1 sm:mb-2 font-bold border-2 text-xs sm:text-sm
                 ${stepNumber < step ? "text-black border-transparent" : 
-                  stepNumber === step ? "text-black border-transparent" : "border-[#EDFF60]/50"}`}
-                style={{ backgroundColor: stepNumber <= step ? '#EDFF60' : 'transparent', color: stepNumber <= step ? 'black' : '#EDFF60' }}
+                  stepNumber === step ? "text-black border-transparent" : "border-[#cad95e]/50"}`}
+                style={{ backgroundColor: stepNumber <= step ? '#cad95e' : 'transparent', color: stepNumber <= step ? 'black' : '#cad95e' }}
               >
                 {stepNumber < step ? "✓" : stepNumber}
               </div>
-              <span className="text-xs hidden sm:block font-bold" style={{ color: '#EDFF60' }}>
+              <span className="text-xs hidden sm:block font-bold" style={{ color: '#cad95e' }}>
                 {stepNumber === 1 && "Participación"}
                 {stepNumber === 2 && "Perfil"}
                 {stepNumber === 3 && "Datos"}
@@ -305,14 +305,14 @@ const RegistrationForm = () => {
             className="h-1 sm:h-2 rounded-full transition-all duration-300"
             style={{ 
               width: `${(step / 6) * 100}%`,
-              backgroundColor: '#EDFF60'
+              backgroundColor: '#cad95e'
             }}
           ></div>
         </div>
       </div>
 
       {/* Form Content - Transparent with Yellow Outline */}
-      <div className="backdrop-blur-sm bg-transparent border-2 border-[#EDFF60] rounded-xl p-4 sm:p-6 md:p-8">
+      <div className="backdrop-blur-sm bg-transparent border-2 border-[#cad95e] rounded-xl p-4 sm:p-6 md:p-8">
         {renderStep()}
       </div>
     </div>

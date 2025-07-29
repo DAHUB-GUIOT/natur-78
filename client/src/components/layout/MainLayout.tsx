@@ -58,34 +58,34 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
               </SheetTrigger>
               <SheetContent side="right" className="bg-[#222408] text-[#FCF8EE] w-80">
                 <SheetHeader className="text-left">
-                  <SheetTitle className="font-gasoek text-2xl text-[#EDFF60] tracking-wide uppercase">Menú</SheetTitle>
+                  <SheetTitle className="font-gasoek text-2xl text-[#cad95e] tracking-wide uppercase">Menú</SheetTitle>
                   <SheetDescription>
                     Navega por la plataforma y descubre todo lo que tenemos para ti.
                   </SheetDescription>
                 </SheetHeader>
                 <div className="py-4">
-                  <Button variant="ghost" className="w-full justify-start text-base hover:bg-transparent text-[#FCF8EE] hover:text-[#EDFF60]" asChild>
+                  <Button variant="ghost" className="w-full justify-start text-base hover:bg-transparent text-[#FCF8EE] hover:text-[#cad95e]" asChild>
                     <Link to="/heart">💚 Corazón NATUR</Link>
                   </Button>
-                  <Button variant="ghost" className="w-full justify-start text-base hover:bg-transparent text-[#FCF8EE] hover:text-[#EDFF60]" asChild>
+                  <Button variant="ghost" className="w-full justify-start text-base hover:bg-transparent text-[#FCF8EE] hover:text-[#cad95e]" asChild>
                     <Link to="/plataforma">Plataforma</Link>
                   </Button>
-                  <Button variant="ghost" className="w-full justify-start text-base hover:bg-transparent text-[#FCF8EE] hover:text-[#EDFF60]" asChild>
+                  <Button variant="ghost" className="w-full justify-start text-base hover:bg-transparent text-[#FCF8EE] hover:text-[#cad95e]" asChild>
                     <Link to="/agenda">Agenda</Link>
                   </Button>
-                  <Button variant="ghost" className="w-full justify-start text-base hover:bg-transparent text-[#FCF8EE] hover:text-[#EDFF60]" asChild>
+                  <Button variant="ghost" className="w-full justify-start text-base hover:bg-transparent text-[#FCF8EE] hover:text-[#cad95e]" asChild>
                     <Link to="/networking">Networking</Link>
                   </Button>
-                  <Button variant="ghost" className="w-full justify-start text-base hover:bg-transparent text-[#FCF8EE] hover:text-[#EDFF60]" asChild>
+                  <Button variant="ghost" className="w-full justify-start text-base hover:bg-transparent text-[#FCF8EE] hover:text-[#cad95e]" asChild>
                     <Link to="/educacion">Educación</Link>
                   </Button>
-                  <Button variant="ghost" className="w-full justify-start text-base hover:bg-transparent text-[#FCF8EE] hover:text-[#EDFF60]" asChild>
+                  <Button variant="ghost" className="w-full justify-start text-base hover:bg-transparent text-[#FCF8EE] hover:text-[#cad95e]" asChild>
                     <Link to="/marketplace">Marketplace</Link>
                   </Button>
-                  <Button variant="ghost" className="w-full justify-start text-base hover:bg-transparent text-[#FCF8EE] hover:text-[#EDFF60]" asChild>
+                  <Button variant="ghost" className="w-full justify-start text-base hover:bg-transparent text-[#FCF8EE] hover:text-[#cad95e]" asChild>
                     <Link to="/experiencias">Experiencias</Link>
                   </Button>
-                  <Button variant="ghost" className="w-full justify-start text-base hover:bg-transparent text-[#FCF8EE] hover:text-[#EDFF60]" asChild>
+                  <Button variant="ghost" className="w-full justify-start text-base hover:bg-transparent text-[#FCF8EE] hover:text-[#cad95e]" asChild>
                     <Link to="/dashboard">📊 Dashboard</Link>
                   </Button>
                 </div>
@@ -102,7 +102,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
       <Sheet open={showLogin} onOpenChange={setShowLogin}>
         <SheetContent side="right" className="bg-[#222408] text-[#FCF8EE] w-80">
           <SheetHeader className="text-left">
-            <SheetTitle className="font-gasoek text-2xl text-[#EDFF60] tracking-wide uppercase">
+            <SheetTitle className="font-gasoek text-2xl text-[#cad95e] tracking-wide uppercase">
               Iniciar Sesión
             </SheetTitle>
             <SheetDescription>

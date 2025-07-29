@@ -38,7 +38,7 @@ export function Partners() {
           </div>
         </div>
         
-        <div className="backdrop-blur-sm bg-[#EDFF60]/20 rounded-xl p-4 sm:p-6 mt-6 sm:mt-8 border border-[#6D7A4E]/10 max-w-4xl">
+        <div className="backdrop-blur-sm bg-[#cad95e]/20 rounded-xl p-4 sm:p-6 mt-6 sm:mt-8 border border-[#6D7A4E]/10 max-w-4xl">
           <p className="text-center text-xs sm:text-sm md:text-base text-[#6D7A4E] font-medium leading-relaxed">
             Trabajamos junto a organizaciones comprometidas con el turismo sostenible y la conservación ambiental en Colombia.
           </p>
