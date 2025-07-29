@@ -11,7 +11,6 @@ export default {
         'jakarta-light': ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
         'jakarta-bold': ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
         'unbounded': ['Unbounded', 'system-ui', 'sans-serif'],
-        'unbounded-medium': ['Unbounded', 'system-ui', 'sans-serif'],
       },
       borderRadius: {
         lg: "var(--radius)",

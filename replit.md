@@ -10,15 +10,16 @@ This is a full-stack web application for Festival NATUR (www.festivalnatur.com),
 
 ## Recent Changes
 
-- ✅ **January 28, 2025**: Typography Enhancement - H4 Headers with Unbounded Medium Font
+- ✅ **January 29, 2025**: Typography Enhancement - H4 Headers with Unbounded Regular Font
   - **UPDATED**: Four specific brand paragraphs converted from P to H4 tags
   - **NEW**: Added Unbounded font family with full weight range (200-900) to Google Fonts import
-  - **NEW**: Created font-unbounded and font-unbounded-medium utility classes in CSS and Tailwind
-  - **UPDATED**: "El Festival NATUR es el punto de encuentro..." (Benefits section) to H4 with Unbounded Medium
-  - **UPDATED**: "Si haces parte de la cadena turística..." (Participation section) to H4 with Unbounded Medium  
-  - **UPDATED**: "CONÉCTATE, APRENDE, INSPÍRATE, DISFRUTA." (Program section) to H4 with Unbounded Medium
-  - **UPDATED**: "MÁS QUE UN PREMIO, UN RECONOCIMIENTO..." (Award section) to H4 with Unbounded Medium
-  - **TYPOGRAPHY**: Enhanced semantic structure and brand message hierarchy with premium Unbounded font
+  - **UPDATED**: All Unbounded fonts changed from medium weight to regular weight for cleaner appearance
+  - **UPDATED**: "El Festival NATUR es el punto de encuentro..." (Benefits section) to H4 with Unbounded Regular
+  - **UPDATED**: "Si haces parte de la cadena turística..." (Participation section) to H4 with Unbounded Regular  
+  - **UPDATED**: "CONÉCTATE, APRENDE, INSPÍRATA, DISFRUTA." (Program section) to H4 with Unbounded Regular
+  - **UPDATED**: "MÁS QUE UN PREMIO, UN RECONOCIMIENTO..." (Award section) to H4 with Unbounded Regular
+  - **REMOVED**: font-unbounded-medium utility class from CSS and Tailwind configuration
+  - **TYPOGRAPHY**: Enhanced semantic structure with cleaner Unbounded regular font weight
 
 - ✅ **January 29, 2025**: Complete Festival NATUR 2025 Menu Architecture Implementation
   - **UPDATED**: Festival NATUR Bogotá 2025 with full VIVE NATUR and NATUR PRO structure
