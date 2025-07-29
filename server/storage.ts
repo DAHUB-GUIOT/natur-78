@@ -659,7 +659,48 @@ export class DatabaseStorage implements IStorage {
   async getUsers(): Promise<User[]> {
     return this.getAllUsers();
   }
+  async getUser(id: number): Promise<any> {
+    try {
+      const [user] = await db.select().from(users).where(eq(users.id, id));
+      return user;
+    } catch (error) {
+      console.error("Database error fetching user:", error);
+      return undefined;
+    }
+  }
+
+  async updateUser(id: number, data: any): Promise<any> {
+    try {
+      const [updatedUser] = await db
+        .update(users)
+        .set({
+          ...data,
+          updatedAt: new Date()
+        })
+        .where(eq(users.id, id))
+        .returning();
+      return updatedUser;
+    } catch (error) {
+      console.error("Database error updating user:", error);
+      throw error;
+    }
+  }
+
+  async getUserExperiences(userId: number): Promise<any[]> {
+    try {
+      const userExperiences = await db
+        .select()
+        .from(experiences)
+        .where(eq(experiences.createdBy, userId))
+        .orderBy(experiences.createdAt);
+      return userExperiences;
+    } catch (error) {
+      console.error("Database error fetching user experiences:", error);
+      return [];
+    }
+  }
 }
 
 // Use DatabaseStorage for production, MemStorage for development/testing
+
 export const storage = new DatabaseStorage();

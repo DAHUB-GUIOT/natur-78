@@ -969,6 +969,59 @@ export async function registerRoutes(app: Express): Promise<Server> {
     );
   }
 
+  // Enhanced profile API endpoints
+  app.get("/api/users/:id", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.id);
+      const user = await storage.getUser(userId);
+      
+      if (!user) {
+        return res.status(404).json({ error: "User not found" });
+      }
+      
+      // Calculate profile completion
+      const fields = [
+        user.companyName, user.firstName, user.lastName, user.bio, 
+        user.website, user.city, user.businessType, user.skills,
+        user.twitterUrl, user.facebookUrl, user.linkedinUrl
+      ];
+      const completedFields = fields.filter(field => field && field !== null && field !== '').length;
+      const profileCompletion = Math.round((completedFields / fields.length) * 100);
+      
+      res.json({
+        ...user,
+        profileCompletion
+      });
+    } catch (error) {
+      console.error("Error fetching user profile:", error);
+      res.status(500).json({ error: "Failed to fetch user profile" });
+    }
+  });
+
+  app.patch("/api/users/:id", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.id);
+      const updateData = req.body;
+      
+      const updatedUser = await storage.updateUser(userId, updateData);
+      res.json(updatedUser);
+    } catch (error) {
+      console.error("Error updating user profile:", error);
+      res.status(500).json({ error: "Failed to update user profile" });
+    }
+  });
+
+  app.get("/api/experiences/user/:id", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.id);
+      const experiences = await storage.getUserExperiences(userId);
+      res.json(experiences);
+    } catch (error) {
+      console.error("Error fetching user experiences:", error);
+      res.status(500).json({ error: "Failed to fetch user experiences" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

@@ -39,6 +39,24 @@ export const users = pgTable("users", {
   city: text("city"),
   country: text("country").default("Colombia"),
   coordinates: jsonb("coordinates"), // {lat, lng}
+  // Contact information
+  phone: text("phone"),
+  website: text("website"),
+  // Social media links for enhanced profile
+  twitterUrl: text("twitter_url"),
+  facebookUrl: text("facebook_url"),
+  linkedinUrl: text("linkedin_url"),
+  instagramUrl: text("instagram_url"),
+  // Professional information
+  bio: text("bio"),
+  skills: jsonb("skills"), // Array of skills
+  interests: jsonb("interests"), // Array of interests
+  businessType: text("business_type"),
+  yearsExperience: integer("years_experience"),
+  teamSize: integer("team_size"),
+  // Profile completion and verification
+  profileCompletion: integer("profile_completion").default(0),
+  isVerified: boolean("is_verified").default(false),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
