@@ -86,7 +86,7 @@ const PortalEmpresasDashboard = () => {
   });
 
   // Optimized directory users fetch with caching and conditional loading
-  const { data: directoryUsers = [], isLoading: directoryLoading, error: directoryError } = useQuery({
+  const { data: directoryUsers, isLoading: directoryLoading, error: directoryError } = useQuery({
     queryKey: ["/api/directory/users"],
     enabled: activeSection === "directorio" || activeSection === "empresas",
     staleTime: 5 * 60 * 1000, // 5 minutes cache
@@ -96,8 +96,21 @@ const PortalEmpresasDashboard = () => {
     retryDelay: 1000,
   });
 
-  // Type-safe directory users
-  const typedDirectoryUsers = directoryUsers as any[];
+  // Type-safe directory users with proper default
+  const typedDirectoryUsers = Array.isArray(directoryUsers) ? directoryUsers : [];
+  
+  // Debug logging
+  useEffect(() => {
+    if (activeSection === "empresas") {
+      console.log("Directory state:", {
+        directoryUsers,
+        typedDirectoryUsers,
+        directoryLoading,
+        directoryError,
+        activeSection
+      });
+    }
+  }, [directoryUsers, typedDirectoryUsers, directoryLoading, directoryError, activeSection]);
 
   const sidebarItems = [
     { id: "mapa", label: "Mapa", icon: Map },
