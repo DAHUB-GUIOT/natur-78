@@ -19,6 +19,7 @@ This is a full-stack web application for Festival NATUR (www.festivalnatur.com),
   - **UPDATED**: All buttons now use Unbounded Light font (weight: 300) for consistent typography
   - **GLOBAL**: Updated all Unbounded font usage throughout entire application to use light variant (weight: 300)
   - **GLOBAL**: All buttons across entire platform now use square corners (rounded-none) for brutalist aesthetic
+  - **UPDATED**: Simplified typography in Agenda page - changed complex fonts to clean font-sans for titles and card titles
   - **DESIGN**: Clean, minimal hero with logo prominence and square button aesthetic
   - **UX**: Centered layout with focused call-to-action buttons
 

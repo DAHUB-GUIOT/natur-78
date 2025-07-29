@@ -379,7 +379,7 @@ export function Agenda() {
                 {/* Agenda Header */}
                 <Card className="bg-black/20 backdrop-blur-md border-white/20 mb-8">
                   <CardHeader className="text-center">
-                    <CardTitle className="text-2xl md:text-3xl font-gasoek text-white mb-2">
+                    <CardTitle className="text-2xl md:text-3xl font-sans text-white mb-2">
                       {agenda.title}
                     </CardTitle>
                     <p className="text-lg text-white/80 mb-4">{agenda.subtitle}</p>
@@ -399,7 +399,7 @@ export function Agenda() {
                 {/* Days and Sessions */}
                 {agenda.days.map((day, dayIndex) => (
                   <div key={dayIndex} className="mb-12">
-                    <h2 className="text-3xl font-gasoek mb-6 text-center" style={{ color: agenda.color }}>
+                    <h2 className="text-3xl font-sans mb-6 text-center" style={{ color: agenda.color }}>
                       {day.day}
                     </h2>
                     
@@ -454,7 +454,7 @@ export function Agenda() {
                           </div>
                           
                           <CardContent className="p-6 space-y-4">
-                            <h3 className="font-bold text-white text-lg leading-tight group-hover:text-lime-400 transition-colors duration-300">
+                            <h3 className="font-sans font-medium text-white text-lg leading-tight group-hover:text-lime-400 transition-colors duration-300">
                               {session.title}
                             </h3>
                             
@@ -550,7 +550,7 @@ export function Agenda() {
                 </Badge>
               </div>
               
-              <h2 className="text-2xl font-bold text-white mb-4">
+              <h2 className="text-2xl font-sans font-medium text-white mb-4">
                 {selectedSession.title}
               </h2>
               
@@ -561,7 +561,7 @@ export function Agenda() {
               )}
               
               <div className="space-y-4">
-                <h3 className="text-lg font-semibold text-white">Speakers:</h3>
+                <h3 className="text-lg font-sans font-normal text-white">Speakers:</h3>
                 {selectedSession.speakers.map((speaker: string, index: number) => (
                   <div key={index} className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
@@ -573,7 +573,7 @@ export function Agenda() {
                 
                 {selectedSession.moderator && (
                   <div className="pt-4 border-t border-white/20">
-                    <h4 className="text-sm font-medium text-white/70 mb-2">Moderación:</h4>
+                    <h4 className="text-sm font-sans font-normal text-white/70 mb-2">Moderación:</h4>
                     <div className="flex items-center gap-3">
                       <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
                         <Users className="w-4 h-4 text-white/70" />
