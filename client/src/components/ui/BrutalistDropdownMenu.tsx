@@ -15,55 +15,35 @@ interface MenuCategory {
 
 const menuData: MenuCategory[] = [
   {
-    icon: '🌿',
-    title: 'NATUR Bogotá 2025',
+    icon: '🎪',
+    title: 'FESTIVAL NATUR BOGOTÁ 2025',
     subcategories: [
-      { label: 'VIVE NATUR', url: '/vive-natur' },
-      { label: 'Charlas NATUR', url: '/charlas' },
-      { label: 'Rooftop + Comidas', url: '/rooftop' },
-      { label: 'Emprendimientos', url: '/emprendimientos' },
-      { label: 'Zona Chill', url: '/zona-chill' },
-      { label: 'Foro Colombia Sostenible', url: '/foro' },
-      { label: 'Zona Kinder', url: '/zona-kinder' }
-    ]
-  },
-  {
-    icon: '🎯',
-    title: 'NATUR PRO',
-    subcategories: [
-      { label: 'Cartel de Artistas', url: '/artistas' },
-      { label: 'Talleres', url: '/talleres' },
-      { label: 'Zona Startups', url: '/startups' },
-      { label: 'Coffee Talks', url: '/coffee-talks' },
-      { label: 'Rumba', url: '/rumba' },
-      { label: 'Zona Wellness', url: '/wellness' },
-      { label: 'Experiencia NATUR', url: '/experiencia' },
-      { label: 'Zona VIP', url: '/vip' }
+      { label: 'VIVE NATUR', url: '/tickets/vive-natur' },
+      { label: 'NATUR PRO', url: '/tickets/natur-pro' }
     ]
   },
   {
     icon: '📰',
-    title: 'Noticias',
+    title: 'NOTICIAS',
     subcategories: [
-      { label: 'Crónicas', url: '/cronicas' },
-      { label: 'Artículos', url: '/articulos' },
-      { label: 'Novedades', url: '/novedades' }
+      { label: 'Turismo Regenerativo: El Futuro del Sector', url: '/blog/turismo-regenerativo' },
+      { label: 'Startups Sostenibles Transforman Colombia', url: '/blog/startups-sostenibles' },
+      { label: 'Festival NATUR 2025: Fecha y Novedades', url: '/blog/festival-2025' }
     ]
   },
   {
-    icon: '🧭',
-    title: 'Plataforma NATUR',
+    icon: '🌱',
+    title: 'PLATAFORMA NATUR',
     subcategories: [
-      { label: 'Comunidad de Viajeros', url: '/portal-viajeros' },
-      { label: 'Portal de Empresas', url: '/portal-empresas' },
-      { label: 'Mapa de Experiencias', url: '/mapa' }
+      { label: 'Registrarse', url: '/auth/empresas' },
+      { label: 'Iniciar Sesión', url: '/auth/login' }
     ]
   },
   {
     icon: 'ℹ️',
-    title: 'Info',
+    title: 'INFO',
     subcategories: [
-      { label: 'Sobre NATUR', url: '/sobre' },
+      { label: 'Sobre NATUR', url: '/sobre-natur' },
       { label: 'Contacto', url: '/contacto' },
       { label: 'FAQ', url: '/faq' },
       { label: 'Alianzas', url: '/alianzas' }

@@ -20,6 +20,15 @@ This is a full-stack web application for Festival NATUR (www.festivalnatur.com),
   - **UPDATED**: "MÁS QUE UN PREMIO, UN RECONOCIMIENTO..." (Award section) to H4 with Unbounded Medium
   - **TYPOGRAPHY**: Enhanced semantic structure and brand message hierarchy with premium Unbounded font
 
+- ✅ **January 29, 2025**: Updated Navigation Menu with Festival NATUR 2025 Structure
+  - **UPDATED**: Menu restructured with 4 main categories following Festival NATUR branding
+  - **NEW**: Festival NATUR Bogotá 2025 category with VIVE NATUR and NATUR PRO ticket types
+  - **NEW**: Noticias section with 3 blog entries (turismo regenerativo, startups sostenibles, festival novedades)
+  - **NEW**: Plataforma NATUR with registration and login options
+  - **NEW**: INFO section with Sobre NATUR, Contacto, FAQ, and Alianzas
+  - **SIMPLIFIED**: Menu now focuses on core festival experience and platform access
+  - **ARCHITECTURE**: Navigation system aligned with Festival NATUR 2025 goals and user journeys
+
 - ✅ **January 29, 2025**: Full-Screen BIME-Style Brutalist Navigation Menu Implementation
   - **REDESIGNED**: Complete menu system with full-screen overlay following BIME design aesthetics
   - **NEW**: Very dark green background (#0a1a0a) with yellow typography (#EDFF60) for high contrast
