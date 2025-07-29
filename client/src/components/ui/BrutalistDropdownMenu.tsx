@@ -118,72 +118,155 @@ export function BrutalistDropdownMenu({ isOpen, onClose, triggerRef }: Brutalist
   return (
     <div 
       ref={menuRef}
-      className="fixed top-16 left-4 z-50 w-80 bg-[#1a3d1a] border-4 border-[#EDFF60] shadow-2xl transform transition-all duration-300 ease-out"
-      style={{
-        boxShadow: '8px 8px 0px #EDFF60, 16px 16px 0px rgba(237, 255, 96, 0.3)'
-      }}
+      className="fixed inset-0 z-50 bg-[#0a1a0a] text-[#EDFF60] transform transition-all duration-300 ease-out"
       data-state={isOpen ? 'open' : 'closed'}
     >
       {/* Header */}
-      <div className="bg-[#0f2d0f] border-b-4 border-[#EDFF60] p-4">
-        <h2 className="text-[#EDFF60] font-unbounded-medium text-lg uppercase tracking-wider">
-          MENÚ NATUR
-        </h2>
+      <div className="flex items-center justify-between p-6 border-b border-[#EDFF60]/20">
+        <h1 className="text-4xl font-gasoek text-[#EDFF60] tracking-wider">NATUR</h1>
+        <button 
+          onClick={onClose}
+          className="text-[#EDFF60] hover:text-white text-2xl font-bold"
+        >
+          ×
+        </button>
       </div>
 
-      {/* Menu Items */}
-      <div className="max-h-96 overflow-y-auto">
-        {menuData.map((category, index) => (
-          <div key={index} className="border-b-2 border-[#2d5d2d]">
-            <button
-              onClick={() => handleCategoryClick(index)}
-              className="w-full flex items-center justify-between p-4 bg-[#1a3d1a] hover:bg-[#2d5d2d] transition-colors duration-200 text-left group"
-            >
-              <div className="flex items-center gap-3">
-                <span className="text-xl">{category.icon}</span>
-                <span className="text-[#EDFF60] font-jakarta-bold text-sm uppercase tracking-wide group-hover:text-white transition-colors">
-                  {category.title}
-                </span>
-              </div>
-              {category.subcategories && (
-                <ChevronRight 
-                  className={`w-5 h-5 text-[#EDFF60] transition-transform duration-200 ${
-                    expandedCategory === index ? 'rotate-90' : ''
-                  }`}
-                />
-              )}
-            </button>
-
-            {/* Subcategories */}
-            {category.subcategories && expandedCategory === index && (
-              <div 
-                className="bg-[#0f2d0f] border-t-2 border-[#2d5d2d] overflow-hidden"
-                data-state="expanded"
+      {/* Menu Content - BIME Style Layout */}
+      <div className="flex h-full">
+        {/* Left Sidebar - Main Categories */}
+        <div className="w-1/4 bg-[#0f2d0f] border-r border-[#EDFF60]/20 p-6">
+          <div className="space-y-4">
+            {menuData.map((category, index) => (
+              <button
+                key={index}
+                onClick={() => handleCategoryClick(index)}
+                className={`w-full text-left p-3 text-lg font-jakarta-bold uppercase tracking-wider transition-colors duration-200 ${
+                  expandedCategory === index 
+                    ? 'text-[#EDFF60] bg-[#1a3d1a]' 
+                    : 'text-gray-400 hover:text-[#EDFF60]'
+                }`}
               >
-                <div className="grid grid-cols-2 gap-1 p-2">
-                  {category.subcategories.map((sub, subIndex) => (
-                    <button
-                      key={subIndex}
-                      onClick={() => handleSubcategoryClick(sub.url)}
-                      className="p-3 bg-[#1a3d1a] hover:bg-[#EDFF60] hover:text-[#0f2d0f] text-[#EDFF60] font-jakarta text-xs uppercase tracking-wide transition-all duration-200 border border-[#2d5d2d] hover:border-[#EDFF60] hover:shadow-md"
-                    >
-                      {sub.label}
-                    </button>
-                  ))}
+                <div className="flex items-center gap-3">
+                  <span className="text-2xl">{category.icon}</span>
+                  <span>{category.title}</span>
+                  {expandedCategory === index && (
+                    <ChevronRight className="w-4 h-4 ml-auto" />
+                  )}
                 </div>
-              </div>
-            )}
+              </button>
+            ))}
           </div>
-        ))}
-      </div>
+        </div>
 
-      {/* Footer */}
-      <div className="bg-[#0f2d0f] border-t-4 border-[#EDFF60] p-3 text-center">
-        <span className="text-[#EDFF60] font-jakarta text-xs opacity-70">
-          Festival NATUR 2025
-        </span>
-      </div>
+        {/* Center Content - Subcategories */}
+        <div className="flex-1 p-6">
+          {expandedCategory !== null && menuData[expandedCategory]?.subcategories && (
+            <div className="grid grid-cols-3 gap-6 h-full">
+              {/* Pro Column */}
+              <div>
+                <h3 className="text-xl font-jakarta-bold text-[#EDFF60] uppercase tracking-wider mb-6">
+                  Pro
+                </h3>
+                <ul className="space-y-3">
+                  {menuData[expandedCategory].subcategories?.slice(0, Math.ceil(menuData[expandedCategory].subcategories!.length / 3)).map((sub, subIndex) => (
+                    <li key={subIndex}>
+                      <button
+                        onClick={() => handleSubcategoryClick(sub.url)}
+                        className="text-gray-300 hover:text-[#EDFF60] transition-colors duration-200 text-left block"
+                      >
+                        • {sub.label}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
 
+              {/* Live Column */}
+              <div>
+                <h3 className="text-xl font-jakarta-bold text-[#EDFF60] uppercase tracking-wider mb-6">
+                  Live
+                </h3>
+                <ul className="space-y-3">
+                  {menuData[expandedCategory].subcategories?.slice(Math.ceil(menuData[expandedCategory].subcategories!.length / 3), Math.ceil(menuData[expandedCategory].subcategories!.length * 2 / 3)).map((sub, subIndex) => (
+                    <li key={subIndex}>
+                      <button
+                        onClick={() => handleSubcategoryClick(sub.url)}
+                        className="text-gray-300 hover:text-[#EDFF60] transition-colors duration-200 text-left block"
+                      >
+                        • {sub.label}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Info Column */}
+              <div>
+                <h3 className="text-xl font-jakarta-bold text-[#EDFF60] uppercase tracking-wider mb-6">
+                  Info
+                </h3>
+                <ul className="space-y-3">
+                  {menuData[expandedCategory].subcategories?.slice(Math.ceil(menuData[expandedCategory].subcategories!.length * 2 / 3)).map((sub, subIndex) => (
+                    <li key={subIndex}>
+                      <button
+                        onClick={() => handleSubcategoryClick(sub.url)}
+                        className="text-gray-300 hover:text-[#EDFF60] transition-colors duration-200 text-left block"
+                      >
+                        • {sub.label}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          )}
+
+          {/* Default State - Show Main Menu */}
+          {expandedCategory === null && (
+            <div className="flex flex-col justify-center items-center h-full text-center">
+              <h2 className="text-3xl font-gasoek text-[#EDFF60] mb-4 uppercase tracking-wider">
+                FESTIVAL NATUR 2025
+              </h2>
+              <p className="text-gray-300 text-lg mb-8 max-w-2xl">
+                Selecciona una categoría del menú lateral para explorar todas las opciones del festival de turismo sostenible más importante de Colombia.
+              </p>
+              <div className="grid grid-cols-2 gap-4">
+                <button className="bg-[#EDFF60] text-[#0a1a0a] px-6 py-3 font-jakarta-bold uppercase tracking-wide hover:bg-yellow-300 transition-colors">
+                  Boletos
+                </button>
+                <button className="border border-[#EDFF60] text-[#EDFF60] px-6 py-3 font-jakarta-bold uppercase tracking-wide hover:bg-[#EDFF60] hover:text-[#0a1a0a] transition-colors">
+                  Agenda
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Right Sidebar - Additional Info */}
+        <div className="w-1/4 bg-[#0f2d0f] border-l border-[#EDFF60]/20 p-6">
+          <div className="space-y-6">
+            <button className="w-full bg-[#EDFF60] text-[#0a1a0a] py-3 px-4 font-jakarta-bold uppercase tracking-wide text-sm hover:bg-yellow-300 transition-colors">
+              🎫 TICKETS
+            </button>
+            <button className="w-full border border-[#EDFF60] text-[#EDFF60] py-3 px-4 font-jakarta-bold uppercase tracking-wide text-sm hover:bg-[#EDFF60] hover:text-[#0a1a0a] transition-colors">
+              📅 AGENDA
+            </button>
+            
+            <div className="pt-6 border-t border-[#EDFF60]/20">
+              <h4 className="text-[#EDFF60] font-jakarta-bold uppercase tracking-wider mb-4">
+                Destacados
+              </h4>
+              <ul className="space-y-2 text-sm text-gray-300">
+                <li>• The Space</li>
+                <li>• Partners</li>
+                <li>• The Music Club</li>
+                <li>• Networking</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
 
     </div>
   );
