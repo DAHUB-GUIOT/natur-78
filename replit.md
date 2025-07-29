@@ -10,7 +10,7 @@ This is a full-stack web application for Festival NATUR (www.festivalnatur.com),
 
 ## Recent Changes
 
-- ✅ **January 29, 2025**: Contact Cards Updated to Show Company Names as Titles
+- ✅ **January 29, 2025**: Contact Cards Updated to Show Actual User Names Instead of Generic "Empresa"
   - **UPDATED**: Contact cards now display company names (DaHub, TripCol) as main titles instead of person names
   - **UPDATED**: Person names (Daniel Hurtado, María González) now appear below company name without "Fundador:" label
   - **IMPROVED**: Better visual hierarchy with company branding as primary identification

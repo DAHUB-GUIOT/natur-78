@@ -130,7 +130,10 @@ const PortalEmpresasDashboard = () => {
   // Use all registered company users from database
   const companies = (companiesData as any[]).map((user: any) => ({
     id: user.id,
-    name: user.email === 'dahub.tech@gmail.com' ? 'DaHub' : user.email === 'tripcol.tour@gmail.com' ? 'TripCol' : user.name,
+    name: user.email === 'dahub.tech@gmail.com' ? 'DaHub' : 
+          user.email === 'tripcol.tour@gmail.com' ? 'TripCol' : 
+          user.email === 'info@festivalnatur.com' ? 'Festival NATUR' :
+          user.firstName && user.lastName ? `${user.firstName} ${user.lastName}` : user.name,
     category: user.category,
     categoryId: user.category?.toLowerCase().replace(/\s+/g, '-') || "general",
     location: user.location,
@@ -1047,7 +1050,8 @@ const PortalEmpresasDashboard = () => {
               <p className="text-white font-medium text-xs truncate">
                 {user?.email === 'dahub.tech@gmail.com' ? 'DaHub' : 
                  user?.email === 'tripcol.tour@gmail.com' ? 'TripCol' : 
-                 'Empresa'}
+                 user?.email === 'info@festivalnatur.com' ? 'Festival NATUR' :
+                 user?.firstName && user?.lastName ? `${user.firstName} ${user.lastName}` : user?.name || 'Usuario'}
               </p>
               <p className="text-green-300 text-xs font-medium">Tecnología</p>
             </div>
