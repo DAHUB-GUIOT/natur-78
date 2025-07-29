@@ -43,6 +43,7 @@ import { InteractiveMap } from "@/components/dashboard/InteractiveMap";
 import ExperienceForm from "@/components/dashboard/ExperienceForm";
 import ProfileSection from "@/components/dashboard/ProfileSection";
 import TwitterProfileSection from "@/components/profile/TwitterProfileSection";
+import { ChatPage } from "@/components/messaging/ChatPage";
 
 import { Link } from "wouter";
 
@@ -71,7 +72,7 @@ const PortalEmpresasDashboard = () => {
     { id: "mapa", label: "Mapa", icon: Map },
     { id: "empresas", label: "Contactos", icon: Building2 },
     { id: "experiencias", label: "Experiencias", icon: Star },
-
+    { id: "mensajes", label: "Mensajes", icon: MessageCircle },
     { id: "perfil", label: "Mi Perfil", icon: User },
     { id: "ajustes", label: "Ajustes", icon: Settings },
     ...((currentUser as any)?.user?.role === 'admin' ? [{ id: "admin", label: "Admin Panel", icon: ShieldCheck }] : [])
@@ -461,7 +462,18 @@ const PortalEmpresasDashboard = () => {
                           <User className="w-3 h-3 mr-1" />
                           Ver Perfil
                         </Button>
-
+                        <Button 
+                          size="sm" 
+                          className="bg-green-600 hover:bg-green-700 text-white text-xs h-8 flex-1 backdrop-blur-sm"
+                          onClick={() => {
+                            setActiveSection("mensajes");
+                            // Store the selected company for messaging
+                            localStorage.setItem('preSelectedUserId', company.userId?.toString() || '');
+                          }}
+                        >
+                          <MessageCircle className="w-3 h-3 mr-1" />
+                          Contactar
+                        </Button>
                       </div>
                     </div>
                   </CardContent>
@@ -555,6 +567,20 @@ const PortalEmpresasDashboard = () => {
                 </div>
               </CardContent>
             </Card>
+          </div>
+        );
+
+      case "mensajes":
+        return currentUser?.user?.id ? (
+          <div className="h-[calc(100vh-8rem)]">
+            <ChatPage 
+              currentUserId={currentUser.user.id} 
+              onClose={() => setActiveSection("inicio")}
+            />
+          </div>
+        ) : (
+          <div className="flex items-center justify-center h-64">
+            <p className="text-gray-400">Inicia sesión para acceder a los mensajes</p>
           </div>
         );
 

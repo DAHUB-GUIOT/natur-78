@@ -24,6 +24,17 @@ declare global {
   }
 }
 
+// Authentication middleware
+function requireAuth(req: any, res: any, next: any) {
+  if (!req.session.userId) {
+    return res.status(401).json({ error: "Authentication required" });
+  }
+  
+  // Add user info to request
+  req.user = { id: req.session.userId };
+  next();
+}
+
 export async function registerRoutes(app: Express): Promise<Server> {
   // Initialize passport middleware
   app.use(passport.initialize());
@@ -676,6 +687,77 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Admin get logs error:", error);
       res.status(500).json({ error: "Internal server error" });
+    }
+  });
+
+  // Messaging routes
+  app.get("/api/conversations", requireAuth, async (req: any, res) => {
+    try {
+      const conversations = await storage.getConversations(req.user.id);
+      res.json(conversations);
+    } catch (error) {
+      console.error("Error fetching conversations:", error);
+      res.status(500).json({ error: "Failed to fetch conversations" });
+    }
+  });
+
+  app.get("/api/conversations/:conversationId/messages", requireAuth, async (req: any, res) => {
+    try {
+      const conversationId = parseInt(req.params.conversationId);
+      const messages = await storage.getMessages(conversationId);
+      res.json(messages);
+    } catch (error) {
+      console.error("Error fetching messages:", error);
+      res.status(500).json({ error: "Failed to fetch messages" });
+    }
+  });
+
+  app.post("/api/messages", requireAuth, async (req: any, res) => {
+    try {
+      const { receiverId, content, messageType = "text" } = req.body;
+      
+      // Create or get conversation
+      const conversation = await storage.getOrCreateConversation(req.user.id, receiverId);
+      
+      // Send message
+      const message = await storage.sendMessage({
+        senderId: req.user.id,
+        receiverId,
+        content,
+        messageType,
+        isRead: false
+      });
+
+      res.json(message);
+    } catch (error) {
+      console.error("Error sending message:", error);
+      res.status(500).json({ error: "Failed to send message" });
+    }
+  });
+
+  app.put("/api/messages/:messageId/read", requireAuth, async (req: any, res) => {
+    try {
+      const messageId = parseInt(req.params.messageId);
+      await storage.markMessageAsRead(messageId);
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Error marking message as read:", error);
+      res.status(500).json({ error: "Failed to mark message as read" });
+    }
+  });
+
+  app.get("/api/messages/search-users", requireAuth, async (req: any, res) => {
+    try {
+      const query = req.query.q as string;
+      if (!query) {
+        return res.json([]);
+      }
+
+      const users = await storage.searchUsers(query);
+      res.json(users.filter(user => user.id !== req.user.id)); // Exclude current user
+    } catch (error) {
+      console.error("Error searching users:", error);
+      res.status(500).json({ error: "Failed to search users" });
     }
   });
 

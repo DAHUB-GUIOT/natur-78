@@ -1,4 +1,5 @@
 import { users, userProfiles, experiences, companies, type User, type InsertUser, type UserProfile, type InsertUserProfile, type Experience, type InsertExperience, type Company, type InsertCompany } from "@shared/schema";
+import { messages, conversations, type Message, type InsertMessage, type Conversation, type InsertConversation } from "@shared/messaging-schema";
 import { db } from "./db";
 import { eq, desc, or, and } from "drizzle-orm";
 
@@ -33,6 +34,14 @@ export interface IStorage {
   createCompany(company: InsertCompany): Promise<Company>;
   updateCompany(userId: number, company: Partial<InsertCompany>): Promise<Company>;
   getAllCompanies(): Promise<Company[]>;
+  
+  // Messaging methods
+  getMessages(conversationId: number): Promise<Message[]>;
+  sendMessage(message: InsertMessage): Promise<Message>;
+  getConversations(userId: number): Promise<Conversation[]>;
+  createConversation(conversation: InsertConversation): Promise<Conversation>;
+  markMessageAsRead(messageId: number): Promise<void>;
+  getOrCreateConversation(userId1: number, userId2: number): Promise<Conversation>;
 }
 
 export class MemStorage implements IStorage {
@@ -329,6 +338,54 @@ export class MemStorage implements IStorage {
   async getAllCompanies(): Promise<Company[]> {
     return [];
   }
+
+  // Messaging methods (memory storage)
+  async getMessages(conversationId: number): Promise<Message[]> {
+    return [];
+  }
+
+  async sendMessage(messageData: InsertMessage): Promise<Message> {
+    const id = this.currentId++;
+    const message: Message = {
+      id,
+      senderId: messageData.senderId,
+      receiverId: messageData.receiverId,
+      content: messageData.content,
+      messageType: messageData.messageType || "text",
+      isRead: messageData.isRead || false,
+      createdAt: new Date()
+    };
+    return message;
+  }
+
+  async getConversations(userId: number): Promise<Conversation[]> {
+    return [];
+  }
+
+  async createConversation(conversationData: InsertConversation): Promise<Conversation> {
+    const id = this.currentId++;
+    const conversation: Conversation = {
+      id,
+      participant1Id: conversationData.participant1Id,
+      participant2Id: conversationData.participant2Id,
+      lastMessageId: conversationData.lastMessageId || null,
+      lastActivity: new Date(),
+      createdAt: new Date()
+    };
+    return conversation;
+  }
+
+  async markMessageAsRead(messageId: number): Promise<void> {
+    // Implementation for memory storage
+  }
+
+  async getOrCreateConversation(userId1: number, userId2: number): Promise<Conversation> {
+    // For memory storage, create a new conversation
+    return this.createConversation({
+      participant1Id: userId1,
+      participant2Id: userId2
+    });
+  }
 }
 
 export class DatabaseStorage implements IStorage {
@@ -477,6 +534,75 @@ export class DatabaseStorage implements IStorage {
   async getAllCompanies(): Promise<Company[]> {
     const result = await db.select().from(companies).where(eq(companies.status, "active"));
     return result;
+  }
+
+  // Messaging methods (database storage)
+  async getMessages(conversationId: number): Promise<Message[]> {
+    const conversation = await db.select().from(conversations).where(eq(conversations.id, conversationId)).limit(1);
+    if (!conversation[0]) return [];
+    
+    const { participant1Id, participant2Id } = conversation[0];
+    
+    const result = await db.select().from(messages)
+      .where(
+        or(
+          and(eq(messages.senderId, participant1Id), eq(messages.receiverId, participant2Id)),
+          and(eq(messages.senderId, participant2Id), eq(messages.receiverId, participant1Id))
+        )
+      )
+      .orderBy(messages.createdAt);
+    
+    return result;
+  }
+
+  async sendMessage(messageData: InsertMessage): Promise<Message> {
+    const result = await db.insert(messages).values(messageData).returning();
+    return result[0];
+  }
+
+  async getConversations(userId: number): Promise<Conversation[]> {
+    const result = await db.select().from(conversations)
+      .where(
+        or(
+          eq(conversations.participant1Id, userId),
+          eq(conversations.participant2Id, userId)
+        )
+      )
+      .orderBy(desc(conversations.lastActivity));
+    return result;
+  }
+
+  async createConversation(conversationData: InsertConversation): Promise<Conversation> {
+    const result = await db.insert(conversations).values(conversationData).returning();
+    return result[0];
+  }
+
+  async markMessageAsRead(messageId: number): Promise<void> {
+    await db.update(messages)
+      .set({ isRead: true })
+      .where(eq(messages.id, messageId));
+  }
+
+  async getOrCreateConversation(userId1: number, userId2: number): Promise<Conversation> {
+    // Check if conversation already exists
+    const existing = await db.select().from(conversations)
+      .where(
+        or(
+          and(eq(conversations.participant1Id, userId1), eq(conversations.participant2Id, userId2)),
+          and(eq(conversations.participant1Id, userId2), eq(conversations.participant2Id, userId1))
+        )
+      )
+      .limit(1);
+
+    if (existing[0]) {
+      return existing[0];
+    }
+
+    // Create new conversation
+    return this.createConversation({
+      participant1Id: userId1,
+      participant2Id: userId2
+    });
   }
 
   async getAllUsers(): Promise<User[]> {
