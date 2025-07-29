@@ -1,4 +1,4 @@
-import { users, userProfiles, experiences, messages, conversations, companies, type User, type InsertUser, type UserProfile, type InsertUserProfile, type Experience, type InsertExperience, type Message, type InsertMessage, type Conversation, type InsertConversation, type Company, type InsertCompany } from "@shared/schema";
+import { users, userProfiles, experiences, companies, type User, type InsertUser, type UserProfile, type InsertUserProfile, type Experience, type InsertExperience, type Company, type InsertCompany } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, or, and } from "drizzle-orm";
 
@@ -26,12 +26,7 @@ export interface IStorage {
   getExperience(id: number): Promise<Experience | undefined>;
   duplicateExperience(id: number, userId: number): Promise<Experience>;
   
-  // Message methods
-  getMessages(conversationId: number): Promise<Message[]>;
-  sendMessage(message: InsertMessage): Promise<Message>;
-  getConversations(userId: number): Promise<Conversation[]>;
-  createConversation(conversation: InsertConversation): Promise<Conversation>;
-  markMessageAsRead(messageId: number): Promise<void>;
+
   
   // Company methods
   getCompany(userId: number): Promise<Company | undefined>;
@@ -275,27 +270,7 @@ export class MemStorage implements IStorage {
     return duplicatedExperience;
   }
 
-  // Message methods (memory storage)
-  async getMessages(conversationId: number): Promise<Message[]> {
-    // For memory storage, we'll store messages with conversation reference
-    return [];
-  }
 
-  async sendMessage(messageData: InsertMessage): Promise<Message> {
-    const id = this.currentId++;
-    const message: Message = {
-      id,
-      senderId: messageData.senderId,
-      receiverId: messageData.receiverId,
-      experienceId: messageData.experienceId || null,
-      subject: messageData.subject || null,
-      content: messageData.content,
-      isRead: messageData.isRead || false,
-      messageType: messageData.messageType || "direct",
-      createdAt: new Date()
-    };
-    return message;
-  }
 
   async getAllUsers(): Promise<User[]> {
     return Array.from(this.users.values());
@@ -311,26 +286,7 @@ export class MemStorage implements IStorage {
     return updatedUser;
   }
 
-  async getConversations(userId: number): Promise<Conversation[]> {
-    return [];
-  }
 
-  async createConversation(conversationData: InsertConversation): Promise<Conversation> {
-    const id = this.currentId++;
-    const conversation: Conversation = {
-      id,
-      participant1Id: conversationData.participant1Id,
-      participant2Id: conversationData.participant2Id,
-      lastMessageId: conversationData.lastMessageId || null,
-      lastActivity: new Date(),
-      createdAt: new Date()
-    };
-    return conversation;
-  }
-
-  async markMessageAsRead(messageId: number): Promise<void> {
-    // Implementation for memory storage
-  }
 
   // Company methods (memory storage)
   async getCompany(userId: number): Promise<Company | undefined> {
@@ -491,55 +447,7 @@ export class DatabaseStorage implements IStorage {
     return result[0];
   }
 
-  // Message methods (database storage)  
-  async getMessages(conversationId: number): Promise<Message[]> {
-    // Since messages table doesn't use conversation_id in current DB, 
-    // we'll get messages between two users directly
-    const conversation = await db.select().from(conversations).where(eq(conversations.id, conversationId)).limit(1);
-    if (!conversation[0]) return [];
-    
-    const { participant1Id, participant2Id } = conversation[0];
-    
-    const result = await db.select().from(messages)
-      .where(
-        or(
-          and(eq(messages.senderId, participant1Id), eq(messages.receiverId, participant2Id)),
-          and(eq(messages.senderId, participant2Id), eq(messages.receiverId, participant1Id))
-        )
-      )
-      .orderBy(messages.createdAt); // Order by creation time ASC for chronological display
-    
-    return result;
-  }
 
-  async sendMessage(messageData: InsertMessage): Promise<Message> {
-    // Insert message directly without conversationId
-    const result = await db.insert(messages).values(messageData).returning();
-    return result[0];
-  }
-
-  async getConversations(userId: number): Promise<Conversation[]> {
-    const result = await db.select().from(conversations)
-      .where(
-        or(
-          eq(conversations.participant1Id, userId),
-          eq(conversations.participant2Id, userId)
-        )
-      )
-      .orderBy(desc(conversations.lastActivity));
-    return result;
-  }
-
-  async createConversation(conversationData: InsertConversation): Promise<Conversation> {
-    const result = await db.insert(conversations).values(conversationData).returning();
-    return result[0];
-  }
-
-  async markMessageAsRead(messageId: number): Promise<void> {
-    await db.update(messages)
-      .set({ isRead: true })
-      .where(eq(messages.id, messageId));
-  }
 
   // Company methods (database storage)
   async getCompany(userId: number): Promise<Company | undefined> {

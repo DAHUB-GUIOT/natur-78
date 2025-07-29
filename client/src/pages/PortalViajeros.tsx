@@ -19,7 +19,7 @@ import {
   DropdownMenuSeparator 
 } from "@/components/ui/dropdown-menu";
 import { InteractiveMap } from "@/components/dashboard/InteractiveMap";
-import { MessageCenter } from "@/components/messaging/MessageCenter";
+
 import { useQuery } from "@tanstack/react-query";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
@@ -158,7 +158,7 @@ export default function PortalViajeros() {
     { id: "experiencias", label: "Experiencias", icon: Compass },
     { id: "favoritos", label: "Favoritos", icon: Heart },
     { id: "reservas", label: "Reservas", icon: Calendar },
-    { id: "mensajes", label: "Mensajes", icon: MessageCircle },
+
   ];
 
   const categories = [
@@ -537,21 +537,7 @@ export default function PortalViajeros() {
         </div>
       )}
 
-      {activeSection === "mensajes" && (
-        <div className="absolute top-24 left-60 right-4 bottom-4 z-40 backdrop-blur-xl bg-gray-900/40 border border-gray-600/30 rounded-xl shadow-2xl overflow-hidden">
-          <div className="h-full overflow-y-auto p-4">
-            <h2 className="text-xl font-bold text-white mb-4">Mensajes</h2>
-            {currentUser?.user?.id ? (
-              <MessageCenter currentUserId={currentUser.user.id} />
-            ) : (
-              <div className="text-center py-12">
-                <MessageCircle className="w-16 h-16 text-gray-500 mx-auto mb-4" />
-                <p className="text-gray-400">Inicia sesión para ver tus mensajes</p>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
+
 
       {/* Booking Modal */}
       <Dialog open={showBookingModal} onOpenChange={setShowBookingModal}>
@@ -634,17 +620,9 @@ export default function PortalViajeros() {
             </Button>
           </div>
           <div className="h-[calc(100%-64px)] overflow-hidden">
-            {currentUser?.user?.id ? (
-              <MessageCenter 
-                currentUserId={currentUser.user.id} 
-                preSelectedUserId={chatReceiverId}
-                compact={true}
-              />
-            ) : (
-              <div className="flex items-center justify-center h-full">
-                <p className="text-gray-400">Inicia sesión para chatear</p>
-              </div>
-            )}
+            <div className="flex items-center justify-center h-full">
+              <p className="text-gray-400">Función de chat no disponible</p>
+            </div>
           </div>
         </div>
       )}

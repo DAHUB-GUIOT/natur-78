@@ -14,7 +14,7 @@ import {
   Phone, 
   Mail, 
   Globe, 
-  MessageCircle, 
+
   Heart,
   Search,
   Filter,
@@ -24,7 +24,7 @@ import {
   Plus,
   Edit3
 } from "lucide-react";
-import { MessageCenter } from "@/components/messaging/MessageCenter";
+
 import ExperienceForm from "@/components/dashboard/ExperienceForm";
 import { apiRequest } from "@/lib/queryClient";
 
@@ -58,7 +58,7 @@ export default function UnifiedPlatform() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [showExperienceForm, setShowExperienceForm] = useState(false);
-  const [showMessages, setShowMessages] = useState(false);
+
   const queryClient = useQueryClient();
 
   const { data: experiences = [] } = useQuery<Experience[]>({
@@ -107,14 +107,6 @@ export default function UnifiedPlatform() {
               </Badge>
             </div>
             <div className="flex items-center gap-2">
-              <Button
-                variant="outline"
-                onClick={() => setShowMessages(true)}
-                className="gap-2"
-              >
-                <MessageCircle className="h-4 w-4" />
-                Mensajes
-              </Button>
               <Button
                 onClick={() => setShowExperienceForm(true)}
                 className="gap-2 bg-green-600 hover:bg-green-700"
@@ -225,9 +217,6 @@ export default function UnifiedPlatform() {
                       >
                         <Copy className="h-4 w-4" />
                       </Button>
-                      <Button size="sm" variant="outline">
-                        <MessageCircle className="h-4 w-4" />
-                      </Button>
                     </div>
                   </CardContent>
                 </Card>
@@ -273,9 +262,6 @@ export default function UnifiedPlatform() {
                       </Button>
                       <Button size="sm" variant="outline">
                         <Phone className="h-4 w-4" />
-                      </Button>
-                      <Button size="sm" variant="outline">
-                        <MessageCircle className="h-4 w-4" />
                       </Button>
                     </div>
                   </CardContent>
@@ -357,20 +343,7 @@ export default function UnifiedPlatform() {
         </SheetContent>
       </Sheet>
 
-      {/* Messages Modal */}
-      <Sheet open={showMessages} onOpenChange={setShowMessages}>
-        <SheetContent className="w-full max-w-6xl">
-          <SheetHeader>
-            <SheetTitle>Centro de Mensajes</SheetTitle>
-            <SheetDescription>
-              Comunícate con otros usuarios de la plataforma.
-            </SheetDescription>
-          </SheetHeader>
-          <div className="mt-6 h-[calc(100vh-200px)]">
-            <MessageCenter />
-          </div>
-        </SheetContent>
-      </Sheet>
+
     </div>
   );
 }

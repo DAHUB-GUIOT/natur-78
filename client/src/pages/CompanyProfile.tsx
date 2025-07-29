@@ -99,14 +99,8 @@ const CompanyProfile = () => {
   };
 
   const handleContactClick = () => {
-    // Store the company info for messaging
-    localStorage.setItem('contactCompany', JSON.stringify({
-      id: companyData.id,
-      name: companyData.name,
-      email: companyData.email
-    }));
-    // Navigate to portal empresas with messaging section
-    window.location.href = '/portal-empresas#mensajes';
+    // Navigate to portal empresas
+    window.location.href = '/portal-empresas';
   };
 
   return (

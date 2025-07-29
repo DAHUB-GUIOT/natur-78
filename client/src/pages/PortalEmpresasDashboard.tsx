@@ -43,8 +43,7 @@ import { InteractiveMap } from "@/components/dashboard/InteractiveMap";
 import ExperienceForm from "@/components/dashboard/ExperienceForm";
 import ProfileSection from "@/components/dashboard/ProfileSection";
 import TwitterProfileSection from "@/components/profile/TwitterProfileSection";
-import { MessageCenter } from "@/components/messaging/MessageCenter";
-import WhatsAppChat from "@/components/messaging/WhatsAppChat";
+
 import { Link } from "wouter";
 
 const PortalEmpresasDashboard = () => {
@@ -52,13 +51,7 @@ const PortalEmpresasDashboard = () => {
   const [activeSection, setActiveSection] = useState("mapa");
   const [showExperienceForm, setShowExperienceForm] = useState(false);
 
-  // Handle hash fragment navigation for direct messaging access
-  useEffect(() => {
-    const hash = window.location.hash.replace('#', '');
-    if (hash === 'mensajes') {
-      setActiveSection('mensajes');
-    }
-  }, []);
+
 
   // Fetch experiences data
   const { data: experiences = [], isLoading: experiencesLoading } = useQuery({
@@ -78,7 +71,7 @@ const PortalEmpresasDashboard = () => {
     { id: "mapa", label: "Mapa", icon: Map },
     { id: "empresas", label: "Contactos", icon: Building2 },
     { id: "experiencias", label: "Experiencias", icon: Star },
-    { id: "mensajes", label: "Mensajes", icon: MessageCircle },
+
     { id: "perfil", label: "Mi Perfil", icon: User },
     { id: "ajustes", label: "Ajustes", icon: Settings },
     ...((currentUser as any)?.user?.role === 'admin' ? [{ id: "admin", label: "Admin Panel", icon: ShieldCheck }] : [])
@@ -468,18 +461,7 @@ const PortalEmpresasDashboard = () => {
                           <User className="w-3 h-3 mr-1" />
                           Ver Perfil
                         </Button>
-                        <Button 
-                          size="sm" 
-                          className="bg-green-600/80 hover:bg-green-700/80 text-white text-xs h-8 flex-1 backdrop-blur-sm"
-                          onClick={() => {
-                            setActiveSection('mensajes');
-                            // Store the contact to start a chat with
-                            localStorage.setItem('startChatWith', company.id.toString());
-                          }}
-                        >
-                          <MessageCircle className="w-3 h-3 mr-1" />
-                          Contactar
-                        </Button>
+
                       </div>
                     </div>
                   </CardContent>
@@ -493,15 +475,7 @@ const PortalEmpresasDashboard = () => {
       case "mapa":
         return <InteractiveMap />;
 
-      case "mensajes":
-        return (
-          <div className="h-full">
-            <WhatsAppChat 
-              currentUserId={(currentUser as any)?.user?.id} 
-              onClose={() => setActiveSection('inicio')}
-            />
-          </div>
-        );
+
 
       case "ajustes":
         return (

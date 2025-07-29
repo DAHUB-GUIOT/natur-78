@@ -10,6 +10,18 @@ This is a full-stack web application for Festival NATUR (www.festivalnatur.com),
 
 ## Recent Changes
 
+- ✅ **January 29, 2025**: Complete Messaging System Removal
+  - **REMOVED**: All messaging functionality completely eliminated from the platform
+  - **REMOVED**: MessageCenter and WhatsAppChat components from client/src/components/messaging/
+  - **REMOVED**: All messaging-related API endpoints from server/routes.ts (/api/messages, /api/conversations, /api/messages/search-users)
+  - **REMOVED**: All messaging methods from server/storage.ts (getMessages, sendMessage, getConversations, createConversation, markMessageAsRead)
+  - **REMOVED**: WebSocket server setup and real-time messaging infrastructure
+  - **REMOVED**: Messaging imports and references from all pages (UnifiedPlatform, PortalViajeros, PortalEmpresasDashboard, CompanyProfile)
+  - **UPDATED**: Contact buttons now redirect to main portal pages instead of messaging sections
+  - **UPDATED**: Sidebar navigation menus no longer include messaging options
+  - **CLEANED**: Database schema imports and messaging-related type definitions removed
+  - **ARCHITECTURE**: Platform now focuses exclusively on directory, experiences, and agenda functionality without messaging capabilities
+
 - ✅ **January 29, 2025**: Complete Agenda Restructure - VIVE NATUR and NATUR PRO Divisions + Cultural Integration
   - **RESTRUCTURED**: Changed agenda from 3-tab system to 2-tab system integrating cultural activities into both VIVE NATUR and NATUR PRO
   - **NEW**: VIVE NATUR agenda includes all original activities PLUS integrated cultural programming (talleres, arte, música, rituales)

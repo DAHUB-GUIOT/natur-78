@@ -30,7 +30,7 @@ import MapaPublicoOptimized from "./pages/MapaPublicoOptimized";
 import UnifiedPlatform from "./pages/UnifiedPlatform";
 import UserProfile from "./pages/UserProfile";
 import CompanyProfile from "./pages/CompanyProfile";
-import MessagingPage from "./pages/MessagingPage";
+
 import Tickets from "./pages/Tickets";
 import SessionDetail from "./pages/SessionDetail";
 import { AuthProvider } from "./contexts/AuthContext";
@@ -76,7 +76,7 @@ const App = () => (
             <Route path="/plataforma" component={UnifiedPlatform} />
             <Route path="/perfil/:userId" component={UserProfile} />
             <Route path="/empresa/:companyId" component={CompanyProfile} />
-            <Route path="/mensajes" component={MessagingPage} />
+
             <Route path="/tickets" component={Tickets} />
             <Route path="/sesion/:sessionId" component={SessionDetail} />
             <Route path="/agenda">
