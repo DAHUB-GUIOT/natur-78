@@ -933,30 +933,7 @@ const PortalEmpresasDashboard = () => {
           })}
         </nav>
         
-        {/* Usuario Viajero section */}
-        <div className="p-2 border-t border-gray-600/30">
-          <button
-            onClick={() => setActiveSection("perfil")}
-            className="w-full flex items-center space-x-2 px-3 py-2 rounded-lg bg-green-600/20 border border-green-500/30 backdrop-blur-sm hover:bg-green-600/30 hover:border-green-400/40 transition-all duration-200"
-          >
-            <Avatar className="w-6 h-6 ring-1 ring-green-400/50">
-              <AvatarFallback className="bg-green-600/80 text-white text-xs font-bold">
-                {user?.email === 'dahub.tech@gmail.com' ? 'D' : 
-                 user?.email === 'tripcol.tour@gmail.com' ? 'T' : 
-                 'E'}
-              </AvatarFallback>
-            </Avatar>
-            <div className="flex-1 min-w-0 text-left">
-              <p className="text-white font-medium text-xs truncate">
-                {user?.email === 'dahub.tech@gmail.com' ? 'DaHub' : 
-                 user?.email === 'tripcol.tour@gmail.com' ? 'TripCol' : 
-                 user?.email === 'info@festivalnatur.com' ? 'Festival NATUR' :
-                 user?.firstName && user?.lastName ? `${user.firstName} ${user.lastName}` : user?.name || 'Usuario'}
-              </p>
-              <p className="text-green-300 text-xs font-medium">Tecnología</p>
-            </div>
-          </button>
-        </div>
+        
       </div>
 
       {/* Compact main content with glassmorphism background (except for map) */}
