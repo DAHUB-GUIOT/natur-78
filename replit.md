@@ -20,6 +20,15 @@ This is a full-stack web application for Festival NATUR (www.festivalnatur.com),
   - **UPDATED**: "MÁS QUE UN PREMIO, UN RECONOCIMIENTO..." (Award section) to H4 with Unbounded Medium
   - **TYPOGRAPHY**: Enhanced semantic structure and brand message hierarchy with premium Unbounded font
 
+- ✅ **January 29, 2025**: Menu Semantic Structure Enhancement with H1 Tags
+  - **UPDATED**: All menu category titles in sidebar now use h1 tags for proper semantic hierarchy
+  - **UPDATED**: VIVE NATUR and NATUR PRO section headers updated to h1 tags
+  - **UPDATED**: Other category section headers (NOTICIAS, PLATAFORMA NATUR, INFO) use h1 tags
+  - **REMOVED**: Yellow backgrounds from VIVE NATUR and NATUR PRO headers as requested
+  - **REMOVED**: Unnecessary div wrapper element from INFO section
+  - **IMPROVED**: Consistent semantic HTML structure across all menu sections
+  - **TYPOGRAPHY**: Enhanced accessibility and SEO with proper heading hierarchy
+
 - ✅ **January 29, 2025**: Complete Festival NATUR 2025 Menu Architecture Implementation
   - **UPDATED**: Festival NATUR Bogotá 2025 with full VIVE NATUR and NATUR PRO structure
   - **NEW**: VIVE NATUR activities: Charlas NATUR, Rooftop + Zona de Comidas, Emprendimientos Sostenibles, Zona Chill, Foro Colombia Sostenible 2025, Zona Kinder & Coffee Party

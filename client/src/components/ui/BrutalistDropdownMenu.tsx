@@ -148,7 +148,7 @@ export function BrutalistDropdownMenu({ isOpen, onClose, triggerRef }: Brutalist
               >
                 <div className="flex items-center gap-3">
                   <span className="text-2xl">{category.icon}</span>
-                  <span>{category.title}</span>
+                  <h1>{category.title}</h1>
                   {expandedCategory === index && (
                     <ChevronRight className="w-4 h-4 ml-auto" />
                   )}
