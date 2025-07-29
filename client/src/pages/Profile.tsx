@@ -18,18 +18,44 @@ import {
 } from "lucide-react";
 import { Link, useParams } from "wouter";
 
+interface User {
+  id: number;
+  email: string;
+  firstName?: string;
+  lastName?: string;
+  companyName?: string;
+  role: string;
+  city?: string;
+  country?: string;
+  address?: string;
+  coordinates?: { lat: number; lng: number };
+  createdAt: string;
+}
+
+interface Company {
+  id: number;
+  companyName: string;
+  businessType?: string;
+  description?: string;
+  phone?: string;
+  website?: string;
+  address?: string;
+  city?: string;
+  isVerified?: boolean;
+}
+
 const Profile = () => {
   const params = useParams();
   const userId = params.id;
 
   // Fetch user data
-  const { data: user, isLoading } = useQuery({
+  const { data: user, isLoading } = useQuery<User>({
     queryKey: [`/api/profiles/${userId}`],
     enabled: !!userId,
   });
 
   // Fetch company data if user is empresa
-  const { data: company } = useQuery({
+  const { data: company } = useQuery<Company>({
     queryKey: [`/api/companies/user/${userId}`],
     enabled: !!userId && user?.role === 'empresa',
   });

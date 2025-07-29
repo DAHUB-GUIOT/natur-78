@@ -557,7 +557,37 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Get ALL registered users for directory display  
+  // Directory route - get all registered users for Portal Empresas
+  app.get("/api/directory/users", async (req, res) => {
+    try {
+      const users = await storage.getAllUsers();
+      console.log(`✅ Portal Empresas Directory: Found ${users.length} registered users`);
+      
+      // Format users for directory display
+      const directoryUsers = users
+        .filter(user => user.isActive)
+        .map(user => ({
+          id: user.id,
+          email: user.email,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          companyName: user.companyName,
+          role: user.role,
+          city: user.city,
+          country: user.country,
+          coordinates: user.coordinates,
+          createdAt: user.createdAt,
+          isActive: user.isActive
+        }));
+      
+      res.json(directoryUsers);
+    } catch (error) {
+      console.error("Error fetching directory users:", error);
+      res.status(500).json({ error: "Failed to fetch directory users" });
+    }
+  });
+
+  // Get ALL registered users for directory display (legacy endpoint) 
   app.get("/api/users/companies", async (req, res) => {
     try {
       const users = await storage.getAllUsers();

@@ -78,6 +78,12 @@ const PortalEmpresasDashboard = () => {
   // Cast currentUser to proper type - handle both direct user and nested user format
   const user = (currentUser as any)?.user || currentUser;
 
+  // Fetch all users for directory (updated to show ALL registered users)
+  const { data: directoryUsers = [], isLoading: directoryLoading } = useQuery({
+    queryKey: ["/api/directory/users"],
+    enabled: activeSection === "directorio" || activeSection === "empresas",
+  });
+
   const sidebarItems = [
     { id: "mapa", label: "Mapa", icon: Map },
     { id: "empresas", label: "Directorio", icon: Building2 },
@@ -327,7 +333,7 @@ const PortalEmpresasDashboard = () => {
               <div className="flex justify-between items-center">
                 <h2 className="text-xl text-white">Directorio</h2>
                 <Badge className="bg-green-600/20 text-green-300 px-3 py-1">
-                  {filteredCompanies.length} usuarios
+                  {directoryUsers.length} usuarios registrados
                 </Badge>
               </div>
               
@@ -348,50 +354,56 @@ const PortalEmpresasDashboard = () => {
               </div>
             </div>
             
-            {companiesLoading ? (
+            {directoryLoading ? (
               <div className="text-center py-12">
                 <div className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30 rounded-lg p-8">
                   <Building2 className="w-12 h-12 text-gray-400 mx-auto mb-4 animate-pulse" />
-                  <h3 className="text-lg font-sans text-white mb-2">Cargando empresas...</h3>
-                  <p className="text-gray-300 text-sm">Obteniendo contactos de la base de datos</p>
+                  <h3 className="text-lg font-sans text-white mb-2">Cargando directorio...</h3>
+                  <p className="text-gray-300 text-sm">Obteniendo usuarios registrados de la base de datos</p>
                 </div>
               </div>
-            ) : filteredCompanies.length === 0 ? (
+            ) : directoryUsers.length === 0 ? (
               <div className="text-center py-12">
                 <div className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30 rounded-lg p-8">
                   <Building2 className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                  <h3 className="text-lg font-sans text-white mb-2">No se encontraron empresas</h3>
+                  <h3 className="text-lg font-sans text-white mb-2">No hay usuarios registrados</h3>
                   <p className="text-gray-300 text-sm">
-                    {searchTerm ? `No hay resultados para "${searchTerm}"` : "No hay empresas en esta categoría"}
+                    Los usuarios aparecerán aquí cuando se registren en el portal
                   </p>
-
                 </div>
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                {filteredCompanies.map((company) => (
-                  <Card key={company.id} className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30 hover:bg-gray-800/50 transition-all">
+                {directoryUsers.map((user) => (
+                  <Card key={user.id} className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30 hover:bg-gray-800/50 transition-all">
                   <CardContent className="p-3">
                     <div className="space-y-2">
-                      {/* Simplified header */}
-                      <div className="flex items-center space-x-3">
-                        <Avatar className="w-10 h-10">
-                          <AvatarFallback className="bg-green-600 text-white text-sm">{company.name[0]}</AvatarFallback>
+                      <div className="flex items-start space-x-3">
+                        <Avatar className="w-10 h-10 ring-1 ring-gray-600/50">
+                          <AvatarFallback className="bg-green-600 text-white text-sm font-bold">
+                            {user.companyName ? user.companyName[0].toUpperCase() : (user.firstName ? user.firstName[0].toUpperCase() : 'U')}
+                          </AvatarFallback>
                         </Avatar>
-                        
-                        <div className="flex-1">
-                          <h3 className="text-sm text-white">{company.name}</h3>
-                          <p className="text-xs text-gray-300">{company.location}</p>
+                        <div className="flex-1 min-w-0">
+                          <h3 className="text-white font-medium text-sm truncate mb-1">
+                            {user.companyName || `${user.firstName || ''} ${user.lastName || ''}`.trim() || user.email}
+                          </h3>
+                          <p className="text-gray-300 text-xs mb-2 truncate">
+                            {user.role === 'empresa' ? 'Empresa registrada' : user.role === 'admin' ? 'Administrador' : 'Usuario viajero'}
+                          </p>
+                          <div className="flex items-center text-gray-400 text-xs mb-3">
+                            <MapPin className="w-3 h-3 mr-1" />
+                            <span className="truncate">{user.city || user.country || 'Colombia'}</span>
+                          </div>
                         </div>
                       </div>
                       
-                      {/* Simple action buttons */}
                       <div className="flex space-x-2">
                         <Button 
                           size="sm" 
                           variant="outline" 
                           className="border-gray-600/50 text-gray-300 hover:bg-gray-700/50 text-xs h-7 flex-1"
-                          onClick={() => window.location.href = `/empresa/${company.id}`}
+                          onClick={() => window.location.href = `/perfil/${user.id}`}
                         >
                           Ver Perfil
                         </Button>
@@ -404,7 +416,7 @@ const PortalEmpresasDashboard = () => {
                       </div>
                     </div>
                   </CardContent>
-                  </Card>
+                </Card>
                 ))}
               </div>
             )}
