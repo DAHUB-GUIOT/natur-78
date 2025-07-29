@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { 
   Search, User, Bell, MessageCircle, Heart, Filter, MapPin, 
   Star, Calendar, Clock, Users, DollarSign, Camera, Share2,
@@ -23,6 +23,7 @@ import { MessageCenter } from "@/components/messaging/MessageCenter";
 import { useQuery } from "@tanstack/react-query";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface Experience {
   id: number;
@@ -38,6 +39,8 @@ interface Experience {
 }
 
 export default function PortalViajeros() {
+  const { user, loading } = useAuth();
+  const [location, setLocation] = useLocation();
   const [activeSection, setActiveSection] = useState("mapa");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("todos");
@@ -47,6 +50,52 @@ export default function PortalViajeros() {
   const [bookingDate, setBookingDate] = useState("");
   const [bookingGuests, setBookingGuests] = useState("1");
   const [chatReceiverId, setChatReceiverId] = useState<number | null>(null);
+
+  // Redirect to login if not authenticated
+  useEffect(() => {
+    if (!loading && !user) {
+      setLocation('/auth/consentidos');
+    }
+  }, [user, loading, setLocation]);
+
+  // Show loading while checking authentication
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-teal-100 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Cargando...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Show login prompt if not authenticated
+  if (!user) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-teal-100 flex items-center justify-center">
+        <div className="max-w-md mx-auto text-center p-8 bg-white rounded-lg shadow-lg">
+          <MapPin className="w-16 h-16 text-emerald-600 mx-auto mb-4" />
+          <h2 className="text-2xl font-bold text-gray-800 mb-4">Acceso Requerido</h2>
+          <p className="text-gray-600 mb-6">
+            Para acceder al mapa interactivo de turismo sostenible, necesitas iniciar sesión o registrarte.
+          </p>
+          <div className="space-y-3">
+            <Link to="/auth/consentidos">
+              <Button className="w-full bg-emerald-600 hover:bg-emerald-700 text-white">
+                Iniciar Sesión
+              </Button>
+            </Link>
+            <Link to="/con-sentidos">
+              <Button variant="outline" className="w-full border-emerald-600 text-emerald-600 hover:bg-emerald-50">
+                Registrarse Gratis
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   // Sample experiences for the map
   const sampleExperiences = [

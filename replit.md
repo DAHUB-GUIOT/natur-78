@@ -10,6 +10,15 @@ This is a full-stack web application for Festival NATUR (www.festivalnatur.com),
 
 ## Recent Changes
 
+- ✅ **January 29, 2025**: Authentication Required for Interactive Map Access
+  - **NEW**: Portal Viajeros now requires user authentication before accessing the map
+  - **NEW**: Unauthenticated users see login prompt with options to sign in or register
+  - **NEW**: Added loading state while checking authentication status
+  - **NEW**: Automatic redirect to Con-Sentidos authentication page for login
+  - **NEW**: Link to Con-Sentidos registration for new users
+  - **SECURITY**: Protected tourism map access to ensure user engagement and data collection
+  - **UX**: Clear messaging about access requirements with call-to-action buttons
+
 - ✅ **January 29, 2025**: Complete NATUR Festival Tickets Page Implementation
   - **NEW**: Created dedicated tickets page (/tickets) with brutalist, dark, glassmorphism design
   - **NEW**: Two ticket types: VIVE NATUR (Free) with 5 activities and NATUR PRO ($240,000 COP) with 9 experiences
