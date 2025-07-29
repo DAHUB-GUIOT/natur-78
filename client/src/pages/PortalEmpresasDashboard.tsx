@@ -389,7 +389,7 @@ const PortalEmpresasDashboard = () => {
               <div className="text-center py-12">
                 <div className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30 rounded-lg p-8">
                   <Building2 className="w-12 h-12 text-gray-400 mx-auto mb-4 animate-pulse" />
-                  <h3 className="text-lg font-semibold text-white mb-2">Cargando empresas...</h3>
+                  <h3 className="text-lg font-sans text-white mb-2">Cargando empresas...</h3>
                   <p className="text-gray-300 text-sm">Obteniendo contactos de la base de datos</p>
                 </div>
               </div>
@@ -397,7 +397,7 @@ const PortalEmpresasDashboard = () => {
               <div className="text-center py-12">
                 <div className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30 rounded-lg p-8">
                   <Building2 className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                  <h3 className="text-lg font-semibold text-white mb-2">No se encontraron empresas</h3>
+                  <h3 className="text-lg font-sans text-white mb-2">No se encontraron empresas</h3>
                   <p className="text-gray-300 text-sm">
                     {searchTerm ? `No hay resultados para "${searchTerm}"` : "No hay empresas en esta categoría"}
                   </p>
@@ -421,7 +421,7 @@ const PortalEmpresasDashboard = () => {
                         
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center space-x-2 mb-1">
-                            <h3 className="font-bold text-base text-white">{company.name}</h3>
+                            <h3 className="font-sans text-base text-white">{company.name}</h3>
                           </div>
                           
                           <p className="text-sm text-green-300 font-medium">{company.category}</p>
@@ -439,7 +439,7 @@ const PortalEmpresasDashboard = () => {
 
                       {/* Skills */}
                       <div>
-                        <p className="text-xs font-semibold text-white mb-2">Especialidades</p>
+                        <p className="text-xs font-sans text-white mb-2">Especialidades</p>
                         <div className="flex flex-wrap gap-1">
                           {company.skills.slice(0, 3).map((skill, index) => (
                             <Badge key={index} className="bg-green-600/20 text-green-300 text-xs px-2 py-0.5 border border-green-500/30">
@@ -510,11 +510,11 @@ const PortalEmpresasDashboard = () => {
       case "ajustes":
         return (
           <div className="space-y-4">
-            <h2 className="text-xl font-bold text-white">Ajustes</h2>
+            <h2 className="text-xl font-sans text-white">Ajustes</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
               <Card className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30">
                 <CardContent className="p-3">
-                  <h3 className="text-sm font-semibold text-white mb-3">Perfil</h3>
+                  <h3 className="text-sm font-sans text-white mb-3">Perfil</h3>
                   <div className="space-y-2">
                     <Button variant="outline" size="sm" className="w-full justify-start border-gray-600/50 text-white hover:bg-gray-700/50 text-xs h-8 backdrop-blur-sm">
                       <User className="w-3 h-3 mr-2" />
@@ -530,7 +530,7 @@ const PortalEmpresasDashboard = () => {
               
               <Card className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30">
                 <CardContent className="p-3">
-                  <h3 className="text-sm font-semibold text-white mb-3">Pagos</h3>
+                  <h3 className="text-sm font-sans text-white mb-3">Pagos</h3>
                   <div className="space-y-2">
                     <Button variant="outline" size="sm" className="w-full justify-start border-gray-600/50 text-white hover:bg-gray-700/50 text-xs h-8 backdrop-blur-sm">
                       <DollarSign className="w-3 h-3 mr-2" />
@@ -546,7 +546,7 @@ const PortalEmpresasDashboard = () => {
               
               <Card className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30">
                 <CardContent className="p-3">
-                  <h3 className="text-sm font-semibold text-white mb-3">Notificaciones</h3>
+                  <h3 className="text-sm font-sans text-white mb-3">Notificaciones</h3>
                   <div className="space-y-2">
                     <Button variant="outline" size="sm" className="w-full justify-start border-gray-600/50 text-white hover:bg-gray-700/50 text-xs h-8 backdrop-blur-sm">
                       <Bell className="w-3 h-3 mr-2" />
@@ -564,7 +564,7 @@ const PortalEmpresasDashboard = () => {
             {/* Quick Settings */}
             <Card className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30">
               <CardContent className="p-3">
-                <h3 className="text-sm font-semibold text-white mb-3">Configuración Rápida</h3>
+                <h3 className="text-sm font-sans text-white mb-3">Configuración Rápida</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   <div className="space-y-2">
                     <label className="text-xs text-white">Modo de Disponibilidad</label>

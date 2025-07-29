@@ -39,6 +39,7 @@ This is a full-stack web application for Festival NATUR (www.festivalnatur.com),
   - **UPDATED**: Company markers use gradient green backgrounds with emojis (🚀 for startups, 💎 for investors, 🌿 for ecosystem)
   - **ENHANCED**: Experience markers with lime-to-emerald gradients and target icons for better visibility
   - **IMPROVED**: Marker animations with pulse effects, scale transformations, and glowing shadows for premium appearance
+  - **SIMPLIFIED**: All card titles in Portal Empresas now use simple font-sans instead of font-bold/font-semibold for cleaner typography
 
 - ✅ **January 29, 2025**: Conversation Management System with TripCol Integration
   - **NEW**: Implemented conversation saving and management in messaging system
