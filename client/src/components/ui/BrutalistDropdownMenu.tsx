@@ -167,9 +167,9 @@ export function BrutalistDropdownMenu({ isOpen, onClose, triggerRef }: Brutalist
                 <div className="grid grid-cols-2 gap-8 h-full">
                   {/* VIVE NATUR (Pro) Column */}
                   <div>
-                    <h3 className="text-2xl font-jakarta-bold text-[#EDFF60] bg-[#EDFF60] text-[#0a1a0a] px-4 py-2 uppercase tracking-wider mb-6 text-center">
+                    <h1 className="text-2xl font-jakarta-bold text-[#EDFF60] bg-[#EDFF60] text-[#0a1a0a] px-4 py-2 uppercase tracking-wider mb-6 text-center">
                       VIVE NATUR
-                    </h3>
+                    </h1>
                     <ul className="space-y-3">
                       {menuData[expandedCategory].subcategories?.slice(0, 8).map((sub, subIndex) => (
                         <li key={subIndex}>
@@ -186,9 +186,9 @@ export function BrutalistDropdownMenu({ isOpen, onClose, triggerRef }: Brutalist
 
                   {/* NATUR PRO (Live) Column */}
                   <div>
-                    <h3 className="text-2xl font-jakarta-bold text-[#EDFF60] bg-[#EDFF60] text-[#0a1a0a] px-4 py-2 uppercase tracking-wider mb-6 text-center">
+                    <h1 className="text-2xl font-jakarta-bold text-[#EDFF60] bg-[#EDFF60] text-[#0a1a0a] px-4 py-2 uppercase tracking-wider mb-6 text-center">
                       NATUR PRO
-                    </h3>
+                    </h1>
                     <ul className="space-y-3">
                       {menuData[expandedCategory].subcategories?.slice(8).map((sub, subIndex) => (
                         <li key={subIndex}>
@@ -208,9 +208,9 @@ export function BrutalistDropdownMenu({ isOpen, onClose, triggerRef }: Brutalist
               {/* Other Categories - Single Column Layout */}
               {expandedCategory !== 0 && (
                 <div className="max-w-2xl">
-                  <h3 className="text-2xl font-jakarta-bold text-[#EDFF60] uppercase tracking-wider mb-6">
+                  <h1 className="text-2xl font-jakarta-bold text-[#EDFF60] uppercase tracking-wider mb-6">
                     {menuData[expandedCategory].title}
-                  </h3>
+                  </h1>
                   <ul className="space-y-4 grid grid-cols-1 gap-3">
                     {menuData[expandedCategory].subcategories?.map((sub, subIndex) => (
                       <li key={subIndex}>
@@ -265,7 +265,52 @@ export function BrutalistDropdownMenu({ isOpen, onClose, triggerRef }: Brutalist
               </>
             )}
             
-            
+            {/* Info Section - Always visible */}
+            <h1 className="text-[#EDFF60] font-jakarta-bold uppercase tracking-wider mb-4">
+              INFO
+            </h1>
+            <ul className="space-y-3">
+              <li>
+                <button 
+                  onClick={() => handleSubcategoryClick('/sobre')}
+                  className="text-gray-300 hover:text-[#EDFF60] transition-colors duration-200 text-left block text-sm"
+                >
+                  • Sobre Nosotros
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => handleSubcategoryClick('/contacto')}
+                  className="text-gray-300 hover:text-[#EDFF60] transition-colors duration-200 text-left block text-sm"
+                >
+                  • Contacto
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => handleSubcategoryClick('/aliados')}
+                  className="text-gray-300 hover:text-[#EDFF60] transition-colors duration-200 text-left block text-sm"
+                >
+                  • Aliados
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => handleSubcategoryClick('/faq')}
+                  className="text-gray-300 hover:text-[#EDFF60] transition-colors duration-200 text-left block text-sm"
+                >
+                  • FAQ
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => handleSubcategoryClick('/terminos')}
+                  className="text-gray-300 hover:text-[#EDFF60] transition-colors duration-200 text-left block text-sm"
+                >
+                  • Términos y Condiciones
+                </button>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
