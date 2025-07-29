@@ -61,49 +61,36 @@ export function Hero() {
       {/* Main Content - Left Aligned like BIME */}
       <div className="relative z-10 flex items-center min-h-screen px-6 sm:px-8 md:px-20 pt-20">
         <div className="max-w-7xl w-full">
-          <div className="max-w-3xl">
-            {/* Main Title */}
-            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-gasoek mb-3 tracking-wide leading-none" style={{ color: '#cad95e' }}>
-              NATUR
-            </h1>
-            
-            {/* Subtitle */}
-            <h2 className="text-xl sm:text-2xl md:text-3xl font-gasoek mb-6 leading-tight max-w-xl" style={{ color: '#cad95e' }}>
-              TODO SOBRE TURISMO SOSTENIBLE
-              <br />
-              <span style={{ color: '#cad95e', opacity: 0.8 }}>Y MÁS</span>
-            </h2>
+          <div className="max-w-4xl mx-auto text-center">
+            {/* Festival NATUR Logo */}
+            <div className="mb-12">
+              <img 
+                src="/attached_assets/Festival-NATUR_1753754827567.png" 
+                alt="Festival NATUR 2025"
+                className="mx-auto max-w-lg w-full h-auto"
+              />
+            </div>
 
-            {/* Main Action Buttons - Stacked vertically like BIME */}
-            <div className="flex flex-col gap-3 max-w-xs">
-              <Link to="/tickets">
+            {/* Main Action Buttons - Centered horizontally */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center max-w-md mx-auto">
+              <Link to="/tickets" className="w-full sm:w-auto">
                 <Button 
                   size="lg" 
-                  className="text-black font-bold text-sm px-6 py-3 rounded-lg shadow-lg flex items-center justify-center w-full hover:opacity-90"
+                  className="text-black font-bold text-lg px-8 py-4 rounded-none shadow-lg flex items-center justify-center w-full hover:opacity-90 transition-all duration-300"
                   style={{ backgroundColor: '#cad95e' }}
                 >
-                  <Ticket className="w-4 h-4 mr-2" />
+                  <Ticket className="w-5 h-5 mr-2" />
                   TICKETS
                 </Button>
               </Link>
               
-              <Link to="/agenda">
+              <Link to="/agenda" className="w-full sm:w-auto">
                 <Button 
                   size="lg" 
-                  className="bg-black hover:bg-gray-800 text-white font-bold text-sm px-6 py-3 rounded-lg shadow-lg flex items-center justify-center w-full"
+                  className="bg-transparent border-2 border-white hover:bg-white hover:text-black text-white font-bold text-lg px-8 py-4 rounded-none shadow-lg flex items-center justify-center w-full transition-all duration-300"
                 >
-                  <Calendar className="w-4 h-4 mr-2" />
+                  <Calendar className="w-5 h-5 mr-2" />
                   AGENDA
-                </Button>
-              </Link>
-              
-              <Link to="/portal-viajeros">
-                <Button 
-                  size="lg" 
-                  className="bg-white hover:bg-yellow-50 text-black font-bold text-sm px-6 py-3 rounded-lg shadow-lg flex items-center justify-center w-full"
-                >
-                  <Calendar className="w-4 h-4 mr-2" />
-                  EXPERIENCIAS
                 </Button>
               </Link>
             </div>
