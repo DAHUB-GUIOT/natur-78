@@ -10,11 +10,13 @@ This is a full-stack web application for Festival NATUR (www.festivalnatur.com),
 
 ## Recent Changes
 
-- ✅ **January 29, 2025**: Hero Section Redesign with Festival Logo
+- ✅ **January 29, 2025**: Hero Section Redesign with Festival Logo and Custom Button Styling
   - **NEW**: Added Festival NATUR 2025 logo as centered main visual element
   - **REMOVED**: NATUR title text and "TODO SOBRE TURISMO SOSTENIBLE Y MÁS" subtitle
   - **UPDATED**: Simplified to only TICKETS and AGENDA buttons as requested
   - **UPDATED**: Changed buttons from rounded (rounded-lg) to square (rounded-none)
+  - **UPDATED**: AGENDA button now uses custom colors - background #aa3b1e, text #e5bbb0
+  - **UPDATED**: All buttons now use Unbounded font family for consistent typography
   - **DESIGN**: Clean, minimal hero with logo prominence and square button aesthetic
   - **UX**: Centered layout with focused call-to-action buttons
 
