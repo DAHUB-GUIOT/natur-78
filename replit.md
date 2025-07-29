@@ -40,6 +40,11 @@ This is a full-stack web application for Festival NATUR (www.festivalnatur.com),
   - **ENHANCED**: Experience markers with lime-to-emerald gradients and target icons for better visibility
   - **IMPROVED**: Marker animations with pulse effects, scale transformations, and glowing shadows for premium appearance
   - **SIMPLIFIED**: All card titles in Portal Empresas now use simple font-sans instead of font-bold/font-semibold for cleaner typography
+  - **UPDATED**: Sidebar user section now shows company name (DaHub) instead of person name for better B2B focus
+  - **NEW**: Sidebar user section is now clickable button that navigates to profile page
+  - **NEW**: Profile page displays company information, contact details, and specialties with glassmorphism design
+  - **UPDATED**: All h1 fonts simplified to font-sans throughout Portal Empresas platform for consistent typography
+  - **UPDATED**: Removed "Verificados" from contacts section - now simply shows "Contactos" without verification references
 
 - ✅ **January 29, 2025**: Conversation Management System with TripCol Integration
   - **NEW**: Implemented conversation saving and management in messaging system

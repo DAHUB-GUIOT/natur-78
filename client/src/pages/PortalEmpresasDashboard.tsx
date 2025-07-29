@@ -26,7 +26,10 @@ import {
   Edit,
   Handshake,
   ShieldCheck,
-  Mail
+  Mail,
+  Share2,
+  Code,
+  Repeat2
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -598,62 +601,189 @@ const PortalEmpresasDashboard = () => {
       case "perfil":
         return (
           <div className="space-y-6">
-            <div className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30 rounded-xl p-6">
-              <div className="flex items-center space-x-4 mb-6">
-                <Avatar className="w-16 h-16 ring-2 ring-green-400/50">
-                  <AvatarFallback className="bg-green-600/80 text-white text-xl font-bold">
-                    {user?.email === 'dahub.tech@gmail.com' ? 'D' : 
-                     user?.email === 'tripcol.tour@gmail.com' ? 'T' : 
-                     'E'}
-                  </AvatarFallback>
-                </Avatar>
-                <div>
-                  <h1 className="text-2xl font-sans text-white mb-1">
-                    {user?.email === 'dahub.tech@gmail.com' ? 'DaHub' : 
-                     user?.email === 'tripcol.tour@gmail.com' ? 'TripCol' : 
-                     'Empresa'}
-                  </h1>
-                  <p className="text-green-300 font-medium">Usuario Viajero</p>
-                  <p className="text-gray-300 text-sm">
-                    {user?.firstName && user?.lastName 
-                      ? `${user.firstName} ${user.lastName}`
-                      : 'Usuario del sistema'
-                    }
-                  </p>
-                </div>
+            {/* X/Twitter Style Profile Header */}
+            <div className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30 rounded-xl overflow-hidden">
+              {/* Cover Photo */}
+              <div className="h-32 bg-gradient-to-r from-green-600 to-emerald-600 relative">
+                <div className="absolute inset-0 bg-black/20"></div>
               </div>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-4">
-                  <h3 className="text-lg font-semibold text-white">Información de Contacto</h3>
-                  <div className="space-y-2">
-                    <div className="flex items-center text-gray-300">
-                      <Mail className="w-4 h-4 mr-2" />
-                      <span className="text-sm">{user?.email || 'No disponible'}</span>
-                    </div>
-                    <div className="flex items-center text-gray-300">
-                      <MapPin className="w-4 h-4 mr-2" />
-                      <span className="text-sm">Colombia</span>
-                    </div>
+              {/* Profile Info */}
+              <div className="px-6 pb-6">
+                <div className="flex items-end justify-between -mt-8 mb-4">
+                  <Avatar className="w-24 h-24 ring-4 ring-gray-900 bg-gray-900">
+                    <AvatarFallback className="bg-green-600 text-white text-2xl font-bold">D</AvatarFallback>
+                  </Avatar>
+                  
+                  <div className="flex space-x-2 mt-12">
+                    <Button size="sm" variant="outline" className="border-gray-600/50 text-white hover:bg-gray-700/50">
+                      <Settings className="w-4 h-4 mr-1" />
+                      Editar perfil
+                    </Button>
+                    <Button size="sm" className="bg-green-600 hover:bg-green-700 text-white">
+                      <Share2 className="w-4 h-4 mr-1" />
+                      Compartir
+                    </Button>
                   </div>
                 </div>
                 
-                <div className="space-y-4">
-                  <h3 className="text-lg font-semibold text-white">Especialidades</h3>
-                  <div className="flex flex-wrap gap-2">
-                    <Badge className="bg-green-600/20 text-green-300 border border-green-500/30">
-                      Turismo
-                    </Badge>
-                    <Badge className="bg-green-600/20 text-green-300 border border-green-500/30">
-                      Sostenibilidad
-                    </Badge>
-                    <Badge className="bg-green-600/20 text-green-300 border border-green-500/30">
-                      Empresario
-                    </Badge>
+                {/* Profile Details */}
+                <div className="space-y-3">
+                  <div>
+                    <h1 className="text-2xl font-bold text-white">DaHub</h1>
+                    <p className="text-gray-400">@dahub</p>
+                  </div>
+                  
+                  <p className="text-white text-sm leading-relaxed">
+                    🚀 Empresa de tecnología especializada en desarrollo de plataformas digitales para turismo sostenible. 
+                    Creadores de Festival NATUR - conectando la innovación con el turismo regenerativo en Colombia.
+                  </p>
+                  
+                  <div className="flex flex-wrap items-center gap-4 text-sm text-gray-400">
+                    <div className="flex items-center">
+                      <MapPin className="w-4 h-4 mr-1" />
+                      Medellín, Colombia
+                    </div>
+                    <div className="flex items-center">
+                      <Globe className="w-4 h-4 mr-1" />
+                      dahub.tech
+                    </div>
+                    <div className="flex items-center">
+                      <Calendar className="w-4 h-4 mr-1" />
+                      Se unió en enero 2025
+                    </div>
+                  </div>
+                  
+                  <div className="flex space-x-6 text-sm">
+                    <div className="text-white">
+                      <span className="font-bold">156</span> <span className="text-gray-400">Siguiendo</span>
+                    </div>
+                    <div className="text-white">
+                      <span className="font-bold">2.3K</span> <span className="text-gray-400">Seguidores</span>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
+
+            {/* Stats Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <Card className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30">
+                <CardContent className="p-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm text-gray-400">Proyectos Activos</p>
+                      <p className="text-2xl font-bold text-white">8</p>
+                    </div>
+                    <div className="w-10 h-10 bg-blue-600/20 rounded-lg flex items-center justify-center">
+                      <Code className="w-5 h-5 text-blue-400" />
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+              
+              <Card className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30">
+                <CardContent className="p-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm text-gray-400">Clientes</p>
+                      <p className="text-2xl font-bold text-white">42</p>
+                    </div>
+                    <div className="w-10 h-10 bg-green-600/20 rounded-lg flex items-center justify-center">
+                      <Users className="w-5 h-5 text-green-400" />
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+              
+              <Card className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30">
+                <CardContent className="p-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm text-gray-400">Rating</p>
+                      <p className="text-2xl font-bold text-white">4.9</p>
+                    </div>
+                    <div className="w-10 h-10 bg-yellow-600/20 rounded-lg flex items-center justify-center">
+                      <Star className="w-5 h-5 text-yellow-400" />
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Activity Feed */}
+            <Card className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30">
+              <CardHeader>
+                <CardTitle className="text-lg text-white">Actividad Reciente</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="flex space-x-3 pb-4 border-b border-gray-700/50">
+                  <Avatar className="w-10 h-10">
+                    <AvatarFallback className="bg-green-600 text-white text-sm font-bold">D</AvatarFallback>
+                  </Avatar>
+                  <div className="flex-1">
+                    <div className="flex items-center space-x-2 mb-1">
+                      <span className="font-medium text-white">DaHub</span>
+                      <span className="text-gray-400 text-sm">@dahub</span>
+                      <span className="text-gray-400 text-sm">•</span>
+                      <span className="text-gray-400 text-sm">2h</span>
+                    </div>
+                    <p className="text-white text-sm">
+                      🎉 Acabamos de lanzar una nueva funcionalidad en Festival NATUR: 
+                      mapas interactivos 3D con marcadores de empresas sostenibles. 
+                      ¡La tecnología al servicio del turismo regenerativo!
+                    </p>
+                    <div className="flex items-center space-x-4 mt-2 text-gray-400 text-sm">
+                      <button className="flex items-center space-x-1 hover:text-blue-400">
+                        <MessageCircle className="w-4 h-4" />
+                        <span>12</span>
+                      </button>
+                      <button className="flex items-center space-x-1 hover:text-green-400">
+                        <Repeat2 className="w-4 h-4" />
+                        <span>4</span>
+                      </button>
+                      <button className="flex items-center space-x-1 hover:text-red-400">
+                        <Heart className="w-4 h-4" />
+                        <span>28</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="flex space-x-3 pb-4 border-b border-gray-700/50">
+                  <Avatar className="w-10 h-10">
+                    <AvatarFallback className="bg-green-600 text-white text-sm font-bold">D</AvatarFallback>
+                  </Avatar>
+                  <div className="flex-1">
+                    <div className="flex items-center space-x-2 mb-1">
+                      <span className="font-medium text-white">DaHub</span>
+                      <span className="text-gray-400 text-sm">@dahub</span>
+                      <span className="text-gray-400 text-sm">•</span>
+                      <span className="text-gray-400 text-sm">1d</span>
+                    </div>
+                    <p className="text-white text-sm">
+                      💡 Trabajando en la integración de inteligencia artificial para 
+                      recomendaciones personalizadas de experiencias turísticas sostenibles. 
+                      El futuro del turismo es inteligente y consciente.
+                    </p>
+                    <div className="flex items-center space-x-4 mt-2 text-gray-400 text-sm">
+                      <button className="flex items-center space-x-1 hover:text-blue-400">
+                        <MessageCircle className="w-4 h-4" />
+                        <span>8</span>
+                      </button>
+                      <button className="flex items-center space-x-1 hover:text-green-400">
+                        <Repeat2 className="w-4 h-4" />
+                        <span>15</span>
+                      </button>
+                      <button className="flex items-center space-x-1 hover:text-red-400">
+                        <Heart className="w-4 h-4" />
+                        <span>67</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
           </div>
         );
 
@@ -919,7 +1049,7 @@ const PortalEmpresasDashboard = () => {
                  user?.email === 'tripcol.tour@gmail.com' ? 'TripCol' : 
                  'Empresa'}
               </p>
-              <p className="text-green-300 text-xs font-medium">Usuario Viajero</p>
+              <p className="text-green-300 text-xs font-medium">Tecnología</p>
             </div>
           </button>
         </div>
