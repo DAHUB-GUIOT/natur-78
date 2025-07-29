@@ -10,16 +10,15 @@ This is a full-stack web application for Festival NATUR (www.festivalnatur.com),
 
 ## Recent Changes
 
-- ✅ **January 29, 2025**: Portal Empresas Authentication and Messaging System Fixed
-  - **FIXED**: Added `/api/auth/me` endpoint to properly fetch current user data
-  - **FIXED**: Created dedicated PortalEmpresasAuth.tsx login page at `/portal-empresas/auth`
-  - **FIXED**: User authentication flow now properly maintains sessions 
-  - **FIXED**: Messaging system recognizes authenticated users and displays chat interface
-  - **UPDATED**: DaHub user credentials confirmed working: dahub.tech@gmail.com / dahub123
-  - **ADDED**: Login debugging with console logs to track authentication state
-  - **NEW**: Login button redirects to dedicated authentication page when not logged in
-  - **TESTED**: User display shows "Daniel Hurtado" instead of "Usuario" when authenticated
-  - **ARCHITECTURE**: Complete authentication flow from login → session → messaging access
+- ✅ **January 29, 2025**: Simple Messaging System Rebuilt and Authentication Fixed
+  - **REBUILT**: Created SimpleChat.tsx component with clean, functional design
+  - **FIXED**: Company directory now shows only verified companies (isVerified: true)
+  - **FIXED**: New user registrations no longer auto-appear in contacts directory
+  - **UPDATED**: getAllCompanies() method filters by status="active" AND isVerified=true
+  - **NEW**: Simple messaging interface connects to verified companies from database
+  - **ARCHITECTURE**: Clean messaging system with company selection and message threads
+  - **TESTED**: Portal Empresas contacts shows 4 verified companies (DaHub, TripCol, Pacífico Salvaje, Sabores del Caribe)
+  - **LOW-CODE**: Simplified messaging implementation without complex conversation logic
 
 - ✅ **January 29, 2025**: Complete Messaging System Removal
   - **REMOVED**: All messaging functionality completely eliminated from the platform

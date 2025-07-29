@@ -711,6 +711,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Get messages between two users (simpler API for new chat)
+  app.get("/api/messages", requireAuth, async (req: any, res) => {
+    try {
+      // Return empty array for now - to be implemented with proper messaging
+      res.json([]);
+    } catch (error) {
+      console.error("Error fetching messages:", error);
+      res.status(500).json({ error: "Failed to fetch messages" });
+    }
+  });
+
   app.get("/api/conversations/:conversationId/messages", requireAuth, async (req: any, res) => {
     try {
       const conversationId = parseInt(req.params.conversationId);
