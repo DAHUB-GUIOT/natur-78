@@ -586,7 +586,67 @@ const PortalEmpresasDashboard = () => {
           </div>
         );
 
-
+      case "perfil":
+        return (
+          <div className="space-y-6">
+            <div className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30 rounded-xl p-6">
+              <div className="flex items-center space-x-4 mb-6">
+                <Avatar className="w-16 h-16 ring-2 ring-green-400/50">
+                  <AvatarFallback className="bg-green-600/80 text-white text-xl font-bold">
+                    {user?.email === 'dahub.tech@gmail.com' ? 'D' : 
+                     user?.email === 'tripcol.tour@gmail.com' ? 'T' : 
+                     'E'}
+                  </AvatarFallback>
+                </Avatar>
+                <div>
+                  <h1 className="text-2xl font-bold text-white mb-1">
+                    {user?.email === 'dahub.tech@gmail.com' ? 'DaHub' : 
+                     user?.email === 'tripcol.tour@gmail.com' ? 'TripCol' : 
+                     'Empresa'}
+                  </h1>
+                  <p className="text-green-300 font-medium">Usuario Viajero</p>
+                  <p className="text-gray-300 text-sm">
+                    {user?.firstName && user?.lastName 
+                      ? `${user.firstName} ${user.lastName}`
+                      : 'Usuario del sistema'
+                    }
+                  </p>
+                </div>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-4">
+                  <h3 className="text-lg font-semibold text-white">Información de Contacto</h3>
+                  <div className="space-y-2">
+                    <div className="flex items-center text-gray-300">
+                      <Mail className="w-4 h-4 mr-2" />
+                      <span className="text-sm">{user?.email || 'No disponible'}</span>
+                    </div>
+                    <div className="flex items-center text-gray-300">
+                      <MapPin className="w-4 h-4 mr-2" />
+                      <span className="text-sm">Colombia</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="space-y-4">
+                  <h3 className="text-lg font-semibold text-white">Especialidades</h3>
+                  <div className="flex flex-wrap gap-2">
+                    <Badge className="bg-green-600/20 text-green-300 border border-green-500/30">
+                      Turismo
+                    </Badge>
+                    <Badge className="bg-green-600/20 text-green-300 border border-green-500/30">
+                      Sostenibilidad
+                    </Badge>
+                    <Badge className="bg-green-600/20 text-green-300 border border-green-500/30">
+                      Empresario
+                    </Badge>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
 
       default:
         return <div>Sección no encontrada</div>;
@@ -833,7 +893,10 @@ const PortalEmpresasDashboard = () => {
         
         {/* Usuario Viajero section */}
         <div className="p-2 border-t border-gray-600/30">
-          <div className="flex items-center space-x-2 px-3 py-2 rounded-lg bg-green-600/20 border border-green-500/30 backdrop-blur-sm">
+          <button
+            onClick={() => setActiveSection("perfil")}
+            className="w-full flex items-center space-x-2 px-3 py-2 rounded-lg bg-green-600/20 border border-green-500/30 backdrop-blur-sm hover:bg-green-600/30 hover:border-green-400/40 transition-all duration-200"
+          >
             <Avatar className="w-6 h-6 ring-1 ring-green-400/50">
               <AvatarFallback className="bg-green-600/80 text-white text-xs font-bold">
                 {user?.email === 'dahub.tech@gmail.com' ? 'D' : 
@@ -841,7 +904,7 @@ const PortalEmpresasDashboard = () => {
                  'E'}
               </AvatarFallback>
             </Avatar>
-            <div className="flex-1 min-w-0">
+            <div className="flex-1 min-w-0 text-left">
               <p className="text-white font-medium text-xs truncate">
                 {user?.email === 'dahub.tech@gmail.com' ? 'DaHub' : 
                  user?.email === 'tripcol.tour@gmail.com' ? 'TripCol' : 
@@ -849,7 +912,7 @@ const PortalEmpresasDashboard = () => {
               </p>
               <p className="text-green-300 text-xs font-medium">Usuario Viajero</p>
             </div>
-          </div>
+          </button>
         </div>
       </div>
 

@@ -16,6 +16,8 @@ This is a full-stack web application for Festival NATUR (www.festivalnatur.com),
   - **IMPROVED**: Better visual hierarchy with company branding as primary identification
   - **UX**: More professional B2B contact display focusing on company identity first
   - **UPDATED**: Sidebar user section now shows company name (DaHub) instead of person name for better B2B focus
+  - **NEW**: Sidebar user section is now clickable button that navigates to profile page
+  - **NEW**: Profile page displays company information, contact details, and specialties with glassmorphism design
 
 - ✅ **January 29, 2025**: Mi Perfil Page Removed and Usuario Viajero Section Added
   - **REMOVED**: "Mi Perfil" page completely eliminated from Portal Empresas sidebar navigation
