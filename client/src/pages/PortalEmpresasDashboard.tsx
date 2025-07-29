@@ -104,42 +104,24 @@ const PortalEmpresasDashboard = () => {
     { id: "aliados", label: "🤝 Aliados y Patrocinadores" }
   ];
 
-  const companies = [
-    {
-      id: 1,
-      name: "DaHub",
-      category: "Tecnología",
-      categoryId: "tecnologia",
-      location: "Bogotá, Colombia",
-      rating: 5.0,
-      reviews: 127,
-      image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg",
-      verified: true,
-      description: "Empresa de tecnología especializada en diseño y desarrollo de plataformas digitales. Creadores de la plataforma Festival NATUR para conectar emprendedores de turismo sostenible.",
-      founder: "Daniel Hurtado",
-      website: "festivalnatur.com",
-      email: "dahub.tech@gmail.com",
-      skills: ["Desarrollo de plataformas", "UX/UI Design", "Tecnología verde", "Sistemas de networking"],
-      certifications: ["B Corp Pending", "Sello Ambiental Colombiano", "ISO 14001"]
-    },
-    {
-      id: 2,
-      name: "TripCol",
-      category: "Agencia de Viajes",
-      categoryId: "agencia-viajes",
-      location: "Medellín, Colombia",
-      rating: 4.8,
-      reviews: 89,
-      image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg",
-      verified: true,
-      description: "Agencia de viajes especializada en turismo sostenible en Colombia. Organizadores del evento Festival NATUR y expertos en experiencias auténticas con comunidades locales.",
-      founder: "Equipo TripCol",
-      website: "tripcol.tours",
-      email: "tripcol.tour@gmail.com",
-      skills: ["Organización de eventos", "Turismo comunitario", "Experiencias auténticas", "Guías locales"],
-      certifications: ["Certificación en Turismo Responsable", "Sello de Calidad Turística"]
-    }
-  ];
+  // Use real companies from database (filtered to show only verified companies)
+  const companies = companiesData.map(company => ({
+    id: company.id,
+    name: company.companyName,
+    category: company.businessType || "Sin categoría",
+    categoryId: company.businessType?.toLowerCase().replace(/\s+/g, '-') || "general",
+    location: `${company.city}, ${company.department}`,
+    rating: company.rating || 0,
+    reviews: company.totalReviews || 0,
+    image: company.logo || "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg",
+    verified: company.isVerified,
+    description: company.description || "Empresa comprometida con el turismo sostenible.",
+    founder: "Equipo " + company.companyName,
+    website: company.website || "",
+    email: "", // Email not exposed in company data for privacy
+    skills: company.services || [],
+    certifications: company.certifications || []
+  }));
 
   // Filter companies based on search and category
   const filteredCompanies = companies.filter(company => {

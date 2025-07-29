@@ -440,10 +440,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Company routes
+  // Company routes - only return verified companies for contacts directory
   app.get("/api/companies", async (req, res) => {
     try {
       const companies = await storage.getAllCompanies();
+      console.log(`Returning ${companies.length} verified companies for contacts directory`);
       res.json(companies);
     } catch (error) {
       console.error("Get companies error:", error);

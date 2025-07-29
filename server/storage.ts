@@ -532,7 +532,12 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getAllCompanies(): Promise<Company[]> {
-    const result = await db.select().from(companies).where(eq(companies.status, "active"));
+    const result = await db.select().from(companies).where(
+      and(
+        eq(companies.status, "active"),
+        eq(companies.isVerified, true)
+      )
+    );
     return result;
   }
 
