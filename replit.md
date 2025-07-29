@@ -15,6 +15,7 @@ This is a full-stack web application for Festival NATUR (www.festivalnatur.com),
   - **UPDATED**: Person names (Daniel Hurtado, María González) now appear below company name without "Fundador:" label
   - **IMPROVED**: Better visual hierarchy with company branding as primary identification
   - **UX**: More professional B2B contact display focusing on company identity first
+  - **UPDATED**: Sidebar user section now shows company name (DaHub) instead of person name for better B2B focus
 
 - ✅ **January 29, 2025**: Mi Perfil Page Removed and Usuario Viajero Section Added
   - **REMOVED**: "Mi Perfil" page completely eliminated from Portal Empresas sidebar navigation

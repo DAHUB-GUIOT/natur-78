@@ -836,15 +836,16 @@ const PortalEmpresasDashboard = () => {
           <div className="flex items-center space-x-2 px-3 py-2 rounded-lg bg-green-600/20 border border-green-500/30 backdrop-blur-sm">
             <Avatar className="w-6 h-6 ring-1 ring-green-400/50">
               <AvatarFallback className="bg-green-600/80 text-white text-xs font-bold">
-                {user?.firstName?.[0] || 'D'}
+                {user?.email === 'dahub.tech@gmail.com' ? 'D' : 
+                 user?.email === 'tripcol.tour@gmail.com' ? 'T' : 
+                 'E'}
               </AvatarFallback>
             </Avatar>
             <div className="flex-1 min-w-0">
               <p className="text-white font-medium text-xs truncate">
-                {user?.firstName && user?.lastName 
-                  ? `${user.firstName} ${user.lastName}`
-                  : 'Daniel Hurtado'
-                }
+                {user?.email === 'dahub.tech@gmail.com' ? 'DaHub' : 
+                 user?.email === 'tripcol.tour@gmail.com' ? 'TripCol' : 
+                 'Empresa'}
               </p>
               <p className="text-green-300 text-xs font-medium">Usuario Viajero</p>
             </div>
