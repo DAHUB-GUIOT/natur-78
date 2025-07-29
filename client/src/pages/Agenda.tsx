@@ -22,13 +22,13 @@ interface Session {
 const agendaData = {
   "vive-natur": {
     title: "VIVE NATUR - Agenda Abierta",
-    subtitle: "Charlas NATUR • Rooftop + Zona de Comidas • Emprendimientos Sostenibles • Zona Chill • Foro Colombia Sostenible 2025",
+    subtitle: "Charlas NATUR • Rooftop + Zona de Comidas • Emprendimientos Sostenibles • Zona Chill • Foro Colombia Sostenible 2025 • Programación Cultural",
     horario: "9:00 a.m. – 6:00 p.m.",
     lugar: "Acceso Libre - Todos los Espacios",
     color: "#cad95e",
     days: [
       {
-        day: "Día 1: Sábado 15 de marzo",
+        day: "Día 1: Jueves 14 de noviembre",
         sessions: [
           {
             time: "9:00 - 9:30",
@@ -67,6 +67,60 @@ const agendaData = {
             id: "zona-chill-musica-relajacion"
           },
           {
+            time: "10:00",
+            title: "Taller Tintes naturales y estampados",
+            description: "Extrae pigmentos de plantas y estampa con elementos botánicos. Diseña tu tela inspirada en los colores de la tierra.",
+            speakers: ["Artesanos textiles"],
+            type: "taller",
+            image: "https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            id: "taller-tintes-naturales"
+          },
+          {
+            time: "11:00",
+            title: "Taller Bombas de Semillas",
+            description: "Aprende a crear bombas de vida con barro y semillas nativas para reforestar.",
+            speakers: ["Facilitadores ambientales"],
+            type: "taller",
+            image: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            id: "taller-bombas-semillas"
+          },
+          {
+            time: "11:00",
+            title: "Taller Crea tu propio terrario",
+            description: "Diseña tu ecosistema en miniatura con plantas, tierra y piedras. Te llevas tu terrario.",
+            speakers: ["Jardineros urbanos"],
+            type: "taller",
+            image: "https://images.unsplash.com/photo-1485955900006-10f4d324d411?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            id: "taller-terrario"
+          },
+          {
+            time: "11:00",
+            title: "Origami del agua",
+            description: "Plegado artístico con mensajes por el agua, la vida y el territorio.",
+            speakers: ["Artistas del papel"],
+            type: "arte",
+            image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            id: "origami-agua"
+          },
+          {
+            time: "14:00",
+            title: "Círculo de tambores",
+            description: "Toca, escucha y siente el ritmo colectivo con instrumentos de percusión.",
+            speakers: ["Músicos tradicionales"],
+            type: "musica",
+            image: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            id: "circulo-tambores"
+          },
+          {
+            time: "16:00",
+            title: "Ritual colectivo del agua",
+            description: "Ceremonia simbólica para agradecer y proteger el agua, guiada por sabedores.",
+            speakers: ["Sabedores del agua"],
+            type: "ritual",
+            image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            id: "ritual-colectivo-agua"
+          },
+          {
             time: "16:00 - 18:00",
             title: "Foro Colombia Sostenible 2025: Panel Nacional",
             speakers: ["Expertos en Sostenibilidad", "Gobierno Nacional", "Academia"],
@@ -74,11 +128,47 @@ const agendaData = {
             image: "https://images.unsplash.com/photo-1591115765373-5207764f72e7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
             description: "Panel de alto nivel sobre el futuro de la sostenibilidad en Colombia. Participan expertos gubernamentales, académicos y líderes del sector privado para discutir políticas y estrategias hacia un desarrollo sostenible.",
             id: "foro-colombia-sostenible-2025"
+          },
+          {
+            time: "9:00 - 11:00",
+            title: "Taller Bombas de Semillas",
+            description: "Aprende a crear bombas de vida con barro y semillas nativas para reforestar.",
+            speakers: ["Facilitadores ambientales"],
+            type: "taller",
+            image: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            id: "taller-bombas-semillas-vive"
+          },
+          {
+            time: "11:00",
+            title: "Taller Crea tu propio terrario",
+            description: "Diseña tu ecosistema en miniatura con plantas, tierra y piedras. Te llevas tu terrario.",
+            speakers: ["Jardineros urbanos"],
+            type: "taller",
+            image: "https://images.unsplash.com/photo-1485955900006-10f4d324d411?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            id: "taller-terrario-vive"
+          },
+          {
+            time: "14:00",
+            title: "Círculo de tambores",
+            description: "Toca, escucha y siente el ritmo colectivo con instrumentos de percusión.",
+            speakers: ["Músicos tradicionales"],
+            type: "musica",
+            image: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            id: "circulo-tambores-vive"
+          },
+          {
+            time: "16:00",
+            title: "Ritual colectivo del agua",
+            description: "Ceremonia simbólica para agradecer y proteger el agua, guiada por sabedores.",
+            speakers: ["Sabedores del agua"],
+            type: "ritual",
+            image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            id: "ritual-colectivo-agua-vive"
           }
         ]
       },
       {
-        day: "Día 2: Domingo 16 de marzo",
+        day: "Día 2: Viernes 15 de noviembre",
         sessions: [
           {
             time: "9:00 - 10:30",
@@ -137,7 +227,7 @@ const agendaData = {
     color: "#aa3b1e",
     days: [
       {
-        day: "Día 1: Sábado 15 de marzo",
+        day: "Día 1: Jueves 14 de noviembre",
         sessions: [
           {
             time: "8:00 - 9:00",
@@ -194,6 +284,51 @@ const agendaData = {
             id: "experiencia-natur-inmersiva"
           },
           {
+            time: "10:00",
+            title: "Taller Tintes naturales y estampados",
+            description: "Extrae pigmentos de plantas y estampa con elementos botánicos. Diseña tu tela inspirada en los colores de la tierra.",
+            speakers: ["Artesanos textiles"],
+            type: "taller",
+            image: "https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            id: "taller-tintes-naturales-pro"
+          },
+          {
+            time: "11:00",
+            title: "Taller Bombas de Semillas",
+            description: "Aprende a crear bombas de vida con barro y semillas nativas para reforestar.",
+            speakers: ["Facilitadores ambientales"],
+            type: "taller",
+            image: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            id: "taller-bombas-semillas-pro"
+          },
+          {
+            time: "11:00",
+            title: "Origami del agua",
+            description: "Plegado artístico con mensajes por el agua, la vida y el territorio.",
+            speakers: ["Artistas del papel"],
+            type: "arte",
+            image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            id: "origami-agua-pro"
+          },
+          {
+            time: "14:00",
+            title: "Círculo de tambores",
+            description: "Toca, escucha y siente el ritmo colectivo con instrumentos de percusión.",
+            speakers: ["Músicos tradicionales"],
+            type: "musica",
+            image: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            id: "circulo-tambores-pro"
+          },
+          {
+            time: "16:00",
+            title: "Ritual colectivo del agua",
+            description: "Ceremonia simbólica para agradecer y proteger el agua, guiada por sabedores.",
+            speakers: ["Sabedores del agua"],
+            type: "ritual",
+            image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            id: "ritual-colectivo-agua-pro"
+          },
+          {
             time: "19:00 - 22:00",
             title: "Rumba y Manifestaciones Culturales",
             description: "Fiesta exclusiva con música tradicional y contemporánea",
@@ -206,7 +341,7 @@ const agendaData = {
       },
 
       {
-        day: "Día 2: Domingo 16 de marzo",
+        day: "Día 2: Viernes 15 de noviembre",
         sessions: [
           {
             time: "8:00 - 9:00",
@@ -254,6 +389,42 @@ const agendaData = {
             id: "zona-wellness-integracion"
           },
           {
+            time: "10:00",
+            title: "Taller Tintes naturales y estampados VIP",
+            description: "Extrae pigmentos de plantas y estampa con elementos botánicos. Experiencia premium con materiales exclusivos.",
+            speakers: ["Artesanos textiles maestros"],
+            type: "taller",
+            image: "https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            id: "taller-tintes-naturales-vip"
+          },
+          {
+            time: "11:00",
+            title: "Taller Bombas de Semillas Premium",
+            description: "Crea bombas de vida con barro especial y semillas nativas premium para reforestar.",
+            speakers: ["Facilitadores ambientales expertos"],
+            type: "taller",
+            image: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            id: "taller-bombas-semillas-pro"
+          },
+          {
+            time: "14:00",
+            title: "Círculo de tambores ceremonial",
+            description: "Sesión premium de percusión con instrumentos artesanales y guías ceremoniales.",
+            speakers: ["Músicos tradicionales maestros"],
+            type: "musica",
+            image: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            id: "circulo-tambores-pro"
+          },
+          {
+            time: "16:00",
+            title: "Ritual colectivo del agua VIP",
+            description: "Ceremonia exclusiva para agradecer y proteger el agua, guiada por sabedores ancestrales.",
+            speakers: ["Sabedores del agua ancestrales"],
+            type: "ritual",
+            image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            id: "ritual-colectivo-agua-pro"
+          },
+          {
             time: "16:00 - 17:30",
             title: "Cartel de Artistas: Presentaciones de Cierre",
             description: "Conciertos y performances para concluir el festival",
@@ -270,133 +441,6 @@ const agendaData = {
             type: "vip",
             image: "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
             id: "zona-vip-cena-gala"
-          }
-        ]
-      }
-    ]
-  },
-  "agenda-cultural": {
-    title: "Agenda Cultural NATUR",
-    subtitle: "Festival NATUR CEFE Chapinero | 14 Y 15 de noviembre",
-    horario: "9:00 a.m. – 6:00 p.m.",
-    lugar: "Centro de Felicidad Chapinero",
-    color: "#ff6b9d",
-    days: [
-      {
-        day: "Día 1: Jueves 14 de noviembre",
-        sessions: [
-          {
-            time: "4:00 p.m.",
-            title: "Ritual colectivo del agua",
-            description: "Ceremonia simbólica para agradecer y proteger el agua, guiada por sabedores.",
-            speakers: ["Sabedores del agua"],
-            type: "ritual",
-            image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
-            id: "ritual-colectivo-agua"
-          },
-          {
-            time: "9:00 - 11:00 a.m.",
-            title: "Taller Bombas de Semillas",
-            description: "Aprende a crear bombas de vida con barro y semillas nativas para reforestar.",
-            speakers: ["Facilitadores ambientales"],
-            type: "taller",
-            image: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
-            id: "taller-bombas-semillas"
-          },
-          {
-            time: "11:00 a.m.",
-            title: "Taller Crea tu propio terrario",
-            description: "Diseña tu ecosistema en miniatura con plantas, tierra y piedras. Te llevas tu terrario.",
-            speakers: ["Jardineros urbanos"],
-            type: "taller",
-            image: "https://images.unsplash.com/photo-1485955900006-10f4d324d411?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
-            id: "taller-terrario"
-          },
-          {
-            time: "10:00 a.m.",
-            title: "Taller Tintes naturales y estampados",
-            description: "Extrae pigmentos de plantas y estampa con elementos botánicos. Diseña tu tela inspirada en los colores de la tierra.",
-            speakers: ["Artesanos textiles"],
-            type: "taller",
-            image: "https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
-            id: "taller-tintes-naturales"
-          },
-          {
-            time: "11:00 a.m.",
-            title: "Origami del agua",
-            description: "Plegado artístico con mensajes por el agua, la vida y el territorio.",
-            speakers: ["Artistas del papel"],
-            type: "arte",
-            image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
-            id: "origami-agua"
-          },
-          {
-            time: "2:00 p.m.",
-            title: "Círculo de tambores",
-            description: "Toca, escucha y siente el ritmo colectivo con instrumentos de percusión.",
-            speakers: ["Músicos tradicionales"],
-            type: "musica",
-            image: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
-            id: "circulo-tambores"
-          }
-        ]
-      },
-      {
-        day: "Día 2: Viernes 15 de noviembre",
-        sessions: [
-          {
-            time: "9:00 a.m.",
-            title: "Coffee Talks",
-            description: "Conversaciones íntimas con actores del turismo y la sostenibilidad. Café en mano, sin micrófono.",
-            speakers: ["Líderes del turismo sostenible"],
-            type: "conversatorio",
-            image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
-            id: "coffee-talks-cultural"
-          },
-          {
-            time: "10:00 a.m.",
-            title: "Calorías por el planeta",
-            description: "Rutina divertida de ejercicio físico para activar el cuerpo con causa ambiental.",
-            speakers: ["Entrenadores eco-conscientes"],
-            type: "actividad",
-            image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
-            id: "calorias-por-planeta"
-          },
-          {
-            time: "11:00 a.m.",
-            title: "Bingo ecológico",
-            description: "Juego interactivo con palabras, animales y símbolos del planeta.",
-            speakers: ["Animadores ambientales"],
-            type: "juego",
-            image: "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
-            id: "bingo-ecologico"
-          },
-          {
-            time: "12:00 p.m.",
-            title: "Taller de trueque",
-            description: "Intercambia saberes, ropa, libros o historias sin dinero.",
-            speakers: ["Facilitadores de economía circular"],
-            type: "taller",
-            image: "https://images.unsplash.com/photo-1556761175-b413da4baf72?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
-            id: "taller-trueque"
-          },
-          {
-            time: "2:00 p.m.",
-            title: "Yoga acuático",
-            description: "Clase suave de relajación en el agua, apta para todos los cuerpos.",
-            speakers: ["Instructores de yoga"],
-            type: "bienestar",
-            image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
-            id: "yoga-acuatico"
-          },
-          {
-            time: "6:00 p.m.",
-            title: "Observación del cielo y relatos de cosmovisiones",
-            description: "Cerramos el día mirando las estrellas y escuchando mitos, saberes indígenas y relatos celestes sobre el agua y la vida.",
-            speakers: ["Sabedores ancestrales", "Astrónomos"],
-            type: "ceremonia",
-            image: "https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
-            id: "observacion-cielo-cosmovisiones"
           }
         ]
       }
@@ -522,16 +566,13 @@ export function Agenda() {
           
           <div className="text-center mb-16">
             <div className="inline-block">
-              <h1 className="text-6xl md:text-8xl font-black mb-6 tracking-tighter leading-none" style={{ color: '#cad95e', textShadow: '0 0 20px rgba(202, 217, 94, 0.3)' }}>
+              <h1 className="text-6xl md:text-8xl font-unbounded font-light mb-6 tracking-wider leading-none" style={{ color: '#cad95e', textShadow: '0 0 20px rgba(202, 217, 94, 0.3)' }}>
                 AGENDA
               </h1>
               <div className="w-full h-1 bg-gradient-to-r from-transparent via-white/30 to-transparent mb-4"></div>
-              <h2 className="text-2xl md:text-3xl font-light text-white/80 tracking-wide">
-                ACADÉMICA INTERACTIVA
-              </h2>
             </div>
             <p className="text-lg text-white/60 max-w-2xl mx-auto mt-8 font-mono">
-              Festival NATUR 2025 • Turismo Sostenible • Marzo 15-17
+              Festival NATUR 2025 • Turismo Sostenible • Noviembre 14-15
             </p>
           </div>
         </div>
@@ -544,7 +585,7 @@ export function Agenda() {
             
             {/* Agenda Tabs - Brutalist Style */}
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full lg:w-auto">
-              <TabsList className="grid w-full grid-cols-3 bg-transparent border border-white/20 p-1 rounded-none">
+              <TabsList className="grid w-full grid-cols-2 bg-transparent border border-white/20 p-1 rounded-none">
                 <TabsTrigger 
                   value="vive-natur" 
                   className="data-[state=active]:bg-white data-[state=active]:text-black text-white/70 font-mono text-sm tracking-wide rounded-none border-r border-white/20"
@@ -553,15 +594,9 @@ export function Agenda() {
                 </TabsTrigger>
                 <TabsTrigger 
                   value="natur-pro"
-                  className="data-[state=active]:bg-white data-[state=active]:text-black text-white/70 font-mono text-sm tracking-wide rounded-none border-r border-white/20"
-                >
-                  NATUR PRO
-                </TabsTrigger>
-                <TabsTrigger 
-                  value="agenda-cultural"
                   className="data-[state=active]:bg-white data-[state=active]:text-black text-white/70 font-mono text-sm tracking-wide rounded-none"
                 >
-                  CULTURAL
+                  NATUR PRO
                 </TabsTrigger>
               </TabsList>
             </Tabs>
