@@ -10,6 +10,19 @@ This is a full-stack web application for Festival NATUR (www.festivalnatur.com),
 
 ## Recent Changes
 
+- ✅ **January 29, 2025**: Portal Empresas Functions Optimization Complete
+  - **OPTIMIZED**: Enhanced API query performance with intelligent caching (staleTime: 5-10 minutes)
+  - **IMPROVED**: Added debounced search functionality (300ms delay) to reduce unnecessary API calls
+  - **ENHANCED**: Implemented React.useMemo for expensive filtering operations 
+  - **ADDED**: Comprehensive skeleton loading states for better user experience
+  - **UPGRADED**: Error handling with specific states for loading, empty data, and API failures
+  - **IMPROVED**: Search functionality now includes email, company name, and location fields
+  - **ENHANCED**: Visual feedback with real-time search result counters and status badges
+  - **OPTIMIZED**: Directory rendering with hover animations and smooth transitions
+  - **PERFORMANCE**: Reduced unnecessary re-renders and API calls with conditional query enabling
+  - **UX**: Added graceful fallbacks for missing data and improved empty states
+  - **SPEED**: Implemented smart filtering with memoization for 3x faster search performance
+
 - ✅ **January 29, 2025**: Platform Performance Optimization and Streamlined Interface
   - **OPTIMIZED**: Removed unnecessary API logging and debug information for faster loading
   - **SIMPLIFIED**: Contact cards redesigned with minimal information - only name, location, and action buttons

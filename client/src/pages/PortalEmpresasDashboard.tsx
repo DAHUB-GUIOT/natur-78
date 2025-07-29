@@ -46,6 +46,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Skeleton } from "@/components/ui/skeleton";
 import { InteractiveMap } from "@/components/dashboard/InteractiveMap";
 import ExperienceForm from "@/components/dashboard/ExperienceForm";
 import ProfileSection from "@/components/dashboard/ProfileSection";
@@ -61,27 +62,38 @@ const PortalEmpresasDashboard = () => {
 
 
 
-  // Fetch experiences data
-  const { data: experiences = [], isLoading: experiencesLoading } = useQuery({
-    queryKey: ['/api/experiences'],
-    retry: false,
+  // Optimized experiences fetch with user-specific caching
+  const { data: experiences = [], isLoading: experiencesLoading, error: experiencesError } = useQuery({
+    queryKey: ['/api/experiences', user?.id],
+    retry: 2,
+    retryDelay: 1000,
+    staleTime: 2 * 60 * 1000, // 2 minutes cache
+    gcTime: 5 * 60 * 1000, // 5 minutes garbage collection
+    refetchOnWindowFocus: false,
+    enabled: !!user?.id && (activeSection === "experiencias" || activeSection === "inicio"),
   });
 
-  // Fetch current user data
-  const { data: currentUser, isLoading: userLoading, refetch: refetchUser } = useQuery({
+  // Optimized current user data fetch with better error handling
+  const { data: currentUser, isLoading: userLoading, error: userError, refetch: refetchUser } = useQuery({
     queryKey: ['/api/auth/me'],
-    retry: false,
-    refetchOnWindowFocus: true,
-    refetchOnMount: true,
+    retry: 3,
+    retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
+    staleTime: 10 * 60 * 1000, // 10 minutes cache for user data
+    gcTime: 30 * 60 * 1000, // 30 minutes garbage collection
+    refetchOnWindowFocus: false, // Reduce unnecessary API calls
+    refetchOnMount: false,
   });
 
   // Cast currentUser to proper type - handle both direct user and nested user format
   const user = (currentUser as any)?.user || currentUser;
 
-  // Fetch all users for directory (updated to show ALL registered users)
-  const { data: directoryUsers = [], isLoading: directoryLoading } = useQuery({
+  // Optimized directory users fetch with caching and conditional loading
+  const { data: directoryUsers = [], isLoading: directoryLoading, error: directoryError } = useQuery({
     queryKey: ["/api/directory/users"],
     enabled: activeSection === "directorio" || activeSection === "empresas",
+    staleTime: 5 * 60 * 1000, // 5 minutes cache
+    gcTime: 10 * 60 * 1000, // 10 minutes garbage collection
+    refetchOnWindowFocus: false, // Prevent unnecessary refetches
   });
 
   const sidebarItems = [
@@ -101,8 +113,19 @@ const PortalEmpresasDashboard = () => {
     retry: false,
   });
 
+  // Optimized search and filtering with debouncing
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("todas");
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
+
+  // Debounce search term to improve performance
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearchTerm(searchTerm);
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [searchTerm]);
 
   const categories = [
     { id: "todas", label: "Todas las categorías" },
@@ -116,25 +139,32 @@ const PortalEmpresasDashboard = () => {
     { id: "aliados", label: "🤝 Aliados y Patrocinadores" }
   ];
 
-  // Simplified company mapping for better performance
-  const companies = (companiesData as any[]).map((user: any) => ({
-    id: user.id,
-    name: user.email === 'dahub.tech@gmail.com' ? 'DaHub' : 
-          user.email === 'tripcol.tour@gmail.com' ? 'TripCol' : 
-          user.email === 'info@festivalnatur.com' ? 'Festival NATUR' :
-          user.firstName && user.lastName ? `${user.firstName} ${user.lastName}` : user.name,
-    category: user.category || "Empresa",
-    location: user.location || "Colombia",
-    founder: user.founder || user.name,
-    email: user.email
-  }));
+  // Optimized company mapping with memoization for better performance
+  const companies = React.useMemo(() => {
+    return (companiesData as any[]).map((user: any) => ({
+      id: user.id,
+      name: user.email === 'dahub.tech@gmail.com' ? 'DaHub' : 
+            user.email === 'tripcol.tour@gmail.com' ? 'TripCol' : 
+            user.email === 'info@festivalnatur.com' ? 'Festival NATUR' :
+            user.firstName && user.lastName ? `${user.firstName} ${user.lastName}` : user.name,
+      category: user.category || "Empresa",
+      location: user.location || "Colombia",
+      founder: user.founder || user.name,
+      email: user.email
+    }));
+  }, [companiesData]);
 
-  // Optimized filtering logic
-  const filteredCompanies = companies.filter((company: any) => {
-    const matchesSearch = !searchTerm || company.name.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = selectedCategory === "todas";
-    return matchesSearch && matchesCategory;
-  });
+  // Optimized filtering logic with memoization
+  const filteredCompanies = React.useMemo(() => {
+    return companies.filter((company: any) => {
+      const matchesSearch = !debouncedSearchTerm || 
+        company.name.toLowerCase().includes(debouncedSearchTerm.toLowerCase()) ||
+        company.email.toLowerCase().includes(debouncedSearchTerm.toLowerCase()) ||
+        company.category.toLowerCase().includes(debouncedSearchTerm.toLowerCase());
+      const matchesCategory = selectedCategory === "todas";
+      return matchesSearch && matchesCategory;
+    });
+  }, [companies, debouncedSearchTerm, selectedCategory]);
 
   const renderContent = () => {
     switch (activeSection) {
@@ -337,15 +367,22 @@ const PortalEmpresasDashboard = () => {
                 </Badge>
               </div>
               
-              {/* Search Bar */}
+              {/* Optimized Search Bar with real-time feedback */}
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-white/70" />
                 <Input 
-                  placeholder="Buscar por nombre, descripción o especialidades..." 
+                  placeholder="Buscar por nombre, email, empresa o ubicación..." 
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 bg-gray-800/40 border-gray-600/50 text-white placeholder-white/60 backdrop-blur-md"
+                  className="pl-10 pr-20 bg-gray-800/40 border-gray-600/50 text-white placeholder-white/60 backdrop-blur-md focus:border-green-500 transition-colors"
                 />
+                {debouncedSearchTerm && (
+                  <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+                    <Badge className="bg-green-600/20 text-green-300 text-xs">
+                      {filteredCompanies.length} encontrados
+                    </Badge>
+                  </div>
+                )}
               </div>
 
               {/* Simplified filters */}
@@ -355,44 +392,88 @@ const PortalEmpresasDashboard = () => {
             </div>
             
             {directoryLoading ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {[...Array(6)].map((_, index) => (
+                  <Card key={index} className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30">
+                    <CardContent className="p-4">
+                      <div className="flex items-center space-x-3 mb-3">
+                        <Skeleton className="w-10 h-10 rounded-full bg-gray-700" />
+                        <div className="flex-1">
+                          <Skeleton className="h-4 bg-gray-700 mb-2 w-3/4" />
+                          <Skeleton className="h-3 bg-gray-700 mb-1 w-1/2" />
+                          <Skeleton className="h-3 bg-gray-700 w-2/3" />
+                        </div>
+                      </div>
+                      <div className="flex space-x-2">
+                        <Skeleton className="h-7 bg-gray-700 flex-1" />
+                        <Skeleton className="h-7 bg-gray-700 flex-1" />
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            ) : directoryError ? (
               <div className="text-center py-12">
                 <div className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30 rounded-lg p-8">
-                  <Building2 className="w-12 h-12 text-gray-400 mx-auto mb-4 animate-pulse" />
-                  <h3 className="text-lg font-sans text-white mb-2">Cargando directorio...</h3>
-                  <p className="text-gray-300 text-sm">Obteniendo usuarios registrados de la base de datos</p>
+                  <div className="w-12 h-12 bg-red-600/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Building2 className="w-6 h-6 text-red-400" />
+                  </div>
+                  <h3 className="text-lg font-sans text-white mb-2">Error al cargar directorio</h3>
+                  <p className="text-gray-300 text-sm mb-4">No se pudieron obtener los usuarios registrados</p>
+                  <Button 
+                    onClick={() => window.location.reload()} 
+                    className="bg-green-600 hover:bg-green-700 text-white"
+                  >
+                    Reintentar
+                  </Button>
                 </div>
               </div>
             ) : directoryUsers.length === 0 ? (
               <div className="text-center py-12">
                 <div className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30 rounded-lg p-8">
-                  <Building2 className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                  <h3 className="text-lg font-sans text-white mb-2">No hay usuarios registrados</h3>
-                  <p className="text-gray-300 text-sm">
+                  <div className="w-12 h-12 bg-blue-600/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Building2 className="w-6 h-6 text-blue-400" />
+                  </div>
+                  <h3 className="text-lg font-sans text-white mb-2">Directorio vacío</h3>
+                  <p className="text-gray-300 text-sm mb-4">
                     Los usuarios aparecerán aquí cuando se registren en el portal
+                  </p>
+                  <Button className="bg-green-600 hover:bg-green-700 text-white">
+                    Invitar Usuarios
+                  </Button>
+                </div>
+              </div>
+            ) : filteredCompanies.length === 0 && debouncedSearchTerm ? (
+              <div className="text-center py-8">
+                <div className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30 rounded-lg p-6">
+                  <Search className="w-8 h-8 text-gray-400 mx-auto mb-3" />
+                  <h3 className="text-md font-sans text-white mb-2">Sin resultados</h3>
+                  <p className="text-gray-300 text-sm">
+                    No se encontraron usuarios para "{debouncedSearchTerm}"
                   </p>
                 </div>
               </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                {directoryUsers.map((user) => (
-                  <Card key={user.id} className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30 hover:bg-gray-800/50 transition-all">
-                  <CardContent className="p-3">
-                    <div className="space-y-2">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {(debouncedSearchTerm ? filteredCompanies : directoryUsers).map((user) => (
+                  <Card key={user.id} className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30 hover:bg-gray-800/50 hover:border-green-500/30 transition-all duration-200 group cursor-pointer">
+                  <CardContent className="p-4">
+                    <div className="space-y-3">
                       <div className="flex items-start space-x-3">
-                        <Avatar className="w-10 h-10 ring-1 ring-gray-600/50">
-                          <AvatarFallback className="bg-green-600 text-white text-sm font-bold">
-                            {user.companyName ? user.companyName[0].toUpperCase() : (user.firstName ? user.firstName[0].toUpperCase() : 'U')}
+                        <Avatar className="w-10 h-10 ring-2 ring-green-600/50 group-hover:ring-green-500/70 transition-all">
+                          <AvatarFallback className="bg-green-600 text-white text-sm font-bold group-hover:bg-green-500 transition-colors">
+                            {user.companyName ? user.companyName[0].toUpperCase() : (user.firstName ? user.firstName[0].toUpperCase() : user.email[0].toUpperCase())}
                           </AvatarFallback>
                         </Avatar>
                         <div className="flex-1 min-w-0">
-                          <h3 className="text-white font-medium text-sm truncate mb-1">
-                            {user.companyName || `${user.firstName || ''} ${user.lastName || ''}`.trim() || user.email}
+                          <h3 className="text-white font-medium text-sm truncate mb-1 group-hover:text-green-300 transition-colors">
+                            {user.companyName || `${user.firstName || ''} ${user.lastName || ''}`.trim() || user.email.split('@')[0]}
                           </h3>
                           <p className="text-gray-300 text-xs mb-2 truncate">
                             {user.role === 'empresa' ? 'Empresa registrada' : user.role === 'admin' ? 'Administrador' : 'Usuario viajero'}
                           </p>
-                          <div className="flex items-center text-gray-400 text-xs mb-3">
-                            <MapPin className="w-3 h-3 mr-1" />
+                          <div className="flex items-center text-gray-400 text-xs">
+                            <MapPin className="w-3 h-3 mr-1 flex-shrink-0" />
                             <span className="truncate">{user.city || user.country || 'Colombia'}</span>
                           </div>
                         </div>
@@ -402,14 +483,14 @@ const PortalEmpresasDashboard = () => {
                         <Button 
                           size="sm" 
                           variant="outline" 
-                          className="border-gray-600/50 text-gray-300 hover:bg-gray-700/50 text-xs h-7 flex-1"
+                          className="border-gray-600/50 text-gray-300 hover:bg-gray-700/50 hover:border-green-500/50 hover:text-green-300 text-xs h-7 flex-1 transition-all duration-200"
                           onClick={() => window.location.href = `/perfil/${user.id}`}
                         >
                           Ver Perfil
                         </Button>
                         <Button 
                           size="sm" 
-                          className="bg-green-600 hover:bg-green-700 text-white text-xs h-7 flex-1"
+                          className="bg-green-600 hover:bg-green-700 hover:scale-105 text-white text-xs h-7 flex-1 transition-all duration-200"
                         >
                           Contactar
                         </Button>
