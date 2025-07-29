@@ -68,6 +68,9 @@ const PortalEmpresasDashboard = () => {
     refetchOnMount: true,
   });
 
+  // Cast currentUser to proper type
+  const user = currentUser as any;
+
   const sidebarItems = [
     { id: "mapa", label: "Mapa", icon: Map },
     { id: "empresas", label: "Contactos", icon: Building2 },
@@ -75,7 +78,7 @@ const PortalEmpresasDashboard = () => {
     { id: "mensajes", label: "Mensajes", icon: MessageCircle },
     { id: "perfil", label: "Mi Perfil", icon: User },
     { id: "ajustes", label: "Ajustes", icon: Settings },
-    ...(currentUser?.role === 'admin' ? [{ id: "admin", label: "Admin Panel", icon: ShieldCheck }] : [])
+    ...(user?.role === 'admin' ? [{ id: "admin", label: "Admin Panel", icon: ShieldCheck }] : [])
   ];
 
 
@@ -571,16 +574,16 @@ const PortalEmpresasDashboard = () => {
         );
 
       case "mensajes":
-        return currentUser?.id ? (
+        return user ? (
           <div className="h-[calc(100vh-8rem)]">
             <ChatPage 
-              currentUserId={currentUser.id} 
+              currentUserId={user.id} 
               onClose={() => setActiveSection("inicio")}
             />
           </div>
         ) : (
           <div className="flex items-center justify-center h-64">
-            <p className="text-gray-400">Inicia sesión para acceder a los mensajes</p>
+            <p className="text-gray-400">Cargando mensajes...</p>
           </div>
         );
 
@@ -706,19 +709,19 @@ const PortalEmpresasDashboard = () => {
               <Avatar className="w-6 h-6 ring-1 ring-gray-600/50">
                 <AvatarImage src="/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg" />
                 <AvatarFallback className="bg-green-600/80 text-white text-xs">
-                  {currentUser?.firstName?.[0] || currentUser?.email?.[0]?.toUpperCase() || 'U'}
+                  {user?.firstName?.[0] || user?.email?.[0]?.toUpperCase() || 'U'}
                 </AvatarFallback>
               </Avatar>
               <div className="flex-1 min-w-0">
                 <p className="text-white font-medium text-xs truncate">
-                  {currentUser?.firstName && currentUser?.lastName 
-                    ? `${currentUser.firstName} ${currentUser.lastName}`
-                    : currentUser?.email || 'Usuario'
+                  {user?.firstName && user?.lastName 
+                    ? `${user.firstName} ${user.lastName}`
+                    : user?.email || 'Usuario'
                   }
                 </p>
                 <p className="text-gray-300 text-xs">
-                  {currentUser?.role === 'empresa' ? 'Empresa' : 
-                   currentUser?.role === 'admin' ? 'Administrador' : 'Viajero'}
+                  {user?.role === 'empresa' ? 'Empresa' : 
+                   user?.role === 'admin' ? 'Administrador' : 'Viajero'}
                 </p>
               </div>
             </div>
