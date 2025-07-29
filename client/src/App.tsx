@@ -31,6 +31,7 @@ import MapaPublicoOptimized from "./pages/MapaPublicoOptimized";
 import UnifiedPlatform from "./pages/UnifiedPlatform";
 import UserProfile from "./pages/UserProfile";
 import CompanyProfile from "./pages/CompanyProfile";
+import Profile from "./pages/Profile";
 
 import Tickets from "./pages/Tickets";
 import SessionDetail from "./pages/SessionDetail";
@@ -77,6 +78,7 @@ const App = () => (
             <Route path="/mapa" component={PortalViajeros} />
             <Route path="/plataforma" component={UnifiedPlatform} />
             <Route path="/perfil/:userId" component={UserProfile} />
+            <Route path="/perfil/:id" component={Profile} />
             <Route path="/empresa/:companyId" component={CompanyProfile} />
 
             <Route path="/tickets" component={Tickets} />

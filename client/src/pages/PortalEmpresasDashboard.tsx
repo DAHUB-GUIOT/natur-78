@@ -29,12 +29,15 @@ import {
   Mail,
   Share2,
   Code,
-  Repeat2
+  Repeat2,
+  Save,
+  Shield
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Label } from "@/components/ui/label";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -803,29 +806,7 @@ const PortalEmpresasDashboard = () => {
             })}
           </nav>
           
-          {/* Compact user profile section */}
-          <div className="p-2 border-t border-gray-600/30">
-            <div className="flex items-center space-x-2 px-3 py-2 rounded-lg bg-gray-800/30 backdrop-blur-sm">
-              <Avatar className="w-6 h-6 ring-1 ring-gray-600/50">
-                <AvatarImage src="/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg" />
-                <AvatarFallback className="bg-green-600/80 text-white text-xs">
-                  {user?.firstName?.[0] || user?.email?.[0]?.toUpperCase() || 'U'}
-                </AvatarFallback>
-              </Avatar>
-              <div className="flex-1 min-w-0">
-                <p className="text-white font-medium text-xs truncate">
-                  {user?.firstName && user?.lastName 
-                    ? `${user.firstName} ${user.lastName}`
-                    : user?.email || 'Usuario'
-                  }
-                </p>
-                <p className="text-gray-300 text-xs">
-                  {user?.role === 'empresa' ? 'Empresa' : 
-                   user?.role === 'admin' ? 'Administrador' : 'Viajero'}
-                </p>
-              </div>
-            </div>
-          </div>
+
         </div>
 
 

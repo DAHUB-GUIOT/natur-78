@@ -12,6 +12,7 @@ export interface IStorage {
   createUser(user: InsertUser): Promise<User>;
   createGoogleUser(userData: any): Promise<User>;
   getAllUsers(): Promise<User[]>;
+  getUsers(): Promise<User[]>;
   updateUser(id: number, data: Partial<InsertUser>): Promise<User>;
   
   // User profile methods
@@ -406,7 +407,28 @@ export class DatabaseStorage implements IStorage {
 
   async createUser(insertUser: InsertUser): Promise<User> {
     const result = await db.insert(users).values(insertUser).returning();
-    return result[0];
+    const user = result[0];
+    
+    // If user is empresa role, automatically create company profile
+    if (user.role === 'empresa' && user.companyName) {
+      try {
+        await this.createCompany({
+          userId: user.id,
+          companyName: user.companyName,
+          address: user.address || '',
+          city: user.city || '',
+          country: user.country || 'Colombia',
+          coordinates: user.coordinates || null,
+          businessType: 'tourism',
+          status: 'active',
+          isVerified: true // Auto-verify for smooth UX
+        });
+      } catch (error) {
+        console.error('Error creating company profile:', error);
+      }
+    }
+    
+    return user;
   }
 
   async createGoogleUser(userData: any): Promise<User> {
@@ -627,6 +649,15 @@ export class DatabaseStorage implements IStorage {
     }
     
     return result[0];
+  }
+
+  async getAllUsers(): Promise<User[]> {
+    const result = await db.select().from(users).orderBy(desc(users.createdAt));
+    return result;
+  }
+
+  async getUsers(): Promise<User[]> {
+    return this.getAllUsers();
   }
 }
 

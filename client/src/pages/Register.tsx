@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowLeft, Building2 } from "lucide-react";
 import { useLocation, Link } from "wouter";
 import RegistrationForm from "@/components/registration/RegistrationForm";
+import EnhancedRegistrationForm from "@/components/registration/EnhancedRegistrationForm";
 
 const Register = () => {
   const [, setLocation] = useLocation();
@@ -43,10 +44,8 @@ const Register = () => {
       {/* Main Content */}
       <div className="relative z-10 pt-24 pb-12 px-4 sm:px-6 md:px-8">
         <div className="container mx-auto max-w-4xl">
-          {/* Registration Form with Transparent Yellow Styling */}
-          <div className="backdrop-blur-sm bg-transparent border-2 border-[#cad95e] rounded-2xl p-6 sm:p-8 md:p-10">
-            <RegistrationForm />
-          </div>
+          {/* Enhanced Registration Form with All Portal Functionalities */}
+          <EnhancedRegistrationForm />
 
           {/* Additional Info with Transparent Yellow Styling */}
           <div className="text-center mt-8">

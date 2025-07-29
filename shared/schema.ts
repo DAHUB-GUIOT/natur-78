@@ -28,11 +28,17 @@ export const users = pgTable("users", {
   googleId: text("google_id").unique(), // For Google OAuth
   firstName: text("first_name"),
   lastName: text("last_name"),
+  companyName: text("company_name"), // For business users
   profilePicture: text("profile_picture"),
   authProvider: text("auth_provider").notNull().default("local"), // 'local' or 'google'
   role: userRoleEnum("role").default("viajero").notNull(),
   isActive: boolean("is_active").default(true).notNull(),
   emailVerified: boolean("email_verified").default(false).notNull(),
+  // Location fields for map positioning
+  address: text("address"),
+  city: text("city"),
+  country: text("country").default("Colombia"),
+  coordinates: jsonb("coordinates"), // {lat, lng}
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
