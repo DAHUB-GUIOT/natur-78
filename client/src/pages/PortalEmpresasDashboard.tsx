@@ -60,19 +60,6 @@ const PortalEmpresasDashboard = () => {
   const [activeSection, setActiveSection] = useState("mapa");
   const [showExperienceForm, setShowExperienceForm] = useState(false);
 
-
-
-  // Optimized experiences fetch with user-specific caching
-  const { data: experiences = [], isLoading: experiencesLoading, error: experiencesError } = useQuery({
-    queryKey: ['/api/experiences', user?.id],
-    retry: 2,
-    retryDelay: 1000,
-    staleTime: 2 * 60 * 1000, // 2 minutes cache
-    gcTime: 5 * 60 * 1000, // 5 minutes garbage collection
-    refetchOnWindowFocus: false,
-    enabled: !!user?.id && (activeSection === "experiencias" || activeSection === "inicio"),
-  });
-
   // Optimized current user data fetch with better error handling
   const { data: currentUser, isLoading: userLoading, error: userError, refetch: refetchUser } = useQuery({
     queryKey: ['/api/auth/me'],
@@ -87,6 +74,17 @@ const PortalEmpresasDashboard = () => {
   // Cast currentUser to proper type - handle both direct user and nested user format
   const user = (currentUser as any)?.user || currentUser;
 
+  // Optimized experiences fetch with user-specific caching
+  const { data: experiences = [], isLoading: experiencesLoading, error: experiencesError } = useQuery({
+    queryKey: ['/api/experiences', user?.id],
+    retry: 2,
+    retryDelay: 1000,
+    staleTime: 2 * 60 * 1000, // 2 minutes cache
+    gcTime: 5 * 60 * 1000, // 5 minutes garbage collection
+    refetchOnWindowFocus: false,
+    enabled: !!user?.id && (activeSection === "experiencias" || activeSection === "inicio"),
+  });
+
   // Optimized directory users fetch with caching and conditional loading
   const { data: directoryUsers = [], isLoading: directoryLoading, error: directoryError } = useQuery({
     queryKey: ["/api/directory/users"],
@@ -95,6 +93,9 @@ const PortalEmpresasDashboard = () => {
     gcTime: 10 * 60 * 1000, // 10 minutes garbage collection
     refetchOnWindowFocus: false, // Prevent unnecessary refetches
   });
+
+  // Type-safe directory users
+  const typedDirectoryUsers = directoryUsers as any[];
 
   const sidebarItems = [
     { id: "mapa", label: "Mapa", icon: Map },
@@ -363,7 +364,7 @@ const PortalEmpresasDashboard = () => {
               <div className="flex justify-between items-center">
                 <h2 className="text-xl text-white">Directorio</h2>
                 <Badge className="bg-green-600/20 text-green-300 px-3 py-1">
-                  {directoryUsers.length} usuarios registrados
+                  {typedDirectoryUsers.length} usuarios registrados
                 </Badge>
               </div>
               
@@ -428,7 +429,7 @@ const PortalEmpresasDashboard = () => {
                   </Button>
                 </div>
               </div>
-            ) : directoryUsers.length === 0 ? (
+            ) : typedDirectoryUsers.length === 0 ? (
               <div className="text-center py-12">
                 <div className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30 rounded-lg p-8">
                   <div className="w-12 h-12 bg-blue-600/20 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -455,7 +456,7 @@ const PortalEmpresasDashboard = () => {
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {(debouncedSearchTerm ? filteredCompanies : directoryUsers).map((user) => (
+                {(debouncedSearchTerm ? filteredCompanies : typedDirectoryUsers).map((user: any) => (
                   <Card key={user.id} className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30 hover:bg-gray-800/50 hover:border-green-500/30 transition-all duration-200 group cursor-pointer">
                   <CardContent className="p-4">
                     <div className="space-y-3">
