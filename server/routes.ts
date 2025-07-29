@@ -452,6 +452,39 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Get all company users (registered users with empresa role) for contacts
+  app.get("/api/users/companies", async (req, res) => {
+    try {
+      const users = await storage.getAllUsers();
+      // Filter users with empresa role and return as contact cards
+      const companyUsers = users
+        .filter(user => user.role === 'empresa' && user.isActive)
+        .map(user => ({
+          id: user.id,
+          name: `${user.firstName || ''} ${user.lastName || ''}`.trim() || user.email.split('@')[0],
+          email: user.email,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          role: user.role,
+          isActive: user.isActive,
+          createdAt: user.createdAt,
+          category: 'Empresa Registrada',
+          description: `Usuario empresa registrado en la plataforma`,
+          verified: true, // All registered users are considered verified
+          location: 'Colombia',
+          founder: `${user.firstName || ''} ${user.lastName || ''}`.trim() || 'Usuario',
+          skills: ['Turismo', 'Sostenibilidad', 'Empresario'],
+          image: user.profilePicture || null
+        }));
+      
+      console.log(`Returning ${companyUsers.length} company users for contacts`);
+      res.json(companyUsers);
+    } catch (error) {
+      console.error("Get company users error:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+
   app.get("/api/companies/me", async (req, res) => {
     try {
       if (!req.session.userId) {

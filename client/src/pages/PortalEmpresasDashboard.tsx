@@ -83,9 +83,9 @@ const PortalEmpresasDashboard = () => {
 
 
 
-  // Fetch companies data from database
+  // Fetch all company users from database
   const { data: companiesData = [], isLoading: companiesLoading } = useQuery({
-    queryKey: ['/api/companies'],
+    queryKey: ['/api/users/companies'],
     retry: false,
   });
 
@@ -104,23 +104,23 @@ const PortalEmpresasDashboard = () => {
     { id: "aliados", label: "🤝 Aliados y Patrocinadores" }
   ];
 
-  // Use real companies from database (filtered to show only verified companies)
-  const companies = companiesData.map(company => ({
-    id: company.id,
-    name: company.companyName,
-    category: company.businessType || "Sin categoría",
-    categoryId: company.businessType?.toLowerCase().replace(/\s+/g, '-') || "general",
-    location: `${company.city}, ${company.department}`,
-    rating: company.rating || 0,
-    reviews: company.totalReviews || 0,
-    image: company.logo || "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg",
-    verified: company.isVerified,
-    description: company.description || "Empresa comprometida con el turismo sostenible.",
-    founder: "Equipo " + company.companyName,
-    website: company.website || "",
-    email: "", // Email not exposed in company data for privacy
-    skills: company.services || [],
-    certifications: company.certifications || []
+  // Use all registered company users from database
+  const companies = companiesData.map(user => ({
+    id: user.id,
+    name: user.name,
+    category: user.category,
+    categoryId: user.category?.toLowerCase().replace(/\s+/g, '-') || "general",
+    location: user.location,
+    rating: 4.5, // Default rating for registered users
+    reviews: 0,
+    image: user.image,
+    verified: user.verified,
+    description: user.description,
+    founder: user.founder,
+    website: null,
+    email: user.email,
+    skills: user.skills,
+    certifications: []
   }));
 
   // Filter companies based on search and category
@@ -329,9 +329,9 @@ const PortalEmpresasDashboard = () => {
           <div className="space-y-4">
             <div className="flex flex-col space-y-3">
               <div className="flex justify-between items-center">
-                <h2 className="text-xl font-bold text-white">Contactos</h2>
+                <h2 className="text-xl font-bold text-white">Contactos - Usuarios Registrados</h2>
                 <Badge className="bg-green-600/20 text-green-300 px-3 py-1">
-                  {filteredCompanies.length} empresas
+                  {filteredCompanies.length} usuarios empresa
                 </Badge>
               </div>
               
