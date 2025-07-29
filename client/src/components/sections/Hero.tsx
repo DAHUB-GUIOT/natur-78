@@ -39,14 +39,14 @@ export function Hero() {
               </Button>
             </Link>
             
-            <Link to="/auth/consentidos">
+            <Link to="/portal-viajeros">
               <Button 
                 size="sm" 
                 variant="outline"
                 className="bg-transparent border-2 text-black font-medium px-4 py-2 rounded-full backdrop-blur-sm hover:opacity-90"
                 style={{ borderColor: '#EDFF60', color: '#EDFF60' }}
               >
-                Con-Sentidos
+                Mapa Turismo Sostenible
               </Button>
             </Link>
             
