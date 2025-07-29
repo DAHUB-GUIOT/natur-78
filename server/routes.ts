@@ -452,16 +452,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Get all company users (registered users with empresa role) for contacts
+  // Get ALL registered users for directory display  
   app.get("/api/users/companies", async (req, res) => {
-    // Set CORS headers
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Credentials', 'true');
     try {
       const users = await storage.getAllUsers();
-      // Filter users with empresa role and return as contact cards
-      const companyUsers = users
-        .filter(user => user.role === 'empresa' && user.isActive)
+      // Return ALL active users in the directory
+      const allUsers = users
+        .filter(user => user.isActive)
         .map(user => ({
           id: user.id,
           name: `${user.firstName || ''} ${user.lastName || ''}`.trim() || user.email.split('@')[0],
@@ -471,18 +468,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
           role: user.role,
           isActive: user.isActive,
           createdAt: user.createdAt,
-          category: 'Empresa Registrada',
-          description: `Usuario empresa registrado en la plataforma`,
+          category: user.role === 'empresa' ? 'Empresa' : user.role === 'viajero' ? 'Viajero' : user.role === 'admin' ? 'Administrador' : 'Usuario',
           location: 'Colombia',
-          founder: `${user.firstName || ''} ${user.lastName || ''}`.trim() || 'Usuario',
-          skills: ['Turismo', 'Sostenibilidad', 'Empresario'],
-          image: user.profilePicture || null
+          founder: `${user.firstName || ''} ${user.lastName || ''}`.trim() || 'Usuario'
         }));
       
-      console.log(`Returning ${companyUsers.length} company users for contacts`);
-      res.json(companyUsers);
+      res.json(allUsers);
     } catch (error) {
-      console.error("Get company users error:", error);
+      console.error("Get all users error:", error);
       res.status(500).json({ error: "Internal server error" });
     }
   });

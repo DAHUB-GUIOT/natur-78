@@ -77,7 +77,7 @@ const PortalEmpresasDashboard = () => {
 
   const sidebarItems = [
     { id: "mapa", label: "Mapa", icon: Map },
-    { id: "empresas", label: "Contactos", icon: Building2 },
+    { id: "empresas", label: "Directorio", icon: Building2 },
     { id: "experiencias", label: "Experiencias", icon: Star },
     { id: "mensajes", label: "Mensajes", icon: MessageCircle },
     { id: "ajustes", label: "Ajustes", icon: Settings },
@@ -322,9 +322,9 @@ const PortalEmpresasDashboard = () => {
           <div className="space-y-4">
             <div className="flex flex-col space-y-3">
               <div className="flex justify-between items-center">
-                <h2 className="text-xl font-bold text-white">Contactos</h2>
+                <h2 className="text-xl text-white">Directorio</h2>
                 <Badge className="bg-green-600/20 text-green-300 px-3 py-1">
-                  {filteredCompanies.length} contactos
+                  {filteredCompanies.length} usuarios
                 </Badge>
               </div>
               
@@ -377,7 +377,7 @@ const PortalEmpresasDashboard = () => {
                         </Avatar>
                         
                         <div className="flex-1">
-                          <h3 className="font-sans text-sm text-white">{company.name}</h3>
+                          <h3 className="text-sm text-white">{company.name}</h3>
                           <p className="text-xs text-gray-300">{company.location}</p>
                         </div>
                       </div>

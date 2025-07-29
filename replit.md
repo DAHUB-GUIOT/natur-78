@@ -18,6 +18,9 @@ This is a full-stack web application for Festival NATUR (www.festivalnatur.com),
   - **PERFORMANCE**: Eliminated redundant data processing and console logging throughout platform
   - **UX**: Clean, minimal contact directory focusing on core networking functionality
   - **SPEED**: Faster rendering with reduced DOM elements and simplified component structure
+  - **UPDATED**: Directory now shows ALL registered users instead of only company users
+  - **RENAMED**: "Contactos" section changed to "Directorio" throughout interface
+  - **TYPOGRAPHY**: Simplified all title fonts to basic font styling for cleaner appearance
 
 - ✅ **January 29, 2025**: Contact Cards Updated to Show Actual User Names Instead of Generic "Empresa"
   - **UPDATED**: Contact cards now display company names (DaHub, TripCol) as main titles instead of person names
