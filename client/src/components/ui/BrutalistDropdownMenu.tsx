@@ -42,19 +42,29 @@ const menuData: MenuCategory[] = [
     icon: '📰',
     title: 'NOTICIAS',
     subcategories: [
-      { label: 'Artículos', url: '/blog/articulos' },
-      { label: 'Crónicas', url: '/blog/cronicas' },
-      { label: 'Entrevistas', url: '/blog/entrevistas' },
-      { label: 'Novedades del Turismo Regenerativo', url: '/blog/novedades' }
+      { label: 'Turismo Regenerativo: El Futuro del Viaje Consciente', url: '/articulo-1' },
+      { label: 'Colombia Lidera la Revolución del Ecoturismo en Latinoamérica', url: '/articulo-2' },
+      { label: 'Festival NATUR 2025: Conectando Comunidades Sostenibles', url: '/articulo-3' }
     ]
   },
   {
-    icon: '🧭',
+    icon: '🌐',
     title: 'PLATAFORMA NATUR',
     subcategories: [
-      { label: 'Portal de Empresas', url: '/portal-empresas' },
-      { label: 'Comunidad de Viajeros', url: '/portal-viajeros' },
-      { label: 'Mapa Interactivo de Experiencias', url: '/mapa' }
+      { label: 'Portal Empresas', url: '/portal-empresas' },
+      { label: 'Con-Sentidos', url: '/portal-viajeros' },
+      { label: 'Mapa Interactivo', url: '/mapa-interactivo' }
+    ]
+  },
+  {
+    icon: 'ℹ️',
+    title: 'INFO',
+    subcategories: [
+      { label: 'Sobre Nosotros', url: '/sobre' },
+      { label: 'Contacto', url: '/contacto' },
+      { label: 'Aliados', url: '/aliados' },
+      { label: 'FAQ', url: '/faq' },
+      { label: 'Términos y Condiciones', url: '/terminos' }
     ]
   }
 ];
@@ -147,14 +157,14 @@ export function BrutalistDropdownMenu({ isOpen, onClose, triggerRef }: Brutalist
           </div>
         </div>
 
-        {/* Center Content - Subcategories */}
-        <div className="flex-1 p-6">
-          {expandedCategory !== null && menuData[expandedCategory]?.subcategories && (
+        {/* Full Width Content Area */}
+        <div className="flex-1 p-8 overflow-y-auto">
+          {expandedCategory !== null && (
             <>
-              {/* Festival NATUR Layout - Special Pro/Live columns */}
+              {/* Festival Category - Two Column Layout */}
               {expandedCategory === 0 && (
-                <div className="grid grid-cols-2 gap-8 h-full">
-                  {/* VIVE NATUR (Pro) Column */}
+                <div className="grid grid-cols-2 gap-8 h-full max-w-6xl mx-auto">
+                  {/* VIVE NATUR Column */}
                   <div>
                     <h1 className="text-lg font-jakarta text-[#EDFF60] px-3 py-1 uppercase tracking-wide mb-4 text-center">
                       VIVE NATUR
@@ -173,7 +183,7 @@ export function BrutalistDropdownMenu({ isOpen, onClose, triggerRef }: Brutalist
                     </ul>
                   </div>
 
-                  {/* NATUR PRO (Live) Column */}
+                  {/* NATUR PRO Column */}
                   <div>
                     <h1 className="text-lg font-jakarta text-[#EDFF60] px-3 py-1 uppercase tracking-wide mb-4 text-center">
                       NATUR PRO
@@ -194,18 +204,72 @@ export function BrutalistDropdownMenu({ isOpen, onClose, triggerRef }: Brutalist
                 </div>
               )}
 
-              {/* Other Categories - Single Column Layout */}
-              {expandedCategory !== 0 && (
-                <div className="max-w-2xl">
-                  <h1 className="text-lg font-jakarta text-[#EDFF60] uppercase tracking-wide mb-4">
+              {/* NOTICIAS Category - 3 Article Cards */}
+              {expandedCategory === 1 && (
+                <div className="max-w-6xl mx-auto">
+                  <h1 className="text-2xl font-jakarta text-[#EDFF60] uppercase tracking-wide mb-6 text-center">
+                    NOTICIAS
+                  </h1>
+                  <div className="grid grid-cols-3 gap-6">
+                    {menuData[expandedCategory].subcategories?.map((article, articleIndex) => (
+                      <div key={articleIndex} className="bg-[#0f2d0f] border border-[#EDFF60]/20 p-6 hover:border-[#EDFF60]/40 transition-colors duration-200 rounded-lg">
+                        <button
+                          onClick={() => handleSubcategoryClick(article.url)}
+                          className="text-left block w-full"
+                        >
+                          <div className="text-3xl mb-4 text-center">📰</div>
+                          <h3 className="text-[#EDFF60] text-sm font-jakarta mb-3 leading-relaxed">{article.label}</h3>
+                          <p className="text-gray-300 text-xs font-light">Descubre las últimas tendencias y noticias del turismo regenerativo en Colombia...</p>
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* PLATAFORMA NATUR Category - 3 Platform Cards */}
+              {expandedCategory === 2 && (
+                <div className="max-w-6xl mx-auto">
+                  <h1 className="text-2xl font-jakarta text-[#EDFF60] uppercase tracking-wide mb-6 text-center">
+                    PLATAFORMA NATUR
+                  </h1>
+                  <div className="grid grid-cols-3 gap-6">
+                    {menuData[expandedCategory].subcategories?.map((platform, platformIndex) => (
+                      <div key={platformIndex} className="bg-[#0f2d0f] border border-[#EDFF60]/20 p-8 hover:border-[#EDFF60]/40 transition-colors duration-200 text-center rounded-lg">
+                        <button
+                          onClick={() => handleSubcategoryClick(platform.url)}
+                          className="block w-full"
+                        >
+                          <div className="text-4xl mb-4">
+                            {platformIndex === 0 && '🏢'}
+                            {platformIndex === 1 && '🧭'}
+                            {platformIndex === 2 && '🗺️'}
+                          </div>
+                          <h3 className="text-[#EDFF60] text-lg font-jakarta mb-3">{platform.label}</h3>
+                          <p className="text-gray-300 text-sm font-light">
+                            {platformIndex === 0 && 'Conecta con empresas sostenibles y descubre oportunidades de negocio'}
+                            {platformIndex === 1 && 'Descubre experiencias auténticas y conecta con comunidades locales'}
+                            {platformIndex === 2 && 'Explora destinos regenerativos y planifica tu viaje consciente'}
+                          </p>
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* INFO Category - Single Column Layout */}
+              {expandedCategory === 3 && (
+                <div className="max-w-2xl mx-auto">
+                  <h1 className="text-2xl font-jakarta text-[#EDFF60] uppercase tracking-wide mb-6 text-center">
                     {menuData[expandedCategory].title}
                   </h1>
-                  <ul className="space-y-2 grid grid-cols-1 gap-2">
+                  <ul className="space-y-3 grid grid-cols-1 gap-3">
                     {menuData[expandedCategory].subcategories?.map((sub, subIndex) => (
                       <li key={subIndex}>
                         <button
                           onClick={() => handleSubcategoryClick(sub.url)}
-                          className="text-gray-300 hover:text-[#EDFF60] transition-colors duration-200 text-left block text-sm font-light"
+                          className="text-gray-300 hover:text-[#EDFF60] transition-colors duration-200 text-left block text-base font-light w-full p-3 border border-[#EDFF60]/10 hover:border-[#EDFF60]/30 rounded"
                         >
                           • {sub.label}
                         </button>
@@ -236,71 +300,6 @@ export function BrutalistDropdownMenu({ isOpen, onClose, triggerRef }: Brutalist
               </div>
             </div>
           )}
-        </div>
-
-        {/* Right Sidebar - Info Section */}
-        <div className="w-1/4 bg-[#0f2d0f] border-l border-[#EDFF60]/20 p-6">
-          <div className="space-y-6">
-            {/* Festival Buttons - Only show for Festival category */}
-            {expandedCategory === 0 && (
-              <>
-                <button className="w-full bg-[#EDFF60] text-[#0a1a0a] py-3 px-4 font-jakarta-bold uppercase tracking-wide text-sm hover:bg-yellow-300 transition-colors">
-                  🎫 TICKETS
-                </button>
-                <button className="w-full border border-[#EDFF60] text-[#EDFF60] py-3 px-4 font-jakarta-bold uppercase tracking-wide text-sm hover:bg-[#EDFF60] hover:text-[#0a1a0a] transition-colors">
-                  📅 AGENDA
-                </button>
-                <div className="border-t border-[#EDFF60]/20 pt-6"></div>
-              </>
-            )}
-            
-            {/* Info Section - Always visible */}
-            <h1 className="text-[#EDFF60] font-jakarta uppercase tracking-wide mb-3 text-sm">
-              INFO
-            </h1>
-            <ul className="space-y-2">
-              <li>
-                <button 
-                  onClick={() => handleSubcategoryClick('/sobre')}
-                  className="text-gray-300 hover:text-[#EDFF60] transition-colors duration-200 text-left block text-xs font-light"
-                >
-                  • Sobre Nosotros
-                </button>
-              </li>
-              <li>
-                <button 
-                  onClick={() => handleSubcategoryClick('/contacto')}
-                  className="text-gray-300 hover:text-[#EDFF60] transition-colors duration-200 text-left block text-xs font-light"
-                >
-                  • Contacto
-                </button>
-              </li>
-              <li>
-                <button 
-                  onClick={() => handleSubcategoryClick('/aliados')}
-                  className="text-gray-300 hover:text-[#EDFF60] transition-colors duration-200 text-left block text-xs font-light"
-                >
-                  • Aliados
-                </button>
-              </li>
-              <li>
-                <button 
-                  onClick={() => handleSubcategoryClick('/faq')}
-                  className="text-gray-300 hover:text-[#EDFF60] transition-colors duration-200 text-left block text-xs font-light"
-                >
-                  • FAQ
-                </button>
-              </li>
-              <li>
-                <button 
-                  onClick={() => handleSubcategoryClick('/terminos')}
-                  className="text-gray-300 hover:text-[#EDFF60] transition-colors duration-200 text-left block text-xs font-light"
-                >
-                  • Términos y Condiciones
-                </button>
-              </li>
-            </ul>
-          </div>
         </div>
       </div>
 
