@@ -167,7 +167,7 @@ export function BrutalistDropdownMenu({ isOpen, onClose, triggerRef }: Brutalist
                 <div className="grid grid-cols-2 gap-8 h-full">
                   {/* VIVE NATUR (Pro) Column */}
                   <div>
-                    <h1 className="text-2xl font-jakarta-bold text-[#EDFF60] bg-[#EDFF60] text-[#0a1a0a] px-4 py-2 uppercase tracking-wider mb-6 text-center">
+                    <h1 className="text-2xl font-jakarta-bold text-[#EDFF60] px-4 py-2 uppercase tracking-wider mb-6 text-center">
                       VIVE NATUR
                     </h1>
                     <ul className="space-y-3">
@@ -186,7 +186,7 @@ export function BrutalistDropdownMenu({ isOpen, onClose, triggerRef }: Brutalist
 
                   {/* NATUR PRO (Live) Column */}
                   <div>
-                    <h1 className="text-2xl font-jakarta-bold text-[#EDFF60] bg-[#EDFF60] text-[#0a1a0a] px-4 py-2 uppercase tracking-wider mb-6 text-center">
+                    <h1 className="text-2xl font-jakarta-bold text-[#EDFF60] px-4 py-2 uppercase tracking-wider mb-6 text-center">
                       NATUR PRO
                     </h1>
                     <ul className="space-y-3">
