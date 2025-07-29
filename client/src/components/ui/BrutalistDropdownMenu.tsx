@@ -265,54 +265,7 @@ export function BrutalistDropdownMenu({ isOpen, onClose, triggerRef }: Brutalist
               </>
             )}
             
-            {/* Info Section - Always visible */}
-            <div>
-              <h4 className="text-[#EDFF60] font-jakarta-bold uppercase tracking-wider mb-4">
-                INFO
-              </h4>
-              <ul className="space-y-3">
-                <li>
-                  <button 
-                    onClick={() => handleSubcategoryClick('/sobre')}
-                    className="text-gray-300 hover:text-[#EDFF60] transition-colors duration-200 text-left block text-sm"
-                  >
-                    • Sobre Nosotros
-                  </button>
-                </li>
-                <li>
-                  <button 
-                    onClick={() => handleSubcategoryClick('/contacto')}
-                    className="text-gray-300 hover:text-[#EDFF60] transition-colors duration-200 text-left block text-sm"
-                  >
-                    • Contacto
-                  </button>
-                </li>
-                <li>
-                  <button 
-                    onClick={() => handleSubcategoryClick('/aliados')}
-                    className="text-gray-300 hover:text-[#EDFF60] transition-colors duration-200 text-left block text-sm"
-                  >
-                    • Aliados
-                  </button>
-                </li>
-                <li>
-                  <button 
-                    onClick={() => handleSubcategoryClick('/faq')}
-                    className="text-gray-300 hover:text-[#EDFF60] transition-colors duration-200 text-left block text-sm"
-                  >
-                    • FAQ
-                  </button>
-                </li>
-                <li>
-                  <button 
-                    onClick={() => handleSubcategoryClick('/terminos')}
-                    className="text-gray-300 hover:text-[#EDFF60] transition-colors duration-200 text-left block text-sm"
-                  >
-                    • Términos y Condiciones
-                  </button>
-                </li>
-              </ul>
-            </div>
+            
           </div>
         </div>
       </div>
