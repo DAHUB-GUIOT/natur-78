@@ -557,6 +557,8 @@ const PortalEmpresasDashboard = () => {
 
       case "mensajes":
         console.log('Mensajes section - currentUser:', currentUser, 'user:', user, 'userLoading:', userLoading);
+        console.log('User check - user exists:', !!user, 'user.id exists:', !!user?.id, 'user.id value:', user?.id);
+        
         if (userLoading) {
           return (
             <div className="flex items-center justify-center h-64">
@@ -565,16 +567,21 @@ const PortalEmpresasDashboard = () => {
           );
         }
         
-        return user && user.id ? (
+        // Check if user exists and has a valid ID (ensure it's a number)
+        const isAuthenticated = user && (typeof user.id === 'number' || typeof user.id === 'string') && user.id;
+        console.log('Authentication check result:', isAuthenticated, 'user.id type:', typeof user?.id);
+        
+        return isAuthenticated ? (
           <div className="h-[calc(100vh-8rem)]">
             <ChatPage 
-              currentUserId={user.id} 
+              currentUserId={Number(user.id)} 
               onClose={() => setActiveSection("inicio")}
             />
           </div>
         ) : (
           <div className="flex items-center justify-center h-64 flex-col space-y-4">
             <p className="text-gray-400">Inicia sesión para acceder a los mensajes</p>
+            <p className="text-xs text-gray-500">Debug: user = {JSON.stringify(user)}</p>
             <Button 
               onClick={() => window.location.href = '/portal-empresas/auth'}
               className="bg-green-600 hover:bg-green-700"
