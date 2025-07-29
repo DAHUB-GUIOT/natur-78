@@ -19,11 +19,11 @@ interface Session {
 
 // Agenda data structure
 const agendaData = {
-  "academica-publica": {
-    title: "Agenda Académica Abierta al Público",
-    subtitle: "Ejes temáticos: Agua / Medio Ambiente / Turismo consciente y responsable",
-    horario: "9:00 a.m. – 4:00 p.m.",
-    lugar: "Escenario lugar común",
+  "vive-natur": {
+    title: "VIVE NATUR - Agenda Abierta",
+    subtitle: "Charlas NATUR • Rooftop + Zona de Comidas • Emprendimientos Sostenibles • Zona Chill • Foro Colombia Sostenible 2025",
+    horario: "9:00 a.m. – 6:00 p.m.",
+    lugar: "Acceso Libre - Todos los Espacios",
     color: "#cad95e",
     days: [
       {
@@ -31,38 +31,37 @@ const agendaData = {
         sessions: [
           {
             time: "9:00 - 9:30",
-            title: "Ceremonia de apertura: Bienvenida al lugar común",
-            speakers: ["Brigitte Baptiste", "Comunidades invitadas"],
-            type: "ceremonia",
+            title: "Charlas NATUR: Apertura del Festival",
+            speakers: ["Brigitte Baptiste", "Equipo Festival NATUR"],
+            type: "charla",
             image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
           },
           {
-            time: "9:40 - 10:50",
-            title: "Panel: Viajar con sentido: hacia un turismo que cuida",
-            speakers: ["Claudia Bernal - Parques Nacionales", "Andrés Rodríguez - Festival NATUR", "Camilo Robledo - Live Happy"],
-            moderator: "Universidad EAN",
-            type: "panel",
+            time: "10:00 - 11:30",
+            title: "Rooftop + Zona de Comidas: Networking Gastronómico",
+            speakers: ["Chefs Sostenibles", "Productores Locales"],
+            type: "experiencia",
             image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
           },
           {
-            time: "11:00 - 11:30",
-            title: "Conversatorio: Gentrificación, turismo y derecho a la ciudad",
-            speakers: ["Diana Wiesner - Fundación Cerros de Bogotá", "Arquitecto experto en urbanismo", "Viceministerio de Turismo de MINCIT"],
-            type: "conversatorio",
+            time: "11:30 - 13:00",
+            title: "Emprendimientos Sostenibles: Showcase de Proyectos",
+            speakers: ["Startups Verdes", "Emprendedores Locales"],
+            type: "showcase",
             image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
           },
           {
-            time: "11:45 - 12:15",
-            title: "Conversatorio: ¿Es posible un turismo más responsable?",
-            speakers: ["Santiago Giraldo - Fundación Pro Sierra", "CAR - Luisa Fernando Aguirre"],
-            type: "conversatorio",
+            time: "14:00 - 15:30",
+            title: "Zona Chill: Música y Relajación",
+            speakers: ["Artistas Locales", "DJs Orgánicos"],
+            type: "entretenimiento",
             image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
           },
           {
-            time: "14:30 - 16:00",
-            title: "Relatos vivos: Primer momento - Las 50 historias más transformadoras del turismo",
-            speakers: ["Diversos relatores"],
-            type: "relatos",
+            time: "16:00 - 18:00",
+            title: "Foro Colombia Sostenible 2025: Panel Nacional",
+            speakers: ["Expertos en Sostenibilidad", "Gobierno Nacional", "Academia"],
+            type: "foro",
             image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
           }
         ]
@@ -71,133 +70,170 @@ const agendaData = {
         day: "Día 2: Domingo 16 de marzo",
         sessions: [
           {
-            time: "9:00 - 9:30",
-            title: "Charla de apertura: El lugar común",
-            speakers: ["Camila Buelvas - Festival NATUR", "Alejandro Rogelis - Arquitecto del CEFE Chapinero"],
+            time: "9:00 - 10:30",
+            title: "Charlas NATUR: Turismo Regenerativo",
+            speakers: ["Expertos Internacionales", "Comunidades Locales"],
             type: "charla",
             image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
           },
           {
-            time: "9:30 - 11:00",
-            title: "Panel: La sostenibilidad más allá del marketing",
-            speakers: ["Dago Ospina - Tornus Agencia", "Juan Fernando Rubio - Green Destinations", "Invitado internacional"],
-            moderator: "Universidad EAN",
-            type: "panel",
+            time: "11:00 - 12:30",
+            title: "Emprendimientos Sostenibles: Pitch Session",
+            speakers: ["Emprendedores", "Inversionistas"],
+            type: "pitch",
             image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
           },
           {
-            time: "11:30 - 13:00",
-            title: "Ponencia: El poder de contar historias",
-            speakers: ["Dago Ospina - Tornus Agencia"],
-            type: "ponencia",
+            time: "13:00 - 14:30",
+            title: "Rooftop + Zona de Comidas: Almuerzo Sostenible",
+            speakers: ["Restaurantes Km0", "Cocineros Tradicionales"],
+            type: "gastronomia",
             image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
           },
           {
-            time: "14:30 - 16:00",
-            title: "Relatos vivos: Segundo momento - Las 50 historias más transformadoras del turismo",
-            speakers: ["Diversos relatores"],
-            type: "relatos",
+            time: "15:00 - 16:30",
+            title: "Zona Chill: Actividades de Cierre",
+            speakers: ["Artistas", "Facilitadores Wellness"],
+            type: "bienestar",
+            image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
+          },
+          {
+            time: "17:00 - 18:00",
+            title: "Ceremonia de Clausura VIVE NATUR",
+            speakers: ["Equipo Festival NATUR", "Participantes"],
+            type: "ceremonia",
             image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
           }
         ]
       }
     ]
   },
-  "academica-especializada": {
-    title: "Agenda Académica Especializada",
-    subtitle: "Ejes temáticos: Turismo, Tecnología y Sostenibilidad",
-    horario: "9:00 a.m. – 4:00 p.m.",
-    lugar: "Escenario Visión Turismo",
-    color: "#181c0d",
+  "natur-pro": {
+    title: "NATUR PRO - Agenda Especializada",
+    subtitle: "Todo VIVE NATUR + Cartel de Artistas • Talleres • Zona Startups • Coffee Talks • Rumba • Zona Wellness • Experiencia NATUR • Zona VIP",
+    horario: "8:00 a.m. – 10:00 p.m.",
+    lugar: "Acceso VIP - Experiencia Completa",
+    color: "#aa3b1e",
     days: [
       {
         day: "Día 1: Sábado 15 de marzo",
         sessions: [
           {
-            time: "9:00 – 9:30",
-            title: "Tecnología con propósito en el turismo sostenible",
-            description: "Una mirada al uso ético de la tecnología en los viajes, desde la innovación social y el impacto ambiental.",
-            speakers: ["ACOTUR"],
-            type: "ponencia",
+            time: "8:00 - 9:00",
+            title: "Desayuno VIP + Coffee Talks Exclusivos",
+            description: "Networking privado con líderes del sector turístico y sostenibilidad",
+            speakers: ["Expertos VIP", "CEOs Turismo Sostenible"],
+            type: "vip",
             image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
           },
           {
-            time: "9:40 – 10:10",
-            title: "Del dato a la decisión: sistemas de monitoreo para destinos sostenibles",
-            description: "Indicadores, tecnología cívica y datos abiertos para la planificación turística responsable.",
-            speakers: ["Fundación CREATA", "Universidad EAN"],
-            type: "conversatorio",
+            time: "9:00 - 10:30",
+            title: "Cartel de Artistas: Presentaciones Matutinas",
+            description: "Música en vivo y performances artísticas exclusivas para NATUR PRO",
+            speakers: ["Artistas Nacionales", "Músicos Sostenibles"],
+            type: "arte",
             image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
           },
           {
-            time: "10:10 – 10:40",
-            title: "La digitalización del territorio: oportunidades y riesgos",
-            speakers: ["FONTUR"],
-            type: "charla",
+            time: "10:30 - 12:00",
+            title: "Talleres Especializados: Turismo Regenerativo",
+            description: "Workshops prácticos sobre implementación de turismo regenerativo",
+            speakers: ["Facilitadores Expertos", "Consultores Internacionales"],
+            type: "taller",
             image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
           },
           {
-            time: "11:50 – 12:20",
-            title: "Blockchain y turismo regenerativo: ¿una herramienta para la transparencia?",
-            description: "Aplicaciones emergentes para trazabilidad, certificaciones, pagos y confianza comunitaria.",
-            speakers: ["Invitado internacional", "Experto en innovación cívica digital"],
-            type: "charla",
+            time: "12:00 - 13:30",
+            title: "Zona Startups: Pitch y Demo Day",
+            description: "Presentaciones de startups de turismo sostenible y networking con inversionistas",
+            speakers: ["Startups Seleccionadas", "Fondos de Inversión"],
+            type: "startup",
             image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
           },
           {
-            time: "12:20 – 12:50",
-            title: "Juventud, redes y nuevas formas de habitar el viaje",
-            description: "El rol de las redes sociales y las plataformas digitales en el turismo consciente.",
-            speakers: ["Red de turismo joven", "Colectivo de viajeros tecnológicos"],
-            type: "conversatorio",
+            time: "14:00 - 15:30",
+            title: "Zona Wellness: Experiencias de Bienestar",
+            description: "Sesiones de yoga, meditación y conexión con la naturaleza",
+            speakers: ["Instructores Wellness", "Terapeutas Holísticos"],
+            type: "wellness",
             image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
           },
           {
-            time: "12:50 – 13:20",
-            title: "Innovaciones que están cambiando el turismo en Colombia",
-            speakers: ["Startups aliadas (Life Happy)", "Colectivos", "Apps de ecoturismo", "Observatorios territoriales"],
-            type: "panel",
+            time: "16:00 - 17:30",
+            title: "Experiencia NATUR: Actividad Inmersiva",
+            description: "Experiencia única de turismo sostenible in situ",
+            speakers: ["Guías Especializados", "Comunidades Locales"],
+            type: "experiencia",
+            image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
+          },
+          {
+            time: "19:00 - 22:00",
+            title: "Rumba y Manifestaciones Culturales",
+            description: "Fiesta exclusiva con música tradicional y contemporánea",
+            speakers: ["DJs", "Grupos Folclóricos"],
+            type: "rumba",
             image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
           }
         ]
       },
+
       {
         day: "Día 2: Domingo 16 de marzo",
         sessions: [
           {
-            time: "9:00 – 9:30",
-            title: "Inteligencia artificial en la planificación turística: ¿aliada o amenaza?",
-            speakers: ["Universidad EAN", "Experto en IA aplicada al turismo"],
-            type: "charla",
+            time: "8:00 - 9:00",
+            title: "Coffee Talks VIP: Desayuno de Cierre",
+            description: "Reflexiones y networking final con líderes del sector",
+            speakers: ["Panelistas Destacados", "Invitados Especiales"],
+            type: "vip",
             image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
           },
           {
-            time: "9:40 – 10:10",
-            title: "Tecnología y ética en el relato de los destinos",
-            description: "Storytelling digital, fake green y apropiación cultural en el marketing verde.",
-            speakers: ["Andrea García (Nosotras para Nosotras)", "Creativos invitados", "Agencia Sístole o Sancho"],
-            type: "mesa-redonda",
+            time: "9:00 - 10:30",
+            title: "Talleres Especializados: Implementación de Proyectos",
+            description: "Sesiones prácticas para llevar las ideas a la realidad",
+            speakers: ["Mentores Expertos", "Facilitadores"],
+            type: "taller",
             image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
           },
           {
-            time: "10:20 – 10:50",
-            title: "Demo en vivo: Mapa del Turismo Responsable de Colombia",
-            speakers: ["Equipo NATUR"],
-            type: "demo",
+            time: "10:30 - 12:00",
+            title: "Zona Startups: Demo Final y Premiación",
+            description: "Presentaciones finales y reconocimientos a mejores proyectos",
+            speakers: ["Jurado de Expertos", "Startups Finalistas"],
+            type: "startup",
             image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
           },
           {
-            time: "11:00 – 11:30",
-            title: "Carbono, apps y movilidad consciente",
-            speakers: ["Equipo de Placebranders", "Startups de movilidad ecológica"],
-            type: "charla",
+            time: "12:00 - 13:30",
+            title: "Experiencia NATUR: Inmersión Completa",
+            description: "Actividad experimental de turismo regenerativo",
+            speakers: ["Guías Especializados", "Comunidades Anfitrionas"],
+            type: "experiencia",
             image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
           },
           {
-            time: "11:40 – 12:10",
-            title: "Tecnología popular y turismo indígena: alianzas para la autonomía",
-            speakers: ["Representantes de procesos indígenas", "Aliados académicos"],
-            type: "panel",
+            time: "14:00 - 15:30",
+            title: "Zona Wellness: Sesión de Integración",
+            description: "Mindfulness, yoga y reflexión sobre el impacto del festival",
+            speakers: ["Terapeutas", "Instructores Certificados"],
+            type: "wellness",
+            image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
+          },
+          {
+            time: "16:00 - 17:30",
+            title: "Cartel de Artistas: Presentaciones de Cierre",
+            description: "Conciertos y performances para concluir el festival",
+            speakers: ["Artistas Principales", "Invitados Especiales"],
+            type: "arte",
+            image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
+          },
+          {
+            time: "18:00 - 22:00",
+            title: "Zona VIP: Cena de Gala y After Party",
+            description: "Evento exclusivo de clausura con cena de gala y rumba final",
+            speakers: ["Chefs Estrella", "DJs Internacionales"],
+            type: "vip",
             image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
           }
         ]
@@ -359,13 +395,23 @@ const getTypeColor = (type: string) => {
     case 'actividad': return 'bg-cyan-100 text-cyan-800';
     case 'juego': return 'bg-yellow-100 text-yellow-800';
     case 'bienestar': return 'bg-teal-100 text-teal-800';
+    case 'vip': return 'bg-yellow-100 text-yellow-800';
+    case 'startup': return 'bg-blue-100 text-blue-800';
+    case 'wellness': return 'bg-teal-100 text-teal-800';
+    case 'experiencia': return 'bg-green-100 text-green-800';
+    case 'rumba': return 'bg-pink-100 text-pink-800';
+    case 'gastronomia': return 'bg-orange-100 text-orange-800';
+    case 'showcase': return 'bg-purple-100 text-purple-800';
+    case 'entretenimiento': return 'bg-cyan-100 text-cyan-800';
+    case 'foro': return 'bg-indigo-100 text-indigo-800';
+    case 'pitch': return 'bg-red-100 text-red-800';
     default: return 'bg-gray-100 text-gray-800';
   }
 };
 
 export function Agenda() {
   const [selectedSession, setSelectedSession] = useState<Session | null>(null);
-  const [activeTab, setActiveTab] = useState('academica-publica');
+  const [activeTab, setActiveTab] = useState('vive-natur');
   const [filterType, setFilterType] = useState<string>('all');
   const [myAgenda, setMyAgenda] = useState<Set<string>>(new Set());
 
@@ -453,16 +499,16 @@ export function Agenda() {
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full lg:w-auto">
               <TabsList className="grid w-full grid-cols-3 bg-transparent border border-white/20 p-1 rounded-none">
                 <TabsTrigger 
-                  value="academica-publica" 
+                  value="vive-natur" 
                   className="data-[state=active]:bg-white data-[state=active]:text-black text-white/70 font-mono text-sm tracking-wide rounded-none border-r border-white/20"
                 >
-                  AGENDA PÚBLICA
+                  VIVE NATUR
                 </TabsTrigger>
                 <TabsTrigger 
-                  value="academica-especializada"
+                  value="natur-pro"
                   className="data-[state=active]:bg-white data-[state=active]:text-black text-white/70 font-mono text-sm tracking-wide rounded-none border-r border-white/20"
                 >
-                  ESPECIALIZADA
+                  NATUR PRO
                 </TabsTrigger>
                 <TabsTrigger 
                   value="agenda-cultural"

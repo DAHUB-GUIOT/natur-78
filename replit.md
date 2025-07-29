@@ -10,6 +10,17 @@ This is a full-stack web application for Festival NATUR (www.festivalnatur.com),
 
 ## Recent Changes
 
+- ✅ **January 29, 2025**: Complete Agenda Restructure - VIVE NATUR and NATUR PRO Divisions
+  - **RESTRUCTURED**: Changed agenda from academic/cultural format to VIVE NATUR and NATUR PRO structure
+  - **NEW**: VIVE NATUR agenda includes Charlas NATUR, Rooftop + Zona de Comidas, Emprendimientos Sostenibles, Zona Chill, Foro Colombia Sostenible 2025
+  - **NEW**: NATUR PRO agenda includes all VIVE NATUR + Cartel de Artistas, Talleres, Zona Startups, Coffee Talks VIP, Rumba, Zona Wellness, Experiencia NATUR, Zona VIP
+  - **UPDATED**: Agenda tabs now show VIVE NATUR, NATUR PRO, and CULTURAL divisions
+  - **UPDATED**: VIVE NATUR color scheme: #cad95e (lime green) for public access events
+  - **UPDATED**: NATUR PRO color scheme: #aa3b1e (rusty orange) for VIP experience events
+  - **NEW**: Event types added: vip, startup, wellness, experiencia, rumba, gastronomia, showcase, entretenimiento, foro, pitch
+  - **UPDATED**: Default tab changed from academic-publica to vive-natur
+  - **ARCHITECTURE**: Agenda now perfectly aligned with festival ticket structure and user experience levels
+
 - ✅ **January 29, 2025**: Hero Section Redesign with Festival Logo and Custom Button Styling
   - **NEW**: Added Festival NATUR 2025 logo as centered main visual element
   - **REMOVED**: NATUR title text and "TODO SOBRE TURISMO SOSTENIBLE Y MÁS" subtitle
