@@ -3,8 +3,19 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Clock, MapPin, Users, Calendar, ChevronRight, Play, User } from "lucide-react";
+import { Clock, MapPin, Users, Calendar, ChevronRight, Play, User, Star, Filter, X, Eye } from "lucide-react";
 import { Link } from "wouter";
+
+// Session type definition
+interface Session {
+  time: string;
+  title: string;
+  speakers: string[];
+  type: string;
+  image: string;
+  description?: string;
+  moderator?: string;
+}
 
 // Agenda data structure
 const agendaData = {
@@ -224,65 +235,144 @@ const getTypeColor = (type: string) => {
 };
 
 export function Agenda() {
-  const [selectedSession, setSelectedSession] = useState<any>(null);
+  const [selectedSession, setSelectedSession] = useState<Session | null>(null);
   const [activeTab, setActiveTab] = useState('academica-publica');
+  const [filterType, setFilterType] = useState<string>('all');
+  const [myAgenda, setMyAgenda] = useState<Set<string>>(new Set());
+
+  const addToAgenda = (sessionTitle: string) => {
+    const newAgenda = new Set(myAgenda);
+    if (newAgenda.has(sessionTitle)) {
+      newAgenda.delete(sessionTitle);
+    } else {
+      newAgenda.add(sessionTitle);
+    }
+    setMyAgenda(newAgenda);
+  };
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: '#0a1a0a' }}>
-      {/* Background Image */}
+    <div className="min-h-screen bg-black relative overflow-hidden">
+      {/* Organic Background Textures */}
       <div className="fixed inset-0 z-0">
+        <div className="absolute inset-0 opacity-5">
+          <svg className="w-full h-full" viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="organic" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
+                <path d="M20,50 Q50,20 80,50 Q50,80 20,50" fill="none" stroke="#cad95e" strokeWidth="0.5" opacity="0.3"/>
+                <circle cx="30" cy="30" r="2" fill="#cad95e" opacity="0.2"/>
+                <path d="M60,70 L80,60 L70,80 Z" fill="#181c0d" opacity="0.1"/>
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#organic)"/>
+          </svg>
+        </div>
+        
+        {/* Nature background with heavy blur */}
         <img 
           src="/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg" 
           alt="Festival NATUR Background"
-          className="w-full h-full object-cover opacity-20"
+          className="w-full h-full object-cover opacity-10 blur-3xl"
         />
-        <div className="absolute inset-0 bg-black/60"></div>
+        
+        {/* Gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black opacity-90"></div>
       </div>
 
-      {/* Header */}
-      <header className="relative z-10 px-6 py-8">
+      {/* Floating Header */}
+      <header className="relative z-20 px-6 py-6">
         <div className="max-w-7xl mx-auto">
-          <div className="flex items-center justify-between mb-8">
+          <div className="flex items-center justify-between mb-12">
             <Link to="/">
-              <Button variant="ghost" className="text-white hover:bg-white/20">
-                <ChevronRight className="w-4 h-4 mr-2 rotate-180" />
-                Volver al inicio
+              <Button 
+                variant="ghost" 
+                className="text-white/70 hover:text-white hover:bg-white/10 backdrop-blur-sm border border-white/10 px-6 py-3 rounded-none font-mono text-sm tracking-wider"
+              >
+                ← VOLVER
               </Button>
             </Link>
-            <span className="font-bold text-2xl" style={{ color: '#cad95e' }}>N</span>
+            
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 bg-black border-2 border-white/20 flex items-center justify-center font-bold text-2xl tracking-widest" style={{ color: '#cad95e' }}>
+                N
+              </div>
+            </div>
           </div>
           
-          <div className="text-center">
-            <h1 className="text-4xl md:text-6xl font-gasoek mb-4 tracking-wide" style={{ color: '#cad95e' }}>
-              AGENDA ACADÉMICA
-            </h1>
-            <p className="text-xl text-white max-w-3xl mx-auto">
-              Festival NATUR 2025 - Programación completa de actividades académicas
+          <div className="text-center mb-16">
+            <div className="inline-block">
+              <h1 className="text-6xl md:text-8xl font-black mb-6 tracking-tighter leading-none" style={{ color: '#cad95e', textShadow: '0 0 20px rgba(202, 217, 94, 0.3)' }}>
+                AGENDA
+              </h1>
+              <div className="w-full h-1 bg-gradient-to-r from-transparent via-white/30 to-transparent mb-4"></div>
+              <h2 className="text-2xl md:text-3xl font-light text-white/80 tracking-wide">
+                ACADÉMICA INTERACTIVA
+              </h2>
+            </div>
+            <p className="text-lg text-white/60 max-w-2xl mx-auto mt-8 font-mono">
+              Festival NATUR 2025 • Turismo Sostenible • Marzo 15-17
             </p>
           </div>
         </div>
       </header>
 
+      {/* Controls Bar */}
+      <div className="relative z-20 px-6 mb-12">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-6 bg-black/40 backdrop-blur-xl border border-white/10 p-6 rounded-none">
+            
+            {/* Agenda Tabs - Brutalist Style */}
+            <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full lg:w-auto">
+              <TabsList className="grid w-full grid-cols-2 bg-transparent border border-white/20 p-1 rounded-none">
+                <TabsTrigger 
+                  value="academica-publica" 
+                  className="data-[state=active]:bg-white data-[state=active]:text-black text-white/70 font-mono text-sm tracking-wide rounded-none border-r border-white/20"
+                >
+                  AGENDA PÚBLICA
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="academica-especializada"
+                  className="data-[state=active]:bg-white data-[state=active]:text-black text-white/70 font-mono text-sm tracking-wide rounded-none"
+                >
+                  ESPECIALIZADA
+                </TabsTrigger>
+              </TabsList>
+            </Tabs>
+
+            {/* Filter Controls */}
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-2">
+                <Filter className="w-4 h-4 text-white/50" />
+                <select 
+                  value={filterType} 
+                  onChange={(e) => setFilterType(e.target.value)}
+                  className="bg-black/60 border border-white/20 text-white text-sm px-4 py-2 rounded-none font-mono tracking-wide focus:outline-none focus:border-white/40"
+                >
+                  <option value="all">TODOS</option>
+                  <option value="panel">PANELS</option>
+                  <option value="charla">CHARLAS</option>
+                  <option value="conversatorio">CONVERSATORIOS</option>
+                  <option value="ponencia">PONENCIAS</option>
+                  <option value="demo">DEMOS</option>
+                </select>
+              </div>
+              
+              <Button 
+                variant="outline" 
+                size="sm"
+                className="bg-transparent border-white/20 text-white/70 hover:bg-white/10 rounded-none font-mono tracking-wide"
+              >
+                MI AGENDA ({myAgenda.size})
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Main Content */}
-      <main className="relative z-10 px-6 pb-12">
+      <main className="relative z-10 px-6 pb-20">
         <div className="max-w-7xl mx-auto">
           
-          {/* Agenda Tabs */}
-          <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-8">
-            <TabsList className="grid w-full grid-cols-2 max-w-md mx-auto bg-black/20 backdrop-blur-sm">
-              <TabsTrigger 
-                value="academica-publica" 
-                className="data-[state=active]:bg-white/20 data-[state=active]:text-white text-white/70"
-              >
-                Agenda Pública
-              </TabsTrigger>
-              <TabsTrigger 
-                value="academica-especializada"
-                className="data-[state=active]:bg-white/20 data-[state=active]:text-white text-white/70"
-              >
-                Agenda Especializada
-              </TabsTrigger>
-            </TabsList>
+          <Tabs value={activeTab} onValueChange={setActiveTab}>
 
             {Object.entries(agendaData).map(([key, agenda]) => (
               <TabsContent key={key} value={key} className="mt-8">
@@ -313,77 +403,108 @@ export function Agenda() {
                       {day.day}
                     </h2>
                     
-                    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                      {day.sessions.map((session, sessionIndex) => (
+                    {/* Brutalist Card Grid */}
+                    <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+                      {day.sessions
+                        .filter(session => filterType === 'all' || session.type === filterType)
+                        .map((session, sessionIndex) => (
                         <Card 
                           key={sessionIndex}
-                          className="bg-black/30 backdrop-blur-md border-white/20 hover:bg-black/40 transition-all duration-300 cursor-pointer transform hover:scale-105"
+                          className="bg-black/60 backdrop-blur-sm border-2 border-white/10 hover:border-white/30 transition-all duration-500 cursor-pointer group rounded-none overflow-hidden hover:shadow-2xl hover:shadow-lime-500/20"
                           onClick={() => setSelectedSession(session)}
                         >
-                          <div className="relative">
+                          <div className="relative overflow-hidden">
                             <img 
                               src={session.image} 
                               alt={session.title}
-                              className="w-full h-40 object-cover rounded-t-lg"
+                              className="w-full h-48 object-cover grayscale hover:grayscale-0 transition-all duration-700 group-hover:scale-110"
                             />
-                            <div className="absolute top-3 left-3">
-                              <Badge className={`${getTypeColor(session.type)} font-medium`}>
-                                <span className="flex items-center gap-1">
-                                  {getTypeIcon(session.type)}
-                                  {session.type.charAt(0).toUpperCase() + session.type.slice(1)}
-                                </span>
-                              </Badge>
+                            
+                            {/* Glowing overlay */}
+                            <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80"></div>
+                            
+                            {/* Type badge */}
+                            <div className="absolute top-4 left-4">
+                              <div className="bg-black/80 border border-white/20 px-3 py-1 font-mono text-xs tracking-widest text-white">
+                                {session.type.toUpperCase()}
+                              </div>
                             </div>
-                            <div className="absolute top-3 right-3">
-                              <Badge className="bg-black/60 text-white border-white/20">
+                            
+                            {/* Time badge */}
+                            <div className="absolute top-4 right-4">
+                              <div className="bg-black/80 border border-white/20 px-3 py-1 font-mono text-xs tracking-widest text-white">
                                 {session.time}
-                              </Badge>
+                              </div>
                             </div>
+                            
+                            {/* Add to agenda button */}
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                addToAgenda(session.title);
+                              }}
+                              className={`absolute bottom-4 right-4 w-8 h-8 border-2 flex items-center justify-center transition-all duration-300 ${
+                                myAgenda.has(session.title) 
+                                  ? 'bg-lime-400 border-lime-400 text-black' 
+                                  : 'bg-black/60 border-white/20 text-white hover:border-lime-400'
+                              }`}
+                            >
+                              <Star className="w-4 h-4" fill={myAgenda.has(session.title) ? 'currentColor' : 'transparent'} />
+                            </button>
                           </div>
                           
-                          <CardContent className="p-4">
-                            <h3 className="font-bold text-white mb-2 line-clamp-2">
+                          <CardContent className="p-6 space-y-4">
+                            <h3 className="font-bold text-white text-lg leading-tight group-hover:text-lime-400 transition-colors duration-300">
                               {session.title}
                             </h3>
                             
                             {session.description && (
-                              <p className="text-sm text-white/70 mb-3 line-clamp-2">
+                              <p className="text-sm text-white/60 leading-relaxed">
                                 {session.description}
                               </p>
                             )}
                             
+                            {/* Speakers */}
                             <div className="space-y-2">
+                              <div className="flex items-center gap-2 text-xs text-white/40 font-mono tracking-wider">
+                                <Users className="w-3 h-3" />
+                                SPEAKERS
+                              </div>
                               {session.speakers.slice(0, 2).map((speaker, speakerIndex) => (
-                                <div key={speakerIndex} className="flex items-center gap-2">
-                                  <User className="w-3 h-3 text-white/50" />
-                                  <span className="text-xs text-white/70 truncate">{speaker}</span>
+                                <div key={speakerIndex} className="text-sm text-white/80 font-mono">
+                                  {speaker}
                                 </div>
                               ))}
                               
                               {session.speakers.length > 2 && (
-                                <p className="text-xs text-white/50">
-                                  +{session.speakers.length - 2} más...
-                                </p>
+                                <div className="text-xs text-white/50 font-mono">
+                                  +{session.speakers.length - 2} MÁS
+                                </div>
                               )}
                               
                               {session.moderator && (
-                                <div className="flex items-center gap-2 pt-2 border-t border-white/10">
-                                  <Users className="w-3 h-3 text-white/50" />
-                                  <span className="text-xs text-white/50">
-                                    Moderación: {session.moderator}
-                                  </span>
+                                <div className="pt-2 border-t border-white/10">
+                                  <div className="text-xs text-white/40 font-mono tracking-wider mb-1">
+                                    MODERACIÓN
+                                  </div>
+                                  <div className="text-sm text-white/80 font-mono">
+                                    {session.moderator}
+                                  </div>
                                 </div>
                               )}
                             </div>
                             
-                            <Button 
-                              variant="ghost" 
-                              size="sm" 
-                              className="w-full mt-3 text-white/70 hover:bg-white/10"
-                            >
-                              Ver detalles
-                              <ChevronRight className="w-3 h-3 ml-1" />
-                            </Button>
+                            {/* Action buttons */}
+                            <div className="flex gap-2 pt-4">
+                              <Button 
+                                variant="outline" 
+                                size="sm" 
+                                className="flex-1 bg-transparent border-white/20 text-white/70 hover:bg-white/10 hover:border-white/40 rounded-none font-mono text-xs tracking-wider"
+                              >
+                                <Eye className="w-3 h-3 mr-2" />
+                                VER MÁS
+                              </Button>
+                            </div>
                           </CardContent>
                         </Card>
                       ))}
