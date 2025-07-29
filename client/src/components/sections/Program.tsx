@@ -39,7 +39,7 @@ export function Program() {
             </div>)}
         </div>
 
-        <div className="backdrop-blur-sm bg-white/5 border border-[#EDFF60]/20 rounded-xl p-6 sm:p-8 md:p-10 mt-6 sm:mt-8 md:mt-10 max-w-4xl mx-auto">
+        <div className="mt-6 sm:mt-8 md:mt-10 max-w-4xl mx-auto">
           <h4 className="font-unbounded text-[#EDFF60] text-center text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl leading-tight tracking-wide">CONÉCTATE, APRENDE, INSPÍRATE, DISFRUTA.</h4>
         </div>
       </div>
