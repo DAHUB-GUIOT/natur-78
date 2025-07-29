@@ -1,126 +1,115 @@
-import React, { useState } from 'react';
-import { HeaderButtons } from "@/components/layout/HeaderButtons";
+import React, { useState, useEffect } from "react";
+import { useLocation } from "wouter";
+import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useToast } from "@/components/ui/use-toast";
-import { Building2, MapPin, Mail, Lock, User, ArrowLeft } from "lucide-react";
-import { Link, useLocation } from "wouter";
-import { GoogleAuthButton } from "@/components/GoogleAuthButton";
+import { Building2, MapPin, Mail, Lock, ArrowLeft } from "lucide-react";
+import { useMutation } from "@tanstack/react-query";
+import { apiRequest } from "@/lib/queryClient";
+import { useToast } from "@/hooks/use-toast";
 
-interface AuthProps {
-  type: 'empresas' | 'consentidos';
-}
-
-const Auth = ({ type }: AuthProps) => {
+const Auth = () => {
+  const [location] = useLocation();
   const { toast } = useToast();
-  const [, setLocation] = useLocation();
   const [activeTab, setActiveTab] = useState<'login' | 'register'>('login');
   
-  const [loginData, setLoginData] = useState({
-    email: '',
-    password: ''
-  });
+  // Determine if this is empresas or consentidos based on URL
+  const isEmpresas = location.includes('empresas');
+  const IconComponent = isEmpresas ? Building2 : MapPin;
   
-  const [registerData, setRegisterData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    confirmPassword: ''
-  });
-
-  const isEmpresas = type === 'empresas';
-  
-  const config = {
-    empresas: {
-      title: 'Portal Empresas',
-      subtitle: 'Acceso para empresas y organizaciones de turismo sostenible',
-      icon: Building2,
-      color: 'yellow',
-      bgColor: 'bg-yellow-50',
-      borderColor: 'border-yellow-200',
-      iconColor: 'text-yellow-600',
-      buttonColor: 'bg-yellow-500 hover:bg-yellow-600',
-      focusColor: 'focus:border-yellow-500 focus:ring-yellow-500'
-    },
-    consentidos: {
-      title: 'Con-Sentidos',
-      subtitle: 'Acceso para viajeros conscientes y exploradores sostenibles',
-      icon: MapPin,
-      color: 'yellow',
-      bgColor: 'bg-yellow-50',
-      borderColor: 'border-yellow-200',
-      iconColor: 'text-yellow-600',
-      buttonColor: 'bg-yellow-500 hover:bg-yellow-600',
-      focusColor: 'focus:border-yellow-500 focus:ring-yellow-500'
-    }
+  const currentConfig = {
+    title: isEmpresas ? "Portal Empresas" : "Con-Sentidos",
+    subtitle: isEmpresas 
+      ? "Conecta tu empresa con el ecosistema de turismo sostenible"
+      : "Descubre experiencias auténticas y conecta con viajeros conscientes"
   };
 
-  const currentConfig = config[type];
-  const IconComponent = currentConfig.icon;
+  const [loginData, setLoginData] = useState({
+    email: isEmpresas ? "dahub.tech@gmail.com" : "",
+    password: isEmpresas ? "dahub123" : ""
+  });
+
+  const [registerData, setRegisterData] = useState({
+    email: "",
+    password: "",
+    firstName: "",
+    lastName: "",
+    userType: isEmpresas ? "empresa" : "viajero"
+  });
+
+  const loginMutation = useMutation({
+    mutationFn: async (credentials: { email: string; password: string }) => {
+      return await apiRequest('/api/auth/login', {
+        method: 'POST',
+        body: JSON.stringify(credentials),
+        headers: { 'Content-Type': 'application/json' }
+      });
+    },
+    onSuccess: () => {
+      toast({
+        title: "Inicio de sesión exitoso",
+        description: "Redirigiendo...",
+      });
+      const redirectUrl = isEmpresas ? '/portal-empresas' : '/portal-viajeros';
+      setTimeout(() => {
+        window.location.href = redirectUrl;
+      }, 1000);
+    },
+    onError: (error: any) => {
+      toast({
+        title: "Error de autenticación",
+        description: error.message || "Credenciales inválidas",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const registerMutation = useMutation({
+    mutationFn: async (userData: any) => {
+      return await apiRequest('/api/auth/register', {
+        method: 'POST',
+        body: JSON.stringify(userData),
+        headers: { 'Content-Type': 'application/json' }
+      });
+    },
+    onSuccess: () => {
+      toast({
+        title: "Registro exitoso",
+        description: "Redirigiendo...",
+      });
+      const redirectUrl = isEmpresas ? '/portal-empresas' : '/portal-viajeros';
+      setTimeout(() => {
+        window.location.href = redirectUrl;
+      }, 1000);
+    },
+    onError: (error: any) => {
+      toast({
+        title: "Error en registro",
+        description: error.message || "Error al crear cuenta",
+        variant: "destructive",
+      });
+    },
+  });
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    toast({
-      title: "Inicio de sesión exitoso",
-      description: `Bienvenido de vuelta a ${currentConfig.title}`,
-    });
-    
-    // For existing users, redirect to their dashboards
-    if (isEmpresas) {
-      setLocation('/portal-empresas');
-    } else {
-      setLocation('/portal-viajeros'); // Marketplace for travelers
-    }
+    loginMutation.mutate(loginData);
   };
 
   const handleRegister = (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (registerData.password !== registerData.confirmPassword) {
-      toast({
-        title: "Error",
-        description: "Las contraseñas no coinciden",
-        variant: "destructive"
-      });
-      return;
-    }
-    
-    toast({
-      title: "Registro exitoso",
-      description: `Te has registrado en ${currentConfig.title}. Completa tu perfil para comenzar.`,
-    });
-    
-    // Redirect to detailed registration forms with subcategories
-    if (isEmpresas) {
-      setLocation('/registro');
-    } else {
-      setLocation('/con-sentidos'); // Con-Sentidos registration for travelers
-    }
+    registerMutation.mutate(registerData);
   };
 
   return (
-    <div className="min-h-screen relative">
-      {/* Background Image - Same as Hero */}
-      <img 
-        alt="Festival NATUR - Authentication" 
-        className="absolute h-full w-full object-cover inset-0" 
-        src="/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg" 
-      />
-      
-      {/* Light Gradient Overlay */}
-      <div className="absolute inset-0 bg-black/20"></div>
-      
-      {/* Top Navigation - Fixed with Dark Green Background */}
-      <nav className="fixed top-0 left-0 right-0 z-50 shadow-lg" style={{ backgroundColor: '#181c0d', borderBottom: '1px solid #2a2f1a' }}>
-        <div className="flex items-center justify-between max-w-7xl mx-auto px-6 py-4">
-          <div className="flex items-center space-x-4">
-            <span className="font-bold text-2xl font-gasoek" style={{ color: '#cad95e' }}>N</span>
-          </div>
-          
-          <div className="flex items-center space-x-4">
+    <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-green-900 via-gray-900 to-black">
+      {/* Navigation */}
+      <nav className="relative z-20 bg-gradient-to-r from-black/50 to-black/30 backdrop-blur-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16">
             <Link to="/">
               <Button variant="ghost" className="text-white hover:bg-white/20">
                 <ArrowLeft className="w-4 h-4 mr-2" />
@@ -131,18 +120,18 @@ const Auth = ({ type }: AuthProps) => {
         </div>
       </nav>
       
-      {/* Main Content - Centered like BIME */}
+      {/* Main Content */}
       <div className="relative z-10 flex items-center justify-center min-h-screen px-6 pt-20">
         <div className="w-full max-w-md">
           
           {/* Title Section */}
           <div className="text-center mb-8">
             <div className="flex items-center justify-center mb-6">
-              <div className="w-16 h-16 rounded-full flex items-center justify-center" style={{ backgroundColor: isEmpresas ? '#cad95e' : '#cad95e', border: isEmpresas ? 'none' : 'none' }}>
-                <IconComponent className="w-8 h-8" style={{ color: isEmpresas ? '#000' : '#000' }} />
+              <div className="w-16 h-16 rounded-full flex items-center justify-center" style={{ backgroundColor: '#cad95e' }}>
+                <IconComponent className="w-8 h-8 text-black" />
               </div>
             </div>
-            <h1 className="text-3xl md:text-4xl font-bold mb-4 font-gasoek tracking-wide" style={{ color: isEmpresas ? '#cad95e' : '#cad95e' }}>
+            <h1 className="text-3xl md:text-4xl font-bold mb-4 font-gasoek tracking-wide text-[#cad95e]">
               {currentConfig.title.toUpperCase()}
             </h1>
             <p className="text-lg text-white max-w-2xl mx-auto font-medium">
@@ -150,28 +139,20 @@ const Auth = ({ type }: AuthProps) => {
             </p>
           </div>
 
-          {/* Auth Form - Transparent with colored outlines */}
-          <Card className="shadow-2xl backdrop-blur-md bg-white/10 border-2" style={{ borderColor: isEmpresas ? '#cad95e' : '#cad95e' }}>
-            <CardHeader className="backdrop-blur-md bg-white/5 border-b-2" style={{ borderColor: isEmpresas ? '#cad95e' : '#cad95e' }}>
+          {/* Auth Form */}
+          <Card className="shadow-2xl backdrop-blur-md bg-white/10 border-2 border-[#cad95e]">
+            <CardHeader className="backdrop-blur-md bg-white/5 border-b-2 border-[#cad95e]">
               <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as 'login' | 'register')}>
                 <TabsList className="grid w-full grid-cols-2 bg-white/20">
                   <TabsTrigger 
                     value="login" 
-                    className="font-bold data-[state=active]:bg-white/20"
-                    style={{ 
-                      color: isEmpresas ? '#cad95e' : '#cad95e',
-                      borderColor: isEmpresas ? '#cad95e' : '#cad95e'
-                    }}
+                    className="font-bold data-[state=active]:bg-white/20 text-[#cad95e]"
                   >
                     Iniciar Sesión
                   </TabsTrigger>
                   <TabsTrigger 
                     value="register" 
-                    className="font-bold data-[state=active]:bg-white/20"
-                    style={{ 
-                      color: isEmpresas ? '#cad95e' : '#cad95e',
-                      borderColor: isEmpresas ? '#cad95e' : '#cad95e'
-                    }}
+                    className="font-bold data-[state=active]:bg-white/20 text-[#cad95e]"
                   >
                     Registrarse
                   </TabsTrigger>
@@ -184,7 +165,7 @@ const Auth = ({ type }: AuthProps) => {
               {/* Login Tab */}
               <TabsContent value="login">
                 <form onSubmit={handleLogin} className="space-y-4">
-                  {/* Google OAuth Button */}
+                  {/* Google OAuth Button - Single instance */}
                   <Button
                     type="button"
                     className="w-full bg-white/90 border-2 border-gray-300 text-gray-700 hover:bg-white flex items-center justify-center gap-2 p-4"
@@ -213,26 +194,25 @@ const Auth = ({ type }: AuthProps) => {
                   
                   <div className="relative">
                     <div className="absolute inset-0 flex items-center">
-                      <div className="w-full border-t" style={{ borderColor: isEmpresas ? '#cad95e' : '#cad95e' }} />
+                      <div className="w-full border-t border-[#cad95e]" />
                     </div>
                     <div className="relative flex justify-center text-sm">
-                      <span className="px-2 bg-white/10 backdrop-blur-sm" style={{ color: isEmpresas ? '#cad95e' : '#cad95e' }}>O continúa con email</span>
+                      <span className="px-2 bg-white/10 backdrop-blur-sm text-[#cad95e]">O continúa con email</span>
                     </div>
                   </div>
                   
                   <div className="space-y-3">
-                    <Label htmlFor="login-email" className="font-bold text-lg" style={{ color: isEmpresas ? '#cad95e' : '#cad95e' }}>
+                    <Label htmlFor="login-email" className="font-bold text-lg text-[#cad95e]">
                       Correo electrónico
                     </Label>
                     <div className="relative">
-                      <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5" style={{ color: isEmpresas ? '#cad95e' : '#cad95e' }} />
+                      <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-[#cad95e]" />
                       <Input
                         id="login-email"
                         type="email"
                         value={loginData.email}
                         onChange={(e) => setLoginData(prev => ({ ...prev, email: e.target.value }))}
-                        className="pl-12 border-2 bg-white/10 backdrop-blur-sm text-white font-medium text-lg p-4 placeholder-white/60"
-                        style={{ borderColor: isEmpresas ? '#cad95e' : '#cad95e' }}
+                        className="pl-12 border-2 bg-white/10 backdrop-blur-sm text-white font-medium text-lg p-4 placeholder-white/60 border-[#cad95e]"
                         placeholder="tu@email.com"
                         required
                       />
@@ -240,18 +220,17 @@ const Auth = ({ type }: AuthProps) => {
                   </div>
 
                   <div className="space-y-3">
-                    <Label htmlFor="login-password" className="font-bold text-lg" style={{ color: isEmpresas ? '#cad95e' : '#cad95e' }}>
+                    <Label htmlFor="login-password" className="font-bold text-lg text-[#cad95e]">
                       Contraseña
                     </Label>
                     <div className="relative">
-                      <Lock className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5" style={{ color: isEmpresas ? '#cad95e' : '#cad95e' }} />
+                      <Lock className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-[#cad95e]" />
                       <Input
                         id="login-password"
                         type="password"
                         value={loginData.password}
                         onChange={(e) => setLoginData(prev => ({ ...prev, password: e.target.value }))}
-                        className="pl-12 border-2 bg-white/10 backdrop-blur-sm text-white font-medium text-lg p-4 placeholder-white/60"
-                        style={{ borderColor: isEmpresas ? '#cad95e' : '#cad95e' }}
+                        className="pl-12 border-2 bg-white/10 backdrop-blur-sm text-white font-medium text-lg p-4 placeholder-white/60 border-[#cad95e]"
                         placeholder="••••••••"
                         required
                       />
@@ -259,7 +238,7 @@ const Auth = ({ type }: AuthProps) => {
                   </div>
 
                   <div className="flex items-center justify-between text-sm">
-                    <a href="#" className="hover:underline" style={{ color: isEmpresas ? '#cad95e' : '#cad95e' }}>
+                    <a href="#" className="hover:underline text-[#cad95e]">
                       ¿Olvidaste tu contraseña?
                     </a>
                   </div>
@@ -267,236 +246,77 @@ const Auth = ({ type }: AuthProps) => {
                   <Button
                     type="submit"
                     className="w-full text-black py-4 font-bold text-lg shadow-xl hover:opacity-90"
-                    style={{ backgroundColor: isEmpresas ? '#cad95e' : '#cad95e' }}
+                    style={{ backgroundColor: '#cad95e' }}
+                    disabled={loginMutation.isPending}
                   >
-                    Iniciar Sesión
+                    {loginMutation.isPending ? "Iniciando sesión..." : "Iniciar Sesión"}
                   </Button>
-
-                  {/* Google Auth for both portals */}
-                  {(isEmpresas || !isEmpresas) && (
-                    <>
-                      <div className="text-center mt-4">
-                        <p className="text-white/70 text-sm">
-                          ✅ Google OAuth listo para {isEmpresas ? 'empresas' : 'viajeros'}
-                        </p>
-                      </div>
-
-                      <div className="relative my-6">
-                        <div className="absolute inset-0 flex items-center">
-                          <span className="w-full border-t border-white/30" />
-                        </div>
-                        <div className="relative flex justify-center text-xs uppercase">
-                          <span className="bg-transparent px-2 text-white">O continúa con</span>
-                        </div>
-                      </div>
-
-                      <Button 
-                        type="button"
-                        className="w-full bg-white text-gray-700 border border-gray-300 hover:bg-gray-50 shadow-sm py-4 font-medium text-lg transition-all duration-200"
-                        onClick={() => {
-                          const button = document.activeElement as HTMLButtonElement;
-                          if (button) {
-                            button.textContent = 'Conectando...';
-                            button.disabled = true;
-                          }
-                          
-                          // Use popup to avoid iframe blocking
-                          const popup = window.open(
-                            '/api/auth/google?popup=true',
-                            'google-auth',
-                            'width=500,height=600,scrollbars=yes,resizable=yes,menubar=no,toolbar=no,status=no'
-                          );
-
-                          if (!popup) {
-                            alert('Popup bloqueado. Por favor, habilita popups para este sitio.');
-                            if (button) {
-                              button.textContent = 'Continuar con Google';
-                              button.disabled = false;
-                            }
-                            return;
-                          }
-
-                          // Listen for messages from popup
-                          const messageHandler = (event: MessageEvent) => {
-                            if (event.origin !== window.location.origin) return;
-                            
-                            if (event.data.type === 'GOOGLE_AUTH_SUCCESS') {
-                              window.removeEventListener('message', messageHandler);
-                              clearInterval(checkAuth);
-                              if (button) {
-                                button.textContent = 'Continuar con Google';
-                                button.disabled = false;
-                              }
-                              // Redirect to appropriate dashboard
-                              window.location.href = isEmpresas ? '/portal-empresas?auth=success' : '/mapa?auth=success';
-                            }
-                          };
-                          
-                          window.addEventListener('message', messageHandler);
-
-                          // Listen for authentication completion
-                          const checkAuth = setInterval(() => {
-                            try {
-                              if (popup.closed) {
-                                clearInterval(checkAuth);
-                                window.removeEventListener('message', messageHandler);
-                                if (button) {
-                                  button.textContent = 'Continuar con Google';
-                                  button.disabled = false;
-                                }
-                                // Check if authentication was successful by trying to access a protected route
-                                fetch('/api/auth/me')
-                                  .then(res => res.json())
-                                  .then(data => {
-                                    if (data.user) {
-                                      window.location.href = isEmpresas ? '/portal-empresas?auth=success' : '/mapa?auth=success';
-                                    }
-                                  })
-                                  .catch(() => {
-                                    // Authentication failed, stay on current page
-                                  });
-                              }
-                            } catch (e) {
-                              // Cross-origin error, popup is still open
-                            }
-                          }, 1000);
-
-                          // Timeout after 5 minutes
-                          setTimeout(() => {
-                            if (!popup.closed) {
-                              popup.close();
-                              clearInterval(checkAuth);
-                              window.removeEventListener('message', messageHandler);
-                              if (button) {
-                                button.textContent = 'Continuar con Google';
-                                button.disabled = false;
-                              }
-                            }
-                          }, 300000);
-                        }}
-                      >
-                        <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24">
-                          <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                          <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                          <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
-                          <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
-                        </svg>
-                        Continuar con Google
-                      </Button>
-                    </>
-                  )}
                 </form>
               </TabsContent>
 
               {/* Register Tab */}
               <TabsContent value="register">
                 <form onSubmit={handleRegister} className="space-y-4">
-                  {/* Google OAuth Button for Registration */}
-                  <Button
-                    type="button"
-                    className="w-full bg-white/90 border-2 border-gray-300 text-gray-700 hover:bg-white flex items-center justify-center gap-2 p-4"
-                    onClick={() => window.location.href = '/api/auth/google'}
-                  >
-                    <svg className="w-5 h-5" viewBox="0 0 24 24">
-                      <path
-                        fill="#4285F4"
-                        d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
-                      />
-                      <path
-                        fill="#34A853"
-                        d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
-                      />
-                      <path
-                        fill="#FBBC05"
-                        d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
-                      />
-                      <path
-                        fill="#EA4335"
-                        d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
-                      />
-                    </svg>
-                    Registrarse con Google
-                  </Button>
-                  
-                  <div className="relative">
-                    <div className="absolute inset-0 flex items-center">
-                      <div className="w-full border-t" style={{ borderColor: isEmpresas ? '#cad95e' : '#cad95e' }} />
-                    </div>
-                    <div className="relative flex justify-center text-sm">
-                      <span className="px-2 bg-white/10 backdrop-blur-sm" style={{ color: isEmpresas ? '#cad95e' : '#cad95e' }}>O regístrate con email</span>
-                    </div>
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <Label htmlFor="register-name" className="font-medium" style={{ color: isEmpresas ? '#cad95e' : '#cad95e' }}>
-                      Nombre completo
+                  <div className="space-y-3">
+                    <Label htmlFor="register-firstName" className="font-bold text-lg text-[#cad95e]">
+                      Nombre
                     </Label>
-                    <div className="relative">
-                      <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4" style={{ color: isEmpresas ? '#cad95e' : '#cad95e' }} />
-                      <Input
-                        id="register-name"
-                        type="text"
-                        value={registerData.name}
-                        onChange={(e) => setRegisterData(prev => ({ ...prev, name: e.target.value }))}
-                        className="pl-10 border-2 bg-white/10 backdrop-blur-sm text-white font-medium placeholder-white/60"
-                        style={{ borderColor: isEmpresas ? '#cad95e' : '#cad95e' }}
-                        placeholder="Tu nombre completo"
-                        required
-                      />
-                    </div>
+                    <Input
+                      id="register-firstName"
+                      type="text"
+                      value={registerData.firstName}
+                      onChange={(e) => setRegisterData(prev => ({ ...prev, firstName: e.target.value }))}
+                      className="border-2 bg-white/10 backdrop-blur-sm text-white font-medium text-lg p-4 placeholder-white/60 border-[#cad95e]"
+                      placeholder="Tu nombre"
+                      required
+                    />
                   </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="register-email" className="font-medium" style={{ color: isEmpresas ? '#cad95e' : '#cad95e' }}>
+                  <div className="space-y-3">
+                    <Label htmlFor="register-lastName" className="font-bold text-lg text-[#cad95e]">
+                      Apellido
+                    </Label>
+                    <Input
+                      id="register-lastName"
+                      type="text"
+                      value={registerData.lastName}
+                      onChange={(e) => setRegisterData(prev => ({ ...prev, lastName: e.target.value }))}
+                      className="border-2 bg-white/10 backdrop-blur-sm text-white font-medium text-lg p-4 placeholder-white/60 border-[#cad95e]"
+                      placeholder="Tu apellido"
+                      required
+                    />
+                  </div>
+
+                  <div className="space-y-3">
+                    <Label htmlFor="register-email" className="font-bold text-lg text-[#cad95e]">
                       Correo electrónico
                     </Label>
                     <div className="relative">
-                      <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4" style={{ color: isEmpresas ? '#cad95e' : '#cad95e' }} />
+                      <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-[#cad95e]" />
                       <Input
                         id="register-email"
                         type="email"
                         value={registerData.email}
                         onChange={(e) => setRegisterData(prev => ({ ...prev, email: e.target.value }))}
-                        className="pl-10 border-2 bg-white/10 backdrop-blur-sm text-white font-medium placeholder-white/60"
-                        style={{ borderColor: isEmpresas ? '#cad95e' : '#cad95e' }}
+                        className="pl-12 border-2 bg-white/10 backdrop-blur-sm text-white font-medium text-lg p-4 placeholder-white/60 border-[#cad95e]"
                         placeholder="tu@email.com"
                         required
                       />
                     </div>
                   </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="register-password" className="font-medium" style={{ color: isEmpresas ? '#cad95e' : '#cad95e' }}>
+                  <div className="space-y-3">
+                    <Label htmlFor="register-password" className="font-bold text-lg text-[#cad95e]">
                       Contraseña
                     </Label>
                     <div className="relative">
-                      <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4" style={{ color: isEmpresas ? '#cad95e' : '#cad95e' }} />
+                      <Lock className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-[#cad95e]" />
                       <Input
                         id="register-password"
                         type="password"
                         value={registerData.password}
                         onChange={(e) => setRegisterData(prev => ({ ...prev, password: e.target.value }))}
-                        className="pl-10 border-2 bg-white/10 backdrop-blur-sm text-white font-medium placeholder-white/60"
-                        style={{ borderColor: isEmpresas ? '#cad95e' : '#cad95e' }}
-                        placeholder="••••••••"
-                        required
-                      />
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="confirm-password" className="font-medium" style={{ color: isEmpresas ? '#cad95e' : '#cad95e' }}>
-                      Confirmar contraseña
-                    </Label>
-                    <div className="relative">
-                      <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4" style={{ color: isEmpresas ? '#cad95e' : '#cad95e' }} />
-                      <Input
-                        id="confirm-password"
-                        type="password"
-                        value={registerData.confirmPassword}
-                        onChange={(e) => setRegisterData(prev => ({ ...prev, confirmPassword: e.target.value }))}
-                        className="pl-10 border-2 bg-white/10 backdrop-blur-sm text-white font-medium placeholder-white/60"
-                        style={{ borderColor: isEmpresas ? '#cad95e' : '#cad95e' }}
+                        className="pl-12 border-2 bg-white/10 backdrop-blur-sm text-white font-medium text-lg p-4 placeholder-white/60 border-[#cad95e]"
                         placeholder="••••••••"
                         required
                       />
@@ -505,35 +325,17 @@ const Auth = ({ type }: AuthProps) => {
 
                   <Button
                     type="submit"
-                    className="w-full text-black py-3 font-medium hover:opacity-90"
-                    style={{ backgroundColor: isEmpresas ? '#cad95e' : '#cad95e' }}
+                    className="w-full text-black py-4 font-bold text-lg shadow-xl hover:opacity-90"
+                    style={{ backgroundColor: '#cad95e' }}
+                    disabled={registerMutation.isPending}
                   >
-                    Crear Cuenta
+                    {registerMutation.isPending ? "Creando cuenta..." : "Crear Cuenta"}
                   </Button>
                 </form>
               </TabsContent>
             </Tabs>
           </CardContent>
         </Card>
-
-          {/* Additional Links */}
-          <div className="text-center mt-6 text-sm">
-            {isEmpresas ? (
-              <p style={{ color: '#cad95e' }}>
-                ¿Eres un viajero?{" "}
-                <Link to="/auth/consentidos" className="hover:underline font-medium" style={{ color: '#cad95e' }}>
-                  Únete a Con-Sentidos
-                </Link>
-              </p>
-            ) : (
-              <p style={{ color: '#cad95e' }}>
-                ¿Tienes una empresa?{" "}
-                <Link to="/auth/empresas" className="hover:underline font-medium" style={{ color: '#10B981' }}>
-                  Accede al Portal Empresas
-                </Link>
-              </p>
-            )}
-          </div>
         </div>
       </div>
     </div>
