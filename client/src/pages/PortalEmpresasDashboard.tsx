@@ -329,7 +329,7 @@ const PortalEmpresasDashboard = () => {
           <div className="space-y-4">
             <div className="flex flex-col space-y-3">
               <div className="flex justify-between items-center">
-                <h2 className="text-xl font-bold text-white">Contactos - Usuarios Registrados</h2>
+                <h2 className="text-xl font-bold text-white">Contactos - Empresas Verificadas</h2>
                 <Badge className="bg-green-600/20 text-green-300 px-3 py-1">
                   {filteredCompanies.length} usuarios empresa
                 </Badge>
@@ -392,11 +392,9 @@ const PortalEmpresasDashboard = () => {
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center space-x-2 mb-1">
                             <h3 className="font-bold text-base text-white">{company.name}</h3>
-                            {company.verified && (
-                              <Badge className="text-xs bg-green-600 text-white px-2 py-0.5">
-                                Verificado ✓
-                              </Badge>
-                            )}
+                            <Badge className="text-xs bg-green-600 text-white px-2 py-0.5">
+                              Verificado ✓
+                            </Badge>
                           </div>
                           
                           <p className="text-sm text-green-300 font-medium">{company.category}</p>
