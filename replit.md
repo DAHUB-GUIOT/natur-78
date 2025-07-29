@@ -21,7 +21,7 @@ This is a full-stack web application for Festival NATUR (www.festivalnatur.com),
   - **UPDATED**: All h1 fonts simplified to font-sans throughout Portal Empresas platform for consistent typography
   - **UPDATED**: Removed "Verificados" from contacts section - now simply shows "Contactos" without verification references
 
-- ✅ **January 29, 2025**: Enhanced Map with Natural 3D Terrain and Simplified Card Fonts
+- ✅ **January 29, 2025**: Enhanced Map with Natural 3D Terrain and Colombian Business Locations
   - **UPDATED**: Changed map style from outdoors to satellite-streets for more natural appearance
   - **ENHANCED**: Increased terrain exaggeration from 1.5x to 2.2x for dramatic 3D topography
   - **UPDATED**: Enhanced pitch angle from 60° to 70° for more immersive 3D viewing
@@ -30,6 +30,11 @@ This is a full-stack web application for Festival NATUR (www.festivalnatur.com),
   - **UPDATED**: Portal Viajeros, MapaPublicoOptimized, and Portal Empresas cards now use cleaner typography
   - **IMPROVED**: More realistic 3D terrain with enhanced natural colors and atmospheric effects
   - **FIXED**: Resolved TypeScript Set iteration errors in MapaPublicoOptimized using Array.from()
+  - **NEW**: Added Festival NATUR as third company user at Bogotá Chapinero near CEFE location
+  - **UPDATED**: DaHub relocated to Medellín Poblado coordinates (6.2088, -75.5906)
+  - **UPDATED**: TripCol relocated to Santa Marta coordinates (11.2408, -74.1990)
+  - **UPDATED**: Festival NATUR positioned at Bogotá Chapinero CEFE (4.6533, -74.0836)
+  - **ENHANCED**: Interactive map now shows three distinct Colombian business locations with real coordinates
 
 - ✅ **January 29, 2025**: Conversation Management System with TripCol Integration
   - **NEW**: Implemented conversation saving and management in messaging system

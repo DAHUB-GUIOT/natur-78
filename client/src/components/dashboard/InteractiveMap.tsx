@@ -18,62 +18,40 @@ import {
   X
 } from "lucide-react";
 
-// Mock data para empresas
+// Real companies data with updated Colombian locations
 const companies = [
   {
-    id: 1,
-    name: "EcoTours Colombia",
+    id: 21,
+    name: "DaHub",
     type: "startup",
-    category: "Turismo Sostenible",
-    location: { lat: 4.7110, lng: -74.0721, city: "Bogotá", country: "Colombia" },
+    category: "Tecnología",
+    location: { lat: 6.2088, lng: -75.5906, city: "Medellín, Poblado", country: "Colombia" },
     stage: "growth",
-    employees: 25,
-    description: "Turismo regenerativo en la Amazonía colombiana",
-    website: "www.ecotours.co"
-  },
-  {
-    id: 2,
-    name: "Green Impact Fund",
-    type: "investor",
-    category: "Venture Capital",
-    location: { lat: 6.2442, lng: -75.5812, city: "Medellín", country: "Colombia" },
-    stage: "established",
-    employees: 12,
-    description: "Fondo de inversión en startups sostenibles",
-    website: "www.greenimpact.vc"
-  },
-  {
-    id: 3,
-    name: "Sustainable Costa Rica",
-    type: "startup",
-    category: "Conservación",
-    location: { lat: 9.7489, lng: -83.7534, city: "San José", country: "Costa Rica" },
-    stage: "mvp",
     employees: 8,
-    description: "Plataforma de conservación marina",
-    website: "www.sustainablecr.com"
+    description: "Empresa de tecnología especializada en desarrollo de plataformas digitales para turismo sostenible. Creadores del ecosistema Festival NATUR.",
+    website: "www.dahub.tech"
   },
   {
-    id: 4,
-    name: "Amazon Regenerative",
+    id: 22,
+    name: "TripCol",
     type: "ecosystem",
-    category: "ONG",
-    location: { lat: -3.4653, lng: -62.2159, city: "Manaus", country: "Brasil" },
+    category: "Operador Turístico",
+    location: { lat: 11.2408, lng: -74.1990, city: "Santa Marta", country: "Colombia" },
     stage: "established",
-    employees: 45,
-    description: "Regeneración de ecosistemas amazónicos",
-    website: "www.amazonregen.org"
+    employees: 15,
+    description: "Operador turístico especializado en experiencias auténticas de turismo sostenible en la Costa Caribe colombiana.",
+    website: "www.tripcol.com"
   },
   {
-    id: 5,
-    name: "Digital Nomad Hub",
+    id: 24,
+    name: "Festival NATUR",
     type: "ecosystem",
-    category: "Coworking",
-    location: { lat: -12.0464, lng: -77.0428, city: "Lima", country: "Perú" },
-    stage: "growth",
-    employees: 15,
-    description: "Espacios de trabajo para nómadas digitales",
-    website: "www.nomahub.pe"
+    category: "Organizador de Eventos",
+    location: { lat: 4.6533, lng: -74.0836, city: "Bogotá, Chapinero - CEFE", country: "Colombia" },
+    stage: "established",
+    employees: 20,
+    description: "Organizadores del Festival NATUR, el evento más importante de turismo sostenible en Colombia. Conectamos startups, empresas, viajeros y comunidades.",
+    website: "www.festivalnatur.com"
   }
 ];
 
