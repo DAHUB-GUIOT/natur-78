@@ -161,64 +161,71 @@ export function BrutalistDropdownMenu({ isOpen, onClose, triggerRef }: Brutalist
         {/* Center Content - Subcategories */}
         <div className="flex-1 p-6">
           {expandedCategory !== null && menuData[expandedCategory]?.subcategories && (
-            <div className="grid grid-cols-3 gap-6 h-full">
-              {/* Pro Column */}
-              <div>
-                <h3 className="text-xl font-jakarta-bold text-[#EDFF60] uppercase tracking-wider mb-6">
-                  Pro
-                </h3>
-                <ul className="space-y-3">
-                  {menuData[expandedCategory].subcategories?.slice(0, Math.ceil(menuData[expandedCategory].subcategories!.length / 3)).map((sub, subIndex) => (
-                    <li key={subIndex}>
-                      <button
-                        onClick={() => handleSubcategoryClick(sub.url)}
-                        className="text-gray-300 hover:text-[#EDFF60] transition-colors duration-200 text-left block"
-                      >
-                        • {sub.label}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+            <>
+              {/* Festival NATUR Layout - Special Pro/Live columns */}
+              {expandedCategory === 0 && (
+                <div className="grid grid-cols-2 gap-8 h-full">
+                  {/* VIVE NATUR (Pro) Column */}
+                  <div>
+                    <h3 className="text-2xl font-jakarta-bold text-[#EDFF60] bg-[#EDFF60] text-[#0a1a0a] px-4 py-2 uppercase tracking-wider mb-6 text-center">
+                      VIVE NATUR
+                    </h3>
+                    <ul className="space-y-3">
+                      {menuData[expandedCategory].subcategories?.slice(0, 8).map((sub, subIndex) => (
+                        <li key={subIndex}>
+                          <button
+                            onClick={() => handleSubcategoryClick(sub.url)}
+                            className="text-gray-300 hover:text-[#EDFF60] transition-colors duration-200 text-left block w-full"
+                          >
+                            • {sub.label}
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
 
-              {/* Live Column */}
-              <div>
-                <h3 className="text-xl font-jakarta-bold text-[#EDFF60] uppercase tracking-wider mb-6">
-                  Live
-                </h3>
-                <ul className="space-y-3">
-                  {menuData[expandedCategory].subcategories?.slice(Math.ceil(menuData[expandedCategory].subcategories!.length / 3), Math.ceil(menuData[expandedCategory].subcategories!.length * 2 / 3)).map((sub, subIndex) => (
-                    <li key={subIndex}>
-                      <button
-                        onClick={() => handleSubcategoryClick(sub.url)}
-                        className="text-gray-300 hover:text-[#EDFF60] transition-colors duration-200 text-left block"
-                      >
-                        • {sub.label}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+                  {/* NATUR PRO (Live) Column */}
+                  <div>
+                    <h3 className="text-2xl font-jakarta-bold text-[#EDFF60] bg-[#EDFF60] text-[#0a1a0a] px-4 py-2 uppercase tracking-wider mb-6 text-center">
+                      NATUR PRO
+                    </h3>
+                    <ul className="space-y-3">
+                      {menuData[expandedCategory].subcategories?.slice(8).map((sub, subIndex) => (
+                        <li key={subIndex}>
+                          <button
+                            onClick={() => handleSubcategoryClick(sub.url)}
+                            className="text-gray-300 hover:text-[#EDFF60] transition-colors duration-200 text-left block w-full"
+                          >
+                            • {sub.label}
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              )}
 
-              {/* Info Column */}
-              <div>
-                <h3 className="text-xl font-jakarta-bold text-[#EDFF60] uppercase tracking-wider mb-6">
-                  Info
-                </h3>
-                <ul className="space-y-3">
-                  {menuData[expandedCategory].subcategories?.slice(Math.ceil(menuData[expandedCategory].subcategories!.length * 2 / 3)).map((sub, subIndex) => (
-                    <li key={subIndex}>
-                      <button
-                        onClick={() => handleSubcategoryClick(sub.url)}
-                        className="text-gray-300 hover:text-[#EDFF60] transition-colors duration-200 text-left block"
-                      >
-                        • {sub.label}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
+              {/* Other Categories - Single Column Layout */}
+              {expandedCategory !== 0 && (
+                <div className="max-w-2xl">
+                  <h3 className="text-2xl font-jakarta-bold text-[#EDFF60] uppercase tracking-wider mb-6">
+                    {menuData[expandedCategory].title}
+                  </h3>
+                  <ul className="space-y-4 grid grid-cols-1 gap-3">
+                    {menuData[expandedCategory].subcategories?.map((sub, subIndex) => (
+                      <li key={subIndex}>
+                        <button
+                          onClick={() => handleSubcategoryClick(sub.url)}
+                          className="text-gray-300 hover:text-[#EDFF60] transition-colors duration-200 text-left block text-lg"
+                        >
+                          • {sub.label}
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </>
           )}
 
           {/* Default State - Show Main Menu */}
@@ -242,25 +249,68 @@ export function BrutalistDropdownMenu({ isOpen, onClose, triggerRef }: Brutalist
           )}
         </div>
 
-        {/* Right Sidebar - Additional Info */}
+        {/* Right Sidebar - Info Section */}
         <div className="w-1/4 bg-[#0f2d0f] border-l border-[#EDFF60]/20 p-6">
           <div className="space-y-6">
-            <button className="w-full bg-[#EDFF60] text-[#0a1a0a] py-3 px-4 font-jakarta-bold uppercase tracking-wide text-sm hover:bg-yellow-300 transition-colors">
-              🎫 TICKETS
-            </button>
-            <button className="w-full border border-[#EDFF60] text-[#EDFF60] py-3 px-4 font-jakarta-bold uppercase tracking-wide text-sm hover:bg-[#EDFF60] hover:text-[#0a1a0a] transition-colors">
-              📅 AGENDA
-            </button>
+            {/* Festival Buttons - Only show for Festival category */}
+            {expandedCategory === 0 && (
+              <>
+                <button className="w-full bg-[#EDFF60] text-[#0a1a0a] py-3 px-4 font-jakarta-bold uppercase tracking-wide text-sm hover:bg-yellow-300 transition-colors">
+                  🎫 TICKETS
+                </button>
+                <button className="w-full border border-[#EDFF60] text-[#EDFF60] py-3 px-4 font-jakarta-bold uppercase tracking-wide text-sm hover:bg-[#EDFF60] hover:text-[#0a1a0a] transition-colors">
+                  📅 AGENDA
+                </button>
+                <div className="border-t border-[#EDFF60]/20 pt-6"></div>
+              </>
+            )}
             
-            <div className="pt-6 border-t border-[#EDFF60]/20">
+            {/* Info Section - Always visible */}
+            <div>
               <h4 className="text-[#EDFF60] font-jakarta-bold uppercase tracking-wider mb-4">
-                Destacados
+                INFO
               </h4>
-              <ul className="space-y-2 text-sm text-gray-300">
-                <li>• The Space</li>
-                <li>• Partners</li>
-                <li>• The Music Club</li>
-                <li>• Networking</li>
+              <ul className="space-y-3">
+                <li>
+                  <button 
+                    onClick={() => handleSubcategoryClick('/sobre')}
+                    className="text-gray-300 hover:text-[#EDFF60] transition-colors duration-200 text-left block text-sm"
+                  >
+                    • Sobre Nosotros
+                  </button>
+                </li>
+                <li>
+                  <button 
+                    onClick={() => handleSubcategoryClick('/contacto')}
+                    className="text-gray-300 hover:text-[#EDFF60] transition-colors duration-200 text-left block text-sm"
+                  >
+                    • Contacto
+                  </button>
+                </li>
+                <li>
+                  <button 
+                    onClick={() => handleSubcategoryClick('/aliados')}
+                    className="text-gray-300 hover:text-[#EDFF60] transition-colors duration-200 text-left block text-sm"
+                  >
+                    • Aliados
+                  </button>
+                </li>
+                <li>
+                  <button 
+                    onClick={() => handleSubcategoryClick('/faq')}
+                    className="text-gray-300 hover:text-[#EDFF60] transition-colors duration-200 text-left block text-sm"
+                  >
+                    • FAQ
+                  </button>
+                </li>
+                <li>
+                  <button 
+                    onClick={() => handleSubcategoryClick('/terminos')}
+                    className="text-gray-300 hover:text-[#EDFF60] transition-colors duration-200 text-left block text-sm"
+                  >
+                    • Términos y Condiciones
+                  </button>
+                </li>
               </ul>
             </div>
           </div>
