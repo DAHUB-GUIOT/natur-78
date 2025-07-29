@@ -23,19 +23,36 @@ interface Company {
 export function SimpleChat({ onClose }: SimpleChatProps) {
   const [selectedCompany, setSelectedCompany] = useState<Company | null>(null);
   const [messageText, setMessageText] = useState("");
-  const [sentMessages, setSentMessages] = useState<Array<{id: number, content: string, timestamp: Date}>>([]);
-
-  // Mock data for verified companies (clean implementation)
-  const verifiedCompanies: Company[] = [
+  const [savedConversations, setSavedConversations] = useState<Array<{
+    id: number, 
+    companyName: string, 
+    userId: number,
+    messages: Array<{id: number, content: string, timestamp: Date, sender: 'me' | 'them'}>
+  }>>([
+    // Only keep one conversation with TripCol as requested
     {
       id: 1,
-      companyName: "DaHub",
-      description: "Plataforma tecnológica para turismo sostenible",
-      userId: 21,
-      isVerified: true,
-      contactEmail: "dahub.tech@gmail.com",
-      website: "dahub.tech"
-    },
+      companyName: "TripCol",
+      userId: 22,
+      messages: [
+        {
+          id: 1,
+          content: "Hola! Estoy interesado en conocer más sobre sus experiencias turísticas.",
+          timestamp: new Date(Date.now() - 24 * 60 * 60 * 1000), // 1 day ago
+          sender: 'me'
+        },
+        {
+          id: 2,
+          content: "¡Hola! Gracias por contactarnos. Nos especializamos en experiencias auténticas de turismo sostenible en Colombia. ¿Hay alguna región específica que te interese?",
+          timestamp: new Date(Date.now() - 23 * 60 * 60 * 1000), // 23 hours ago
+          sender: 'them'
+        }
+      ]
+    }
+  ]);
+
+  // Mock data for verified companies - simplified to only show TripCol as main contact
+  const verifiedCompanies: Company[] = [
     {
       id: 2,
       companyName: "TripCol",
@@ -44,49 +61,67 @@ export function SimpleChat({ onClose }: SimpleChatProps) {
       isVerified: true,
       contactEmail: "tripcol.tour@gmail.com",
       website: "tripcol.com"
-    },
-    {
-      id: 3,
-      companyName: "Pacífico Salvaje",
-      description: "Turismo ecológico en la costa pacífica colombiana",
-      userId: 23,
-      isVerified: true,
-      contactEmail: "info@pacificosalvaje.com",
-      website: "pacificosalvaje.com"
-    },
-    {
-      id: 4,
-      companyName: "Sabores del Caribe",
-      description: "Experiencias gastronómicas caribeñas auténticas",
-      userId: 24,
-      isVerified: true,
-      contactEmail: "contacto@saboresdelcaribe.co",
-      website: "saboresdelcaribe.co"
     }
   ];
+
+  // Check for pre-selected company from localStorage on mount
+  React.useEffect(() => {
+    const preSelectedCompany = localStorage.getItem('preSelectedCompany');
+    if (preSelectedCompany) {
+      try {
+        const companyData = JSON.parse(preSelectedCompany);
+        // Find the company in our verified list
+        const company = verifiedCompanies.find(c => c.userId === companyData.userId);
+        if (company) {
+          setSelectedCompany(company);
+        }
+        // Clear the localStorage after using it
+        localStorage.removeItem('preSelectedCompany');
+      } catch (error) {
+        console.error('Error parsing pre-selected company:', error);
+      }
+    }
+  }, []);
 
   const handleSendMessage = () => {
     if (!messageText.trim() || !selectedCompany) return;
     
-    // Add message to local state (simplified implementation)
+    // Find or create conversation with the selected company
+    const existingConversationIndex = savedConversations.findIndex(
+      conv => conv.userId === selectedCompany.userId
+    );
+    
     const newMessage = {
       id: Date.now(),
       content: messageText.trim(),
-      timestamp: new Date()
+      timestamp: new Date(),
+      sender: 'me' as const
     };
-    
-    setSentMessages(prev => [...prev, newMessage]);
-    setMessageText("");
 
-    // Show success feedback
-    setTimeout(() => {
-      const confirmationMessage = {
-        id: Date.now() + 1,
-        content: `Mensaje recibido. Nos pondremos en contacto contigo pronto.`,
-        timestamp: new Date()
+    if (existingConversationIndex >= 0) {
+      // Add to existing conversation
+      const updatedConversations = [...savedConversations];
+      updatedConversations[existingConversationIndex].messages.push(newMessage);
+      setSavedConversations(updatedConversations);
+    } else {
+      // Create new conversation
+      const newConversation = {
+        id: Date.now(),
+        companyName: selectedCompany.companyName,
+        userId: selectedCompany.userId,
+        messages: [newMessage]
       };
-      setSentMessages(prev => [...prev, confirmationMessage]);
-    }, 1000);
+      setSavedConversations([...savedConversations, newConversation]);
+    }
+    
+    setMessageText("");
+  };
+
+  // Get current conversation messages
+  const getCurrentMessages = () => {
+    if (!selectedCompany) return [];
+    const conversation = savedConversations.find(conv => conv.userId === selectedCompany.userId);
+    return conversation ? conversation.messages : [];
   };
 
   const formatTime = (date: Date) => {
@@ -94,10 +129,6 @@ export function SimpleChat({ onClose }: SimpleChatProps) {
       hour: '2-digit',
       minute: '2-digit'
     });
-  };
-
-  const getMessagesForCompany = (companyId: number) => {
-    return sentMessages.filter(msg => selectedCompany?.id === companyId);
   };
 
   return (
@@ -177,32 +208,32 @@ export function SimpleChat({ onClose }: SimpleChatProps) {
 
             {/* Messages */}
             <div className="flex-1 p-4 space-y-4 overflow-y-auto">
-              {getMessagesForCompany(selectedCompany.id).length === 0 ? (
+              {getCurrentMessages().length === 0 ? (
                 <div className="flex items-center justify-center h-full">
                   <div className="text-center">
                     <MessageCircle className="w-12 h-12 text-gray-400 mx-auto mb-2" />
                     <p className="text-gray-400">Inicia una conversación con {selectedCompany.companyName}</p>
                     <p className="text-sm text-gray-500 mt-1">
-                      Empresa verificada • Respuesta garantizada
+                      Empresa disponible para contacto
                     </p>
                   </div>
                 </div>
               ) : (
-                getMessagesForCompany(selectedCompany.id).map((message, index) => (
+                getCurrentMessages().map((message) => (
                   <div
                     key={message.id}
-                    className={`flex ${index % 2 === 0 ? 'justify-end' : 'justify-start'}`}
+                    className={`flex ${message.sender === 'me' ? 'justify-end' : 'justify-start'}`}
                   >
                     <div
                       className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
-                        index % 2 === 0
+                        message.sender === 'me'
                           ? 'bg-green-600 text-white'
                           : 'bg-gray-800/60 text-white border border-gray-600/30'
                       }`}
                     >
                       <p>{message.content}</p>
                       <p className={`text-xs mt-1 ${
-                        index % 2 === 0 ? 'text-green-100' : 'text-gray-400'
+                        message.sender === 'me' ? 'text-green-100' : 'text-gray-400'
                       }`}>
                         {formatTime(message.timestamp)}
                       </p>

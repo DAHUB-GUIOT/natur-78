@@ -476,8 +476,16 @@ const PortalEmpresasDashboard = () => {
                           className="bg-green-600 hover:bg-green-700 text-white text-xs h-8 flex-1 backdrop-blur-sm"
                           onClick={() => {
                             setActiveSection("mensajes");
-                            // Store the selected company for messaging
-                            localStorage.setItem('preSelectedUserId', company.userId?.toString() || '');
+                            // Auto-select TripCol or create conversation
+                            if (company.name === 'María González') {
+                              // This is TripCol user, pre-select for conversation
+                              localStorage.setItem('preSelectedCompany', JSON.stringify({
+                                id: 22,
+                                companyName: 'TripCol',
+                                userId: 22,
+                                contactEmail: 'tripcol.tour@gmail.com'
+                              }));
+                            }
                           }}
                         >
                           <MessageCircle className="w-3 h-3 mr-1" />
