@@ -26,7 +26,7 @@ const menuData: MenuCategory[] = [
       { label: 'Foro Colombia Sostenible 2025', url: '/foro' },
       // NATUR PRO
       { label: 'NATUR PRO', url: '/natur-pro' },
-      { label: '(+ VIVE NATUR)', url: '/vive-natur-plus' },
+      { label: '+ VIVE NATUR', url: '/vive-natur-plus' },
       { label: 'Cartel de Artistas', url: '/artistas' },
       { label: 'Talleres', url: '/talleres' },
       { label: 'Zona Startups', url: '/startups' },

@@ -22,11 +22,12 @@ This is a full-stack web application for Festival NATUR (www.festivalnatur.com),
 
 - ✅ **January 29, 2025**: Festival Menu Structure Refinement and Organization
   - **MOVED**: "Zona Kinder & Coffee Party" from VIVE NATUR to NATUR PRO section
-  - **ADDED**: "(+ VIVE NATUR)" option to VIVE NATUR section for additional content access
+  - **ADDED**: "+ VIVE NATUR" option to NATUR PRO section for additional content access
   - **REMOVED**: INFO category from left sidebar menu, keeping it only in right sidebar
   - **SIMPLIFIED**: Left menu now focuses on 3 core categories: Festival, Noticias, Plataforma NATUR
-  - **IMPROVED**: Better organization with 7 VIVE NATUR activities and 9 NATUR PRO experiences
+  - **IMPROVED**: Better organization with 5 VIVE NATUR activities and 10 NATUR PRO experiences
   - **ENHANCED**: Menu balance with more comprehensive NATUR PRO offerings
+  - **CLEANED**: Removed parentheses from "+ VIVE NATUR" for cleaner minimal design
 
 - ✅ **January 29, 2025**: Menu Semantic Structure Enhancement with H1 Tags
   - **UPDATED**: All menu category titles in sidebar now use h1 tags for proper semantic hierarchy
