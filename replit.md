@@ -19,6 +19,7 @@ This is a full-stack web application for Festival NATUR (www.festivalnatur.com),
   - **NEW**: Sidebar user section is now clickable button that navigates to profile page
   - **NEW**: Profile page displays company information, contact details, and specialties with glassmorphism design
   - **UPDATED**: All h1 fonts simplified to font-sans throughout Portal Empresas platform for consistent typography
+  - **UPDATED**: Removed "Verificados" from contacts section - now simply shows "Contactos" without verification references
 
 - ✅ **January 29, 2025**: Mi Perfil Page Removed and Usuario Viajero Section Added
   - **REMOVED**: "Mi Perfil" page completely eliminated from Portal Empresas sidebar navigation

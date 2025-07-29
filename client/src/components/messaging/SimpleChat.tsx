@@ -107,7 +107,7 @@ export function SimpleChat({ onClose }: SimpleChatProps) {
         <div className="p-4 border-b border-gray-600/30">
           <h3 className="text-lg font-semibold text-white flex items-center gap-2">
             <Users className="w-5 h-5" />
-            Contactos Verificados
+            Contactos
           </h3>
           <p className="text-sm text-gray-400 mt-1">
             {verifiedCompanies.length} empresas disponibles
