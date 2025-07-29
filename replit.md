@@ -20,6 +20,21 @@ This is a full-stack web application for Festival NATUR (www.festivalnatur.com),
   - **UPDATED**: "MÁS QUE UN PREMIO, UN RECONOCIMIENTO..." (Award section) to H4 with Unbounded Medium
   - **TYPOGRAPHY**: Enhanced semantic structure and brand message hierarchy with premium Unbounded font
 
+- ✅ **January 29, 2025**: Complete Company Registration Categories Replacement
+  - **REPLACED**: Entire registration system categories with new 10-category structure
+  - **NEW**: 🌱 Alojamientos Sostenibles (5 subcategories): Ecohoteles, Glampings, Hostales rurales, Reservas naturales, Cabañas autosuficientes
+  - **NEW**: 🧭 Agencias y Operadores de Turismo (4 subcategories): Turismo ecológico, Tours comunitarios, Turismo científico, Rutas culturales
+  - **NEW**: 🍃 Gastronomía Local y Sostenible (4 subcategories): Restaurantes km0, Cocinas comunitarias, Productos orgánicos, Cafés sostenibles
+  - **NEW**: 🚲 Movilidad y Transporte Ecológico (4 subcategories): Bicicletas, Transporte eléctrico, Carpooling, Caminatas guiadas
+  - **NEW**: 🎨 Artesanías y Productos Locales (4 subcategories): Artesanos, Cooperativas, Moda sostenible, Cosmética natural
+  - **NEW**: 📚 Educación y Sensibilización Ambiental (4 subcategories): Escuelas verdes, ONGs ambientales, Talleres permacultura, Investigación
+  - **NEW**: 💡 Tecnología para el Turismo Sostenible (4 subcategories): Apps rutas, Plataformas reserva, Medición carbono, Energías renovables
+  - **NEW**: 🧘 Bienestar y Experiencias Holísticas (3 subcategories): Centros meditación, Spa naturales, Terapias naturaleza
+  - **NEW**: 🤝 Emprendimientos Sociales y Comunitarios (3 subcategories): Turismo indígena, Empresas B, Proyectos colaborativos
+  - **NEW**: 🏛️ Aliados y Patrocinadores (4 subcategories): Instituciones gubernamentales, Marcas conscientes, Bancos verdes, Fundaciones
+  - **UPDATED**: SubcategoryStep.tsx completely rewritten with 35+ specialized sustainable tourism business types
+  - **ARCHITECTURE**: New comprehensive company categorization system for registration flow aligned with sustainable tourism ecosystem
+
 - ✅ **January 28, 2025**: Complete Tourism Industry Company Categories Restructure
   - **REPLACED**: Simple 3 categories with comprehensive 8-category sustainable tourism structure
   - **NEW**: 🧭 Agencias u Operadores Turísticos with 8 specialized subcategories
