@@ -84,10 +84,30 @@ const PortalEmpresasDashboard = () => {
 
 
   // Fetch all company users from database
-  const { data: companiesData = [], isLoading: companiesLoading } = useQuery({
+  const { data: companiesData = [], isLoading: companiesLoading, error } = useQuery({
     queryKey: ['/api/users/companies'],
+    queryFn: async () => {
+      console.log('Making API request to /api/users/companies');
+      const response = await fetch('/api/users/companies', {
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      console.log('API response status:', response.status);
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+      const data = await response.json();
+      console.log('API response data:', data);
+      return data;
+    },
     retry: false,
   });
+
+  console.log('Final companies data:', companiesData);
+  console.log('API loading status:', companiesLoading);
+  console.log('API error:', error);
 
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("todas");
@@ -105,7 +125,7 @@ const PortalEmpresasDashboard = () => {
   ];
 
   // Use all registered company users from database
-  const companies = companiesData.map(user => ({
+  const companies = (companiesData as any[]).map((user: any) => ({
     id: user.id,
     name: user.name,
     category: user.category,
@@ -123,10 +143,10 @@ const PortalEmpresasDashboard = () => {
   }));
 
   // Filter companies based on search and category
-  const filteredCompanies = companies.filter(company => {
+  const filteredCompanies = companies.filter((company: any) => {
     const matchesSearch = company.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          company.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         company.skills.some(skill => skill.toLowerCase().includes(searchTerm.toLowerCase()));
+                         (company.skills || []).some((skill: string) => skill.toLowerCase().includes(searchTerm.toLowerCase()));
     
     const matchesCategory = selectedCategory === "todas" || company.categoryId === selectedCategory;
     
@@ -330,7 +350,7 @@ const PortalEmpresasDashboard = () => {
               <div className="flex justify-between items-center">
                 <h2 className="text-xl font-bold text-white">Contactos</h2>
                 <Badge className="bg-green-600/20 text-green-300 px-3 py-1">
-                  {filteredCompanies.length} empresas
+                  {filteredCompanies.length} empresas {companiesLoading ? '(cargando...)' : ''}
                 </Badge>
               </div>
               
@@ -365,13 +385,24 @@ const PortalEmpresasDashboard = () => {
               </div>
             </div>
             
-            {filteredCompanies.length === 0 ? (
+            {companiesLoading ? (
+              <div className="text-center py-12">
+                <div className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30 rounded-lg p-8">
+                  <Building2 className="w-12 h-12 text-gray-400 mx-auto mb-4 animate-pulse" />
+                  <h3 className="text-lg font-semibold text-white mb-2">Cargando empresas...</h3>
+                  <p className="text-gray-300 text-sm">Obteniendo contactos de la base de datos</p>
+                </div>
+              </div>
+            ) : filteredCompanies.length === 0 ? (
               <div className="text-center py-12">
                 <div className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30 rounded-lg p-8">
                   <Building2 className="w-12 h-12 text-gray-400 mx-auto mb-4" />
                   <h3 className="text-lg font-semibold text-white mb-2">No se encontraron empresas</h3>
                   <p className="text-gray-300 text-sm">
                     {searchTerm ? `No hay resultados para "${searchTerm}"` : "No hay empresas en esta categoría"}
+                  </p>
+                  <p className="text-gray-300 text-xs mt-2">
+                    API data: {JSON.stringify(companiesData)} | Error: {error ? JSON.stringify(error) : 'None'}
                   </p>
                 </div>
               </div>

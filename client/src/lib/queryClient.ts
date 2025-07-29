@@ -8,6 +8,10 @@ const queryClient = new QueryClient({
         if (error?.status === 404) return false;
         return failureCount < 3;
       },
+      queryFn: ({ queryKey }: { queryKey: readonly unknown[] }) => {
+        const url = queryKey[0] as string;
+        return apiRequest(url);
+      },
     },
   },
 });
@@ -19,11 +23,12 @@ const apiRequest = async (url: string, options: RequestInit = {}) => {
       'Content-Type': 'application/json',
       ...options.headers,
     },
+    credentials: 'include', // Include cookies for authentication
     ...options,
   });
 
   if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`);
+    throw new Error(`${response.status}: ${response.statusText}`);
   }
 
   return response.json();

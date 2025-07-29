@@ -454,6 +454,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // Get all company users (registered users with empresa role) for contacts
   app.get("/api/users/companies", async (req, res) => {
+    // Set CORS headers
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Credentials', 'true');
     try {
       const users = await storage.getAllUsers();
       // Filter users with empresa role and return as contact cards
