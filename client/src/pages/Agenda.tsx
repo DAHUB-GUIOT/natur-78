@@ -203,6 +203,121 @@ const agendaData = {
         ]
       }
     ]
+  },
+  "agenda-cultural": {
+    title: "Agenda Cultural NATUR",
+    subtitle: "Festival NATUR CEFE Chapinero | 14 Y 15 de noviembre",
+    horario: "9:00 a.m. – 6:00 p.m.",
+    lugar: "Centro de Felicidad Chapinero",
+    color: "#ff6b9d",
+    days: [
+      {
+        day: "Día 1: Jueves 14 de noviembre",
+        sessions: [
+          {
+            time: "4:00 p.m.",
+            title: "Ritual colectivo del agua",
+            description: "Ceremonia simbólica para agradecer y proteger el agua, guiada por sabedores.",
+            speakers: ["Sabedores del agua"],
+            type: "ritual",
+            image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
+          },
+          {
+            time: "9:00 - 11:00 a.m.",
+            title: "Taller Bombas de Semillas",
+            description: "Aprende a crear bombas de vida con barro y semillas nativas para reforestar.",
+            speakers: ["Facilitadores ambientales"],
+            type: "taller",
+            image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
+          },
+          {
+            time: "11:00 a.m.",
+            title: "Taller Crea tu propio terrario",
+            description: "Diseña tu ecosistema en miniatura con plantas, tierra y piedras. Te llevas tu terrario.",
+            speakers: ["Jardineros urbanos"],
+            type: "taller",
+            image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
+          },
+          {
+            time: "10:00 a.m.",
+            title: "Taller Tintes naturales y estampados",
+            description: "Extrae pigmentos de plantas y estampa con elementos botánicos. Diseña tu tela inspirada en los colores de la tierra.",
+            speakers: ["Artesanos textiles"],
+            type: "taller",
+            image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
+          },
+          {
+            time: "11:00 a.m.",
+            title: "Origami del agua",
+            description: "Plegado artístico con mensajes por el agua, la vida y el territorio.",
+            speakers: ["Artistas del papel"],
+            type: "arte",
+            image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
+          },
+          {
+            time: "2:00 p.m.",
+            title: "Círculo de tambores",
+            description: "Toca, escucha y siente el ritmo colectivo con instrumentos de percusión.",
+            speakers: ["Músicos tradicionales"],
+            type: "musica",
+            image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
+          }
+        ]
+      },
+      {
+        day: "Día 2: Viernes 15 de noviembre",
+        sessions: [
+          {
+            time: "9:00 a.m.",
+            title: "Coffee Talks",
+            description: "Conversaciones íntimas con actores del turismo y la sostenibilidad. Café en mano, sin micrófono.",
+            speakers: ["Líderes del turismo sostenible"],
+            type: "conversatorio",
+            image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
+          },
+          {
+            time: "10:00 a.m.",
+            title: "Calorías por el planeta",
+            description: "Rutina divertida de ejercicio físico para activar el cuerpo con causa ambiental.",
+            speakers: ["Entrenadores eco-conscientes"],
+            type: "actividad",
+            image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
+          },
+          {
+            time: "11:00 a.m.",
+            title: "Bingo ecológico",
+            description: "Juego interactivo con palabras, animales y símbolos del planeta.",
+            speakers: ["Animadores ambientales"],
+            type: "juego",
+            image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
+          },
+          {
+            time: "12:00 p.m.",
+            title: "Taller de trueque",
+            description: "Intercambia saberes, ropa, libros o historias sin dinero.",
+            speakers: ["Facilitadores de economía circular"],
+            type: "taller",
+            image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
+          },
+          {
+            time: "2:00 p.m.",
+            title: "Yoga acuático",
+            description: "Clase suave de relajación en el agua, apta para todos los cuerpos.",
+            speakers: ["Instructores de yoga"],
+            type: "bienestar",
+            image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
+          },
+          {
+            time: "6:00 p.m.",
+            title: "Observación del cielo y relatos de cosmovisiones",
+            description: "Cerramos el día mirando las estrellas y escuchando mitos, saberes indígenas y relatos celestes sobre el agua y la vida.",
+            speakers: ["Sabedores ancestrales", "Astrónomos"],
+            type: "ceremonia",
+            image: "/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg"
+          }
+        ]
+      }
+    ]
   }
 };
 
@@ -216,6 +331,13 @@ const getTypeIcon = (type: string) => {
     case 'relatos': return <Play className="w-4 h-4" />;
     case 'mesa-redonda': return <Users className="w-4 h-4" />;
     case 'demo': return <Play className="w-4 h-4" />;
+    case 'ritual': return <Star className="w-4 h-4" />;
+    case 'taller': return <Users className="w-4 h-4" />;
+    case 'arte': return <Star className="w-4 h-4" />;
+    case 'musica': return <Play className="w-4 h-4" />;
+    case 'actividad': return <Users className="w-4 h-4" />;
+    case 'juego': return <Play className="w-4 h-4" />;
+    case 'bienestar': return <User className="w-4 h-4" />;
     default: return <Clock className="w-4 h-4" />;
   }
 };
@@ -230,6 +352,13 @@ const getTypeColor = (type: string) => {
     case 'relatos': return 'bg-yellow-100 text-yellow-800';
     case 'mesa-redonda': return 'bg-indigo-100 text-indigo-800';
     case 'demo': return 'bg-pink-100 text-pink-800';
+    case 'ritual': return 'bg-pink-100 text-pink-800';
+    case 'taller': return 'bg-orange-100 text-orange-800';
+    case 'arte': return 'bg-purple-100 text-purple-800';
+    case 'musica': return 'bg-green-100 text-green-800';
+    case 'actividad': return 'bg-cyan-100 text-cyan-800';
+    case 'juego': return 'bg-yellow-100 text-yellow-800';
+    case 'bienestar': return 'bg-teal-100 text-teal-800';
     default: return 'bg-gray-100 text-gray-800';
   }
 };
@@ -322,7 +451,7 @@ export function Agenda() {
             
             {/* Agenda Tabs - Brutalist Style */}
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full lg:w-auto">
-              <TabsList className="grid w-full grid-cols-2 bg-transparent border border-white/20 p-1 rounded-none">
+              <TabsList className="grid w-full grid-cols-3 bg-transparent border border-white/20 p-1 rounded-none">
                 <TabsTrigger 
                   value="academica-publica" 
                   className="data-[state=active]:bg-white data-[state=active]:text-black text-white/70 font-mono text-sm tracking-wide rounded-none border-r border-white/20"
@@ -331,9 +460,15 @@ export function Agenda() {
                 </TabsTrigger>
                 <TabsTrigger 
                   value="academica-especializada"
-                  className="data-[state=active]:bg-white data-[state=active]:text-black text-white/70 font-mono text-sm tracking-wide rounded-none"
+                  className="data-[state=active]:bg-white data-[state=active]:text-black text-white/70 font-mono text-sm tracking-wide rounded-none border-r border-white/20"
                 >
                   ESPECIALIZADA
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="agenda-cultural"
+                  className="data-[state=active]:bg-white data-[state=active]:text-black text-white/70 font-mono text-sm tracking-wide rounded-none"
+                >
+                  CULTURAL
                 </TabsTrigger>
               </TabsList>
             </Tabs>
@@ -353,6 +488,13 @@ export function Agenda() {
                   <option value="conversatorio">CONVERSATORIOS</option>
                   <option value="ponencia">PONENCIAS</option>
                   <option value="demo">DEMOS</option>
+                  <option value="ritual">RITUALES</option>
+                  <option value="taller">TALLERES</option>
+                  <option value="arte">ARTE</option>
+                  <option value="musica">MÚSICA</option>
+                  <option value="actividad">ACTIVIDADES</option>
+                  <option value="juego">JUEGOS</option>
+                  <option value="bienestar">BIENESTAR</option>
                 </select>
               </div>
               
