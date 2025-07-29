@@ -76,7 +76,7 @@ export function Hero() {
                 <Button 
                   size="lg" 
                   className="text-black font-bold text-lg px-8 py-4 rounded-none shadow-lg flex items-center justify-center w-full hover:opacity-90 transition-all duration-300"
-                  style={{ backgroundColor: '#cad95e', fontFamily: 'Unbounded, sans-serif' }}
+                  style={{ backgroundColor: '#cad95e', fontFamily: 'Unbounded, sans-serif', fontWeight: '300' }}
                 >
                   <Ticket className="w-5 h-5 mr-2" />
                   TICKETS
@@ -87,7 +87,7 @@ export function Hero() {
                 <Button 
                   size="lg" 
                   className="font-bold text-lg px-8 py-4 rounded-none shadow-lg flex items-center justify-center w-full hover:opacity-90 transition-all duration-300"
-                  style={{ backgroundColor: '#aa3b1e', color: '#e5bbb0', fontFamily: 'Unbounded, sans-serif' }}
+                  style={{ backgroundColor: '#aa3b1e', color: '#e5bbb0', fontFamily: 'Unbounded, sans-serif', fontWeight: '300' }}
                 >
                   <Calendar className="w-5 h-5 mr-2" />
                   AGENDA

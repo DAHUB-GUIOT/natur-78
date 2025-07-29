@@ -16,7 +16,7 @@ This is a full-stack web application for Festival NATUR (www.festivalnatur.com),
   - **UPDATED**: Simplified to only TICKETS and AGENDA buttons as requested
   - **UPDATED**: Changed buttons from rounded (rounded-lg) to square (rounded-none)
   - **UPDATED**: AGENDA button now uses custom colors - background #aa3b1e, text #e5bbb0
-  - **UPDATED**: All buttons now use Unbounded font family for consistent typography
+  - **UPDATED**: All buttons now use Unbounded Light font (weight: 300) for consistent typography
   - **DESIGN**: Clean, minimal hero with logo prominence and square button aesthetic
   - **UX**: Centered layout with focused call-to-action buttons
 
