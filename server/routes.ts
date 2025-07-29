@@ -470,7 +470,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
           createdAt: user.createdAt,
           category: 'Empresa Registrada',
           description: `Usuario empresa registrado en la plataforma`,
-          verified: true, // All registered empresa users appear as verified in contacts
           location: 'Colombia',
           founder: `${user.firstName || ''} ${user.lastName || ''}`.trim() || 'Usuario',
           skills: ['Turismo', 'Sostenibilidad', 'Empresario'],

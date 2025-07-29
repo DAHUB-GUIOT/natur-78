@@ -10,14 +10,14 @@ This is a full-stack web application for Festival NATUR (www.festivalnatur.com),
 
 ## Recent Changes
 
-- ✅ **January 29, 2025**: All Registered Company Users Show as Verified in Contacts
-  - **UPDATED**: All registered empresa users now appear as verified in Portal Empresas contacts section
-  - **UPDATED**: New API endpoint `/api/users/companies` returns all empresa users marked as verified
-  - **UPDATED**: Removed conditional verification check - all contact cards show green "Verificado ✓" badge
-  - **UPDATED**: Section title changed to "Contactos - Empresas Verificadas" for clarity
-  - **UPDATED**: Contact cards now display all registered company users from database with verification status
-  - **FEATURE**: Portal Empresas contacts now shows comprehensive directory of all registered business users
-  - **UX**: Consistent verification appearance for all registered empresa users
+- ✅ **January 29, 2025**: All Registered Users Show in Contacts - No Verification Required
+  - **REMOVED**: All verification badges and requirements from Portal Empresas contacts section  
+  - **UPDATED**: New API endpoint `/api/users/companies` returns all registered empresa users without verification filtering
+  - **REMOVED**: Verification badges completely eliminated from contact cards
+  - **UPDATED**: Section title simplified to "Contactos" without verification references
+  - **UPDATED**: All registered company users from database now visible in contacts directory
+  - **FEATURE**: Portal Empresas contacts shows comprehensive directory of ALL registered users
+  - **UX**: Clean contact cards without verification complexity - all users treated equally
 
 - ✅ **January 29, 2025**: Simple Messaging System Rebuilt and Authentication Fixed
   - **REBUILT**: Created SimpleChat.tsx component with clean, functional design
