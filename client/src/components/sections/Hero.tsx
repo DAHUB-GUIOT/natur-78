@@ -5,6 +5,8 @@ import { User, Menu, Calendar, Ticket } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { BrutalistMenu } from "@/components/ui/BrutalistMenu";
 
+import Festival_NATUR from "@assets/Festival-NATUR.png";
+
 export function Hero() {
 
   return (
@@ -15,10 +17,8 @@ export function Hero() {
         className="absolute h-full w-full object-cover inset-0" 
         src="/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg" 
       />
-      
       {/* Light Gradient Overlay for text readability */}
       <div className="absolute inset-0 bg-black/20"></div>
-      
       {/* Top Navigation - Fixed with Dark Green Background */}
       <nav className="fixed top-0 left-0 right-0 z-50 shadow-lg" style={{ backgroundColor: '#181c0d', borderBottom: '1px solid #2a2f1a' }}>
         <div className="flex items-center justify-between max-w-7xl mx-auto px-6 py-4">
@@ -57,7 +57,6 @@ export function Hero() {
           </div>
         </div>
       </nav>
-      
       {/* Main Content - Left Aligned like BIME */}
       <div className="relative z-10 flex items-center min-h-screen px-6 sm:px-8 md:px-20 pt-20">
         <div className="max-w-7xl w-full">
@@ -65,7 +64,7 @@ export function Hero() {
             {/* Festival NATUR Logo */}
             <div className="mb-12">
               <img 
-                src="/attached_assets/Festival-NATUR_1753754827567.png" 
+                src={Festival_NATUR} 
                 alt="Festival NATUR 2025"
                 className="mx-auto max-w-lg w-full h-auto"
               />
@@ -97,7 +96,6 @@ export function Hero() {
           </div>
         </div>
       </div>
-
     </header>
   );
 }
