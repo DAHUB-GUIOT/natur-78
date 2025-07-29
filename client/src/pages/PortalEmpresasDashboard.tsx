@@ -76,7 +76,6 @@ const PortalEmpresasDashboard = () => {
     { id: "empresas", label: "Contactos", icon: Building2 },
     { id: "experiencias", label: "Experiencias", icon: Star },
     { id: "mensajes", label: "Mensajes", icon: MessageCircle },
-    { id: "perfil", label: "Mi Perfil", icon: User },
     { id: "ajustes", label: "Ajustes", icon: Settings },
     ...(user?.role === 'admin' ? [{ id: "admin", label: "Admin Panel", icon: ShieldCheck }] : [])
   ];
@@ -588,8 +587,7 @@ const PortalEmpresasDashboard = () => {
           </div>
         );
 
-      case "perfil":
-        return <TwitterProfileSection />;
+
 
       default:
         return <div>Sección no encontrada</div>;
@@ -834,16 +832,22 @@ const PortalEmpresasDashboard = () => {
           })}
         </nav>
         
-        {/* Compact user profile section */}
+        {/* Usuario Viajero section */}
         <div className="p-2 border-t border-gray-600/30">
-          <div className="flex items-center space-x-2 px-3 py-2 rounded-lg bg-gray-800/30 backdrop-blur-sm">
-            <Avatar className="w-6 h-6 ring-1 ring-gray-600/50">
-              <AvatarImage src="/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg" />
-              <AvatarFallback className="bg-green-600/80 text-white text-xs">U</AvatarFallback>
+          <div className="flex items-center space-x-2 px-3 py-2 rounded-lg bg-green-600/20 border border-green-500/30 backdrop-blur-sm">
+            <Avatar className="w-6 h-6 ring-1 ring-green-400/50">
+              <AvatarFallback className="bg-green-600/80 text-white text-xs font-bold">
+                {user?.firstName?.[0] || 'D'}
+              </AvatarFallback>
             </Avatar>
             <div className="flex-1 min-w-0">
-              <p className="text-white font-medium text-xs truncate">Usuario</p>
-              <p className="text-gray-300 text-xs">Empresa</p>
+              <p className="text-white font-medium text-xs truncate">
+                {user?.firstName && user?.lastName 
+                  ? `${user.firstName} ${user.lastName}`
+                  : 'Daniel Hurtado'
+                }
+              </p>
+              <p className="text-green-300 text-xs font-medium">Usuario Viajero</p>
             </div>
           </div>
         </div>

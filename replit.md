@@ -10,6 +10,16 @@ This is a full-stack web application for Festival NATUR (www.festivalnatur.com),
 
 ## Recent Changes
 
+- ✅ **January 29, 2025**: Mi Perfil Page Removed and Usuario Viajero Section Added
+  - **REMOVED**: "Mi Perfil" page completely eliminated from Portal Empresas sidebar navigation
+  - **REMOVED**: TwitterProfileSection component no longer accessible through navigation
+  - **NEW**: "Usuario Viajero" section added at bottom of sidebar showing current user info
+  - **UPDATED**: User section displays current user name (Daniel Hurtado) and "Usuario Viajero" category
+  - **DESIGN**: Green-themed user profile card with avatar, name, and role designation
+  - **UX**: Clean sidebar navigation without profile page, user info prominently displayed at bottom
+  - **CONFIRMED**: Contact cards now successfully display both DaHub (Daniel Hurtado) and TripCol (María González) users
+  - **ARCHITECTURE**: Portal Empresas focused on core business functions without profile management complexity
+
 - ✅ **January 29, 2025**: All Registered Users Show in Contacts - No Verification Required
   - **REMOVED**: All verification badges and requirements from Portal Empresas contacts section  
   - **UPDATED**: New API endpoint `/api/users/companies` returns all registered empresa users without verification filtering
