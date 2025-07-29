@@ -271,7 +271,7 @@ export default function ProfileSection() {
             <div className="flex-1">
               <div className="flex items-start justify-between">
                 <div>
-                  <h1 className="text-2xl font-bold text-white">
+                  <h1 className="text-2xl font-sans text-white">
                     {profile?.fullName || `${profile?.user?.firstName} ${profile?.user?.lastName}`.trim() || "Mi Perfil"}
                   </h1>
                   <div className="flex items-center gap-3 mt-2">

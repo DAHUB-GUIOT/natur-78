@@ -144,7 +144,7 @@ const CompanyProfile = () => {
             <div className="mt-4 space-y-4">
               <div>
                 <div className="flex items-center gap-2">
-                  <h1 className="text-2xl font-bold text-white">{companyData.name}</h1>
+                  <h1 className="text-2xl font-sans text-white">{companyData.name}</h1>
                   {companyData.verified && (
                     <Verified className="w-6 h-6 text-blue-400 fill-blue-400" />
                   )}

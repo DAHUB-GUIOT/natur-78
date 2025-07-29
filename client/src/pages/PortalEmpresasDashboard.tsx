@@ -599,7 +599,7 @@ const PortalEmpresasDashboard = () => {
                   </AvatarFallback>
                 </Avatar>
                 <div>
-                  <h1 className="text-2xl font-bold text-white mb-1">
+                  <h1 className="text-2xl font-sans text-white mb-1">
                     {user?.email === 'dahub.tech@gmail.com' ? 'DaHub' : 
                      user?.email === 'tripcol.tour@gmail.com' ? 'TripCol' : 
                      'Empresa'}
