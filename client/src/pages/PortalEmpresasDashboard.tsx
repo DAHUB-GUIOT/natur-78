@@ -126,7 +126,7 @@ const PortalEmpresasDashboard = () => {
   // Use all registered company users from database
   const companies = (companiesData as any[]).map((user: any) => ({
     id: user.id,
-    name: user.name,
+    name: user.email === 'dahub.tech@gmail.com' ? 'DaHub' : user.email === 'tripcol.tour@gmail.com' ? 'TripCol' : user.name,
     category: user.category,
     categoryId: user.category?.toLowerCase().replace(/\s+/g, '-') || "general",
     location: user.location,
@@ -421,11 +421,10 @@ const PortalEmpresasDashboard = () => {
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center space-x-2 mb-1">
                             <h3 className="font-bold text-base text-white">{company.name}</h3>
-
                           </div>
                           
                           <p className="text-sm text-green-300 font-medium">{company.category}</p>
-                          <p className="text-xs text-gray-300">Fundador: {company.founder}</p>
+                          <p className="text-xs text-gray-300">{company.founder}</p>
                           
                           <div className="flex items-center text-xs text-gray-200 mt-1">
                             <MapPin className="w-3 h-3 mr-1" />
