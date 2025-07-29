@@ -49,7 +49,7 @@ export function Benefits() {
           ¡Reserva tu stand o patrocina!
         </Link>
 
-        <div className="backdrop-blur-sm bg-white/5 border border-[#EDFF60]/20 rounded-xl p-4 sm:p-6 mt-6 sm:mt-8 md:mt-10 max-w-4xl">
+        <div className="mt-6 sm:mt-8 md:mt-10 max-w-4xl">
           <h4 className="text-center leading-5 sm:leading-6 md:leading-7 tracking-wide font-unbounded text-xs sm:text-sm md:text-base text-[#EDFF60]">
             El Festival NATUR es el punto de encuentro entre la sostenibilidad, el turismo y la innovación. Aquí convergen viajeros, empresas y destinos que creen en el turismo como fuerza transformadora.
           </h4>
