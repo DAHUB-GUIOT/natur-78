@@ -15,38 +15,57 @@ interface MenuCategory {
 
 const menuData: MenuCategory[] = [
   {
-    icon: '🎪',
+    icon: '🌿',
     title: 'FESTIVAL NATUR BOGOTÁ 2025',
     subcategories: [
-      { label: 'VIVE NATUR', url: '/tickets/vive-natur' },
-      { label: 'NATUR PRO', url: '/tickets/natur-pro' }
+      // VIVE NATUR
+      { label: 'VIVE NATUR', url: '/vive-natur' },
+      { label: 'Charlas NATUR (Agenda Académica)', url: '/charlas' },
+      { label: 'Rooftop + Zona de Comidas', url: '/rooftop' },
+      { label: 'Emprendimientos Sostenibles', url: '/emprendimientos' },
+      { label: 'Zona Chill', url: '/zona-chill' },
+      { label: 'Foro Colombia Sostenible 2025', url: '/foro' },
+      { label: 'Zona Kinder & Coffee Party', url: '/zona-kinder' },
+      // NATUR PRO
+      { label: 'NATUR PRO', url: '/natur-pro' },
+      { label: 'Cartel de Artistas', url: '/artistas' },
+      { label: 'Talleres', url: '/talleres' },
+      { label: 'Zona Startups', url: '/startups' },
+      { label: 'Coffee Talks / Speed Talks', url: '/coffee-talks' },
+      { label: 'Rumba y Manifestaciones', url: '/rumba' },
+      { label: 'Zona Wellness', url: '/wellness' },
+      { label: 'Experiencia NATUR', url: '/experiencia' },
+      { label: 'Zona VIP', url: '/vip' }
     ]
   },
   {
     icon: '📰',
     title: 'NOTICIAS',
     subcategories: [
-      { label: 'Turismo Regenerativo: El Futuro del Sector', url: '/blog/turismo-regenerativo' },
-      { label: 'Startups Sostenibles Transforman Colombia', url: '/blog/startups-sostenibles' },
-      { label: 'Festival NATUR 2025: Fecha y Novedades', url: '/blog/festival-2025' }
+      { label: 'Artículos', url: '/blog/articulos' },
+      { label: 'Crónicas', url: '/blog/cronicas' },
+      { label: 'Entrevistas', url: '/blog/entrevistas' },
+      { label: 'Novedades del Turismo Regenerativo', url: '/blog/novedades' }
     ]
   },
   {
-    icon: '🌱',
+    icon: '🧭',
     title: 'PLATAFORMA NATUR',
     subcategories: [
-      { label: 'Registrarse', url: '/auth/empresas' },
-      { label: 'Iniciar Sesión', url: '/auth/login' }
+      { label: 'Portal de Empresas', url: '/portal-empresas' },
+      { label: 'Comunidad de Viajeros', url: '/portal-viajeros' },
+      { label: 'Mapa Interactivo de Experiencias', url: '/mapa' }
     ]
   },
   {
     icon: 'ℹ️',
     title: 'INFO',
     subcategories: [
-      { label: 'Sobre NATUR', url: '/sobre-natur' },
+      { label: 'Sobre Nosotros', url: '/sobre' },
       { label: 'Contacto', url: '/contacto' },
-      { label: 'FAQ', url: '/faq' },
-      { label: 'Alianzas', url: '/alianzas' }
+      { label: 'Aliados', url: '/aliados' },
+      { label: 'Preguntas Frecuentes', url: '/faq' },
+      { label: 'Términos y Condiciones', url: '/terminos' }
     ]
   }
 ];
