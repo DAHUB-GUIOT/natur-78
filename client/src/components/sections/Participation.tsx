@@ -15,7 +15,8 @@ export function Participation() {
           </h1>
 
           <div className="lg:w-[40%]">
-            <h4 className="text-[#CEDD9F] font-unbounded text-xs sm:text-sm md:text-base tracking-wide leading-relaxed">
+            <h4 className="text-[#CEDD9F] text-xs sm:text-sm md:text-base tracking-wide leading-relaxed"
+                style={{ fontFamily: 'Unbounded, sans-serif', fontWeight: '300' }}>
               Si haces parte de la cadena turística y quieres aprender del turismo con propósito, este festival es para ti
             </h4>
           </div>
@@ -32,8 +33,10 @@ export function Participation() {
 
         {/* Button */}
         <div className="w-full flex justify-center mt-8 md:mt-12">
-          <Link to="/reserva" className="w-full max-w-[400px] bg-[#cad95e] text-[#232611] rounded-lg text-sm sm:text-base md:text-lg font-unbounded font-bold uppercase px-6 py-3 sm:px-8 sm:py-4 tracking-tight hover:bg-[#cad95e]/90 transition-all duration-300 shadow-lg text-center" style={{
-          letterSpacing: 0
+          <Link to="/reserva" className="w-full max-w-[400px] bg-[#cad95e] text-[#232611] rounded-lg text-sm sm:text-base md:text-lg font-bold uppercase px-6 py-3 sm:px-8 sm:py-4 tracking-tight hover:bg-[#cad95e]/90 transition-all duration-300 shadow-lg text-center" style={{
+          letterSpacing: 0,
+          fontFamily: 'Unbounded, sans-serif',
+          fontWeight: '300'
         }}>
             ¡Reserva tu stand o patrocina!
           </Link>

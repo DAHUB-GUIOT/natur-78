@@ -14,7 +14,8 @@ export function Award() {
               NATUR
             </h1>
             <div className="backdrop-blur-sm bg-white/10 rounded-xl p-4 sm:p-5 border border-white/20 mb-6">
-              <h4 className="text-[#FCF8EE] text-xs sm:text-sm md:text-base font-unbounded tracking-wide leading-relaxed">
+              <h4 className="text-[#FCF8EE] text-xs sm:text-sm md:text-base tracking-wide leading-relaxed"
+                  style={{ fontFamily: 'Unbounded, sans-serif', fontWeight: '300' }}>
                 MÁS QUE UN PREMIO, UN RECONOCIMIENTO QUE INSPIRA Y VISIBILIZA LO QUE MERECE MULTIPLICARSE. PORQUE OTRO TURISMO ES POSIBLE… Y YA ESTÁ PASANDO.
               </h4>
             </div>

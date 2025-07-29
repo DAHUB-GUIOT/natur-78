@@ -44,13 +44,14 @@ export function Benefits() {
             mt-6 sm:mt-8 md:mt-10
             px-6 py-3 sm:px-8 sm:py-4 
             hover:bg-[#cad95e]/90 transition-all duration-300
-            font-unbounded rounded-lg shadow-lg
-          ">
+            rounded-lg shadow-lg"
+          style={{ fontFamily: 'Unbounded, sans-serif', fontWeight: '300' }}>
           ¡Reserva tu stand o patrocina!
         </Link>
 
         <div className="mt-6 sm:mt-8 md:mt-10 max-w-4xl">
-          <h4 className="text-center leading-5 sm:leading-6 md:leading-7 tracking-wide font-unbounded text-xs sm:text-sm md:text-base text-[#cad95e]">
+          <h4 className="text-center leading-5 sm:leading-6 md:leading-7 tracking-wide text-xs sm:text-sm md:text-base text-[#cad95e]"
+              style={{ fontFamily: 'Unbounded, sans-serif', fontWeight: '300' }}>
             El Festival NATUR es el punto de encuentro entre la sostenibilidad, el turismo y la innovación. Aquí convergen viajeros, empresas y destinos que creen en el turismo como fuerza transformadora.
           </h4>
         </div>
