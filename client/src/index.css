@@ -171,6 +171,53 @@
     font-weight: 500;
   }
 
+  /* Brutalist Menu Animations */
+  @keyframes brutalistSlideIn {
+    0% {
+      opacity: 0;
+      transform: translateX(-20px) translateY(-10px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0) translateY(0);
+    }
+  }
+
+  @keyframes brutalistSlideOut {
+    0% {
+      opacity: 1;
+      transform: translateX(0) translateY(0);
+    }
+    100% {
+      opacity: 0;
+      transform: translateX(-20px) translateY(-10px);
+    }
+  }
+
+  @keyframes brutalistExpandDown {
+    0% {
+      max-height: 0;
+      opacity: 0;
+    }
+    100% {
+      max-height: 300px;
+      opacity: 1;
+    }
+  }
+
+  /* Brutalist Menu States */
+  [data-state="open"] {
+    animation: brutalistSlideIn 0.4s ease-out;
+  }
+
+  [data-state="closed"] {
+    animation: brutalistSlideOut 0.3s ease-in;
+  }
+
+  [data-state="expanded"] {
+    animation: brutalistExpandDown 0.3s ease-out;
+  }
+
   /* Default paragraph and text styling */
   p, span, div:not(.font-gasoek):not(h1):not(h2):not(h3):not(h4):not(h5):not(h6) {
     font-family: 'Plus Jakarta Sans', system-ui, sans-serif;

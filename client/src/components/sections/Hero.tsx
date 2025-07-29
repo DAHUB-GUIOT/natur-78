@@ -3,6 +3,7 @@ import React from "react";
 import { Link } from "wouter";
 import { User, Menu, Calendar, Ticket } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { BrutalistMenu } from "@/components/ui/BrutalistMenu";
 
 export function Hero() {
 
@@ -52,9 +53,7 @@ export function Hero() {
             <Button variant="ghost" size="sm" className="text-white hover:bg-white/20">
               <User className="w-5 h-5" />
             </Button>
-            <Button variant="ghost" size="sm" className="text-white hover:bg-white/20">
-              <Menu className="w-5 h-5" />
-            </Button>
+            <BrutalistMenu />
           </div>
         </div>
       </nav>
