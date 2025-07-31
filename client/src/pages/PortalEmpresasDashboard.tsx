@@ -88,6 +88,10 @@ const PortalEmpresasDashboard = () => {
   // Optimized directory users fetch with caching and conditional loading
   const { data: directoryUsers, isLoading: directoryLoading, error: directoryError, refetch: refetchDirectory } = useQuery({
     queryKey: ["/api/directory/users"],
+    queryFn: () => fetch("/api/directory/users", { credentials: 'include' }).then(res => {
+      if (!res.ok) throw new Error(`${res.status}: ${res.statusText}`);
+      return res.json();
+    }),
     enabled: true, // Always enabled since directory doesn't require auth
     staleTime: 2 * 60 * 1000, // 2 minutes cache
     gcTime: 5 * 60 * 1000, // 5 minutes garbage collection
