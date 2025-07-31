@@ -99,18 +99,7 @@ const PortalEmpresasDashboard = () => {
   // Type-safe directory users with proper default
   const typedDirectoryUsers = Array.isArray(directoryUsers) ? directoryUsers : [];
   
-  // Debug logging
-  useEffect(() => {
-    if (activeSection === "empresas") {
-      console.log("Directory state:", {
-        directoryUsers,
-        typedDirectoryUsers,
-        directoryLoading,
-        directoryError,
-        activeSection
-      });
-    }
-  }, [directoryUsers, typedDirectoryUsers, directoryLoading, directoryError, activeSection]);
+
 
   const sidebarItems = [
     { id: "mapa", label: "Mapa", icon: Map },

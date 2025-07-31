@@ -225,28 +225,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     });
   });
 
-  // Directory API - Get all registered users for contact directory
-  app.get("/api/directory/users", async (req, res) => {
-    try {
-      const users = await storage.getUsers();
-      // Return all registered users for directory
-      const directoryUsers = users.map(user => ({
-        id: user.id,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        companyName: user.companyName,
-        email: user.email,
-        city: user.city,
-        country: user.country,
-        role: user.role,
-        coordinates: user.coordinates
-      }));
-      res.json(directoryUsers);
-    } catch (error) {
-      console.error("Error fetching directory users:", error);
-      res.status(500).json({ error: "Internal server error" });
-    }
-  });
+
 
   // Map API - Get companies with locations for map markers
   app.get("/api/map/companies", async (req, res) => {
