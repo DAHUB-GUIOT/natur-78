@@ -86,18 +86,26 @@ const PortalEmpresasDashboard = () => {
   });
 
   // Optimized directory users fetch with caching and conditional loading
-  const { data: directoryUsers, isLoading: directoryLoading, error: directoryError } = useQuery({
+  const { data: directoryUsers, isLoading: directoryLoading, error: directoryError, refetch: refetchDirectory } = useQuery({
     queryKey: ["/api/directory/users"],
-    enabled: activeSection === "directorio" || activeSection === "empresas",
-    staleTime: 5 * 60 * 1000, // 5 minutes cache
-    gcTime: 10 * 60 * 1000, // 10 minutes garbage collection
+    enabled: true, // Always enabled since directory doesn't require auth
+    staleTime: 2 * 60 * 1000, // 2 minutes cache
+    gcTime: 5 * 60 * 1000, // 5 minutes garbage collection
     refetchOnWindowFocus: false, // Prevent unnecessary refetches
-    retry: 2,
-    retryDelay: 1000,
+    retry: 3,
+    retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 5000),
   });
 
   // Type-safe directory users with proper default
   const typedDirectoryUsers = Array.isArray(directoryUsers) ? directoryUsers : [];
+  
+  // Debug info
+  console.log("Directory Debug:", {
+    directoryUsers,
+    directoryLoading,
+    directoryError: directoryError?.message || directoryError,
+    typedLength: typedDirectoryUsers.length
+  });
   
 
 
@@ -426,7 +434,7 @@ const PortalEmpresasDashboard = () => {
                   <h3 className="text-lg font-sans text-white mb-2">Error al cargar directorio</h3>
                   <p className="text-gray-300 text-sm mb-4">No se pudieron obtener los usuarios registrados</p>
                   <Button 
-                    onClick={() => window.location.reload()} 
+                    onClick={() => refetchDirectory()} 
                     className="bg-green-600 hover:bg-green-700 text-white"
                   >
                     Reintentar
