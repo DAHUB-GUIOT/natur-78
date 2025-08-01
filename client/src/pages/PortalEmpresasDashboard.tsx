@@ -36,7 +36,10 @@ import {
   Repeat2,
   Save,
   Shield,
-  ChevronLeft
+  ChevronLeft,
+  Clock,
+  ChevronDown,
+  ChevronRight
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -91,17 +94,87 @@ const PortalEmpresasDashboard = () => {
   const [activeSection, setActiveSection] = useState("inicio");
   const [isMobileSidebarExpanded, setIsMobileSidebarExpanded] = useState(false);
   const [showExperienceForm, setShowExperienceForm] = useState(false);
+  const [expandedCategories, setExpandedCategories] = useState<string[]>([]);
 
-  // Sidebar configuration
-  const sidebarItems = [
-    { id: "inicio", label: "Inicio", icon: Home },
-    { id: "mapa", label: "Mapa", icon: Map },
-    { id: "directorio", label: "Directorio", icon: Building2 },
-    { id: "experiencias", label: "Experiencias", icon: Star },
-    { id: "mensajes", label: "Mensajes", icon: MessageCircle },
-    { id: "estadisticas", label: "Estadísticas", icon: BarChart3 },
-    { id: "admin", label: "Admin", icon: ShieldCheck },
+  // Complete menu structure with categories and subcategories
+  const menuStructure = [
+    { id: "inicio", label: "Inicio", icon: Home, type: "single" },
+    { id: "mapa", label: "Mapa", icon: Map, type: "single" },
+    {
+      id: "directorio",
+      label: "Directorio",
+      icon: Building2,
+      type: "category",
+      subcategories: [
+        { id: "turismo-sostenible", label: "Agencias Turismo Sostenible", icon: Globe },
+        { id: "alojamientos", label: "Alojamientos Sostenibles", icon: Building2 },
+        { id: "gastronomia", label: "Gastronomía Sostenible", icon: Users },
+        { id: "movilidad", label: "Movilidad Ecológica", icon: MapPin },
+        { id: "ong-fundaciones", label: "ONG y Fundaciones", icon: Heart },
+        { id: "educacion", label: "Educación Ambiental", icon: Star },
+        { id: "tecnologia", label: "Tecnología Sostenible", icon: Settings },
+        { id: "aliados", label: "Aliados y Patrocinadores", icon: Handshake }
+      ]
+    },
+    {
+      id: "experiencias",
+      label: "Experiencias",
+      icon: Star,
+      type: "category",
+      subcategories: [
+        { id: "mis-experiencias", label: "Mis Experiencias", icon: Star },
+        { id: "crear-experiencia", label: "Crear Nueva", icon: Plus },
+        { id: "experiencias-populares", label: "Más Populares", icon: Heart },
+        { id: "experiencias-pending", label: "Pendientes Aprobación", icon: Clock }
+      ]
+    },
+    {
+      id: "mensajes",
+      label: "Mensajes",
+      icon: MessageCircle,
+      type: "category", 
+      subcategories: [
+        { id: "chat-general", label: "Chat General", icon: MessageCircle },
+        { id: "consultas-empresas", label: "Consultas Empresas", icon: Building2 },
+        { id: "soporte-tecnico", label: "Soporte Técnico", icon: Settings }
+      ]
+    },
+    {
+      id: "estadisticas",
+      label: "Estadísticas",
+      icon: BarChart3,
+      type: "category",
+      subcategories: [
+        { id: "dashboard-general", label: "Dashboard General", icon: BarChart3 },
+        { id: "analytics-experiencias", label: "Analytics Experiencias", icon: Star },
+        { id: "metricas-engagement", label: "Métricas Engagement", icon: Users },
+        { id: "reportes-financieros", label: "Reportes Financieros", icon: DollarSign }
+      ]
+    },
+    { id: "admin", label: "Admin", icon: ShieldCheck, type: "single" },
+    {
+      id: "producir",
+      label: "PRODUCIR",
+      icon: TreePine,
+      type: "category",
+      subcategories: [
+        { id: "contenido-sostenible", label: "Contenido Sostenible", icon: Edit },
+        { id: "herramientas-marketing", label: "Herramientas Marketing", icon: Share2 },
+        { id: "recursos-educativos", label: "Recursos Educativos", icon: Star },
+        { id: "plantillas-experiencias", label: "Plantillas Experiencias", icon: Save }
+      ]
+    },
+    { id: "perfil", label: "Perfil", icon: User, type: "single" },
+    { id: "salir", label: "Salir", icon: LogOut, type: "single" }
   ];
+
+  const toggleCategory = (categoryId: string) => {
+    setExpandedCategories(prev => 
+      prev.includes(categoryId) 
+        ? prev.filter(id => id !== categoryId)
+        : [...prev, categoryId]
+    );
+  };
 
   // Desktop Sidebar Component
   const DesktopSidebar = () => {
@@ -148,27 +221,78 @@ const PortalEmpresasDashboard = () => {
 
           {/* Navigation Items */}
           <div className="flex-1 p-2 space-y-1 overflow-y-auto">
-            {sidebarItems.map((item) => {
+            {menuStructure.map((item) => {
               const Icon = item.icon;
+              const isExpanded = expandedCategories.includes(item.id);
+              
+              if (item.type === "single") {
+                return (
+                  <button
+                    key={item.id}
+                    onClick={() => {
+                      if (item.id === 'admin') {
+                        window.location.href = '/admin';
+                      } else if (item.id === 'perfil') {
+                        setActiveSection('perfil');
+                      } else if (item.id === 'salir') {
+                        window.location.href = '/';
+                      } else {
+                        setActiveSection(item.id);
+                      }
+                    }}
+                    className={`w-full flex items-center p-3 rounded-lg transition-all duration-200 ${
+                      activeSection === item.id 
+                        ? 'bg-white/20 text-white shadow-lg border border-white/30 backdrop-blur-sm' 
+                        : 'text-white/80 hover:bg-white/10 hover:text-white backdrop-blur-sm'
+                    } justify-start`}
+                  >
+                    <Icon className="w-5 h-5 flex-shrink-0" />
+                    <span className="ml-3 text-sm font-medium truncate">{item.label}</span>
+                  </button>
+                );
+              }
+              
               return (
-                <button
-                  key={item.id}
-                  onClick={() => {
-                    if (item.id === 'admin') {
-                      window.location.href = '/admin';
-                    } else {
-                      setActiveSection(item.id);
-                    }
-                  }}
-                  className={`w-full flex items-center p-3 rounded-lg transition-all duration-200 ${
-                    activeSection === item.id 
-                      ? 'bg-white/20 text-white shadow-lg border border-white/30 backdrop-blur-sm' 
-                      : 'text-white/80 hover:bg-white/10 hover:text-white backdrop-blur-sm'
-                  } justify-start`}
-                >
-                  <Icon className="w-5 h-5 flex-shrink-0" />
-                  <span className="ml-3 text-sm font-medium truncate">{item.label}</span>
-                </button>
+                <div key={item.id} className="space-y-1">
+                  <button
+                    onClick={() => toggleCategory(item.id)}
+                    className={`w-full flex items-center p-3 rounded-lg transition-all duration-200 ${
+                      activeSection === item.id 
+                        ? 'bg-white/20 text-white shadow-lg border border-white/30 backdrop-blur-sm' 
+                        : 'text-white/80 hover:bg-white/10 hover:text-white backdrop-blur-sm'
+                    } justify-start`}
+                  >
+                    <Icon className="w-5 h-5 flex-shrink-0" />
+                    <span className="ml-3 text-sm font-medium truncate">{item.label}</span>
+                    {isExpanded ? (
+                      <ChevronDown className="w-4 h-4 ml-auto" />
+                    ) : (
+                      <ChevronRight className="w-4 h-4 ml-auto" />
+                    )}
+                  </button>
+                  
+                  {isExpanded && item.subcategories && (
+                    <div className="ml-4 space-y-1">
+                      {item.subcategories.map((subItem) => {
+                        const SubIcon = subItem.icon;
+                        return (
+                          <button
+                            key={subItem.id}
+                            onClick={() => setActiveSection(subItem.id)}
+                            className={`w-full flex items-center p-2 rounded-lg transition-all duration-200 ${
+                              activeSection === subItem.id 
+                                ? 'bg-white/20 text-white shadow-lg border border-white/30 backdrop-blur-sm' 
+                                : 'text-white/60 hover:bg-white/5 hover:text-white/80 backdrop-blur-sm'
+                            } justify-start`}
+                          >
+                            <SubIcon className="w-4 h-4 flex-shrink-0" />
+                            <span className="ml-3 text-xs font-medium truncate">{subItem.label}</span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
               );
             })}
           </div>
@@ -263,28 +387,82 @@ const PortalEmpresasDashboard = () => {
               )}
 
               {/* Navigation Items */}
-              {sidebarItems.map((item) => {
+              {menuStructure.map((item) => {
                 const Icon = item.icon;
+                const isExpanded = expandedCategories.includes(item.id);
+                
+                if (item.type === "single") {
+                  return (
+                    <button
+                      key={item.id}
+                      onClick={() => {
+                        if (item.id === 'admin') {
+                          window.location.href = '/admin';
+                        } else if (item.id === 'perfil') {
+                          setActiveSection('perfil');
+                        } else if (item.id === 'salir') {
+                          window.location.href = '/';
+                        } else {
+                          setActiveSection(item.id);
+                        }
+                        setIsMobileSidebarExpanded(false);
+                      }}
+                      className={`w-full flex items-center p-3 rounded-lg transition-all duration-200 ${
+                        activeSection === item.id 
+                          ? 'bg-white/20 text-white shadow-lg border border-white/30 backdrop-blur-sm' 
+                          : 'text-white/80 hover:bg-white/10 hover:text-white backdrop-blur-sm'
+                      }`}
+                    >
+                      <Icon className="w-5 h-5 flex-shrink-0" />
+                      <span className="ml-3 text-sm font-medium">{item.label}</span>
+                    </button>
+                  );
+                }
+                
                 return (
-                  <button
-                    key={item.id}
-                    onClick={() => {
-                      if (item.id === 'admin') {
-                        window.location.href = '/admin';
-                      } else {
-                        setActiveSection(item.id);
-                      }
-                      setIsMobileSidebarExpanded(false);
-                    }}
-                    className={`w-full flex items-center p-3 rounded-lg transition-all duration-200 ${
-                      activeSection === item.id 
-                        ? 'bg-white/20 text-white shadow-lg border border-white/30 backdrop-blur-sm' 
-                        : 'text-white/80 hover:bg-white/10 hover:text-white backdrop-blur-sm'
-                    }`}
-                  >
-                    <Icon className="w-5 h-5 flex-shrink-0" />
-                    <span className="ml-3 text-sm font-medium">{item.label}</span>
-                  </button>
+                  <div key={item.id} className="space-y-1">
+                    <button
+                      onClick={() => toggleCategory(item.id)}
+                      className={`w-full flex items-center p-3 rounded-lg transition-all duration-200 ${
+                        activeSection === item.id 
+                          ? 'bg-white/20 text-white shadow-lg border border-white/30 backdrop-blur-sm' 
+                          : 'text-white/80 hover:bg-white/10 hover:text-white backdrop-blur-sm'
+                      }`}
+                    >
+                      <Icon className="w-5 h-5 flex-shrink-0" />
+                      <span className="ml-3 text-sm font-medium">{item.label}</span>
+                      {isExpanded ? (
+                        <ChevronDown className="w-4 h-4 ml-auto" />
+                      ) : (
+                        <ChevronRight className="w-4 h-4 ml-auto" />
+                      )}
+                    </button>
+                    
+                    {isExpanded && item.subcategories && (
+                      <div className="ml-4 space-y-1">
+                        {item.subcategories.map((subItem) => {
+                          const SubIcon = subItem.icon;
+                          return (
+                            <button
+                              key={subItem.id}
+                              onClick={() => {
+                                setActiveSection(subItem.id);
+                                setIsMobileSidebarExpanded(false);
+                              }}
+                              className={`w-full flex items-center p-2 rounded-lg transition-all duration-200 ${
+                                activeSection === subItem.id 
+                                  ? 'bg-white/20 text-white shadow-lg border border-white/30 backdrop-blur-sm' 
+                                  : 'text-white/60 hover:bg-white/5 hover:text-white/80 backdrop-blur-sm'
+                              }`}
+                            >
+                              <SubIcon className="w-4 h-4 flex-shrink-0" />
+                              <span className="ml-3 text-xs font-medium">{subItem.label}</span>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    )}
+                  </div>
                 );
               })}
 
@@ -599,7 +777,21 @@ const PortalEmpresasDashboard = () => {
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <h1 className="text-xl font-bold text-white tracking-wide hidden sm:block">
-              {sidebarItems.find(item => item.id === activeSection)?.label || "Portal Empresas"}
+              {(() => {
+                // Find the active section in main menu or subcategories
+                for (const item of menuStructure) {
+                  if (item.id === activeSection) {
+                    return item.label;
+                  }
+                  if (item.subcategories) {
+                    const subItem = item.subcategories.find(sub => sub.id === activeSection);
+                    if (subItem) {
+                      return subItem.label;
+                    }
+                  }
+                }
+                return "Portal Empresas";
+              })()}
             </h1>
           </div>
           
