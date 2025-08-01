@@ -1024,7 +1024,82 @@ const PortalEmpresasDashboard = () => {
           })}
         </nav>
         
-        
+        {/* User Profile Section */}
+        <div className="p-3 border-t border-gray-600/30 mt-2">
+          <div className="backdrop-blur-xl bg-gray-800/30 border border-gray-600/20 rounded-lg p-3">
+            {user ? (
+              <div className="space-y-2">
+                {/* Profile Picture */}
+                <div className="flex items-center justify-center">
+                  {user.profilePicture ? (
+                    <img 
+                      src={user.profilePicture} 
+                      alt={`${user.firstName} ${user.lastName}`}
+                      className="w-12 h-12 rounded-full object-cover border-2 border-[#cad95e]"
+                    />
+                  ) : (
+                    <div className="w-12 h-12 rounded-full bg-[#cad95e]/20 border-2 border-[#cad95e] flex items-center justify-center">
+                      <User className="w-6 h-6 text-[#cad95e]" />
+                    </div>
+                  )}
+                </div>
+
+                {/* User Info */}
+                <div className="text-center">
+                  <h3 className="text-white font-sans text-sm font-medium">
+                    {user.firstName} {user.lastName}
+                  </h3>
+                  <p className="text-gray-400 text-xs mt-1 truncate">
+                    {user.email}
+                  </p>
+                  {user.companyName && (
+                    <p className="text-[#cad95e] text-xs mt-1 font-medium truncate">
+                      {user.companyName}
+                    </p>
+                  )}
+                  <div className="mt-2">
+                    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs bg-[#cad95e]/20 text-[#cad95e] border border-[#cad95e]/30">
+                      {user.role === 'empresa' ? 'Empresa' : user.role === 'viajero' ? 'Viajero' : 'Usuario'}
+                    </span>
+                  </div>
+                  {user.city && (
+                    <p className="text-gray-400 text-xs mt-2 flex items-center justify-center">
+                      <MapPin className="w-3 h-3 mr-1" />
+                      {user.city}
+                    </p>
+                  )}
+                </div>
+
+                {/* Quick Actions */}
+                <div className="flex space-x-1 pt-2">
+                  <Button
+                    onClick={() => setActiveSection("ajustes")}
+                    variant="outline"
+                    size="sm"
+                    className="flex-1 bg-gray-800/50 border-gray-600/50 text-gray-300 hover:bg-gray-700/50 hover:text-white text-xs h-7"
+                  >
+                    <Settings className="w-3 h-3 mr-1" />
+                    Perfil
+                  </Button>
+                  <Button
+                    onClick={() => window.location.href = "/api/auth/logout"}
+                    variant="outline"
+                    size="sm"
+                    className="bg-red-800/30 border-red-600/50 text-red-300 hover:bg-red-700/50 hover:text-red-200 text-xs h-7 px-2"
+                  >
+                    <LogOut className="w-3 h-3" />
+                  </Button>
+                </div>
+              </div>
+            ) : (
+              <div className="text-center">
+                <div className="w-12 h-12 rounded-full bg-gray-700 mx-auto mb-2 animate-pulse"></div>
+                <div className="h-3 bg-gray-700 rounded animate-pulse mb-1"></div>
+                <div className="h-2 bg-gray-700 rounded animate-pulse"></div>
+              </div>
+            )}
+          </div>
+        </div>
       </div>
 
       {/* Compact main content with glassmorphism background (except for map) */}
