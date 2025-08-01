@@ -33,7 +33,8 @@ import {
   Save,
   Shield,
   Menu,
-  X
+  X,
+  ChevronLeft
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -814,12 +815,12 @@ const PortalEmpresasDashboard = () => {
         <div className={`md:hidden fixed top-0 left-0 bottom-0 z-50 transition-all duration-300 ease-in-out ${
           isMobileSidebarExpanded ? 'w-60' : 'w-16'
         }`}>
-          <div className="h-full backdrop-blur-xl bg-gray-900/95 border-r border-gray-600/30 shadow-2xl flex flex-col">
+          <div className="h-full backdrop-blur-xl bg-gray-900/20 border-r border-white/20 shadow-2xl flex flex-col">
             {/* Toggle Button */}
-            <div className="p-3 border-b border-gray-600/30">
+            <div className="p-3 border-b border-white/20">
               <button
                 onClick={() => setIsMobileSidebarExpanded(!isMobileSidebarExpanded)}
-                className="w-full flex items-center justify-center p-2 rounded-lg bg-gray-800/50 hover:bg-gray-700/50 transition-colors text-white"
+                className="w-full flex items-center justify-center p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors text-white backdrop-blur-sm"
               >
                 {isMobileSidebarExpanded ? (
                   <ChevronLeft className="w-5 h-5" />
@@ -830,7 +831,7 @@ const PortalEmpresasDashboard = () => {
             </div>
 
             {/* User Profile Section */}
-            <div className="p-3 border-b border-gray-600/30">
+            <div className="p-3 border-b border-white/20">
               {user ? (
                 <div className="space-y-2">
                   <div className={`flex items-center ${isMobileSidebarExpanded ? 'justify-start' : 'justify-center'}`}>
@@ -850,7 +851,7 @@ const PortalEmpresasDashboard = () => {
                         <h3 className="text-white font-sans text-sm font-medium truncate">
                           {user.firstName} {user.lastName}
                         </h3>
-                        <p className="text-gray-400 text-xs truncate">
+                        <p className="text-white/70 text-xs truncate">
                           {user.companyName || user.email}
                         </p>
                       </div>
@@ -913,7 +914,7 @@ const PortalEmpresasDashboard = () => {
             </div>
 
             {/* Quick Actions */}
-            <div className="p-3 border-t border-gray-600/30">
+            <div className="p-3 border-t border-white/20">
               <div className={`flex ${isMobileSidebarExpanded ? 'space-x-2' : 'flex-col space-y-2'}`}>
                 <button
                   onClick={() => {
@@ -922,14 +923,14 @@ const PortalEmpresasDashboard = () => {
                       setIsMobileSidebarExpanded(false);
                     }
                   }}
-                  className={`${isMobileSidebarExpanded ? 'flex-1' : 'w-full'} flex items-center justify-center p-2 rounded-lg bg-gray-800/50 hover:bg-gray-700/50 transition-colors text-gray-300 hover:text-white`}
+                  className={`${isMobileSidebarExpanded ? 'flex-1' : 'w-full'} flex items-center justify-center p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors text-white backdrop-blur-sm`}
                 >
                   <Settings className="w-4 h-4" />
                   {isMobileSidebarExpanded && <span className="ml-2 text-xs">Perfil</span>}
                 </button>
                 <button
                   onClick={() => window.location.href = "/api/auth/logout"}
-                  className={`${isMobileSidebarExpanded ? 'px-3' : 'w-full'} flex items-center justify-center p-2 rounded-lg bg-red-800/30 hover:bg-red-700/50 transition-colors text-red-300 hover:text-red-200`}
+                  className={`${isMobileSidebarExpanded ? 'px-3' : 'w-full'} flex items-center justify-center p-2 rounded-lg bg-red-500/20 hover:bg-red-500/30 transition-colors text-white backdrop-blur-sm`}
                 >
                   <LogOut className="w-4 h-4" />
                   {isMobileSidebarExpanded && <span className="ml-2 text-xs">Salir</span>}
@@ -1011,15 +1012,15 @@ const PortalEmpresasDashboard = () => {
         </header>
         
         {/* Compact glassmorphism sidebar for map view */}
-        <div className="absolute top-24 left-4 z-50 w-52 backdrop-blur-xl bg-gray-900/40 border border-gray-600/30 rounded-xl shadow-2xl">
-          <div className="p-3 border-b border-gray-600/30">
+        <div className="absolute top-24 left-4 z-50 w-52 backdrop-blur-xl bg-gray-900/20 border border-white/20 rounded-xl shadow-2xl">
+          <div className="p-3 border-b border-white/20">
             <div className="flex items-center space-x-2">
               <div className="w-6 h-6 bg-green-600/80 rounded-lg flex items-center justify-center shadow-lg backdrop-blur-sm">
                 <span className="text-white font-bold text-xs">N</span>
               </div>
               <span className="text-lg font-bold text-white tracking-wide">NATUR</span>
             </div>
-            <p className="text-gray-300 text-xs mt-1">Portal Empresas</p>
+            <p className="text-white/70 text-xs mt-1">Portal Empresas</p>
           </div>
           
           <nav className="p-2 space-y-0.5">
@@ -1037,8 +1038,8 @@ const PortalEmpresasDashboard = () => {
                   }}
                   className={`w-full flex items-center space-x-2 px-3 py-2 rounded-lg transition-all duration-200 ${
                     activeSection === item.id 
-                      ? 'bg-green-600/30 text-white shadow-lg border border-green-400/30 backdrop-blur-sm' 
-                      : 'text-gray-200 hover:bg-gray-700/30 hover:text-white hover:shadow-md'
+                      ? 'bg-white/20 text-white shadow-lg border border-white/30 backdrop-blur-sm' 
+                      : 'text-white/80 hover:bg-white/10 hover:text-white hover:shadow-md backdrop-blur-sm'
                   }`}
                 >
                   <Icon className="w-4 h-4" />
@@ -1270,12 +1271,12 @@ const PortalEmpresasDashboard = () => {
       <div className={`md:hidden fixed top-0 left-0 bottom-0 z-50 transition-all duration-300 ease-in-out ${
         isMobileSidebarExpanded ? 'w-60' : 'w-16'
       }`}>
-        <div className="h-full backdrop-blur-xl bg-gray-900/95 border-r border-gray-600/30 shadow-2xl flex flex-col">
+        <div className="h-full backdrop-blur-xl bg-gray-900/20 border-r border-white/20 shadow-2xl flex flex-col">
           {/* Toggle Button */}
-          <div className="p-3 border-b border-gray-600/30">
+          <div className="p-3 border-b border-white/20">
             <button
               onClick={() => setIsMobileSidebarExpanded(!isMobileSidebarExpanded)}
-              className="w-full flex items-center justify-center p-2 rounded-lg bg-gray-800/50 hover:bg-gray-700/50 transition-colors text-white"
+              className="w-full flex items-center justify-center p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors text-white backdrop-blur-sm"
             >
               {isMobileSidebarExpanded ? (
                 <ChevronLeft className="w-5 h-5" />
@@ -1286,7 +1287,7 @@ const PortalEmpresasDashboard = () => {
           </div>
 
           {/* User Profile Section */}
-          <div className="p-3 border-b border-gray-600/30">
+          <div className="p-3 border-b border-white/20">
             {user ? (
               <div className="space-y-2">
                 <div className={`flex items-center ${isMobileSidebarExpanded ? 'justify-start' : 'justify-center'}`}>
@@ -1306,7 +1307,7 @@ const PortalEmpresasDashboard = () => {
                       <h3 className="text-white font-sans text-sm font-medium truncate">
                         {user.firstName} {user.lastName}
                       </h3>
-                      <p className="text-gray-400 text-xs truncate">
+                      <p className="text-white/70 text-xs truncate">
                         {user.companyName || user.email}
                       </p>
                     </div>
@@ -1336,8 +1337,8 @@ const PortalEmpresasDashboard = () => {
                   }}
                   className={`w-full flex items-center p-3 rounded-lg transition-all duration-200 ${
                     activeSection === item.id 
-                      ? 'bg-green-600/30 text-white shadow-lg border border-green-400/30' 
-                      : 'text-gray-300 hover:bg-gray-700/30 hover:text-white'
+                      ? 'bg-white/20 text-white shadow-lg border border-white/30 backdrop-blur-sm' 
+                      : 'text-white/80 hover:bg-white/10 hover:text-white backdrop-blur-sm'
                   } ${!isMobileSidebarExpanded ? 'justify-center' : 'justify-start'}`}
                 >
                   <Icon className="w-5 h-5 flex-shrink-0" />
@@ -1370,7 +1371,7 @@ const PortalEmpresasDashboard = () => {
           </div>
 
           {/* Quick Actions */}
-          <div className="p-3 border-t border-gray-600/30">
+          <div className="p-3 border-t border-white/20">
             <div className={`flex ${isMobileSidebarExpanded ? 'space-x-2' : 'flex-col space-y-2'}`}>
               <button
                 onClick={() => {
@@ -1379,14 +1380,14 @@ const PortalEmpresasDashboard = () => {
                     setIsMobileSidebarExpanded(false);
                   }
                 }}
-                className={`${isMobileSidebarExpanded ? 'flex-1' : 'w-full'} flex items-center justify-center p-2 rounded-lg bg-gray-800/50 hover:bg-gray-700/50 transition-colors text-gray-300 hover:text-white`}
+                className={`${isMobileSidebarExpanded ? 'flex-1' : 'w-full'} flex items-center justify-center p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors text-white backdrop-blur-sm`}
               >
                 <Settings className="w-4 h-4" />
                 {isMobileSidebarExpanded && <span className="ml-2 text-xs">Perfil</span>}
               </button>
               <button
                 onClick={() => window.location.href = "/api/auth/logout"}
-                className={`${isMobileSidebarExpanded ? 'px-3' : 'w-full'} flex items-center justify-center p-2 rounded-lg bg-red-800/30 hover:bg-red-700/50 transition-colors text-red-300 hover:text-red-200`}
+                className={`${isMobileSidebarExpanded ? 'px-3' : 'w-full'} flex items-center justify-center p-2 rounded-lg bg-red-500/20 hover:bg-red-500/30 transition-colors text-white backdrop-blur-sm`}
               >
                 <LogOut className="w-4 h-4" />
                 {isMobileSidebarExpanded && <span className="ml-2 text-xs">Salir</span>}
