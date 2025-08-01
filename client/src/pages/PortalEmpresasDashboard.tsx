@@ -105,14 +105,7 @@ const PortalEmpresasDashboard = () => {
     ? directoryUsers.filter((user: any) => user.role === 'empresa') 
     : [];
   
-  // Debug info
-  console.log("Directory Debug:", {
-    directoryUsers,
-    directoryLoading,
-    directoryError: directoryError?.message || directoryError,
-    typedLength: typedDirectoryUsers.length,
-    empresasOnly: typedDirectoryUsers.length
-  });
+  // Companies successfully filtered
   
 
 
