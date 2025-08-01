@@ -31,7 +31,9 @@ import {
   Code,
   Repeat2,
   Save,
-  Shield
+  Shield,
+  Menu,
+  X
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -59,6 +61,7 @@ const PortalEmpresasDashboard = () => {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [activeSection, setActiveSection] = useState("mapa");
   const [showExperienceForm, setShowExperienceForm] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // Optimized current user data fetch with better error handling
   const { data: currentUser, isLoading: userLoading, error: userError, refetch: refetchUser } = useQuery({
@@ -1058,8 +1061,29 @@ const PortalEmpresasDashboard = () => {
           </div>
         </header>
 
+      {/* Mobile burger menu button */}
+      <div className="md:hidden fixed top-4 left-4 z-[60]">
+        <Button
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          className="w-12 h-12 bg-gray-900/80 backdrop-blur-xl border border-gray-600/30 hover:bg-gray-800/80 text-white rounded-xl shadow-lg"
+          size="sm"
+        >
+          {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+        </Button>
+      </div>
+
+      {/* Mobile overlay */}
+      {mobileMenuOpen && (
+        <div 
+          className="md:hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-[55]"
+          onClick={() => setMobileMenuOpen(false)}
+        />
+      )}
+
       {/* Compact glassmorphism sidebar for all pages */}
-      <div className="absolute top-24 left-4 z-50 w-52 backdrop-blur-xl bg-gray-900/40 border border-gray-600/30 rounded-xl shadow-2xl">
+      <div className={`absolute top-24 left-4 z-50 w-52 backdrop-blur-xl bg-gray-900/40 border border-gray-600/30 rounded-xl shadow-2xl transition-transform duration-300 ${
+        mobileMenuOpen ? 'translate-x-0' : 'max-md:-translate-x-full'
+      } md:translate-x-0`}>
         <div className="p-3 border-b border-gray-600/30">
           <div className="flex items-center space-x-2">
             <div className="w-6 h-6 bg-green-600/80 rounded-lg flex items-center justify-center shadow-lg backdrop-blur-sm">
@@ -1076,7 +1100,10 @@ const PortalEmpresasDashboard = () => {
             return (
               <button
                 key={item.id}
-                onClick={() => setActiveSection(item.id)}
+                onClick={() => {
+                  setActiveSection(item.id);
+                  setMobileMenuOpen(false);
+                }}
                 className={`w-full flex items-center space-x-2 px-3 py-2 rounded-lg transition-all duration-200 ${
                   activeSection === item.id 
                     ? 'bg-green-600/30 text-white shadow-lg border border-green-400/30 backdrop-blur-sm' 
@@ -1139,7 +1166,10 @@ const PortalEmpresasDashboard = () => {
                 {/* Quick Actions */}
                 <div className="flex space-x-1 pt-2">
                   <Button
-                    onClick={() => setActiveSection("ajustes")}
+                    onClick={() => {
+                      setActiveSection("ajustes");
+                      setMobileMenuOpen(false);
+                    }}
                     variant="outline"
                     size="sm"
                     className="flex-1 bg-gray-800/50 border-gray-600/50 text-gray-300 hover:bg-gray-700/50 hover:text-white text-xs h-7"
@@ -1170,7 +1200,10 @@ const PortalEmpresasDashboard = () => {
         {/* Produce Button Section */}
         <div className="p-3 border-t border-gray-600/30">
           <Button
-            onClick={() => setActiveSection("producir")}
+            onClick={() => {
+              setActiveSection("producir");
+              setMobileMenuOpen(false);
+            }}
             className={`w-full bg-gradient-to-r from-[#cad95e] to-green-500 hover:from-green-500 hover:to-[#cad95e] text-black font-bold transition-all duration-300 hover:scale-105 shadow-lg ${
               activeSection === "producir" ? "scale-105 shadow-xl" : ""
             }`}
@@ -1185,7 +1218,7 @@ const PortalEmpresasDashboard = () => {
 
       {/* Compact main content with glassmorphism background (except for map) */}
       {activeSection !== "mapa" && (
-        <main className="absolute top-24 left-60 right-4 bottom-4 z-40 backdrop-blur-xl bg-gray-900/40 border border-gray-600/30 rounded-xl shadow-2xl overflow-hidden">
+        <main className="absolute top-24 md:left-60 left-4 right-4 bottom-4 z-40 backdrop-blur-xl bg-gray-900/40 border border-gray-600/30 rounded-xl shadow-2xl overflow-hidden">
           <div className="h-full overflow-y-auto p-4">
             {renderContent()}
           </div>
