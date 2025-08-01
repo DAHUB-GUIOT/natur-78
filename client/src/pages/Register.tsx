@@ -1,6 +1,6 @@
 
 import React from "react";
-import { HeaderButtons } from "@/components/layout/HeaderButtons";
+import { UnifiedHeader } from "@/components/layout/UnifiedHeader";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowLeft, Building2 } from "lucide-react";
@@ -23,23 +23,7 @@ const Register = () => {
       {/* Light Gradient Overlay */}
       <div className="absolute inset-0 bg-black/20"></div>
       
-      {/* Top Navigation - Fixed with Green Background */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-green-600 border-b border-green-700 shadow-lg">
-        <div className="flex items-center justify-between max-w-7xl mx-auto px-6 py-4">
-          <div className="flex items-center space-x-4">
-            <span className="font-bold text-2xl font-gasoek" style={{ color: '#cad95e' }}>N</span>
-          </div>
-          
-          <div className="flex items-center space-x-4">
-            <Link to="/">
-              <Button variant="ghost" className="text-white hover:bg-white/20">
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                Volver al inicio
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </nav>
+      <UnifiedHeader title="Registro NATUR" showSearch={false} />
       
       {/* Main Content */}
       <div className="relative z-10 pt-24 pb-12 px-4 sm:px-6 md:px-8">

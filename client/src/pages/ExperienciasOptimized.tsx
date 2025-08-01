@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { HeaderButtons } from "@/components/layout/HeaderButtons";
+import { UnifiedHeader } from "@/components/layout/UnifiedHeader";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -217,7 +217,7 @@ const ExperienciasOptimized = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <HeaderButtons showPortalButtons={false} />
+      <UnifiedHeader title="Experiencias NATUR" showSearch={true} />
       <div className="bg-white shadow-sm border-b">
         <div className="container mx-auto px-4 py-6 max-w-7xl">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">

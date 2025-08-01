@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { HeaderButtons } from "@/components/layout/HeaderButtons";
+import { UnifiedHeader } from "@/components/layout/UnifiedHeader";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -196,7 +196,7 @@ const AdminOptimized = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <HeaderButtons showPortalButtons={false} />
+      <UnifiedHeader title="Administración NATUR" showSearch={true} />
       {/* Header */}
       <div className="bg-white shadow-sm border-b">
         <div className="container mx-auto px-4 py-6 max-w-7xl">

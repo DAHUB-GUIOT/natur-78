@@ -162,10 +162,10 @@ export const UnifiedHeader: React.FC<UnifiedHeaderProps> = ({
                               </h4>
                               <ul className="space-y-1">
                                 {subcat.items.map((subItem, subItemIndex) => {
-                                  const SubIcon = subItem.icon;
+                                  const SubIcon = (subItem as any).icon;
                                   return (
                                     <li key={subItemIndex}>
-                                      <Link href={subItem.href}>
+                                      <Link href={subItem.href || '#'}>
                                         <Button
                                           variant="ghost"
                                           className="w-full justify-start text-xs text-white/80 hover:text-white hover:bg-white/10 h-8"
@@ -229,7 +229,7 @@ export const UnifiedHeader: React.FC<UnifiedHeaderProps> = ({
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" className="relative h-8 w-8 rounded-full">
                     <Avatar className="h-8 w-8">
-                      <AvatarImage src={user.profileImageUrl || "/placeholder-avatar.png"} />
+                      <AvatarImage src={(user as any).profileImageUrl || "/placeholder-avatar.png"} />
                       <AvatarFallback className="bg-[#cad95e]/20 text-[#cad95e]">
                         <User className="w-4 h-4" />
                       </AvatarFallback>
@@ -360,9 +360,9 @@ export const UnifiedHeader: React.FC<UnifiedHeaderProps> = ({
                               {subcat.group}
                             </div>
                             {subcat.items.map((subItem, subItemIndex) => {
-                              const SubIcon = subItem.icon;
+                              const SubIcon = (subItem as any).icon;
                               return (
-                                <Link key={subItemIndex} href={subItem.href}>
+                                <Link key={subItemIndex} href={subItem.href || '#'}>
                                   <Button
                                     variant="ghost"
                                     className="w-full justify-start text-xs text-white/70 hover:text-white hover:bg-white/10 h-8 ml-2"
