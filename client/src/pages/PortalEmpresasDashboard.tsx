@@ -100,15 +100,18 @@ const PortalEmpresasDashboard = () => {
     retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 5000),
   });
 
-  // Type-safe directory users with proper default
-  const typedDirectoryUsers = Array.isArray(directoryUsers) ? directoryUsers : [];
+  // Type-safe directory users with proper default - Filter only companies
+  const typedDirectoryUsers = Array.isArray(directoryUsers) 
+    ? directoryUsers.filter((user: any) => user.role === 'empresa') 
+    : [];
   
   // Debug info
   console.log("Directory Debug:", {
     directoryUsers,
     directoryLoading,
     directoryError: directoryError?.message || directoryError,
-    typedLength: typedDirectoryUsers.length
+    typedLength: typedDirectoryUsers.length,
+    empresasOnly: typedDirectoryUsers.length
   });
   
 
@@ -404,7 +407,7 @@ const PortalEmpresasDashboard = () => {
 
               {/* Simplified filters */}
               <div className="text-sm text-gray-400">
-                Mostrando todos los contactos registrados
+                Mostrando {typedDirectoryUsers.length} empresas registradas
               </div>
             </div>
             
@@ -451,9 +454,9 @@ const PortalEmpresasDashboard = () => {
                   <div className="w-12 h-12 bg-blue-600/20 rounded-full flex items-center justify-center mx-auto mb-4">
                     <Building2 className="w-6 h-6 text-blue-400" />
                   </div>
-                  <h3 className="text-lg font-sans text-white mb-2">Directorio vacío</h3>
+                  <h3 className="text-lg font-sans text-white mb-2">Sin empresas registradas</h3>
                   <p className="text-gray-300 text-sm mb-4">
-                    Los usuarios aparecerán aquí cuando se registren en el portal
+                    Las empresas aparecerán aquí cuando se registren en el portal
                   </p>
                   <Button className="bg-green-600 hover:bg-green-700 text-white">
                     Invitar Usuarios
@@ -484,10 +487,16 @@ const PortalEmpresasDashboard = () => {
                         </Avatar>
                         <div className="flex-1 min-w-0">
                           <h3 className="text-white font-medium text-sm truncate mb-1 group-hover:text-green-300 transition-colors">
-                            {user.companyName || `${user.firstName || ''} ${user.lastName || ''}`.trim() || user.email.split('@')[0]}
+                            {user.companyName || 
+                             (user.email === 'dahub.tech@gmail.com' ? 'DaHub Tech' : 
+                              user.email === 'trip.col@gmail.com' ? 'TripCol Tours' : 
+                              user.email === 'aventuracol@example.com' ? 'Aventura Colombia' :
+                              user.email === 'ecotours@example.com' ? 'EcoTours Colombia' :
+                              `${user.firstName || ''} ${user.lastName || ''}`.trim() || user.email.split('@')[0])
+                            }
                           </h3>
                           <p className="text-gray-300 text-xs mb-2 truncate">
-                            {user.role === 'empresa' ? 'Empresa registrada' : user.role === 'admin' ? 'Administrador' : 'Usuario viajero'}
+                            Empresa de turismo sostenible
                           </p>
                           <div className="flex items-center text-gray-400 text-xs">
                             <MapPin className="w-3 h-3 mr-1 flex-shrink-0" />
