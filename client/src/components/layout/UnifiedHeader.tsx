@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Menu, Search, Bell, MessageCircle, Globe, User, LogOut, X, Home, Map, Building2, Star, BarChart3, ShieldCheck, Settings } from "lucide-react";
+import { Menu, Search, Bell, MessageCircle, Globe, User, LogOut, X, Home, Map, Building2, Star, BarChart3, ShieldCheck, Settings, ChevronDown, ChevronRight, Users, MapPin, Heart, Clock, Plus, Handshake } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -26,16 +26,87 @@ export const UnifiedHeader: React.FC<UnifiedHeaderProps> = ({
   variant = 'main'
 }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [expandedDesktopCategory, setExpandedDesktopCategory] = useState<string | null>(null);
+  const [expandedMobileCategories, setExpandedMobileCategories] = useState<Set<string>>(new Set());
   const { user } = useAuth();
   const [location] = useLocation();
 
   const navigationItems = [
-    { id: 'inicio', label: 'Inicio', href: '/', icon: Home },
-    { id: 'plataforma', label: 'Plataforma', href: '/plataforma', icon: Building2 },
-    { id: 'agenda', label: 'Agenda', href: '/agenda', icon: Star },
-    { id: 'mapa', label: 'Mapa', href: '/mapa', icon: Map },
-    { id: 'experiencias', label: 'Experiencias', href: '/experiencias', icon: Star },
-    { id: 'networking', label: 'Networking', href: '/networking', icon: Building2 },
+    { id: 'inicio', label: 'Inicio', href: '/', icon: Home, type: 'single' },
+    { id: 'mapa', label: 'Mapa', href: '/mapa', icon: Map, type: 'single' },
+    {
+      id: 'festival',
+      label: 'Festival NATUR',
+      icon: Star,
+      type: 'category',
+      subcategories: [
+        {
+          group: 'VIVE NATUR',
+          items: [
+            { label: 'Charlas NATUR (Agenda Académica)', href: '/charlas' },
+            { label: 'Rooftop + Zona de Comidas', href: '/rooftop' },
+            { label: 'Emprendimientos Sostenibles', href: '/emprendimientos' },
+            { label: 'Zona Chill', href: '/zona-chill' },
+            { label: 'Foro Colombia Sostenible 2025', href: '/foro' }
+          ]
+        },
+        {
+          group: 'NATUR PRO',
+          items: [
+            { label: 'NATUR PRO', href: '/natur-pro' },
+            { label: '+ VIVE NATUR', href: '/vive-natur-plus' },
+            { label: 'Cartel de Artistas', href: '/artistas' },
+            { label: 'Talleres', href: '/talleres' },
+            { label: 'Zona Startups', href: '/startups' },
+            { label: 'Coffee Talks / Speed Talks', href: '/coffee-talks' },
+            { label: 'Rumba y Manifestaciones', href: '/rumba' },
+            { label: 'Zona Wellness', href: '/wellness' },
+            { label: 'Experiencia NATUR', href: '/experiencia' },
+            { label: 'Zona VIP', href: '/vip' },
+            { label: 'Zona Kinder & Coffee Party', href: '/zona-kinder' }
+          ]
+        }
+      ]
+    },
+    {
+      id: 'directorio',
+      label: 'Directorio',
+      icon: Building2,
+      type: 'category',
+      subcategories: [
+        {
+          group: 'Categorías',
+          items: [
+            { label: 'Agencias Turismo Sostenible', href: '/directorio/turismo-sostenible', icon: Globe },
+            { label: 'Alojamientos Sostenibles', href: '/directorio/alojamientos', icon: Building2 },
+            { label: 'Gastronomía Sostenible', href: '/directorio/gastronomia', icon: Users },
+            { label: 'Movilidad Ecológica', href: '/directorio/movilidad', icon: MapPin },
+            { label: 'ONG y Fundaciones', href: '/directorio/ong-fundaciones', icon: Heart },
+            { label: 'Educación Ambiental', href: '/directorio/educacion', icon: Star },
+            { label: 'Tecnología Sostenible', href: '/directorio/tecnologia', icon: Settings },
+            { label: 'Aliados y Patrocinadores', href: '/directorio/aliados', icon: Handshake }
+          ]
+        }
+      ]
+    },
+    {
+      id: 'experiencias',
+      label: 'Experiencias',
+      icon: Star,
+      type: 'category',
+      subcategories: [
+        {
+          group: 'Gestión',
+          items: [
+            { label: 'Mis Experiencias', href: '/experiencias/mis-experiencias', icon: Star },
+            { label: 'Crear Nueva', href: '/experiencias/crear', icon: Plus },
+            { label: 'Más Populares', href: '/experiencias/populares', icon: Heart },
+            { label: 'Pendientes Aprobación', href: '/experiencias/pending', icon: Clock }
+          ]
+        }
+      ]
+    },
+    { id: 'agenda', label: 'Agenda', href: '/agenda', icon: Star, type: 'single' }
   ];
 
   const portalItems = [
@@ -64,21 +135,76 @@ export const UnifiedHeader: React.FC<UnifiedHeaderProps> = ({
             {navigationItems.map((item) => {
               const Icon = item.icon;
               const isActive = location === item.href;
-              return (
-                <Link key={item.id} href={item.href}>
-                  <Button
-                    variant="ghost"
-                    className={`text-sm transition-all duration-200 ${
-                      isActive 
-                        ? 'bg-white/20 text-white shadow-lg border border-white/30' 
-                        : 'text-white/80 hover:bg-white/10 hover:text-white'
-                    }`}
-                  >
-                    <Icon className="w-4 h-4 mr-2" />
-                    {item.label}
-                  </Button>
-                </Link>
-              );
+              
+              if (item.type === 'single') {
+                return (
+                  <Link key={item.id} href={item.href}>
+                    <Button
+                      variant="ghost"
+                      className={`text-sm transition-all duration-200 ${
+                        isActive 
+                          ? 'bg-white/20 text-white shadow-lg border border-white/30' 
+                          : 'text-white/80 hover:bg-white/10 hover:text-white'
+                      }`}
+                    >
+                      <Icon className="w-4 h-4 mr-2" />
+                      {item.label}
+                    </Button>
+                  </Link>
+                );
+              } else {
+                return (
+                  <div key={item.id} className="relative">
+                    <Button
+                      variant="ghost"
+                      className="text-sm text-white/80 hover:bg-white/10 hover:text-white"
+                      onMouseEnter={() => setExpandedDesktopCategory(item.id)}
+                      onMouseLeave={() => setExpandedDesktopCategory(null)}
+                    >
+                      <Icon className="w-4 h-4 mr-2" />
+                      {item.label}
+                      <ChevronDown className="w-3 h-3 ml-1" />
+                    </Button>
+                    
+                    {/* Desktop Dropdown */}
+                    {expandedDesktopCategory === item.id && (
+                      <div 
+                        className="absolute top-full left-0 mt-1 min-w-80 bg-gray-900/95 backdrop-blur-xl border border-white/20 rounded-lg shadow-2xl z-50"
+                        onMouseEnter={() => setExpandedDesktopCategory(item.id)}
+                        onMouseLeave={() => setExpandedDesktopCategory(null)}
+                      >
+                        <div className="p-4">
+                          {item.subcategories?.map((subcat, subcatIndex) => (
+                            <div key={subcatIndex} className="mb-4 last:mb-0">
+                              <h4 className="text-[#cad95e] text-sm font-medium mb-2 uppercase tracking-wide">
+                                {subcat.group}
+                              </h4>
+                              <ul className="space-y-1">
+                                {subcat.items.map((subItem, subItemIndex) => {
+                                  const SubIcon = subItem.icon;
+                                  return (
+                                    <li key={subItemIndex}>
+                                      <Link href={subItem.href}>
+                                        <Button
+                                          variant="ghost"
+                                          className="w-full justify-start text-xs text-white/80 hover:text-white hover:bg-white/10 h-8"
+                                        >
+                                          {SubIcon && <SubIcon className="w-3 h-3 mr-2" />}
+                                          {subItem.label}
+                                        </Button>
+                                      </Link>
+                                    </li>
+                                  );
+                                })}
+                              </ul>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                );
+              }
             })}
           </nav>
 
@@ -196,26 +322,84 @@ export const UnifiedHeader: React.FC<UnifiedHeaderProps> = ({
 
         {/* Mobile Navigation */}
         {isMobileMenuOpen && (
-          <div className="md:hidden py-4 border-t border-white/20 space-y-2">
+          <div className="md:hidden py-4 border-t border-white/20 space-y-2 max-h-96 overflow-y-auto">
             {navigationItems.map((item) => {
               const Icon = item.icon;
               const isActive = location === item.href;
-              return (
-                <Link key={item.id} href={item.href}>
-                  <Button
-                    variant="ghost"
-                    className={`w-full justify-start text-sm ${
-                      isActive 
-                        ? 'bg-white/20 text-white' 
-                        : 'text-white/80 hover:bg-white/10'
-                    }`}
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    <Icon className="w-4 h-4 mr-3" />
-                    {item.label}
-                  </Button>
-                </Link>
-              );
+              const isExpanded = expandedMobileCategories.has(item.id);
+              
+              if (item.type === 'single') {
+                return (
+                  <Link key={item.id} href={item.href}>
+                    <Button
+                      variant="ghost"
+                      className={`w-full justify-start text-sm ${
+                        isActive 
+                          ? 'bg-white/20 text-white' 
+                          : 'text-white/80 hover:bg-white/10'
+                      }`}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      <Icon className="w-4 h-4 mr-3" />
+                      {item.label}
+                    </Button>
+                  </Link>
+                );
+              } else {
+                return (
+                  <div key={item.id} className="space-y-1">
+                    <Button
+                      variant="ghost"
+                      className="w-full justify-start text-sm text-white/80 hover:bg-white/10"
+                      onClick={() => {
+                        const newExpanded = new Set(expandedMobileCategories);
+                        if (isExpanded) {
+                          newExpanded.delete(item.id);
+                        } else {
+                          newExpanded.add(item.id);
+                        }
+                        setExpandedMobileCategories(newExpanded);
+                      }}
+                    >
+                      <Icon className="w-4 h-4 mr-3" />
+                      {item.label}
+                      {isExpanded ? (
+                        <ChevronDown className="w-3 h-3 ml-auto" />
+                      ) : (
+                        <ChevronRight className="w-3 h-3 ml-auto" />
+                      )}
+                    </Button>
+                    
+                    {/* Mobile Subcategories */}
+                    {isExpanded && (
+                      <div className="ml-4 space-y-1">
+                        {item.subcategories?.map((subcat, subcatIndex) => (
+                          <div key={subcatIndex}>
+                            <div className="text-[#cad95e] text-xs font-medium mb-1 px-3 uppercase tracking-wide">
+                              {subcat.group}
+                            </div>
+                            {subcat.items.map((subItem, subItemIndex) => {
+                              const SubIcon = subItem.icon;
+                              return (
+                                <Link key={subItemIndex} href={subItem.href}>
+                                  <Button
+                                    variant="ghost"
+                                    className="w-full justify-start text-xs text-white/70 hover:text-white hover:bg-white/10 h-8 ml-2"
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                  >
+                                    {SubIcon && <SubIcon className="w-3 h-3 mr-2" />}
+                                    {subItem.label}
+                                  </Button>
+                                </Link>
+                              );
+                            })}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                );
+              }
             })}
           </div>
         )}
