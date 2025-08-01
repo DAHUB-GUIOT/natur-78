@@ -28,14 +28,14 @@ import {
   ShieldCheck,
   TreePine,
   Waves,
+  Menu,
+  X,
   Mail,
   Share2,
   Code,
   Repeat2,
   Save,
   Shield,
-  Menu,
-  X,
   ChevronLeft
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -103,82 +103,44 @@ const PortalEmpresasDashboard = () => {
     { id: "admin", label: "Admin", icon: ShieldCheck },
   ];
 
-  // Unified Sidebar Component
-  const UnifiedSidebar = () => {
-    const isExpanded = window.innerWidth >= 768 || isMobileSidebarExpanded;
-    
+  // Desktop Sidebar Component
+  const DesktopSidebar = () => {
     return (
-      <div className={`fixed top-0 left-0 bottom-0 z-50 transition-all duration-300 ease-in-out ${
-        isMobileSidebarExpanded ? 'w-60' : 'w-16'
-      } md:w-60`}>
+      <div className="hidden md:block fixed top-0 left-0 bottom-0 w-60 z-50">
         <div className="h-full backdrop-blur-xl bg-gray-900/20 border-r border-white/20 shadow-2xl flex flex-col">
-          {/* Logo Section with integrated mobile toggle */}
+          {/* Logo Section */}
           <div className="p-3 border-b border-white/20">
-            <div className={`flex items-center ${isExpanded ? 'justify-between' : 'justify-center'}`}>
-              {/* Logo */}
-              <div className={`flex items-center ${isExpanded ? 'space-x-2' : ''}`}>
-                <div className="w-8 h-8 bg-green-600/80 rounded-lg flex items-center justify-center shadow-lg backdrop-blur-sm">
-                  <span className="text-white font-bold text-sm">N</span>
-                </div>
-                {isExpanded && (
-                  <div>
-                    <span className="text-xl font-bold text-white tracking-wide">NATUR</span>
-                    <p className="text-white/70 text-xs">Portal Empresas</p>
-                  </div>
-                )}
+            <div className="flex items-center space-x-2">
+              <div className="w-8 h-8 bg-green-600/80 rounded-lg flex items-center justify-center shadow-lg backdrop-blur-sm">
+                <span className="text-white font-bold text-sm">N</span>
               </div>
-              
-              {/* Mobile toggle button - only when expanded */}
-              {isMobileSidebarExpanded && (
-                <button
-                  onClick={() => setIsMobileSidebarExpanded(false)}
-                  className="md:hidden p-1.5 rounded-lg bg-white/10 hover:bg-white/20 transition-colors text-white backdrop-blur-sm"
-                >
-                  <ChevronLeft className="w-4 h-4" />
-                </button>
-              )}
+              <div>
+                <span className="text-xl font-bold text-white tracking-wide">NATUR</span>
+                <p className="text-white/70 text-xs">Portal Empresas</p>
+              </div>
             </div>
-            
-            {/* Mobile toggle when collapsed - make it clickable on the logo area */}
-            {!isMobileSidebarExpanded && (
-              <button
-                onClick={() => setIsMobileSidebarExpanded(true)}
-                className="md:hidden absolute inset-0 w-full h-full bg-transparent"
-                aria-label="Expandir menú"
-              />
-            )}
           </div>
 
           {/* User Profile Section */}
           <div className="p-3 border-b border-white/20">
             {user ? (
               <div className="space-y-2">
-                <div className={`flex items-center ${isExpanded ? 'justify-start' : 'justify-center'}`}>
-                  {user.profilePicture ? (
-                    <img 
-                      src={user.profilePicture} 
-                      alt={`${user.firstName} ${user.lastName}`}
-                      className="w-10 h-10 rounded-full object-cover border-2 border-[#cad95e]"
-                    />
-                  ) : (
-                    <div className="w-10 h-10 rounded-full bg-[#cad95e]/20 border-2 border-[#cad95e] flex items-center justify-center">
-                      <User className="w-5 h-5 text-[#cad95e]" />
-                    </div>
-                  )}
-                  {isExpanded && (
-                    <div className="ml-3 flex-1 min-w-0">
-                      <h3 className="text-white font-sans text-sm font-medium truncate">
-                        {user.firstName} {user.lastName}
-                      </h3>
-                      <p className="text-white/70 text-xs truncate">
-                        {user.companyName || user.email}
-                      </p>
-                    </div>
-                  )}
+                <div className="flex items-center justify-start">
+                  <div className="w-10 h-10 rounded-full bg-[#cad95e]/20 border-2 border-[#cad95e] flex items-center justify-center">
+                    <User className="w-5 h-5 text-[#cad95e]" />
+                  </div>
+                  <div className="ml-3 flex-1 min-w-0">
+                    <h3 className="text-white font-sans text-sm font-medium truncate">
+                      Usuario Portal
+                    </h3>
+                    <p className="text-white/70 text-xs truncate">
+                      {user.email}
+                    </p>
+                  </div>
                 </div>
               </div>
             ) : (
-              <div className={`${isExpanded ? 'text-center' : 'flex justify-center'}`}>
+              <div className="text-center">
                 <div className="w-10 h-10 rounded-full bg-gray-700 animate-pulse"></div>
               </div>
             )}
@@ -197,21 +159,15 @@ const PortalEmpresasDashboard = () => {
                     } else {
                       setActiveSection(item.id);
                     }
-                    // Auto-collapse on mobile after selection
-                    if (window.innerWidth < 768) {
-                      setIsMobileSidebarExpanded(false);
-                    }
                   }}
                   className={`w-full flex items-center p-3 rounded-lg transition-all duration-200 ${
                     activeSection === item.id 
                       ? 'bg-white/20 text-white shadow-lg border border-white/30 backdrop-blur-sm' 
                       : 'text-white/80 hover:bg-white/10 hover:text-white backdrop-blur-sm'
-                  } ${!isExpanded ? 'justify-center' : 'justify-start'}`}
+                  } justify-start`}
                 >
                   <Icon className="w-5 h-5 flex-shrink-0" />
-                  {isExpanded && (
-                    <span className="ml-3 text-sm font-medium truncate">{item.label}</span>
-                  )}
+                  <span className="ml-3 text-sm font-medium truncate">{item.label}</span>
                 </button>
               );
             })}
@@ -220,50 +176,157 @@ const PortalEmpresasDashboard = () => {
           {/* PRODUCIR Button */}
           <div className="p-3">
             <button
-              onClick={() => {
-                setActiveSection("producir");
-                if (window.innerWidth < 768) {
-                  setIsMobileSidebarExpanded(false);
-                }
-              }}
+              onClick={() => setActiveSection("producir")}
               className={`w-full flex items-center p-3 rounded-lg transition-all duration-200 ${
                 activeSection === "producir" 
                   ? 'bg-gradient-to-r from-[#cad95e] to-green-500 text-black font-bold shadow-xl' 
                   : 'bg-gradient-to-r from-[#cad95e]/80 to-green-500/80 text-black font-bold hover:from-[#cad95e] hover:to-green-500'
-              } ${!isExpanded ? 'justify-center' : 'justify-start'}`}
+              } justify-start`}
             >
               <Plus className="w-5 h-5 flex-shrink-0" />
-              {isExpanded && (
-                <span className="ml-3 text-sm font-medium truncate">PRODUCIR</span>
-              )}
+              <span className="ml-3 text-sm font-medium truncate">PRODUCIR</span>
             </button>
           </div>
 
           {/* Quick Actions */}
           <div className="p-3 border-t border-white/20">
-            <div className={`flex ${isExpanded ? 'space-x-2' : 'flex-col space-y-2'}`}>
+            <div className="flex space-x-2">
               <button
-                onClick={() => {
-                  setActiveSection("ajustes");
-                  if (window.innerWidth < 768) {
-                    setIsMobileSidebarExpanded(false);
-                  }
-                }}
-                className={`${isExpanded ? 'flex-1' : 'w-full'} flex items-center justify-center p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors text-white backdrop-blur-sm`}
+                onClick={() => setActiveSection("ajustes")}
+                className="flex-1 flex items-center justify-center p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors text-white backdrop-blur-sm"
               >
                 <Settings className="w-4 h-4" />
-                {isExpanded && <span className="ml-2 text-xs">Perfil</span>}
+                <span className="ml-2 text-xs">Perfil</span>
               </button>
               <button
                 onClick={() => window.location.href = "/api/auth/logout"}
-                className={`${isExpanded ? 'px-3' : 'w-full'} flex items-center justify-center p-2 rounded-lg bg-red-500/20 hover:bg-red-500/30 transition-colors text-white backdrop-blur-sm`}
+                className="px-3 flex items-center justify-center p-2 rounded-lg bg-red-500/20 hover:bg-red-500/30 transition-colors text-white backdrop-blur-sm"
               >
                 <LogOut className="w-4 h-4" />
-                {isExpanded && <span className="ml-2 text-xs">Salir</span>}
+                <span className="ml-2 text-xs">Salir</span>
               </button>
             </div>
           </div>
         </div>
+      </div>
+    );
+  };
+
+  // Mobile Header with Burger Menu
+  const MobileHeader = () => {
+    return (
+      <div className="md:hidden fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-gray-900/20 border-b border-white/20 shadow-2xl">
+        <div className="flex items-center justify-between p-4">
+          {/* Logo */}
+          <div className="flex items-center space-x-2">
+            <div className="w-8 h-8 bg-green-600/80 rounded-lg flex items-center justify-center shadow-lg backdrop-blur-sm">
+              <span className="text-white font-bold text-sm">N</span>
+            </div>
+            <div>
+              <span className="text-lg font-bold text-white tracking-wide">NATUR</span>
+              <p className="text-white/70 text-xs">Portal Empresas</p>
+            </div>
+          </div>
+
+          {/* Burger Menu Button */}
+          <button
+            onClick={() => setIsMobileSidebarExpanded(!isMobileSidebarExpanded)}
+            className="p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors text-white backdrop-blur-sm"
+          >
+            {isMobileSidebarExpanded ? (
+              <X className="w-6 h-6" />
+            ) : (
+              <Menu className="w-6 h-6" />
+            )}
+          </button>
+        </div>
+
+        {/* Mobile Dropdown Menu */}
+        {isMobileSidebarExpanded && (
+          <div className="border-t border-white/20 backdrop-blur-xl bg-gray-900/30">
+            <div className="p-4 space-y-2">
+              {/* User Profile in Mobile */}
+              {user && (
+                <div className="flex items-center p-3 rounded-lg bg-white/5 border border-white/10 mb-4">
+                  <div className="w-8 h-8 rounded-full bg-[#cad95e]/20 border-2 border-[#cad95e] flex items-center justify-center">
+                    <User className="w-4 h-4 text-[#cad95e]" />
+                  </div>
+                  <div className="ml-3">
+                    <h3 className="text-white font-sans text-sm font-medium">
+                      Usuario Portal
+                    </h3>
+                    <p className="text-white/70 text-xs">
+                      {user.email}
+                    </p>
+                  </div>
+                </div>
+              )}
+
+              {/* Navigation Items */}
+              {sidebarItems.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <button
+                    key={item.id}
+                    onClick={() => {
+                      if (item.id === 'admin') {
+                        window.location.href = '/admin';
+                      } else {
+                        setActiveSection(item.id);
+                      }
+                      setIsMobileSidebarExpanded(false);
+                    }}
+                    className={`w-full flex items-center p-3 rounded-lg transition-all duration-200 ${
+                      activeSection === item.id 
+                        ? 'bg-white/20 text-white shadow-lg border border-white/30 backdrop-blur-sm' 
+                        : 'text-white/80 hover:bg-white/10 hover:text-white backdrop-blur-sm'
+                    }`}
+                  >
+                    <Icon className="w-5 h-5 flex-shrink-0" />
+                    <span className="ml-3 text-sm font-medium">{item.label}</span>
+                  </button>
+                );
+              })}
+
+              {/* PRODUCIR Button */}
+              <button
+                onClick={() => {
+                  setActiveSection("producir");
+                  setIsMobileSidebarExpanded(false);
+                }}
+                className={`w-full flex items-center p-3 rounded-lg transition-all duration-200 ${
+                  activeSection === "producir" 
+                    ? 'bg-gradient-to-r from-[#cad95e] to-green-500 text-black font-bold shadow-xl' 
+                    : 'bg-gradient-to-r from-[#cad95e]/80 to-green-500/80 text-black font-bold hover:from-[#cad95e] hover:to-green-500'
+                }`}
+              >
+                <Plus className="w-5 h-5 flex-shrink-0" />
+                <span className="ml-3 text-sm font-medium">PRODUCIR</span>
+              </button>
+
+              {/* Quick Actions */}
+              <div className="flex space-x-2 pt-2 border-t border-white/20 mt-4">
+                <button
+                  onClick={() => {
+                    setActiveSection("ajustes");
+                    setIsMobileSidebarExpanded(false);
+                  }}
+                  className="flex-1 flex items-center justify-center p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors text-white backdrop-blur-sm"
+                >
+                  <Settings className="w-4 h-4" />
+                  <span className="ml-2 text-xs">Perfil</span>
+                </button>
+                <button
+                  onClick={() => window.location.href = "/api/auth/logout"}
+                  className="px-3 flex items-center justify-center p-2 rounded-lg bg-red-500/20 hover:bg-red-500/30 transition-colors text-white backdrop-blur-sm"
+                >
+                  <LogOut className="w-4 h-4" />
+                  <span className="ml-2 text-xs">Salir</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     );
   };
@@ -463,12 +526,15 @@ const PortalEmpresasDashboard = () => {
     return (
       <div className="h-screen w-full relative overflow-hidden">
         {/* Full-screen map as background */}
-        <div className={`absolute inset-0 ${isMobileSidebarExpanded ? 'md:left-60 left-60' : 'md:left-60 left-16'}`}>
+        <div className="absolute inset-0 md:left-60 left-0">
           <InteractiveMap />
         </div>
 
-        {/* Unified Sidebar */}
-        <UnifiedSidebar />
+        {/* Desktop Sidebar */}
+        <DesktopSidebar />
+
+        {/* Mobile Header */}
+        <MobileHeader />
 
         {/* Mobile Overlay */}
         {isMobileSidebarExpanded && (
@@ -479,9 +545,7 @@ const PortalEmpresasDashboard = () => {
         )}
         
         {/* Top green bar for map page */}
-        <header className={`absolute top-0 right-0 bg-green-600 border-b border-green-700 shadow-lg px-3 md:px-6 py-3 md:py-4 z-40 backdrop-blur-md bg-green-600/95 ${
-          isMobileSidebarExpanded ? 'md:left-60 left-60' : 'md:left-60 left-16'
-        }`}>
+        <header className="absolute top-0 right-0 md:left-60 left-0 bg-green-600 border-b border-green-700 shadow-lg px-3 md:px-6 py-3 md:py-4 z-40 backdrop-blur-md bg-green-600/95 md:top-0 top-16">
           <div className="flex items-center justify-between">
             <div className="flex-1 max-w-md mx-auto">
               <div className="relative">
@@ -516,8 +580,11 @@ const PortalEmpresasDashboard = () => {
       {/* Full-screen map as background for all pages */}
       <InteractiveMap />
       
-      {/* Unified Sidebar */}
-      <UnifiedSidebar />
+      {/* Desktop Sidebar */}
+      <DesktopSidebar />
+
+      {/* Mobile Header */}
+      <MobileHeader />
 
       {/* Mobile Overlay */}
       {isMobileSidebarExpanded && (
@@ -528,9 +595,7 @@ const PortalEmpresasDashboard = () => {
       )}
       
       {/* Top green bar for all pages */}
-      <header className={`absolute top-0 right-0 bg-green-600 border-b border-green-700 shadow-lg px-3 md:px-6 py-3 md:py-4 z-40 backdrop-blur-md bg-green-600/95 ${
-        isMobileSidebarExpanded ? 'md:left-60 left-60' : 'md:left-60 left-16'
-      }`}>
+      <header className="absolute top-0 right-0 md:left-60 left-0 bg-green-600 border-b border-green-700 shadow-lg px-3 md:px-6 py-3 md:py-4 z-40 backdrop-blur-md bg-green-600/95 md:top-0 top-16">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <h1 className="text-xl font-bold text-white tracking-wide hidden sm:block">
@@ -563,9 +628,7 @@ const PortalEmpresasDashboard = () => {
       </header>
 
       {/* Main content area */}
-      <main className={`absolute top-20 right-0 bottom-0 bg-black/40 backdrop-blur-sm p-6 overflow-y-auto ${
-        isMobileSidebarExpanded ? 'md:left-60 left-60' : 'md:left-60 left-16'
-      }`}>
+      <main className="absolute right-0 bottom-0 md:left-60 left-0 bg-black/40 backdrop-blur-sm p-6 overflow-y-auto md:top-20 top-32">
         <div className="max-w-7xl mx-auto">
           {renderContent()}
         </div>
