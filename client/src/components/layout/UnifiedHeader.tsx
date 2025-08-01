@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Menu, Search, Bell, MessageCircle, Globe, User, LogOut, X, Home, Map, Building2, Star, BarChart3, ShieldCheck, Settings, ChevronDown, ChevronRight, Users, MapPin, Heart, Clock, Plus, Handshake } from "lucide-react";
+import { Menu, Search, Bell, MessageCircle, Globe, User, LogOut, X, Building2, Star, Settings, ChevronDown, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -32,11 +32,9 @@ export const UnifiedHeader: React.FC<UnifiedHeaderProps> = ({
   const [location] = useLocation();
 
   const navigationItems = [
-    { id: 'inicio', label: 'Inicio', href: '/', icon: Home, type: 'single' },
-    { id: 'mapa', label: 'Mapa', href: '/mapa', icon: Map, type: 'single' },
     {
       id: 'festival',
-      label: 'Festival NATUR',
+      label: 'Festival NATUR Bogotá 2025',
       icon: Star,
       type: 'category',
       subcategories: [
@@ -47,14 +45,13 @@ export const UnifiedHeader: React.FC<UnifiedHeaderProps> = ({
             { label: 'Rooftop + Zona de Comidas', href: '/rooftop' },
             { label: 'Emprendimientos Sostenibles', href: '/emprendimientos' },
             { label: 'Zona Chill', href: '/zona-chill' },
-            { label: 'Foro Colombia Sostenible 2025', href: '/foro' }
+            { label: 'Foro Colombia Sostenible 2025', href: '/foro' },
+            { label: 'Zona Kinder & Coffee Party', href: '/zona-kinder' }
           ]
         },
         {
           group: 'NATUR PRO',
           items: [
-            { label: 'NATUR PRO', href: '/natur-pro' },
-            { label: '+ VIVE NATUR', href: '/vive-natur-plus' },
             { label: 'Cartel de Artistas', href: '/artistas' },
             { label: 'Talleres', href: '/talleres' },
             { label: 'Zona Startups', href: '/startups' },
@@ -62,51 +59,35 @@ export const UnifiedHeader: React.FC<UnifiedHeaderProps> = ({
             { label: 'Rumba y Manifestaciones', href: '/rumba' },
             { label: 'Zona Wellness', href: '/wellness' },
             { label: 'Experiencia NATUR', href: '/experiencia' },
-            { label: 'Zona VIP', href: '/vip' },
-            { label: 'Zona Kinder & Coffee Party', href: '/zona-kinder' }
+            { label: 'Zona VIP', href: '/vip' }
           ]
         }
       ]
     },
-    {
-      id: 'directorio',
-      label: 'Directorio',
-      icon: Building2,
-      type: 'category',
-      subcategories: [
-        {
-          group: 'Categorías',
-          items: [
-            { label: 'Agencias Turismo Sostenible', href: '/directorio/turismo-sostenible', icon: Globe },
-            { label: 'Alojamientos Sostenibles', href: '/directorio/alojamientos', icon: Building2 },
-            { label: 'Gastronomía Sostenible', href: '/directorio/gastronomia', icon: Users },
-            { label: 'Movilidad Ecológica', href: '/directorio/movilidad', icon: MapPin },
-            { label: 'ONG y Fundaciones', href: '/directorio/ong-fundaciones', icon: Heart },
-            { label: 'Educación Ambiental', href: '/directorio/educacion', icon: Star },
-            { label: 'Tecnología Sostenible', href: '/directorio/tecnologia', icon: Settings },
-            { label: 'Aliados y Patrocinadores', href: '/directorio/aliados', icon: Handshake }
-          ]
-        }
-      ]
+    { 
+      id: 'noticias', 
+      label: 'Noticias', 
+      href: '/noticias', 
+      icon: MessageCircle, 
+      type: 'single',
+      description: 'Artículos, crónicas, entrevistas y novedades del turismo regenerativo.'
     },
-    {
-      id: 'experiencias',
-      label: 'Experiencias',
-      icon: Star,
-      type: 'category',
-      subcategories: [
-        {
-          group: 'Gestión',
-          items: [
-            { label: 'Mis Experiencias', href: '/experiencias/mis-experiencias', icon: Star },
-            { label: 'Crear Nueva', href: '/experiencias/crear', icon: Plus },
-            { label: 'Más Populares', href: '/experiencias/populares', icon: Heart },
-            { label: 'Pendientes Aprobación', href: '/experiencias/pending', icon: Clock }
-          ]
-        }
-      ]
+    { 
+      id: 'plataforma', 
+      label: 'Plataforma NATUR', 
+      href: '/plataforma', 
+      icon: Building2, 
+      type: 'single',
+      description: 'Accede al portal de empresas, comunidad de viajeros y mapa interactivo de experiencias sostenibles.'
     },
-    { id: 'agenda', label: 'Agenda', href: '/agenda', icon: Star, type: 'single' }
+    { 
+      id: 'info', 
+      label: 'Info', 
+      href: '/info', 
+      icon: Settings, 
+      type: 'single',
+      description: 'Sobre nosotros, contacto, aliados, preguntas frecuentes, términos y condiciones.'
+    }
   ];
 
   const portalItems = [
