@@ -24,6 +24,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { useAuth } from "@/contexts/AuthContext";
+import { UnifiedHeader } from "@/components/layout/UnifiedHeader";
 
 interface Experience {
   id: number;
@@ -260,68 +261,7 @@ export default function PortalViajeros() {
         }}
       />
       
-      {/* Top Navigation */}
-      <header className="absolute top-0 left-0 right-0 bg-green-600 border-b border-green-700 shadow-lg px-6 py-4 z-40 backdrop-blur-md bg-green-600/95">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-4">
-            <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-green-500 rounded-lg flex items-center justify-center shadow-lg">
-                <span className="text-white font-bold text-sm">N</span>
-              </div>
-              <span className="text-xl font-bold text-white tracking-wide">NATUR</span>
-            </div>
-          </div>
-          
-          
-          
-          <div className="flex items-center space-x-4">
-            <Button variant="ghost" size="sm" className="relative text-white hover:bg-white/20">
-              <Bell className="w-5 h-5" />
-              <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full text-xs text-white flex items-center justify-center">2</span>
-            </Button>
-            
-            <Button variant="ghost" size="sm" className="relative text-white hover:bg-white/20">
-              <MessageCircle className="w-5 h-5" />
-              <span className="absolute -top-1 -right-1 w-4 h-4 bg-blue-500 rounded-full text-xs text-white flex items-center justify-center">1</span>
-            </Button>
-            
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="flex items-center space-x-2 p-2 text-white hover:bg-white/20">
-                  <Avatar className="w-8 h-8">
-                    <AvatarImage src="/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg" />
-                    <AvatarFallback>V</AvatarFallback>
-                  </Avatar>
-                  <span className="text-sm font-medium">Viajero</span>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-56">
-                <DropdownMenuItem>
-                  <User className="w-4 h-4 mr-2" />
-                  Mi Perfil
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Heart className="w-4 h-4 mr-2" />
-                  Favoritos
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Calendar className="w-4 h-4 mr-2" />
-                  Mis Reservas
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Settings className="w-4 h-4 mr-2" />
-                  Configuración
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                  <LogOut className="w-4 h-4 mr-2" />
-                  Cerrar sesión
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-        </div>
-      </header>
+      <UnifiedHeader title="Portal Viajeros" showSearch={true} variant="portal" />
 
 
 

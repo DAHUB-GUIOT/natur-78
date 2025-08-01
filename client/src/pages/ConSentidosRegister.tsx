@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { HeaderButtons } from "@/components/layout/HeaderButtons";
+import { UnifiedHeader } from "@/components/layout/UnifiedHeader";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -53,22 +53,7 @@ const ConSentidosRegister = () => {
       {/* Light Gradient Overlay */}
       <div className="absolute inset-0 bg-black/20"></div>
       
-      {/* Top Navigation - Fixed with Green Background */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-green-600 border-b border-green-700 shadow-lg">
-        <div className="flex items-center justify-between max-w-7xl mx-auto px-6 py-4">
-          <div className="flex items-center space-x-4">
-            <span className="font-bold text-2xl font-gasoek" style={{ color: '#cad95e' }}>N</span>
-          </div>
-          
-          <div className="flex items-center space-x-4">
-            <Link to="/">
-              <Button variant="ghost" className="text-white hover:bg-white/20">
-                Volver
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </nav>
+      <UnifiedHeader title="Registro Con-Sentidos" showSearch={false} />
       
       {/* Main Content - Centered */}
       <div className="relative z-10 flex items-center justify-center min-h-screen px-6 pt-20">
