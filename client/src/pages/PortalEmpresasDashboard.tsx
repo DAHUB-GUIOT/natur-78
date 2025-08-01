@@ -63,6 +63,7 @@ const PortalEmpresasDashboard = () => {
   const [activeSection, setActiveSection] = useState("mapa");
   const [showExperienceForm, setShowExperienceForm] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isMobileSidebarExpanded, setIsMobileSidebarExpanded] = useState(false);
 
   // Optimized current user data fetch with better error handling
   const { data: currentUser, isLoading: userLoading, error: userError, refetch: refetchUser } = useQuery({
@@ -805,7 +806,146 @@ const PortalEmpresasDashboard = () => {
     return (
       <div className="h-screen w-full relative overflow-hidden">
         {/* Full-screen map as background */}
-        <InteractiveMap />
+        <div className={`absolute inset-0 ${isMobileSidebarExpanded ? 'md:left-0 left-60' : 'md:left-0 left-16'} md:left-0`}>
+          <InteractiveMap />
+        </div>
+
+        {/* Mobile Smart Sidebar for Map */}
+        <div className={`md:hidden fixed top-0 left-0 bottom-0 z-50 transition-all duration-300 ease-in-out ${
+          isMobileSidebarExpanded ? 'w-60' : 'w-16'
+        }`}>
+          <div className="h-full backdrop-blur-xl bg-gray-900/95 border-r border-gray-600/30 shadow-2xl flex flex-col">
+            {/* Toggle Button */}
+            <div className="p-3 border-b border-gray-600/30">
+              <button
+                onClick={() => setIsMobileSidebarExpanded(!isMobileSidebarExpanded)}
+                className="w-full flex items-center justify-center p-2 rounded-lg bg-gray-800/50 hover:bg-gray-700/50 transition-colors text-white"
+              >
+                {isMobileSidebarExpanded ? (
+                  <ChevronLeft className="w-5 h-5" />
+                ) : (
+                  <Menu className="w-5 h-5" />
+                )}
+              </button>
+            </div>
+
+            {/* User Profile Section */}
+            <div className="p-3 border-b border-gray-600/30">
+              {user ? (
+                <div className="space-y-2">
+                  <div className={`flex items-center ${isMobileSidebarExpanded ? 'justify-start' : 'justify-center'}`}>
+                    {user.profilePicture ? (
+                      <img 
+                        src={user.profilePicture} 
+                        alt={`${user.firstName} ${user.lastName}`}
+                        className="w-10 h-10 rounded-full object-cover border-2 border-[#cad95e]"
+                      />
+                    ) : (
+                      <div className="w-10 h-10 rounded-full bg-[#cad95e]/20 border-2 border-[#cad95e] flex items-center justify-center">
+                        <User className="w-5 h-5 text-[#cad95e]" />
+                      </div>
+                    )}
+                    {isMobileSidebarExpanded && (
+                      <div className="ml-3 flex-1 min-w-0">
+                        <h3 className="text-white font-sans text-sm font-medium truncate">
+                          {user.firstName} {user.lastName}
+                        </h3>
+                        <p className="text-gray-400 text-xs truncate">
+                          {user.companyName || user.email}
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ) : (
+                <div className={`${isMobileSidebarExpanded ? 'text-center' : 'flex justify-center'}`}>
+                  <div className="w-10 h-10 rounded-full bg-gray-700 animate-pulse"></div>
+                </div>
+              )}
+            </div>
+
+            {/* Navigation Items */}
+            <div className="flex-1 p-2 space-y-1 overflow-y-auto">
+              {sidebarItems.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <button
+                    key={item.id}
+                    onClick={() => {
+                      setActiveSection(item.id);
+                      if (window.innerWidth < 768) {
+                        setIsMobileSidebarExpanded(false);
+                      }
+                    }}
+                    className={`w-full flex items-center p-3 rounded-lg transition-all duration-200 ${
+                      activeSection === item.id 
+                        ? 'bg-green-600/30 text-white shadow-lg border border-green-400/30' 
+                        : 'text-gray-300 hover:bg-gray-700/30 hover:text-white'
+                    } ${!isMobileSidebarExpanded ? 'justify-center' : 'justify-start'}`}
+                  >
+                    <Icon className="w-5 h-5 flex-shrink-0" />
+                    {isMobileSidebarExpanded && (
+                      <span className="ml-3 text-sm font-medium truncate">{item.label}</span>
+                    )}
+                  </button>
+                );
+              })}
+              
+              {/* PRODUCIR button */}
+              <button
+                onClick={() => {
+                  setActiveSection("producir");
+                  if (window.innerWidth < 768) {
+                    setIsMobileSidebarExpanded(false);
+                  }
+                }}
+                className={`w-full flex items-center p-3 rounded-lg transition-all duration-200 ${
+                  activeSection === "producir" 
+                    ? 'bg-gradient-to-r from-[#cad95e] to-green-500 text-black font-bold shadow-xl' 
+                    : 'bg-gradient-to-r from-[#cad95e]/80 to-green-500/80 text-black font-bold hover:from-[#cad95e] hover:to-green-500'
+                } ${!isMobileSidebarExpanded ? 'justify-center' : 'justify-start'}`}
+              >
+                <Plus className="w-5 h-5 flex-shrink-0" />
+                {isMobileSidebarExpanded && (
+                  <span className="ml-3 text-sm font-medium truncate">PRODUCIR</span>
+                )}
+              </button>
+            </div>
+
+            {/* Quick Actions */}
+            <div className="p-3 border-t border-gray-600/30">
+              <div className={`flex ${isMobileSidebarExpanded ? 'space-x-2' : 'flex-col space-y-2'}`}>
+                <button
+                  onClick={() => {
+                    setActiveSection("ajustes");
+                    if (window.innerWidth < 768) {
+                      setIsMobileSidebarExpanded(false);
+                    }
+                  }}
+                  className={`${isMobileSidebarExpanded ? 'flex-1' : 'w-full'} flex items-center justify-center p-2 rounded-lg bg-gray-800/50 hover:bg-gray-700/50 transition-colors text-gray-300 hover:text-white`}
+                >
+                  <Settings className="w-4 h-4" />
+                  {isMobileSidebarExpanded && <span className="ml-2 text-xs">Perfil</span>}
+                </button>
+                <button
+                  onClick={() => window.location.href = "/api/auth/logout"}
+                  className={`${isMobileSidebarExpanded ? 'px-3' : 'w-full'} flex items-center justify-center p-2 rounded-lg bg-red-800/30 hover:bg-red-700/50 transition-colors text-red-300 hover:text-red-200`}
+                >
+                  <LogOut className="w-4 h-4" />
+                  {isMobileSidebarExpanded && <span className="ml-2 text-xs">Salir</span>}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile Overlay for Map */}
+        {isMobileSidebarExpanded && (
+          <div 
+            className="md:hidden fixed inset-0 bg-black/50 z-40"
+            onClick={() => setIsMobileSidebarExpanded(false)}
+          />
+        )}
         
         {/* Top green bar for map page */}
         <header className="absolute top-0 left-0 right-0 bg-green-600 border-b border-green-700 shadow-lg px-3 md:px-6 py-3 md:py-4 z-40 backdrop-blur-md bg-green-600/95">
@@ -1117,69 +1257,152 @@ const PortalEmpresasDashboard = () => {
 
       {/* Compact main content with glassmorphism background (except for map) */}
       {activeSection !== "mapa" && (
-        <main className="absolute top-24 md:left-60 left-4 right-4 md:bottom-4 bottom-20 z-40 backdrop-blur-xl bg-gray-900/40 border border-gray-600/30 rounded-xl shadow-2xl overflow-hidden">
+        <main className={`absolute top-24 md:left-60 right-4 md:bottom-4 bottom-4 z-40 backdrop-blur-xl bg-gray-900/40 border border-gray-600/30 rounded-xl shadow-2xl overflow-hidden ${
+          isMobileSidebarExpanded ? 'left-64' : 'left-20'
+        } md:left-60`}>
           <div className="h-full overflow-y-auto p-2 md:p-4">
             {renderContent()}
           </div>
         </main>
       )}
 
-      {/* Mobile Bottom Navigation */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 backdrop-blur-xl bg-gray-900/95 border-t border-gray-600/30 shadow-2xl">
-        <div className="grid grid-cols-4 gap-1 p-2">
-          {sidebarItems.slice(0, 4).map((item) => {
-            const Icon = item.icon;
-            return (
+      {/* Mobile Smart Sidebar */}
+      <div className={`md:hidden fixed top-0 left-0 bottom-0 z-50 transition-all duration-300 ease-in-out ${
+        isMobileSidebarExpanded ? 'w-60' : 'w-16'
+      }`}>
+        <div className="h-full backdrop-blur-xl bg-gray-900/95 border-r border-gray-600/30 shadow-2xl flex flex-col">
+          {/* Toggle Button */}
+          <div className="p-3 border-b border-gray-600/30">
+            <button
+              onClick={() => setIsMobileSidebarExpanded(!isMobileSidebarExpanded)}
+              className="w-full flex items-center justify-center p-2 rounded-lg bg-gray-800/50 hover:bg-gray-700/50 transition-colors text-white"
+            >
+              {isMobileSidebarExpanded ? (
+                <ChevronLeft className="w-5 h-5" />
+              ) : (
+                <Menu className="w-5 h-5" />
+              )}
+            </button>
+          </div>
+
+          {/* User Profile Section */}
+          <div className="p-3 border-b border-gray-600/30">
+            {user ? (
+              <div className="space-y-2">
+                <div className={`flex items-center ${isMobileSidebarExpanded ? 'justify-start' : 'justify-center'}`}>
+                  {user.profilePicture ? (
+                    <img 
+                      src={user.profilePicture} 
+                      alt={`${user.firstName} ${user.lastName}`}
+                      className="w-10 h-10 rounded-full object-cover border-2 border-[#cad95e]"
+                    />
+                  ) : (
+                    <div className="w-10 h-10 rounded-full bg-[#cad95e]/20 border-2 border-[#cad95e] flex items-center justify-center">
+                      <User className="w-5 h-5 text-[#cad95e]" />
+                    </div>
+                  )}
+                  {isMobileSidebarExpanded && (
+                    <div className="ml-3 flex-1 min-w-0">
+                      <h3 className="text-white font-sans text-sm font-medium truncate">
+                        {user.firstName} {user.lastName}
+                      </h3>
+                      <p className="text-gray-400 text-xs truncate">
+                        {user.companyName || user.email}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            ) : (
+              <div className={`${isMobileSidebarExpanded ? 'text-center' : 'flex justify-center'}`}>
+                <div className="w-10 h-10 rounded-full bg-gray-700 animate-pulse"></div>
+              </div>
+            )}
+          </div>
+
+          {/* Navigation Items */}
+          <div className="flex-1 p-2 space-y-1 overflow-y-auto">
+            {sidebarItems.map((item) => {
+              const Icon = item.icon;
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => {
+                    setActiveSection(item.id);
+                    // Auto-collapse on mobile after selection
+                    if (window.innerWidth < 768) {
+                      setIsMobileSidebarExpanded(false);
+                    }
+                  }}
+                  className={`w-full flex items-center p-3 rounded-lg transition-all duration-200 ${
+                    activeSection === item.id 
+                      ? 'bg-green-600/30 text-white shadow-lg border border-green-400/30' 
+                      : 'text-gray-300 hover:bg-gray-700/30 hover:text-white'
+                  } ${!isMobileSidebarExpanded ? 'justify-center' : 'justify-start'}`}
+                >
+                  <Icon className="w-5 h-5 flex-shrink-0" />
+                  {isMobileSidebarExpanded && (
+                    <span className="ml-3 text-sm font-medium truncate">{item.label}</span>
+                  )}
+                </button>
+              );
+            })}
+            
+            {/* PRODUCIR button */}
+            <button
+              onClick={() => {
+                setActiveSection("producir");
+                if (window.innerWidth < 768) {
+                  setIsMobileSidebarExpanded(false);
+                }
+              }}
+              className={`w-full flex items-center p-3 rounded-lg transition-all duration-200 ${
+                activeSection === "producir" 
+                  ? 'bg-gradient-to-r from-[#cad95e] to-green-500 text-black font-bold shadow-xl' 
+                  : 'bg-gradient-to-r from-[#cad95e]/80 to-green-500/80 text-black font-bold hover:from-[#cad95e] hover:to-green-500'
+              } ${!isMobileSidebarExpanded ? 'justify-center' : 'justify-start'}`}
+            >
+              <Plus className="w-5 h-5 flex-shrink-0" />
+              {isMobileSidebarExpanded && (
+                <span className="ml-3 text-sm font-medium truncate">PRODUCIR</span>
+              )}
+            </button>
+          </div>
+
+          {/* Quick Actions */}
+          <div className="p-3 border-t border-gray-600/30">
+            <div className={`flex ${isMobileSidebarExpanded ? 'space-x-2' : 'flex-col space-y-2'}`}>
               <button
-                key={item.id}
-                onClick={() => setActiveSection(item.id)}
-                className={`flex flex-col items-center space-y-1 px-2 py-3 rounded-lg transition-all duration-200 ${
-                  activeSection === item.id 
-                    ? 'bg-green-600/30 text-white shadow-lg border border-green-400/30' 
-                    : 'text-gray-300 hover:bg-gray-700/30 hover:text-white'
-                }`}
+                onClick={() => {
+                  setActiveSection("ajustes");
+                  if (window.innerWidth < 768) {
+                    setIsMobileSidebarExpanded(false);
+                  }
+                }}
+                className={`${isMobileSidebarExpanded ? 'flex-1' : 'w-full'} flex items-center justify-center p-2 rounded-lg bg-gray-800/50 hover:bg-gray-700/50 transition-colors text-gray-300 hover:text-white`}
               >
-                <Icon className="w-5 h-5" />
-                <span className="text-xs font-medium">{item.label}</span>
+                <Settings className="w-4 h-4" />
+                {isMobileSidebarExpanded && <span className="ml-2 text-xs">Perfil</span>}
               </button>
-            );
-          })}
-        </div>
-        
-        {/* Second row for remaining items */}
-        <div className="grid grid-cols-4 gap-1 px-2 pb-2">
-          {sidebarItems.slice(4).map((item) => {
-            const Icon = item.icon;
-            return (
               <button
-                key={item.id}
-                onClick={() => setActiveSection(item.id)}
-                className={`flex flex-col items-center space-y-1 px-2 py-3 rounded-lg transition-all duration-200 ${
-                  activeSection === item.id 
-                    ? 'bg-green-600/30 text-white shadow-lg border border-green-400/30' 
-                    : 'text-gray-300 hover:bg-gray-700/30 hover:text-white'
-                }`}
+                onClick={() => window.location.href = "/api/auth/logout"}
+                className={`${isMobileSidebarExpanded ? 'px-3' : 'w-full'} flex items-center justify-center p-2 rounded-lg bg-red-800/30 hover:bg-red-700/50 transition-colors text-red-300 hover:text-red-200`}
               >
-                <Icon className="w-5 h-5" />
-                <span className="text-xs font-medium">{item.label}</span>
+                <LogOut className="w-4 h-4" />
+                {isMobileSidebarExpanded && <span className="ml-2 text-xs">Salir</span>}
               </button>
-            );
-          })}
-          
-          {/* PRODUCIR button in mobile */}
-          <button
-            onClick={() => setActiveSection("producir")}
-            className={`flex flex-col items-center space-y-1 px-2 py-3 rounded-lg transition-all duration-200 ${
-              activeSection === "producir" 
-                ? 'bg-gradient-to-r from-[#cad95e] to-green-500 text-black font-bold shadow-xl' 
-                : 'bg-gradient-to-r from-[#cad95e]/80 to-green-500/80 text-black font-bold hover:from-[#cad95e] hover:to-green-500'
-            }`}
-          >
-            <Plus className="w-5 h-5" />
-            <span className="text-xs font-bold">PRODUCIR</span>
-          </button>
+            </div>
+          </div>
         </div>
       </div>
+
+      {/* Mobile Overlay */}
+      {isMobileSidebarExpanded && (
+        <div 
+          className="md:hidden fixed inset-0 bg-black/50 z-40"
+          onClick={() => setIsMobileSidebarExpanded(false)}
+        />
+      )}
 
       {/* Floating Action Button - Create Experience */}
       {activeSection !== "mapa" && (
