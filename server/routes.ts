@@ -321,44 +321,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Get individual user for profile display
-  app.get("/api/users/:id", async (req, res) => {
-    try {
-      const userId = parseInt(req.params.id);
-      const user = await storage.getUser(userId);
-      if (!user) {
-        return res.status(404).json({ message: "User not found" });
-      }
-      res.json(user);
-    } catch (error) {
-      console.error("Error fetching user:", error);
-      res.status(500).json({ message: "Failed to fetch user" });
-    }
-  });
-
   // Update user profile
-  app.patch("/api/users/:id", async (req, res) => {
-    try {
-      const userId = parseInt(req.params.id);
-      const updates = req.body;
-      
-      if (!userId || isNaN(userId)) {
-        return res.status(400).json({ message: "Invalid user ID" });
-      }
-
-      const updatedUser = await storage.updateUser(userId, updates);
-      if (!updatedUser) {
-        return res.status(404).json({ message: "User not found" });
-      }
-      
-      res.json(updatedUser);
-    } catch (error) {
-      console.error("Error updating user:", error);
-      res.status(500).json({ message: "Failed to update user" });
-    }
-  });
-
-  // Update user profile (legacy endpoint)
   app.put("/api/profiles/:userId", async (req, res) => {
     try {
       const userId = parseInt(req.params.userId);

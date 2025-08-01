@@ -34,11 +34,6 @@ Preferred communication style: Simple, everyday language.
 ### Key Features and Design Decisions
 - **Unified Authentication**: A single system for both "Empresas" (businesses) and "Con-Sentidos" (travelers), with distinct themed login/registration flows.
 - **Interactive Map**: Features a Mapbox-based 3D map with natural terrain and custom markers for businesses and experiences, serving as a central navigation element.
-- **Unified Navigation System**: Single header menu across all pages with four main categories:
-    1. 🌿 Festival NATUR Bogotá 2025 (expandable with VIVE NATUR and NATUR PRO subcategories)
-    2. 📰 Noticias (Blog NATUR)
-    3. 🧭 Plataforma NATUR (access to portals and interactive map)
-    4. ℹ️ Info (about, contact, FAQ, terms)
 - **Comprehensive Directories**:
     - **Portal Empresas (B2B)**: A dashboard for businesses to manage profiles, experiences, and network. Features include enhanced profiles (Twitter/X-style), real-time search, and a streamlined contact directory.
     - **Portal Viajeros (B2C)**: A marketplace for travelers to browse, filter, and book sustainable tourism experiences.

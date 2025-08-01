@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { UnifiedHeader } from "@/components/layout/UnifiedHeader";
+import { HeaderButtons } from "@/components/layout/HeaderButtons";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -156,7 +156,7 @@ const MapaPublicoOptimized = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <UnifiedHeader title="Mapa Interactivo NATUR" showSearch={true} />
+      <HeaderButtons showPortalButtons={false} />
       {/* Hero Section */}
       <div className="bg-gradient-to-r from-green-600 to-green-800 text-white">
         <div className="container mx-auto px-4 py-16 max-w-7xl">
