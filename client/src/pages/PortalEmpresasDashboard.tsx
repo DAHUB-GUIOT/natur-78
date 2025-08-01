@@ -179,8 +179,8 @@ const PortalEmpresasDashboard = () => {
   // Desktop Sidebar Component
   const DesktopSidebar = () => {
     return (
-      <div className="hidden md:block fixed top-0 left-0 bottom-0 w-60 z-50">
-        <div className="h-full backdrop-blur-xl bg-gray-900/20 border-r border-white/20 shadow-2xl flex flex-col">
+      <div className="hidden md:block fixed top-0 left-0 bottom-0 w-64 z-50">
+        <div className="h-full backdrop-blur-xl bg-gray-900/95 border-r border-white/20 shadow-2xl flex flex-col">
           {/* Logo Section */}
           <div className="p-3 border-b border-white/20">
             <div className="flex items-center space-x-2">
@@ -339,17 +339,33 @@ const PortalEmpresasDashboard = () => {
   // Mobile Header with Burger Menu
   const MobileHeader = () => {
     return (
-      <div className="md:hidden fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-gray-900/20 border-b border-white/20 shadow-2xl">
-        <div className="flex items-center justify-between p-4">
+      <div className="md:hidden fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-gray-900/95 border-b border-white/20 shadow-2xl">
+        <div className="flex items-center justify-between p-3">
           {/* Logo */}
           <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-green-600/80 rounded-lg flex items-center justify-center shadow-lg backdrop-blur-sm">
-              <span className="text-white font-bold text-sm">N</span>
+            <div className="w-7 h-7 bg-green-600/80 rounded-lg flex items-center justify-center shadow-lg backdrop-blur-sm">
+              <span className="text-white font-bold text-xs">N</span>
             </div>
             <div>
-              <span className="text-lg font-bold text-white tracking-wide">NATUR</span>
+              <span className="text-sm font-bold text-white tracking-wide">NATUR</span>
               <p className="text-white/70 text-xs">Portal Empresas</p>
             </div>
+          </div>
+
+          {/* Current Section Title */}
+          <div className="flex-1 text-center px-4">
+            <h2 className="text-sm font-medium text-white truncate">
+              {(() => {
+                for (const item of menuStructure) {
+                  if (item.id === activeSection) return item.label;
+                  if (item.subcategories) {
+                    const subItem = item.subcategories.find(sub => sub.id === activeSection);
+                    if (subItem) return subItem.label;
+                  }
+                }
+                return "Portal";
+              })()}
+            </h2>
           </div>
 
           {/* Burger Menu Button */}
@@ -358,25 +374,25 @@ const PortalEmpresasDashboard = () => {
             className="p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors text-white backdrop-blur-sm"
           >
             {isMobileSidebarExpanded ? (
-              <X className="w-6 h-6" />
+              <X className="w-5 h-5" />
             ) : (
-              <Menu className="w-6 h-6" />
+              <Menu className="w-5 h-5" />
             )}
           </button>
         </div>
 
         {/* Mobile Dropdown Menu */}
         {isMobileSidebarExpanded && (
-          <div className="border-t border-white/20 backdrop-blur-xl bg-gray-900/30">
-            <div className="p-4 space-y-2">
+          <div className="border-t border-white/20 backdrop-blur-xl bg-gray-900/95 max-h-[calc(100vh-4rem)] overflow-y-auto">
+            <div className="p-3 space-y-1">
               {/* User Profile in Mobile */}
               {user && (
-                <div className="flex items-center p-3 rounded-lg bg-white/5 border border-white/10 mb-4">
-                  <div className="w-8 h-8 rounded-full bg-[#cad95e]/20 border-2 border-[#cad95e] flex items-center justify-center">
-                    <User className="w-4 h-4 text-[#cad95e]" />
+                <div className="flex items-center p-2 rounded-lg bg-white/5 border border-white/10 mb-3">
+                  <div className="w-7 h-7 rounded-full bg-[#cad95e]/20 border-2 border-[#cad95e] flex items-center justify-center">
+                    <User className="w-3 h-3 text-[#cad95e]" />
                   </div>
-                  <div className="ml-3">
-                    <h3 className="text-white font-sans text-sm font-medium">
+                  <div className="ml-2">
+                    <h3 className="text-white font-sans text-xs font-medium">
                       Usuario Portal
                     </h3>
                     <p className="text-white/70 text-xs">
@@ -423,7 +439,7 @@ const PortalEmpresasDashboard = () => {
                   <div key={item.id} className="space-y-1">
                     <button
                       onClick={() => toggleCategory(item.id)}
-                      className={`w-full flex items-center p-3 rounded-lg transition-all duration-200 ${
+                      className={`w-full flex items-center p-2 rounded-lg transition-all duration-200 ${
                         activeSection === item.id 
                           ? 'bg-white/20 text-white shadow-lg border border-white/30 backdrop-blur-sm' 
                           : 'text-white/80 hover:bg-white/10 hover:text-white backdrop-blur-sm'
@@ -723,7 +739,7 @@ const PortalEmpresasDashboard = () => {
         )}
         
         {/* Top green bar for map page */}
-        <header className="absolute top-0 right-0 md:left-60 left-0 bg-green-600 border-b border-green-700 shadow-lg px-3 md:px-6 py-3 md:py-4 z-40 backdrop-blur-md bg-green-600/95 md:top-0 top-16">
+        <header className="absolute top-0 right-0 md:left-64 left-0 bg-green-600 border-b border-green-700 shadow-lg px-3 md:px-6 py-3 md:py-4 z-40 backdrop-blur-md bg-green-600/95 md:top-0 top-16">
           <div className="flex items-center justify-between">
             <div className="flex-1 max-w-md mx-auto">
               <div className="relative">
@@ -773,7 +789,7 @@ const PortalEmpresasDashboard = () => {
       )}
       
       {/* Top green bar for all pages */}
-      <header className="absolute top-0 right-0 md:left-60 left-0 bg-green-600 border-b border-green-700 shadow-lg px-3 md:px-6 py-3 md:py-4 z-40 backdrop-blur-md bg-green-600/95 md:top-0 top-16">
+      <header className="absolute top-0 right-0 md:left-64 left-0 bg-green-600 border-b border-green-700 shadow-lg px-3 md:px-6 py-3 md:py-4 z-40 backdrop-blur-md bg-green-600/95 md:top-0 top-16">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <h1 className="text-xl font-bold text-white tracking-wide hidden sm:block">
@@ -820,7 +836,7 @@ const PortalEmpresasDashboard = () => {
       </header>
 
       {/* Main content area */}
-      <main className="absolute right-0 bottom-0 md:left-60 left-0 bg-black/40 backdrop-blur-sm p-6 overflow-y-auto md:top-20 top-32">
+      <main className="absolute right-0 bottom-0 md:left-64 left-0 bg-black/40 backdrop-blur-sm p-4 md:p-6 overflow-y-auto md:top-20 top-20">
         <div className="max-w-7xl mx-auto">
           {renderContent()}
         </div>
