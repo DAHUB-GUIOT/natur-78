@@ -276,59 +276,8 @@ const PortalEmpresasDashboard = () => {
       case "inicio":
         return (
           <div className="space-y-8">
-            {/* Stats Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <Card className="bg-gradient-to-br from-blue-500 to-blue-600 text-white border-0">
-                <CardContent className="p-6">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-blue-100">Experiencias Activas</p>
-                      <p className="text-2xl font-bold">12</p>
-                    </div>
-                    <Star className="w-8 h-8 text-blue-200" />
-                  </div>
-                </CardContent>
-              </Card>
-              
-              <Card className="bg-gradient-to-br from-green-500 to-green-600 text-white border-0">
-                <CardContent className="p-6">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-green-100">Reservas Mes</p>
-                      <p className="text-2xl font-bold">47</p>
-                    </div>
-                    <Calendar className="w-8 h-8 text-green-200" />
-                  </div>
-                </CardContent>
-              </Card>
-              
-              <Card className="bg-gradient-to-br from-purple-500 to-purple-600 text-white border-0">
-                <CardContent className="p-6">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-purple-100">Ingresos</p>
-                      <p className="text-2xl font-bold">$2.8M</p>
-                    </div>
-                    <DollarSign className="w-8 h-8 text-purple-200" />
-                  </div>
-                </CardContent>
-              </Card>
-              
-              <Card className="bg-gradient-to-br from-orange-500 to-orange-600 text-white border-0">
-                <CardContent className="p-6">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-orange-100">Conectados</p>
-                      <p className="text-2xl font-bold">156</p>
-                    </div>
-                    <Users className="w-8 h-8 text-orange-200" />
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-
             {/* Sustainability News Section */}
-            <div className="mt-12">
+            <div>
               <div className="flex items-center justify-between mb-8">
                 <div>
                   <h2 className="text-3xl font-bold text-white mb-2">Noticias de Sostenibilidad</h2>
