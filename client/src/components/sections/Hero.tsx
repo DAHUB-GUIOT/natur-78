@@ -1,13 +1,14 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "wouter";
-import { User, Menu, Calendar, Ticket } from "lucide-react";
+import { User, Menu, Calendar, Ticket, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { BrutalistMenu } from "@/components/ui/BrutalistMenu";
 
 import Festival_NATUR from "@assets/Festival-NATUR.png";
 
 export function Hero() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
     <header className="relative min-h-screen w-full overflow-hidden">
@@ -21,13 +22,47 @@ export function Hero() {
       <div className="absolute inset-0 bg-black/20"></div>
       {/* Top Navigation - Fixed with Dark Green Background */}
       <nav className="fixed top-0 left-0 right-0 z-50 shadow-lg" style={{ backgroundColor: '#181c0d', borderBottom: '1px solid #2a2f1a' }}>
-        <div className="flex items-center justify-between max-w-7xl mx-auto px-6 py-4">
+        <div className="flex items-center justify-between max-w-7xl mx-auto px-4 md:px-6 py-4">
           <div className="flex items-center space-x-4">
             <span className="font-bold text-2xl" style={{ color: '#cad95e' }}>N</span>
           </div>
           
-          {/* Portal Buttons in Top Menu */}
-          <div className="flex items-center space-x-4">
+          {/* Mobile burger menu button */}
+          <div className="md:hidden">
+            <Button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              variant="ghost"
+              size="sm"
+              className="text-white hover:bg-white/20"
+            >
+              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </Button>
+          </div>
+          
+          {/* Desktop Menu - Portal Buttons in Top Menu */}
+          <div className="hidden md:flex items-center space-x-4">
+            <Link to="/tickets">
+              <Button 
+                size="sm" 
+                variant="outline"
+                className="bg-transparent border-2 text-black font-medium px-4 py-2 rounded-none backdrop-blur-sm hover:opacity-90"
+                style={{ borderColor: '#cad95e', color: '#cad95e' }}
+              >
+                Tickets
+              </Button>
+            </Link>
+            
+            <Link to="/agenda">
+              <Button 
+                size="sm" 
+                variant="outline"
+                className="bg-transparent border-2 text-black font-medium px-4 py-2 rounded-none backdrop-blur-sm hover:opacity-90"
+                style={{ borderColor: '#cad95e', color: '#cad95e' }}
+              >
+                Agenda
+              </Button>
+            </Link>
+            
             <Link to="/auth/empresas">
               <Button 
                 size="sm" 
@@ -46,7 +81,7 @@ export function Hero() {
                 className="bg-transparent border-2 text-black font-medium px-4 py-2 rounded-none backdrop-blur-sm hover:opacity-90"
                 style={{ borderColor: '#cad95e', color: '#cad95e' }}
               >
-                Mapa Turismo Sostenible
+                Con-Sentidos
               </Button>
             </Link>
             
@@ -56,6 +91,61 @@ export function Hero() {
             <BrutalistMenu />
           </div>
         </div>
+
+        {/* Mobile menu overlay */}
+        {mobileMenuOpen && (
+          <div className="md:hidden absolute top-full left-0 right-0 bg-[#181c0d] border-t border-[#2a2f1a] shadow-lg">
+            <div className="px-4 py-6 space-y-4">
+              <Link to="/tickets" onClick={() => setMobileMenuOpen(false)}>
+                <Button 
+                  className="w-full justify-start bg-transparent border-2 font-medium px-4 py-3 rounded-none backdrop-blur-sm hover:opacity-90"
+                  style={{ borderColor: '#cad95e', color: '#cad95e' }}
+                >
+                  <Ticket className="w-5 h-5 mr-3" />
+                  TICKETS
+                </Button>
+              </Link>
+              
+              <Link to="/agenda" onClick={() => setMobileMenuOpen(false)}>
+                <Button 
+                  className="w-full justify-start bg-transparent border-2 font-medium px-4 py-3 rounded-none backdrop-blur-sm hover:opacity-90"
+                  style={{ borderColor: '#cad95e', color: '#cad95e' }}
+                >
+                  <Calendar className="w-5 h-5 mr-3" />
+                  AGENDA
+                </Button>
+              </Link>
+              
+              <Link to="/auth/empresas" onClick={() => setMobileMenuOpen(false)}>
+                <Button 
+                  className="w-full justify-start bg-transparent border-2 font-medium px-4 py-3 rounded-none backdrop-blur-sm hover:opacity-90"
+                  style={{ borderColor: '#cad95e', color: '#cad95e' }}
+                >
+                  Portal Empresas
+                </Button>
+              </Link>
+              
+              <Link to="/portal-viajeros" onClick={() => setMobileMenuOpen(false)}>
+                <Button 
+                  className="w-full justify-start bg-transparent border-2 font-medium px-4 py-3 rounded-none backdrop-blur-sm hover:opacity-90"
+                  style={{ borderColor: '#cad95e', color: '#cad95e' }}
+                >
+                  Con-Sentidos
+                </Button>
+              </Link>
+              
+              <div className="border-t border-[#2a2f1a] pt-4">
+                <Button 
+                  variant="ghost" 
+                  className="w-full justify-start text-white hover:bg-white/20 px-4 py-3"
+                >
+                  <User className="w-5 h-5 mr-3" />
+                  Perfil
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
       </nav>
       {/* Main Content - Left Aligned like BIME */}
       <div className="relative z-10 flex items-center min-h-screen px-6 sm:px-8 md:px-20 pt-20">
