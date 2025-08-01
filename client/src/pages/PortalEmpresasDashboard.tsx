@@ -885,7 +885,7 @@ const PortalEmpresasDashboard = () => {
         <InteractiveMap />
         
         {/* Top green bar for map page */}
-        <header className="absolute top-0 left-0 right-0 bg-green-600 border-b border-green-700 shadow-lg px-6 py-4 z-40 backdrop-blur-md bg-green-600/95">
+        <header className="absolute top-0 left-0 right-0 bg-green-600 border-b border-green-700 shadow-lg px-3 md:px-6 py-3 md:py-4 z-40 backdrop-blur-md bg-green-600/95">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <div className="flex items-center space-x-2">
@@ -999,18 +999,18 @@ const PortalEmpresasDashboard = () => {
       <InteractiveMap />
       
       {/* Top green bar for all pages */}
-      <header className="absolute top-0 left-0 right-0 bg-green-600 border-b border-green-700 shadow-lg px-6 py-4 z-40 backdrop-blur-md bg-green-600/95">
+      <header className="absolute top-0 left-0 right-0 bg-green-600 border-b border-green-700 shadow-lg px-3 md:px-6 py-3 md:py-4 z-40 backdrop-blur-md bg-green-600/95">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <div className="flex items-center space-x-2">
                 <div className="w-8 h-8 bg-green-500 rounded-lg flex items-center justify-center shadow-lg">
                   <span className="text-white font-bold text-sm">N</span>
                 </div>
-                <span className="text-xl font-bold text-white tracking-wide">NATUR</span>
+                <span className="text-xl font-bold text-white tracking-wide hidden sm:block">NATUR</span>
               </div>
             </div>
             
-            <div className="flex-1 max-w-md mx-8">
+            <div className="hidden md:block flex-1 max-w-md mx-8">
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-white/70" />
                 <Input 
@@ -1020,13 +1020,13 @@ const PortalEmpresasDashboard = () => {
               </div>
             </div>
             
-            <div className="flex items-center space-x-4">
-              <Button variant="ghost" size="sm" className="relative text-white hover:bg-white/20">
+            <div className="flex items-center space-x-2 md:space-x-4">
+              <Button variant="ghost" size="sm" className="relative text-white hover:bg-white/20 hidden md:flex">
                 <Bell className="w-5 h-5" />
                 <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full text-xs text-white flex items-center justify-center">3</span>
               </Button>
               
-              <Button variant="ghost" size="sm" className="relative text-white hover:bg-white/20">
+              <Button variant="ghost" size="sm" className="relative text-white hover:bg-white/20 hidden md:flex">
                 <MessageCircle className="w-5 h-5" />
                 <span className="absolute -top-1 -right-1 w-4 h-4 bg-blue-500 rounded-full text-xs text-white flex items-center justify-center">2</span>
               </Button>
@@ -1034,11 +1034,11 @@ const PortalEmpresasDashboard = () => {
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" className="flex items-center space-x-2 p-2 text-white hover:bg-white/20">
-                    <Avatar className="w-8 h-8">
+                    <Avatar className="w-6 h-6 md:w-8 md:h-8">
                       <AvatarImage src="/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg" />
                       <AvatarFallback>U</AvatarFallback>
                     </Avatar>
-                    <span className="text-sm font-medium">Usuario</span>
+                    <span className="text-sm font-medium hidden md:block">Usuario</span>
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-56">
@@ -1061,29 +1061,8 @@ const PortalEmpresasDashboard = () => {
           </div>
         </header>
 
-      {/* Mobile burger menu button */}
-      <div className="md:hidden fixed top-4 left-4 z-[60]">
-        <Button
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="w-12 h-12 bg-gray-900/80 backdrop-blur-xl border border-gray-600/30 hover:bg-gray-800/80 text-white rounded-xl shadow-lg"
-          size="sm"
-        >
-          {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-        </Button>
-      </div>
-
-      {/* Mobile overlay */}
-      {mobileMenuOpen && (
-        <div 
-          className="md:hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-[55]"
-          onClick={() => setMobileMenuOpen(false)}
-        />
-      )}
-
-      {/* Compact glassmorphism sidebar for all pages */}
-      <div className={`absolute top-24 left-4 z-50 w-52 backdrop-blur-xl bg-gray-900/40 border border-gray-600/30 rounded-xl shadow-2xl transition-transform duration-300 ${
-        mobileMenuOpen ? 'translate-x-0' : 'max-md:-translate-x-full'
-      } md:translate-x-0`}>
+      {/* Desktop sidebar - hidden on mobile */}
+      <div className="hidden md:block absolute top-24 left-4 z-50 w-52 backdrop-blur-xl bg-gray-900/40 border border-gray-600/30 rounded-xl shadow-2xl">
         <div className="p-3 border-b border-gray-600/30">
           <div className="flex items-center space-x-2">
             <div className="w-6 h-6 bg-green-600/80 rounded-lg flex items-center justify-center shadow-lg backdrop-blur-sm">
@@ -1102,7 +1081,6 @@ const PortalEmpresasDashboard = () => {
                 key={item.id}
                 onClick={() => {
                   setActiveSection(item.id);
-                  setMobileMenuOpen(false);
                 }}
                 className={`w-full flex items-center space-x-2 px-3 py-2 rounded-lg transition-all duration-200 ${
                   activeSection === item.id 
@@ -1168,7 +1146,6 @@ const PortalEmpresasDashboard = () => {
                   <Button
                     onClick={() => {
                       setActiveSection("ajustes");
-                      setMobileMenuOpen(false);
                     }}
                     variant="outline"
                     size="sm"
@@ -1202,7 +1179,6 @@ const PortalEmpresasDashboard = () => {
           <Button
             onClick={() => {
               setActiveSection("producir");
-              setMobileMenuOpen(false);
             }}
             className={`w-full bg-gradient-to-r from-[#cad95e] to-green-500 hover:from-green-500 hover:to-[#cad95e] text-black font-bold transition-all duration-300 hover:scale-105 shadow-lg ${
               activeSection === "producir" ? "scale-105 shadow-xl" : ""
@@ -1218,12 +1194,69 @@ const PortalEmpresasDashboard = () => {
 
       {/* Compact main content with glassmorphism background (except for map) */}
       {activeSection !== "mapa" && (
-        <main className="absolute top-24 md:left-60 left-4 right-4 bottom-4 z-40 backdrop-blur-xl bg-gray-900/40 border border-gray-600/30 rounded-xl shadow-2xl overflow-hidden">
-          <div className="h-full overflow-y-auto p-4">
+        <main className="absolute top-24 md:left-60 left-4 right-4 md:bottom-4 bottom-20 z-40 backdrop-blur-xl bg-gray-900/40 border border-gray-600/30 rounded-xl shadow-2xl overflow-hidden">
+          <div className="h-full overflow-y-auto p-2 md:p-4">
             {renderContent()}
           </div>
         </main>
       )}
+
+      {/* Mobile Bottom Navigation */}
+      <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 backdrop-blur-xl bg-gray-900/95 border-t border-gray-600/30 shadow-2xl">
+        <div className="grid grid-cols-4 gap-1 p-2">
+          {sidebarItems.slice(0, 4).map((item) => {
+            const Icon = item.icon;
+            return (
+              <button
+                key={item.id}
+                onClick={() => setActiveSection(item.id)}
+                className={`flex flex-col items-center space-y-1 px-2 py-3 rounded-lg transition-all duration-200 ${
+                  activeSection === item.id 
+                    ? 'bg-green-600/30 text-white shadow-lg border border-green-400/30' 
+                    : 'text-gray-300 hover:bg-gray-700/30 hover:text-white'
+                }`}
+              >
+                <Icon className="w-5 h-5" />
+                <span className="text-xs font-medium">{item.label}</span>
+              </button>
+            );
+          })}
+        </div>
+        
+        {/* Second row for remaining items */}
+        <div className="grid grid-cols-4 gap-1 px-2 pb-2">
+          {sidebarItems.slice(4).map((item) => {
+            const Icon = item.icon;
+            return (
+              <button
+                key={item.id}
+                onClick={() => setActiveSection(item.id)}
+                className={`flex flex-col items-center space-y-1 px-2 py-3 rounded-lg transition-all duration-200 ${
+                  activeSection === item.id 
+                    ? 'bg-green-600/30 text-white shadow-lg border border-green-400/30' 
+                    : 'text-gray-300 hover:bg-gray-700/30 hover:text-white'
+                }`}
+              >
+                <Icon className="w-5 h-5" />
+                <span className="text-xs font-medium">{item.label}</span>
+              </button>
+            );
+          })}
+          
+          {/* PRODUCIR button in mobile */}
+          <button
+            onClick={() => setActiveSection("producir")}
+            className={`flex flex-col items-center space-y-1 px-2 py-3 rounded-lg transition-all duration-200 ${
+              activeSection === "producir" 
+                ? 'bg-gradient-to-r from-[#cad95e] to-green-500 text-black font-bold shadow-xl' 
+                : 'bg-gradient-to-r from-[#cad95e]/80 to-green-500/80 text-black font-bold hover:from-[#cad95e] hover:to-green-500'
+            }`}
+          >
+            <Plus className="w-5 h-5" />
+            <span className="text-xs font-bold">PRODUCIR</span>
+          </button>
+        </div>
+      </div>
 
       {/* Floating Action Button - Create Experience */}
       {activeSection !== "mapa" && (
