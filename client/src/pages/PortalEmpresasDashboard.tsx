@@ -26,6 +26,8 @@ import {
   Edit,
   Handshake,
   ShieldCheck,
+  TreePine,
+  Waves,
   Mail,
   Share2,
   Code,
@@ -273,7 +275,8 @@ const PortalEmpresasDashboard = () => {
         return <PortalProfile />;
       case "inicio":
         return (
-          <div className="space-y-6">
+          <div className="space-y-8">
+            {/* Stats Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               <Card className="bg-gradient-to-br from-blue-500 to-blue-600 text-white border-0">
                 <CardContent className="p-6">
@@ -322,6 +325,180 @@ const PortalEmpresasDashboard = () => {
                   </div>
                 </CardContent>
               </Card>
+            </div>
+
+            {/* Sustainability News Section */}
+            <div className="mt-12">
+              <div className="flex items-center justify-between mb-8">
+                <div>
+                  <h2 className="text-3xl font-bold text-white mb-2">Noticias de Sostenibilidad</h2>
+                  <p className="text-white/70">Últimas tendencias en turismo regenerativo y tecnología verde</p>
+                </div>
+                <Button variant="outline" className="border-white/20 text-white hover:bg-white/10">
+                  Ver todas
+                </Button>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {/* Featured News Item */}
+                <div className="lg:col-span-2 group cursor-pointer">
+                  <div className="relative h-80 rounded-2xl overflow-hidden backdrop-blur-xl bg-gradient-to-br from-white/10 to-white/5 border border-white/20 shadow-2xl hover:shadow-3xl transition-all duration-500 hover:scale-[1.02]">
+                    <div 
+                      className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 via-blue-600/30 to-purple-700/40"
+                      style={{
+                        backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05' fill-rule='nonzero'%3E%3Ccircle cx='7' cy='7' r='3'/%3E%3Ccircle cx='53' cy='53' r='3'/%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+                      }}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                    
+                    {/* Floating geometric elements */}
+                    <div className="absolute top-4 right-4 w-12 h-12 rounded-full bg-[#cad95e]/20 backdrop-blur-md border border-[#cad95e]/30 flex items-center justify-center">
+                      <Globe className="w-6 h-6 text-[#cad95e]" />
+                    </div>
+                    
+                    <div className="absolute top-1/3 left-6 w-8 h-8 rounded-lg bg-blue-400/20 backdrop-blur-md border border-blue-400/30 rotate-12 flex items-center justify-center">
+                      <div className="w-3 h-3 bg-blue-400 rounded-full animate-pulse" />
+                    </div>
+
+                    <div className="absolute bottom-6 left-6 right-6">
+                      <div className="inline-block px-3 py-1 rounded-full bg-[#cad95e]/20 backdrop-blur-md border border-[#cad95e]/30 text-[#cad95e] text-xs font-medium mb-4">
+                        TECNOLOGÍA SOSTENIBLE
+                      </div>
+                      <h3 className="text-2xl font-bold text-white mb-3 leading-tight">
+                        IA Regenerativa: El Futuro del Turismo Consciente en 2025
+                      </h3>
+                      <p className="text-white/70 text-sm line-clamp-2 mb-4">
+                        Descubre cómo la inteligencia artificial está revolucionando las experiencias de turismo sostenible, 
+                        creando itinerarios personalizados que respetan los ecosistemas locales.
+                      </p>
+                      <div className="flex items-center text-white/60 text-xs space-x-4">
+                        <span>Hace 2 horas</span>
+                        <span>•</span>
+                        <span>5 min lectura</span>
+                        <span>•</span>
+                        <div className="flex items-center space-x-1">
+                          <Heart className="w-3 h-3" />
+                          <span>24</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Side News Items */}
+                <div className="space-y-6">
+                  <div className="group cursor-pointer">
+                    <div className="relative h-36 rounded-xl overflow-hidden backdrop-blur-xl bg-gradient-to-br from-white/10 to-white/5 border border-white/20 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.02]">
+                      <div 
+                        className="absolute inset-0 bg-gradient-to-br from-green-500/20 via-emerald-600/30 to-teal-700/40"
+                        style={{
+                          backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpolygon points='20 0 40 20 20 40 0 20'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+                        }}
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                      
+                      <div className="absolute top-3 right-3 w-8 h-8 rounded-full bg-green-400/20 backdrop-blur-md border border-green-400/30 flex items-center justify-center">
+                        <TreePine className="w-4 h-4 text-green-400" />
+                      </div>
+
+                      <div className="absolute bottom-3 left-3 right-3">
+                        <div className="inline-block px-2 py-0.5 rounded-full bg-green-400/20 backdrop-blur-md border border-green-400/30 text-green-400 text-xs font-medium mb-2">
+                          CONSERVACIÓN
+                        </div>
+                        <h4 className="text-white font-bold text-sm leading-tight mb-1">
+                          Blockchain para Certificación de Carbono Neutral
+                        </h4>
+                        <p className="text-white/60 text-xs">Hace 4 horas</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="group cursor-pointer">
+                    <div className="relative h-36 rounded-xl overflow-hidden backdrop-blur-xl bg-gradient-to-br from-white/10 to-white/5 border border-white/20 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.02]">
+                      <div 
+                        className="absolute inset-0 bg-gradient-to-br from-purple-500/20 via-pink-600/30 to-red-700/40"
+                        style={{
+                          backgroundImage: `url("data:image/svg+xml,%3Csvg width='30' height='30' viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M15 0L30 15L15 30L0 15z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+                        }}
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                      
+                      <div className="absolute top-3 right-3 w-8 h-8 rounded-full bg-purple-400/20 backdrop-blur-md border border-purple-400/30 flex items-center justify-center">
+                        <Waves className="w-4 h-4 text-purple-400" />
+                      </div>
+
+                      <div className="absolute bottom-3 left-3 right-3">
+                        <div className="inline-block px-2 py-0.5 rounded-full bg-purple-400/20 backdrop-blur-md border border-purple-400/30 text-purple-400 text-xs font-medium mb-2">
+                          INNOVACIÓN
+                        </div>
+                        <h4 className="text-white font-bold text-sm leading-tight mb-1">
+                          Drones Solares Monitorean Biodiversidad Marina
+                        </h4>
+                        <p className="text-white/60 text-xs">Hace 6 horas</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Additional News Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
+                <div className="group cursor-pointer">
+                  <div className="relative h-32 rounded-lg overflow-hidden backdrop-blur-xl bg-gradient-to-br from-white/8 to-white/3 border border-white/15 shadow-lg hover:shadow-xl transition-all duration-300">
+                    <div className="absolute inset-0 bg-gradient-to-br from-orange-500/15 via-yellow-600/20 to-red-700/25" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+                    
+                    <div className="absolute bottom-2 left-2 right-2">
+                      <h5 className="text-white font-medium text-xs leading-tight mb-1">
+                        Energía Solar en Ecolodges: +300% Eficiencia
+                      </h5>
+                      <p className="text-white/50 text-xs">Hace 8 horas</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="group cursor-pointer">
+                  <div className="relative h-32 rounded-lg overflow-hidden backdrop-blur-xl bg-gradient-to-br from-white/8 to-white/3 border border-white/15 shadow-lg hover:shadow-xl transition-all duration-300">
+                    <div className="absolute inset-0 bg-gradient-to-br from-teal-500/15 via-cyan-600/20 to-blue-700/25" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+                    
+                    <div className="absolute bottom-2 left-2 right-2">
+                      <h5 className="text-white font-medium text-xs leading-tight mb-1">
+                        Apps de Realidad Aumentada para Educación Ambiental
+                      </h5>
+                      <p className="text-white/50 text-xs">Hace 10 horas</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="group cursor-pointer">
+                  <div className="relative h-32 rounded-lg overflow-hidden backdrop-blur-xl bg-gradient-to-br from-white/8 to-white/3 border border-white/15 shadow-lg hover:shadow-xl transition-all duration-300">
+                    <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/15 via-purple-600/20 to-pink-700/25" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+                    
+                    <div className="absolute bottom-2 left-2 right-2">
+                      <h5 className="text-white font-medium text-xs leading-tight mb-1">
+                        Sensores IoT Predicen Cambios Climáticos Locales
+                      </h5>
+                      <p className="text-white/50 text-xs">Hace 12 horas</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="group cursor-pointer">
+                  <div className="relative h-32 rounded-lg overflow-hidden backdrop-blur-xl bg-gradient-to-br from-white/8 to-white/3 border border-white/15 shadow-lg hover:shadow-xl transition-all duration-300">
+                    <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/15 via-green-600/20 to-lime-700/25" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+                    
+                    <div className="absolute bottom-2 left-2 right-2">
+                      <h5 className="text-white font-medium text-xs leading-tight mb-1">
+                        Biomateriales Revolucionan Construcción Sostenible
+                      </h5>
+                      <p className="text-white/50 text-xs">Hace 1 día</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         );
