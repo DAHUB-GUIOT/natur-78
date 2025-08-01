@@ -265,52 +265,7 @@ export default function PortalViajeros() {
 
 
 
-      {/* Compact glassmorphism sidebar for travelers */}
-      <div className="absolute top-24 left-4 z-50 w-52 backdrop-blur-xl bg-gray-900/40 border border-gray-600/30 rounded-xl shadow-2xl">
-        <div className="p-3 border-b border-gray-600/30">
-          <div className="flex items-center space-x-2">
-            <div className="w-6 h-6 bg-green-600/80 rounded-lg flex items-center justify-center shadow-lg backdrop-blur-sm">
-              <span className="text-white font-bold text-xs">M</span>
-            </div>
-            <span className="text-lg font-bold text-white tracking-wide">Marketplace</span>
-          </div>
-          <p className="text-gray-300 text-xs mt-1">Experiencias Sostenibles</p>
-        </div>
-        
-        <nav className="p-2 space-y-0.5">
-          {sidebarItems.map((item) => {
-            const Icon = item.icon;
-            return (
-              <button
-                key={item.id}
-                onClick={() => setActiveSection(item.id)}
-                className={`w-full flex items-center space-x-2 px-3 py-2 rounded-lg transition-all duration-200 ${
-                  activeSection === item.id 
-                    ? 'bg-green-600/30 text-white shadow-lg border border-green-400/30 backdrop-blur-sm' 
-                    : 'text-gray-200 hover:bg-gray-700/30 hover:text-white hover:shadow-md'
-                }`}
-              >
-                <Icon className="w-4 h-4" />
-                <span className="font-medium text-xs">{item.label}</span>
-              </button>
-            );
-          })}
-        </nav>
-        
-        {/* Compact user profile section */}
-        <div className="p-2 border-t border-gray-600/30">
-          <div className="flex items-center space-x-2 px-3 py-2 rounded-lg bg-gray-800/30 backdrop-blur-sm">
-            <Avatar className="w-6 h-6 ring-1 ring-gray-600/50">
-              <AvatarImage src="/lovable-uploads/96c8e76d-00c8-4cd5-b263-4b779aa85181.jpg" />
-              <AvatarFallback className="bg-green-600/80 text-white text-xs">V</AvatarFallback>
-            </Avatar>
-            <div className="flex-1 min-w-0">
-              <p className="text-white font-medium text-xs truncate">Viajero</p>
-              <p className="text-gray-300 text-xs">Explorador</p>
-            </div>
-          </div>
-        </div>
-      </div>
+
 
       {/* Content overlay based on active section */}
       {activeSection === "mapa" && (

@@ -57,6 +57,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useAuth } from "@/contexts/AuthContext";
+import { UnifiedHeader } from "@/components/layout/UnifiedHeader";
 import { InteractiveMap } from "@/components/dashboard/InteractiveMap";
 import ExperienceForm from "@/components/dashboard/ExperienceForm";
 import { PortalProfile } from "@/components/portal/PortalProfile";
@@ -723,73 +724,12 @@ const PortalEmpresasDashboard = () => {
       <UnifiedHeader title="Portal Empresas" showSearch={true} variant="portal" />
       
       {/* Full-screen map as background for all pages */}
-      <div className="absolute inset-0 pt-16 md:left-64 left-0">
+      <div className="absolute inset-0 pt-16">
         <InteractiveMap />
       </div>
-      
-      {/* Desktop Sidebar */}
-      <DesktopSidebar />
-
-      {/* Mobile Header */}
-      <MobileHeader />
-
-      {/* Mobile Overlay */}
-      {isMobileSidebarExpanded && (
-        <div 
-          className="md:hidden fixed inset-0 bg-black/50 z-40"
-          onClick={() => setIsMobileSidebarExpanded(false)}
-        />
-      )}
-      
-      {/* Top green bar for all pages */}
-      <header className="absolute top-0 right-0 md:left-64 left-0 bg-green-600 border-b border-green-700 shadow-lg px-3 md:px-6 py-3 md:py-4 z-40 backdrop-blur-md bg-green-600/95 md:top-0 top-16">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-4">
-            <h1 className="text-xl font-bold text-white tracking-wide hidden sm:block">
-              {(() => {
-                // Find the active section in main menu or subcategories
-                for (const item of menuStructure) {
-                  if (item.id === activeSection) {
-                    return item.label;
-                  }
-                  if (item.subcategories) {
-                    const subItem = item.subcategories.find(sub => sub.id === activeSection);
-                    if (subItem) {
-                      return subItem.label;
-                    }
-                  }
-                }
-                return "Portal Empresas";
-              })()}
-            </h1>
-          </div>
-          
-          <div className="flex-1 max-w-md mx-8">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-white/70" />
-              <Input 
-                placeholder="Buscar experiencias, empresas, ubicaciones..." 
-                className="pl-10 bg-white/10 border-white/20 text-white placeholder-white/60 backdrop-blur-md"
-              />
-            </div>
-          </div>
-          
-          <div className="flex items-center space-x-4">
-            <Button variant="ghost" size="sm" className="relative text-white hover:bg-white/20">
-              <Bell className="w-5 h-5" />
-              <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full text-xs text-white flex items-center justify-center">3</span>
-            </Button>
-            
-            <Button variant="ghost" size="sm" className="relative text-white hover:bg-white/20">
-              <MessageCircle className="w-5 h-5" />
-              <span className="absolute -top-1 -right-1 w-4 h-4 bg-blue-500 rounded-full text-xs text-white flex items-center justify-center">2</span>
-            </Button>
-          </div>
-        </div>
-      </header>
 
       {/* Main content area */}
-      <main className="absolute right-0 bottom-0 md:left-64 left-0 bg-black/40 backdrop-blur-sm p-4 md:p-6 overflow-y-auto md:top-20 top-20">
+      <main className="absolute right-0 bottom-0 left-0 bg-black/40 backdrop-blur-sm p-4 md:p-6 overflow-y-auto top-20">
         <div className="max-w-7xl mx-auto">
           {renderContent()}
         </div>
