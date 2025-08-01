@@ -181,6 +181,70 @@ const PortalEmpresasDashboard = () => {
 
   const renderContent = () => {
     switch (activeSection) {
+      case "producir":
+        return (
+          <div className="space-y-6">
+            <div className="text-center">
+              <h2 className="text-2xl font-bold text-white mb-2">PRODUCIR</h2>
+              <p className="text-gray-300 text-sm mb-6">Crear y gestionar contenido para tu empresa</p>
+            </div>
+            
+            {/* Production Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <Card className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30 hover:bg-gray-800/50 transition-all cursor-pointer">
+                <CardContent className="p-6 text-center">
+                  <div className="w-12 h-12 bg-[#cad95e]/20 rounded-lg flex items-center justify-center mx-auto mb-4">
+                    <Star className="w-6 h-6 text-[#cad95e]" />
+                  </div>
+                  <h3 className="text-white font-medium mb-2">Crear Experiencia</h3>
+                  <p className="text-gray-400 text-sm mb-4">Diseña nuevas experiencias turísticas</p>
+                  <Button 
+                    size="sm" 
+                    className="bg-[#cad95e] hover:bg-green-500 text-black"
+                    onClick={() => setShowExperienceForm(true)}
+                  >
+                    Crear
+                  </Button>
+                </CardContent>
+              </Card>
+
+              <Card className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30 hover:bg-gray-800/50 transition-all cursor-pointer">
+                <CardContent className="p-6 text-center">
+                  <div className="w-12 h-12 bg-blue-600/20 rounded-lg flex items-center justify-center mx-auto mb-4">
+                    <Edit className="w-6 h-6 text-blue-400" />
+                  </div>
+                  <h3 className="text-white font-medium mb-2">Gestionar Perfil</h3>
+                  <p className="text-gray-400 text-sm mb-4">Actualiza información de empresa</p>
+                  <Button 
+                    size="sm" 
+                    className="bg-blue-600 hover:bg-blue-700 text-white"
+                    onClick={() => setActiveSection("ajustes")}
+                  >
+                    Editar
+                  </Button>
+                </CardContent>
+              </Card>
+
+              <Card className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30 hover:bg-gray-800/50 transition-all cursor-pointer">
+                <CardContent className="p-6 text-center">
+                  <div className="w-12 h-12 bg-purple-600/20 rounded-lg flex items-center justify-center mx-auto mb-4">
+                    <MessageCircle className="w-6 h-6 text-purple-400" />
+                  </div>
+                  <h3 className="text-white font-medium mb-2">Mensajes</h3>
+                  <p className="text-gray-400 text-sm mb-4">Conecta con otros empresarios</p>
+                  <Button 
+                    size="sm" 
+                    className="bg-purple-600 hover:bg-purple-700 text-white"
+                    onClick={() => setActiveSection("mensajes")}
+                  >
+                    Abrir
+                  </Button>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        );
+
       case "inicio":
         return (
           <div className="space-y-6">
@@ -1101,6 +1165,21 @@ const PortalEmpresasDashboard = () => {
               </div>
             )}
           </div>
+        </div>
+
+        {/* Produce Button Section */}
+        <div className="p-3 border-t border-gray-600/30">
+          <Button
+            onClick={() => setActiveSection("producir")}
+            className={`w-full bg-gradient-to-r from-[#cad95e] to-green-500 hover:from-green-500 hover:to-[#cad95e] text-black font-bold transition-all duration-300 hover:scale-105 shadow-lg ${
+              activeSection === "producir" ? "scale-105 shadow-xl" : ""
+            }`}
+          >
+            <div className="flex flex-col items-center py-1">
+              <span className="text-sm font-bold">PRODUCIR</span>
+              <span className="text-xs opacity-80">Crear y gestionar</span>
+            </div>
+          </Button>
         </div>
       </div>
 
