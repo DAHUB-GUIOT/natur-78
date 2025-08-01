@@ -9,7 +9,7 @@ import { Location } from "@/components/sections/Location";
 import { Award } from "@/components/sections/Award";
 import { Partners } from "@/components/sections/Partners";
 import { Contact } from "@/components/sections/Contact";
-import { HeaderButtons } from "@/components/layout/HeaderButtons";
+import { UnifiedHeader } from "@/components/layout/UnifiedHeader";
 import { HomeBanner } from "@/components/sections/HomeBanner";
 import { FeaturedArticles } from "@/components/sections/FeaturedArticles";
 
@@ -37,12 +37,14 @@ const Index = () => {
   return (
     <div className="overflow-x-hidden w-full">
       <div className="min-h-screen bg-[#FCF8EE] w-full">
-        <HeaderButtons showPortalButtons={true} />
+        <UnifiedHeader title="Festival Natur 2025" showSearch={false} />
         
-        <HomeBanner />
-        <FeaturedArticles />
-        
-        <Hero />
+        <div className="pt-16">
+          <HomeBanner />
+          <FeaturedArticles />
+          
+          <Hero />
+        </div>
         
         <div id="about">
           <About />

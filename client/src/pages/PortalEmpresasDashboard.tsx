@@ -60,6 +60,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { InteractiveMap } from "@/components/dashboard/InteractiveMap";
 import ExperienceForm from "@/components/dashboard/ExperienceForm";
 import { PortalProfile } from "@/components/portal/PortalProfile";
+import { UnifiedHeader } from "@/components/layout/UnifiedHeader";
 
 // Mock data for demo
 const mockExperiences = [
@@ -715,64 +716,16 @@ const PortalEmpresasDashboard = () => {
     }
   };
 
-  // Full-screen layout for map, regular layout for other sections
-  if (activeSection === "mapa") {
-    return (
-      <div className="h-screen w-full relative overflow-hidden">
-        {/* Full-screen map as background */}
-        <div className="absolute inset-0 md:left-60 left-0">
-          <InteractiveMap />
-        </div>
-
-        {/* Desktop Sidebar */}
-        <DesktopSidebar />
-
-        {/* Mobile Header */}
-        <MobileHeader />
-
-        {/* Mobile Overlay */}
-        {isMobileSidebarExpanded && (
-          <div 
-            className="md:hidden fixed inset-0 bg-black/50 z-40"
-            onClick={() => setIsMobileSidebarExpanded(false)}
-          />
-        )}
-        
-        {/* Top green bar for map page */}
-        <header className="absolute top-0 right-0 md:left-64 left-0 bg-green-600 border-b border-green-700 shadow-lg px-3 md:px-6 py-3 md:py-4 z-40 backdrop-blur-md bg-green-600/95 md:top-0 top-16">
-          <div className="flex items-center justify-between">
-            <div className="flex-1 max-w-md mx-auto">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-white/70" />
-                <Input 
-                  placeholder="Buscar experiencias, empresas, ubicaciones..." 
-                  className="pl-10 bg-white/10 border-white/20 text-white placeholder-white/60 backdrop-blur-md"
-                />
-              </div>
-            </div>
-            
-            <div className="flex items-center space-x-4 ml-4">
-              <Button variant="ghost" size="sm" className="relative text-white hover:bg-white/20">
-                <Bell className="w-5 h-5" />
-                <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full text-xs text-white flex items-center justify-center">3</span>
-              </Button>
-              
-              <Button variant="ghost" size="sm" className="relative text-white hover:bg-white/20">
-                <MessageCircle className="w-5 h-5" />
-                <span className="absolute -top-1 -right-1 w-4 h-4 bg-blue-500 rounded-full text-xs text-white flex items-center justify-center">2</span>
-              </Button>
-            </div>
-          </div>
-        </header>
-      </div>
-    );
-  }
-
-  // Regular layout for non-map sections
+  // Main layout with unified header
   return (
     <div className="h-screen w-full relative overflow-hidden">
+      {/* Unified Header */}
+      <UnifiedHeader title="Portal Empresas" showSearch={true} variant="portal" />
+      
       {/* Full-screen map as background for all pages */}
-      <InteractiveMap />
+      <div className="absolute inset-0 pt-16 md:left-64 left-0">
+        <InteractiveMap />
+      </div>
       
       {/* Desktop Sidebar */}
       <DesktopSidebar />
