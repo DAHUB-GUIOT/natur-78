@@ -110,33 +110,41 @@ const PortalEmpresasDashboard = () => {
         isMobileSidebarExpanded ? 'w-60' : 'w-16'
       } md:w-60`}>
         <div className="h-full backdrop-blur-xl bg-gray-900/20 border-r border-white/20 shadow-2xl flex flex-col">
-          {/* Toggle Button - Only visible on mobile */}
-          <div className="p-3 border-b border-white/20 md:hidden">
-            <button
-              onClick={() => setIsMobileSidebarExpanded(!isMobileSidebarExpanded)}
-              className="w-full flex items-center justify-center p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors text-white backdrop-blur-sm"
-            >
-              {isMobileSidebarExpanded ? (
-                <ChevronLeft className="w-5 h-5" />
-              ) : (
-                <Menu className="w-5 h-5" />
-              )}
-            </button>
-          </div>
-
-          {/* Logo Section */}
+          {/* Logo Section with integrated mobile toggle */}
           <div className="p-3 border-b border-white/20">
-            <div className={`flex items-center ${isExpanded ? 'justify-start space-x-2' : 'justify-center'}`}>
-              <div className="w-8 h-8 bg-green-600/80 rounded-lg flex items-center justify-center shadow-lg backdrop-blur-sm">
-                <span className="text-white font-bold text-sm">N</span>
-              </div>
-              {isExpanded && (
-                <div>
-                  <span className="text-xl font-bold text-white tracking-wide">NATUR</span>
-                  <p className="text-white/70 text-xs">Portal Empresas</p>
+            <div className={`flex items-center ${isExpanded ? 'justify-between' : 'justify-center'}`}>
+              {/* Logo */}
+              <div className={`flex items-center ${isExpanded ? 'space-x-2' : ''}`}>
+                <div className="w-8 h-8 bg-green-600/80 rounded-lg flex items-center justify-center shadow-lg backdrop-blur-sm">
+                  <span className="text-white font-bold text-sm">N</span>
                 </div>
+                {isExpanded && (
+                  <div>
+                    <span className="text-xl font-bold text-white tracking-wide">NATUR</span>
+                    <p className="text-white/70 text-xs">Portal Empresas</p>
+                  </div>
+                )}
+              </div>
+              
+              {/* Mobile toggle button - only when expanded */}
+              {isMobileSidebarExpanded && (
+                <button
+                  onClick={() => setIsMobileSidebarExpanded(false)}
+                  className="md:hidden p-1.5 rounded-lg bg-white/10 hover:bg-white/20 transition-colors text-white backdrop-blur-sm"
+                >
+                  <ChevronLeft className="w-4 h-4" />
+                </button>
               )}
             </div>
+            
+            {/* Mobile toggle when collapsed - make it clickable on the logo area */}
+            {!isMobileSidebarExpanded && (
+              <button
+                onClick={() => setIsMobileSidebarExpanded(true)}
+                className="md:hidden absolute inset-0 w-full h-full bg-transparent"
+                aria-label="Expandir menú"
+              />
+            )}
           </div>
 
           {/* User Profile Section */}
