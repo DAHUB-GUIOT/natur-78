@@ -54,6 +54,7 @@ import ExperienceForm from "@/components/dashboard/ExperienceForm";
 import ProfileSection from "@/components/dashboard/ProfileSection";
 import TwitterProfileSection from "@/components/profile/TwitterProfileSection";
 import { SimpleChat } from "@/components/messaging/SimpleChat";
+import PortalProfile from "@/components/portal/PortalProfile";
 
 import { Link } from "wouter";
 
@@ -596,85 +597,7 @@ const PortalEmpresasDashboard = () => {
 
 
       case "ajustes":
-        return (
-          <div className="space-y-4">
-            <h2 className="text-xl font-sans text-white">Ajustes</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-              <Card className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30">
-                <CardContent className="p-3">
-                  <h3 className="text-sm font-sans text-white mb-3">Perfil</h3>
-                  <div className="space-y-2">
-                    <Button variant="outline" size="sm" className="w-full justify-start border-gray-600/50 text-white hover:bg-gray-700/50 text-xs h-8 backdrop-blur-sm">
-                      <User className="w-3 h-3 mr-2" />
-                      Editar perfil
-                    </Button>
-                    <Button variant="outline" size="sm" className="w-full justify-start border-gray-600/50 text-white hover:bg-gray-700/50 text-xs h-8 backdrop-blur-sm">
-                      <Settings className="w-3 h-3 mr-2" />
-                      Cambiar contraseña
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-              
-              <Card className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30">
-                <CardContent className="p-3">
-                  <h3 className="text-sm font-sans text-white mb-3">Pagos</h3>
-                  <div className="space-y-2">
-                    <Button variant="outline" size="sm" className="w-full justify-start border-gray-600/50 text-white hover:bg-gray-700/50 text-xs h-8 backdrop-blur-sm">
-                      <DollarSign className="w-3 h-3 mr-2" />
-                      Métodos de pago
-                    </Button>
-                    <Button variant="outline" size="sm" className="w-full justify-start border-gray-600/50 text-white hover:bg-gray-700/50 text-xs h-8 backdrop-blur-sm">
-                      <BarChart3 className="w-3 h-3 mr-2" />
-                      Facturación
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-              
-              <Card className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30">
-                <CardContent className="p-3">
-                  <h3 className="text-sm font-sans text-white mb-3">Notificaciones</h3>
-                  <div className="space-y-2">
-                    <Button variant="outline" size="sm" className="w-full justify-start border-gray-600/50 text-white hover:bg-gray-700/50 text-xs h-8 backdrop-blur-sm">
-                      <Bell className="w-3 h-3 mr-2" />
-                      Configurar
-                    </Button>
-                    <Button variant="outline" size="sm" className="w-full justify-start border-gray-600/50 text-white hover:bg-gray-700/50 text-xs h-8 backdrop-blur-sm">
-                      <MessageCircle className="w-3 h-3 mr-2" />
-                      Mensajes
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-            
-            {/* Quick Settings */}
-            <Card className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30">
-              <CardContent className="p-3">
-                <h3 className="text-sm font-sans text-white mb-3">Configuración Rápida</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                  <div className="space-y-2">
-                    <label className="text-xs text-white">Modo de Disponibilidad</label>
-                    <select className="w-full bg-gray-800/50 border border-gray-600/50 text-white text-xs rounded-lg p-2 backdrop-blur-sm">
-                      <option>Disponible</option>
-                      <option>Ocupado</option>
-                      <option>Ausente</option>
-                    </select>
-                  </div>
-                  <div className="space-y-2">
-                    <label className="text-xs text-white">Idioma</label>
-                    <select className="w-full bg-gray-800/50 border border-gray-600/50 text-white text-xs rounded-lg p-2 backdrop-blur-sm">
-                      <option>Español</option>
-                      <option>English</option>
-                      <option>Português</option>
-                    </select>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        );
+        return <PortalProfile />;
 
       case "mensajes":
         return (
