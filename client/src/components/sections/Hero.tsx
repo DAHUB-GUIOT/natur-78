@@ -42,8 +42,8 @@ export function Hero() {
               <Link to="/tickets" className="w-full sm:w-auto">
                 <Button 
                   size="lg" 
-                  className="text-black font-bold text-lg px-8 py-4 rounded-none shadow-lg flex items-center justify-center w-full hover:opacity-90 transition-all duration-300"
-                  style={{ backgroundColor: '#cad95e', fontFamily: 'Unbounded, sans-serif', fontWeight: '300' }}
+                  className="bg-yellow-400 text-green-800 font-bold text-lg px-8 py-4 rounded-none shadow-lg flex items-center justify-center w-full hover:bg-green-600 hover:text-yellow-400 transition-all duration-300 uppercase tracking-wide border-2 border-green-600"
+                  style={{ fontFamily: 'Unbounded, sans-serif' }}
                 >
                   <Ticket className="w-5 h-5 mr-2" />
                   TICKETS
@@ -53,8 +53,8 @@ export function Hero() {
               <Link to="/agenda" className="w-full sm:w-auto">
                 <Button 
                   size="lg" 
-                  className="font-bold text-lg px-8 py-4 rounded-none shadow-lg flex items-center justify-center w-full hover:opacity-90 transition-all duration-300"
-                  style={{ backgroundColor: '#aa3b1e', color: '#e5bbb0', fontFamily: 'Unbounded, sans-serif', fontWeight: '300' }}
+                  className="bg-yellow-400 text-green-800 font-bold text-lg px-8 py-4 rounded-none shadow-lg flex items-center justify-center w-full hover:bg-green-600 hover:text-yellow-400 transition-all duration-300 uppercase tracking-wide border-2 border-green-600"
+                  style={{ fontFamily: 'Unbounded, sans-serif' }}
                 >
                   <Calendar className="w-5 h-5 mr-2" />
                   AGENDA
