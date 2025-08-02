@@ -43,6 +43,7 @@ Preferred communication style: Simple, everyday language.
 - **Ticket Sales**: A dedicated tickets page with different access tiers (VIVE NATUR, NATUR PRO) and clear feature differentiation.
 - **User Categories**: Robust classification for users, including Agencias u Operadores Turísticos, Alojamientos Sostenibles, Gastronomía Sostenible, Movilidad y Transporte Ecológico, ONG y Fundaciones, Educación y Sensibilización Ambiental, Tecnología para el Turismo Sostenible, and Aliados y Patrocinadores, each with specialized subcategories.
 - **Admin Dashboard**: A comprehensive panel for user management, experience approval, and platform statistics.
+- **Accessibility Enhancement**: Comprehensive accessibility features including high contrast modes (normal, high, ultra, inverted), font size adjustment, reduced motion options, link underlining, enhanced focus visibility, and keyboard navigation support with WCAG 2.1 compliance.
 - **Visuals & UX**: Consistent application of glassmorphism, brutalist design elements, and a white/dark theme contrast, with a focus on high contrast and simplified typography for improved readability and user experience.
 
 ## External Dependencies

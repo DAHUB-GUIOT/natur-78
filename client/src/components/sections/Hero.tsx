@@ -11,6 +11,10 @@ export function Hero() {
 
   return (
     <header className="relative min-h-screen w-full overflow-hidden">
+      {/* Skip to Content Link for Accessibility */}
+      <a href="#main-content" className="skip-link">
+        Saltar al contenido principal
+      </a>
       {/* Background Image */}
       <img 
         alt="Festival NATUR - Sustainable Tourism Community" 
@@ -58,7 +62,7 @@ export function Hero() {
         </div>
       </nav>
       {/* Main Content - Left Aligned like BIME */}
-      <div className="relative z-10 flex items-center min-h-screen px-6 sm:px-8 md:px-20 pt-20">
+      <div id="main-content" className="relative z-10 flex items-center min-h-screen px-6 sm:px-8 md:px-20 pt-20">
         <div className="max-w-7xl w-full">
           <div className="max-w-4xl mx-auto text-center">
             {/* Festival NATUR Logo */}
