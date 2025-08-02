@@ -95,10 +95,10 @@ const SimpleSidebar: React.FC<SimpleSidebarProps> = ({
     <motion.aside
       initial={{ x: -64, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
-      className="fixed left-0 top-0 bottom-0 w-16 z-40 glass-card border-r border-white/20 flex flex-col"
+      className="fixed left-0 top-0 bottom-0 w-16 z-40 flex flex-col"
     >
       {/* Logo */}
-      <div className="p-3 border-b border-white/10">
+      <div className="p-3">
         <div className="w-10 h-10 bg-gradient-to-br from-yellow-400 to-green-400 rounded-lg flex items-center justify-center shadow-lg">
           <span className="text-black font-gasoek text-lg font-bold">N</span>
         </div>
@@ -119,8 +119,8 @@ const SimpleSidebar: React.FC<SimpleSidebarProps> = ({
                   className={`
                     w-12 h-12 flex items-center justify-center rounded-xl transition-all duration-300 relative
                     ${isActive 
-                      ? 'bg-gradient-to-r from-yellow-400/20 to-green-400/20 border border-yellow-400/30 shadow-lg' 
-                      : 'glass-button hover:bg-white/10 border-transparent'
+                      ? 'bg-white/10 backdrop-blur-sm' 
+                      : 'hover:bg-white/5'
                     }
                   `}
                   title={item.label}
@@ -173,7 +173,7 @@ const SimpleSidebar: React.FC<SimpleSidebarProps> = ({
       </nav>
 
       {/* User indicator at bottom */}
-      <div className="p-3 border-t border-white/10">
+      <div className="p-3">
         <div className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center">
           <div className="w-6 h-6 bg-gradient-to-br from-blue-400 to-purple-400 rounded-full"></div>
         </div>

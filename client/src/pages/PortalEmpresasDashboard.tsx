@@ -396,20 +396,12 @@ const PortalEmpresasDashboard = () => {
 
   return (
     <GlassmorphismLayout showEcoElements={true} backgroundVariant="forest">
-      {/* Top Navigation Menu */}
-      <TopNavigationMenu 
-        user={user}
-        notificationCount={3}
-        onSearch={() => setContentPosition('center')}
-        onLogout={() => window.location.href = '/api/logout'}
-      />
-      
       {/* Always-visible Interactive Map */}
       <div className="absolute inset-0 z-0">
         <InteractiveMap />
       </div>
 
-      {/* Simple Stable Sidebar */}
+      {/* Simple Stable Sidebar - No top bar */}
       <SimpleSidebar
         activeSection={activeSection}
         setActiveSection={handleSectionChange}
