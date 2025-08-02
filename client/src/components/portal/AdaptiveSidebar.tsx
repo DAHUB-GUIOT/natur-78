@@ -129,14 +129,14 @@ const AdaptiveSidebar: React.FC<AdaptiveSidebarProps> = ({
     }
   };
 
-  // Adaptive width based on mode
+  // Compact width for better UX
   const getSidebarWidth = () => {
     switch (sidebarMode) {
-      case 'overlay': return 'w-80';
-      case 'floating': return 'w-64';
-      case 'minimal': return 'w-16';
-      case 'full': return 'w-72';
-      default: return 'w-72';
+      case 'overlay': return 'w-56';
+      case 'floating': return 'w-48';
+      case 'minimal': return 'w-12';
+      case 'full': return 'w-48'; // Reduced from w-72 to w-48
+      default: return 'w-48';
     }
   };
 
@@ -155,9 +155,9 @@ const AdaptiveSidebar: React.FC<AdaptiveSidebarProps> = ({
     return (
       <Button
         onClick={() => setIsMinimized(false)}
-        className="fixed top-20 left-4 z-50 w-12 h-12 bg-[var(--color-surface)]/95 hover:bg-[var(--color-surface)] border border-[var(--color-border)] text-[var(--color-text)] shadow-xl backdrop-blur-sm"
+        className="fixed top-16 left-4 z-50 w-10 h-10 bg-black/80 hover:bg-black/90 border border-white/20 text-white shadow-xl backdrop-blur-sm"
       >
-        <Menu className="w-5 h-5" />
+        <Menu className="w-4 h-4" />
       </Button>
     );
   }
@@ -177,30 +177,30 @@ const AdaptiveSidebar: React.FC<AdaptiveSidebarProps> = ({
         className={`
           ${getSidebarWidth()}
           ${getPositionClasses()}
-          bg-[var(--color-surface)]/95 backdrop-blur-xl 
-          border-r border-[var(--color-border)]
+          bg-black/80 backdrop-blur-xl 
+          border-r border-white/10
           transition-all duration-300 ease-in-out
           ${sidebarMode === 'floating' ? 'border rounded-lg' : ''}
           ${isMinimized && isMobile ? '-translate-x-full' : ''}
         `}
       >
-        {/* Header Section */}
-        <div className="p-4 border-b border-[var(--color-border)]/30">
+        {/* Compact Header */}
+        <div className="p-2 border-b border-white/10">
           <div className="flex items-center justify-between">
-            {/* NATUR Branding */}
-            <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 bg-[var(--color-accent)] flex items-center justify-center shadow-lg">
-                <span className="text-black font-gasoek text-sm font-bold">N</span>
+            {/* NATUR Branding - Smaller */}
+            <div className="flex items-center space-x-2">
+              <div className="w-6 h-6 bg-[#cad95e] flex items-center justify-center shadow-lg">
+                <span className="text-black font-gasoek text-xs font-bold">N</span>
               </div>
               {sidebarMode !== 'minimal' && (
                 <div>
-                  <h1 className="text-lg font-gasoek text-[var(--color-text)] uppercase tracking-wider">NATUR</h1>
-                  <p className="text-xs text-[var(--color-text)]/60 font-jakarta">Portal Empresas</p>
+                  <h1 className="text-sm font-gasoek text-white uppercase tracking-wider">NATUR</h1>
+                  <p className="text-xs text-white/60 font-jakarta">Portal</p>
                 </div>
               )}
             </div>
 
-            {/* Control Buttons */}
+            {/* Compact Control Buttons */}
             <div className="flex items-center space-x-1">
               {!isMobile && (
                 <>
@@ -208,19 +208,19 @@ const AdaptiveSidebar: React.FC<AdaptiveSidebarProps> = ({
                     variant="ghost"
                     size="sm"
                     onClick={() => setIsPinned(!isPinned)}
-                    className="w-8 h-8 p-0 text-[var(--color-text)]/60 hover:text-[var(--color-accent)]"
+                    className="w-6 h-6 p-0 text-white/60 hover:text-[#cad95e]"
                     title={isPinned ? "Desanclar" : "Anclar"}
                   >
-                    <Pin className={`w-4 h-4 ${isPinned ? 'fill-current' : ''}`} />
+                    <Pin className={`w-3 h-3 ${isPinned ? 'fill-current' : ''}`} />
                   </Button>
                   <Button
                     variant="ghost"
                     size="sm"
                     onClick={() => setIsCollapsed(!isCollapsed)}
-                    className="w-8 h-8 p-0 text-[var(--color-text)]/60 hover:text-[var(--color-accent)]"
+                    className="w-6 h-6 p-0 text-white/60 hover:text-[#cad95e]"
                     title={isCollapsed ? "Expandir" : "Contraer"}
                   >
-                    {isCollapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
+                    {isCollapsed ? <ChevronRight className="w-3 h-3" /> : <ChevronLeft className="w-3 h-3" />}
                   </Button>
                 </>
               )}
@@ -229,23 +229,23 @@ const AdaptiveSidebar: React.FC<AdaptiveSidebarProps> = ({
                   variant="ghost"
                   size="sm"
                   onClick={() => setIsMinimized(true)}
-                  className="w-8 h-8 p-0 text-[var(--color-text)]/60 hover:text-[var(--color-accent)]"
+                  className="w-6 h-6 p-0 text-white/60 hover:text-[#cad95e]"
                 >
-                  <X className="w-4 h-4" />
+                  <X className="w-3 h-3" />
                 </Button>
               )}
             </div>
           </div>
 
-          {/* Quick Search - Only in expanded modes */}
+          {/* Compact Search */}
           {sidebarMode === 'full' || sidebarMode === 'overlay' && (
-            <div className="mt-4">
+            <div className="mt-2">
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-[var(--color-text)]/40" />
+                <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 w-3 h-3 text-white/40" />
                 <input
                   type="text"
                   placeholder="Buscar..."
-                  className="w-full pl-10 pr-4 py-2 bg-[var(--color-bg)]/50 border border-[var(--color-border)]/50 rounded-md text-[var(--color-text)] placeholder-[var(--color-text)]/40 text-sm font-jakarta focus:outline-none focus:border-[var(--color-accent)] focus:ring-1 focus:ring-[var(--color-accent)]/20"
+                  className="w-full pl-7 pr-3 py-1.5 bg-white/10 border border-white/20 rounded-md text-white placeholder-white/40 text-xs font-jakarta focus:outline-none focus:border-[#cad95e] focus:ring-1 focus:ring-[#cad95e]/20"
                   onFocus={onSearchFocus}
                 />
               </div>
@@ -253,9 +253,9 @@ const AdaptiveSidebar: React.FC<AdaptiveSidebarProps> = ({
           )}
         </div>
 
-        {/* Navigation Section */}
-        <nav className="flex-1 overflow-y-auto p-2">
-          <div className="space-y-1">
+        {/* Compact Navigation Section */}
+        <nav className="flex-1 overflow-y-auto p-1">
+          <div className="space-y-0.5">
             {sidebarItems.map((item) => {
               const Icon = item.icon;
               const isActive = activeSection === item.id;
@@ -265,19 +265,19 @@ const AdaptiveSidebar: React.FC<AdaptiveSidebarProps> = ({
                   key={item.id}
                   onClick={() => handleNavigation(item.id)}
                   className={`
-                    w-full flex items-center space-x-3 px-3 py-3 rounded-lg transition-all duration-200 font-jakarta group
+                    w-full flex items-center space-x-2 px-2 py-2 rounded-md transition-all duration-200 font-jakarta group
                     ${isActive 
-                      ? 'bg-[var(--color-accent)]/15 text-[var(--color-accent)] border border-[var(--color-accent)]/30 shadow-sm' 
-                      : 'text-[var(--color-text)]/70 hover:bg-[var(--color-accent)]/10 hover:text-[var(--color-text)] hover:shadow-sm'
+                      ? 'bg-[#cad95e]/20 text-[#cad95e] border border-[#cad95e]/30 shadow-sm' 
+                      : 'text-white/70 hover:bg-white/10 hover:text-white hover:shadow-sm'
                     }
                     ${sidebarMode === 'minimal' ? 'justify-center' : ''}
                   `}
                   title={sidebarMode === 'minimal' ? item.label : ''}
                 >
                   <div className="relative">
-                    <Icon className={`w-5 h-5 ${isActive ? 'text-[var(--color-accent)]' : ''} transition-colors`} />
+                    <Icon className={`w-3 h-3 ${isActive ? 'text-[#cad95e]' : ''} transition-colors`} />
                     {item.badge && (
-                      <Badge className="absolute -top-2 -right-2 w-5 h-5 p-0 bg-red-500 text-white text-xs flex items-center justify-center">
+                      <Badge className="absolute -top-1 -right-1 w-3 h-3 p-0 bg-red-500 text-white text-xs flex items-center justify-center">
                         {item.badge}
                       </Badge>
                     )}
@@ -285,11 +285,11 @@ const AdaptiveSidebar: React.FC<AdaptiveSidebarProps> = ({
                   
                   {sidebarMode !== 'minimal' && (
                     <div className="flex-1 text-left">
-                      <div className="text-sm font-medium">
+                      <div className="text-xs font-medium text-white">
                         {sidebarMode === 'floating' ? item.shortLabel : item.label}
                       </div>
                       {sidebarMode === 'full' && (
-                        <div className="text-xs opacity-60 mt-0.5">
+                        <div className="text-xs opacity-60 mt-0.5 text-white/60">
                           {item.description}
                         </div>
                       )}
@@ -298,7 +298,7 @@ const AdaptiveSidebar: React.FC<AdaptiveSidebarProps> = ({
 
                   {/* Active indicator */}
                   {isActive && (
-                    <div className="w-1 h-8 bg-[var(--color-accent)] rounded-full" />
+                    <div className="w-0.5 h-4 bg-[#cad95e] rounded-full" />
                   )}
                 </button>
               );
@@ -306,17 +306,17 @@ const AdaptiveSidebar: React.FC<AdaptiveSidebarProps> = ({
           </div>
         </nav>
 
-        {/* Footer Section - Status & Notifications */}
+        {/* Compact Footer */}
         {sidebarMode === 'full' && (
-          <div className="p-4 border-t border-[var(--color-border)]/30">
-            <div className="flex items-center justify-between text-xs text-[var(--color-text)]/60 font-jakarta">
-              <div className="flex items-center space-x-2">
-                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                <span>En línea</span>
+          <div className="p-2 border-t border-white/10">
+            <div className="flex items-center justify-between text-xs text-white/60 font-jakarta">
+              <div className="flex items-center space-x-1">
+                <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></div>
+                <span>Online</span>
               </div>
               {notificationCount > 0 && (
-                <Badge className="bg-[var(--color-accent)]/20 text-[var(--color-accent)]">
-                  {notificationCount} nuevas
+                <Badge className="bg-[#cad95e]/20 text-[#cad95e] px-1 py-0.5 text-xs">
+                  {notificationCount}
                 </Badge>
               )}
             </div>
