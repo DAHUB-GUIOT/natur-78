@@ -42,17 +42,58 @@
 
 @layer base {
   :root {
-    /* NATUR Design Tokens - Light Mode (Homepage Colors) */
-    --color-bg: #FCF8EE;           /* Homepage cream background */
-    --color-text: #000000;         /* Black text for contrast */
-    --color-accent: #cad95e;       /* NATUR green from logo/buttons */
-    --color-surface: #ffffff;      /* White for cards/surfaces */
-    --color-border: #e5e5e5;       /* Light border color */
+    /* Solarpunk Glassmorphism Design System */
     
-    /* Additional colors from homepage design */
-    --color-nav-bg: #181c0d;       /* Dark green navigation */
-    --color-secondary: #aa3b1e;    /* Red from agenda button */
-    --color-secondary-text: #e5bbb0; /* Light pink text on red */
+    /* Core Solarpunk Palette */
+    --solar-gold: #FFD700;
+    --solar-amber: #FFA500;
+    --nature-green: #4A9B3B;
+    --eco-mint: #7FE7A3;
+    --sky-blue: #87CEEB;
+    --earth-brown: #8B6B47;
+    --energy-yellow: #F4E04D;
+    --crystal-white: #F8F8FF;
+    
+    /* Glassmorphism Foundation */
+    --glass-primary: rgba(255, 255, 255, 0.15);
+    --glass-secondary: rgba(255, 255, 255, 0.08);
+    --glass-accent: rgba(202, 217, 94, 0.2);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    
+    /* Backgrounds with Natural Gradients */
+    --bg-primary: linear-gradient(135deg, #0a1a0a 0%, #1a2f1a 50%, #2a4a2a 100%);
+    --bg-surface: rgba(255, 255, 255, 0.1);
+    --bg-card: rgba(255, 255, 255, 0.12);
+    --bg-hover: rgba(255, 255, 255, 0.18);
+    
+    /* Text Hierarchy */
+    --text-primary: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.8);
+    --text-tertiary: rgba(255, 255, 255, 0.6);
+    --text-accent: #cad95e;
+    
+    /* Interactive Elements */
+    --accent-primary: #cad95e;
+    --accent-glow: rgba(202, 217, 94, 0.4);
+    --success-green: #4A9B3B;
+    --warning-amber: #FFA500;
+    --energy-gold: #FFD700;
+    
+    /* Borders and Outlines */
+    --border-glass: rgba(255, 255, 255, 0.2);
+    --border-accent: rgba(202, 217, 94, 0.3);
+    --border-subtle: rgba(255, 255, 255, 0.1);
+    
+    /* Legacy NATUR Colors for Backward Compatibility */
+    --color-bg: #0a1a0a;
+    --color-text: #ffffff;
+    --color-accent: #cad95e;
+    --color-surface: rgba(255, 255, 255, 0.1);
+    --color-border: rgba(255, 255, 255, 0.2);
+    --color-nav-bg: #0a1a0a;
+    --color-secondary: #aa3b1e;
+    --color-secondary-text: #e5bbb0;
 
     /* Legacy shadcn variables for compatibility */
     --background: 50 40% 95%;      /* FCF8EE converted to HSL */
@@ -136,10 +177,12 @@
   }
 
   body {
-    @apply bg-background text-foreground overflow-x-hidden;
+    @apply text-foreground overflow-x-hidden;
+    background: var(--bg-primary);
     font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
-    font-weight: 300; /* Light variant as default */
+    font-weight: 300;
     scroll-behavior: smooth;
+    min-height: 100vh;
   }
   
   h1, h2, h3, h4, h5, h6 {
@@ -173,8 +216,201 @@
 
   .font-unbounded {
     font-family: 'Unbounded', system-ui, sans-serif;
-    font-weight: 300; /* Light variant as default */
   }
+}
+
+/* Solarpunk Glassmorphism Utility Classes */
+@layer components {
+  
+  /* Core Glassmorphism Components */
+  .glass-card {
+    @apply bg-white/10 backdrop-blur-md border border-white/20 rounded-lg shadow-lg;
+    background: var(--glass-primary);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(12px);
+    box-shadow: var(--glass-shadow);
+  }
+  
+  .glass-card-hover {
+    @apply transition-all duration-300 ease-out hover:bg-white/20 hover:border-white/30 hover:shadow-xl hover:scale-[1.02];
+  }
+  
+  .glass-surface {
+    @apply bg-white/5 backdrop-blur-sm border border-white/10 rounded-md;
+    background: var(--glass-secondary);
+  }
+  
+  .glass-button {
+    @apply bg-white/10 backdrop-blur-md border border-white/20 rounded-lg transition-all duration-200;
+    background: var(--glass-primary);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(8px);
+  }
+  
+  .glass-button:hover {
+    @apply bg-white/20 border-white/30 shadow-lg scale-105;
+    background: var(--bg-hover);
+  }
+  
+  .glass-accent {
+    @apply bg-green-400/20 border-green-400/30 text-green-300;
+    background: var(--glass-accent);
+    border-color: var(--border-accent);
+  }
+  
+  /* Grid Layout System - 2x4 Blocks */
+  .grid-2x4 {
+    @apply grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6;
+  }
+  
+  .grid-block {
+    @apply glass-card glass-card-hover p-4 md:p-6 min-h-[160px] md:min-h-[200px];
+  }
+  
+  .grid-block-2x {
+    @apply col-span-2;
+  }
+  
+  .grid-block-full {
+    @apply col-span-2 md:col-span-4;
+  }
+  
+  /* Solar-Inspired Elements */
+  .solar-glow {
+    @apply relative before:absolute before:inset-0 before:bg-gradient-to-r before:from-yellow-400/20 before:to-orange-400/20 before:rounded-lg before:blur-xl before:-z-10;
+  }
+  
+  .energy-gradient {
+    background: linear-gradient(135deg, var(--energy-gold) 0%, var(--solar-amber) 50%, var(--accent-primary) 100%);
+  }
+  
+  .nature-gradient {
+    background: linear-gradient(135deg, var(--nature-green) 0%, var(--eco-mint) 50%, var(--sky-blue) 100%);
+  }
+  
+  .eco-border {
+    border-image: linear-gradient(45deg, var(--accent-primary), var(--nature-green), var(--eco-mint)) 1;
+  }
+  
+  /* Eco-Futuristic Animations */
+  .pulse-solar {
+    @apply animate-pulse;
+    animation: pulse-solar 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+  
+  @keyframes pulse-solar {
+    0%, 100% {
+      opacity: 1;
+      box-shadow: 0 0 20px var(--accent-glow);
+    }
+    50% {
+      opacity: .8;
+      box-shadow: 0 0 30px var(--accent-glow), 0 0 40px var(--energy-gold);
+    }
+  }
+  
+  .float-element {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+  }
+  
+  .grow-on-hover {
+    @apply transition-transform duration-300 ease-out hover:scale-110;
+  }
+  
+  .glow-on-hover {
+    @apply transition-all duration-300;
+  }
+  
+  .glow-on-hover:hover {
+    box-shadow: 0 0 25px var(--accent-glow), 0 0 50px var(--accent-glow);
+    transform: translateY(-2px);
+  }
+  
+  /* Scroll Reveal Animation */
+  .scroll-reveal {
+    @apply opacity-0 translate-y-8 transition-all duration-700 ease-out;
+  }
+  
+  .scroll-reveal.revealed {
+    @apply opacity-100 translate-y-0;
+  }
+  
+  /* Interactive States */
+  .interactive-card {
+    @apply glass-card glass-card-hover cursor-pointer relative overflow-hidden;
+  }
+  
+  .interactive-card::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full transition-transform duration-700;
+  }
+  
+  .interactive-card:hover::before {
+    @apply translate-x-full;
+  }
+  
+  /* Breadcrumb Navigation */
+  .breadcrumb-nav {
+    @apply glass-surface p-3 mb-6 rounded-lg;
+  }
+  
+  .breadcrumb-item {
+    @apply text-white/60 hover:text-white transition-colors duration-200;
+  }
+  
+  .breadcrumb-separator {
+    @apply text-white/30 mx-2;
+  }
+  
+  .breadcrumb-current {
+    @apply text-green-400 font-medium;
+  }
+  
+  /* Sidebar Enhancements */
+  .sidebar-glass {
+    @apply bg-black/80 backdrop-blur-xl border-r border-white/10;
+    background: linear-gradient(180deg, rgba(0,0,0,0.9) 0%, rgba(10,26,10,0.95) 100%);
+  }
+  
+  /* Typography Hierarchy */
+  .text-hero {
+    @apply text-4xl md:text-6xl font-gasoek text-white leading-tight;
+  }
+  
+  .text-title {
+    @apply text-2xl md:text-3xl font-gasoek text-white;
+  }
+  
+  .text-subtitle {
+    @apply text-lg md:text-xl font-jakarta text-white/80;
+  }
+  
+  .text-body {
+    @apply text-base font-jakarta text-white/70;
+  }
+  
+  .text-caption {
+    @apply text-sm font-jakarta text-white/60;
+  }
+  
+  /* Button Variants */
+  .btn-primary {
+    @apply glass-button bg-green-400/20 border-green-400/30 text-green-300 hover:bg-green-400/30 hover:text-green-200;
+  }
+  
+  .btn-secondary {
+    @apply glass-button bg-white/10 border-white/20 text-white hover:bg-white/20;
+  }
+  
+  .btn-accent {
+    @apply glass-button energy-gradient text-black font-medium hover:shadow-lg hover:shadow-yellow-400/25;
+  }
+}
 
   /* Brutalist Menu Animations */
   @keyframes brutalistSlideIn {
@@ -237,8 +473,8 @@
   section {
     scroll-margin-top: 80px;
   }
-}
 
+/* Animation Keyframes */
 @keyframes bounce {
   0%, 100% {
     transform: translateY(-25%);
