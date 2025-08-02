@@ -6,7 +6,7 @@ export function About() {
     <section className="bg-[#CEDD9F] flex w-full flex-col items-center justify-center px-4 sm:px-6 md:px-12 py-12 md:py-16 lg:py-20 max-md:max-w-full font-jakarta-light">
       <div className="mb-0 w-full max-w-5xl max-md:max-w-full">
         <div className="gap-8 flex max-md:flex-col max-md:items-stretch">
-          <div className="w-full md:w-[40%] max-md:w-full max-md:ml-0">
+          <div className="w-full md:w-[40%] max-md:w-full max-md:ml-0 flex items-center justify-center md:justify-start">
             <h1
               style={{
                 letterSpacing: 1.5
@@ -22,7 +22,8 @@ export function About() {
                 xl:text-6xl xl:leading-[4.8rem]
                 max-md:max-w-full 
                 max-md:mt-0
-                tracking-wide"
+                tracking-wide
+                text-center md:text-left"
             >
               ¿QUIENES SOMOS?
             </h1>
