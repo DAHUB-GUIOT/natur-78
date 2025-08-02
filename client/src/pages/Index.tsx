@@ -600,6 +600,143 @@ const Index = () => {
           </div>
         </div>
       </section>
+
+      {/* Final Section: 50 Untold Stories */}
+      <section ref={addToRefs} className="min-h-screen flex items-center justify-center relative bg-[#0f1f0f] overflow-hidden">
+        <div className="parallax-layer absolute inset-0">
+          {/* Concrete textured background with glitch lines */}
+          <div className="absolute inset-0 concrete-texture opacity-20"></div>
+          
+          {/* Animated glitch lines drawing Colombia silhouette */}
+          <div className="absolute inset-0">
+            <svg className="w-full h-full opacity-30" viewBox="0 0 800 600">
+              <path 
+                d="M300,100 L360,120 L400,180 L440,240 L480,320 L460,400 L420,460 L380,500 L340,520 L300,500 L260,460 L240,400 L220,320 L240,240 L280,180 L300,100 Z"
+                fill="none" 
+                stroke="#ffd900" 
+                strokeWidth="2"
+                strokeDasharray="10,5"
+                className="glitch-lines"
+              />
+              
+              {/* Glitch animation lines */}
+              <line x1="200" y1="150" x2="600" y2="180" stroke="#ffd900" strokeWidth="1" opacity="0.4">
+                <animate attributeName="x1" values="200;220;200" dur="2s" repeatCount="indefinite"/>
+                <animate attributeName="opacity" values="0.4;0.8;0.4" dur="2s" repeatCount="indefinite"/>
+              </line>
+              <line x1="180" y1="250" x2="620" y2="280" stroke="#ffd900" strokeWidth="1" opacity="0.3">
+                <animate attributeName="x1" values="180;200;180" dur="2.5s" repeatCount="indefinite"/>
+                <animate attributeName="opacity" values="0.3;0.7;0.3" dur="2.5s" repeatCount="indefinite"/>
+              </line>
+              <line x1="220" y1="350" x2="580" y2="380" stroke="#ffd900" strokeWidth="1" opacity="0.5">
+                <animate attributeName="x1" values="220;240;220" dur="1.8s" repeatCount="indefinite"/>
+                <animate attributeName="opacity" values="0.5;0.9;0.5" dur="1.8s" repeatCount="indefinite"/>
+              </line>
+            </svg>
+          </div>
+          
+          {/* 50 glowing dots scattered across the map */}
+          <div className="absolute inset-0">
+            {[...Array(50)].map((_, i) => {
+              const x = 200 + (Math.random() * 400);
+              const y = 100 + (Math.random() * 400);
+              const delay = Math.random() * 5;
+              
+              return (
+                <div
+                  key={i}
+                  className="absolute w-3 h-3 cursor-pointer group transition-all duration-300 hover:scale-150"
+                  style={{
+                    left: `${x}px`,
+                    top: `${y}px`,
+                    animationDelay: `${delay}s`
+                  }}
+                >
+                  <div className="w-full h-full bg-[#ffd900] rounded-full animate-pulse neon-glow opacity-60 hover:opacity-100">
+                    <div className="absolute inset-0 bg-[#ffd900] rounded-full animate-ping"></div>
+                  </div>
+                  
+                  {/* Tooltip on hover */}
+                  <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
+                    <div className="bg-[#1d1d1d] border-2 border-[#ffd900] px-3 py-2 rounded brutalist-text text-[#ffd900] text-xs whitespace-nowrap">
+                      Historia #{String(i + 1).padStart(2, '0')} — 🌿 Silencio, aún en construcción...
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          
+          {/* Floating seeds effect */}
+          <div className="absolute inset-0 pointer-events-none">
+            {[...Array(15)].map((_, i) => (
+              <div
+                key={i}
+                className="absolute w-1 h-1 bg-[#ffd900] rounded-full opacity-20"
+                style={{
+                  left: `${Math.random() * 100}%`,
+                  top: `${Math.random() * 100}%`,
+                  animation: `float ${3 + Math.random() * 2}s ease-in-out infinite ${Math.random() * 2}s`
+                }}
+              />
+            ))}
+          </div>
+        </div>
+        
+        <div className="text-center px-6 z-10 max-w-4xl">
+          <h1 className="brutalist-text stencil-text text-4xl md:text-7xl mb-8 tracking-tight neon-glow">
+            50 HISTORIAS<br/>
+            AÚN NO CONTADAS
+          </h1>
+          
+          <div className="max-w-3xl mx-auto mb-12">
+            <p className="text-lg md:text-xl text-[#ffd900] leading-relaxed bg-[#1d1d1d] p-6 border-2 border-[#ffd900] transform -rotate-1 concrete-texture">
+              <span className="brutalist-text">
+                "El turismo sostenible no es una tendencia. Es un cambio de perspectiva. 
+                Estas historias lo demuestran. Pronto, podrás escucharlas, sentirlas y caminar dentro de ellas."
+              </span>
+            </p>
+          </div>
+          
+          {/* Emerging text effect */}
+          <div className="mb-8">
+            <p className="brutalist-text text-2xl md:text-3xl text-[#ffd900] opacity-80 animate-pulse">
+              Cuando estés listo para verlas,<br/>
+              <span className="stencil-text neon-glow">las historias aparecerán.</span>
+            </p>
+          </div>
+          
+          {/* Big brutalist CTA button */}
+          <div className="relative">
+            <Button className="bg-[#ffd900] text-[#1d1d1d] hover:bg-[#ffed4a] text-xl md:text-2xl brutalist-text px-16 py-8 transform hover:scale-105 transition-all duration-300 border-4 border-[#1d1d1d] concrete-texture neon-glow relative overflow-hidden group">
+              <div className="absolute inset-0 bg-[#1d1d1d] transform translate-x-2 translate-y-2 group-hover:translate-x-1 group-hover:translate-y-1 transition-transform duration-300"></div>
+              <div className="relative flex items-center gap-4">
+                <span className="animate-pulse text-2xl">🎯</span>
+                QUIERO SER DE LOS PRIMEROS EN VERLAS
+                <span className="animate-pulse text-2xl">🎯</span>
+              </div>
+            </Button>
+          </div>
+        </div>
+        
+        {/* Additional CSS for this section */}
+        <style>{`
+          @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-10px) rotate(120deg); }
+            66% { transform: translateY(10px) rotate(240deg); }
+          }
+          
+          .glitch-lines {
+            animation: glitchDraw 4s ease-in-out infinite;
+          }
+          
+          @keyframes glitchDraw {
+            0%, 100% { stroke-dashoffset: 0; }
+            50% { stroke-dashoffset: 20; }
+          }
+        `}</style>
+      </section>
     </div>
   );
 };
