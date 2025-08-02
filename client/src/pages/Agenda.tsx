@@ -548,39 +548,20 @@ export function Agenda() {
         <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black opacity-90"></div>
       </div>
 
-      {/* Floating Header */}
-      <header className="relative z-20 px-6 py-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex items-center justify-between mb-12">
-            <Link to="/">
-              <Button 
-                variant="ghost" 
-                className="text-white/70 hover:text-white hover:bg-white/10 backdrop-blur-sm border border-white/10 px-6 py-3 rounded-none font-mono text-sm tracking-wider"
-              >
-                ← VOLVER
-              </Button>
-            </Link>
-            
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-black border-2 border-white/20 flex items-center justify-center font-bold text-2xl tracking-widest" style={{ color: '#cad95e' }}>
-                N
-              </div>
-            </div>
+      {/* Page Title Section */}
+      <div className="relative z-20 px-6 py-12 pt-24">
+        <div className="max-w-7xl mx-auto text-center">
+          <div className="inline-block">
+            <h1 className="text-6xl md:text-8xl font-unbounded font-light mb-6 tracking-wider leading-none" style={{ color: '#cad95e', textShadow: '0 0 20px rgba(202, 217, 94, 0.3)' }}>
+              AGENDA
+            </h1>
+            <div className="w-full h-1 bg-gradient-to-r from-transparent via-white/30 to-transparent mb-4"></div>
           </div>
-          
-          <div className="text-center mb-16">
-            <div className="inline-block">
-              <h1 className="text-6xl md:text-8xl font-unbounded font-light mb-6 tracking-wider leading-none" style={{ color: '#cad95e', textShadow: '0 0 20px rgba(202, 217, 94, 0.3)' }}>
-                AGENDA
-              </h1>
-              <div className="w-full h-1 bg-gradient-to-r from-transparent via-white/30 to-transparent mb-4"></div>
-            </div>
-            <p className="text-lg text-white/60 max-w-2xl mx-auto mt-8 font-mono">
-              Festival NATUR 2025 • Turismo Sostenible • Noviembre 14-15
-            </p>
-          </div>
+          <p className="text-lg text-white/60 max-w-2xl mx-auto mt-8 font-mono">
+            Festival NATUR 2025 • Turismo Sostenible • Noviembre 14-15
+          </p>
         </div>
-      </header>
+      </div>
 
       {/* Controls Bar */}
       <div className="relative z-20 px-6 mb-12">
