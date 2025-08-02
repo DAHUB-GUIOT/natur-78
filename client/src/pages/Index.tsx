@@ -7,8 +7,8 @@ const Index = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const worldMapRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
-  const mainMapRef = useRef<mapboxgl.Map | null>(null);
-  const worldMiniMapRef = useRef<mapboxgl.Map | null>(null);
+  const mapInstance = useRef<mapboxgl.Map | null>(null);
+  const hasZoomedToColombia = useRef(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -27,8 +27,9 @@ const Index = () => {
       textRef.current.style.opacity = textOpacity.toString();
 
       // Zoom to Colombia when scroll reaches certain point
-      if (scrollProgress > 0.6 && worldMiniMapRef.current) {
-        worldMiniMapRef.current.flyTo({
+      if (scrollProgress > 0.6 && mapInstance.current && !hasZoomedToColombia.current) {
+        hasZoomedToColombia.current = true;
+        mapInstance.current.flyTo({
           center: [-74.2973, 4.5709], // Colombia center
           zoom: 5.5,
           duration: 2000
@@ -45,13 +46,13 @@ const Index = () => {
       }
     };
 
-    // Initialize World Mini Map
+    // Initialize Single Map Instance
     const initializeWorldMap = () => {
-      if (!worldMapRef.current || worldMiniMapRef.current) return;
+      if (!worldMapRef.current || mapInstance.current) return;
 
       mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
-      worldMiniMapRef.current = new mapboxgl.Map({
+      mapInstance.current = new mapboxgl.Map({
         container: worldMapRef.current,
         style: 'mapbox://styles/mapbox/satellite-v9',
         center: [0, 20], // World center
@@ -62,8 +63,8 @@ const Index = () => {
         attributionControl: false,
       });
 
-      worldMiniMapRef.current.on('load', () => {
-        if (!worldMiniMapRef.current) return;
+      mapInstance.current.on('load', () => {
+        if (!mapInstance.current) return;
 
         // Load Colombia GeoJSON from public source
         fetch('https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson')
@@ -76,14 +77,14 @@ const Index = () => {
               feature.properties.NAME_EN === 'Colombia'
             );
 
-            if (colombia && worldMiniMapRef.current) {
-              worldMiniMapRef.current.addSource('colombia', {
+            if (colombia && mapInstance.current) {
+              mapInstance.current.addSource('colombia', {
                 type: 'geojson',
                 data: colombia
               });
 
               // Add Colombia outline layer with green stroke
-              worldMiniMapRef.current.addLayer({
+              mapInstance.current.addLayer({
                 id: 'colombia-outline',
                 type: 'line',
                 source: 'colombia',
@@ -91,33 +92,27 @@ const Index = () => {
                 paint: {
                   'line-color': '#4A9B3B',
                   'line-width': 3,
-                  'line-opacity': 1,
+                  'line-opacity': 0.8,
                 },
               });
 
               // Add Colombia fill with transparent green
-              worldMiniMapRef.current.addLayer({
+              mapInstance.current.addLayer({
                 id: 'colombia-fill',
                 type: 'fill',
                 source: 'colombia',
                 layout: {},
                 paint: {
                   'fill-color': '#4A9B3B',
-                  'fill-opacity': 0.15,
+                  'fill-opacity': 0.3,
                 },
               }, 'colombia-outline');
-
-              // Fit map to Colombia bounds
-              const bounds = new mapboxgl.LngLatBounds();
-              const coordinates = colombia.geometry.coordinates[0];
-              coordinates.forEach((coord: number[]) => bounds.extend(coord as [number, number]));
-              worldMiniMapRef.current.fitBounds(bounds, { padding: 50 });
             }
           })
           .catch(() => {
             // Fallback: Use simplified Colombia coordinates
-            if (worldMiniMapRef.current) {
-              worldMiniMapRef.current.addSource('colombia', {
+            if (mapInstance.current) {
+              mapInstance.current.addSource('colombia', {
                 type: 'geojson',
                 data: {
                   type: 'Feature',
@@ -139,7 +134,7 @@ const Index = () => {
                 }
               });
 
-              worldMiniMapRef.current.addLayer({
+              mapInstance.current.addLayer({
                 id: 'colombia-outline',
                 type: 'line',
                 source: 'colombia',
@@ -151,7 +146,7 @@ const Index = () => {
                 },
               });
 
-              worldMiniMapRef.current.addLayer({
+              mapInstance.current.addLayer({
                 id: 'colombia-fill',
                 type: 'fill',
                 source: 'colombia',
@@ -181,13 +176,9 @@ const Index = () => {
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
-      if (worldMiniMapRef.current) {
-        worldMiniMapRef.current.remove();
-        worldMiniMapRef.current = null;
-      }
-      if (mainMapRef.current) {
-        mainMapRef.current.remove();
-        mainMapRef.current = null;
+      if (mapInstance.current) {
+        mapInstance.current.remove();
+        mapInstance.current = null;
       }
     };
   }, []);
