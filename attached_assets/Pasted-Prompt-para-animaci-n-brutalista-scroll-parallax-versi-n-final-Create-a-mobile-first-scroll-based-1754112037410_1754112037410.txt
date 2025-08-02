@@ -1,0 +1,77 @@
+Prompt para animación brutalista scroll-parallax (versión final)
+
+Create a mobile-first scroll-based parallax website animation in a brutalist visual style.
+Use a dark green background (#0B1E0C) and only yellow illustrations and typography (#FFD600).
+The site tells a progressive story of sustainable tourism in Colombia, from the global scale to the personal.
+All illustrations are high-contrast yellow vector drawings, extremely minimalist, with bold, slow-motion parallax animation effects.
+There are 6 key sections, each with simple SVG animations. All text is bold grotesque yellow font.
+
+⸻
+
+🌍 Scene 1: Earth
+	•	Use a flat, simplified yellow wireframe Earth, slowly rotating.
+	•	Scroll zooms into the continent of South America.
+	•	Text:
+“El turismo representa más del 10% del PIB global… pero también amenaza los ecosistemas.”
+
+⸻
+
+🇨🇴 Scene 2: Colombia
+	•	Replace simplified shape with the actual geographic map of Colombia in yellow stroke.
+	•	Mountains, rivers, jungles represented as thin minimal line elements.
+	•	Scroll zooms deeper into the territory.
+	•	Text:
+“Colombia: el segundo país más biodiverso del planeta… y uno de los más vulnerables.”
+
+⸻
+
+🕊️ Scene 3: Ave
+	•	Yellow SVG of a condor or tucán, made of expressive minimal lines.
+	•	Bird glides and flaps slowly as user scrolls.
+	•	Text:
+“Cada especie es una historia que aún podemos proteger.”
+
+⸻
+
+🧍 Scene 4: Persona
+	•	Yellow silhouette of a standing human figure with lines representing wind, water, and trees passing by.
+	•	Parallax animates these elements while the person stays still.
+	•	Text:
+“Somos parte del entorno. Somos parte del cambio.”
+
+⸻
+
+❤️ Scene 5: Corazón
+	•	Heart shape drawn using river-like curves and tree branches.
+	•	Scroll causes soft pulsing animation.
+	•	Text:
+“El turismo sostenible nace desde el corazón: cuidar, compartir, regenerar.”
+
+⸻
+
+⚛️ Scene 6: Átomo
+	•	Atom with orbiting icons: a tree, a house, a person, water drop — all in yellow line.
+	•	Orbits animate as scroll progresses.
+	•	Text:
+“La sostenibilidad no es una idea. Es una red viva.”
+
+⸻
+
+✨ Escena Final: 50 historias (expectativa)
+	•	Show real map of Colombia again with 50 glowing yellow dots scattered across.
+	•	Each dot flickers softly.
+	•	Text:
+“50 historias de turismo sostenible están por contarse.”
+“Historias reales. Lugares reales. Personas reales.”
+	•	Brutalist call-to-action button:
+“Sé el primero en descubrirlas →”
+
+⸻
+
+📐 Estilo visual
+	•	Fondo: #0B1E0C (verde oscuro puro)
+	•	Color único: #FFD600 (amarillo brutalista)
+	•	Tipografía: Grotesk, bold, tamaño grande, todo en mayúsculas
+	•	Ilustraciones: Minimalistas, monocromáticas, formato SVG animado
+	•	Animaciones: Zoom, parallax, fade-ins lentos, escala progresiva
+	•	Sin sombras, sin gradientes, sin imágenes reales
