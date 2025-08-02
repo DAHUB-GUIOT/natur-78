@@ -18,8 +18,8 @@ export function HeaderButtons({ showPortalButtons = false }: HeaderButtonsProps)
         <div className="flex items-center justify-between p-4">
           {/* Logo on the left */}
           <Link to="/" className="flex items-center">
-            <div className="w-12 h-12 bg-gradient-to-br from-yellow-400 to-green-400 rounded-lg flex items-center justify-center shadow-lg">
-              <span className="text-black font-gasoek text-xl font-bold">N</span>
+            <div className="w-12 h-12 flex items-center justify-center">
+              <span className="text-yellow-400 font-gasoek text-3xl font-bold drop-shadow-lg">N</span>
             </div>
             <div className="ml-3 hidden sm:block">
               <h1 className="text-white font-gasoek text-lg font-bold">NATUR</h1>
