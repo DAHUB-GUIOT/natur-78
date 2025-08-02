@@ -109,7 +109,8 @@ const Index = () => {
     <div className="bg-[#0f2f22] text-[#ffe600] overflow-x-hidden">
       <HeaderButtons />
       
-      <style jsx>{`
+      <style dangerouslySetInnerHTML={{
+        __html: `
         .brutalist-text {
           font-family: 'IBM Plex Mono', 'Space Grotesk', monospace;
           font-weight: bold;
@@ -146,7 +147,8 @@ const Index = () => {
           stroke-dasharray: 0 100;
           transition: stroke-dasharray 0.3s ease;
         }
-      `}</style>
+        `
+      }} />
 
       {/* Scene 1: EL MUNDO COMO PUNTO */}
       <section ref={addToRefs} className="scene-container">
