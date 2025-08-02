@@ -17,6 +17,7 @@ Preferred communication style: Simple, everyday language.
 - **State Management**: React Context for authentication, TanStack Query for server state.
 - **Form Handling**: React Hook Form with Zod validation.
 - **Design Philosophy**: Emphasizes brutalist and glassmorphism aesthetics, white themes for marketplace and dashboards, and dark themes for immersive experiences. Features include organic background textures, interactive cards, and consistent typography.
+- **Color System**: Minimal two-mode design token system extracted from homepage colors - light mode uses cream background (#FCF8EE), dark mode uses dark green (#0a1a0a), with consistent NATUR brand green (#cad95e) accent across both modes.
 
 ### Backend Architecture
 - **Runtime**: Node.js with TypeScript

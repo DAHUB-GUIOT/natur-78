@@ -42,7 +42,20 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
+    /* NATUR Design Tokens - Light Mode (Homepage Colors) */
+    --color-bg: #FCF8EE;           /* Homepage cream background */
+    --color-text: #000000;         /* Black text for contrast */
+    --color-accent: #cad95e;       /* NATUR green from logo/buttons */
+    --color-surface: #ffffff;      /* White for cards/surfaces */
+    --color-border: #e5e5e5;       /* Light border color */
+    
+    /* Additional colors from homepage design */
+    --color-nav-bg: #181c0d;       /* Dark green navigation */
+    --color-secondary: #aa3b1e;    /* Red from agenda button */
+    --color-secondary-text: #e5bbb0; /* Light pink text on red */
+
+    /* Legacy shadcn variables for compatibility */
+    --background: 50 40% 95%;      /* FCF8EE converted to HSL */
     --foreground: 0 0% 0%;
 
     --card: 0 0% 100%;
@@ -54,70 +67,66 @@
     --primary: 0 0% 0%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 142 76% 36%;
-    --secondary-foreground: 0 0% 100%;
+    --secondary: 72 61% 58%;        /* #cad95e */
+    --secondary-foreground: 0 0% 0%;
 
-    --muted: 0 0% 96%;
+    --muted: 50 40% 95%;
     --muted-foreground: 0 0% 45%;
 
-    --accent: 142 76% 36%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 72 61% 58%;           /* #cad95e */
+    --accent-foreground: 0 0% 0%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
 
     --border: 0 0% 90%;
     --input: 0 0% 90%;
-    --ring: 142 76% 36%;
+    --ring: 72 61% 58%;
 
     --radius: 0rem;
-
-    --sidebar-background: 0 0% 9%;
-    --sidebar-foreground: 0 0% 100%;
-    --sidebar-primary: 142 76% 36%;
-    --sidebar-primary-foreground: 86 32% 8%;
-    --sidebar-accent: 86 10% 15%;
-    --sidebar-accent-foreground: 84 42% 95%;
-    --sidebar-border: 86 10% 20%;
-    --sidebar-ring: 72 100% 69%;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    /* NATUR Design Tokens - Dark Mode (Inverted/Adapted) */
+    --color-bg: #0a1a0a;           /* Very dark green */
+    --color-text: #ffffff;         /* White text for contrast */
+    --color-accent: #cad95e;       /* Keep NATUR green for brand consistency */
+    --color-surface: #0f2d0f;      /* Slightly lighter dark green for surfaces */
+    --color-border: #1a3d1a;       /* Dark green border */
+    
+    /* Additional dark mode colors */
+    --color-nav-bg: #000000;       /* Pure black navigation */
+    --color-secondary: #cc4727;    /* Slightly brighter red for visibility */
+    --color-secondary-text: #f0c9be; /* Lighter pink for better contrast */
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    /* Legacy shadcn variables for dark mode compatibility */
+    --background: 120 100% 3%;     /* 0a1a0a converted to HSL */
+    --foreground: 0 0% 100%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --card: 120 100% 6%;
+    --card-foreground: 0 0% 100%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --popover: 120 100% 6%;
+    --popover-foreground: 0 0% 100%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --primary: 0 0% 100%;
+    --primary-foreground: 120 100% 3%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --secondary: 72 61% 58%;        /* Keep NATUR green */
+    --secondary-foreground: 0 0% 0%;
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --muted: 120 50% 8%;
+    --muted-foreground: 0 0% 65%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --accent: 72 61% 58%;           /* Keep NATUR green */
+    --accent-foreground: 0 0% 0%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 120 50% 12%;
+    --input: 120 50% 8%;
+    --ring: 72 61% 58%;
   }
 }
 
