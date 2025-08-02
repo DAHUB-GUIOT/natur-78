@@ -1,8 +1,11 @@
 import React, { useEffect, useRef } from "react";
 import { HeaderButtons } from "@/components/layout/HeaderButtons";
 import { Globe, Map, Bird, User, Heart, Atom, BookOpen, Cloud, Mountain, Trees, Waves } from "lucide-react";
+import countries from "world-map-country-shapes";
 
 const Index = () => {
+  // Get authentic Colombia SVG path
+  const colombia = countries.find(country => country.id === "CO");
   const sectionsRef = useRef<HTMLElement[]>([]);
 
   const addToRefs = (el: HTMLElement | null) => {
@@ -249,9 +252,19 @@ const Index = () => {
         <div className="relative z-10">
           <div className="scene-svg relative w-[350px] h-[450px] flex items-center justify-center">
             <div className="relative">
-              <Map size={280} color="#ffe600" strokeWidth={2.5} className="animate-pulse" />
+              {/* Authentic Colombia SVG outline from world-map-country-shapes */}
+              <svg width="280" height="350" viewBox="0 0 2000 1001" className="animate-pulse">
+                <path 
+                  d={colombia?.shape || "M500,300 L600,250 L700,300 L650,400 L550,400 Z"}
+                  fill="none" 
+                  stroke="#ffe600" 
+                  strokeWidth="4"
+                  className="map-fragment"
+                  transform="scale(0.15) translate(3000, 1500)"
+                />
+              </svg>
               
-              {/* Biodiversity indicators around the map */}
+              {/* Biodiversity indicators around the authentic map */}
               <div className="absolute inset-0">
                 <div className="map-fragment absolute top-8 left-12 animate-bounce-slow">
                   <Trees size={24} color="#ffe600" className="opacity-70" />
