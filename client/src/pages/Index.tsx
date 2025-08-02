@@ -19,7 +19,7 @@ const Index = () => {
         container: worldMapRef.current,
         style: 'mapbox://styles/mapbox/satellite-streets-v12',
         center: [0, 20], // Center on world view
-        zoom: 1.2, // Show world distant but visible
+        zoom: 0.8, // Much more distant world view
         pitch: 0, // Flat view for clean background
         bearing: 0, // No rotation
         interactive: false,
