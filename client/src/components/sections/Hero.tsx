@@ -23,46 +23,9 @@ export function Hero() {
       />
       {/* Light Gradient Overlay for text readability */}
       <div className="absolute inset-0 bg-black/20"></div>
-      {/* Top Navigation - Fixed with Dark Green Background */}
-      <nav className="fixed top-0 left-0 right-0 z-50 shadow-lg" style={{ backgroundColor: '#181c0d', borderBottom: '1px solid #2a2f1a' }}>
-        <div className="flex items-center justify-between max-w-7xl mx-auto px-6 py-4">
-          <div className="flex items-center space-x-4">
-            <span className="font-bold text-2xl" style={{ color: '#cad95e' }}>N</span>
-          </div>
-          
-          {/* Portal Buttons in Top Menu - Hidden on mobile */}
-          <div className="flex items-center space-x-4">
-            <Link to="/auth/empresas" className="hidden md:block">
-              <Button 
-                size="sm" 
-                variant="outline"
-                className="bg-transparent border-2 text-black font-medium px-4 py-2 rounded-none backdrop-blur-sm hover:opacity-90"
-                style={{ borderColor: '#cad95e', color: '#cad95e' }}
-              >
-                Portal Empresas
-              </Button>
-            </Link>
-            
-            <Link to="/portal-viajeros" className="hidden md:block">
-              <Button 
-                size="sm" 
-                variant="outline"
-                className="bg-transparent border-2 text-black font-medium px-4 py-2 rounded-none backdrop-blur-sm hover:opacity-90"
-                style={{ borderColor: '#cad95e', color: '#cad95e' }}
-              >
-                Mapa Turismo Sostenible
-              </Button>
-            </Link>
-            
-            <Button variant="ghost" size="sm" className="text-white hover:bg-white/20">
-              <User className="w-5 h-5" />
-            </Button>
-            <BrutalistMenu />
-          </div>
-        </div>
-      </nav>
+      {/* Navigation is now handled by HeaderButtons component - transparent over background */}
       {/* Main Content - Left Aligned like BIME */}
-      <div id="main-content" className="relative z-10 flex items-center min-h-screen px-6 sm:px-8 md:px-20 pt-20">
+      <div id="main-content" className="relative z-10 flex items-center min-h-screen px-6 sm:px-8 md:px-20 pt-24">
         <div className="max-w-7xl w-full">
           <div className="max-w-4xl mx-auto text-center">
             {/* Festival NATUR Logo */}
