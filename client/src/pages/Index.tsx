@@ -15,42 +15,110 @@ const Index = () => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
       const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight - windowHeight;
+      const globalScrollProgress = scrollY / documentHeight;
       
-      // Progressive parallax effects for each scene
+      // Advanced parallax effects for each scene with fusion
       const parallaxElements = document.querySelectorAll('.parallax-scene');
       parallaxElements.forEach((element, index) => {
         const rect = element.getBoundingClientRect();
         const elementTop = rect.top;
         const elementHeight = rect.height;
         
-        // Calculate scroll progress for this element (0 to 1)
-        const scrollProgress = Math.max(0, Math.min(1, 
-          (windowHeight - elementTop) / (windowHeight + elementHeight)
-        ));
+        // Calculate scroll progress for this element (-1 to 2 for extended range)
+        const scrollProgress = (windowHeight - elementTop) / (windowHeight + elementHeight);
+        const extendedProgress = Math.max(-1, Math.min(2, scrollProgress));
         
-        // Apply different effects based on scene
+        // Different parallax layers for depth
+        const backgroundLayer = element.querySelector('.bg-layer');
+        const midgroundLayer = element.querySelector('.mid-layer');
+        const foregroundLayer = element.querySelector('.fg-layer');
         const svgElement = element.querySelector('.scene-svg');
+        
+        if (backgroundLayer) {
+          const bgTransform = `translateY(${scrollY * 0.1}px) scale(${0.8 + extendedProgress * 0.4})`;
+          (backgroundLayer as HTMLElement).style.transform = bgTransform;
+          (backgroundLayer as HTMLElement).style.opacity = (0.2 + Math.abs(extendedProgress) * 0.3).toString();
+        }
+        
+        if (midgroundLayer) {
+          const midTransform = `translateY(${scrollY * 0.3}px) scale(${0.9 + extendedProgress * 0.3})`;
+          (midgroundLayer as HTMLElement).style.transform = midTransform;
+          (midgroundLayer as HTMLElement).style.opacity = (0.4 + Math.abs(extendedProgress) * 0.4).toString();
+        }
+        
+        if (foregroundLayer) {
+          const fgTransform = `translateY(${scrollY * 0.5}px) scale(${1 + extendedProgress * 0.2})`;
+          (foregroundLayer as HTMLElement).style.transform = fgTransform;
+          (foregroundLayer as HTMLElement).style.opacity = (0.6 + Math.abs(extendedProgress) * 0.4).toString();
+        }
+        
         if (svgElement) {
-          const transform = `scale(${0.5 + scrollProgress * 1.5}) rotate(${scrollProgress * 360}deg)`;
+          // More complex transformations based on scene index
+          const sceneEffects = [
+            // Earth: Continuous rotation + zoom
+            () => `scale(${0.4 + scrollProgress * 2}) rotate(${globalScrollProgress * 720}deg)`,
+            // Colombia: Zoom in from Earth + slight rotation
+            () => `scale(${0.3 + scrollProgress * 2.5}) rotate(${scrollProgress * 180}deg) translateY(${-scrollProgress * 50}px)`,
+            // Bird: Floating effect + scale
+            () => `scale(${0.5 + scrollProgress * 1.8}) translateY(${Math.sin(globalScrollProgress * 10) * 20}px) rotate(${Math.sin(globalScrollProgress * 5) * 15}deg)`,
+            // Human: Emerge from background + scale
+            () => `scale(${0.2 + scrollProgress * 2.2}) translateY(${(1-scrollProgress) * 100}px)`,
+            // Heart: Pulse + grow
+            () => `scale(${0.4 + scrollProgress * 2 + Math.sin(globalScrollProgress * 20) * 0.1}) rotate(${scrollProgress * 45}deg)`,
+            // Atom: Complex orbital motion
+            () => `scale(${0.3 + scrollProgress * 2.3}) rotate(${globalScrollProgress * 1080}deg) translateX(${Math.cos(globalScrollProgress * 8) * 30}px)`
+          ];
+          
+          const transform = sceneEffects[index] ? sceneEffects[index]() : `scale(${0.5 + scrollProgress * 1.5})`;
           (svgElement as HTMLElement).style.transform = transform;
-          (svgElement as HTMLElement).style.opacity = (0.3 + scrollProgress * 0.7).toString();
+          
+          // Opacity fade effects for seamless transitions
+          const opacityFactor = Math.max(0.1, Math.min(1, 
+            scrollProgress < 0.2 ? scrollProgress * 5 :
+            scrollProgress > 0.8 ? (1 - scrollProgress) * 5 : 1
+          ));
+          (svgElement as HTMLElement).style.opacity = opacityFactor.toString();
         }
       });
 
-      // Zoom effects for progressive scenes
+      // Enhanced zoom effects with morphing
       const zoomScenes = document.querySelectorAll('.zoom-scene');
       zoomScenes.forEach((scene, index) => {
         const rect = scene.getBoundingClientRect();
         const centerY = rect.top + rect.height / 2;
         const distanceFromCenter = Math.abs(centerY - windowHeight / 2);
-        const maxDistance = windowHeight;
+        const maxDistance = windowHeight * 1.5;
         
-        // Scale factor based on proximity to viewport center
-        const scaleFactor = Math.max(0.2, 1 - (distanceFromCenter / maxDistance));
-        const finalScale = 0.3 + (scaleFactor * 2);
+        // More dramatic scale factor with morphing
+        const proximity = Math.max(0, 1 - (distanceFromCenter / maxDistance));
+        const scaleFactor = 0.1 + (proximity * 3);
         
-        (scene as HTMLElement).style.transform = `scale(${finalScale})`;
-        (scene as HTMLElement).style.opacity = scaleFactor.toString();
+        // Add rotation and translation for more dynamic effects
+        const rotationAngle = (1 - proximity) * 180 + globalScrollProgress * 360;
+        const translateY = (1 - proximity) * 200;
+        
+        const transform = `scale(${scaleFactor}) rotate(${rotationAngle}deg) translateY(${translateY}px)`;
+        (scene as HTMLElement).style.transform = transform;
+        (scene as HTMLElement).style.opacity = (proximity * 0.9 + 0.1).toString();
+        
+        // Add blur effect for depth
+        const blurAmount = (1 - proximity) * 5;
+        (scene as HTMLElement).style.filter = `blur(${blurAmount}px)`;
+      });
+
+      // Text parallax effects
+      const textElements = document.querySelectorAll('.grotesk-text');
+      textElements.forEach((text, index) => {
+        const rect = text.getBoundingClientRect();
+        const textProgress = (windowHeight - rect.top) / windowHeight;
+        
+        if (textProgress > 0 && textProgress < 1) {
+          const translateY = (0.5 - textProgress) * 100;
+          const scale = 0.8 + textProgress * 0.4;
+          (text as HTMLElement).style.transform = `translateY(${translateY}px) scale(${scale})`;
+          (text as HTMLElement).style.opacity = textProgress.toString();
+        }
       });
     };
 
@@ -77,19 +145,47 @@ const Index = () => {
         }
         
         .parallax-scene {
-          will-change: transform, opacity;
-          transition: all 0.1s ease-out;
+          will-change: transform, opacity, filter;
+          transition: none;
+          position: relative;
+          overflow: hidden;
         }
         
         .zoom-scene {
-          will-change: transform, opacity;
-          transition: all 0.2s ease-out;
+          will-change: transform, opacity, filter;
+          transition: none;
           transform-origin: center;
+          position: relative;
         }
         
         .scene-svg {
-          transition: all 0.3s ease-out;
+          will-change: transform, opacity;
+          transition: none;
           transform-origin: center;
+        }
+        
+        .bg-layer {
+          will-change: transform, opacity;
+          transition: none;
+          position: absolute;
+          inset: 0;
+          z-index: 1;
+        }
+        
+        .mid-layer {
+          will-change: transform, opacity;
+          transition: none;
+          position: absolute;
+          inset: 0;
+          z-index: 2;
+        }
+        
+        .fg-layer {
+          will-change: transform, opacity;
+          transition: none;
+          position: absolute;
+          inset: 0;
+          z-index: 3;
         }
         
         @keyframes slowRotate {
@@ -120,9 +216,31 @@ const Index = () => {
 
       {/* Scene 1: Earth 🌍 */}
       <section ref={addToRefs} className="min-h-screen flex items-center justify-center relative parallax-scene overflow-hidden">
-        <div className="absolute inset-0 flex items-center justify-center">
+        {/* Background cosmic layer */}
+        <div className="bg-layer absolute inset-0">
+          {[...Array(30)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute w-1 h-1 bg-[#FFD600] rounded-full opacity-20"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                animationDelay: `${Math.random() * 3}s`
+              }}
+            />
+          ))}
+        </div>
+        
+        {/* Midground orbit rings */}
+        <div className="mid-layer absolute inset-0 flex items-center justify-center">
+          <div className="absolute w-[800px] h-[800px] border border-[#FFD600] rounded-full opacity-10 slow-rotate"></div>
+          <div className="absolute w-[600px] h-[600px] border border-[#FFD600] rounded-full opacity-15" style={{animation: 'slowRotate 80s linear infinite reverse'}}></div>
+        </div>
+        
+        {/* Foreground Earth */}
+        <div className="fg-layer absolute inset-0 flex items-center justify-center">
           <div className="zoom-scene">
-            <svg className="scene-svg slow-rotate w-96 h-96" viewBox="0 0 400 400">
+            <svg className="scene-svg w-96 h-96" viewBox="0 0 400 400">
               {/* Simplified Earth circle */}
               <circle cx="200" cy="200" r="180" fill="none" stroke="#FFD600" strokeWidth="6"/>
               
@@ -160,7 +278,29 @@ const Index = () => {
 
       {/* Scene 2: Colombia 🇨🇴 */}
       <section ref={addToRefs} className="min-h-screen flex items-center justify-center relative parallax-scene overflow-hidden">
-        <div className="absolute inset-0 flex items-center justify-center">
+        {/* Background continental layer */}
+        <div className="bg-layer absolute inset-0 flex items-center justify-center opacity-20">
+          <svg className="w-full h-full" viewBox="0 0 800 600">
+            <path d="M200,100 L500,120 L600,300 L400,500 L100,450 L50,200 Z" 
+                  fill="none" stroke="#FFD600" strokeWidth="1" opacity="0.3"/>
+          </svg>
+        </div>
+        
+        {/* Midground geographic features */}
+        <div className="mid-layer absolute inset-0 flex items-center justify-center">
+          <div className="absolute w-full h-full">
+            {/* Flowing rivers */}
+            <svg className="w-full h-full" viewBox="0 0 800 600">
+              <path d="M100,200 Q300,150 500,200 Q600,250 700,200" 
+                    fill="none" stroke="#FFD600" strokeWidth="2" opacity="0.4">
+                <animate attributeName="stroke-dasharray" values="0,50;50,0;0,50" dur="6s" repeatCount="indefinite"/>
+              </path>
+            </svg>
+          </div>
+        </div>
+        
+        {/* Foreground Colombia map */}
+        <div className="fg-layer absolute inset-0 flex items-center justify-center">
           <div className="zoom-scene">
             <svg className="scene-svg w-[400px] h-[500px]" viewBox="0 0 300 400">
               {/* Simplified Colombia outline - more recognizable shape */}
@@ -202,8 +342,45 @@ const Index = () => {
 
       {/* Scene 3: Ave 🕊️ */}
       <section ref={addToRefs} className="min-h-screen flex items-center justify-center relative parallax-scene overflow-hidden">
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="zoom-scene slow-pulse">
+        {/* Background sky layer */}
+        <div className="bg-layer absolute inset-0">
+          <svg className="w-full h-full" viewBox="0 0 800 600">
+            {/* Moving clouds */}
+            <ellipse cx="200" cy="100" rx="80" ry="30" fill="none" stroke="#FFD600" strokeWidth="1" opacity="0.2">
+              <animate attributeName="cx" values="200;600;200" dur="20s" repeatCount="indefinite"/>
+            </ellipse>
+            <ellipse cx="500" cy="150" rx="60" ry="25" fill="none" stroke="#FFD600" strokeWidth="1" opacity="0.2">
+              <animate attributeName="cx" values="500;100;500" dur="25s" repeatCount="indefinite"/>
+            </ellipse>
+          </svg>
+        </div>
+        
+        {/* Midground wind currents */}
+        <div className="mid-layer absolute inset-0">
+          <svg className="w-full h-full" viewBox="0 0 800 600">
+            {[...Array(8)].map((_, i) => (
+              <path
+                key={i}
+                d={`M${i * 100},${200 + i * 20} Q${i * 100 + 200},${180 + i * 20} ${i * 100 + 400},${200 + i * 20}`}
+                fill="none"
+                stroke="#FFD600"
+                strokeWidth="1"
+                opacity="0.3"
+              >
+                <animate
+                  attributeName="d"
+                  values={`M${i * 100},${200 + i * 20} Q${i * 100 + 200},${180 + i * 20} ${i * 100 + 400},${200 + i * 20};M${i * 100},${220 + i * 20} Q${i * 100 + 200},${160 + i * 20} ${i * 100 + 400},${220 + i * 20};M${i * 100},${200 + i * 20} Q${i * 100 + 200},${180 + i * 20} ${i * 100 + 400},${200 + i * 20}`}
+                  dur={`${4 + i}s`}
+                  repeatCount="indefinite"
+                />
+              </path>
+            ))}
+          </svg>
+        </div>
+        
+        {/* Foreground bird */}
+        <div className="fg-layer absolute inset-0 flex items-center justify-center">
+          <div className="zoom-scene">
             <svg className="scene-svg w-[500px] h-[300px]" viewBox="0 0 500 300">
               {/* Simplified bird silhouette - more recognizable */}
               {/* Left wing */}
@@ -249,7 +426,43 @@ const Index = () => {
 
       {/* Scene 4: Persona 🧍 */}
       <section ref={addToRefs} className="min-h-screen flex items-center justify-center relative parallax-scene overflow-hidden">
-        <div className="absolute inset-0 flex items-center justify-center">
+        {/* Background environment layer */}
+        <div className="bg-layer absolute inset-0">
+          <svg className="w-full h-full" viewBox="0 0 800 600">
+            {/* Ground/horizon line */}
+            <line x1="0" y1="400" x2="800" y2="400" stroke="#FFD600" strokeWidth="2" opacity="0.3"/>
+            {/* Distant mountains */}
+            <polygon points="100,400 200,300 300,400" fill="none" stroke="#FFD600" strokeWidth="1" opacity="0.2"/>
+            <polygon points="300,400 450,250 600,400" fill="none" stroke="#FFD600" strokeWidth="1" opacity="0.2"/>
+          </svg>
+        </div>
+        
+        {/* Midground flowing elements */}
+        <div className="mid-layer absolute inset-0">
+          <svg className="w-full h-full" viewBox="0 0 800 600">
+            {/* Flowing energy lines */}
+            {[...Array(6)].map((_, i) => (
+              <path
+                key={i}
+                d={`M0,${300 + i * 30} Q400,${280 + i * 30} 800,${300 + i * 30}`}
+                fill="none"
+                stroke="#FFD600"
+                strokeWidth="2"
+                opacity="0.4"
+              >
+                <animate
+                  attributeName="d"
+                  values={`M0,${300 + i * 30} Q400,${280 + i * 30} 800,${300 + i * 30};M0,${320 + i * 30} Q400,${260 + i * 30} 800,${320 + i * 30};M0,${300 + i * 30} Q400,${280 + i * 30} 800,${300 + i * 30}`}
+                  dur={`${8 + i * 2}s`}
+                  repeatCount="indefinite"
+                />
+              </path>
+            ))}
+          </svg>
+        </div>
+        
+        {/* Foreground human */}
+        <div className="fg-layer absolute inset-0 flex items-center justify-center">
           <div className="zoom-scene">
             <svg className="scene-svg w-[400px] h-[500px]" viewBox="0 0 400 500">
               {/* Simplified human figure */}
@@ -309,8 +522,38 @@ const Index = () => {
 
       {/* Scene 5: Corazón ❤️ */}
       <section ref={addToRefs} className="min-h-screen flex items-center justify-center relative parallax-scene overflow-hidden">
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="zoom-scene slow-pulse">
+        {/* Background pulsing energy */}
+        <div className="bg-layer absolute inset-0 flex items-center justify-center">
+          {[...Array(5)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute border border-[#FFD600] rounded-full opacity-20"
+              style={{
+                width: `${(i + 1) * 100}px`,
+                height: `${(i + 1) * 100}px`,
+                animation: `slowPulse ${4 + i}s ease-in-out infinite`,
+                animationDelay: `${i * 0.5}s`
+              }}
+            />
+          ))}
+        </div>
+        
+        {/* Midground organic patterns */}
+        <div className="mid-layer absolute inset-0 flex items-center justify-center">
+          <svg className="w-full h-full" viewBox="0 0 800 600">
+            {/* Organic flowing lines */}
+            <path d="M200,300 Q400,200 600,300 Q400,400 200,300" 
+                  fill="none" stroke="#FFD600" strokeWidth="1" opacity="0.3">
+              <animate attributeName="d" 
+                       values="M200,300 Q400,200 600,300 Q400,400 200,300;M200,300 Q400,250 600,300 Q400,350 200,300;M200,300 Q400,200 600,300 Q400,400 200,300" 
+                       dur="6s" repeatCount="indefinite"/>
+            </path>
+          </svg>
+        </div>
+        
+        {/* Foreground heart */}
+        <div className="fg-layer absolute inset-0 flex items-center justify-center">
+          <div className="zoom-scene">
             <svg className="scene-svg w-[400px] h-[400px]" viewBox="0 0 400 400">
               {/* Heart made of river curves and tree branches */}
               <path d="M200,120 C180,100 140,100 120,140 C120,180 200,260 200,320 C200,260 280,180 280,140 C280,100 240,100 220,120"
@@ -351,7 +594,55 @@ const Index = () => {
 
       {/* Scene 6: Átomo ⚛️ */}
       <section ref={addToRefs} className="min-h-screen flex items-center justify-center relative parallax-scene overflow-hidden">
-        <div className="absolute inset-0 flex items-center justify-center">
+        {/* Background quantum field */}
+        <div className="bg-layer absolute inset-0">
+          {[...Array(20)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute w-2 h-2 bg-[#FFD600] rounded-full opacity-30"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                animation: `flicker ${2 + Math.random() * 3}s ease-in-out infinite`,
+                animationDelay: `${Math.random() * 2}s`
+              }}
+            />
+          ))}
+        </div>
+        
+        {/* Midground energy waves */}
+        <div className="mid-layer absolute inset-0 flex items-center justify-center">
+          <svg className="w-full h-full" viewBox="0 0 800 600">
+            {[...Array(4)].map((_, i) => (
+              <circle
+                key={i}
+                cx="400"
+                cy="300"
+                r={50 + i * 80}
+                fill="none"
+                stroke="#FFD600"
+                strokeWidth="1"
+                opacity="0.2"
+              >
+                <animate
+                  attributeName="r"
+                  values={`${50 + i * 80};${100 + i * 80};${50 + i * 80}`}
+                  dur={`${6 + i * 2}s`}
+                  repeatCount="indefinite"
+                />
+                <animate
+                  attributeName="opacity"
+                  values="0.2;0.6;0.2"
+                  dur={`${6 + i * 2}s`}
+                  repeatCount="indefinite"
+                />
+              </circle>
+            ))}
+          </svg>
+        </div>
+        
+        {/* Foreground atom */}
+        <div className="fg-layer absolute inset-0 flex items-center justify-center">
           <div className="zoom-scene">
             <svg className="scene-svg w-[500px] h-[500px]" viewBox="0 0 500 500">
               {/* Atom center */}
