@@ -66,7 +66,7 @@ const Index = () => {
               <p><strong>🌍 $9 billones USD/año</strong><br/>WTTC, 2023</p>
               <p><strong>📊 10.4% del PIB global</strong><br/>Representación económica</p>
               <p><strong>👥 1 de cada 10 empleos</strong><br/>Dependencia directa/indirecta</p>
-              <p><strong>🛩️ Gasto en transporte > comunidades</strong><br/>Distribución desigual</p>
+              <p><strong>🛩️ Gasto en transporte &gt; comunidades</strong><br/>Distribución desigual</p>
             </div>
             <div className="space-y-3">
               <p><strong>💸 80% ganancias se fugan</strong><br/>Hacia corporaciones internacionales</p>
