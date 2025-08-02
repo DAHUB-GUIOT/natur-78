@@ -171,37 +171,6 @@ export function HeaderButtons({ showPortalButtons = false }: HeaderButtonsProps)
             className="fixed top-16 left-0 right-0 z-40 bg-green-800 border-b border-green-900"
           >
             <div className="p-4 space-y-3">
-              {/* Mobile Tickets Section - Always Visible */}
-              <div className="bg-yellow-400 rounded-lg p-4 -mx-2">
-                <h3 className="text-green-800 font-gasoek text-2xl font-bold mb-3 text-center">ENTRADAS FESTIVAL</h3>
-                
-                <div className="space-y-3">
-                  <div className="bg-green-800/10 rounded-lg p-3 border border-green-800/20">
-                    <h4 className="text-green-800 font-bold text-lg">VIVE NATUR</h4>
-                    <p className="text-green-800/80 text-sm">Acceso completo al festival</p>
-                    <p className="text-green-800 font-bold">$50.000 COP</p>
-                  </div>
-                  
-                  <div className="bg-green-800/10 rounded-lg p-3 border border-green-800/20">
-                    <h4 className="text-green-800 font-bold text-lg">NATUR PRO</h4>
-                    <p className="text-green-800/80 text-sm">Acceso profesional + networking</p>
-                    <p className="text-green-800 font-bold">$120.000 COP</p>
-                  </div>
-                </div>
-
-                <Link to="/tickets">
-                  <Button 
-                    className="w-full bg-green-800 hover:bg-green-900 text-yellow-400 font-bold mt-3"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    Comprar Entradas
-                  </Button>
-                </Link>
-              </div>
-
-              {/* Divider */}
-              <div className="border-t border-yellow-400/30 my-6"></div>
-
               {/* Portal Buttons */}
               <Link to="/auth/empresas" onClick={() => setIsMenuOpen(false)}>
                 <Button 
@@ -209,7 +178,7 @@ export function HeaderButtons({ showPortalButtons = false }: HeaderButtonsProps)
                   className="w-full justify-start text-yellow-400 hover:text-yellow-400 hover:bg-green-900/50 py-6"
                 >
                   <Building2 className="w-6 h-6 mr-4" />
-                  <span className="text-4xl font-black font-gasoek tracking-wider uppercase">Portal Empresas</span>
+                  <span className="text-3xl font-black font-gasoek tracking-wider uppercase">Portal Empresas</span>
                 </Button>
               </Link>
               
@@ -219,7 +188,7 @@ export function HeaderButtons({ showPortalButtons = false }: HeaderButtonsProps)
                   className="w-full justify-start text-yellow-400 hover:text-yellow-400 hover:bg-green-900/50 py-6"
                 >
                   <MapPin className="w-6 h-6 mr-4" />
-                  <span className="text-4xl font-black font-gasoek tracking-wider uppercase">Mapa Turismo</span>
+                  <span className="text-3xl font-black font-gasoek tracking-wider uppercase">Mapa Turismo</span>
                 </Button>
               </Link>
 
@@ -233,7 +202,7 @@ export function HeaderButtons({ showPortalButtons = false }: HeaderButtonsProps)
                   className="w-full justify-start text-yellow-400 hover:text-yellow-400 hover:bg-green-900/50 py-6"
                 >
                   <Calendar className="w-6 h-6 mr-4" />
-                  <span className="text-4xl font-black font-gasoek tracking-wider uppercase">Agenda</span>
+                  <span className="text-3xl font-black font-gasoek tracking-wider uppercase">Agenda</span>
                 </Button>
               </Link>
               
@@ -243,7 +212,7 @@ export function HeaderButtons({ showPortalButtons = false }: HeaderButtonsProps)
                   className="w-full justify-start text-yellow-400 hover:text-yellow-400 hover:bg-green-900/50 py-6"
                 >
                   <Ticket className="w-6 h-6 mr-4" />
-                  <span className="text-4xl font-black font-gasoek tracking-wider uppercase">Entradas</span>
+                  <span className="text-3xl font-black font-gasoek tracking-wider uppercase">Entradas</span>
                 </Button>
               </Link>
 
@@ -256,7 +225,7 @@ export function HeaderButtons({ showPortalButtons = false }: HeaderButtonsProps)
                 onClick={() => setIsMenuOpen(false)}
               >
                 <Info className="w-6 h-6 mr-4" />
-                <span className="text-4xl font-black font-gasoek tracking-wider uppercase">Sobre NATUR</span>
+                <span className="text-3xl font-black font-gasoek tracking-wider uppercase">Sobre NATUR</span>
               </Button>
 
               <Button 
@@ -265,7 +234,7 @@ export function HeaderButtons({ showPortalButtons = false }: HeaderButtonsProps)
                 onClick={() => setIsMenuOpen(false)}
               >
                 <Users className="w-6 h-6 mr-4" />
-                <span className="text-4xl font-black font-gasoek tracking-wider uppercase">Quiénes Somos</span>
+                <span className="text-3xl font-black font-gasoek tracking-wider uppercase">Quiénes Somos</span>
               </Button>
 
               <Button 
@@ -274,7 +243,7 @@ export function HeaderButtons({ showPortalButtons = false }: HeaderButtonsProps)
                 onClick={() => setIsMenuOpen(false)}
               >
                 <Mail className="w-6 h-6 mr-4" />
-                <span className="text-4xl font-black font-gasoek tracking-wider uppercase">Contacto</span>
+                <span className="text-3xl font-black font-gasoek tracking-wider uppercase">Contacto</span>
               </Button>
 
               {/* Social Links */}
