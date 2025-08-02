@@ -71,8 +71,8 @@ const Index = () => {
         if (!worldMapRef.current || !textRef.current || !colombiaMapRef.current) return;
 
         const scrollY = window.scrollY;
-        const maxScroll = document.body.scrollHeight - window.innerHeight;
-        const scrollProgress = Math.min(scrollY / (maxScroll * 0.3), 1);
+        const windowHeight = window.innerHeight;
+        const scrollProgress = Math.min(scrollY / (windowHeight * 0.8), 1);
 
         // Main text fade out
         const textOpacity = Math.max(0, 1 - scrollProgress * 2);
@@ -85,8 +85,28 @@ const Index = () => {
         worldMapRef.current.style.transform = `scale(${worldMapScale})`;
 
         // Colombia map fade in
-        const colombiaMapOpacity = Math.max(0, Math.min(1, (scrollProgress - 0.5) * 2));
+        const colombiaMapOpacity = Math.max(0, Math.min(1, (scrollProgress - 0.3) * 3));
         colombiaMapRef.current.style.opacity = colombiaMapOpacity.toString();
+
+        // Animate content sections
+        const sections = document.querySelectorAll('.content-section');
+        sections.forEach((section, index) => {
+          const sectionElement = section as HTMLElement;
+          const sectionTop = sectionElement.offsetTop;
+          const sectionHeight = sectionElement.offsetHeight;
+          const sectionProgress = Math.max(0, Math.min(1, (scrollY - sectionTop + windowHeight) / (sectionHeight + windowHeight)));
+          
+          // Parallax text animation
+          const translateY = (1 - sectionProgress) * 100;
+          const opacity = Math.max(0, Math.min(1, sectionProgress * 2 - 0.2));
+          const scale = 0.8 + sectionProgress * 0.2;
+          
+          const content = sectionElement.querySelector('.section-content') as HTMLElement;
+          if (content) {
+            content.style.transform = `translateY(${translateY}px) scale(${scale})`;
+            content.style.opacity = opacity.toString();
+          }
+        });
       };
 
       window.addEventListener('scroll', handleScroll);
@@ -138,50 +158,53 @@ const Index = () => {
       </div>
 
       {/* Content Sections with Colombia Background */}
-      <div className="relative z-10 bg-black/70">
+      <div className="relative z-10">
         {/* Slide 1 — Potencia en peligro */}
-        <section className="min-h-screen flex items-center justify-center px-8">
-          <div className="max-w-4xl text-center text-white">
-            <h2 className="text-4xl md:text-6xl font-gasoek text-yellow-400 mb-8 font-black">
+        <section className="content-section min-h-screen flex items-center justify-center px-8">
+          <div className="section-content max-w-4xl text-center text-white bg-black/80 backdrop-blur-sm rounded-3xl p-12 border border-yellow-400/20"
+               style={{ transform: 'translateY(100px) scale(0.8)', opacity: 0, transition: 'none' }}>
+            <h2 className="text-4xl md:text-6xl font-gasoek text-yellow-400 mb-8 font-black drop-shadow-2xl">
               Slide 1 — Potencia en peligro
             </h2>
-            <p className="text-xl md:text-2xl leading-relaxed mb-6">
+            <p className="text-xl md:text-2xl leading-relaxed mb-6 drop-shadow-lg">
               Colombia es el país con mayor biodiversidad por kilómetro cuadrado del mundo, alberga más de 54 000 especies y 314 ecosistemas únicos.
             </p>
-            <p className="text-xl md:text-2xl leading-relaxed text-red-400">
+            <p className="text-xl md:text-2xl leading-relaxed text-red-400 drop-shadow-lg font-semibold">
               Sin embargo, el turismo que llega buscando "naturaleza" está acelerando su degradación.
             </p>
           </div>
         </section>
 
         {/* Slide 2 — Turismo mal entendido */}
-        <section className="min-h-screen flex items-center justify-center px-8">
-          <div className="max-w-4xl text-center text-white">
-            <h2 className="text-4xl md:text-6xl font-gasoek text-yellow-400 mb-8 font-black">
+        <section className="content-section min-h-screen flex items-center justify-center px-8">
+          <div className="section-content max-w-4xl text-center text-white bg-black/80 backdrop-blur-sm rounded-3xl p-12 border border-yellow-400/20"
+               style={{ transform: 'translateY(100px) scale(0.8)', opacity: 0, transition: 'none' }}>
+            <h2 className="text-4xl md:text-6xl font-gasoek text-yellow-400 mb-8 font-black drop-shadow-2xl">
               Slide 2 — Turismo mal entendido
             </h2>
-            <p className="text-xl md:text-2xl leading-relaxed mb-6">
+            <p className="text-xl md:text-2xl leading-relaxed mb-6 drop-shadow-lg">
               El 57 % de los turistas en Colombia no sabe qué significa turismo sostenible.
             </p>
-            <p className="text-xl md:text-2xl leading-relaxed">
+            <p className="text-xl md:text-2xl leading-relaxed drop-shadow-lg">
               El interés por experiencias "eco" creció un 400 % en la última década, pero 1 de cada 5 proyectos se anuncia sostenible sin serlo realmente, convirtiendo la biodiversidad en mercancía.
             </p>
           </div>
         </section>
 
         {/* Slide 3 — Consumo vs. conservación */}
-        <section className="min-h-screen flex items-center justify-center px-8">
-          <div className="max-w-4xl text-center text-white">
-            <h2 className="text-4xl md:text-6xl font-gasoek text-yellow-400 mb-8 font-black">
+        <section className="content-section min-h-screen flex items-center justify-center px-8">
+          <div className="section-content max-w-4xl text-center text-white bg-black/80 backdrop-blur-sm rounded-3xl p-12 border border-yellow-400/20"
+               style={{ transform: 'translateY(100px) scale(0.8)', opacity: 0, transition: 'none' }}>
+            <h2 className="text-4xl md:text-6xl font-gasoek text-yellow-400 mb-8 font-black drop-shadow-2xl">
               Slide 3 — Consumo vs. conservación
             </h2>
-            <p className="text-xl md:text-2xl leading-relaxed mb-6">
+            <p className="text-xl md:text-2xl leading-relaxed mb-6 drop-shadow-lg">
               Playas saturadas, montañas con basura, comunidades desplazadas y ecosistemas en riesgo → 42 % de los destinos naturales ya muestran señales de colapso.
             </p>
-            <p className="text-xl md:text-2xl leading-relaxed mb-6">
+            <p className="text-xl md:text-2xl leading-relaxed mb-6 drop-shadow-lg">
               El turismo como está planteado consume lo que promete proteger.
             </p>
-            <p className="text-xl md:text-2xl leading-relaxed text-yellow-400 font-bold">
+            <p className="text-xl md:text-2xl leading-relaxed text-yellow-400 font-bold drop-shadow-lg">
               Es urgente un reinicio del modelo.
             </p>
           </div>
