@@ -61,8 +61,8 @@ const Index = () => {
       mapInstance.current = new mapboxgl.Map({
         container: worldMapRef.current,
         style: 'mapbox://styles/mapbox/satellite-streets-v12',
-        center: [-30, 20], // Better positioning toward Americas
-        zoom: 2.2, // More detailed initial view
+        center: [-74.2973, 4.5709], // Start centered on Colombia (Bogotá)
+        zoom: 2.5, // Wide enough to show world context but centered on Colombia
         pitch: 15, // Slight 3D angle for depth
         bearing: -10, // Slight rotation for dynamic feel
         interactive: false,
