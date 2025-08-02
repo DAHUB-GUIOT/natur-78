@@ -30,9 +30,11 @@ const Index = () => {
       if (scrollProgress > 0.6 && mapInstance.current && !hasZoomedToColombia.current) {
         hasZoomedToColombia.current = true;
         mapInstance.current.flyTo({
-          center: [-74.2973, 4.5709], // Colombia center
-          zoom: 5.5,
-          duration: 2000
+          center: [-74.2973, 4.5709], // Precise center of Colombia (Bogotá coordinates)
+          zoom: 6.0, // Optimal zoom to show Colombia nicely centered
+          duration: 3000,
+          essential: true,
+          curve: 1.2, // Smoother curve transition
         });
       }
 
@@ -55,8 +57,8 @@ const Index = () => {
       mapInstance.current = new mapboxgl.Map({
         container: worldMapRef.current,
         style: 'mapbox://styles/mapbox/satellite-v9',
-        center: [0, 20], // World center
-        zoom: 1.5,
+        center: [-20, 15], // Slightly shifted toward South America
+        zoom: 1.8, // Slightly closer initial zoom
         pitch: 0,
         bearing: 0,
         interactive: false,
@@ -90,9 +92,9 @@ const Index = () => {
                 source: 'colombia',
                 layout: {},
                 paint: {
-                  'line-color': '#4A9B3B',
-                  'line-width': 3,
-                  'line-opacity': 0.8,
+                  'line-color': '#cad95e', // NATUR brand green
+                  'line-width': 4,
+                  'line-opacity': 1,
                 },
               });
 
@@ -103,8 +105,8 @@ const Index = () => {
                 source: 'colombia',
                 layout: {},
                 paint: {
-                  'fill-color': '#4A9B3B',
-                  'fill-opacity': 0.3,
+                  'fill-color': '#cad95e', // NATUR brand green
+                  'fill-opacity': 0.4,
                 },
               }, 'colombia-outline');
             }
@@ -140,8 +142,8 @@ const Index = () => {
                 source: 'colombia',
                 layout: {},
                 paint: {
-                  'line-color': '#4A9B3B',
-                  'line-width': 3,
+                  'line-color': '#cad95e', // NATUR brand green
+                  'line-width': 4,
                   'line-opacity': 1,
                 },
               });
@@ -152,8 +154,8 @@ const Index = () => {
                 source: 'colombia',
                 layout: {},
                 paint: {
-                  'fill-color': '#4A9B3B',
-                  'fill-opacity': 0.15,
+                  'fill-color': '#cad95e', // NATUR brand green
+                  'fill-opacity': 0.4,
                 },
               }, 'colombia-outline');
             }
