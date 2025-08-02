@@ -17,6 +17,7 @@ import NavigationBreadcrumb from "@/components/portal/NavigationBreadcrumb";
 import { GlassmorphismLayout, GlassBlock } from "@/components/layout/GlassmorphismLayout";
 import SolarBreadcrumb from "@/components/layout/SolarBreadcrumb";
 import EcoGrid from "@/components/layout/EcoGrid";
+import { HeaderButtons } from "@/components/layout/HeaderButtons";
 
 const PortalEmpresasDashboard = () => {
   // Enhanced state management for intelligent navigation
@@ -396,6 +397,7 @@ const PortalEmpresasDashboard = () => {
 
   return (
     <GlassmorphismLayout showEcoElements={true} backgroundVariant="forest">
+      <HeaderButtons showPortalButtons={true} />
       {/* Always-visible Interactive Map */}
       <div className="absolute inset-0 z-0">
         <InteractiveMap />

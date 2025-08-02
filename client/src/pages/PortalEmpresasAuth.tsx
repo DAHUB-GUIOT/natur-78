@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
+import { HeaderButtons } from "@/components/layout/HeaderButtons";
 
 const PortalEmpresasAuth = () => {
   const [email, setEmail] = useState("dahub.tech@gmail.com");
@@ -44,6 +45,7 @@ const PortalEmpresasAuth = () => {
 
   return (
     <div className="min-h-screen bg-[var(--color-bg)] dark:bg-[var(--color-bg)] flex items-center justify-center p-4">
+      <HeaderButtons showPortalButtons={true} />
       <div className="w-full max-w-md">
         {/* NATUR Branding */}
         <div className="text-center mb-8">

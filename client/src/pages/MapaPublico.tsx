@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { MapPin, Search, Phone, Globe, ExternalLink } from "lucide-react";
 import { useLocation } from "wouter";
+import { HeaderButtons } from "@/components/layout/HeaderButtons";
 
 
 // Mock data for map visualization - viajeros can see initiatives without registration
@@ -61,6 +62,7 @@ const MapaPublico = () => {
 
   return (
     <div className="min-h-screen bg-[#222408] text-[#FCF8EE]">
+      <HeaderButtons showPortalButtons={true} />
 
       {/* Header */}
       <header className="bg-[#222408] border-b border-[#FCF8EE]/10">
