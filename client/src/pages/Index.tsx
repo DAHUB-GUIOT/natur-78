@@ -32,17 +32,17 @@ const Index = () => {
         const rotateWorld = () => {
           if (mapInstance.current) {
             const currentBearing = mapInstance.current.getBearing();
-            const newBearing = (currentBearing + 0.2) % 360; // Full 360 rotation
+            const newBearing = (currentBearing + 1) % 360; // Faster rotation
             mapInstance.current.easeTo({ 
               bearing: newBearing, 
-              duration: 200,
+              duration: 100,
               easing: (t) => t // Linear easing for smooth rotation
             });
           }
         };
         
-        // Rotate every 200ms for smooth slow Y-axis rotation
-        setInterval(rotateWorld, 200);
+        // Rotate every 100ms for faster Y-axis rotation
+        setInterval(rotateWorld, 100);
       });
     };
 
@@ -67,7 +67,7 @@ const Index = () => {
       {/* Simple Text Content */}
       <div className="relative z-10 min-h-screen flex items-center justify-center">
         <div ref={textRef} className="text-center">
-          <h1 className="text-6xl md:text-8xl font-gasoek text-white font-black tracking-tight drop-shadow-2xl">
+          <h1 className="text-6xl md:text-8xl font-gasoek text-yellow-400 font-black tracking-tight drop-shadow-2xl">
             FESTIVAL NATUR
           </h1>
         </div>
