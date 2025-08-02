@@ -16,22 +16,22 @@ export function HeaderButtons({ showPortalButtons = false }: HeaderButtonsProps)
     <>
       {/* Transparent header with logo and hamburger menu over background */}
       <div className={`fixed top-0 left-0 right-0 z-50 backdrop-blur-sm transition-all duration-300 ${
-        isTicketsOpen ? 'bg-yellow-400' : 'bg-black/10'
+        isTicketsOpen ? 'bg-yellow-400' : (isMenuOpen ? 'bg-green-800' : 'bg-black/10')
       }`}>
         <div className="flex items-center justify-between p-4">
           {/* Logo on the left */}
           <Link to="/" className="flex items-center">
             <div className="w-12 h-12 flex items-center justify-center">
               <span className={`font-gasoek text-3xl font-bold drop-shadow-lg transition-colors duration-300 ${
-                isTicketsOpen ? 'text-green-600' : 'text-yellow-400'
+                isTicketsOpen ? 'text-green-600' : (isMenuOpen ? 'text-yellow-400' : 'text-yellow-400')
               }`}>N</span>
             </div>
             <div className="ml-3 hidden sm:block">
               <h1 className={`font-gasoek text-lg font-bold transition-colors duration-300 ${
-                isTicketsOpen ? 'text-green-600' : 'text-white'
+                isTicketsOpen ? 'text-green-600' : (isMenuOpen ? 'text-yellow-400' : 'text-white')
               }`}>NATUR</h1>
               <p className={`text-xs transition-colors duration-300 ${
-                isTicketsOpen ? 'text-green-600/80' : 'text-white/80'
+                isTicketsOpen ? 'text-green-600/80' : (isMenuOpen ? 'text-yellow-400/80' : 'text-white/80')
               }`}>Festival 2025</p>
             </div>
           </Link>
@@ -134,7 +134,7 @@ export function HeaderButtons({ showPortalButtons = false }: HeaderButtonsProps)
               className={`w-10 h-10 touch-manipulation min-w-[44px] transition-colors duration-300 ${
                 isTicketsOpen 
                   ? 'text-green-600 hover:text-green-700 hover:bg-green-600/10' 
-                  : 'text-white hover:text-[#cad95e] hover:bg-white/10'
+                  : (isMenuOpen ? 'text-yellow-400 hover:text-yellow-300 hover:bg-green-900/10' : 'text-white hover:text-[#cad95e] hover:bg-white/10')
               }`}
             >
               <Globe className="h-4 w-4" />
@@ -148,7 +148,7 @@ export function HeaderButtons({ showPortalButtons = false }: HeaderButtonsProps)
               className={`w-10 h-10 touch-manipulation min-w-[44px] transition-colors duration-300 ${
                 isTicketsOpen 
                   ? 'text-green-600 hover:text-green-700 hover:bg-green-600/10' 
-                  : 'text-white hover:text-[#cad95e] hover:bg-white/10'
+                  : (isMenuOpen ? 'text-yellow-400 hover:text-yellow-300 hover:bg-green-900/10' : 'text-white hover:text-[#cad95e] hover:bg-white/10')
               }`}
             >
               {isMenuOpen ? (
@@ -178,7 +178,7 @@ export function HeaderButtons({ showPortalButtons = false }: HeaderButtonsProps)
                   className="w-full justify-start text-yellow-400 hover:text-yellow-400 hover:bg-green-900/50 py-6"
                 >
                   <Building2 className="w-6 h-6 mr-4" />
-                  <span className="text-3xl font-black font-gasoek tracking-wider uppercase">Portal Empresas</span>
+                  <span className="text-2xl font-black font-gasoek tracking-wider uppercase">Portal Empresas</span>
                 </Button>
               </Link>
               
@@ -188,7 +188,7 @@ export function HeaderButtons({ showPortalButtons = false }: HeaderButtonsProps)
                   className="w-full justify-start text-yellow-400 hover:text-yellow-400 hover:bg-green-900/50 py-6"
                 >
                   <MapPin className="w-6 h-6 mr-4" />
-                  <span className="text-3xl font-black font-gasoek tracking-wider uppercase">Mapa Turismo</span>
+                  <span className="text-2xl font-black font-gasoek tracking-wider uppercase">Mapa Turismo</span>
                 </Button>
               </Link>
 
@@ -202,7 +202,7 @@ export function HeaderButtons({ showPortalButtons = false }: HeaderButtonsProps)
                   className="w-full justify-start text-yellow-400 hover:text-yellow-400 hover:bg-green-900/50 py-6"
                 >
                   <Calendar className="w-6 h-6 mr-4" />
-                  <span className="text-3xl font-black font-gasoek tracking-wider uppercase">Agenda</span>
+                  <span className="text-2xl font-black font-gasoek tracking-wider uppercase">Agenda</span>
                 </Button>
               </Link>
               
@@ -212,7 +212,7 @@ export function HeaderButtons({ showPortalButtons = false }: HeaderButtonsProps)
                   className="w-full justify-start text-yellow-400 hover:text-yellow-400 hover:bg-green-900/50 py-6"
                 >
                   <Ticket className="w-6 h-6 mr-4" />
-                  <span className="text-3xl font-black font-gasoek tracking-wider uppercase">Entradas</span>
+                  <span className="text-2xl font-black font-gasoek tracking-wider uppercase">Entradas</span>
                 </Button>
               </Link>
 
@@ -225,7 +225,7 @@ export function HeaderButtons({ showPortalButtons = false }: HeaderButtonsProps)
                 onClick={() => setIsMenuOpen(false)}
               >
                 <Info className="w-6 h-6 mr-4" />
-                <span className="text-3xl font-black font-gasoek tracking-wider uppercase">Sobre NATUR</span>
+                <span className="text-2xl font-black font-gasoek tracking-wider uppercase">Sobre NATUR</span>
               </Button>
 
               <Button 
@@ -234,7 +234,7 @@ export function HeaderButtons({ showPortalButtons = false }: HeaderButtonsProps)
                 onClick={() => setIsMenuOpen(false)}
               >
                 <Users className="w-6 h-6 mr-4" />
-                <span className="text-3xl font-black font-gasoek tracking-wider uppercase">Quiénes Somos</span>
+                <span className="text-2xl font-black font-gasoek tracking-wider uppercase">Quiénes Somos</span>
               </Button>
 
               <Button 
@@ -243,7 +243,7 @@ export function HeaderButtons({ showPortalButtons = false }: HeaderButtonsProps)
                 onClick={() => setIsMenuOpen(false)}
               >
                 <Mail className="w-6 h-6 mr-4" />
-                <span className="text-3xl font-black font-gasoek tracking-wider uppercase">Contacto</span>
+                <span className="text-2xl font-black font-gasoek tracking-wider uppercase">Contacto</span>
               </Button>
 
               {/* Social Links */}
