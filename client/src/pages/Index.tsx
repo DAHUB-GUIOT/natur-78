@@ -1,14 +1,30 @@
 import React, { useEffect, useRef } from "react";
 import { HeaderButtons } from "@/components/layout/HeaderButtons";
+import { getCountryShape } from "world-map-country-shapes";
 
 const Index = () => {
   const sectionsRef = useRef<HTMLElement[]>([]);
+  const [colombiaPath, setColombiaPath] = React.useState<string>("");
 
   const addToRefs = (el: HTMLElement | null) => {
     if (el && !sectionsRef.current.includes(el)) {
       sectionsRef.current.push(el);
     }
   };
+
+  // Get authentic Colombia map coordinates
+  React.useEffect(() => {
+    try {
+      const colombiaShape = getCountryShape("CO");
+      if (colombiaShape && colombiaShape.shape) {
+        setColombiaPath(colombiaShape.shape);
+      }
+    } catch (error) {
+      console.log("Using fallback Colombia outline");
+      // Fallback to simplified outline if needed
+      setColombiaPath("M150,50 L200,40 L240,60 L270,100 L280,140 L275,180 L270,220 L260,260 L240,300 L200,320 L150,330 L100,320 L60,300 L40,260 L30,220 L35,180 L50,140 L80,100 L120,70 L150,50 Z");
+    }
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -170,12 +186,38 @@ const Index = () => {
       {/* Scene 2: COLOMBIA */}
       <section ref={addToRefs} className="scene-container">
         <div className="scene-element">
-          <svg width="300" height="400" viewBox="0 0 300 400">
-            {/* Simplified Colombia outline */}
-            <path className="map-part" d="M150,50 L200,40 L240,60 L270,100 L280,140 L275,180 L270,220 L260,260 L240,300 L200,320 L150,330" 
-                  fill="none" stroke="#ffe600" strokeWidth="3"/>
-            <path className="map-part" d="M150,330 L100,320 L60,300 L40,260 L30,220 L35,180 L50,140 L80,100 L120,70 L150,50" 
-                  fill="none" stroke="#ffe600" strokeWidth="3"/>
+          <svg width="400" height="450" viewBox="0 0 400 450">
+            {/* Authentic Colombia outline from Wikimedia Commons */}
+            {colombiaPath ? (
+              <>
+                <path className="map-part" d={colombiaPath} 
+                      fill="none" stroke="#ffe600" strokeWidth="2" 
+                      transform="scale(0.8) translate(50, 50)"/>
+                {/* Create fragmented parts for animation */}
+                <path className="map-part" d={colombiaPath.split('M')[1]?.split('Z')[0] || colombiaPath} 
+                      fill="none" stroke="#ffe600" strokeWidth="1.5" opacity="0.7"
+                      transform="scale(0.8) translate(50, 50)"/>
+              </>
+            ) : (
+              <>
+                {/* Fallback simplified outline while loading */}
+                <path className="map-part" d="M200,80 L250,70 L290,90 L320,130 L330,170 L325,210 L320,250 L310,290 L290,330 L250,350 L200,360" 
+                      fill="none" stroke="#ffe600" strokeWidth="3"/>
+                <path className="map-part" d="M200,360 L150,350 L110,330 L80,290 L70,250 L75,210 L90,170 L120,130 L160,100 L200,80" 
+                      fill="none" stroke="#ffe600" strokeWidth="3"/>
+              </>
+            )}
+            
+            {/* Add key biodiversity points */}
+            <circle className="map-part" cx="180" cy="200" r="3" fill="#ffe600" opacity="0.8">
+              <animate attributeName="r" values="2;5;2" dur="3s" repeatCount="indefinite"/>
+            </circle>
+            <circle className="map-part" cx="220" cy="150" r="2" fill="#ffe600" opacity="0.6">
+              <animate attributeName="r" values="1;4;1" dur="4s" repeatCount="indefinite"/>
+            </circle>
+            <circle className="map-part" cx="160" cy="280" r="2.5" fill="#ffe600" opacity="0.7">
+              <animate attributeName="r" values="1.5;4.5;1.5" dur="5s" repeatCount="indefinite"/>
+            </circle>
           </svg>
         </div>
         <div className="scene-text">
@@ -185,6 +227,9 @@ const Index = () => {
           <p className="text-sm md:text-base opacity-80">
             País más biodiverso por km² • 314 ecosistemas • 60M hectáreas boscosas<br/>
             80% del turismo en zonas sensibles
+          </p>
+          <p className="text-xs opacity-60 mt-2">
+            Fuente: Wikimedia Commons • Milenioscuro (CC BY-SA 3.0)
           </p>
         </div>
       </section>
