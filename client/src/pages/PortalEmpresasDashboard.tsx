@@ -11,6 +11,7 @@ import ExperienceForm from "@/components/dashboard/ExperienceForm";
 import TwitterProfileSection from "@/components/profile/TwitterProfileSection";
 import { SimpleChat } from "@/components/messaging/SimpleChat";
 import AdaptiveSidebar from "@/components/portal/AdaptiveSidebar";
+import TopNavigationMenu from "@/components/portal/TopNavigationMenu";
 import ContentOverlay from "@/components/portal/ContentOverlay";
 import NavigationBreadcrumb from "@/components/portal/NavigationBreadcrumb";
 import { GlassmorphismLayout, GlassBlock } from "@/components/layout/GlassmorphismLayout";
@@ -395,6 +396,14 @@ const PortalEmpresasDashboard = () => {
 
   return (
     <GlassmorphismLayout showEcoElements={true} backgroundVariant="forest">
+      {/* Top Navigation Menu */}
+      <TopNavigationMenu 
+        user={user}
+        notificationCount={3}
+        onSearch={() => setContentPosition('center')}
+        onLogout={() => window.location.href = '/api/logout'}
+      />
+      
       {/* Always-visible Interactive Map */}
       <div className="absolute inset-0 z-0">
         <InteractiveMap />

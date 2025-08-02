@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { 
   Map, Building2, Star, MessageCircle, Settings, ShieldCheck, 
   ChevronLeft, ChevronRight, Pin, X, Menu, Minimize2, Maximize2,
-  Bell, Search, Filter
+  Bell, Search, Filter, Home, Users, Calendar, BarChart3
 } from "lucide-react";
 
 interface AdaptiveSidebarProps {
@@ -26,10 +27,11 @@ const AdaptiveSidebar: React.FC<AdaptiveSidebarProps> = ({
   onSearchFocus,
   isMapView
 }) => {
-  const [isCollapsed, setIsCollapsed] = useState(false);
-  const [isPinned, setIsPinned] = useState(true);
+  const [isCollapsed, setIsCollapsed] = useState(true); // Start collapsed by default
+  const [isPinned, setIsPinned] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [hoveredItem, setHoveredItem] = useState<string | null>(null);
 
   // Responsive detection
   useEffect(() => {
@@ -50,44 +52,49 @@ const AdaptiveSidebar: React.FC<AdaptiveSidebarProps> = ({
   const sidebarItems = [
     { 
       id: "mapa", 
-      label: "Explorar Mapa", 
-      icon: Map, 
-      shortLabel: "Mapa",
-      description: "Vista principal del territorio",
-      priority: 1
+      label: "Dashboard", 
+      icon: Home, 
+      shortLabel: "Inicio",
+      description: "Panel principal del ecosistema",
+      priority: 1,
+      color: "text-yellow-400"
     },
     { 
       id: "empresas", 
-      label: "Directorio Empresarial", 
+      label: "Red Empresarial", 
       icon: Building2, 
       shortLabel: "Empresas",
-      description: "Red de aliados comerciales",
-      priority: 2
+      description: "Directorio de aliados comerciales",
+      priority: 2,
+      color: "text-green-400"
     },
     { 
       id: "experiencias", 
-      label: "Gestión de Experiencias", 
+      label: "Experiencias", 
       icon: Star, 
-      shortLabel: "Experiencias",
-      description: "Productos turísticos",
-      priority: 2
+      shortLabel: "Productos",
+      description: "Gestión de ofertas turísticas",
+      priority: 2,
+      color: "text-blue-400"
     },
     { 
       id: "mensajes", 
-      label: "Centro de Mensajes", 
+      label: "Mensajes", 
       icon: MessageCircle, 
-      shortLabel: "Mensajes",
-      description: "Comunicación directa",
+      shortLabel: "Chat",
+      description: "Comunicación empresarial",
       priority: 3,
-      badge: messageCount > 0 ? messageCount : null
+      badge: messageCount > 0 ? messageCount : undefined,
+      color: "text-purple-400"
     },
     { 
       id: "ajustes", 
       label: "Configuración", 
       icon: Settings, 
-      shortLabel: "Ajustes",
-      description: "Personalización de cuenta",
-      priority: 4
+      shortLabel: "Config",
+      description: "Ajustes de perfil y cuenta",
+      priority: 4,
+      color: "text-gray-400"
     },
     ...(user?.role === 'admin' ? [{ 
       id: "admin", 
@@ -165,164 +172,167 @@ const AdaptiveSidebar: React.FC<AdaptiveSidebarProps> = ({
   return (
     <>
       {/* Mobile overlay backdrop */}
-      {sidebarMode === 'overlay' && !isMinimized && (
+      {isMobile && !isCollapsed && (
         <div 
-          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40"
-          onClick={() => setIsMinimized(true)}
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-30"
+          onClick={() => setIsCollapsed(true)}
         />
       )}
 
-      {/* Adaptive Sidebar */}
-      <aside
-        className={`
-          ${getSidebarWidth()}
-          ${getPositionClasses()}
-          bg-black/80 backdrop-blur-xl 
-          border-r border-white/10
-          transition-all duration-300 ease-in-out
-          ${sidebarMode === 'floating' ? 'border rounded-lg' : ''}
-          ${isMinimized && isMobile ? '-translate-x-full' : ''}
-        `}
+      {/* Symbol-Only Sidebar with Glassmorphism */}
+      <motion.aside
+        initial={{ x: -100, opacity: 0 }}
+        animate={{ 
+          x: isMinimized ? -100 : 0,
+          opacity: isMinimized ? 0 : 1,
+          width: isCollapsed || isMobile ? '4rem' : '16rem'
+        }}
+        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+        className="fixed left-0 top-16 bottom-0 z-40 glass-card border-r border-white/20 overflow-hidden group"
+        onMouseEnter={() => !isPinned && !isMobile && setIsCollapsed(false)}
+        onMouseLeave={() => !isPinned && !isMobile && setIsCollapsed(true)}
       >
-        {/* Compact Header */}
-        <div className="p-2 border-b border-white/10">
-          <div className="flex items-center justify-between">
-            {/* NATUR Branding - Smaller */}
-            <div className="flex items-center space-x-2">
-              <div className="w-6 h-6 bg-[#cad95e] flex items-center justify-center shadow-lg">
-                <span className="text-black font-gasoek text-xs font-bold">N</span>
-              </div>
-              {sidebarMode !== 'minimal' && (
-                <div>
-                  <h1 className="text-sm font-gasoek text-white uppercase tracking-wider">NATUR</h1>
-                  <p className="text-xs text-white/60 font-jakarta">Portal</p>
-                </div>
-              )}
+        {/* Logo Section */}
+        <div className="p-4 border-b border-white/10">
+          <motion.div 
+            className="flex items-center space-x-3"
+            animate={{ justifyContent: isCollapsed ? 'center' : 'flex-start' }}
+          >
+            <div className="w-10 h-10 bg-gradient-to-br from-yellow-400 to-green-400 rounded-lg flex items-center justify-center shadow-lg">
+              <span className="text-black font-gasoek text-lg font-bold">N</span>
             </div>
-
-            {/* Compact Control Buttons */}
-            <div className="flex items-center space-x-1">
-              {!isMobile && (
-                <>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => setIsPinned(!isPinned)}
-                    className="w-6 h-6 p-0 text-white/60 hover:text-[#cad95e]"
-                    title={isPinned ? "Desanclar" : "Anclar"}
-                  >
-                    <Pin className={`w-3 h-3 ${isPinned ? 'fill-current' : ''}`} />
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => setIsCollapsed(!isCollapsed)}
-                    className="w-6 h-6 p-0 text-white/60 hover:text-[#cad95e]"
-                    title={isCollapsed ? "Expandir" : "Contraer"}
-                  >
-                    {isCollapsed ? <ChevronRight className="w-3 h-3" /> : <ChevronLeft className="w-3 h-3" />}
-                  </Button>
-                </>
-              )}
-              {isMobile && (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => setIsMinimized(true)}
-                  className="w-6 h-6 p-0 text-white/60 hover:text-[#cad95e]"
+            <AnimatePresence>
+              {!isCollapsed && (
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  transition={{ duration: 0.2 }}
                 >
-                  <X className="w-3 h-3" />
-                </Button>
+                  <h1 className="text-title text-white">NATUR</h1>
+                  <p className="text-caption">Portal Empresas</p>
+                </motion.div>
               )}
-            </div>
-          </div>
-
-          {/* Compact Search */}
-          {sidebarMode === 'full' || sidebarMode === 'overlay' && (
-            <div className="mt-2">
-              <div className="relative">
-                <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 w-3 h-3 text-white/40" />
-                <input
-                  type="text"
-                  placeholder="Buscar..."
-                  className="w-full pl-7 pr-3 py-1.5 bg-white/10 border border-white/20 rounded-md text-white placeholder-white/40 text-xs font-jakarta focus:outline-none focus:border-[#cad95e] focus:ring-1 focus:ring-[#cad95e]/20"
-                  onFocus={onSearchFocus}
-                />
-              </div>
-            </div>
-          )}
+            </AnimatePresence>
+          </motion.div>
         </div>
 
-        {/* Compact Navigation Section */}
-        <nav className="flex-1 overflow-y-auto p-1">
-          <div className="space-y-0.5">
-            {sidebarItems.map((item) => {
+        {/* Navigation Items */}
+        <nav className="flex-1 p-2 mt-4">
+          <div className="space-y-2">
+            {sidebarItems.map((item, index) => {
               const Icon = item.icon;
               const isActive = activeSection === item.id;
               
               return (
-                <button
+                <motion.div
                   key={item.id}
-                  onClick={() => handleNavigation(item.id)}
-                  className={`
-                    w-full flex items-center space-x-2 px-2 py-2 rounded-md transition-all duration-200 font-jakarta group
-                    ${isActive 
-                      ? 'bg-[#cad95e]/20 text-[#cad95e] border border-[#cad95e]/30 shadow-sm' 
-                      : 'text-white/70 hover:bg-white/10 hover:text-white hover:shadow-sm'
-                    }
-                    ${sidebarMode === 'minimal' ? 'justify-center' : ''}
-                  `}
-                  title={sidebarMode === 'minimal' ? item.label : ''}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  onMouseEnter={() => setHoveredItem(item.id)}
+                  onMouseLeave={() => setHoveredItem(null)}
                 >
-                  <div className="relative">
-                    <Icon className={`w-3 h-3 ${isActive ? 'text-[#cad95e]' : ''} transition-colors`} />
-                    {item.badge && (
-                      <Badge className="absolute -top-1 -right-1 w-3 h-3 p-0 bg-red-500 text-white text-xs flex items-center justify-center">
-                        {item.badge}
-                      </Badge>
-                    )}
-                  </div>
-                  
-                  {sidebarMode !== 'minimal' && (
-                    <div className="flex-1 text-left">
-                      <div className="text-xs font-medium text-white">
-                        {sidebarMode === 'floating' ? item.shortLabel : item.label}
-                      </div>
-                      {sidebarMode === 'full' && (
-                        <div className="text-xs opacity-60 mt-0.5 text-white/60">
-                          {item.description}
-                        </div>
+                  <button
+                    onClick={() => handleNavigation(item.id)}
+                    className={`
+                      w-full flex items-center rounded-xl transition-all duration-300 relative overflow-hidden group
+                      ${isActive 
+                        ? 'bg-gradient-to-r from-yellow-400/20 to-green-400/20 border border-yellow-400/30 shadow-lg' 
+                        : 'glass-button hover:bg-white/10 border-transparent'
+                      }
+                      ${isCollapsed ? 'p-3 justify-center' : 'p-4 space-x-4'}
+                    `}
+                  >
+                    {/* Icon with colored glow */}
+                    <div className={`relative flex-shrink-0 ${isCollapsed ? '' : 'ml-0'}`}>
+                      <Icon className={`
+                        w-6 h-6 transition-all duration-300
+                        ${isActive 
+                          ? 'text-yellow-400 drop-shadow-lg' 
+                          : item.color || 'text-white/70 group-hover:text-white'
+                        }
+                      `} />
+                      
+                      {/* Badge for notifications */}
+                      {item.badge && (
+                        <Badge className="absolute -top-1 -right-1 bg-red-500 text-white text-xs px-1 min-w-[1.25rem] h-5 flex items-center justify-center">
+                          {item.badge > 9 ? '9+' : item.badge}
+                        </Badge>
+                      )}
+                      
+                      {/* Active glow effect */}
+                      {isActive && (
+                        <div className="absolute inset-0 bg-yellow-400/20 rounded-full animate-pulse -z-10" />
                       )}
                     </div>
-                  )}
 
-                  {/* Active indicator */}
-                  {isActive && (
-                    <div className="w-0.5 h-4 bg-[#cad95e] rounded-full" />
-                  )}
-                </button>
+                    {/* Expandable Text */}
+                    <AnimatePresence>
+                      {!isCollapsed && (
+                        <motion.div
+                          initial={{ opacity: 0, width: 0 }}
+                          animate={{ opacity: 1, width: 'auto' }}
+                          exit={{ opacity: 0, width: 0 }}
+                          transition={{ duration: 0.2 }}
+                          className="flex-1 text-left overflow-hidden"
+                        >
+                          <p className={`
+                            text-sm font-medium transition-colors
+                            ${isActive ? 'text-yellow-400' : 'text-white group-hover:text-white'}
+                          `}>
+                            {item.label}
+                          </p>
+                          <p className="text-xs text-white/60 mt-1 truncate">
+                            {item.description}
+                          </p>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+
+                    {/* Hover tooltip for collapsed state */}
+                    {isCollapsed && hoveredItem === item.id && (
+                      <motion.div
+                        initial={{ opacity: 0, x: -10, scale: 0.8 }}
+                        animate={{ opacity: 1, x: 0, scale: 1 }}
+                        className="absolute left-16 bg-black/90 backdrop-blur-lg text-white p-3 rounded-lg shadow-xl border border-white/20 z-50 min-w-[200px]"
+                      >
+                        <p className="text-sm font-medium">{item.label}</p>
+                        <p className="text-xs text-white/70 mt-1">{item.description}</p>
+                      </motion.div>
+                    )}
+
+                    {/* Active indicator line */}
+                    {isActive && (
+                      <motion.div
+                        layoutId="activeIndicator"
+                        className="absolute right-1 top-1/2 transform -translate-y-1/2 w-1 h-6 bg-gradient-to-b from-yellow-400 to-green-400 rounded-full"
+                      />
+                    )}
+                  </button>
+                </motion.div>
               );
             })}
           </div>
         </nav>
 
-        {/* Compact Footer */}
-        {sidebarMode === 'full' && (
-          <div className="p-2 border-t border-white/10">
-            <div className="flex items-center justify-between text-xs text-white/60 font-jakarta">
-              <div className="flex items-center space-x-1">
-                <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></div>
-                <span>Online</span>
-              </div>
-              {notificationCount > 0 && (
-                <Badge className="bg-[#cad95e]/20 text-[#cad95e] px-1 py-0.5 text-xs">
-                  {notificationCount}
-                </Badge>
-              )}
-            </div>
+        {/* Controls at bottom */}
+        <div className="p-4 border-t border-white/10">
+          <div className="flex items-center justify-center space-x-2">
+            {!isMobile && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setIsPinned(!isPinned)}
+                className="w-8 h-8 p-0 text-white/60 hover:text-yellow-400"
+                title={isPinned ? "Desanclar" : "Anclar"}
+              >
+                <Pin className={`w-4 h-4 ${isPinned ? 'fill-current' : ''}`} />
+              </Button>
+            )}
           </div>
-        )}
-      </aside>
+        </div>
+      </motion.aside>
     </>
   );
 };
