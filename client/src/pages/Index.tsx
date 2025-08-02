@@ -8,20 +8,23 @@ const Index = () => {
   const textRef = useRef<HTMLDivElement>(null);
   const mapInstance = useRef<mapboxgl.Map | null>(null);
 
+  const colombiaMapRef = useRef<HTMLDivElement>(null);
+  const colombiaMapInstance = useRef<mapboxgl.Map | null>(null);
+
   useEffect(() => {
-    // Initialize Map Instance
-    const initializeMap = () => {
+    // Initialize World Map Instance
+    const initializeWorldMap = () => {
       if (!worldMapRef.current || mapInstance.current) return;
 
       mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
       mapInstance.current = new mapboxgl.Map({
         container: worldMapRef.current,
-        style: 'mapbox://styles/mapbox/satellite-streets-v12', // Better contrast for rotation
+        style: 'mapbox://styles/mapbox/satellite-streets-v12',
         center: [-75, 0], // Center on Latin America
         zoom: 0.8, // Much more distant world view
-        pitch: 0, // Starting pitch for X-axis rotation
-        bearing: 0, // No bearing rotation
+        pitch: 0,
+        bearing: 0,
         interactive: false,
         attributionControl: false,
         antialias: true,
@@ -32,25 +35,75 @@ const Index = () => {
         const rotateWorld = () => {
           if (mapInstance.current) {
             const currentBearing = mapInstance.current.getBearing();
-            const newBearing = (currentBearing + 1) % 360; // Faster rotation
+            const newBearing = (currentBearing + 1) % 360;
             mapInstance.current.easeTo({ 
               bearing: newBearing, 
               duration: 100,
-              easing: (t) => t // Linear easing for smooth rotation
+              easing: (t) => t
             });
           }
         };
         
-        // Rotate every 100ms for faster Y-axis rotation
         setInterval(rotateWorld, 100);
       });
     };
 
-    initializeMap();
+    // Initialize Colombia Map Instance
+    const initializeColombiaMap = () => {
+      if (!colombiaMapRef.current || colombiaMapInstance.current) return;
+
+      colombiaMapInstance.current = new mapboxgl.Map({
+        container: colombiaMapRef.current,
+        style: 'mapbox://styles/mapbox/satellite-streets-v12',
+        center: [-74.2973, 4.5709], // Center on Colombia (Bogotá)
+        zoom: 5.5,
+        pitch: 0,
+        bearing: 0,
+        interactive: false,
+        attributionControl: false,
+        antialias: true,
+      });
+    };
+
+    // Setup scroll handling for parallax effect
+    const setupScrollHandling = () => {
+      const handleScroll = () => {
+        if (!worldMapRef.current || !textRef.current || !colombiaMapRef.current) return;
+
+        const scrollY = window.scrollY;
+        const maxScroll = document.body.scrollHeight - window.innerHeight;
+        const scrollProgress = Math.min(scrollY / (maxScroll * 0.3), 1);
+
+        // Main text fade out
+        const textOpacity = Math.max(0, 1 - scrollProgress * 2);
+        textRef.current.style.opacity = textOpacity.toString();
+
+        // World map fade out and scale
+        const worldMapOpacity = Math.max(0, 1 - scrollProgress * 1.5);
+        const worldMapScale = 1 + scrollProgress * 2;
+        worldMapRef.current.style.opacity = worldMapOpacity.toString();
+        worldMapRef.current.style.transform = `scale(${worldMapScale})`;
+
+        // Colombia map fade in
+        const colombiaMapOpacity = Math.max(0, Math.min(1, (scrollProgress - 0.5) * 2));
+        colombiaMapRef.current.style.opacity = colombiaMapOpacity.toString();
+      };
+
+      window.addEventListener('scroll', handleScroll);
+      handleScroll();
+
+      return () => window.removeEventListener('scroll', handleScroll);
+    };
+
+    initializeWorldMap();
+    initializeColombiaMap();
+    const cleanup = setupScrollHandling();
+    
+    return cleanup;
   }, []);
 
   return (
-    <div className="min-h-screen relative overflow-hidden">
+    <div className="relative">
       {/* Top Menu */}
       <HeaderButtons />
       
@@ -64,13 +117,75 @@ const Index = () => {
         }}
       />
 
-      {/* Simple Text Content */}
+      {/* Colombia Map - Initially Hidden */}
+      <div 
+        ref={colombiaMapRef}
+        className="fixed inset-0 w-full h-full z-0"
+        style={{ 
+          opacity: 0,
+          transformOrigin: 'center',
+          backfaceVisibility: 'hidden',
+        }}
+      />
+
+      {/* First Section - Festival NATUR */}
       <div className="relative z-10 min-h-screen flex items-center justify-center">
         <div ref={textRef} className="text-center">
           <h1 className="text-6xl md:text-8xl font-gasoek text-yellow-400 font-black tracking-tight drop-shadow-2xl">
             FESTIVAL NATUR
           </h1>
         </div>
+      </div>
+
+      {/* Content Sections with Colombia Background */}
+      <div className="relative z-10 bg-black/70">
+        {/* Slide 1 — Potencia en peligro */}
+        <section className="min-h-screen flex items-center justify-center px-8">
+          <div className="max-w-4xl text-center text-white">
+            <h2 className="text-4xl md:text-6xl font-gasoek text-yellow-400 mb-8 font-black">
+              Slide 1 — Potencia en peligro
+            </h2>
+            <p className="text-xl md:text-2xl leading-relaxed mb-6">
+              Colombia es el país con mayor biodiversidad por kilómetro cuadrado del mundo, alberga más de 54 000 especies y 314 ecosistemas únicos.
+            </p>
+            <p className="text-xl md:text-2xl leading-relaxed text-red-400">
+              Sin embargo, el turismo que llega buscando "naturaleza" está acelerando su degradación.
+            </p>
+          </div>
+        </section>
+
+        {/* Slide 2 — Turismo mal entendido */}
+        <section className="min-h-screen flex items-center justify-center px-8">
+          <div className="max-w-4xl text-center text-white">
+            <h2 className="text-4xl md:text-6xl font-gasoek text-yellow-400 mb-8 font-black">
+              Slide 2 — Turismo mal entendido
+            </h2>
+            <p className="text-xl md:text-2xl leading-relaxed mb-6">
+              El 57 % de los turistas en Colombia no sabe qué significa turismo sostenible.
+            </p>
+            <p className="text-xl md:text-2xl leading-relaxed">
+              El interés por experiencias "eco" creció un 400 % en la última década, pero 1 de cada 5 proyectos se anuncia sostenible sin serlo realmente, convirtiendo la biodiversidad en mercancía.
+            </p>
+          </div>
+        </section>
+
+        {/* Slide 3 — Consumo vs. conservación */}
+        <section className="min-h-screen flex items-center justify-center px-8">
+          <div className="max-w-4xl text-center text-white">
+            <h2 className="text-4xl md:text-6xl font-gasoek text-yellow-400 mb-8 font-black">
+              Slide 3 — Consumo vs. conservación
+            </h2>
+            <p className="text-xl md:text-2xl leading-relaxed mb-6">
+              Playas saturadas, montañas con basura, comunidades desplazadas y ecosistemas en riesgo → 42 % de los destinos naturales ya muestran señales de colapso.
+            </p>
+            <p className="text-xl md:text-2xl leading-relaxed mb-6">
+              El turismo como está planteado consume lo que promete proteger.
+            </p>
+            <p className="text-xl md:text-2xl leading-relaxed text-yellow-400 font-bold">
+              Es urgente un reinicio del modelo.
+            </p>
+          </div>
+        </section>
       </div>
     </div>
   );
