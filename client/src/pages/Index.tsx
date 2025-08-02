@@ -1,10 +1,14 @@
 import React, { useEffect, useRef } from "react";
 import { HeaderButtons } from "@/components/layout/HeaderButtons";
+import mapboxgl from 'mapbox-gl';
+import 'mapbox-gl/dist/mapbox-gl.css';
 
 const Index = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const yellowDotRef = useRef<SVGSVGElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
+  const mapContainerRef = useRef<HTMLDivElement>(null);
+  const mapRef = useRef<mapboxgl.Map | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -32,15 +36,146 @@ const Index = () => {
       }
     };
 
+    // Initialize Mapbox
+    const initializeMap = () => {
+      if (!mapContainerRef.current || mapRef.current) return;
+
+      mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
+
+      mapRef.current = new mapboxgl.Map({
+        container: mapContainerRef.current,
+        style: 'mapbox://styles/mapbox/dark-v11',
+        center: [-74.2973, 4.5709], // Colombia center coordinates
+        zoom: 5,
+        pitch: 0,
+        bearing: 0,
+        interactive: true,
+      });
+
+      mapRef.current.on('load', () => {
+        if (!mapRef.current) return;
+
+        // Load Colombia GeoJSON from public source
+        fetch('https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson')
+          .then(response => response.json())
+          .then(data => {
+            // Filter for Colombia
+            const colombia = data.features.find((feature: any) => 
+              feature.properties.NAME === 'Colombia' || 
+              feature.properties.name === 'Colombia' ||
+              feature.properties.NAME_EN === 'Colombia'
+            );
+
+            if (colombia && mapRef.current) {
+              mapRef.current.addSource('colombia', {
+                type: 'geojson',
+                data: colombia
+              });
+
+              // Add Colombia outline layer with green stroke
+              mapRef.current.addLayer({
+                id: 'colombia-outline',
+                type: 'line',
+                source: 'colombia',
+                layout: {},
+                paint: {
+                  'line-color': '#4A9B3B',
+                  'line-width': 3,
+                  'line-opacity': 1,
+                },
+              });
+
+              // Add Colombia fill with transparent green
+              mapRef.current.addLayer({
+                id: 'colombia-fill',
+                type: 'fill',
+                source: 'colombia',
+                layout: {},
+                paint: {
+                  'fill-color': '#4A9B3B',
+                  'fill-opacity': 0.15,
+                },
+              }, 'colombia-outline');
+
+              // Fit map to Colombia bounds
+              const bounds = new mapboxgl.LngLatBounds();
+              const coordinates = colombia.geometry.coordinates[0];
+              coordinates.forEach((coord: number[]) => bounds.extend(coord as [number, number]));
+              mapRef.current.fitBounds(bounds, { padding: 50 });
+            }
+          })
+          .catch(() => {
+            // Fallback: Use simplified Colombia coordinates
+            if (mapRef.current) {
+              mapRef.current.addSource('colombia', {
+                type: 'geojson',
+                data: {
+                  type: 'Feature',
+                  properties: {},
+                  geometry: {
+                    type: 'Polygon',
+                    coordinates: [[
+                      [-81.8, 13.4], [-79.0, 12.6], [-77.2, 12.0], [-75.8, 11.8],
+                      [-74.0, 11.5], [-72.2, 11.2], [-70.9, 11.8], [-69.9, 12.2],
+                      [-69.2, 10.9], [-67.8, 10.8], [-67.1, 8.7], [-67.3, 6.1],
+                      [-67.8, 4.5], [-67.9, 3.0], [-67.3, 2.0], [-66.9, 1.2],
+                      [-66.3, 0.7], [-67.0, 0.0], [-67.8, -0.7], [-69.8, -0.9],
+                      [-70.0, -0.2], [-70.9, 0.9], [-72.0, 0.1], [-73.3, 0.9],
+                      [-74.5, 0.1], [-75.4, 0.1], [-76.3, 0.9], [-77.4, 0.4],
+                      [-78.2, 1.2], [-78.6, 2.3], [-79.1, 2.9], [-79.9, 4.5],
+                      [-80.5, 5.5], [-81.7, 8.9], [-81.8, 13.4]
+                    ]]
+                  }
+                }
+              });
+
+              mapRef.current.addLayer({
+                id: 'colombia-outline',
+                type: 'line',
+                source: 'colombia',
+                layout: {},
+                paint: {
+                  'line-color': '#4A9B3B',
+                  'line-width': 3,
+                  'line-opacity': 1,
+                },
+              });
+
+              mapRef.current.addLayer({
+                id: 'colombia-fill',
+                type: 'fill',
+                source: 'colombia',
+                layout: {},
+                paint: {
+                  'fill-color': '#4A9B3B',
+                  'fill-opacity': 0.15,
+                },
+              }, 'colombia-outline');
+            }
+          });
+
+
+      });
+    };
+
     // Add content height for scrolling
     if (containerRef.current) {
-      containerRef.current.style.minHeight = '300vh';
+      containerRef.current.style.minHeight = '400vh';
     }
 
     window.addEventListener('scroll', handleScroll);
     handleScroll();
 
-    return () => window.removeEventListener('scroll', handleScroll);
+    // Initialize map after a short delay to ensure DOM is ready
+    setTimeout(initializeMap, 1000);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (mapRef.current) {
+        mapRef.current.remove();
+        mapRef.current = null;
+      }
+    };
   }, []);
 
   return (
@@ -79,6 +214,19 @@ const Index = () => {
       {/* Scroll indicator */}
       <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 text-[#ffe600] text-xs font-mono opacity-60 animate-bounce z-30">
         SCROLL PARA CONTINUAR
+      </div>
+
+      {/* Colombia Map Section */}
+      <div className="relative h-screen w-full" style={{ top: '200vh' }}>
+        <div 
+          ref={mapContainerRef}
+          className="w-full h-full"
+          style={{ 
+            background: '#0f2f22',
+            border: 'none',
+            outline: 'none'
+          }}
+        />
       </div>
     </div>
   );
