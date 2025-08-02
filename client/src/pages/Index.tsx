@@ -9,13 +9,47 @@ const Index = () => {
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
+      const windowHeight = window.innerHeight;
       
-      // Parallax effects for background elements
-      const parallaxElements = document.querySelectorAll('.parallax');
+      // Advanced parallax effects for progressive SVG animations
+      const parallaxElements = document.querySelectorAll('.parallax-layer');
       parallaxElements.forEach((element, index) => {
-        const speed = 0.3 + (index * 0.1);
+        const rect = element.getBoundingClientRect();
+        const elementTop = rect.top;
+        const elementHeight = rect.height;
+        
+        // Calculate scroll progress for this element (0 to 1)
+        const scrollProgress = Math.max(0, Math.min(1, 
+          (windowHeight - elementTop) / (windowHeight + elementHeight)
+        ));
+        
+        // Different parallax speeds for layers
+        const speed = 0.2 + (index * 0.15);
         const yPos = -(scrollY * speed);
+        
+        // Apply transforms based on scroll progress
         (element as HTMLElement).style.transform = `translateY(${yPos}px)`;
+        (element as HTMLElement).style.setProperty('--scroll-progress', scrollProgress.toString());
+      });
+
+      // Progressive SVG scaling and animation
+      const svgScenes = document.querySelectorAll('.svg-scene');
+      svgScenes.forEach((scene, index) => {
+        const rect = scene.getBoundingClientRect();
+        const centerY = rect.top + rect.height / 2;
+        const distanceFromCenter = Math.abs(centerY - windowHeight / 2);
+        const maxDistance = windowHeight;
+        
+        // Scale factor based on proximity to viewport center
+        const scaleFactor = Math.max(0.3, 1 - (distanceFromCenter / maxDistance));
+        const finalScale = 0.5 + (scaleFactor * 1.5);
+        
+        // Rotation and additional effects
+        const rotation = (scrollY * (0.1 + index * 0.05)) % 360;
+        
+        (scene as HTMLElement).style.transform = 
+          `scale(${finalScale}) rotate(${rotation}deg)`;
+        (scene as HTMLElement).style.opacity = scaleFactor.toString();
       });
 
       // Scroll reveal animations
@@ -47,43 +81,41 @@ const Index = () => {
     <div className="min-h-screen bg-[#0f2f22] text-[#ffe600] overflow-x-hidden">
       <HeaderButtons showPortalButtons={true} />
       
-      {/* Custom CSS for animations */}
-      <style jsx>{`
-        @keyframes slideInLeft {
-          from { transform: translateX(-100px); opacity: 0; }
-          to { transform: translateX(0); opacity: 1; }
-        }
-        
-        @keyframes slideInRight {
-          from { transform: translateX(100px); opacity: 0; }
-          to { transform: translateX(0); opacity: 1; }
-        }
-        
+      {/* Custom CSS for advanced animations and parallax */}
+      <style>{`
         @keyframes fadeInUp {
           from { transform: translateY(50px); opacity: 0; }
           to { transform: translateY(0); opacity: 1; }
         }
         
-        @keyframes pulse {
-          0%, 100% { opacity: 0.8; }
-          50% { opacity: 1; }
-        }
-        
-        @keyframes rotate {
+        @keyframes planetRotate {
           from { transform: rotate(0deg); }
           to { transform: rotate(360deg); }
         }
         
+        @keyframes wingFlap {
+          0%, 100% { transform: scaleX(1) scaleY(1); }
+          50% { transform: scaleX(1.1) scaleY(0.95); }
+        }
+        
+        @keyframes heartBeat {
+          0%, 100% { transform: scale(1); }
+          50% { transform: scale(1.1); }
+        }
+        
+        @keyframes atomOrbit {
+          from { transform: rotateY(0deg); }
+          to { transform: rotateY(360deg); }
+        }
+        
+        @keyframes glitchStars {
+          0%, 100% { opacity: 0.8; transform: translateX(0); }
+          25% { opacity: 0.4; transform: translateX(2px); }
+          75% { opacity: 1; transform: translateX(-2px); }
+        }
+        
         .animate-in {
           animation: fadeInUp 1s ease-out forwards;
-        }
-        
-        .slide-left {
-          animation: slideInLeft 1s ease-out forwards;
-        }
-        
-        .slide-right {
-          animation: slideInRight 1s ease-out forwards;
         }
         
         .brutalist-text {
@@ -92,260 +124,461 @@ const Index = () => {
           text-transform: uppercase;
           letter-spacing: -0.02em;
           line-height: 0.9;
+          text-shadow: 2px 2px 0px rgba(0,0,0,0.8);
         }
         
-        .grain-overlay {
-          background-image: 
-            radial-gradient(circle at 20% 50%, rgba(255, 230, 0, 0.1) 0%, transparent 50%),
-            radial-gradient(circle at 80% 20%, rgba(255, 230, 0, 0.05) 0%, transparent 50%),
-            radial-gradient(circle at 40% 80%, rgba(255, 230, 0, 0.08) 0%, transparent 50%);
-          position: relative;
+        .svg-scene {
+          transition: all 0.1s ease-out;
+          transform-origin: center;
         }
         
-        .noise-texture::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          background: 
-            repeating-linear-gradient(
-              90deg,
-              transparent,
-              transparent 2px,
-              rgba(255, 230, 0, 0.03) 2px,
-              rgba(255, 230, 0, 0.03) 4px
-            );
-          pointer-events: none;
+        .parallax-layer {
+          will-change: transform;
+        }
+        
+        .planet-scene {
+          animation: planetRotate 60s linear infinite;
+        }
+        
+        .bird-wings {
+          animation: wingFlap 4s ease-in-out infinite;
+          transform-origin: center;
+        }
+        
+        .heart-beat {
+          animation: heartBeat 2s ease-in-out infinite;
+        }
+        
+        .atom-orbit {
+          animation: atomOrbit 8s linear infinite;
+        }
+        
+        .glitch-stars {
+          animation: glitchStars 3s ease-in-out infinite;
+        }
+        
+        .concrete-texture {
+          background: linear-gradient(45deg, #1d1d1d 25%, transparent 25%), 
+                      linear-gradient(-45deg, #1d1d1d 25%, transparent 25%),
+                      linear-gradient(45deg, transparent 75%, #1d1d1d 75%), 
+                      linear-gradient(-45deg, transparent 75%, #1d1d1d 75%);
+          background-size: 20px 20px;
+          background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+        }
+        
+        .neon-glow {
+          filter: drop-shadow(0 0 10px #ffd900) drop-shadow(0 0 20px #ffd900);
+        }
+        
+        .stencil-text {
+          background: #ffd900;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          filter: contrast(2) brightness(1.2);
         }
       `}</style>
 
-      {/* Section 1: El Problema Global */}
-      <section ref={addToRefs} className="min-h-screen flex items-center justify-center relative grain-overlay noise-texture">
-        <div className="parallax absolute inset-0 opacity-10">
-          <svg className="w-full h-full" viewBox="0 0 800 600">
-            <circle cx="400" cy="300" r="150" fill="none" stroke="#ffe600" strokeWidth="2" opacity="0.3">
-              <animateTransform 
-                attributeName="transform" 
-                type="rotate" 
-                values="0 400 300;360 400 300" 
-                dur="20s" 
-                repeatCount="indefinite"
+      {/* Scene 1: The Planet 🌍 */}
+      <section ref={addToRefs} className="min-h-screen flex items-center justify-center relative bg-[#0f1f0f] overflow-hidden">
+        <div className="parallax-layer absolute inset-0">
+          {/* Glitch stars background */}
+          <div className="absolute inset-0">
+            {[...Array(20)].map((_, i) => (
+              <div 
+                key={i}
+                className="glitch-stars absolute w-1 h-1 bg-[#ffd900] rounded-full"
+                style={{
+                  left: `${Math.random() * 100}%`,
+                  top: `${Math.random() * 100}%`,
+                  animationDelay: `${Math.random() * 3}s`
+                }}
               />
-            </circle>
-            <path d="M300,200 L500,200 L400,400 Z" fill="#ffe600" opacity="0.1">
-              <animateTransform 
-                attributeName="transform" 
-                type="rotate" 
-                values="0 400 300;-360 400 300" 
-                dur="30s" 
-                repeatCount="indefinite"
-              />
-            </path>
-          </svg>
+            ))}
+          </div>
+          
+          {/* Brutalist Earth SVG */}
+          <div className="svg-scene planet-scene absolute inset-0 flex items-center justify-center">
+            <svg className="w-96 h-96" viewBox="0 0 400 400">
+              {/* Earth base */}
+              <circle cx="200" cy="200" r="180" fill="#1d1d1d" stroke="#ffd900" strokeWidth="4"/>
+              
+              {/* Brutalist continents */}
+              <polygon points="120,120 180,100 200,150 160,180 130,160" fill="#0f1f0f" stroke="#ffd900" strokeWidth="2"/>
+              <polygon points="220,130 280,110 300,160 260,190 230,170" fill="#0f1f0f" stroke="#ffd900" strokeWidth="2"/>
+              <polygon points="150,220 210,200 230,250 190,280 160,260" fill="#0f1f0f" stroke="#ffd900" strokeWidth="2"/>
+              <polygon points="250,240 310,220 330,270 290,300 260,280" fill="#0f1f0f" stroke="#ffd900" strokeWidth="2"/>
+              
+              {/* Tectonic lines */}
+              <path d="M50,200 Q200,150 350,200" stroke="#ff0000" strokeWidth="3" fill="none" opacity="0.8"/>
+              <path d="M100,100 Q250,200 300,300" stroke="#ff0000" strokeWidth="2" fill="none" opacity="0.6"/>
+            </svg>
+          </div>
         </div>
         
         <div className="text-center px-6 z-10 max-w-4xl">
-          <h1 className="brutalist-text text-4xl md:text-7xl mb-8 tracking-tight">
+          <h1 className="brutalist-text stencil-text text-4xl md:text-7xl mb-8 tracking-tight">
             EL TURISMO MASIVO ESTÁ<br/>
             <span className="text-red-500">DESTRUYENDO</span><br/>
             LO QUE VINO A ADMIRAR
           </h1>
-          
-          <svg className="w-32 h-32 mx-auto animate-pulse" viewBox="0 0 100 100">
-            <circle cx="50" cy="50" r="40" fill="none" stroke="#ffe600" strokeWidth="2"/>
-            <path d="M30,30 L70,70 M70,30 L30,70" stroke="#ff0000" strokeWidth="3"/>
-            <animateTransform 
-              attributeName="transform" 
-              type="rotate" 
-              values="0 50 50;360 50 50" 
-              dur="5s" 
-              repeatCount="indefinite"
-            />
-          </svg>
         </div>
       </section>
 
-      {/* Section 2: Colombia Biodiversa */}
-      <section ref={addToRefs} className="min-h-screen flex items-center justify-center relative grain-overlay">
-        <div className="parallax absolute inset-0 opacity-20">
-          <svg className="w-full h-full" viewBox="0 0 800 600">
-            <path 
-              d="M200,150 C250,100 350,120 400,180 C450,120 550,140 600,200 C580,280 520,350 450,400 C400,450 350,440 300,400 C250,380 180,300 200,150 Z" 
-              fill="#ffe600" 
-              opacity="0.1"
-            >
-              <animate attributeName="opacity" values="0.1;0.3;0.1" dur="4s" repeatCount="indefinite"/>
-            </path>
-          </svg>
+      {/* Scene 2: Colombia 🇨🇴 */}
+      <section ref={addToRefs} className="min-h-screen flex items-center justify-center relative bg-[#0f1f0f] overflow-hidden">
+        <div className="parallax-layer absolute inset-0">
+          {/* Brutalist Colombia map */}
+          <div className="svg-scene absolute inset-0 flex items-center justify-center">
+            <svg className="w-[500px] h-[600px]" viewBox="0 0 300 400">
+              {/* Colombia brutalist outline */}
+              <path 
+                d="M150,50 L180,60 L200,90 L220,120 L240,160 L250,200 L240,240 L220,280 L200,320 L180,350 L150,370 L120,350 L100,320 L80,280 L70,240 L80,200 L90,160 L110,120 L130,90 L150,50 Z"
+                fill="#ffd900" 
+                stroke="#1d1d1d" 
+                strokeWidth="4"
+                className="concrete-texture"
+              />
+              
+              {/* Terrain mesh lines */}
+              <g stroke="#1d1d1d" strokeWidth="2" opacity="0.7">
+                <line x1="100" y1="100" x2="200" y2="120"/>
+                <line x1="90" y1="150" x2="210" y2="180"/>
+                <line x1="85" y1="200" x2="215" y2="230"/>
+                <line x1="95" y1="250" x2="205" y2="280"/>
+                <line x1="110" y1="300" x2="190" y2="320"/>
+              </g>
+              
+              {/* Animated rivers */}
+              <path d="M120,100 Q150,150 180,200 Q150,250 120,300" 
+                    stroke="#00bfff" strokeWidth="3" fill="none" opacity="0.8">
+                <animate attributeName="stroke-dasharray" values="0,20;20,0;0,20" dur="3s" repeatCount="indefinite"/>
+              </path>
+              
+              {/* Mountains (triangular) */}
+              <polygon points="130,120 140,100 150,120" fill="#1d1d1d"/>
+              <polygon points="160,140 170,120 180,140" fill="#1d1d1d"/>
+              <polygon points="140,180 150,160 160,180" fill="#1d1d1d"/>
+              
+              {/* Endangered zones (pulsing red) */}
+              <circle cx="130" cy="200" r="8" fill="#ff0000" opacity="0.7">
+                <animate attributeName="r" values="6;12;6" dur="2s" repeatCount="indefinite"/>
+              </circle>
+              <circle cx="180" cy="250" r="6" fill="#ff0000" opacity="0.7">
+                <animate attributeName="r" values="4;10;4" dur="2.5s" repeatCount="indefinite"/>
+              </circle>
+            </svg>
+          </div>
         </div>
         
         <div className="text-center px-6 z-10 max-w-4xl">
-          <h2 className="brutalist-text text-3xl md:text-6xl mb-8">
+          <h2 className="brutalist-text stencil-text text-3xl md:text-6xl mb-8">
             UNA JOYA BIOLÓGICA<br/>
             AL BORDE DEL <span className="text-red-500">ABISMO</span>
           </h2>
           
           <div className="grid md:grid-cols-2 gap-8 text-2xl font-bold">
-            <div className="bg-[#ffe600] text-[#0f2f22] p-6 transform -rotate-2">
-              <div className="text-4xl">+10%</div>
-              <div>ESPECIES DEL MUNDO</div>
+            <div className="bg-[#ffd900] text-[#1d1d1d] p-6 transform -rotate-2 concrete-texture">
+              <div className="text-4xl brutalist-text">+10%</div>
+              <div className="brutalist-text">ESPECIES DEL MUNDO</div>
             </div>
-            <div className="bg-red-500 text-white p-6 transform rotate-2">
-              <div className="text-4xl">2º</div>
-              <div>PAÍS MÁS BIODIVERSO</div>
+            <div className="bg-red-500 text-white p-6 transform rotate-2 concrete-texture">
+              <div className="text-4xl brutalist-text">2º</div>
+              <div className="brutalist-text">PAÍS MÁS BIODIVERSO</div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Section 3: ¿Qué es Turismo Sostenible? */}
-      <section ref={addToRefs} className="min-h-screen flex items-center justify-center relative grain-overlay">
+      {/* Scene 3: The Bird 🐦 */}
+      <section ref={addToRefs} className="min-h-screen flex items-center justify-center relative bg-[#0f1f0f] overflow-hidden">
+        <div className="parallax-layer absolute inset-0">
+          {/* Massive brutalist condor */}
+          <div className="svg-scene absolute inset-0 flex items-center justify-center">
+            <svg className="w-[600px] h-[400px]" viewBox="0 0 600 400">
+              {/* Bird body */}
+              <ellipse cx="300" cy="200" rx="60" ry="100" fill="#1d1d1d" stroke="#ffd900" strokeWidth="3"/>
+              
+              {/* Wings - animated */}
+              <g className="bird-wings">
+                {/* Left wing */}
+                <path d="M240,150 L120,100 L80,140 L100,180 L140,200 L200,190 L240,170 Z" 
+                      fill="#1d1d1d" stroke="#ffd900" strokeWidth="3"/>
+                {/* Wing feathers (angular) */}
+                <polygon points="120,120 100,100 110,140" fill="#ffd900"/>
+                <polygon points="140,130 120,110 130,150" fill="#ffd900"/>
+                <polygon points="160,140 140,120 150,160" fill="#ffd900"/>
+                
+                {/* Right wing */}
+                <path d="M360,150 L480,100 L520,140 L500,180 L460,200 L400,190 L360,170 Z" 
+                      fill="#1d1d1d" stroke="#ffd900" strokeWidth="3"/>
+                {/* Wing feathers (angular) */}
+                <polygon points="480,120 500,100 490,140" fill="#ffd900"/>
+                <polygon points="460,130 480,110 470,150" fill="#ffd900"/>
+                <polygon points="440,140 460,120 450,160" fill="#ffd900"/>
+              </g>
+              
+              {/* Head */}
+              <circle cx="300" cy="120" r="40" fill="#1d1d1d" stroke="#ffd900" strokeWidth="3"/>
+              {/* Beak */}
+              <polygon points="300,100 320,80 310,100" fill="#ffd900"/>
+              {/* Eye */}
+              <circle cx="285" cy="110" r="8" fill="#ffd900"/>
+              
+              {/* Tail feathers */}
+              <polygon points="300,300 280,350 300,380 320,350" fill="#1d1d1d" stroke="#ffd900" strokeWidth="2"/>
+              <polygon points="290,310 270,360 290,390 310,360" fill="#ffd900" opacity="0.7"/>
+            </svg>
+          </div>
+        </div>
+        
         <div className="text-center px-6 z-10 max-w-4xl">
-          <h2 className="brutalist-text text-3xl md:text-6xl mb-12">
+          <h2 className="brutalist-text stencil-text text-3xl md:text-6xl mb-12">
             ¿QUÉ ES TURISMO<br/>
-            <span className="text-green-400">SOSTENIBLE?</span>
+            <span className="text-green-400 neon-glow">SOSTENIBLE?</span>
           </h2>
           
-          <div className="relative">
-            <svg className="w-80 h-80 mx-auto" viewBox="0 0 200 200">
-              <polygon 
-                points="100,20 180,160 20,160" 
-                fill="none" 
-                stroke="#ffe600" 
-                strokeWidth="4"
-                className="hover:fill-[#ffe600] hover:fill-opacity-20 transition-all duration-300 cursor-pointer"
-              />
-              
-              <text x="100" y="80" textAnchor="middle" fill="#ffe600" fontSize="12" fontWeight="bold">
-                AMBIENTAL
-              </text>
-              <text x="60" y="150" textAnchor="middle" fill="#ffe600" fontSize="12" fontWeight="bold">
-                SOCIAL
-              </text>
-              <text x="140" y="150" textAnchor="middle" fill="#ffe600" fontSize="12" fontWeight="bold">
-                ECONÓMICO
-              </text>
-              
-              <circle cx="100" cy="100" r="30" fill="#ffe600" opacity="0.2">
-                <animate attributeName="r" values="25;35;25" dur="3s" repeatCount="indefinite"/>
-              </circle>
-            </svg>
+          <div className="brutalist-text text-lg md:text-2xl text-[#ffd900] space-y-4">
+            <div className="bg-[#1d1d1d] p-4 border-2 border-[#ffd900] transform -rotate-1">
+              AMBIENTAL • SOCIAL • ECONÓMICO
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Section 4: Historias de Regeneración */}
-      <section ref={addToRefs} className="min-h-screen flex items-center justify-center relative grain-overlay">
-        <div className="text-center px-6 z-10 max-w-4xl">
-          <h2 className="brutalist-text text-3xl md:text-6xl mb-12">
-            HISTORIAS DE<br/>
-            <span className="text-green-400">REGENERACIÓN</span>
-          </h2>
-          
-          <div className="relative">
-            <svg className="w-64 h-64 mx-auto" viewBox="0 0 200 200">
-              {/* Manos plantando */}
-              <path d="M80,120 C85,115 95,115 100,120 C105,115 115,115 120,120 L110,140 L90,140 Z" fill="#8B4513" opacity="0.8"/>
+      {/* Scene 4: The Human 🧍 */}
+      <section ref={addToRefs} className="min-h-screen flex items-center justify-center relative bg-[#0f1f0f] overflow-hidden">
+        <div className="parallax-layer absolute inset-0">
+          {/* Brutalist human figure */}
+          <div className="svg-scene absolute inset-0 flex items-center justify-center">
+            <svg className="w-[300px] h-[500px]" viewBox="0 0 300 500">
+              {/* Head (geometric) */}
+              <rect x="125" y="50" width="50" height="60" fill="#1d1d1d" stroke="#ffd900" strokeWidth="3" className="concrete-texture"/>
               
-              {/* Semilla -> Brote -> Árbol (animado con scroll) */}
-              <circle cx="100" cy="140" r="3" fill="#654321">
-                <animate attributeName="r" values="3;0;3" dur="6s" repeatCount="indefinite"/>
-              </circle>
+              {/* Torso (concrete-like) */}
+              <rect x="110" y="110" width="80" height="120" fill="#1d1d1d" stroke="#ffd900" strokeWidth="3" className="concrete-texture"/>
               
-              <line x1="100" y1="140" x2="100" y2="120" stroke="#22c55e" strokeWidth="2">
-                <animate attributeName="y2" values="140;120;100;80" dur="6s" repeatCount="indefinite"/>
-              </line>
+              {/* Arms (geometric joints) */}
+              <rect x="70" y="130" width="40" height="15" fill="#1d1d1d" stroke="#ffd900" strokeWidth="2"/>
+              <rect x="50" y="145" width="15" height="40" fill="#1d1d1d" stroke="#ffd900" strokeWidth="2"/>
+              <rect x="45" y="185" width="25" height="15" fill="#1d1d1d" stroke="#ffd900" strokeWidth="2"/>
               
-              <circle cx="95" cy="100" r="0" fill="#22c55e">
-                <animate attributeName="r" values="0;8;15;20" dur="6s" repeatCount="indefinite"/>
-              </circle>
-              <circle cx="105" cy="95" r="0" fill="#22c55e">
-                <animate attributeName="r" values="0;5;10;15" dur="6s" repeatCount="indefinite" begin="1s"/>
-              </circle>
+              <rect x="190" y="130" width="40" height="15" fill="#1d1d1d" stroke="#ffd900" strokeWidth="2"/>
+              <rect x="235" y="145" width="15" height="40" fill="#1d1d1d" stroke="#ffd900" strokeWidth="2"/>
+              <rect x="230" y="185" width="25" height="15" fill="#1d1d1d" stroke="#ffd900" strokeWidth="2"/>
+              
+              {/* Legs (assembling with scroll) */}
+              <rect x="125" y="230" width="20" height="80" fill="#1d1d1d" stroke="#ffd900" strokeWidth="2"/>
+              <rect x="155" y="230" width="20" height="80" fill="#1d1d1d" stroke="#ffd900" strokeWidth="2"/>
+              
+              <rect x="120" y="310" width="30" height="15" fill="#1d1d1d" stroke="#ffd900" strokeWidth="2"/>
+              <rect x="150" y="310" width="30" height="15" fill="#1d1d1d" stroke="#ffd900" strokeWidth="2"/>
+              
+              <rect x="115" y="325" width="40" height="60" fill="#1d1d1d" stroke="#ffd900" strokeWidth="2"/>
+              <rect x="145" y="325" width="40" height="60" fill="#1d1d1d" stroke="#ffd900" strokeWidth="2"/>
+              
+              {/* Feet */}
+              <rect x="110" y="385" width="50" height="20" fill="#1d1d1d" stroke="#ffd900" strokeWidth="2"/>
+              <rect x="140" y="385" width="50" height="20" fill="#1d1d1d" stroke="#ffd900" strokeWidth="2"/>
+              
+              {/* Joints (circles) */}
+              <circle cx="150" cy="137" r="8" fill="#ffd900"/>
+              <circle cx="150" cy="187" r="8" fill="#ffd900"/>
+              <circle cx="135" cy="237" r="8" fill="#ffd900"/>
+              <circle cx="165" cy="237" r="8" fill="#ffd900"/>
+              <circle cx="135" cy="317" r="6" fill="#ffd900"/>
+              <circle cx="165" cy="317" r="6" fill="#ffd900"/>
             </svg>
           </div>
+        </div>
+        
+        <div className="text-center px-6 z-10 max-w-4xl">
+          <h2 className="brutalist-text stencil-text text-3xl md:text-6xl mb-12">
+            HISTORIAS DE<br/>
+            <span className="text-green-400 neon-glow">REGENERACIÓN</span>
+          </h2>
           
-          <p className="text-xl mt-8 max-w-2xl mx-auto">
+          <p className="brutalist-text text-xl text-[#ffd900] max-w-2xl mx-auto bg-[#1d1d1d] p-6 border-2 border-[#ffd900] transform rotate-1">
             Una comunidad indígena planta una ceiba gigante.<br/>
-            <span className="text-green-400">Del suelo nace la esperanza.</span>
+            <span className="text-green-400">DEL SUELO NACE LA ESPERANZA.</span>
           </p>
         </div>
       </section>
 
-      {/* Section 5: Rutas de Esperanza */}
-      <section ref={addToRefs} className="min-h-screen flex items-center justify-center relative grain-overlay">
+      {/* Scene 5: The Heart ❤️ */}
+      <section ref={addToRefs} className="min-h-screen flex items-center justify-center relative bg-[#0f1f0f] overflow-hidden">
+        <div className="parallax-layer absolute inset-0">
+          {/* Brutalist anatomical heart */}
+          <div className="svg-scene heart-beat absolute inset-0 flex items-center justify-center">
+            <svg className="w-[400px] h-[400px]" viewBox="0 0 400 400">
+              {/* Heart main body (chunky, blocky 3D style) */}
+              <path d="M200,120 C180,100 140,100 120,140 C120,180 200,260 200,320 C200,260 280,180 280,140 C280,100 240,100 220,120 Z" 
+                    fill="#1d1d1d" stroke="#ffd900" strokeWidth="4" className="concrete-texture"/>
+              
+              {/* Heart chambers (geometric) */}
+              <rect x="160" y="140" width="80" height="100" fill="#ff0000" opacity="0.7" stroke="#ffd900" strokeWidth="2"/>
+              <rect x="170" y="150" width="60" height="80" fill="#1d1d1d" stroke="#ffd900" strokeWidth="1"/>
+              
+              {/* Veins as pipes (brutalist) */}
+              <rect x="140" y="120" width="12" height="80" fill="#ffd900"/>
+              <rect x="248" y="120" width="12" height="80" fill="#ffd900"/>
+              <rect x="180" y="100" width="40" height="8" fill="#ffd900"/>
+              
+              {/* Pipe connections (joints) */}
+              <circle cx="146" cy="120" r="8" fill="#1d1d1d" stroke="#ffd900" strokeWidth="2"/>
+              <circle cx="254" cy="120" r="8" fill="#1d1d1d" stroke="#ffd900" strokeWidth="2"/>
+              
+              {/* Pulsing rings (heart beats) */}
+              <circle cx="200" cy="200" r="50" fill="none" stroke="#ff0000" strokeWidth="3" opacity="0.5">
+                <animate attributeName="r" values="50;80;50" dur="2s" repeatCount="indefinite"/>
+                <animate attributeName="opacity" values="0.5;0;0.5" dur="2s" repeatCount="indefinite"/>
+              </circle>
+              <circle cx="200" cy="200" r="70" fill="none" stroke="#ff0000" strokeWidth="2" opacity="0.3">
+                <animate attributeName="r" values="70;100;70" dur="2s" repeatCount="indefinite" begin="0.5s"/>
+                <animate attributeName="opacity" values="0.3;0;0.3" dur="2s" repeatCount="indefinite" begin="0.5s"/>
+              </circle>
+            </svg>
+          </div>
+        </div>
+        
         <div className="text-center px-6 z-10 max-w-4xl">
-          <h2 className="brutalist-text text-3xl md:text-6xl mb-12">
+          <h2 className="brutalist-text stencil-text text-3xl md:text-6xl mb-12">
             RUTAS DE<br/>
-            <span className="text-blue-400">ESPERANZA</span>
+            <span className="text-blue-400 neon-glow">ESPERANZA</span>
           </h2>
           
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            <div className="text-center">
-              <svg className="w-16 h-16 mx-auto mb-4" viewBox="0 0 50 50">
-                <circle cx="25" cy="25" r="20" fill="#22c55e" opacity="0.8">
-                  <animate attributeName="opacity" values="0.5;1;0.5" dur="2s" repeatCount="indefinite"/>
-                </circle>
-                <path d="M15,25 Q25,15 35,25 Q25,35 15,25" fill="#0f2f22"/>
-              </svg>
-              <div className="font-bold">SELVA</div>
+            <div className="text-center bg-[#1d1d1d] p-4 border-2 border-[#ffd900] transform -rotate-2">
+              <div className="brutalist-text text-[#ffd900] text-2xl mb-2">SELVA</div>
             </div>
-            
-            <div className="text-center">
-              <svg className="w-16 h-16 mx-auto mb-4" viewBox="0 0 50 50">
-                <path d="M10,30 Q25,20 40,30 Q25,40 10,30" fill="#3b82f6" opacity="0.8">
-                  <animateTransform 
-                    attributeName="transform" 
-                    type="scale" 
-                    values="1;1.1;1" 
-                    dur="3s" 
-                    repeatCount="indefinite"
-                  />
-                </path>
-              </svg>
-              <div className="font-bold">RÍO</div>
+            <div className="text-center bg-[#1d1d1d] p-4 border-2 border-[#ffd900] transform rotate-1">
+              <div className="brutalist-text text-[#ffd900] text-2xl mb-2">RÍO</div>
             </div>
-            
-            <div className="text-center">
-              <svg className="w-16 h-16 mx-auto mb-4" viewBox="0 0 50 50">
-                <circle cx="25" cy="30" r="8" fill="#f59e0b"/>
-                <circle cx="20" cy="25" r="6" fill="#f59e0b" opacity="0.8"/>
-                <circle cx="30" cy="25" r="6" fill="#f59e0b" opacity="0.6"/>
-                <animateTransform 
-                  attributeName="transform" 
-                  type="rotate" 
-                  values="0 25 25;10 25 25;0 25 25" 
-                  dur="4s" 
-                  repeatCount="indefinite"
-                />
-              </svg>
-              <div className="font-bold">CULTURA</div>
+            <div className="text-center bg-[#1d1d1d] p-4 border-2 border-[#ffd900] transform -rotate-1">
+              <div className="brutalist-text text-[#ffd900] text-2xl mb-2">CULTURA</div>
             </div>
-            
-            <div className="text-center">
-              <svg className="w-16 h-16 mx-auto mb-4" viewBox="0 0 50 50">
-                <polygon points="25,10 35,30 15,30" fill="#6b7280" opacity="0.8">
-                  <animate attributeName="opacity" values="0.6;1;0.6" dur="5s" repeatCount="indefinite"/>
-                </polygon>
-              </svg>
-              <div className="font-bold">MONTAÑA</div>
+            <div className="text-center bg-[#1d1d1d] p-4 border-2 border-[#ffd900] transform rotate-2">
+              <div className="brutalist-text text-[#ffd900] text-2xl mb-2">MONTAÑA</div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Section 6: Convocatoria al Festival */}
-      <section ref={addToRefs} className="min-h-screen flex items-center justify-center relative grain-overlay">
+      {/* Scene 6: The Atom ⚛️ */}
+      <section ref={addToRefs} className="min-h-screen flex items-center justify-center relative bg-[#0f1f0f] overflow-hidden">
+        <div className="parallax-layer absolute inset-0">
+          {/* Brutalist atom model */}
+          <div className="svg-scene atom-orbit absolute inset-0 flex items-center justify-center">
+            <svg className="w-[500px] h-[500px]" viewBox="0 0 500 500">
+              {/* Outer orbit ring */}
+              <ellipse cx="250" cy="250" rx="200" ry="80" fill="none" stroke="#ffd900" strokeWidth="6" opacity="0.8" className="neon-glow">
+                <animateTransform 
+                  attributeName="transform" 
+                  type="rotate" 
+                  values="0 250 250;360 250 250" 
+                  dur="8s" 
+                  repeatCount="indefinite"
+                />
+              </ellipse>
+              
+              {/* Middle orbit ring */}
+              <ellipse cx="250" cy="250" rx="150" ry="60" fill="none" stroke="#00ff00" strokeWidth="4" opacity="0.6" className="neon-glow">
+                <animateTransform 
+                  attributeName="transform" 
+                  type="rotate" 
+                  values="60 250 250;420 250 250" 
+                  dur="6s" 
+                  repeatCount="indefinite"
+                />
+              </ellipse>
+              
+              {/* Inner orbit ring */}
+              <ellipse cx="250" cy="250" rx="100" ry="40" fill="none" stroke="#ff00ff" strokeWidth="3" opacity="0.7" className="neon-glow">
+                <animateTransform 
+                  attributeName="transform" 
+                  type="rotate" 
+                  values="120 250 250;480 250 250" 
+                  dur="4s" 
+                  repeatCount="indefinite"
+                />
+              </ellipse>
+              
+              {/* Nucleus (center) */}
+              <circle cx="250" cy="250" r="30" fill="#1d1d1d" stroke="#ffd900" strokeWidth="4" className="concrete-texture"/>
+              <circle cx="240" cy="240" r="8" fill="#ffd900" className="neon-glow"/>
+              <circle cx="260" cy="240" r="8" fill="#ffd900" className="neon-glow"/>
+              <circle cx="250" cy="260" r="8" fill="#ffd900" className="neon-glow"/>
+              
+              {/* Electrons (orbiting spheres) */}
+              <circle cx="450" cy="250" r="12" fill="#00ff00" className="neon-glow">
+                <animateTransform 
+                  attributeName="transform" 
+                  type="rotate" 
+                  values="0 250 250;360 250 250" 
+                  dur="8s" 
+                  repeatCount="indefinite"
+                />
+              </circle>
+              
+              <circle cx="400" cy="250" r="10" fill="#ff00ff" className="neon-glow">
+                <animateTransform 
+                  attributeName="transform" 
+                  type="rotate" 
+                  values="60 250 250;420 250 250" 
+                  dur="6s" 
+                  repeatCount="indefinite"
+                />
+              </circle>
+              
+              <circle cx="350" cy="250" r="8" fill="#00ffff" className="neon-glow">
+                <animateTransform 
+                  attributeName="transform" 
+                  type="rotate" 
+                  values="120 250 250;480 250 250" 
+                  dur="4s" 
+                  repeatCount="indefinite"
+                />
+              </circle>
+              
+              {/* Light particles breaking apart */}
+              {[...Array(12)].map((_, i) => (
+                <circle 
+                  key={i}
+                  cx={250 + Math.cos(i * 30 * Math.PI / 180) * 100}
+                  cy={250 + Math.sin(i * 30 * Math.PI / 180) * 100}
+                  r="3" 
+                  fill="#ffd900" 
+                  opacity="0.8"
+                  className="neon-glow"
+                >
+                  <animate 
+                    attributeName="r" 
+                    values="3;8;3" 
+                    dur="2s" 
+                    repeatCount="indefinite"
+                    begin={`${i * 0.2}s`}
+                  />
+                  <animate 
+                    attributeName="opacity" 
+                    values="0.8;0.2;0.8" 
+                    dur="2s" 
+                    repeatCount="indefinite"
+                    begin={`${i * 0.2}s`}
+                  />
+                </circle>
+              ))}
+            </svg>
+          </div>
+        </div>
+        
         <div className="text-center px-6 z-10 max-w-4xl">
-          <div className="bg-[#ffe600] text-[#0f2f22] p-8 transform -rotate-1 mb-12 relative">
-            <div className="absolute inset-0 bg-[#0f2f22] transform translate-x-2 translate-y-2"></div>
-            <div className="relative bg-[#ffe600] p-8">
+          <div className="bg-[#ffd900] text-[#1d1d1d] p-8 transform -rotate-1 mb-12 relative concrete-texture border-4 border-[#1d1d1d]">
+            <div className="absolute inset-0 bg-[#1d1d1d] transform translate-x-3 translate-y-3"></div>
+            <div className="relative bg-[#ffd900] p-8">
               <h2 className="brutalist-text text-4xl md:text-7xl mb-4">
                 FESTIVAL<br/>NATUR
               </h2>
-              <p className="text-xl font-bold">
+              <p className="brutalist-text text-xl">
                 14-15 NOVIEMBRE 2025<br/>
                 BOGOTÁ, COLOMBIA
               </p>
@@ -353,12 +586,12 @@ const Index = () => {
           </div>
           
           <div className="space-y-6">
-            <h3 className="brutalist-text text-2xl md:text-4xl">
+            <h3 className="brutalist-text stencil-text text-2xl md:text-4xl neon-glow">
               ÚNETE • PARTICIPA • TRANSFORMA
             </h3>
             
-            <Link href="/registro">
-              <Button className="bg-[#ffe600] text-[#0f2f22] hover:bg-[#ffed4a] text-xl font-black px-12 py-6 transform hover:scale-105 transition-all duration-300 brutalist-text">
+            <Link href="/auth/empresas">
+              <Button className="bg-[#ffd900] text-[#1d1d1d] hover:bg-[#ffed4a] text-xl brutalist-text px-12 py-6 transform hover:scale-105 transition-all duration-300 border-4 border-[#1d1d1d] concrete-texture neon-glow">
                 <span className="animate-pulse">⚡</span>
                 CONECTAR AHORA
                 <span className="animate-pulse">⚡</span>

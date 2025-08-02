@@ -1,0 +1,29 @@
+Create a vertically scrolling parallax web experience that transitions through six animated brutalist SVG illustrations, each one progressively enlarging and animating as the user scrolls down the page. The theme is sustainable tourism, moving from the global to the personal.
+
+	1.	Scene 1 – The Planet 🌍
+A dark green brutalist SVG of Earth seen from space. Continents are blocky and geometric, with exaggerated tectonic lines. Background: deep space with glitch stars.
+Effect: slowly rotates and scales up as user scrolls.
+	2.	Scene 2 – Colombia 🇨🇴
+A brutalist map of Colombia in bright yellow on a dark green background, textured like a terrain mesh. Animated rivers, mountains, and endangered zones appear.
+Effect: zooms into Colombia from the Earth with animated layer transitions.
+	3.	Scene 3 – The Bird 🐦
+A massive brutalist condor or tropical bird, made of angular feathers and sharp lines. Wings slowly unfold as you scroll.
+Effect: wings flap subtly and bird grows large, moving to foreground.
+	4.	Scene 4 – The Human 🧍
+A faceless brutalist human figure standing tall, composed of concrete-like textures and geometric joints.
+Effect: slowly emerges from behind the bird, growing in scale, with limbs assembling as you scroll.
+	5.	Scene 5 – The Heart ❤️
+A brutalist anatomical heart in chunky, blocky 3D style. Veins are pipes, and it pulses gently.
+Effect: as the scroll continues, the heart “beats” and releases pulses that spread outward.
+	6.	Scene 6 – The Atom ⚛️
+A glowing brutalist atom model — thick orbits intersecting with neon green spheres. Each layer of orbit animates in a different direction.
+Effect: atom scales up to fill the screen, and then breaks apart into light particles.
+
+⸻
+
+🧠 Notas para desarrollo e interacción:
+	•	SVG animations: Preferably CSS or GSAP controlled, with easing to match the scroll.
+	•	Transitions: Use scroll-based parallax where foreground layers move faster than the background.
+	•	Color palette: Dark forest green (#0F1F0F), concrete gray (#1D1D1D), electric yellow (#FFD900).
+	•	Typography: Brutalist sans-serif, high-contrast, stencil-cut effect.
+	•	Sound (optional): Subtle ambient audio per slide for immersion.
