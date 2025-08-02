@@ -68,9 +68,9 @@ const Index = () => {
           <h1 className="text-6xl md:text-8xl lg:text-9xl font-bold mb-12 uppercase tracking-wider" style={{ fontFamily: 'IBM Plex Mono, monospace' }}>
             FESTIVAL<br/>NATUR
           </h1>
-          <div className="text-xl md:text-3xl font-mono uppercase tracking-wide opacity-90">
+          <p className="text-xl md:text-3xl font-mono uppercase tracking-wide opacity-90">
             DESCUBRE EL FUTURO DEL TURISMO SOSTENIBLE
-          </div>
+          </p>
         </div>
       </div>
 
