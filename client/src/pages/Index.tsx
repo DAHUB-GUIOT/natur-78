@@ -18,7 +18,7 @@ const Index = () => {
       mapInstance.current = new mapboxgl.Map({
         container: worldMapRef.current,
         style: 'mapbox://styles/mapbox/satellite-streets-v12', // Better contrast for rotation
-        center: [-60, -15], // Center on South America
+        center: [-75, 0], // Center on Latin America
         zoom: 0.8, // Much more distant world view
         pitch: 0, // Starting pitch for X-axis rotation
         bearing: 0, // No bearing rotation
@@ -27,21 +27,21 @@ const Index = () => {
         antialias: true,
       });
 
-      // Add slow rotation on X-axis (pitch)
+      // Add slow rotation on Y-axis (bearing)
       mapInstance.current.on('load', () => {
         const rotateWorld = () => {
           if (mapInstance.current) {
-            const currentPitch = mapInstance.current.getPitch();
-            const newPitch = (currentPitch + 0.5) % 60; // Rotate between 0-60 degrees
+            const currentBearing = mapInstance.current.getBearing();
+            const newBearing = (currentBearing + 0.2) % 360; // Full 360 rotation
             mapInstance.current.easeTo({ 
-              pitch: newPitch, 
+              bearing: newBearing, 
               duration: 200,
               easing: (t) => t // Linear easing for smooth rotation
             });
           }
         };
         
-        // Rotate every 200ms for smooth slow X-axis rotation
+        // Rotate every 200ms for smooth slow Y-axis rotation
         setInterval(rotateWorld, 200);
       });
     };
