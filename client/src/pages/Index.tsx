@@ -5,7 +5,6 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 
 const Index = () => {
   const worldMapRef = useRef<HTMLDivElement>(null);
-  const textRef = useRef<HTMLDivElement>(null);
   const mapInstance = useRef<mapboxgl.Map | null>(null);
 
   useEffect(() => {
@@ -17,14 +16,28 @@ const Index = () => {
 
       mapInstance.current = new mapboxgl.Map({
         container: worldMapRef.current,
-        style: 'mapbox://styles/mapbox/satellite-streets-v12',
+        style: 'mapbox://styles/mapbox/satellite-v9', // Clean satellite without labels
         center: [0, 20], // Center on world view
         zoom: 0.8, // Much more distant world view
         pitch: 0, // Flat view for clean background
-        bearing: 0, // No rotation
+        bearing: 0, // Starting rotation
         interactive: false,
         attributionControl: false,
         antialias: true,
+      });
+
+      // Start slow rotation animation
+      const rotateWorld = () => {
+        if (!mapInstance.current) return;
+        
+        const currentBearing = mapInstance.current.getBearing();
+        mapInstance.current.setBearing(currentBearing + 0.1); // Very slow rotation
+        
+        requestAnimationFrame(rotateWorld);
+      };
+
+      mapInstance.current.on('load', () => {
+        rotateWorld();
       });
     };
 
@@ -46,14 +59,7 @@ const Index = () => {
         }}
       />
 
-      {/* Simple Text Content */}
-      <div className="relative z-10 min-h-screen flex items-center justify-center">
-        <div ref={textRef} className="text-center">
-          <h1 className="text-6xl md:text-8xl font-gasoek text-white font-black tracking-tight drop-shadow-2xl">
-            FESTIVAL NATUR
-          </h1>
-        </div>
-      </div>
+
     </div>
   );
 };
