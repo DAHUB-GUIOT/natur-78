@@ -1,0 +1,89 @@
+Objetivo: Crear una experiencia web brutalista y poética que visualice la urgencia del turismo sostenible en Colombia. La experiencia debe tener el poder de concientizar profundamente y provocar acción global.
+
+⸻
+
+🟢 PALETA Y ESTILO
+	•	Estética brutalista minimalista, tipografía monoespaciada.
+	•	Paleta de solo dos colores:
+	•	Fondo: Verde profundo #0f2f22 → representa biodiversidad y sombra de selva.
+	•	Ilustraciones/SVG/Textos: Amarillo puro #ffe600 → representa vida, alerta, energía solar.
+
+⸻
+
+🌍 NARRATIVA INTERACTIVA (Parallax Scroll en 7 Escenas)
+
+Cada sección combina:
+	•	Ilustración SVG minimalista (líneas puras, sin capas ni rellenos)
+	•	Movimiento Parallax y animaciones suaves (con GSAP + ScrollTrigger o Lottie)
+	•	Texto poderoso, con datos científicos relevantes
+	•	Una transición narrativa del global a lo molecular, de macroecología a bioética individual
+
+⸻
+
+1. 🌍 EL MUNDO
+	•	SVG: Silueta minimal del planeta con nubes flotando en líneas.
+	•	Animación: Nubes se mueven con parallax. El planeta gira levemente.
+	•	Texto:
+“El turismo devora lo que vino a ver.”
+	•	El 80% de los ecosistemas naturales más visitados ya presentan signos de estrés ecológico severo (IPBES, 2023).
+	•	Las emisiones de turismo internacional podrían alcanzar 2.5–3.5 Gt CO₂/año para 2030 (UNWTO).
+
+⸻
+
+2. 🗺️ COLOMBIA
+	•	SVG: Mapa real de Colombia como línea cerrada. Se fragmenta al hacer scroll.
+	•	Texto:
+“Una joya biodiversa en peligro.”
+	•	Colombia es el país más biodiverso por km² del planeta.
+	•	Más de 1.900 especies endémicas.
+	•	Sin embargo, pierde 230.000 hectáreas de bosque al año (IDEAM, 2023).
+
+⸻
+
+3. 🕊️ AVE NATIVA (Ej. Guacamaya o Cóndor Andino)
+	•	SVG: Vista lateral de un ave nativa (Guacamaya Bandera, Cóndor) con alas abiertas.
+	•	Texto:
+“No es símbolo. Es vida.”
+	•	El Cóndor Andino está clasificado como especie vulnerable.
+	•	El ecoturismo mal gestionado ha reducido poblaciones en santuarios naturales.
+	•	Colombia alberga más del 20% de todas las especies de aves del mundo.
+
+⸻
+
+4. 🧍 PERSONA
+	•	SVG: Rostro humano con ojos abiertos, dibujado por líneas que emergen desde el centro.
+	•	Texto:
+“El viaje empieza dentro.”
+	•	El turismo regenerativo no solo observa: transforma al viajero.
+	•	Estudios de Harvard (2021) revelan que experiencias inmersivas en la naturaleza pueden reducir el cortisol hasta en 34%.
+	•	El 60% de los turistas responsables reporta cambios de comportamiento a largo plazo.
+
+⸻
+
+5. ❤️ CORAZÓN
+	•	SVG: Corazón anatómico simplificado. Vibra con latido al scroll.
+	•	Texto:
+“Solo lo que se cuida, permanece.”
+	•	1 de cada 4 destinos naturales se encuentra en riesgo por falta de protección comunitaria.
+	•	El turismo comunitario genera hasta 3 veces más impacto positivo local que el turismo extractivo.
+	•	¿Qué late en ti cuando recorres una tierra ajena?
+
+⸻
+
+6. ⚛️ ÁTOMO
+	•	SVG: Representación de un átomo girando (sin relleno, solo líneas).
+	•	Texto:
+“Todo está conectado. También tú.”
+	•	Desde el CO₂ emitido por un vuelo hasta el colibrí que desaparece.
+	•	El turismo es responsable del 8% de las emisiones globales de gases de efecto invernadero (Nature Climate Change, 2018).
+	•	Cada decisión afecta la red completa.
+
+⸻
+
+7. 🌀 HISTORIAS NO CONTADAS
+	•	SVG: Círculo o red simbólica. Los nodos se acercan al centro.
+	•	Texto:
+“50 historias aún no contadas.”
+	•	Relatos reales de comunidades que reinventan el turismo desde la dignidad y la sostenibilidad.
+	•	Desde la Amazonía hasta la Sierra Nevada.
+Muy pronto: Explora las historias.
