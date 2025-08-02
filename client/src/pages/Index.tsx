@@ -22,7 +22,7 @@ const Index = () => {
         container: worldMapRef.current,
         style: 'mapbox://styles/mapbox/satellite-streets-v12',
         center: [-74.2973, 4.5709], // Start centered on Colombia (Bogotá)
-        zoom: 2.5, // Wide enough to show world context but centered on Colombia
+        zoom: 0.1, // Extremely distant zoom - world barely visible
         pitch: 15, // Slight 3D angle for depth
         bearing: -10, // Slight rotation for dynamic feel
         interactive: false,
@@ -30,59 +30,7 @@ const Index = () => {
         antialias: true, // Better rendering quality
       });
 
-      mapInstance.current.on('load', () => {
-        if (!mapInstance.current) return;
-
-        // Add Colombia highlighting with precise outline
-        const colombiaGeoJSON = {
-          type: 'Feature',
-          properties: { name: 'Colombia' },
-          geometry: {
-            type: 'Polygon',
-            coordinates: [[
-              [-81.7, 13.3], [-79.0, 12.6], [-77.2, 12.0], [-75.8, 11.8],
-              [-74.0, 11.5], [-72.2, 11.2], [-70.9, 11.8], [-69.9, 12.2],
-              [-69.2, 10.9], [-67.8, 10.8], [-67.1, 8.7], [-67.3, 6.1],
-              [-67.8, 4.5], [-67.9, 3.0], [-67.3, 2.0], [-66.9, 1.2],
-              [-66.3, 0.7], [-67.0, 0.0], [-67.8, -0.7], [-69.8, -0.9],
-              [-70.0, -0.2], [-70.9, 0.9], [-72.0, 0.1], [-73.3, 0.9],
-              [-74.5, 0.1], [-75.4, 0.1], [-76.3, 0.9], [-77.4, 0.4],
-              [-78.2, 1.2], [-78.6, 2.3], [-79.1, 2.9], [-79.9, 4.5],
-              [-80.5, 5.5], [-81.7, 8.9], [-81.7, 13.3]
-            ]]
-          }
-        };
-
-        mapInstance.current.addSource('colombia', {
-          type: 'geojson',
-          data: colombiaGeoJSON
-        });
-
-        // Add Colombia fill layer first
-        mapInstance.current.addLayer({
-          id: 'colombia-fill',
-          type: 'fill',
-          source: 'colombia',
-          layout: {},
-          paint: {
-            'fill-color': '#cad95e', // NATUR brand green
-            'fill-opacity': 0.8,
-          },
-        });
-
-        // Add Colombia outline layer on top
-        mapInstance.current.addLayer({
-          id: 'colombia-outline',
-          type: 'line',
-          source: 'colombia',
-          layout: {},
-          paint: {
-            'line-color': '#ffe600', // Yellow outline for better visibility
-            'line-width': 3,
-            'line-opacity': 1,
-          },
-        });
-      });
+      // Map loads without any overlays - clean and distant view
     };
 
     initializeMap();
