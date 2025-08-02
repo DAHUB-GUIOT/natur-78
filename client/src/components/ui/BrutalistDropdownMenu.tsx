@@ -30,6 +30,10 @@ const mobileMenuData = [
     ]
   },
   {
+    title: 'NOTICIAS',
+    url: '/noticias'
+  },
+  {
     title: 'INFO',
     subcategories: [
       { label: 'Sobre Nosotros', url: '/sobre' },
@@ -180,35 +184,48 @@ export function BrutalistDropdownMenu({ isOpen, onClose, triggerRef }: Brutalist
           <div className="space-y-3">
             {currentMenuData.map((category, index) => (
               <div key={index} className="border-b border-[#cad95e]/20 pb-3">
-                <button
-                  onClick={() => handleCategoryClick(index)}
-                  className={`w-full text-left p-3 text-base font-jakarta uppercase tracking-wide transition-colors duration-200 rounded touch-manipulation min-h-[48px] ${
-                    expandedCategory === index 
-                      ? 'text-[#cad95e] bg-[#1a3d1a]' 
-                      : 'text-gray-300 hover:text-[#cad95e]'
-                  }`}
-                >
-                  <div className="flex items-center justify-between">
+                {/* Category with subcategories */}
+                {category.subcategories ? (
+                  <>
+                    <button
+                      onClick={() => handleCategoryClick(index)}
+                      className={`w-full text-left p-3 text-base font-jakarta uppercase tracking-wide transition-colors duration-200 rounded touch-manipulation min-h-[48px] ${
+                        expandedCategory === index 
+                          ? 'text-[#cad95e] bg-[#1a3d1a]' 
+                          : 'text-gray-300 hover:text-[#cad95e]'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between">
+                        <h1 className="text-sm font-jakarta font-medium">{category.title}</h1>
+                        <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${
+                          expandedCategory === index ? 'rotate-180' : ''
+                        }`} />
+                      </div>
+                    </button>
+                    
+                    {/* Mobile Subcategories */}
+                    {expandedCategory === index && (
+                      <div className="mt-2 ml-4 space-y-1">
+                        {category.subcategories.map((sub, subIndex) => (
+                          <button
+                            key={subIndex}
+                            onClick={() => handleSubcategoryClick(sub.url)}
+                            className="block w-full text-left p-2 text-sm text-gray-400 hover:text-[#cad95e] transition-colors duration-200 rounded touch-manipulation min-h-[44px]"
+                          >
+                            {sub.label}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </>
+                ) : (
+                  /* Direct link category (like NOTICIAS) */
+                  <button
+                    onClick={() => handleSubcategoryClick(category.url)}
+                    className="w-full text-left p-3 text-base font-jakarta uppercase tracking-wide transition-colors duration-200 rounded touch-manipulation min-h-[48px] text-gray-300 hover:text-[#cad95e] hover:bg-[#1a3d1a]"
+                  >
                     <h1 className="text-sm font-jakarta font-medium">{category.title}</h1>
-                    <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${
-                      expandedCategory === index ? 'rotate-180' : ''
-                    }`} />
-                  </div>
-                </button>
-                
-                {/* Mobile Subcategories */}
-                {expandedCategory === index && category.subcategories && (
-                  <div className="mt-2 ml-4 space-y-1">
-                    {category.subcategories.map((sub, subIndex) => (
-                      <button
-                        key={subIndex}
-                        onClick={() => handleSubcategoryClick(sub.url)}
-                        className="block w-full text-left p-2 text-sm text-gray-400 hover:text-[#cad95e] transition-colors duration-200 rounded touch-manipulation min-h-[44px]"
-                      >
-                        {sub.label}
-                      </button>
-                    ))}
-                  </div>
+                  </button>
                 )}
               </div>
             ))}
@@ -247,7 +264,7 @@ export function BrutalistDropdownMenu({ isOpen, onClose, triggerRef }: Brutalist
                   }`}
                 >
                   <div className="flex items-center gap-1">
-                    <span className="text-lg">{category.icon}</span>
+                    {category.icon && <span className="text-lg">{category.icon}</span>}
                     <h1 className="text-xs font-jakarta">{category.title}</h1>
                     {expandedCategory === index && (
                       <ChevronRight className="w-3 h-3 ml-auto" />
