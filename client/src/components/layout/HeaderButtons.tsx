@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Globe, LogIn, UserPlus, Building2, MapPin, Menu, X } from "lucide-react";
+import { Globe, LogIn, UserPlus, Building2, MapPin, Menu, X, Calendar, Ticket, Info, Users, Mail, Instagram, Twitter, Facebook } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
@@ -89,36 +89,38 @@ export function HeaderButtons({ showPortalButtons = false }: HeaderButtonsProps)
             className="fixed top-16 left-0 right-0 z-40 bg-black/90 backdrop-blur-lg border-b border-white/20"
           >
             <div className="p-4 space-y-3">
-              {showPortalButtons && (
-                <>
-                  <Link to="/auth/empresas" onClick={() => setIsMenuOpen(false)}>
-                    <Button 
-                      variant="ghost"
-                      className="w-full justify-start text-white hover:text-[#cad95e] hover:bg-white/10"
-                    >
-                      <Building2 className="w-4 h-4 mr-3" />
-                      Portal Empresas
-                    </Button>
-                  </Link>
-                  
-                  <Link to="/portal-viajeros" onClick={() => setIsMenuOpen(false)}>
-                    <Button 
-                      variant="ghost"
-                      className="w-full justify-start text-white hover:text-[#cad95e] hover:bg-white/10"
-                    >
-                      <MapPin className="w-4 h-4 mr-3" />
-                      Mapa Turismo Sostenible
-                    </Button>
-                  </Link>
-                </>
-              )}
+              {/* Portal Buttons */}
+              <Link to="/auth/empresas" onClick={() => setIsMenuOpen(false)}>
+                <Button 
+                  variant="ghost"
+                  className="w-full justify-start text-white hover:text-[#cad95e] hover:bg-white/10"
+                >
+                  <Building2 className="w-4 h-4 mr-3" />
+                  Portal Empresas
+                </Button>
+              </Link>
               
+              <Link to="/portal-viajeros" onClick={() => setIsMenuOpen(false)}>
+                <Button 
+                  variant="ghost"
+                  className="w-full justify-start text-white hover:text-[#cad95e] hover:bg-white/10"
+                >
+                  <MapPin className="w-4 h-4 mr-3" />
+                  Mapa Turismo Sostenible
+                </Button>
+              </Link>
+
+              {/* Divider */}
+              <div className="border-t border-white/20 my-3"></div>
+
+              {/* Event Information */}
               <Link to="/agenda" onClick={() => setIsMenuOpen(false)}>
                 <Button 
                   variant="ghost"
                   className="w-full justify-start text-white hover:text-[#cad95e] hover:bg-white/10"
                 >
-                  Agenda
+                  <Calendar className="w-4 h-4 mr-3" />
+                  Agenda Festival
                 </Button>
               </Link>
               
@@ -127,9 +129,77 @@ export function HeaderButtons({ showPortalButtons = false }: HeaderButtonsProps)
                   variant="ghost"
                   className="w-full justify-start text-white hover:text-[#cad95e] hover:bg-white/10"
                 >
+                  <Ticket className="w-4 h-4 mr-3" />
                   Entradas
                 </Button>
               </Link>
+
+              {/* About Section */}
+              <div className="border-t border-white/20 my-3"></div>
+              
+              <Button 
+                variant="ghost"
+                className="w-full justify-start text-white hover:text-[#cad95e] hover:bg-white/10"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                <Info className="w-4 h-4 mr-3" />
+                Sobre NATUR
+              </Button>
+
+              <Button 
+                variant="ghost"
+                className="w-full justify-start text-white hover:text-[#cad95e] hover:bg-white/10"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                <Users className="w-4 h-4 mr-3" />
+                Quiénes Somos
+              </Button>
+
+              <Button 
+                variant="ghost"
+                className="w-full justify-start text-white hover:text-[#cad95e] hover:bg-white/10"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                <Mail className="w-4 h-4 mr-3" />
+                Contacto
+              </Button>
+
+              {/* Social Links */}
+              <div className="border-t border-white/20 my-3"></div>
+              
+              <div className="flex justify-center space-x-4">
+                <Button 
+                  variant="ghost"
+                  size="icon"
+                  className="text-white hover:text-[#cad95e] hover:bg-white/10"
+                >
+                  <Instagram className="w-4 h-4" />
+                </Button>
+                <Button 
+                  variant="ghost"
+                  size="icon"
+                  className="text-white hover:text-[#cad95e] hover:bg-white/10"
+                >
+                  <Twitter className="w-4 h-4" />
+                </Button>
+                <Button 
+                  variant="ghost"
+                  size="icon"
+                  className="text-white hover:text-[#cad95e] hover:bg-white/10"
+                >
+                  <Facebook className="w-4 h-4" />
+                </Button>
+              </div>
+
+              {/* Festival Info */}
+              <div className="text-center pt-4 border-t border-white/20">
+                <p className="text-white/80 text-xs">
+                  Festival NATUR 2025
+                </p>
+                <p className="text-white/60 text-xs">
+                  14-15 Noviembre • Bogotá
+                </p>
+              </div>
             </div>
           </motion.div>
         )}
