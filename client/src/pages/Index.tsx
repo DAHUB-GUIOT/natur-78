@@ -65,7 +65,7 @@ const Index = () => {
       {/* Main Text Content */}
       <div ref={textRef} className="fixed inset-0 flex items-center justify-center text-[#ffe600] transition-opacity duration-300 z-10 pointer-events-none">
         <div className="text-center max-w-4xl px-6">
-          <h1 className="text-6xl md:text-8xl lg:text-9xl font-bold mb-12 uppercase tracking-wider" style={{ fontFamily: 'IBM Plex Mono, monospace' }}>
+          <h1 className="text-6xl md:text-8xl lg:text-9xl font-gasoek font-bold mb-12 uppercase tracking-wider">
             FESTIVAL<br/>NATUR
           </h1>
           <p className="text-xl md:text-3xl font-mono uppercase tracking-wide opacity-90">
