@@ -17,7 +17,7 @@ const Index = () => {
 
       mapInstance.current = new mapboxgl.Map({
         container: worldMapRef.current,
-        style: 'mapbox://styles/mapbox/outdoors-v12', // Green natural style
+        style: 'mapbox://styles/mapbox/satellite-streets-v12', // Better contrast for rotation
         center: [-75, 0], // Center on Latin America
         zoom: 0.8, // Much more distant world view
         pitch: 0, // Starting pitch for X-axis rotation
@@ -61,7 +61,6 @@ const Index = () => {
         style={{ 
           transformOrigin: 'center',
           backfaceVisibility: 'hidden',
-          filter: 'hue-rotate(60deg) saturate(1.5)', // Green tint
         }}
       />
 
