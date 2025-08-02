@@ -10,7 +10,7 @@ import { InteractiveMap } from "@/components/dashboard/InteractiveMap";
 import ExperienceForm from "@/components/dashboard/ExperienceForm";
 import TwitterProfileSection from "@/components/profile/TwitterProfileSection";
 import { SimpleChat } from "@/components/messaging/SimpleChat";
-import AdaptiveSidebar from "@/components/portal/AdaptiveSidebar";
+import SimpleSidebar from "@/components/portal/SimpleSidebar";
 import TopNavigationMenu from "@/components/portal/TopNavigationMenu";
 import ContentOverlay from "@/components/portal/ContentOverlay";
 import NavigationBreadcrumb from "@/components/portal/NavigationBreadcrumb";
@@ -409,17 +409,13 @@ const PortalEmpresasDashboard = () => {
         <InteractiveMap />
       </div>
 
-      {/* Enhanced Adaptive Sidebar */}
-      <AdaptiveSidebar
+      {/* Simple Stable Sidebar */}
+      <SimpleSidebar
         activeSection={activeSection}
         setActiveSection={handleSectionChange}
         user={user}
         notificationCount={3}
         messageCount={2}
-        isMapView={isMapContext}
-        onSearchFocus={() => {
-          // Handle search focus
-        }}
       />
 
       {/* Glassmorphism Content Area */}
