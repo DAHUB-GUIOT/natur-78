@@ -5,26 +5,35 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 
 const Index = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const yellowDotRef = useRef<SVGSVGElement>(null);
+  const worldMapRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
-  const mapContainerRef = useRef<HTMLDivElement>(null);
-  const mapRef = useRef<mapboxgl.Map | null>(null);
+  const mainMapRef = useRef<mapboxgl.Map | null>(null);
+  const worldMiniMapRef = useRef<mapboxgl.Map | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
-      if (!yellowDotRef.current || !textRef.current || !containerRef.current) return;
+      if (!worldMapRef.current || !textRef.current || !containerRef.current) return;
 
       const scrollY = window.scrollY;
       const maxScroll = document.body.scrollHeight - window.innerHeight;
-      const scrollProgress = Math.min(scrollY / (maxScroll * 0.3), 1);
+      const scrollProgress = Math.min(scrollY / (maxScroll * 0.5), 1);
 
-      // SVG circle scaling - no pixelation
-      const scale = 1 + scrollProgress * 100;
-      yellowDotRef.current.style.transform = `translate(-50%, -50%) scale(${scale})`;
+      // World map scaling and zoom effect
+      const scale = 1 + scrollProgress * 50;
+      worldMapRef.current.style.transform = `translate(-50%, -50%) scale(${scale})`;
 
       // Main text fade out
-      const textOpacity = Math.max(0, 1 - scrollProgress * 2);
+      const textOpacity = Math.max(0, 1 - scrollProgress * 1.5);
       textRef.current.style.opacity = textOpacity.toString();
+
+      // Zoom to Colombia when scroll reaches certain point
+      if (scrollProgress > 0.6 && worldMiniMapRef.current) {
+        worldMiniMapRef.current.flyTo({
+          center: [-74.2973, 4.5709], // Colombia center
+          zoom: 5.5,
+          duration: 2000
+        });
+      }
 
       // Background transition
       if (scrollProgress > 0.7) {
@@ -36,24 +45,25 @@ const Index = () => {
       }
     };
 
-    // Initialize Mapbox
-    const initializeMap = () => {
-      if (!mapContainerRef.current || mapRef.current) return;
+    // Initialize World Mini Map
+    const initializeWorldMap = () => {
+      if (!worldMapRef.current || worldMiniMapRef.current) return;
 
       mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
-      mapRef.current = new mapboxgl.Map({
-        container: mapContainerRef.current,
-        style: 'mapbox://styles/mapbox/dark-v11',
-        center: [-74.2973, 4.5709], // Colombia center coordinates
-        zoom: 5,
+      worldMiniMapRef.current = new mapboxgl.Map({
+        container: worldMapRef.current,
+        style: 'mapbox://styles/mapbox/satellite-v9',
+        center: [0, 20], // World center
+        zoom: 1.5,
         pitch: 0,
         bearing: 0,
-        interactive: true,
+        interactive: false,
+        attributionControl: false,
       });
 
-      mapRef.current.on('load', () => {
-        if (!mapRef.current) return;
+      worldMiniMapRef.current.on('load', () => {
+        if (!worldMiniMapRef.current) return;
 
         // Load Colombia GeoJSON from public source
         fetch('https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson')
@@ -66,14 +76,14 @@ const Index = () => {
               feature.properties.NAME_EN === 'Colombia'
             );
 
-            if (colombia && mapRef.current) {
-              mapRef.current.addSource('colombia', {
+            if (colombia && worldMiniMapRef.current) {
+              worldMiniMapRef.current.addSource('colombia', {
                 type: 'geojson',
                 data: colombia
               });
 
               // Add Colombia outline layer with green stroke
-              mapRef.current.addLayer({
+              worldMiniMapRef.current.addLayer({
                 id: 'colombia-outline',
                 type: 'line',
                 source: 'colombia',
@@ -86,7 +96,7 @@ const Index = () => {
               });
 
               // Add Colombia fill with transparent green
-              mapRef.current.addLayer({
+              worldMiniMapRef.current.addLayer({
                 id: 'colombia-fill',
                 type: 'fill',
                 source: 'colombia',
@@ -101,13 +111,13 @@ const Index = () => {
               const bounds = new mapboxgl.LngLatBounds();
               const coordinates = colombia.geometry.coordinates[0];
               coordinates.forEach((coord: number[]) => bounds.extend(coord as [number, number]));
-              mapRef.current.fitBounds(bounds, { padding: 50 });
+              worldMiniMapRef.current.fitBounds(bounds, { padding: 50 });
             }
           })
           .catch(() => {
             // Fallback: Use simplified Colombia coordinates
-            if (mapRef.current) {
-              mapRef.current.addSource('colombia', {
+            if (worldMiniMapRef.current) {
+              worldMiniMapRef.current.addSource('colombia', {
                 type: 'geojson',
                 data: {
                   type: 'Feature',
@@ -129,7 +139,7 @@ const Index = () => {
                 }
               });
 
-              mapRef.current.addLayer({
+              worldMiniMapRef.current.addLayer({
                 id: 'colombia-outline',
                 type: 'line',
                 source: 'colombia',
@@ -141,7 +151,7 @@ const Index = () => {
                 },
               });
 
-              mapRef.current.addLayer({
+              worldMiniMapRef.current.addLayer({
                 id: 'colombia-fill',
                 type: 'fill',
                 source: 'colombia',
@@ -167,13 +177,17 @@ const Index = () => {
     handleScroll();
 
     // Initialize map after a short delay to ensure DOM is ready
-    setTimeout(initializeMap, 1000);
+    setTimeout(initializeWorldMap, 1000);
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
-      if (mapRef.current) {
-        mapRef.current.remove();
-        mapRef.current = null;
+      if (worldMiniMapRef.current) {
+        worldMiniMapRef.current.remove();
+        worldMiniMapRef.current = null;
+      }
+      if (mainMapRef.current) {
+        mainMapRef.current.remove();
+        mainMapRef.current = null;
       }
     };
   }, []);
@@ -182,20 +196,17 @@ const Index = () => {
     <div ref={containerRef} className="min-h-screen bg-[#0f2f22] transition-colors duration-500 relative overflow-hidden">
       <HeaderButtons />
       
-      {/* SVG Circle - No Pixelation */}
-      <svg 
-        ref={yellowDotRef}
-        className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-0"
+      {/* World Map Container */}
+      <div 
+        ref={worldMapRef}
+        className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-0 rounded-full overflow-hidden"
         style={{ 
           transformOrigin: 'center',
           backfaceVisibility: 'hidden',
-          width: '20px',
-          height: '20px'
+          width: '200px',
+          height: '200px'
         }}
-        viewBox="0 0 20 20"
-      >
-        <circle cx="10" cy="10" r="10" fill="#ffe600" />
-      </svg>
+      />
 
       {/* Main Text Content */}
       <div ref={textRef} className="fixed inset-0 flex items-center justify-center text-[#ffe600] transition-opacity duration-300 z-10 pointer-events-none">
@@ -216,18 +227,7 @@ const Index = () => {
         SCROLL PARA CONTINUAR
       </div>
 
-      {/* Colombia Map Section */}
-      <div className="relative h-screen w-full" style={{ top: '200vh' }}>
-        <div 
-          ref={mapContainerRef}
-          className="w-full h-full"
-          style={{ 
-            background: '#0f2f22',
-            border: 'none',
-            outline: 'none'
-          }}
-        />
-      </div>
+
     </div>
   );
 };
