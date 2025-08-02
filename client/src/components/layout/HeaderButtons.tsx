@@ -168,14 +168,45 @@ export function HeaderButtons({ showPortalButtons = false }: HeaderButtonsProps)
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="fixed top-16 left-0 right-0 z-40 bg-green-600 border-b border-green-700"
+            className="fixed top-16 left-0 right-0 z-40 bg-green-800 border-b border-green-900"
           >
             <div className="p-4 space-y-3">
+              {/* Mobile Tickets Section - Always Visible */}
+              <div className="bg-yellow-400 rounded-lg p-4 -mx-2">
+                <h3 className="text-green-800 font-gasoek text-2xl font-bold mb-3 text-center">ENTRADAS FESTIVAL</h3>
+                
+                <div className="space-y-3">
+                  <div className="bg-green-800/10 rounded-lg p-3 border border-green-800/20">
+                    <h4 className="text-green-800 font-bold text-lg">VIVE NATUR</h4>
+                    <p className="text-green-800/80 text-sm">Acceso completo al festival</p>
+                    <p className="text-green-800 font-bold">$50.000 COP</p>
+                  </div>
+                  
+                  <div className="bg-green-800/10 rounded-lg p-3 border border-green-800/20">
+                    <h4 className="text-green-800 font-bold text-lg">NATUR PRO</h4>
+                    <p className="text-green-800/80 text-sm">Acceso profesional + networking</p>
+                    <p className="text-green-800 font-bold">$120.000 COP</p>
+                  </div>
+                </div>
+
+                <Link to="/tickets">
+                  <Button 
+                    className="w-full bg-green-800 hover:bg-green-900 text-yellow-400 font-bold mt-3"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Comprar Entradas
+                  </Button>
+                </Link>
+              </div>
+
+              {/* Divider */}
+              <div className="border-t border-yellow-400/30 my-6"></div>
+
               {/* Portal Buttons */}
               <Link to="/auth/empresas" onClick={() => setIsMenuOpen(false)}>
                 <Button 
                   variant="ghost"
-                  className="w-full justify-start text-yellow-400 hover:text-yellow-300 hover:bg-green-700/50 py-6"
+                  className="w-full justify-start text-yellow-400 hover:text-yellow-400 hover:bg-green-900/50 py-6"
                 >
                   <Building2 className="w-6 h-6 mr-4" />
                   <span className="text-4xl font-black font-gasoek tracking-wider uppercase">Portal Empresas</span>
@@ -185,7 +216,7 @@ export function HeaderButtons({ showPortalButtons = false }: HeaderButtonsProps)
               <Link to="/portal-viajeros" onClick={() => setIsMenuOpen(false)}>
                 <Button 
                   variant="ghost"
-                  className="w-full justify-start text-yellow-400 hover:text-yellow-300 hover:bg-green-700/50 py-6"
+                  className="w-full justify-start text-yellow-400 hover:text-yellow-400 hover:bg-green-900/50 py-6"
                 >
                   <MapPin className="w-6 h-6 mr-4" />
                   <span className="text-4xl font-black font-gasoek tracking-wider uppercase">Mapa Turismo</span>
@@ -199,7 +230,7 @@ export function HeaderButtons({ showPortalButtons = false }: HeaderButtonsProps)
               <Link to="/agenda" onClick={() => setIsMenuOpen(false)}>
                 <Button 
                   variant="ghost"
-                  className="w-full justify-start text-yellow-400 hover:text-yellow-300 hover:bg-green-700/50 py-6"
+                  className="w-full justify-start text-yellow-400 hover:text-yellow-400 hover:bg-green-900/50 py-6"
                 >
                   <Calendar className="w-6 h-6 mr-4" />
                   <span className="text-4xl font-black font-gasoek tracking-wider uppercase">Agenda</span>
@@ -209,7 +240,7 @@ export function HeaderButtons({ showPortalButtons = false }: HeaderButtonsProps)
               <Link to="/tickets" onClick={() => setIsMenuOpen(false)}>
                 <Button 
                   variant="ghost"
-                  className="w-full justify-start text-yellow-400 hover:text-yellow-300 hover:bg-green-700/50 py-6"
+                  className="w-full justify-start text-yellow-400 hover:text-yellow-400 hover:bg-green-900/50 py-6"
                 >
                   <Ticket className="w-6 h-6 mr-4" />
                   <span className="text-4xl font-black font-gasoek tracking-wider uppercase">Entradas</span>
@@ -221,7 +252,7 @@ export function HeaderButtons({ showPortalButtons = false }: HeaderButtonsProps)
               
               <Button 
                 variant="ghost"
-                className="w-full justify-start text-yellow-400 hover:text-yellow-300 hover:bg-green-700/50 py-6"
+                className="w-full justify-start text-yellow-400 hover:text-yellow-400 hover:bg-green-900/50 py-6"
                 onClick={() => setIsMenuOpen(false)}
               >
                 <Info className="w-6 h-6 mr-4" />
@@ -230,7 +261,7 @@ export function HeaderButtons({ showPortalButtons = false }: HeaderButtonsProps)
 
               <Button 
                 variant="ghost"
-                className="w-full justify-start text-yellow-400 hover:text-yellow-300 hover:bg-green-700/50 py-6"
+                className="w-full justify-start text-yellow-400 hover:text-yellow-400 hover:bg-green-900/50 py-6"
                 onClick={() => setIsMenuOpen(false)}
               >
                 <Users className="w-6 h-6 mr-4" />
@@ -239,7 +270,7 @@ export function HeaderButtons({ showPortalButtons = false }: HeaderButtonsProps)
 
               <Button 
                 variant="ghost"
-                className="w-full justify-start text-yellow-400 hover:text-yellow-300 hover:bg-green-700/50 py-6"
+                className="w-full justify-start text-yellow-400 hover:text-yellow-400 hover:bg-green-900/50 py-6"
                 onClick={() => setIsMenuOpen(false)}
               >
                 <Mail className="w-6 h-6 mr-4" />
@@ -253,21 +284,21 @@ export function HeaderButtons({ showPortalButtons = false }: HeaderButtonsProps)
                 <Button 
                   variant="ghost"
                   size="icon"
-                  className="text-yellow-400 hover:text-yellow-300 hover:bg-green-700/50 w-12 h-12"
+                  className="text-yellow-400 hover:text-yellow-400 hover:bg-green-900/50 w-12 h-12"
                 >
                   <Instagram className="w-8 h-8" />
                 </Button>
                 <Button 
                   variant="ghost"
                   size="icon"
-                  className="text-yellow-400 hover:text-yellow-300 hover:bg-green-700/50 w-12 h-12"
+                  className="text-yellow-400 hover:text-yellow-400 hover:bg-green-900/50 w-12 h-12"
                 >
                   <Twitter className="w-8 h-8" />
                 </Button>
                 <Button 
                   variant="ghost"
                   size="icon"
-                  className="text-yellow-400 hover:text-yellow-300 hover:bg-green-700/50 w-12 h-12"
+                  className="text-yellow-400 hover:text-yellow-400 hover:bg-green-900/50 w-12 h-12"
                 >
                   <Facebook className="w-8 h-8" />
                 </Button>
