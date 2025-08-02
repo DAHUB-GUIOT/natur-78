@@ -68,98 +68,57 @@ const Index = () => {
       mapInstance.current.on('load', () => {
         if (!mapInstance.current) return;
 
-        // Load Colombia GeoJSON from public source
-        fetch('https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson')
-          .then(response => response.json())
-          .then(data => {
-            // Filter for Colombia
-            const colombia = data.features.find((feature: any) => 
-              feature.properties.NAME === 'Colombia' || 
-              feature.properties.name === 'Colombia' ||
-              feature.properties.NAME_EN === 'Colombia'
-            );
-
-            if (colombia && mapInstance.current) {
-              mapInstance.current.addSource('colombia', {
-                type: 'geojson',
-                data: colombia
-              });
-
-              // Add Colombia outline layer with green stroke
-              mapInstance.current.addLayer({
-                id: 'colombia-outline',
-                type: 'line',
-                source: 'colombia',
-                layout: {},
-                paint: {
-                  'line-color': '#cad95e', // NATUR brand green
-                  'line-width': 4,
-                  'line-opacity': 1,
-                },
-              });
-
-              // Add Colombia fill with transparent green
-              mapInstance.current.addLayer({
-                id: 'colombia-fill',
-                type: 'fill',
-                source: 'colombia',
-                layout: {},
-                paint: {
-                  'fill-color': '#cad95e', // NATUR brand green
-                  'fill-opacity': 0.4,
-                },
-              }, 'colombia-outline');
+        // Add Colombia highlighting immediately with fallback coordinates
+        if (mapInstance.current) {
+          const colombiaGeoJSON = {
+            type: 'Feature',
+            properties: { name: 'Colombia' },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [[
+                [-81.8, 13.4], [-79.0, 12.6], [-77.2, 12.0], [-75.8, 11.8],
+                [-74.0, 11.5], [-72.2, 11.2], [-70.9, 11.8], [-69.9, 12.2],
+                [-69.2, 10.9], [-67.8, 10.8], [-67.1, 8.7], [-67.3, 6.1],
+                [-67.8, 4.5], [-67.9, 3.0], [-67.3, 2.0], [-66.9, 1.2],
+                [-66.3, 0.7], [-67.0, 0.0], [-67.8, -0.7], [-69.8, -0.9],
+                [-70.0, -0.2], [-70.9, 0.9], [-72.0, 0.1], [-73.3, 0.9],
+                [-74.5, 0.1], [-75.4, 0.1], [-76.3, 0.9], [-77.4, 0.4],
+                [-78.2, 1.2], [-78.6, 2.3], [-79.1, 2.9], [-79.9, 4.5],
+                [-80.5, 5.5], [-81.7, 8.9], [-81.8, 13.4]
+              ]]
             }
-          })
-          .catch(() => {
-            // Fallback: Use simplified Colombia coordinates
-            if (mapInstance.current) {
-              mapInstance.current.addSource('colombia', {
-                type: 'geojson',
-                data: {
-                  type: 'Feature',
-                  properties: {},
-                  geometry: {
-                    type: 'Polygon',
-                    coordinates: [[
-                      [-81.8, 13.4], [-79.0, 12.6], [-77.2, 12.0], [-75.8, 11.8],
-                      [-74.0, 11.5], [-72.2, 11.2], [-70.9, 11.8], [-69.9, 12.2],
-                      [-69.2, 10.9], [-67.8, 10.8], [-67.1, 8.7], [-67.3, 6.1],
-                      [-67.8, 4.5], [-67.9, 3.0], [-67.3, 2.0], [-66.9, 1.2],
-                      [-66.3, 0.7], [-67.0, 0.0], [-67.8, -0.7], [-69.8, -0.9],
-                      [-70.0, -0.2], [-70.9, 0.9], [-72.0, 0.1], [-73.3, 0.9],
-                      [-74.5, 0.1], [-75.4, 0.1], [-76.3, 0.9], [-77.4, 0.4],
-                      [-78.2, 1.2], [-78.6, 2.3], [-79.1, 2.9], [-79.9, 4.5],
-                      [-80.5, 5.5], [-81.7, 8.9], [-81.8, 13.4]
-                    ]]
-                  }
-                }
-              });
+          };
 
-              mapInstance.current.addLayer({
-                id: 'colombia-outline',
-                type: 'line',
-                source: 'colombia',
-                layout: {},
-                paint: {
-                  'line-color': '#cad95e', // NATUR brand green
-                  'line-width': 4,
-                  'line-opacity': 1,
-                },
-              });
-
-              mapInstance.current.addLayer({
-                id: 'colombia-fill',
-                type: 'fill',
-                source: 'colombia',
-                layout: {},
-                paint: {
-                  'fill-color': '#cad95e', // NATUR brand green
-                  'fill-opacity': 0.4,
-                },
-              }, 'colombia-outline');
-            }
+          mapInstance.current.addSource('colombia', {
+            type: 'geojson',
+            data: colombiaGeoJSON
           });
+
+          // Add Colombia fill layer first
+          mapInstance.current.addLayer({
+            id: 'colombia-fill',
+            type: 'fill',
+            source: 'colombia',
+            layout: {},
+            paint: {
+              'fill-color': '#cad95e', // NATUR brand green
+              'fill-opacity': 0.6,
+            },
+          });
+
+          // Add Colombia outline layer on top
+          mapInstance.current.addLayer({
+            id: 'colombia-outline',
+            type: 'line',
+            source: 'colombia',
+            layout: {},
+            paint: {
+              'line-color': '#ffe600', // Yellow outline for better visibility
+              'line-width': 3,
+              'line-opacity': 1,
+            },
+          });
+        }
 
 
       });
