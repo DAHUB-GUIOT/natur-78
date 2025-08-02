@@ -123,22 +123,28 @@ const Index = () => {
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="zoom-scene">
             <svg className="scene-svg slow-rotate w-96 h-96" viewBox="0 0 400 400">
-              {/* Wireframe Earth */}
-              <circle cx="200" cy="200" r="180" fill="none" stroke="#FFD600" strokeWidth="3"/>
+              {/* Simplified Earth circle */}
+              <circle cx="200" cy="200" r="180" fill="none" stroke="#FFD600" strokeWidth="6"/>
               
-              {/* Latitude lines */}
-              <ellipse cx="200" cy="200" rx="180" ry="90" fill="none" stroke="#FFD600" strokeWidth="2" opacity="0.7"/>
-              <ellipse cx="200" cy="200" rx="180" ry="45" fill="none" stroke="#FFD600" strokeWidth="2" opacity="0.7"/>
-              <line x1="20" y1="200" x2="380" y2="200" stroke="#FFD600" strokeWidth="2" opacity="0.7"/>
+              {/* Main continents as simple shapes */}
+              {/* North America */}
+              <path d="M120,120 L160,100 L180,140 L140,160 Z" fill="#FFD600" opacity="0.8"/>
               
-              {/* Longitude lines */}
-              <ellipse cx="200" cy="200" rx="90" ry="180" fill="none" stroke="#FFD600" strokeWidth="2" opacity="0.7"/>
-              <ellipse cx="200" cy="200" rx="45" ry="180" fill="none" stroke="#FFD600" strokeWidth="2" opacity="0.7"/>
-              <line x1="200" y1="20" x2="200" y2="380" stroke="#FFD600" strokeWidth="2" opacity="0.7"/>
+              {/* South America - highlighted */}
+              <path d="M160,240 L180,220 L200,260 L190,320 L170,300 Z" fill="#FFD600"/>
               
-              {/* South America highlight */}
-              <path d="M160,240 L180,220 L190,260 L200,300 L180,320 L160,300 Z" 
-                    fill="none" stroke="#FFD600" strokeWidth="4" opacity="0.9"/>
+              {/* Europe/Africa */}
+              <path d="M220,140 L260,130 L280,180 L250,200 Z" fill="#FFD600" opacity="0.8"/>
+              
+              {/* Asia */}
+              <path d="M280,100 L320,110 L340,150 L310,160 Z" fill="#FFD600" opacity="0.8"/>
+              
+              {/* Equator line */}
+              <line x1="20" y1="200" x2="380" y2="200" stroke="#FFD600" strokeWidth="3" opacity="0.9" strokeDasharray="10,5"/>
+              
+              {/* Simplified grid */}
+              <line x1="200" y1="20" x2="200" y2="380" stroke="#FFD600" strokeWidth="2" opacity="0.6"/>
+              <ellipse cx="200" cy="200" rx="180" ry="90" fill="none" stroke="#FFD600" strokeWidth="2" opacity="0.6"/>
             </svg>
           </div>
         </div>
@@ -157,26 +163,29 @@ const Index = () => {
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="zoom-scene">
             <svg className="scene-svg w-[400px] h-[500px]" viewBox="0 0 300 400">
-              {/* Colombia outline */}
-              <path d="M150,50 L180,60 L200,90 L220,120 L240,160 L250,200 L240,240 L220,280 L200,320 L180,350 L150,370 L120,350 L100,320 L80,280 L70,240 L80,200 L90,160 L110,120 L130,90 L150,50 Z"
-                    fill="none" stroke="#FFD600" strokeWidth="4"/>
+              {/* Simplified Colombia outline - more recognizable shape */}
+              <path d="M150,50 L200,40 L240,60 L260,100 L270,140 L280,180 L275,220 L270,260 L260,300 L240,340 L200,360 L150,370 L100,360 L60,340 L40,300 L30,260 L25,220 L30,180 L40,140 L60,100 L100,60 L150,50 Z"
+                    fill="none" stroke="#FFD600" strokeWidth="6"/>
               
-              {/* Mountains (Andes) */}
-              <path d="M120,120 L140,100 L160,120 L180,100 L200,120" 
-                    fill="none" stroke="#FFD600" strokeWidth="2" opacity="0.8"/>
-              <path d="M110,180 L130,160 L150,180 L170,160 L190,180" 
-                    fill="none" stroke="#FFD600" strokeWidth="2" opacity="0.8"/>
+              {/* Caribbean coast - distinctive feature */}
+              <path d="M80,80 L160,70 L220,80 L260,100" 
+                    fill="none" stroke="#FFD600" strokeWidth="4" opacity="0.9"/>
               
-              {/* Rivers */}
-              <path d="M140,100 Q160,150 180,200 Q160,250 140,300" 
-                    fill="none" stroke="#FFD600" strokeWidth="2" opacity="0.7"/>
-              <path d="M180,120 Q200,170 220,220 Q200,270 180,320" 
-                    fill="none" stroke="#FFD600" strokeWidth="2" opacity="0.7"/>
+              {/* Pacific coast */}
+              <path d="M50,120 L40,160 L35,200 L40,240 L50,280 L70,320" 
+                    fill="none" stroke="#FFD600" strokeWidth="4" opacity="0.9"/>
               
-              {/* Jungle areas */}
-              <circle cx="120" cy="200" r="15" fill="none" stroke="#FFD600" strokeWidth="1" opacity="0.6"/>
-              <circle cx="160" cy="240" r="20" fill="none" stroke="#FFD600" strokeWidth="1" opacity="0.6"/>
-              <circle cx="200" cy="180" r="18" fill="none" stroke="#FFD600" strokeWidth="1" opacity="0.6"/>
+              {/* Amazon region (simple rectangle) */}
+              <rect x="180" y="280" width="80" height="60" fill="none" stroke="#FFD600" strokeWidth="3" opacity="0.7"/>
+              
+              {/* Andes mountains (simple triangles) */}
+              <polygon points="100,120 110,100 120,120" fill="#FFD600" opacity="0.8"/>
+              <polygon points="130,140 140,120 150,140" fill="#FFD600" opacity="0.8"/>
+              <polygon points="160,160 170,140 180,160" fill="#FFD600" opacity="0.8"/>
+              
+              {/* Major cities as dots */}
+              <circle cx="150" cy="180" r="4" fill="#FFD600"/>
+              <text x="155" y="175" fill="#FFD600" fontSize="12" opacity="0.8">BOGOTÁ</text>
             </svg>
           </div>
         </div>
@@ -196,29 +205,35 @@ const Index = () => {
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="zoom-scene slow-pulse">
             <svg className="scene-svg w-[500px] h-[300px]" viewBox="0 0 500 300">
-              {/* Condor/Tucán minimal lines */}
-              <path d="M250,100 L220,80 L180,90 L140,110 L120,130 L160,140 L200,145 L240,140 L250,120 Z" 
-                    fill="none" stroke="#FFD600" strokeWidth="3"/>
-              <path d="M250,100 L280,80 L320,90 L360,110 L380,130 L340,140 L300,145 L260,140 L250,120 Z" 
-                    fill="none" stroke="#FFD600" strokeWidth="3"/>
+              {/* Simplified bird silhouette - more recognizable */}
+              {/* Left wing */}
+              <path d="M250,120 L150,100 L100,120 L120,140 L180,150 L220,140 Z" 
+                    fill="#FFD600" stroke="#FFD600" strokeWidth="2"/>
               
-              {/* Body */}
-              <ellipse cx="250" cy="150" rx="30" ry="60" fill="none" stroke="#FFD600" strokeWidth="3"/>
+              {/* Right wing */}
+              <path d="M250,120 L350,100 L400,120 L380,140 L320,150 L280,140 Z" 
+                    fill="#FFD600" stroke="#FFD600" strokeWidth="2"/>
               
-              {/* Head */}
-              <circle cx="250" cy="100" r="25" fill="none" stroke="#FFD600" strokeWidth="3"/>
+              {/* Body - simple oval */}
+              <ellipse cx="250" cy="160" rx="25" ry="50" fill="#FFD600"/>
               
-              {/* Beak */}
-              <path d="M250,85 L270,75 L265,85" fill="none" stroke="#FFD600" strokeWidth="2"/>
+              {/* Head - circle */}
+              <circle cx="250" cy="110" r="20" fill="#FFD600"/>
               
-              {/* Tail */}
-              <path d="M250,210 L240,250 L250,280 L260,250 Z" fill="none" stroke="#FFD600" strokeWidth="2"/>
+              {/* Eye */}
+              <circle cx="245" cy="105" r="3" fill="#0B1E0C"/>
               
-              {/* Wing details */}
-              <line x1="150" y1="120" x2="130" y2="140" stroke="#FFD600" strokeWidth="2" opacity="0.7"/>
-              <line x1="170" y1="125" x2="150" y2="145" stroke="#FFD600" strokeWidth="2" opacity="0.7"/>
-              <line x1="350" y1="120" x2="370" y2="140" stroke="#FFD600" strokeWidth="2" opacity="0.7"/>
-              <line x1="330" y1="125" x2="350" y2="145" stroke="#FFD600" strokeWidth="2" opacity="0.7"/>
+              {/* Beak - simple triangle */}
+              <polygon points="250,100 270,95 260,105" fill="#FFD600"/>
+              
+              {/* Tail - simple diamond */}
+              <polygon points="250,210 240,240 250,260 260,240" fill="#FFD600"/>
+              
+              {/* Wing feather lines for detail */}
+              <line x1="180" y1="120" x2="160" y2="135" stroke="#0B1E0C" strokeWidth="2"/>
+              <line x1="200" y1="125" x2="180" y2="140" stroke="#0B1E0C" strokeWidth="2"/>
+              <line x1="320" y1="120" x2="340" y2="135" stroke="#0B1E0C" strokeWidth="2"/>
+              <line x1="300" y1="125" x2="320" y2="140" stroke="#0B1E0C" strokeWidth="2"/>
             </svg>
           </div>
         </div>
@@ -237,46 +252,48 @@ const Index = () => {
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="zoom-scene">
             <svg className="scene-svg w-[400px] h-[500px]" viewBox="0 0 400 500">
-              {/* Human silhouette */}
-              <path d="M200,50 C190,50 185,60 185,70 C185,80 190,90 200,90 C210,90 215,80 215,70 C215,60 210,50 200,50 Z" 
-                    fill="none" stroke="#FFD600" strokeWidth="3"/>
+              {/* Simplified human figure */}
+              {/* Head */}
+              <circle cx="200" cy="70" r="25" fill="#FFD600"/>
               
               {/* Body */}
-              <rect x="180" y="90" width="40" height="100" fill="none" stroke="#FFD600" strokeWidth="3"/>
+              <rect x="175" y="95" width="50" height="80" fill="#FFD600" rx="5"/>
               
               {/* Arms */}
-              <line x1="180" y1="120" x2="150" y2="140" stroke="#FFD600" strokeWidth="3"/>
-              <line x1="150" y1="140" x2="140" y2="170" stroke="#FFD600" strokeWidth="3"/>
-              <line x1="220" y1="120" x2="250" y2="140" stroke="#FFD600" strokeWidth="3"/>
-              <line x1="250" y1="140" x2="260" y2="170" stroke="#FFD600" strokeWidth="3"/>
+              <rect x="135" y="115" width="40" height="15" fill="#FFD600" rx="7"/>
+              <rect x="225" y="115" width="40" height="15" fill="#FFD600" rx="7"/>
               
               {/* Legs */}
-              <line x1="185" y1="190" x2="175" y2="250" stroke="#FFD600" strokeWidth="3"/>
-              <line x1="175" y1="250" x2="165" y2="300" stroke="#FFD600" strokeWidth="3"/>
-              <line x1="215" y1="190" x2="225" y2="250" stroke="#FFD600" strokeWidth="3"/>
-              <line x1="225" y1="250" x2="235" y2="300" stroke="#FFD600" strokeWidth="3"/>
+              <rect x="180" y="175" width="15" height="70" fill="#FFD600" rx="7"/>
+              <rect x="205" y="175" width="15" height="70" fill="#FFD600" rx="7"/>
               
-              {/* Wind lines (moving) */}
-              <path d="M50,100 Q100,90 150,100" fill="none" stroke="#FFD600" strokeWidth="1" opacity="0.5">
-                <animate attributeName="d" values="M50,100 Q100,90 150,100;M60,105 Q110,95 160,105;M50,100 Q100,90 150,100" dur="3s" repeatCount="indefinite"/>
+              {/* Feet */}
+              <ellipse cx="187" cy="255" rx="12" ry="8" fill="#FFD600"/>
+              <ellipse cx="213" cy="255" rx="12" ry="8" fill="#FFD600"/>
+              
+              {/* Simple environmental elements around the person */}
+              {/* Wind lines */}
+              <path d="M50,120 L120,110" stroke="#FFD600" strokeWidth="3" opacity="0.6">
+                <animate attributeName="d" values="M50,120 L120,110;M60,125 L130,115;M50,120 L120,110" dur="3s" repeatCount="indefinite"/>
               </path>
-              <path d="M250,120 Q300,110 350,120" fill="none" stroke="#FFD600" strokeWidth="1" opacity="0.5">
-                <animate attributeName="d" values="M250,120 Q300,110 350,120;M240,125 Q290,115 340,125;M250,120 Q300,110 350,120" dur="3s" repeatCount="indefinite"/>
+              <path d="M280,130 L350,120" stroke="#FFD600" strokeWidth="3" opacity="0.6">
+                <animate attributeName="d" values="M280,130 L350,120;M270,135 L340,125;M280,130 L350,120" dur="2.5s" repeatCount="indefinite"/>
               </path>
+              
+              {/* Trees */}
+              <rect x="65" y="220" width="8" height="40" fill="#FFD600"/>
+              <circle cx="69" cy="210" r="15" fill="#FFD600"/>
+              
+              <rect x="325" y="240" width="8" height="40" fill="#FFD600"/>
+              <circle cx="329" cy="230" r="15" fill="#FFD600"/>
               
               {/* Water drops */}
-              <circle cx="80" cy="200" r="3" fill="#FFD600" opacity="0.6">
-                <animate attributeName="cy" values="200;220;200" dur="2s" repeatCount="indefinite"/>
+              <circle cx="100" cy="180" r="4" fill="#FFD600" opacity="0.7">
+                <animate attributeName="cy" values="180;200;180" dur="2s" repeatCount="indefinite"/>
               </circle>
-              <circle cx="320" cy="180" r="3" fill="#FFD600" opacity="0.6">
-                <animate attributeName="cy" values="180;200;180" dur="2.5s" repeatCount="indefinite"/>
+              <circle cx="300" cy="160" r="4" fill="#FFD600" opacity="0.7">
+                <animate attributeName="cy" values="160;180;160" dur="2.3s" repeatCount="indefinite"/>
               </circle>
-              
-              {/* Tree elements */}
-              <line x1="70" y1="250" x2="70" y2="300" stroke="#FFD600" strokeWidth="2" opacity="0.4"/>
-              <circle cx="70" cy="245" r="8" fill="none" stroke="#FFD600" strokeWidth="1" opacity="0.4"/>
-              <line x1="330" y1="270" x2="330" y2="320" stroke="#FFD600" strokeWidth="2" opacity="0.4"/>
-              <circle cx="330" cy="265" r="8" fill="none" stroke="#FFD600" strokeWidth="1" opacity="0.4"/>
             </svg>
           </div>
         </div>
