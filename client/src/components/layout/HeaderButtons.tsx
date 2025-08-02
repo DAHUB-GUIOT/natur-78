@@ -273,15 +273,7 @@ export function HeaderButtons({ showPortalButtons = false }: HeaderButtonsProps)
                 </Button>
               </div>
 
-              {/* Festival Info */}
-              <div className="text-center pt-6 border-t border-yellow-400/30">
-                <p className="text-yellow-400 text-lg font-gasoek font-bold tracking-wider">
-                  FESTIVAL NATUR 2025
-                </p>
-                <p className="text-yellow-300 text-sm font-bold tracking-wide">
-                  14-15 NOVIEMBRE • BOGOTÁ
-                </p>
-              </div>
+
             </div>
           </motion.div>
         )}
