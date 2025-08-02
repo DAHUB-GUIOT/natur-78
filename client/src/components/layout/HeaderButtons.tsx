@@ -86,14 +86,14 @@ export function HeaderButtons({ showPortalButtons = false }: HeaderButtonsProps)
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="fixed top-16 left-0 right-0 z-40 bg-black/90 backdrop-blur-lg border-b border-white/20"
+            className="fixed top-16 left-0 right-0 z-40 bg-transparent backdrop-blur-sm border-b border-yellow-400/20"
           >
             <div className="p-4 space-y-3">
               {/* Portal Buttons */}
               <Link to="/auth/empresas" onClick={() => setIsMenuOpen(false)}>
                 <Button 
                   variant="ghost"
-                  className="w-full justify-start text-white hover:text-[#cad95e] hover:bg-white/10"
+                  className="w-full justify-start text-yellow-400 hover:text-yellow-300 hover:bg-yellow-400/10"
                 >
                   <Building2 className="w-4 h-4 mr-3" />
                   Portal Empresas
@@ -103,7 +103,7 @@ export function HeaderButtons({ showPortalButtons = false }: HeaderButtonsProps)
               <Link to="/portal-viajeros" onClick={() => setIsMenuOpen(false)}>
                 <Button 
                   variant="ghost"
-                  className="w-full justify-start text-white hover:text-[#cad95e] hover:bg-white/10"
+                  className="w-full justify-start text-yellow-400 hover:text-yellow-300 hover:bg-yellow-400/10"
                 >
                   <MapPin className="w-4 h-4 mr-3" />
                   Mapa Turismo Sostenible
@@ -111,13 +111,13 @@ export function HeaderButtons({ showPortalButtons = false }: HeaderButtonsProps)
               </Link>
 
               {/* Divider */}
-              <div className="border-t border-white/20 my-3"></div>
+              <div className="border-t border-yellow-400/20 my-3"></div>
 
               {/* Event Information */}
               <Link to="/agenda" onClick={() => setIsMenuOpen(false)}>
                 <Button 
                   variant="ghost"
-                  className="w-full justify-start text-white hover:text-[#cad95e] hover:bg-white/10"
+                  className="w-full justify-start text-yellow-400 hover:text-yellow-300 hover:bg-yellow-400/10"
                 >
                   <Calendar className="w-4 h-4 mr-3" />
                   Agenda Festival
@@ -127,7 +127,7 @@ export function HeaderButtons({ showPortalButtons = false }: HeaderButtonsProps)
               <Link to="/tickets" onClick={() => setIsMenuOpen(false)}>
                 <Button 
                   variant="ghost"
-                  className="w-full justify-start text-white hover:text-[#cad95e] hover:bg-white/10"
+                  className="w-full justify-start text-yellow-400 hover:text-yellow-300 hover:bg-yellow-400/10"
                 >
                   <Ticket className="w-4 h-4 mr-3" />
                   Entradas
@@ -135,11 +135,11 @@ export function HeaderButtons({ showPortalButtons = false }: HeaderButtonsProps)
               </Link>
 
               {/* About Section */}
-              <div className="border-t border-white/20 my-3"></div>
+              <div className="border-t border-yellow-400/20 my-3"></div>
               
               <Button 
                 variant="ghost"
-                className="w-full justify-start text-white hover:text-[#cad95e] hover:bg-white/10"
+                className="w-full justify-start text-yellow-400 hover:text-yellow-300 hover:bg-yellow-400/10"
                 onClick={() => setIsMenuOpen(false)}
               >
                 <Info className="w-4 h-4 mr-3" />
@@ -148,7 +148,7 @@ export function HeaderButtons({ showPortalButtons = false }: HeaderButtonsProps)
 
               <Button 
                 variant="ghost"
-                className="w-full justify-start text-white hover:text-[#cad95e] hover:bg-white/10"
+                className="w-full justify-start text-yellow-400 hover:text-yellow-300 hover:bg-yellow-400/10"
                 onClick={() => setIsMenuOpen(false)}
               >
                 <Users className="w-4 h-4 mr-3" />
@@ -157,7 +157,7 @@ export function HeaderButtons({ showPortalButtons = false }: HeaderButtonsProps)
 
               <Button 
                 variant="ghost"
-                className="w-full justify-start text-white hover:text-[#cad95e] hover:bg-white/10"
+                className="w-full justify-start text-yellow-400 hover:text-yellow-300 hover:bg-yellow-400/10"
                 onClick={() => setIsMenuOpen(false)}
               >
                 <Mail className="w-4 h-4 mr-3" />
@@ -165,38 +165,38 @@ export function HeaderButtons({ showPortalButtons = false }: HeaderButtonsProps)
               </Button>
 
               {/* Social Links */}
-              <div className="border-t border-white/20 my-3"></div>
+              <div className="border-t border-yellow-400/20 my-3"></div>
               
               <div className="flex justify-center space-x-4">
                 <Button 
                   variant="ghost"
                   size="icon"
-                  className="text-white hover:text-[#cad95e] hover:bg-white/10"
+                  className="text-yellow-400 hover:text-yellow-300 hover:bg-yellow-400/10"
                 >
                   <Instagram className="w-4 h-4" />
                 </Button>
                 <Button 
                   variant="ghost"
                   size="icon"
-                  className="text-white hover:text-[#cad95e] hover:bg-white/10"
+                  className="text-yellow-400 hover:text-yellow-300 hover:bg-yellow-400/10"
                 >
                   <Twitter className="w-4 h-4" />
                 </Button>
                 <Button 
                   variant="ghost"
                   size="icon"
-                  className="text-white hover:text-[#cad95e] hover:bg-white/10"
+                  className="text-yellow-400 hover:text-yellow-300 hover:bg-yellow-400/10"
                 >
                   <Facebook className="w-4 h-4" />
                 </Button>
               </div>
 
               {/* Festival Info */}
-              <div className="text-center pt-4 border-t border-white/20">
-                <p className="text-white/80 text-xs">
+              <div className="text-center pt-4 border-t border-yellow-400/20">
+                <p className="text-yellow-400/90 text-xs font-medium">
                   Festival NATUR 2025
                 </p>
-                <p className="text-white/60 text-xs">
+                <p className="text-yellow-400/70 text-xs">
                   14-15 Noviembre • Bogotá
                 </p>
               </div>
