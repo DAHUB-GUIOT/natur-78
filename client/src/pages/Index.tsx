@@ -7,7 +7,6 @@ const Index = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const worldMapRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
-  const yellowDotRef = useRef<HTMLDivElement>(null);
   const mapInstance = useRef<mapboxgl.Map | null>(null);
   const hasZoomedToColombia = useRef(false);
 
@@ -53,16 +52,7 @@ const Index = () => {
         const textOpacity = Math.max(0, 1 - scrollProgress * 1.5);
         textRef.current.style.opacity = textOpacity.toString();
 
-        // Yellow dot scaling animation with anti-pixelation
-        if (yellowDotRef.current) {
-          const dotScale = 1 + scrollProgress * 50;
-          const time = Date.now() * 0.001;
-          const sinusoidalOffset = Math.sin(time * 2) * 5;
-          
-          yellowDotRef.current.style.transform = `translate(calc(-50% + ${sinusoidalOffset}px), -50%) scale(${dotScale})`;
-          yellowDotRef.current.style.opacity = Math.max(0, 1 - scrollProgress * 1.2).toString();
-          yellowDotRef.current.style.textShadow = `0 0 ${10 + scrollProgress * 20}px rgba(255, 230, 0, 0.8)`;
-        }
+
 
         // Zoom to Colombia when scroll reaches certain point
         if (scrollProgress > 0.6 && mapInstance.current && !hasZoomedToColombia.current) {
@@ -121,16 +111,7 @@ const Index = () => {
           </p>
         </div>
 
-        {/* Yellow Dot Animation */}
-        <div 
-          ref={yellowDotRef}
-          className="absolute top-1/2 left-1/2 w-4 h-4 bg-[#ffe600] rounded-full transform -translate-x-1/2 -translate-y-1/2 z-30"
-          style={{
-            filter: 'drop-shadow(0 0 10px rgba(255, 230, 0, 0.8))',
-            transformOrigin: 'center',
-            backfaceVisibility: 'hidden',
-          }}
-        />
+
       </div>
 
       {/* Extended Spacer for Scroll Effect */}
