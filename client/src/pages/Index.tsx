@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { HeaderButtons } from "@/components/layout/HeaderButtons";
+import { Globe, Map, Bird, User, Heart, Atom, BookOpen, Cloud, Mountain, Trees, Waves } from "lucide-react";
 
 const Index = () => {
   const sectionsRef = useRef<HTMLElement[]>([]);
@@ -153,36 +154,83 @@ const Index = () => {
           stroke-dasharray: 0 100;
           transition: stroke-dasharray 0.3s ease;
         }
+
+        @keyframes float {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-10px); }
+        }
+
+        @keyframes float-delayed {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-15px); }
+        }
+
+        @keyframes float-slow {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-8px); }
+        }
+
+        @keyframes bounce-slow {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-20px); }
+        }
+
+        .animate-float {
+          animation: float 3s ease-in-out infinite;
+        }
+
+        .animate-float-delayed {
+          animation: float-delayed 4s ease-in-out infinite;
+          animation-delay: 1s;
+        }
+
+        .animate-float-slow {
+          animation: float-slow 5s ease-in-out infinite;
+        }
+
+        .animate-bounce-slow {
+          animation: bounce-slow 2s ease-in-out infinite;
+        }
+
+        .animate-spin-slow {
+          animation: spin 20s linear infinite;
+        }
       `}</style>
 
       {/* Scene 1: EL MUNDO 🌍 */}
       <section ref={addToRefs} className="min-h-screen flex items-center justify-center relative parallax-scene">
         <div className="relative z-10">
-          <svg className="scene-svg w-[400px] h-[400px]" viewBox="0 0 400 400">
-            <g className="planet">
-              {/* Earth outline */}
-              <circle cx="200" cy="200" r="120" fill="none" stroke="#ffe600" strokeWidth="2"/>
+          <div className="scene-svg relative w-[400px] h-[400px] flex items-center justify-center">
+            <div className="planet relative">
+              <Globe size={240} color="#ffe600" strokeWidth={2} className="animate-spin-slow" />
               
-              {/* Continents */}
-              <path d="M140,160 L180,150 L190,180 L160,190 Z" fill="none" stroke="#ffe600" strokeWidth="1.5"/>
-              <path d="M180,220 L220,210 L230,240 L200,250 Z" fill="none" stroke="#ffe600" strokeWidth="1.5"/>
-              <path d="M240,170 L270,160 L280,190 L250,200 Z" fill="none" stroke="#ffe600" strokeWidth="1.5"/>
-            </g>
+              {/* Overlay pollution indicators */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="absolute top-8 left-16">
+                  <Cloud size={32} color="#ffe600" className="opacity-60 animate-pulse" />
+                </div>
+                <div className="absolute bottom-12 right-20">
+                  <Cloud size={24} color="#ffe600" className="opacity-40 animate-bounce" />
+                </div>
+                <div className="absolute top-16 right-12">
+                  <Waves size={20} color="#ffe600" className="opacity-50" />
+                </div>
+              </div>
+            </div>
             
-            <g className="clouds">
-              {/* Cloud 1 */}
-              <path d="M80,120 Q90,110 100,115 Q115,105 130,115 Q140,110 150,120 Q145,130 130,125 Q115,135 100,125 Q85,130 80,120" 
-                    fill="none" stroke="#ffe600" strokeWidth="1" opacity="0.4"/>
-              
-              {/* Cloud 2 */}
-              <path d="M250,100 Q260,90 270,95 Q285,85 300,95 Q310,90 320,100 Q315,110 300,105 Q285,115 270,105 Q255,110 250,100" 
-                    fill="none" stroke="#ffe600" strokeWidth="1" opacity="0.5"/>
-              
-              {/* Cloud 3 */}
-              <path d="M320,250 Q330,240 340,245 Q355,235 370,245 Q380,240 390,250 Q385,260 370,255 Q355,265 340,255 Q325,260 320,250" 
-                    fill="none" stroke="#ffe600" strokeWidth="1" opacity="0.3"/>
-            </g>
-          </svg>
+            <div className="clouds absolute inset-0">
+              {/* Floating cloud elements */}
+              <div className="absolute top-20 left-8 animate-float">
+                <Cloud size={28} color="#ffe600" className="opacity-30" />
+              </div>
+              <div className="absolute bottom-16 left-12 animate-float-delayed">
+                <Cloud size={20} color="#ffe600" className="opacity-25" />
+              </div>
+              <div className="absolute top-32 right-8 animate-float-slow">
+                <Cloud size={24} color="#ffe600" className="opacity-35" />
+              </div>
+            </div>
+          </div>
         </div>
         
         <div className="absolute bottom-20 left-0 right-0 scene-text text-center px-6">
@@ -199,26 +247,38 @@ const Index = () => {
       {/* Scene 2: COLOMBIA 🗺️ */}
       <section ref={addToRefs} className="min-h-screen flex items-center justify-center relative parallax-scene">
         <div className="relative z-10">
-          <svg className="scene-svg w-[350px] h-[450px]" viewBox="0 0 300 400">
-            {/* Colombia map outline - fragmented */}
-            <path className="map-fragment" d="M150,50 L200,40 L240,60 L270,100 L280,140" 
-                  fill="none" stroke="#ffe600" strokeWidth="3"/>
-            <path className="map-fragment" d="M280,140 L275,180 L270,220 L260,260" 
-                  fill="none" stroke="#ffe600" strokeWidth="3"/>
-            <path className="map-fragment" d="M260,260 L240,300 L200,320 L150,330" 
-                  fill="none" stroke="#ffe600" strokeWidth="3"/>
-            <path className="map-fragment" d="M150,330 L100,320 L60,300 L40,260" 
-                  fill="none" stroke="#ffe600" strokeWidth="3"/>
-            <path className="map-fragment" d="M40,260 L30,220 L35,180 L50,140" 
-                  fill="none" stroke="#ffe600" strokeWidth="3"/>
-            <path className="map-fragment" d="M50,140 L80,100 L120,70 L150,50" 
-                  fill="none" stroke="#ffe600" strokeWidth="3"/>
-            
-            {/* COLOMBIA text */}
-            <text x="150" y="380" textAnchor="middle" className="brutalist-text" fontSize="24" fill="#ffe600">
-              COLOMBIA
-            </text>
-          </svg>
+          <div className="scene-svg relative w-[350px] h-[450px] flex items-center justify-center">
+            <div className="relative">
+              <Map size={280} color="#ffe600" strokeWidth={2.5} className="animate-pulse" />
+              
+              {/* Biodiversity indicators around the map */}
+              <div className="absolute inset-0">
+                <div className="map-fragment absolute top-8 left-12 animate-bounce-slow">
+                  <Trees size={24} color="#ffe600" className="opacity-70" />
+                </div>
+                <div className="map-fragment absolute top-16 right-8 animate-float">
+                  <Mountain size={20} color="#ffe600" className="opacity-60" />
+                </div>
+                <div className="map-fragment absolute bottom-20 left-8 animate-pulse">
+                  <Waves size={18} color="#ffe600" className="opacity-50" />
+                </div>
+                <div className="map-fragment absolute bottom-12 right-12 animate-float-delayed">
+                  <Trees size={16} color="#ffe600" className="opacity-65" />
+                </div>
+                <div className="map-fragment absolute top-1/2 left-4 animate-bounce">
+                  <Mountain size={22} color="#ffe600" className="opacity-55" />
+                </div>
+                <div className="map-fragment absolute top-1/3 right-4 animate-float-slow">
+                  <Trees size={20} color="#ffe600" className="opacity-60" />
+                </div>
+              </div>
+              
+              {/* COLOMBIA text overlay */}
+              <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2">
+                <h3 className="brutalist-text text-2xl text-[#ffe600]">COLOMBIA</h3>
+              </div>
+            </div>
+          </div>
         </div>
         
         <div className="absolute bottom-20 left-0 right-0 scene-text text-center px-6">
@@ -235,28 +295,30 @@ const Index = () => {
       {/* Scene 3: AVE NATIVA 🕊️ */}
       <section ref={addToRefs} className="min-h-screen flex items-center justify-center relative parallax-scene">
         <div className="relative z-10">
-          <svg className="scene-svg w-[500px] h-[300px]" viewBox="0 0 500 300">
-            {/* Bird silhouette */}
-            {/* Left wing */}
-            <path className="wing" d="M250,120 L150,100 L100,130 L120,150 L180,160 L220,140 Z" 
-                  fill="none" stroke="#ffe600" strokeWidth="3" style={{transformOrigin: '180px 140px'}}/>
-            
-            {/* Right wing */}
-            <path className="wing" d="M250,120 L350,100 L400,130 L380,150 L320,160 L280,140 Z" 
-                  fill="none" stroke="#ffe600" strokeWidth="3" style={{transformOrigin: '320px 140px'}}/>
-            
-            {/* Body */}
-            <ellipse cx="250" cy="160" rx="15" ry="35" fill="none" stroke="#ffe600" strokeWidth="3"/>
-            
-            {/* Head */}
-            <circle cx="250" cy="110" r="12" fill="none" stroke="#ffe600" strokeWidth="3"/>
-            
-            {/* Beak */}
-            <path d="M250,100 L265,95 L260,105" fill="none" stroke="#ffe600" strokeWidth="2"/>
-            
-            {/* Tail */}
-            <path d="M250,195 L240,225 L250,245 L260,225 Z" fill="none" stroke="#ffe600" strokeWidth="2"/>
-          </svg>
+          <div className="scene-svg relative w-[500px] h-[300px] flex items-center justify-center">
+            <div className="relative">
+              <Bird size={200} color="#ffe600" strokeWidth={2} className="wing animate-pulse" />
+              
+              {/* Flying motion trail */}
+              <div className="absolute -top-4 -left-8 animate-float">
+                <div className="w-2 h-2 bg-[#ffe600] rounded-full opacity-30"></div>
+              </div>
+              <div className="absolute -top-8 -left-16 animate-float-delayed">
+                <div className="w-1 h-1 bg-[#ffe600] rounded-full opacity-20"></div>
+              </div>
+              <div className="absolute -top-12 -left-24 animate-float-slow">
+                <div className="w-1 h-1 bg-[#ffe600] rounded-full opacity-15"></div>
+              </div>
+              
+              {/* Wind currents */}
+              <div className="absolute top-8 right-12 animate-pulse">
+                <Waves size={16} color="#ffe600" className="opacity-30 rotate-45" />
+              </div>
+              <div className="absolute bottom-8 left-12 animate-float">
+                <Waves size={12} color="#ffe600" className="opacity-25 rotate-12" />
+              </div>
+            </div>
+          </div>
         </div>
         
         <div className="absolute bottom-20 left-0 right-0 scene-text text-center px-6">
@@ -273,35 +335,29 @@ const Index = () => {
       {/* Scene 4: PERSONA 🧍 */}
       <section ref={addToRefs} className="min-h-screen flex items-center justify-center relative parallax-scene">
         <div className="relative z-10">
-          <svg className="scene-svg w-[300px] h-[400px]" viewBox="0 0 300 400">
-            {/* Face wireframe */}
-            <g transform="translate(150,200)">
-              {/* Face outline */}
-              <ellipse className="face-line" cx="0" cy="0" rx="60" ry="80" fill="none" stroke="#ffe600" strokeWidth="2"/>
+          <div className="scene-svg relative w-[300px] h-[400px] flex items-center justify-center">
+            <div className="relative">
+              <User size={180} color="#ffe600" strokeWidth={2} className="face-line animate-pulse" />
               
-              {/* Eyes */}
-              <circle className="face-line" cx="-20" cy="-20" r="8" fill="none" stroke="#ffe600" strokeWidth="2"/>
-              <circle className="face-line" cx="20" cy="-20" r="8" fill="none" stroke="#ffe600" strokeWidth="2"/>
+              {/* Geometric connection lines emanating from center */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="face-line absolute w-16 h-px bg-[#ffe600] opacity-40 rotate-45 animate-pulse"></div>
+                <div className="face-line absolute w-16 h-px bg-[#ffe600] opacity-40 -rotate-45 animate-pulse"></div>
+                <div className="face-line absolute w-px h-16 bg-[#ffe600] opacity-40 animate-pulse"></div>
+                <div className="face-line absolute w-16 h-px bg-[#ffe600] opacity-40 animate-pulse"></div>
+                <div className="face-line absolute w-20 h-px bg-[#ffe600] opacity-30 rotate-12 animate-float"></div>
+                <div className="face-line absolute w-20 h-px bg-[#ffe600] opacity-30 -rotate-12 animate-float-delayed"></div>
+              </div>
               
-              {/* Pupils */}
-              <circle cx="-20" cy="-20" r="3" fill="#ffe600"/>
-              <circle cx="20" cy="-20" r="3" fill="#ffe600"/>
-              
-              {/* Nose */}
-              <line className="face-line" x1="0" y1="-5" x2="0" y2="15" stroke="#ffe600" strokeWidth="2"/>
-              
-              {/* Mouth */}
-              <path className="face-line" d="M-15,25 Q0,35 15,25" fill="none" stroke="#ffe600" strokeWidth="2"/>
-              
-              {/* Geometric lines from center */}
-              <line className="face-line" x1="0" y1="0" x2="-30" y2="-30" stroke="#ffe600" strokeWidth="1" opacity="0.6"/>
-              <line className="face-line" x1="0" y1="0" x2="30" y2="-30" stroke="#ffe600" strokeWidth="1" opacity="0.6"/>
-              <line className="face-line" x1="0" y1="0" x2="-40" y2="0" stroke="#ffe600" strokeWidth="1" opacity="0.6"/>
-              <line className="face-line" x1="0" y1="0" x2="40" y2="0" stroke="#ffe600" strokeWidth="1" opacity="0.6"/>
-              <line className="face-line" x1="0" y1="0" x2="0" y2="-50" stroke="#ffe600" strokeWidth="1" opacity="0.6"/>
-              <line className="face-line" x1="0" y1="0" x2="0" y2="50" stroke="#ffe600" strokeWidth="1" opacity="0.6"/>
-            </g>
-          </svg>
+              {/* Cultural symbols around the person */}
+              <div className="absolute -top-4 -left-8 animate-float">
+                <div className="w-2 h-2 border border-[#ffe600] rounded-full opacity-50"></div>
+              </div>
+              <div className="absolute -top-8 right-4 animate-float-delayed">
+                <div className="w-1 h-1 bg-[#ffe600] rounded-full opacity-40"></div>
+              </div>
+            </div>
+          </div>
         </div>
         
         <div className="absolute bottom-20 left-0 right-0 scene-text text-center px-6">
@@ -318,22 +374,25 @@ const Index = () => {
       {/* Scene 5: CORAZÓN ❤️ */}
       <section ref={addToRefs} className="min-h-screen flex items-center justify-center relative parallax-scene">
         <div className="relative z-10">
-          <svg className="scene-svg w-[300px] h-[300px]" viewBox="0 0 300 300">
-            {/* Anatomical heart */}
-            <path d="M150,80 C120,50 80,60 80,100 C80,140 150,200 150,200 C150,200 220,140 220,100 C220,60 180,50 150,80 Z" 
-                  fill="none" stroke="#ffe600" strokeWidth="3"/>
-            
-            {/* Heart chambers */}
-            <path d="M150,100 C130,85 110,95 110,115 C110,135 150,170 150,170" 
-                  fill="none" stroke="#ffe600" strokeWidth="2" opacity="0.7"/>
-            <path d="M150,100 C170,85 190,95 190,115 C190,135 150,170 150,170" 
-                  fill="none" stroke="#ffe600" strokeWidth="2" opacity="0.7"/>
-            
-            {/* Arteries */}
-            <line x1="150" y1="80" x2="150" y2="60" stroke="#ffe600" strokeWidth="2"/>
-            <line x1="120" y1="90" x2="100" y2="80" stroke="#ffe600" strokeWidth="2"/>
-            <line x1="180" y1="90" x2="200" y2="80" stroke="#ffe600" strokeWidth="2"/>
-          </svg>
+          <div className="scene-svg relative w-[300px] h-[300px] flex items-center justify-center">
+            <div className="relative">
+              <Heart size={160} color="#ffe600" strokeWidth={3} className="animate-pulse" style={{animationDuration: '2s'}} />
+              
+              {/* Heartbeat lines */}
+              <div className="absolute -left-20 top-1/2 animate-pulse">
+                <div className="w-16 h-px bg-[#ffe600] opacity-60"></div>
+              </div>
+              <div className="absolute -right-20 top-1/2 animate-pulse">
+                <div className="w-16 h-px bg-[#ffe600] opacity-60"></div>
+              </div>
+              
+              {/* Pulse rings */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="absolute w-40 h-40 border border-[#ffe600] rounded-full opacity-20 animate-ping"></div>
+                <div className="absolute w-52 h-52 border border-[#ffe600] rounded-full opacity-15 animate-ping" style={{animationDelay: '0.5s'}}></div>
+              </div>
+            </div>
+          </div>
         </div>
         
         <div className="absolute bottom-20 left-0 right-0 scene-text text-center px-6">
@@ -350,20 +409,22 @@ const Index = () => {
       {/* Scene 6: ÁTOMO ⚛️ */}
       <section ref={addToRefs} className="min-h-screen flex items-center justify-center relative parallax-scene">
         <div className="relative z-10">
-          <svg className="scene-svg w-[400px] h-[400px]" viewBox="0 0 400 400">
-            {/* Nucleus */}
-            <circle cx="200" cy="200" r="8" fill="#ffe600"/>
-            
-            {/* Electron orbits */}
-            <ellipse className="orbit" cx="200" cy="200" rx="80" ry="30" fill="none" stroke="#ffe600" strokeWidth="2" opacity="0.7"/>
-            <ellipse className="orbit" cx="200" cy="200" rx="30" ry="80" fill="none" stroke="#ffe600" strokeWidth="2" opacity="0.7"/>
-            <ellipse className="orbit" cx="200" cy="200" rx="60" ry="60" fill="none" stroke="#ffe600" strokeWidth="2" opacity="0.7"/>
-            
-            {/* Electrons */}
-            <circle cx="280" cy="200" r="4" fill="#ffe600"/>
-            <circle cx="200" cy="120" r="4" fill="#ffe600"/>
-            <circle cx="260" cy="240" r="4" fill="#ffe600"/>
-          </svg>
+          <div className="scene-svg relative w-[400px] h-[400px] flex items-center justify-center">
+            <div className="relative">
+              <Atom size={200} color="#ffe600" strokeWidth={2} className="orbit animate-spin" style={{animationDuration: '8s'}} />
+              
+              {/* Orbital electrons */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="absolute w-32 h-32 border border-[#ffe600] rounded-full opacity-40 orbit animate-spin" style={{animationDuration: '4s'}}></div>
+                <div className="absolute w-24 h-24 border border-[#ffe600] rounded-full opacity-50 orbit animate-spin" style={{animationDuration: '6s', animationDirection: 'reverse'}}></div>
+                
+                {/* Electron dots */}
+                <div className="absolute top-12 w-2 h-2 bg-[#ffe600] rounded-full animate-spin" style={{animationDuration: '3s'}}></div>
+                <div className="absolute bottom-12 w-2 h-2 bg-[#ffe600] rounded-full animate-spin" style={{animationDuration: '5s'}}></div>
+                <div className="absolute left-12 w-2 h-2 bg-[#ffe600] rounded-full animate-spin" style={{animationDuration: '4s'}}></div>
+              </div>
+            </div>
+          </div>
         </div>
         
         <div className="absolute bottom-20 left-0 right-0 scene-text text-center px-6">
@@ -380,21 +441,33 @@ const Index = () => {
       {/* Scene 7: INTRO A LAS 50 HISTORIAS ✨ */}
       <section ref={addToRefs} className="min-h-screen flex items-center justify-center relative parallax-scene">
         <div className="relative z-10">
-          <svg className="scene-svg w-[400px] h-[300px]" viewBox="0 0 400 300">
-            {/* Book/wave curves */}
-            <path className="story-curve" d="M100,150 Q200,100 300,150" fill="none" stroke="#ffe600" strokeWidth="3" opacity="0.8"/>
-            <path className="story-curve" d="M100,150 Q200,120 300,150" fill="none" stroke="#ffe600" strokeWidth="2" opacity="0.6"/>
-            <path className="story-curve" d="M100,150 Q200,180 300,150" fill="none" stroke="#ffe600" strokeWidth="2" opacity="0.6"/>
-            
-            {/* Central binding */}
-            <line x1="200" y1="120" x2="200" y2="180" stroke="#ffe600" strokeWidth="4"/>
-            
-            {/* Decorative dots */}
-            <circle cx="150" cy="130" r="2" fill="#ffe600" opacity="0.7"/>
-            <circle cx="250" cy="130" r="2" fill="#ffe600" opacity="0.7"/>
-            <circle cx="150" cy="170" r="2" fill="#ffe600" opacity="0.7"/>
-            <circle cx="250" cy="170" r="2" fill="#ffe600" opacity="0.7"/>
-          </svg>
+          <div className="scene-svg relative w-[400px] h-[300px] flex items-center justify-center">
+            <div className="relative">
+              <BookOpen size={180} color="#ffe600" strokeWidth={2.5} className="story-curve animate-pulse" />
+              
+              {/* Story particles emanating */}
+              <div className="absolute inset-0">
+                <div className="story-curve absolute top-8 left-12 animate-float">
+                  <div className="w-1 h-1 bg-[#ffe600] rounded-full opacity-60"></div>
+                </div>
+                <div className="story-curve absolute top-16 right-8 animate-float-delayed">
+                  <div className="w-1 h-1 bg-[#ffe600] rounded-full opacity-50"></div>
+                </div>
+                <div className="story-curve absolute bottom-12 left-8 animate-float-slow">
+                  <div className="w-1 h-1 bg-[#ffe600] rounded-full opacity-70"></div>
+                </div>
+                <div className="story-curve absolute bottom-16 right-12 animate-float">
+                  <div className="w-1 h-1 bg-[#ffe600] rounded-full opacity-45"></div>
+                </div>
+                <div className="story-curve absolute top-1/3 left-4 animate-pulse">
+                  <div className="w-1 h-1 bg-[#ffe600] rounded-full opacity-55"></div>
+                </div>
+                <div className="story-curve absolute bottom-1/3 right-4 animate-float-delayed">
+                  <div className="w-1 h-1 bg-[#ffe600] rounded-full opacity-65"></div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         
         <div className="absolute bottom-20 left-0 right-0 scene-text text-center px-6">
