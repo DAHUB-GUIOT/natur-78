@@ -7,53 +7,13 @@ const Index = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const worldMapRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
+  const yellowDotRef = useRef<HTMLDivElement>(null);
   const mapInstance = useRef<mapboxgl.Map | null>(null);
   const hasZoomedToColombia = useRef(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (!worldMapRef.current || !textRef.current || !containerRef.current) return;
-
-      const scrollY = window.scrollY;
-      const maxScroll = document.body.scrollHeight - window.innerHeight;
-      const scrollProgress = Math.min(scrollY / (maxScroll * 0.5), 1);
-
-      // World map scaling and zoom effect with rotation
-      const scale = 1 + scrollProgress * 25;
-      const rotation = scrollProgress * 360;
-      worldMapRef.current.style.transform = `translate(-50%, -50%) scale(${scale}) rotate(${rotation}deg)`;
-      worldMapRef.current.style.filter = `brightness(${1 + scrollProgress * 0.3}) contrast(${1 + scrollProgress * 0.2})`;
-
-      // Main text fade out
-      const textOpacity = Math.max(0, 1 - scrollProgress * 1.5);
-      textRef.current.style.opacity = textOpacity.toString();
-
-      // Zoom to Colombia when scroll reaches certain point
-      if (scrollProgress > 0.6 && mapInstance.current && !hasZoomedToColombia.current) {
-        hasZoomedToColombia.current = true;
-        mapInstance.current.flyTo({
-          center: [-74.2973, 4.5709], // Precise center of Colombia (Bogotá coordinates)
-          zoom: 6.5, // Higher zoom for better detail
-          pitch: 45, // More dramatic 3D angle
-          bearing: 0, // Straighten rotation for Colombia view
-          duration: 4000,
-          essential: true,
-          curve: 1.5, // More dramatic curve
-        });
-      }
-
-      // Background transition
-      if (scrollProgress > 0.7) {
-        containerRef.current.style.backgroundColor = '#ffe600';
-        textRef.current.style.color = '#0f2f22';
-      } else {
-        containerRef.current.style.backgroundColor = '#0f2f22';
-        textRef.current.style.color = '#ffe600';
-      }
-    };
-
     // Initialize Single Map Instance
-    const initializeWorldMap = () => {
+    const initializeMap = () => {
       if (!worldMapRef.current || mapInstance.current) return;
 
       mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
@@ -73,80 +33,112 @@ const Index = () => {
       mapInstance.current.on('load', () => {
         if (!mapInstance.current) return;
 
-        // Add Colombia highlighting immediately with fallback coordinates
-        if (mapInstance.current) {
-          const colombiaGeoJSON = {
-            type: 'Feature',
-            properties: { name: 'Colombia' },
-            geometry: {
-              type: 'Polygon',
-              coordinates: [[
-                [-81.8, 13.4], [-79.0, 12.6], [-77.2, 12.0], [-75.8, 11.8],
-                [-74.0, 11.5], [-72.2, 11.2], [-70.9, 11.8], [-69.9, 12.2],
-                [-69.2, 10.9], [-67.8, 10.8], [-67.1, 8.7], [-67.3, 6.1],
-                [-67.8, 4.5], [-67.9, 3.0], [-67.3, 2.0], [-66.9, 1.2],
-                [-66.3, 0.7], [-67.0, 0.0], [-67.8, -0.7], [-69.8, -0.9],
-                [-70.0, -0.2], [-70.9, 0.9], [-72.0, 0.1], [-73.3, 0.9],
-                [-74.5, 0.1], [-75.4, 0.1], [-76.3, 0.9], [-77.4, 0.4],
-                [-78.2, 1.2], [-78.6, 2.3], [-79.1, 2.9], [-79.9, 4.5],
-                [-80.5, 5.5], [-81.7, 8.9], [-81.8, 13.4]
-              ]]
-            }
-          };
+        // Add Colombia highlighting with precise outline
+        const colombiaGeoJSON = {
+          type: 'Feature',
+          properties: { name: 'Colombia' },
+          geometry: {
+            type: 'Polygon',
+            coordinates: [[
+              [-81.7, 13.3], [-79.0, 12.6], [-77.2, 12.0], [-75.8, 11.8],
+              [-74.0, 11.5], [-72.2, 11.2], [-70.9, 11.8], [-69.9, 12.2],
+              [-69.2, 10.9], [-67.8, 10.8], [-67.1, 8.7], [-67.3, 6.1],
+              [-67.8, 4.5], [-67.9, 3.0], [-67.3, 2.0], [-66.9, 1.2],
+              [-66.3, 0.7], [-67.0, 0.0], [-67.8, -0.7], [-69.8, -0.9],
+              [-70.0, -0.2], [-70.9, 0.9], [-72.0, 0.1], [-73.3, 0.9],
+              [-74.5, 0.1], [-75.4, 0.1], [-76.3, 0.9], [-77.4, 0.4],
+              [-78.2, 1.2], [-78.6, 2.3], [-79.1, 2.9], [-79.9, 4.5],
+              [-80.5, 5.5], [-81.7, 8.9], [-81.7, 13.3]
+            ]]
+          }
+        };
 
-          mapInstance.current.addSource('colombia', {
-            type: 'geojson',
-            data: colombiaGeoJSON
-          });
+        mapInstance.current.addSource('colombia', {
+          type: 'geojson',
+          data: colombiaGeoJSON
+        });
 
-          // Add Colombia fill layer first
-          mapInstance.current.addLayer({
-            id: 'colombia-fill',
-            type: 'fill',
-            source: 'colombia',
-            layout: {},
-            paint: {
-              'fill-color': '#cad95e', // NATUR brand green
-              'fill-opacity': 0.6,
-            },
-          });
+        // Add Colombia fill layer first
+        mapInstance.current.addLayer({
+          id: 'colombia-fill',
+          type: 'fill',
+          source: 'colombia',
+          layout: {},
+          paint: {
+            'fill-color': '#cad95e', // NATUR brand green
+            'fill-opacity': 0.8,
+          },
+        });
 
-          // Add Colombia outline layer on top
-          mapInstance.current.addLayer({
-            id: 'colombia-outline',
-            type: 'line',
-            source: 'colombia',
-            layout: {},
-            paint: {
-              'line-color': '#ffe600', // Yellow outline for better visibility
-              'line-width': 3,
-              'line-opacity': 1,
-            },
-          });
-        }
-
-
+        // Add Colombia outline layer on top
+        mapInstance.current.addLayer({
+          id: 'colombia-outline',
+          type: 'line',
+          source: 'colombia',
+          layout: {},
+          paint: {
+            'line-color': '#ffe600', // Yellow outline for better visibility
+            'line-width': 3,
+            'line-opacity': 1,
+          },
+        });
       });
     };
 
-    // Add content height for scrolling
-    if (containerRef.current) {
-      containerRef.current.style.minHeight = '400vh';
-    }
+    initializeMap();
+    
+    const setupScrollHandling = () => {
+      const handleScroll = () => {
+        if (!worldMapRef.current || !textRef.current) return;
 
-    window.addEventListener('scroll', handleScroll);
-    handleScroll();
+        const scrollY = window.scrollY;
+        const maxScroll = document.body.scrollHeight - window.innerHeight;
+        const scrollProgress = Math.min(scrollY / (maxScroll * 0.5), 1);
 
-    // Initialize map after a short delay to ensure DOM is ready
-    setTimeout(initializeWorldMap, 1000);
+        // World map scaling and zoom effect with rotation
+        const scale = 1 + scrollProgress * 25;
+        const rotation = scrollProgress * 360;
+        worldMapRef.current.style.transform = `translate(-50%, -50%) scale(${scale}) rotate(${rotation}deg)`;
+        worldMapRef.current.style.filter = `brightness(${1 + scrollProgress * 0.3}) contrast(${1 + scrollProgress * 0.2})`;
 
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      if (mapInstance.current) {
-        mapInstance.current.remove();
-        mapInstance.current = null;
-      }
+        // Main text fade out
+        const textOpacity = Math.max(0, 1 - scrollProgress * 1.5);
+        textRef.current.style.opacity = textOpacity.toString();
+
+        // Yellow dot scaling animation with anti-pixelation
+        if (yellowDotRef.current) {
+          const dotScale = 1 + scrollProgress * 50;
+          const time = Date.now() * 0.001;
+          const sinusoidalOffset = Math.sin(time * 2) * 5;
+          
+          yellowDotRef.current.style.transform = `translate(calc(-50% + ${sinusoidalOffset}px), -50%) scale(${dotScale})`;
+          yellowDotRef.current.style.opacity = Math.max(0, 1 - scrollProgress * 1.2).toString();
+          yellowDotRef.current.style.textShadow = `0 0 ${10 + scrollProgress * 20}px rgba(255, 230, 0, 0.8)`;
+        }
+
+        // Zoom to Colombia when scroll reaches certain point
+        if (scrollProgress > 0.6 && mapInstance.current && !hasZoomedToColombia.current) {
+          hasZoomedToColombia.current = true;
+          mapInstance.current.flyTo({
+            center: [-74.2973, 4.5709], // Precise center of Colombia (Bogotá coordinates)
+            zoom: 6.5, // Higher zoom for better detail
+            pitch: 45, // More dramatic 3D angle
+            bearing: 0, // Straighten rotation for Colombia view
+            duration: 4000,
+            essential: true,
+            curve: 1.5, // More dramatic curve
+          });
+        }
+      };
+
+      window.addEventListener('scroll', handleScroll);
+      handleScroll(); // Initial call
+
+      return () => window.removeEventListener('scroll', handleScroll);
     };
+
+    const cleanup = setupScrollHandling();
+    return cleanup;
   }, []);
 
   return (
@@ -166,26 +158,35 @@ const Index = () => {
         }}
       />
 
-      {/* Main Text Content */}
-      <div ref={textRef} className="fixed inset-0 flex items-center justify-center text-[#ffe600] transition-opacity duration-300 z-10 pointer-events-none">
-        <div className="text-center max-w-4xl px-6">
-          <h1 className="text-6xl md:text-8xl lg:text-9xl font-gasoek font-bold mb-12 uppercase tracking-wider">
-            FESTIVAL<br/>NATUR
+      {/* Main Content Container */}
+      <div className="relative z-10 min-h-screen flex flex-col items-center justify-center px-4">
+        {/* Main Title Section */}
+        <div ref={textRef} className="text-center space-y-6 max-w-4xl mx-auto">
+          <h1 className="text-6xl md:text-8xl font-gasoek text-[#cad95e] font-black tracking-tight">
+            FESTIVAL
           </h1>
-          <p className="text-xl md:text-3xl font-mono uppercase tracking-wide opacity-90">
-            DESCUBRE EL FUTURO DEL TURISMO SOSTENIBLE
+          <h2 className="text-4xl md:text-6xl font-gasoek text-[#ffe600] font-bold tracking-wide">
+            NATUR
+          </h2>
+          <p className="text-xl md:text-2xl text-white/90 font-light leading-relaxed mt-8">
+            Narrativa visual del mundo al corazón
           </p>
         </div>
+
+        {/* Yellow Dot Animation */}
+        <div 
+          ref={yellowDotRef}
+          className="absolute top-1/2 left-1/2 w-4 h-4 bg-[#ffe600] rounded-full transform -translate-x-1/2 -translate-y-1/2 z-30"
+          style={{
+            filter: 'drop-shadow(0 0 10px rgba(255, 230, 0, 0.8))',
+            transformOrigin: 'center',
+            backfaceVisibility: 'hidden',
+          }}
+        />
       </div>
 
-
-
-      {/* Scroll indicator */}
-      <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 text-[#ffe600] text-xs font-mono opacity-60 animate-bounce z-30">
-        SCROLL PARA CONTINUAR
-      </div>
-
-
+      {/* Extended Spacer for Scroll Effect */}
+      <div style={{ height: '200vh' }} />
     </div>
   );
 };
