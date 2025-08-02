@@ -60,11 +60,7 @@ const TopNavigationMenu: React.FC<TopNavigationMenuProps> = ({
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled 
-          ? 'glass-card backdrop-blur-xl border-b border-white/10' 
-          : 'bg-transparent'
-      }`}
+      className="absolute top-0 left-0 right-0 z-50 bg-transparent"
     >
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex items-center justify-between h-16">
@@ -137,70 +133,22 @@ const TopNavigationMenu: React.FC<TopNavigationMenuProps> = ({
               )}
             </Button>
 
-            {/* User Menu */}
+            {/* Inverted Mode Toggle */}
             <div className="relative">
               <Button
                 variant="ghost"
-                onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                onClick={() => {
+                  // Toggle inverted mode
+                  document.documentElement.classList.toggle('invert');
+                }}
                 className="glass-button p-2 hover:bg-white/10 flex items-center space-x-2"
+                title="Alternar modo invertido"
               >
-                <Avatar className="w-8 h-8">
-                  <AvatarImage src={user?.profileImageUrl} />
-                  <AvatarFallback className="bg-green-600 text-white text-sm">
-                    {user?.firstName?.charAt(0) || user?.email?.charAt(0) || 'U'}
-                  </AvatarFallback>
-                </Avatar>
-                <ChevronDown className={`w-4 h-4 text-white transition-transform duration-200 ${
-                  isUserMenuOpen ? 'rotate-180' : ''
-                }`} />
+                <div className="w-8 h-8 rounded-full border-2 border-white/60 flex items-center justify-center bg-white/10">
+                  <div className="w-4 h-4 bg-white rounded-full"></div>
+                </div>
+                <span className="hidden lg:block text-white text-sm">Invertido</span>
               </Button>
-
-              {/* User Dropdown */}
-              {isUserMenuOpen && (
-                <motion.div
-                  initial={{ opacity: 0, y: -10, scale: 0.95 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: -10, scale: 0.95 }}
-                  className="absolute right-0 top-full mt-2 w-64 glass-card border border-white/20 rounded-lg shadow-xl"
-                >
-                  {/* User Info */}
-                  <div className="p-4 border-b border-white/10">
-                    <div className="flex items-center space-x-3">
-                      <Avatar className="w-12 h-12">
-                        <AvatarImage src={user?.profileImageUrl} />
-                        <AvatarFallback className="bg-green-600 text-white">
-                          {user?.firstName?.charAt(0) || 'U'}
-                        </AvatarFallback>
-                      </Avatar>
-                      <div>
-                        <p className="text-subtitle text-white">
-                          {user?.firstName} {user?.lastName}
-                        </p>
-                        <p className="text-caption">{user?.email}</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Menu Items */}
-                  <div className="p-2">
-                    <Button
-                      variant="ghost"
-                      className="w-full justify-start text-white hover:bg-white/10"
-                    >
-                      <Settings className="w-4 h-4 mr-3" />
-                      Configuración
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      onClick={onLogout}
-                      className="w-full justify-start text-red-400 hover:bg-red-500/10"
-                    >
-                      <LogOut className="w-4 h-4 mr-3" />
-                      Cerrar Sesión
-                    </Button>
-                  </div>
-                </motion.div>
-              )}
             </div>
 
             {/* Mobile Menu Button */}

@@ -715,3 +715,16 @@
   border-color: #cad95e !important;
   background-color: rgba(202, 217, 94, 0.1) !important;
 }
+
+/* Inverted mode */
+html.invert {
+  filter: invert(1) hue-rotate(180deg);
+}
+
+html.invert img,
+html.invert video,
+html.invert iframe,
+html.invert svg,
+html.invert canvas {
+  filter: invert(1) hue-rotate(180deg);
+}
