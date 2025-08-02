@@ -168,174 +168,118 @@ export function HeaderButtons({ showPortalButtons = false }: HeaderButtonsProps)
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className={`fixed top-16 left-0 right-0 z-40 backdrop-blur-lg border-b transition-all duration-300 ${
-              isTicketsOpen 
-                ? 'bg-yellow-400/95 border-green-600/20' 
-                : 'bg-black/90 border-white/20'
-            }`}
+            className="fixed top-16 left-0 right-0 z-40 bg-green-600 border-b border-green-700"
           >
             <div className="p-4 space-y-3">
               {/* Portal Buttons */}
               <Link to="/auth/empresas" onClick={() => setIsMenuOpen(false)}>
                 <Button 
                   variant="ghost"
-                  className={`w-full justify-start transition-colors duration-300 ${
-                    isTicketsOpen 
-                      ? 'text-green-600 hover:text-green-700 hover:bg-green-600/10' 
-                      : 'text-white hover:text-[#cad95e] hover:bg-white/10'
-                  }`}
+                  className="w-full justify-start text-yellow-400 hover:text-yellow-300 hover:bg-green-700/50 py-6"
                 >
-                  <Building2 className="w-4 h-4 mr-3" />
-                  <span className={isTicketsOpen ? 'text-2xl font-bold' : ''}>Portal Empresas</span>
+                  <Building2 className="w-6 h-6 mr-4" />
+                  <span className="text-4xl font-black font-gasoek tracking-wider uppercase">Portal Empresas</span>
                 </Button>
               </Link>
               
               <Link to="/portal-viajeros" onClick={() => setIsMenuOpen(false)}>
                 <Button 
                   variant="ghost"
-                  className={`w-full justify-start transition-colors duration-300 ${
-                    isTicketsOpen 
-                      ? 'text-green-600 hover:text-green-700 hover:bg-green-600/10' 
-                      : 'text-white hover:text-[#cad95e] hover:bg-white/10'
-                  }`}
+                  className="w-full justify-start text-yellow-400 hover:text-yellow-300 hover:bg-green-700/50 py-6"
                 >
-                  <MapPin className="w-4 h-4 mr-3" />
-                  <span className={isTicketsOpen ? 'text-2xl font-bold' : ''}>Mapa Turismo Sostenible</span>
+                  <MapPin className="w-6 h-6 mr-4" />
+                  <span className="text-4xl font-black font-gasoek tracking-wider uppercase">Mapa Turismo</span>
                 </Button>
               </Link>
 
               {/* Divider */}
-              <div className={`border-t my-3 transition-colors duration-300 ${
-                isTicketsOpen ? 'border-green-600/20' : 'border-white/20'
-              }`}></div>
+              <div className="border-t border-yellow-400/30 my-6"></div>
 
               {/* Event Information */}
               <Link to="/agenda" onClick={() => setIsMenuOpen(false)}>
                 <Button 
                   variant="ghost"
-                  className={`w-full justify-start transition-colors duration-300 ${
-                    isTicketsOpen 
-                      ? 'text-green-600 hover:text-green-700 hover:bg-green-600/10' 
-                      : 'text-white hover:text-[#cad95e] hover:bg-white/10'
-                  }`}
+                  className="w-full justify-start text-yellow-400 hover:text-yellow-300 hover:bg-green-700/50 py-6"
                 >
-                  <Calendar className="w-4 h-4 mr-3" />
-                  <span className={isTicketsOpen ? 'text-2xl font-bold' : ''}>Agenda Festival</span>
+                  <Calendar className="w-6 h-6 mr-4" />
+                  <span className="text-4xl font-black font-gasoek tracking-wider uppercase">Agenda</span>
                 </Button>
               </Link>
               
               <Link to="/tickets" onClick={() => setIsMenuOpen(false)}>
                 <Button 
                   variant="ghost"
-                  className={`w-full justify-start transition-colors duration-300 ${
-                    isTicketsOpen 
-                      ? 'text-green-600 hover:text-green-700 hover:bg-green-600/10' 
-                      : 'text-white hover:text-[#cad95e] hover:bg-white/10'
-                  }`}
+                  className="w-full justify-start text-yellow-400 hover:text-yellow-300 hover:bg-green-700/50 py-6"
                 >
-                  <Ticket className="w-4 h-4 mr-3" />
-                  <span className={isTicketsOpen ? 'text-2xl font-bold' : ''}>Entradas</span>
+                  <Ticket className="w-6 h-6 mr-4" />
+                  <span className="text-4xl font-black font-gasoek tracking-wider uppercase">Entradas</span>
                 </Button>
               </Link>
 
               {/* About Section */}
-              <div className={`border-t my-3 transition-colors duration-300 ${
-                isTicketsOpen ? 'border-green-600/20' : 'border-white/20'
-              }`}></div>
+              <div className="border-t border-yellow-400/30 my-6"></div>
               
               <Button 
                 variant="ghost"
-                className={`w-full justify-start transition-colors duration-300 ${
-                  isTicketsOpen 
-                    ? 'text-green-600 hover:text-green-700 hover:bg-green-600/10' 
-                    : 'text-white hover:text-[#cad95e] hover:bg-white/10'
-                }`}
+                className="w-full justify-start text-yellow-400 hover:text-yellow-300 hover:bg-green-700/50 py-6"
                 onClick={() => setIsMenuOpen(false)}
               >
-                <Info className="w-4 h-4 mr-3" />
-                <span className={isTicketsOpen ? 'text-2xl font-bold' : ''}>Sobre NATUR</span>
+                <Info className="w-6 h-6 mr-4" />
+                <span className="text-4xl font-black font-gasoek tracking-wider uppercase">Sobre NATUR</span>
               </Button>
 
               <Button 
                 variant="ghost"
-                className={`w-full justify-start transition-colors duration-300 ${
-                  isTicketsOpen 
-                    ? 'text-green-600 hover:text-green-700 hover:bg-green-600/10' 
-                    : 'text-white hover:text-[#cad95e] hover:bg-white/10'
-                }`}
+                className="w-full justify-start text-yellow-400 hover:text-yellow-300 hover:bg-green-700/50 py-6"
                 onClick={() => setIsMenuOpen(false)}
               >
-                <Users className="w-4 h-4 mr-3" />
-                <span className={isTicketsOpen ? 'text-2xl font-bold' : ''}>Quiénes Somos</span>
+                <Users className="w-6 h-6 mr-4" />
+                <span className="text-4xl font-black font-gasoek tracking-wider uppercase">Quiénes Somos</span>
               </Button>
 
               <Button 
                 variant="ghost"
-                className={`w-full justify-start transition-colors duration-300 ${
-                  isTicketsOpen 
-                    ? 'text-green-600 hover:text-green-700 hover:bg-green-600/10' 
-                    : 'text-white hover:text-[#cad95e] hover:bg-white/10'
-                }`}
+                className="w-full justify-start text-yellow-400 hover:text-yellow-300 hover:bg-green-700/50 py-6"
                 onClick={() => setIsMenuOpen(false)}
               >
-                <Mail className="w-4 h-4 mr-3" />
-                <span className={isTicketsOpen ? 'text-2xl font-bold' : ''}>Contacto</span>
+                <Mail className="w-6 h-6 mr-4" />
+                <span className="text-4xl font-black font-gasoek tracking-wider uppercase">Contacto</span>
               </Button>
 
               {/* Social Links */}
-              <div className={`border-t my-3 transition-colors duration-300 ${
-                isTicketsOpen ? 'border-green-600/20' : 'border-white/20'
-              }`}></div>
+              <div className="border-t border-yellow-400/30 my-6"></div>
               
-              <div className="flex justify-center space-x-4">
+              <div className="flex justify-center space-x-6">
                 <Button 
                   variant="ghost"
                   size="icon"
-                  className={`transition-colors duration-300 ${
-                    isTicketsOpen 
-                      ? 'text-green-600 hover:text-green-700 hover:bg-green-600/10' 
-                      : 'text-white hover:text-[#cad95e] hover:bg-white/10'
-                  }`}
+                  className="text-yellow-400 hover:text-yellow-300 hover:bg-green-700/50 w-12 h-12"
                 >
-                  <Instagram className="w-4 h-4" />
+                  <Instagram className="w-8 h-8" />
                 </Button>
                 <Button 
                   variant="ghost"
                   size="icon"
-                  className={`transition-colors duration-300 ${
-                    isTicketsOpen 
-                      ? 'text-green-600 hover:text-green-700 hover:bg-green-600/10' 
-                      : 'text-white hover:text-[#cad95e] hover:bg-white/10'
-                  }`}
+                  className="text-yellow-400 hover:text-yellow-300 hover:bg-green-700/50 w-12 h-12"
                 >
-                  <Twitter className="w-4 h-4" />
+                  <Twitter className="w-8 h-8" />
                 </Button>
                 <Button 
                   variant="ghost"
                   size="icon"
-                  className={`transition-colors duration-300 ${
-                    isTicketsOpen 
-                      ? 'text-green-600 hover:text-green-700 hover:bg-green-600/10' 
-                      : 'text-white hover:text-[#cad95e] hover:bg-white/10'
-                  }`}
+                  className="text-yellow-400 hover:text-yellow-300 hover:bg-green-700/50 w-12 h-12"
                 >
-                  <Facebook className="w-4 h-4" />
+                  <Facebook className="w-8 h-8" />
                 </Button>
               </div>
 
               {/* Festival Info */}
-              <div className={`text-center pt-4 border-t transition-colors duration-300 ${
-                isTicketsOpen ? 'border-green-600/20' : 'border-white/20'
-              }`}>
-                <p className={`text-xs transition-colors duration-300 ${
-                  isTicketsOpen ? 'text-green-600/80' : 'text-white/80'
-                }`}>
-                  Festival NATUR 2025
+              <div className="text-center pt-6 border-t border-yellow-400/30">
+                <p className="text-yellow-400 text-lg font-gasoek font-bold tracking-wider">
+                  FESTIVAL NATUR 2025
                 </p>
-                <p className={`text-xs transition-colors duration-300 ${
-                  isTicketsOpen ? 'text-green-600/60' : 'text-white/60'
-                }`}>
-                  14-15 Noviembre • Bogotá
+                <p className="text-yellow-300 text-sm font-bold tracking-wide">
+                  14-15 NOVIEMBRE • BOGOTÁ
                 </p>
               </div>
             </div>
