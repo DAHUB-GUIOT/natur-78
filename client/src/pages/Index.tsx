@@ -17,8 +17,8 @@ const Index = () => {
       mapInstance.current = new mapboxgl.Map({
         container: worldMapRef.current,
         style: 'mapbox://styles/mapbox/satellite-v9', // Clean satellite without labels
-        center: [0, 20], // Center on world view
-        zoom: 0.8, // Much more distant world view
+        center: [0, 15], // Better centered view for sphere rotation
+        zoom: 0.6, // More distant for full sphere effect
         pitch: 0, // Flat view for clean background
         bearing: 0, // Starting rotation
         interactive: false,
@@ -26,12 +26,12 @@ const Index = () => {
         antialias: true,
       });
 
-      // Start slow rotation animation
+      // Start smooth spherical rotation animation
       const rotateWorld = () => {
         if (!mapInstance.current) return;
         
         const currentBearing = mapInstance.current.getBearing();
-        mapInstance.current.setBearing(currentBearing + 0.1); // Very slow rotation
+        mapInstance.current.setBearing(currentBearing + 0.05); // Slower, more natural rotation
         
         requestAnimationFrame(rotateWorld);
       };
