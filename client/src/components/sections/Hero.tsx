@@ -26,9 +26,9 @@ export function Hero() {
             <span className="font-bold text-2xl" style={{ color: '#cad95e' }}>N</span>
           </div>
           
-          {/* Portal Buttons in Top Menu */}
+          {/* Portal Buttons in Top Menu - Hidden on mobile */}
           <div className="flex items-center space-x-4">
-            <Link to="/auth/empresas">
+            <Link to="/auth/empresas" className="hidden md:block">
               <Button 
                 size="sm" 
                 variant="outline"
@@ -39,7 +39,7 @@ export function Hero() {
               </Button>
             </Link>
             
-            <Link to="/portal-viajeros">
+            <Link to="/portal-viajeros" className="hidden md:block">
               <Button 
                 size="sm" 
                 variant="outline"
