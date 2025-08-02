@@ -267,12 +267,29 @@ const Index = () => {
           </div>
         </div>
         
-        <div className="text-center px-4 z-10 max-w-4xl">
-          <h1 className="grotesk-text text-3xl md:text-6xl mb-8 leading-tight">
-            EL TURISMO REPRESENTA<br/>
-            MÁS DEL 10% DEL PIB GLOBAL...<br/>
-            <span className="opacity-80">PERO TAMBIÉN AMENAZA<br/>LOS ECOSISTEMAS</span>
+        <div className="text-center px-6 z-10 max-w-5xl">
+          <h1 className="grotesk-text text-4xl md:text-7xl mb-8 leading-tight tracking-tighter">
+            EL TURISMO MASIVO<br/>
+            ESTÁ DESTRUYENDO<br/>
+            <span className="text-[#FFD600] opacity-90">LO QUE VINO A ADMIRAR</span>
           </h1>
+          
+          <div className="space-y-6 mb-8">
+            <p className="grotesk-text text-lg md:text-2xl opacity-80">
+              CADA AÑO, MÁS DE 1.400 MILLONES<br/>
+              DE TURISTAS CRUZAN EL PLANETA
+            </p>
+            <p className="grotesk-text text-xl md:text-3xl bg-[#FFD600] text-[#0B1E0C] px-4 py-2 inline-block transform -rotate-2">
+              8% DE LAS EMISIONES GLOBALES
+            </p>
+          </div>
+          
+          <div className="animate-pulse">
+            <p className="grotesk-text text-2xl md:text-4xl italic opacity-90">
+              "LO QUE NO SE CUIDA,<br/>
+              SE CONVIERTE EN POSTAL VACÍA"
+            </p>
+          </div>
         </div>
       </section>
 
@@ -330,13 +347,35 @@ const Index = () => {
           </div>
         </div>
         
-        <div className="text-center px-4 z-10 max-w-4xl">
-          <h2 className="grotesk-text text-3xl md:text-6xl mb-8 leading-tight">
+        <div className="text-center px-6 z-10 max-w-5xl">
+          <h2 className="grotesk-text text-4xl md:text-7xl mb-8 leading-tight tracking-tighter">
             COLOMBIA:<br/>
-            EL SEGUNDO PAÍS<br/>
-            MÁS BIODIVERSO DEL PLANETA...<br/>
-            <span className="opacity-80">Y UNO DE LOS<br/>MÁS VULNERABLES</span>
+            UNA JOYA BIOLÓGICA<br/>
+            <span className="text-[#FFD600]">AL BORDE DEL ABISMO</span>
           </h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+            <div className="bg-[#FFD600] text-[#0B1E0C] p-6 transform rotate-1">
+              <p className="grotesk-text text-xl md:text-2xl">
+                1 DE CADA 10 ESPECIES<br/>
+                DEL PLANETA VIVE AQUÍ
+              </p>
+            </div>
+            <div className="bg-[#0B1E0C] border-4 border-[#FFD600] p-6 transform -rotate-1">
+              <p className="grotesk-text text-xl md:text-2xl text-[#FFD600]">
+                TURISMO MAL GESTIONADO<br/>
+                PONE EN RIESGO TODO
+              </p>
+            </div>
+          </div>
+          
+          <div className="bg-[#FFD600] text-[#0B1E0C] p-8 transform -rotate-1 animate-pulse">
+            <p className="grotesk-text text-2xl md:text-4xl italic">
+              "LA SELVA NO ES UN FONDO<br/>
+              PARA TU FOTO.<br/>
+              ES UN SER VIVO."
+            </p>
+          </div>
         </div>
       </section>
 
@@ -415,12 +454,49 @@ const Index = () => {
           </div>
         </div>
         
-        <div className="text-center px-4 z-10 max-w-4xl">
-          <h2 className="grotesk-text text-3xl md:text-6xl mb-8 leading-tight">
-            CADA ESPECIE<br/>
-            ES UNA HISTORIA<br/>
-            <span className="opacity-80">QUE AÚN PODEMOS<br/>PROTEGER</span>
+        <div className="text-center px-6 z-10 max-w-5xl">
+          <h2 className="grotesk-text text-4xl md:text-7xl mb-12 leading-tight tracking-tighter">
+            ¿QUÉ ES TURISMO<br/>
+            <span className="text-[#FFD600]">SOSTENIBLE?</span>
           </h2>
+          
+          <div className="mb-12">
+            <p className="grotesk-text text-2xl md:text-4xl mb-8">
+              NO ES UNA MODA.<br/>
+              ES UNA RESPONSABILIDAD.
+            </p>
+          </div>
+          
+          {/* Interactive triangle concept */}
+          <div className="relative mb-12">
+            <div className="flex flex-col md:flex-row justify-center items-center gap-8">
+              <div className="bg-[#FFD600] text-[#0B1E0C] p-6 transform rotate-3 hover:rotate-6 transition-transform">
+                <p className="grotesk-text text-lg md:text-xl">
+                  CONSERVA LA<br/>
+                  BIODIVERSIDAD
+                </p>
+              </div>
+              <div className="bg-[#0B1E0C] border-4 border-[#FFD600] p-6 transform -rotate-2 hover:-rotate-4 transition-transform">
+                <p className="grotesk-text text-lg md:text-xl text-[#FFD600]">
+                  BENEFICIA A LAS<br/>
+                  COMUNIDADES
+                </p>
+              </div>
+              <div className="bg-[#FFD600] text-[#0B1E0C] p-6 transform rotate-1 hover:rotate-3 transition-transform">
+                <p className="grotesk-text text-lg md:text-xl">
+                  GENERA ECONOMÍA<br/>
+                  RESPONSABLE
+                </p>
+              </div>
+            </div>
+          </div>
+          
+          <div className="animate-pulse">
+            <p className="grotesk-text text-2xl md:text-3xl italic opacity-90">
+              "CADA ESPECIE ES UNA HISTORIA<br/>
+              QUE AÚN PODEMOS PROTEGER"
+            </p>
+          </div>
         </div>
       </section>
 
