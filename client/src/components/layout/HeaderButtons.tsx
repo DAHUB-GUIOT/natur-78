@@ -36,8 +36,9 @@ export function HeaderButtons({ showPortalButtons = false }: HeaderButtonsProps)
             </div>
           </Link>
 
-          {/* Desktop Portal Buttons and Tickets Dropdown */}
+          {/* Desktop Navigation - Portal Buttons and Tickets Dropdown */}
           <div className="hidden md:flex items-center gap-3">
+            {/* Portal Buttons - conditional */}
             {showPortalButtons && (
               <>
                 <Link to="/auth/empresas">
@@ -69,8 +70,10 @@ export function HeaderButtons({ showPortalButtons = false }: HeaderButtonsProps)
                 </Link>
               </>
             )}
+          </div>
 
-            {/* Tickets Dropdown */}
+          {/* Tickets Dropdown - always visible */}
+          <div className="hidden md:block">
             <div className="relative">
               <Button 
                 size="sm" 
@@ -89,7 +92,7 @@ export function HeaderButtons({ showPortalButtons = false }: HeaderButtonsProps)
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
-                    className="absolute top-full right-0 mt-2 w-72 bg-yellow-400 border border-yellow-500 rounded-lg shadow-xl backdrop-blur-sm"
+                    className="absolute top-full right-0 mt-2 w-72 bg-yellow-400 border border-yellow-500 rounded-lg shadow-xl backdrop-blur-sm z-50"
                   >
                     <div className="p-4 space-y-3">
                       <h3 className="text-green-600 font-gasoek text-xl font-bold">ENTRADAS FESTIVAL</h3>
