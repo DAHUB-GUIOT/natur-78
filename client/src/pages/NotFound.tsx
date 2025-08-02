@@ -2,7 +2,7 @@ import { useLocation, Link } from "wouter";
 import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Home, MapPin, Building2, User } from "lucide-react";
-import { HeaderButtons } from "@/components/layout/HeaderButtons";
+
 
 const NotFound = () => {
   const [location] = useLocation();
@@ -16,7 +16,7 @@ const NotFound = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-white">
-      <HeaderButtons showPortalButtons={true} />
+
       <div className="text-center max-w-md mx-auto p-8">
         <div className="text-gray-400 mb-8">
           <div className="text-8xl font-bold mb-4 text-gray-200">404</div>

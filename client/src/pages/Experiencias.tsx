@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/components/ui/use-toast";
 import { Plus, Edit, Trash2, MapPin, Calendar, Users } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
-import { HeaderButtons } from "@/components/layout/HeaderButtons";
+
 
 // MVP Experience Management for Entrepreneurs/Initiatives
 const Experiencias = () => {
@@ -105,8 +105,8 @@ const Experiencias = () => {
 
   return (
     <div className="min-h-screen">
-      <HeaderButtons showPortalButtons={true} />
-      <div className="container mx-auto px-4 py-8 max-w-4xl pt-20">
+      <div className="container mx-auto px-4 py-8 max-w-4xl">
+      <div className="flex items-center justify-between mb-8">
       <div className="flex items-center justify-between mb-8">
         <div>
           <h1 className="text-3xl font-bold text-black">Mis Experiencias</h1>

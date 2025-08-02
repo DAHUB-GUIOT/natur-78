@@ -251,7 +251,7 @@ export default function PortalViajeros() {
 
   return (
     <div className="h-screen w-full relative overflow-hidden">
-      <HeaderButtons showPortalButtons={true} />
+
       {/* Full-screen map as background with experience markers */}
       <InteractiveMap 
         experiences={filteredExperiences}

@@ -7,11 +7,11 @@ import { Search } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { MarketplaceBanner } from '@/components/marketplace/MarketplaceBanner';
 import { MarketplaceQuickAccess } from '@/components/marketplace/MarketplaceQuickAccess';
-import { HeaderButtons } from "@/components/layout/HeaderButtons";
+
 
 const Marketplace = () => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [activeFilters, setActiveFilters] = useState({
+  const [activeFilters, setActiveFilters] = useState<Record<string, boolean>>({
     tipo: [],
     region: [],
     impacto: []
@@ -41,7 +41,7 @@ const Marketplace = () => {
 
   return (
     <>
-      <HeaderButtons showPortalButtons={true} />
+
       <MainLayout>
         <div className="space-y-4 w-full">
           <MarketplaceBanner />
