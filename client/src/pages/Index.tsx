@@ -20,10 +20,10 @@ const Index = () => {
       mapInstance.current = new mapboxgl.Map({
         container: worldMapRef.current,
         style: 'mapbox://styles/mapbox/satellite-streets-v12',
-        center: [-74.2973, 4.5709], // Start centered on Colombia (Bogotá)
-        zoom: 0.1, // Extremely distant zoom - world barely visible
-        pitch: 15, // Slight 3D angle for depth
-        bearing: -10, // Slight rotation for dynamic feel
+        center: [0, 20], // Center on world view
+        zoom: 1.5, // Show world clearly but distant
+        pitch: 0, // Flat view for full background
+        bearing: 0, // No rotation for clean background
         interactive: false,
         attributionControl: false,
         antialias: true, // Better rendering quality
@@ -42,11 +42,10 @@ const Index = () => {
         const maxScroll = document.body.scrollHeight - window.innerHeight;
         const scrollProgress = Math.min(scrollY / (maxScroll * 0.5), 1);
 
-        // World map scaling and zoom effect with rotation
-        const scale = 1 + scrollProgress * 25;
-        const rotation = scrollProgress * 360;
-        worldMapRef.current.style.transform = `translate(-50%, -50%) scale(${scale}) rotate(${rotation}deg)`;
-        worldMapRef.current.style.filter = `brightness(${1 + scrollProgress * 0.3}) contrast(${1 + scrollProgress * 0.2})`;
+        // World map zoom effect for background
+        const scale = 1 + scrollProgress * 3;
+        worldMapRef.current.style.transform = `scale(${scale})`;
+        worldMapRef.current.style.filter = `brightness(${0.7 + scrollProgress * 0.5}) contrast(${1 + scrollProgress * 0.3})`;
 
         // Main text fade out
         const textOpacity = Math.max(0, 1 - scrollProgress * 1.5);
@@ -80,19 +79,16 @@ const Index = () => {
   }, []);
 
   return (
-    <div ref={containerRef} className="min-h-screen bg-[#0f2f22] transition-colors duration-500 relative overflow-hidden">
+    <div ref={containerRef} className="min-h-screen relative overflow-hidden">
       <HeaderButtons />
       
-      {/* World Map Container */}
+      {/* Full Background World Map */}
       <div 
         ref={worldMapRef}
-        className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-0 rounded-full overflow-hidden shadow-2xl border-4 border-[#ffe600]/30"
+        className="fixed inset-0 w-full h-full z-0"
         style={{ 
           transformOrigin: 'center',
           backfaceVisibility: 'hidden',
-          width: '300px',
-          height: '300px',
-          boxShadow: '0 0 60px rgba(255, 230, 0, 0.3), inset 0 0 30px rgba(0, 0, 0, 0.2)'
         }}
       />
 
@@ -100,18 +96,16 @@ const Index = () => {
       <div className="relative z-10 min-h-screen flex flex-col items-center justify-center px-4">
         {/* Main Title Section */}
         <div ref={textRef} className="text-center space-y-6 max-w-4xl mx-auto">
-          <h1 className="text-6xl md:text-8xl font-gasoek text-[#cad95e] font-black tracking-tight">
+          <h1 className="text-6xl md:text-8xl font-gasoek text-white font-black tracking-tight drop-shadow-2xl">
             FESTIVAL
           </h1>
-          <h2 className="text-4xl md:text-6xl font-gasoek text-[#ffe600] font-bold tracking-wide">
+          <h2 className="text-4xl md:text-6xl font-gasoek text-[#ffe600] font-bold tracking-wide drop-shadow-2xl">
             NATUR
           </h2>
-          <p className="text-xl md:text-2xl text-white/90 font-light leading-relaxed mt-8">
+          <p className="text-xl md:text-2xl text-white font-light leading-relaxed mt-8 drop-shadow-lg">
             Narrativa visual del mundo al corazón
           </p>
         </div>
-
-
       </div>
 
       {/* Extended Spacer for Scroll Effect */}
