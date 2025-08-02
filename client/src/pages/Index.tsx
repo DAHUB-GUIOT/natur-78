@@ -18,9 +18,11 @@ const Index = () => {
       const maxScroll = document.body.scrollHeight - window.innerHeight;
       const scrollProgress = Math.min(scrollY / (maxScroll * 0.5), 1);
 
-      // World map scaling and zoom effect
-      const scale = 1 + scrollProgress * 50;
-      worldMapRef.current.style.transform = `translate(-50%, -50%) scale(${scale})`;
+      // World map scaling and zoom effect with rotation
+      const scale = 1 + scrollProgress * 25;
+      const rotation = scrollProgress * 360;
+      worldMapRef.current.style.transform = `translate(-50%, -50%) scale(${scale}) rotate(${rotation}deg)`;
+      worldMapRef.current.style.filter = `brightness(${1 + scrollProgress * 0.3}) contrast(${1 + scrollProgress * 0.2})`;
 
       // Main text fade out
       const textOpacity = Math.max(0, 1 - scrollProgress * 1.5);
@@ -31,10 +33,12 @@ const Index = () => {
         hasZoomedToColombia.current = true;
         mapInstance.current.flyTo({
           center: [-74.2973, 4.5709], // Precise center of Colombia (Bogotá coordinates)
-          zoom: 6.0, // Optimal zoom to show Colombia nicely centered
-          duration: 3000,
+          zoom: 6.5, // Higher zoom for better detail
+          pitch: 45, // More dramatic 3D angle
+          bearing: 0, // Straighten rotation for Colombia view
+          duration: 4000,
           essential: true,
-          curve: 1.2, // Smoother curve transition
+          curve: 1.5, // More dramatic curve
         });
       }
 
@@ -56,13 +60,14 @@ const Index = () => {
 
       mapInstance.current = new mapboxgl.Map({
         container: worldMapRef.current,
-        style: 'mapbox://styles/mapbox/satellite-v9',
-        center: [-20, 15], // Slightly shifted toward South America
-        zoom: 1.8, // Slightly closer initial zoom
-        pitch: 0,
-        bearing: 0,
+        style: 'mapbox://styles/mapbox/satellite-streets-v12',
+        center: [-30, 20], // Better positioning toward Americas
+        zoom: 2.2, // More detailed initial view
+        pitch: 15, // Slight 3D angle for depth
+        bearing: -10, // Slight rotation for dynamic feel
         interactive: false,
         attributionControl: false,
+        antialias: true, // Better rendering quality
       });
 
       mapInstance.current.on('load', () => {
@@ -151,12 +156,13 @@ const Index = () => {
       {/* World Map Container */}
       <div 
         ref={worldMapRef}
-        className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-0 rounded-full overflow-hidden"
+        className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-0 rounded-full overflow-hidden shadow-2xl border-4 border-[#ffe600]/30"
         style={{ 
           transformOrigin: 'center',
           backfaceVisibility: 'hidden',
-          width: '200px',
-          height: '200px'
+          width: '300px',
+          height: '300px',
+          boxShadow: '0 0 60px rgba(255, 230, 0, 0.3), inset 0 0 30px rgba(0, 0, 0, 0.2)'
         }}
       />
 
