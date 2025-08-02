@@ -34,7 +34,7 @@ export function HeaderButtons({ showPortalButtons = false }: HeaderButtonsProps)
                 <Button 
                   size="sm" 
                   variant="outline"
-                  className="bg-yellow-400/90 border-2 border-green-600 text-green-800 font-bold uppercase tracking-wide px-4 py-2 hover:bg-green-600 hover:text-yellow-400 backdrop-blur-sm transition-all shadow-lg"
+                  className="bg-white/10 border-2 border-[#cad95e] text-[#cad95e] font-medium px-4 py-2 hover:bg-[#cad95e] hover:text-black backdrop-blur-sm transition-all"
                 >
                   Portal Empresas
                 </Button>
@@ -44,7 +44,7 @@ export function HeaderButtons({ showPortalButtons = false }: HeaderButtonsProps)
                 <Button 
                   size="sm" 
                   variant="outline"
-                  className="bg-yellow-400/90 border-2 border-green-600 text-green-800 font-bold uppercase tracking-wide px-4 py-2 hover:bg-green-600 hover:text-yellow-400 backdrop-blur-sm transition-all shadow-lg"
+                  className="bg-white/10 border-2 border-[#cad95e] text-[#cad95e] font-medium px-4 py-2 hover:bg-[#cad95e] hover:text-black backdrop-blur-sm transition-all"
                 >
                   Mapa Turismo
                 </Button>
@@ -86,14 +86,14 @@ export function HeaderButtons({ showPortalButtons = false }: HeaderButtonsProps)
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="fixed top-16 left-0 right-0 z-40 bg-yellow-400/90 backdrop-blur-sm border-b border-green-600/30"
+            className="fixed top-16 left-0 right-0 z-40 bg-black/90 backdrop-blur-lg border-b border-white/20"
           >
             <div className="p-4 space-y-3">
               {/* Portal Buttons */}
               <Link to="/auth/empresas" onClick={() => setIsMenuOpen(false)}>
                 <Button 
                   variant="ghost"
-                  className="w-full justify-start text-green-800 hover:text-green-900 hover:bg-green-600/20 font-bold uppercase tracking-wide"
+                  className="w-full justify-start text-white hover:text-[#cad95e] hover:bg-white/10"
                 >
                   <Building2 className="w-4 h-4 mr-3" />
                   Portal Empresas
@@ -103,7 +103,7 @@ export function HeaderButtons({ showPortalButtons = false }: HeaderButtonsProps)
               <Link to="/portal-viajeros" onClick={() => setIsMenuOpen(false)}>
                 <Button 
                   variant="ghost"
-                  className="w-full justify-start text-green-800 hover:text-green-900 hover:bg-green-600/20 font-bold uppercase tracking-wide"
+                  className="w-full justify-start text-white hover:text-[#cad95e] hover:bg-white/10"
                 >
                   <MapPin className="w-4 h-4 mr-3" />
                   Mapa Turismo Sostenible
@@ -111,13 +111,13 @@ export function HeaderButtons({ showPortalButtons = false }: HeaderButtonsProps)
               </Link>
 
               {/* Divider */}
-              <div className="border-t border-green-600/30 my-3"></div>
+              <div className="border-t border-white/20 my-3"></div>
 
               {/* Event Information */}
               <Link to="/agenda" onClick={() => setIsMenuOpen(false)}>
                 <Button 
                   variant="ghost"
-                  className="w-full justify-start text-green-800 hover:text-green-900 hover:bg-green-600/20 font-bold uppercase tracking-wide"
+                  className="w-full justify-start text-white hover:text-[#cad95e] hover:bg-white/10"
                 >
                   <Calendar className="w-4 h-4 mr-3" />
                   Agenda Festival
@@ -127,7 +127,7 @@ export function HeaderButtons({ showPortalButtons = false }: HeaderButtonsProps)
               <Link to="/tickets" onClick={() => setIsMenuOpen(false)}>
                 <Button 
                   variant="ghost"
-                  className="w-full justify-start text-green-800 hover:text-green-900 hover:bg-green-600/20 font-bold uppercase tracking-wide"
+                  className="w-full justify-start text-white hover:text-[#cad95e] hover:bg-white/10"
                 >
                   <Ticket className="w-4 h-4 mr-3" />
                   Entradas
@@ -135,11 +135,11 @@ export function HeaderButtons({ showPortalButtons = false }: HeaderButtonsProps)
               </Link>
 
               {/* About Section */}
-              <div className="border-t border-green-600/30 my-3"></div>
+              <div className="border-t border-white/20 my-3"></div>
               
               <Button 
                 variant="ghost"
-                className="w-full justify-start text-green-800 hover:text-green-900 hover:bg-green-600/20 font-bold uppercase tracking-wide"
+                className="w-full justify-start text-white hover:text-[#cad95e] hover:bg-white/10"
                 onClick={() => setIsMenuOpen(false)}
               >
                 <Info className="w-4 h-4 mr-3" />
@@ -148,7 +148,7 @@ export function HeaderButtons({ showPortalButtons = false }: HeaderButtonsProps)
 
               <Button 
                 variant="ghost"
-                className="w-full justify-start text-green-800 hover:text-green-900 hover:bg-green-600/20 font-bold uppercase tracking-wide"
+                className="w-full justify-start text-white hover:text-[#cad95e] hover:bg-white/10"
                 onClick={() => setIsMenuOpen(false)}
               >
                 <Users className="w-4 h-4 mr-3" />
@@ -157,7 +157,7 @@ export function HeaderButtons({ showPortalButtons = false }: HeaderButtonsProps)
 
               <Button 
                 variant="ghost"
-                className="w-full justify-start text-green-800 hover:text-green-900 hover:bg-green-600/20 font-bold uppercase tracking-wide"
+                className="w-full justify-start text-white hover:text-[#cad95e] hover:bg-white/10"
                 onClick={() => setIsMenuOpen(false)}
               >
                 <Mail className="w-4 h-4 mr-3" />
@@ -165,38 +165,38 @@ export function HeaderButtons({ showPortalButtons = false }: HeaderButtonsProps)
               </Button>
 
               {/* Social Links */}
-              <div className="border-t border-green-600/30 my-3"></div>
+              <div className="border-t border-white/20 my-3"></div>
               
               <div className="flex justify-center space-x-4">
                 <Button 
                   variant="ghost"
                   size="icon"
-                  className="text-green-800 hover:text-green-900 hover:bg-green-600/20"
+                  className="text-white hover:text-[#cad95e] hover:bg-white/10"
                 >
                   <Instagram className="w-4 h-4" />
                 </Button>
                 <Button 
                   variant="ghost"
                   size="icon"
-                  className="text-green-800 hover:text-green-900 hover:bg-green-600/20"
+                  className="text-white hover:text-[#cad95e] hover:bg-white/10"
                 >
                   <Twitter className="w-4 h-4" />
                 </Button>
                 <Button 
                   variant="ghost"
                   size="icon"
-                  className="text-green-800 hover:text-green-900 hover:bg-green-600/20"
+                  className="text-white hover:text-[#cad95e] hover:bg-white/10"
                 >
                   <Facebook className="w-4 h-4" />
                 </Button>
               </div>
 
               {/* Festival Info */}
-              <div className="text-center pt-4 border-t border-green-600/30">
-                <p className="text-green-800 text-xs font-bold uppercase tracking-wide">
+              <div className="text-center pt-4 border-t border-white/20">
+                <p className="text-white/80 text-xs">
                   Festival NATUR 2025
                 </p>
-                <p className="text-green-700 text-xs font-medium">
+                <p className="text-white/60 text-xs">
                   14-15 Noviembre • Bogotá
                 </p>
               </div>
