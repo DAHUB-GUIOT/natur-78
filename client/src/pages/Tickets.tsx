@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'wouter';
 import { Check, Star, Users, Calendar, MapPin, Music, Coffee, Leaf, Zap } from 'lucide-react';
+import { HeaderButtons } from "@/components/layout/HeaderButtons";
 
 const Tickets = () => {
   const [selectedTicket, setSelectedTicket] = useState<string | null>(null);
@@ -44,6 +45,7 @@ const Tickets = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 relative overflow-hidden">
+      <HeaderButtons showPortalButtons={true} />
       {/* Background Elements */}
       <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=2070')] bg-cover bg-center opacity-10"></div>
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>

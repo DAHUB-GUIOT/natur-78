@@ -6,10 +6,13 @@ import { NetworkingBanner } from "@/components/networking/NetworkingBanner";
 import { NetworkingArticles } from "@/components/networking/NetworkingArticles";
 import { NetworkingQuickAccess } from "@/components/networking/NetworkingQuickAccess";
 import { MainLayout } from "@/components/layout/MainLayout";
+import { HeaderButtons } from "@/components/layout/HeaderButtons";
 
 const Networking = () => {
   return (
-    <MainLayout>
+    <>
+      <HeaderButtons showPortalButtons={true} />
+      <MainLayout>
       <div className="w-full">
         <NetworkingBanner />
         <div className="px-4 md:px-6 py-6">
@@ -27,6 +30,7 @@ const Networking = () => {
         </div>
       </div>
     </MainLayout>
+    </>
   );
 };
 

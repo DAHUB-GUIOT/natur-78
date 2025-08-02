@@ -7,6 +7,7 @@ import { Search } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { MarketplaceBanner } from '@/components/marketplace/MarketplaceBanner';
 import { MarketplaceQuickAccess } from '@/components/marketplace/MarketplaceQuickAccess';
+import { HeaderButtons } from "@/components/layout/HeaderButtons";
 
 const Marketplace = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -39,9 +40,11 @@ const Marketplace = () => {
   };
 
   return (
-    <MainLayout>
-      <div className="space-y-4 w-full">
-        <MarketplaceBanner />
+    <>
+      <HeaderButtons showPortalButtons={true} />
+      <MainLayout>
+        <div className="space-y-4 w-full">
+          <MarketplaceBanner />
         <div className="px-4 md:px-6">
           <MarketplaceQuickAccess />
           
@@ -74,6 +77,7 @@ const Marketplace = () => {
         </div>
       </div>
     </MainLayout>
+    </>
   );
 };
 

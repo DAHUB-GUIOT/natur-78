@@ -19,6 +19,7 @@ import {
   DropdownMenuSeparator 
 } from "@/components/ui/dropdown-menu";
 import { InteractiveMap } from "@/components/dashboard/InteractiveMap";
+import { HeaderButtons } from "@/components/layout/HeaderButtons";
 
 import { useQuery } from "@tanstack/react-query";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
@@ -250,6 +251,7 @@ export default function PortalViajeros() {
 
   return (
     <div className="h-screen w-full relative overflow-hidden">
+      <HeaderButtons showPortalButtons={true} />
       {/* Full-screen map as background with experience markers */}
       <InteractiveMap 
         experiences={filteredExperiences}

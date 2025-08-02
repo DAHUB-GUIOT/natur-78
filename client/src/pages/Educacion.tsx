@@ -6,10 +6,13 @@ import { ColaboracionSection } from "@/components/educacion/ColaboracionSection"
 import { EducacionQuickAccess } from "@/components/educacion/EducacionQuickAccess";
 import { EducacionBanner } from "@/components/educacion/EducacionBanner";
 import { MainLayout } from "@/components/layout/MainLayout";
+import { HeaderButtons } from "@/components/layout/HeaderButtons";
 
 const Educacion = () => {
   return (
-    <MainLayout>
+    <>
+      <HeaderButtons showPortalButtons={true} />
+      <MainLayout>
       <div className="w-full">
         <EducacionBanner />
         <div className="px-4 md:px-6 py-6">
@@ -29,6 +32,7 @@ const Educacion = () => {
         </div>
       </div>
     </MainLayout>
+    </>
   );
 };
 
