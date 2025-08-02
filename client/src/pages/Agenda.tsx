@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Clock, MapPin, Users, Calendar, ChevronRight, Play, User, Star, Filter, X, Eye } from "lucide-react";
 import { Link } from "wouter";
+import { HeaderButtons } from "@/components/layout/HeaderButtons";
 
 
 // Session type definition
@@ -519,6 +520,7 @@ export function Agenda() {
 
   return (
     <div className="min-h-screen bg-black relative overflow-hidden">
+      <HeaderButtons showPortalButtons={true} />
 
       {/* Organic Background Textures */}
       <div className="fixed inset-0 z-0">
