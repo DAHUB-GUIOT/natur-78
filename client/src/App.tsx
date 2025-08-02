@@ -7,7 +7,6 @@ import { Router, Route, Switch } from "wouter";
 import { ContrastEnhancer } from "@/components/accessibility/ContrastEnhancer";
 import { MainLayout } from "./components/layout/MainLayout";
 import Index from "./pages/Index";
-import QuienesSomos from "./pages/QuienesSomos";
 import Register from "./pages/Register";
 import ConSentidosRegister from "./pages/ConSentidosRegister";
 import AuthEmpresas from "./pages/AuthEmpresas";
@@ -54,7 +53,6 @@ const App = () => (
           <ContrastEnhancer />
           <Switch>
             <Route path="/" component={Index} />
-            <Route path="/quienes-somos" component={QuienesSomos} />
             <Route path="/registro" component={Register} />
             <Route path="/con-sentidos" component={ConSentidosRegister} />
             <Route path="/auth/empresas" component={AuthEmpresas} />
