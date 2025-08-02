@@ -34,6 +34,7 @@ import UserProfile from "./pages/UserProfile";
 import CompanyProfile from "./pages/CompanyProfile";
 import Profile from "./pages/Profile";
 import EnhancedProfile from "./pages/EnhancedProfile";
+import SobreNatur from "./pages/SobreNatur";
 
 import Tickets from "./pages/Tickets";
 import SessionDetail from "./pages/SessionDetail";
@@ -53,6 +54,7 @@ const App = () => (
           <ContrastEnhancer />
           <Switch>
             <Route path="/" component={Index} />
+            <Route path="/sobre-natur" component={SobreNatur} />
             <Route path="/registro" component={Register} />
             <Route path="/con-sentidos" component={ConSentidosRegister} />
             <Route path="/auth/empresas" component={AuthEmpresas} />
