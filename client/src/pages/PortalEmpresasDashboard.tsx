@@ -438,27 +438,27 @@ const PortalEmpresasDashboard = () => {
 
       case "empresas":
         return (
-          <div className="space-y-4">
-            <div className="flex flex-col space-y-3">
+          <div className="space-y-6">
+            <div className="flex flex-col space-y-4">
               <div className="flex justify-between items-center">
-                <h2 className="text-xl text-white">Directorio</h2>
-                <Badge className="bg-green-600/20 text-green-300 px-3 py-1">
-                  {typedDirectoryUsers.length} usuarios registrados
+                <h2 className="text-2xl font-gasoek text-[var(--color-text)] uppercase tracking-wider">Directorio Empresarial</h2>
+                <Badge className="bg-[var(--color-accent)]/20 text-[var(--color-accent)] px-4 py-2 font-jakarta font-medium">
+                  {typedDirectoryUsers.length} empresas registradas
                 </Badge>
               </div>
               
-              {/* Optimized Search Bar with real-time feedback */}
+              {/* Optimized Search Bar with NATUR design */}
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-white/70" />
+                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-[var(--color-text)]/50" />
                 <Input 
                   placeholder="Buscar por nombre, email, empresa o ubicación..." 
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 pr-20 bg-gray-800/40 border-gray-600/50 text-white placeholder-white/60 backdrop-blur-md focus:border-green-500 transition-colors"
+                  className="pl-12 pr-20 h-12 bg-[var(--color-surface)] border-[var(--color-border)] text-[var(--color-text)] placeholder-[var(--color-text)]/40 font-jakarta focus:border-[var(--color-accent)] focus:ring-[var(--color-accent)]/20 transition-colors rounded-none"
                 />
                 {debouncedSearchTerm && (
-                  <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
-                    <Badge className="bg-green-600/20 text-green-300 text-xs">
+                  <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
+                    <Badge className="bg-[var(--color-accent)]/20 text-[var(--color-accent)] text-xs font-jakarta">
                       {filteredCompanies.length} encontrados
                     </Badge>
                   </div>
@@ -534,19 +534,19 @@ const PortalEmpresasDashboard = () => {
                 </div>
               </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {(debouncedSearchTerm ? filteredCompanies : typedDirectoryUsers).map((user: any) => (
-                  <Card key={user.id} className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30 hover:bg-gray-800/50 hover:border-green-500/30 transition-all duration-200 group cursor-pointer">
-                  <CardContent className="p-4">
-                    <div className="space-y-3">
-                      <div className="flex items-start space-x-3">
-                        <Avatar className="w-10 h-10 ring-2 ring-green-600/50 group-hover:ring-green-500/70 transition-all">
-                          <AvatarFallback className="bg-green-600 text-white text-sm font-bold group-hover:bg-green-500 transition-colors">
+                  <Card key={user.id} className="bg-[var(--color-surface)] border border-[var(--color-border)] hover:border-[var(--color-accent)]/50 transition-all duration-200 group cursor-pointer shadow-lg hover:shadow-xl">
+                  <CardContent className="p-6">
+                    <div className="space-y-4">
+                      <div className="flex items-start space-x-4">
+                        <Avatar className="w-12 h-12 ring-2 ring-[var(--color-accent)]/20 group-hover:ring-[var(--color-accent)]/50 transition-all">
+                          <AvatarFallback className="bg-[var(--color-accent)] text-black text-lg font-gasoek font-bold group-hover:scale-105 transition-transform">
                             {user.companyName ? user.companyName[0].toUpperCase() : (user.firstName ? user.firstName[0].toUpperCase() : user.email[0].toUpperCase())}
                           </AvatarFallback>
                         </Avatar>
                         <div className="flex-1 min-w-0">
-                          <h3 className="text-white font-medium text-sm truncate mb-1 group-hover:text-green-300 transition-colors">
+                          <h3 className="text-[var(--color-text)] font-jakarta font-bold text-base truncate mb-2 group-hover:text-[var(--color-accent)] transition-colors">
                             {user.companyName || 
                              (user.email === 'dahub.tech@gmail.com' ? 'DaHub Tech' : 
                               user.email === 'trip.col@gmail.com' ? 'TripCol Tours' : 
@@ -555,28 +555,28 @@ const PortalEmpresasDashboard = () => {
                               `${user.firstName || ''} ${user.lastName || ''}`.trim() || user.email.split('@')[0])
                             }
                           </h3>
-                          <p className="text-gray-300 text-xs mb-2 truncate">
+                          <p className="text-[var(--color-text)]/70 text-sm mb-3 font-jakarta">
                             Empresa de turismo sostenible
                           </p>
-                          <div className="flex items-center text-gray-400 text-xs">
-                            <MapPin className="w-3 h-3 mr-1 flex-shrink-0" />
+                          <div className="flex items-center text-[var(--color-text)]/50 text-sm font-jakarta">
+                            <MapPin className="w-4 h-4 mr-2 flex-shrink-0 text-[var(--color-accent)]" />
                             <span className="truncate">{user.city || user.country || 'Colombia'}</span>
                           </div>
                         </div>
                       </div>
                       
-                      <div className="flex space-x-2">
+                      <div className="flex space-x-3">
                         <Button 
                           size="sm" 
                           variant="outline" 
-                          className="border-gray-600/50 text-gray-300 hover:bg-gray-700/50 hover:border-green-500/50 hover:text-green-300 text-xs h-7 flex-1 transition-all duration-200"
+                          className="border-[var(--color-border)] text-[var(--color-text)] hover:bg-[var(--color-accent)]/10 hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] text-sm h-9 flex-1 transition-all duration-200 font-jakarta rounded-none"
                           onClick={() => window.location.href = `/perfil/${user.id}`}
                         >
                           Ver Perfil
                         </Button>
                         <Button 
                           size="sm" 
-                          className="bg-green-600 hover:bg-green-700 hover:scale-105 text-white text-xs h-7 flex-1 transition-all duration-200"
+                          className="bg-[var(--color-accent)] hover:bg-[var(--color-accent)]/90 text-black text-sm h-9 flex-1 transition-all duration-200 font-jakarta font-bold rounded-none"
                         >
                           Contactar
                         </Button>
@@ -948,15 +948,15 @@ const PortalEmpresasDashboard = () => {
         </header>
         
         {/* Compact glassmorphism sidebar for map view */}
-        <div className="absolute top-24 left-4 z-50 w-52 backdrop-blur-xl bg-gray-900/40 border border-gray-600/30 rounded-xl shadow-2xl">
-          <div className="p-3 border-b border-gray-600/30">
+        <div className="absolute top-24 left-4 z-50 w-52 backdrop-blur-xl bg-[var(--color-surface)]/90 dark:bg-[var(--color-surface)] border border-[var(--color-border)] shadow-2xl">
+          <div className="p-3 border-b border-[var(--color-border)]">
             <div className="flex items-center space-x-2">
-              <div className="w-6 h-6 bg-green-600/80 rounded-lg flex items-center justify-center shadow-lg backdrop-blur-sm">
-                <span className="text-white font-bold text-xs">N</span>
+              <div className="w-6 h-6 bg-[var(--color-accent)] flex items-center justify-center shadow-lg">
+                <span className="text-black font-gasoek text-xs font-bold">N</span>
               </div>
-              <span className="text-lg font-bold text-white tracking-wide">NATUR</span>
+              <span className="text-lg font-gasoek text-[var(--color-text)] tracking-wide uppercase">NATUR</span>
             </div>
-            <p className="text-gray-300 text-xs mt-1">Portal Empresas</p>
+            <p className="text-[var(--color-text)]/70 text-xs mt-1 font-jakarta">Portal Empresas</p>
           </div>
           
           <nav className="p-2 space-y-0.5">
@@ -972,10 +972,10 @@ const PortalEmpresasDashboard = () => {
                       setActiveSection(item.id);
                     }
                   }}
-                  className={`w-full flex items-center space-x-2 px-3 py-2 rounded-lg transition-all duration-200 ${
+                  className={`w-full flex items-center space-x-2 px-3 py-2 transition-all duration-200 font-jakarta ${
                     activeSection === item.id 
-                      ? 'bg-green-600/30 text-white shadow-lg border border-green-400/30 backdrop-blur-sm' 
-                      : 'text-gray-200 hover:bg-gray-700/30 hover:text-white hover:shadow-md'
+                      ? 'bg-[var(--color-accent)]/20 text-[var(--color-accent)] shadow-lg border border-[var(--color-accent)]/30' 
+                      : 'text-[var(--color-text)]/70 hover:bg-[var(--color-accent)]/10 hover:text-[var(--color-text)] hover:shadow-md'
                   }`}
                 >
                   <Icon className="w-4 h-4" />
@@ -998,16 +998,17 @@ const PortalEmpresasDashboard = () => {
       {/* Full-screen map as background for all pages */}
       <InteractiveMap />
       
-      {/* Top green bar for all pages */}
-      <header className="absolute top-0 left-0 right-0 bg-green-600 border-b border-green-700 shadow-lg px-6 py-4 z-40 backdrop-blur-md bg-green-600/95">
+      {/* NATUR Header with consistent design tokens */}
+      <header className="absolute top-0 left-0 right-0 bg-[var(--color-nav-bg)] border-b border-[var(--color-accent)]/20 shadow-lg px-6 py-4 z-40 backdrop-blur-md">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-green-500 rounded-lg flex items-center justify-center shadow-lg">
-                  <span className="text-white font-bold text-sm">N</span>
+                <div className="w-8 h-8 bg-[var(--color-accent)] flex items-center justify-center shadow-lg">
+                  <span className="text-black font-gasoek text-sm font-bold">N</span>
                 </div>
-                <span className="text-xl font-bold text-white tracking-wide">NATUR</span>
+                <span className="text-xl font-gasoek text-[var(--color-accent)] tracking-wider uppercase">NATUR</span>
               </div>
+              <span className="text-sm font-jakarta text-white/70">Portal Empresas</span>
             </div>
             
             <div className="flex-1 max-w-md mx-8">
