@@ -27,11 +27,28 @@ const AdaptiveSidebar: React.FC<AdaptiveSidebarProps> = ({
   onSearchFocus,
   isMapView
 }) => {
-  const [isCollapsed, setIsCollapsed] = useState(true); // Start collapsed by default
-  const [isPinned, setIsPinned] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(() => {
+    // Load from localStorage, default to true (collapsed/icons only)
+    const saved = localStorage.getItem('sidebar-collapsed');
+    return saved !== null ? JSON.parse(saved) : true;
+  });
+  const [isPinned, setIsPinned] = useState(() => {
+    const saved = localStorage.getItem('sidebar-pinned');
+    return saved !== null ? JSON.parse(saved) : false;
+  });
   const [isMinimized, setIsMinimized] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
+  const [isHovered, setIsHovered] = useState(false);
+
+  // Save state to localStorage
+  useEffect(() => {
+    localStorage.setItem('sidebar-collapsed', JSON.stringify(isCollapsed));
+  }, [isCollapsed]);
+
+  useEffect(() => {
+    localStorage.setItem('sidebar-pinned', JSON.stringify(isPinned));
+  }, [isPinned]);
 
   // Responsive detection
   useEffect(() => {
@@ -136,6 +153,9 @@ const AdaptiveSidebar: React.FC<AdaptiveSidebarProps> = ({
     }
   };
 
+  // Determine if sidebar should show expanded content
+  const shouldShowExpanded = !isCollapsed || (isCollapsed && isHovered);
+
   // Compact width for better UX
   const getSidebarWidth = () => {
     switch (sidebarMode) {
@@ -185,24 +205,24 @@ const AdaptiveSidebar: React.FC<AdaptiveSidebarProps> = ({
         animate={{ 
           x: isMinimized ? -100 : 0,
           opacity: isMinimized ? 0 : 1,
-          width: isCollapsed || isMobile ? '4rem' : '16rem'
+          width: shouldShowExpanded ? '240px' : '64px'
         }}
         transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-        className="fixed left-0 top-16 bottom-0 z-40 glass-card border-r border-white/20 overflow-hidden group"
-        onMouseEnter={() => !isPinned && !isMobile && setIsCollapsed(false)}
-        onMouseLeave={() => !isPinned && !isMobile && setIsCollapsed(true)}
+        className="fixed left-0 top-0 bottom-0 z-40 glass-card border-r border-white/20 overflow-hidden group"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
       >
         {/* Logo Section */}
         <div className="p-4 border-b border-white/10">
           <motion.div 
             className="flex items-center space-x-3"
-            animate={{ justifyContent: isCollapsed ? 'center' : 'flex-start' }}
+            animate={{ justifyContent: shouldShowExpanded ? 'flex-start' : 'center' }}
           >
             <div className="w-10 h-10 bg-gradient-to-br from-yellow-400 to-green-400 rounded-lg flex items-center justify-center shadow-lg">
               <span className="text-black font-gasoek text-lg font-bold">N</span>
             </div>
             <AnimatePresence>
-              {!isCollapsed && (
+              {shouldShowExpanded && (
                 <motion.div
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
@@ -232,6 +252,7 @@ const AdaptiveSidebar: React.FC<AdaptiveSidebarProps> = ({
                   transition={{ delay: index * 0.1 }}
                   onMouseEnter={() => setHoveredItem(item.id)}
                   onMouseLeave={() => setHoveredItem(null)}
+                  className="relative"
                 >
                   <button
                     onClick={() => handleNavigation(item.id)}
@@ -241,11 +262,12 @@ const AdaptiveSidebar: React.FC<AdaptiveSidebarProps> = ({
                         ? 'bg-gradient-to-r from-yellow-400/20 to-green-400/20 border border-yellow-400/30 shadow-lg' 
                         : 'glass-button hover:bg-white/10 border-transparent'
                       }
-                      ${isCollapsed ? 'p-3 justify-center' : 'p-4 space-x-4'}
+                      ${shouldShowExpanded ? 'p-4 space-x-4' : 'p-3 justify-center w-12 h-12'}
                     `}
+                    title={!shouldShowExpanded ? item.label : undefined}
                   >
                     {/* Icon with colored glow */}
-                    <div className={`relative flex-shrink-0 ${isCollapsed ? '' : 'ml-0'}`}>
+                    <div className="relative flex-shrink-0">
                       <Icon className={`
                         w-6 h-6 transition-all duration-300
                         ${isActive 
@@ -269,7 +291,7 @@ const AdaptiveSidebar: React.FC<AdaptiveSidebarProps> = ({
 
                     {/* Expandable Text */}
                     <AnimatePresence>
-                      {!isCollapsed && (
+                      {shouldShowExpanded && (
                         <motion.div
                           initial={{ opacity: 0, width: 0 }}
                           animate={{ opacity: 1, width: 'auto' }}
@@ -291,7 +313,7 @@ const AdaptiveSidebar: React.FC<AdaptiveSidebarProps> = ({
                     </AnimatePresence>
 
                     {/* Hover tooltip for collapsed state */}
-                    {isCollapsed && hoveredItem === item.id && (
+                    {!shouldShowExpanded && hoveredItem === item.id && (
                       <motion.div
                         initial={{ opacity: 0, x: -10, scale: 0.8 }}
                         animate={{ opacity: 1, x: 0, scale: 1 }}
