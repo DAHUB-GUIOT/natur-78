@@ -16,7 +16,7 @@ import { HeaderButtons } from "@/components/layout/HeaderButtons";
 
 const MinimalistPortalEmpresas = () => {
   const [activeView, setActiveView] = useState("map");
-  const [showMobileMenu, setShowMobileMenu] = useState(false);
+  // Mobile menu removed - now handled by HeaderButtons
   const [searchQuery, setSearchQuery] = useState("");
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
 
@@ -56,54 +56,9 @@ const MinimalistPortalEmpresas = () => {
 
   const handleNavigation = (viewId: string) => {
     setActiveView(viewId);
-    setShowMobileMenu(false);
   };
 
-  const renderMobileNav = () => (
-    <AnimatePresence>
-      {showMobileMenu && (
-        <motion.div
-          initial={{ opacity: 0, y: -100 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -100 }}
-          className="fixed inset-x-0 top-0 z-50 bg-black/95 backdrop-blur-xl border-b border-white/10"
-        >
-          <div className="p-4">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-lg font-medium text-white">Navegación</h2>
-              <Button 
-                variant="ghost" 
-                size="sm"
-                onClick={() => setShowMobileMenu(false)}
-                className="text-white hover:bg-white/10"
-              >
-                <X className="w-5 h-5" />
-              </Button>
-            </div>
-            
-            <div className="grid grid-cols-2 gap-3">
-              {navItems.map((item) => {
-                const Icon = item.icon;
-                return (
-                  <Button
-                    key={item.id}
-                    variant={activeView === item.id ? "secondary" : "ghost"}
-                    onClick={() => handleNavigation(item.id)}
-                    className={`h-16 flex flex-col items-center justify-center text-white hover:bg-white/10 ${
-                      activeView === item.id ? 'bg-white/20' : ''
-                    }`}
-                  >
-                    <Icon className="w-5 h-5 mb-1" />
-                    <span className="text-xs">{item.label}</span>
-                  </Button>
-                );
-              })}
-            </div>
-          </div>
-        </motion.div>
-      )}
-    </AnimatePresence>
-  );
+  // Mobile navigation removed - now handled by HeaderButtons component
 
   // Sidebar removed - navigation now in HeaderButtons
 
@@ -351,7 +306,7 @@ const MinimalistPortalEmpresas = () => {
         </main>
       </div>
 
-      {renderMobileNav()}
+      {/* Mobile navigation now handled by HeaderButtons */}
     </div>
   );
 };
