@@ -56,7 +56,7 @@ const Index = () => {
         container: colombiaMapRef.current,
         style: 'mapbox://styles/mapbox/satellite-streets-v12',
         center: [-74.2973, 4.5709], // Center on Colombia (Bogotá)
-        zoom: 4.2, // More zoomed out view of Colombia
+        zoom: 3.5, // Much more zoomed out view of Colombia
         pitch: 0,
         bearing: 0,
         interactive: false,
