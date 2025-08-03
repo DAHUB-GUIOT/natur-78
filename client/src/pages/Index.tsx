@@ -20,8 +20,8 @@ const Index = () => {
 
       mapInstance.current = new mapboxgl.Map({
         container: worldMapRef.current,
-        style: 'mapbox://styles/mapbox/satellite-streets-v12',
-        center: [-75, 0], // Center on Latin America
+        style: 'mapbox://styles/mapbox/satellite-v9', // Clean satellite without text labels
+        center: [0, 0], // Center on world
         zoom: 0.8, // Much more distant world view
         pitch: 0,
         bearing: 0,
@@ -54,8 +54,8 @@ const Index = () => {
 
       colombiaMapInstance.current = new mapboxgl.Map({
         container: colombiaMapRef.current,
-        style: 'mapbox://styles/mapbox/satellite-streets-v12',
-        center: [-74.2973, 4.5709], // Center on Colombia (Bogotá)
+        style: 'mapbox://styles/mapbox/satellite-v9', // Clean satellite without text labels
+        center: [-74.0, 4.0], // Better centered on Colombia
         zoom: 3.5, // Much more zoomed out view of Colombia
         pitch: 0,
         bearing: 0,
