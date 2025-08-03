@@ -1,7 +1,7 @@
 
 import React from "react";
 import { Link } from "wouter";
-import { User, Menu, Calendar, Ticket } from "lucide-react";
+import { User, Menu, Calendar, Ticket, Leaf } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { BrutalistMenu } from "@/components/ui/BrutalistMenu";
 
@@ -38,7 +38,7 @@ export function Hero() {
             </div>
 
             {/* Main Action Buttons - Centered horizontally */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center max-w-md mx-auto">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center max-w-2xl mx-auto">
               <Link to="/tickets" className="w-full sm:w-auto">
                 <Button 
                   size="lg" 
@@ -58,6 +58,23 @@ export function Hero() {
                 >
                   <Calendar className="w-5 h-5 mr-2" />
                   AGENDA
+                </Button>
+              </Link>
+              
+              <Link to="/biodiversidad" className="w-full sm:w-auto">
+                <Button 
+                  size="lg" 
+                  className="font-bold text-lg px-6 py-4 rounded-none shadow-lg flex items-center justify-center w-full hover:opacity-90 transition-all duration-300 border-2"
+                  style={{ 
+                    backgroundColor: 'transparent', 
+                    color: '#10b981', 
+                    borderColor: '#10b981',
+                    fontFamily: 'Unbounded, sans-serif', 
+                    fontWeight: '300' 
+                  }}
+                >
+                  <Leaf className="w-5 h-5 mr-2" />
+                  BIODIVERSIDAD
                 </Button>
               </Link>
             </div>

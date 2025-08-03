@@ -38,6 +38,7 @@ import EnhancedProfile from "./pages/EnhancedProfile";
 import Tickets from "./pages/Tickets";
 import SessionDetail from "./pages/SessionDetail";
 import Noticias from "./pages/Noticias";
+import BiodiversityExperience from "./pages/BiodiversityExperience";
 import { AuthProvider } from "./contexts/AuthContext";
 
 // Create QueryClient outside component to prevent recreation on renders
@@ -98,6 +99,7 @@ const App = () => (
               <MainLayout><Marketplace /></MainLayout>
             </Route>
             <Route path="/noticias" component={Noticias} />
+            <Route path="/biodiversidad" component={BiodiversityExperience} />
             <Route><NotFound /></Route>
           </Switch>
         </Router>
