@@ -15,7 +15,7 @@ import TwitterProfileSection from "@/components/profile/TwitterProfileSection";
 import { HeaderButtons } from "@/components/layout/HeaderButtons";
 
 const MinimalistPortalEmpresas = () => {
-  const [activeView, setActiveView] = useState("dashboard");
+  const [activeView, setActiveView] = useState("map");
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
@@ -46,7 +46,7 @@ const MinimalistPortalEmpresas = () => {
     : [];
 
   const navItems = [
-    { id: "dashboard", label: "Dashboard", icon: Map },
+    { id: "map", label: "Mapa", icon: Map },
     { id: "network", label: "Red", icon: Building2 },
     { id: "experiences", label: "Experiencias", icon: Star },
     { id: "messages", label: "Mensajes", icon: MessageCircle },
@@ -106,46 +106,59 @@ const MinimalistPortalEmpresas = () => {
   );
 
   const renderDesktopSidebar = () => (
-    <div className="hidden lg:flex flex-col w-64 bg-black/30 backdrop-blur-xl border-r border-white/10">
+    <div className="hidden lg:flex flex-col w-64 bg-black/30 backdrop-blur-xl border-r border-white/10 min-h-screen">
       <div className="p-6">
-        <h1 className="text-xl font-medium text-white mb-6">Portal Empresas</h1>
+        <div className="mb-8">
+          <h1 className="text-xl font-medium text-white mb-2">Portal Empresas</h1>
+          <p className="text-sm text-white/60">
+            {user?.companyName || 'Tu empresa'}
+          </p>
+        </div>
         
-        <nav className="space-y-2">
+        <nav className="space-y-1">
           {navItems.map((item) => {
             const Icon = item.icon;
+            const isActive = activeView === item.id;
             return (
               <Button
                 key={item.id}
                 variant="ghost"
                 onClick={() => handleNavigation(item.id)}
-                className={`w-full justify-start text-white hover:bg-white/10 ${
-                  activeView === item.id ? 'bg-white/20' : ''
+                className={`w-full justify-start text-white hover:bg-white/10 transition-colors ${
+                  isActive ? 'bg-white/20 border-l-2 border-green-400' : ''
                 }`}
               >
-                <Icon className="w-4 h-4 mr-3" />
-                {item.label}
+                <Icon className={`w-4 h-4 mr-3 ${isActive ? 'text-green-400' : 'text-white/70'}`} />
+                <span className={isActive ? 'font-medium' : ''}>{item.label}</span>
               </Button>
             );
           })}
         </nav>
       </div>
+      
+      {/* Sidebar Footer */}
+      <div className="mt-auto p-6 border-t border-white/10">
+        <div className="text-xs text-white/50 text-center">
+          Festival NATUR 2025
+        </div>
+      </div>
     </div>
   );
 
-  const renderDashboardView = () => (
-    <div className="space-y-6">
-      {/* Welcome Section */}
-      <div className="text-center mb-8">
+  const renderMapView = () => (
+    <div className="space-y-4">
+      {/* Welcome Header */}
+      <div className="mb-6">
         <h1 className="text-2xl lg:text-3xl font-light mb-2 text-white">
           Hola, {user?.companyName || user?.firstName || 'Empresa'}
         </h1>
         <p className="text-white/70">
-          Tu centro de operaciones para turismo sostenible
+          Explora el ecosistema de turismo sostenible
         </p>
       </div>
 
-      {/* Quick Stats */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+      {/* Quick Stats Bar */}
+      <div className="grid grid-cols-4 gap-3 mb-4">
         {[
           { label: "Experiencias", value: "3", color: "text-yellow-400" },
           { label: "Vistas", value: "1.2K", color: "text-blue-400" },
@@ -158,10 +171,10 @@ const MinimalistPortalEmpresas = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1 }}
           >
-            <Card className="bg-white/10 backdrop-blur-sm border-white/20 p-4">
+            <Card className="bg-white/10 backdrop-blur-sm border-white/20 p-3">
               <CardContent className="p-0">
                 <div className="text-center">
-                  <div className={`text-2xl font-bold ${stat.color} mb-1`}>
+                  <div className={`text-lg lg:text-xl font-bold ${stat.color} mb-1`}>
                     {stat.value}
                   </div>
                   <div className="text-xs text-white/60">{stat.label}</div>
@@ -172,36 +185,36 @@ const MinimalistPortalEmpresas = () => {
         ))}
       </div>
 
-      {/* Interactive Map */}
+      {/* Main Interactive Map - Full Height */}
       <Card className="bg-white/10 backdrop-blur-sm border-white/20">
         <CardContent className="p-0">
-          <div className="h-80 lg:h-96 rounded-lg overflow-hidden">
+          <div className="h-[60vh] lg:h-[70vh] rounded-lg overflow-hidden">
             <InteractiveMap />
           </div>
         </CardContent>
       </Card>
 
-      {/* Quick Actions */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+      {/* Quick Actions Row */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
         <Button 
           onClick={() => setActiveView('experiences')}
-          className="h-16 bg-green-600/20 border border-green-500/30 text-white hover:bg-green-600/30"
+          className="h-12 bg-green-600/20 border border-green-500/30 text-white hover:bg-green-600/30"
         >
-          <Plus className="w-5 h-5 mr-2" />
+          <Plus className="w-4 h-4 mr-2" />
           Nueva Experiencia
         </Button>
         <Button 
           onClick={() => setActiveView('network')}
-          className="h-16 bg-blue-600/20 border border-blue-500/30 text-white hover:bg-blue-600/30"
+          className="h-12 bg-blue-600/20 border border-blue-500/30 text-white hover:bg-blue-600/30"
         >
-          <Building2 className="w-5 h-5 mr-2" />
+          <Building2 className="w-4 h-4 mr-2" />
           Ver Red
         </Button>
         <Button 
           onClick={() => setActiveView('messages')}
-          className="h-16 bg-purple-600/20 border border-purple-500/30 text-white hover:bg-purple-600/30"
+          className="h-12 bg-purple-600/20 border border-purple-500/30 text-white hover:bg-purple-600/30"
         >
-          <MessageCircle className="w-5 h-5 mr-2" />
+          <MessageCircle className="w-4 h-4 mr-2" />
           Mensajes
         </Button>
       </div>
@@ -377,13 +390,13 @@ const MinimalistPortalEmpresas = () => {
 
   const renderContent = () => {
     switch (activeView) {
-      case "dashboard": return renderDashboardView();
+      case "map": return renderMapView();
       case "network": return renderNetworkView();
       case "experiences": return renderExperiencesView();
       case "messages": return renderMessagesView();
       case "profile": return renderProfileView();
       case "settings": return renderSettingsView();
-      default: return renderDashboardView();
+      default: return renderMapView();
     }
   };
 
@@ -403,9 +416,12 @@ const MinimalistPortalEmpresas = () => {
       <HeaderButtons showPortalButtons={false} />
       
       {/* Mobile Header */}
-      <div className="lg:hidden bg-black/30 backdrop-blur-xl border-b border-white/10 px-4 py-3 mt-16">
+      <div className="lg:hidden bg-black/30 backdrop-blur-xl border-b border-white/10 px-4 py-3 mt-16 sticky top-16 z-30">
         <div className="flex items-center justify-between">
-          <h1 className="text-lg font-medium text-white">Portal Empresas</h1>
+          <div>
+            <h1 className="text-lg font-medium text-white">Portal Empresas</h1>
+            <p className="text-xs text-white/60">{navItems.find(item => item.id === activeView)?.label}</p>
+          </div>
           <Button 
             variant="ghost" 
             size="sm"
