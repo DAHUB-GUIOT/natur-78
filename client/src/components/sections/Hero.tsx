@@ -61,22 +61,7 @@ export function Hero() {
                 </Button>
               </Link>
               
-              <Link to="/biodiversidad" className="w-full sm:w-auto">
-                <Button 
-                  size="lg" 
-                  className="font-bold text-lg px-6 py-4 rounded-none shadow-lg flex items-center justify-center w-full hover:opacity-90 transition-all duration-300 border-2"
-                  style={{ 
-                    backgroundColor: 'transparent', 
-                    color: '#10b981', 
-                    borderColor: '#10b981',
-                    fontFamily: 'Unbounded, sans-serif', 
-                    fontWeight: '300' 
-                  }}
-                >
-                  <Leaf className="w-5 h-5 mr-2" />
-                  BIODIVERSIDAD
-                </Button>
-              </Link>
+
             </div>
           </div>
         </div>
