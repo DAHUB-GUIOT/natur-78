@@ -51,13 +51,13 @@ const BiodiversityExperience: React.FC = () => {
               <Leaf className="w-8 h-8 text-green-400" />
             </div>
 
-            <h1 className="text-6xl md:text-8xl font-unbounded font-light mb-8 text-white tracking-wider leading-none">
+            <h1 className="text-4xl sm:text-6xl md:text-8xl font-unbounded font-light mb-8 text-white tracking-wider leading-none">
               BIODIVERSIDAD
               <br />
               <span className="text-green-400">INMERSIVA</span>
             </h1>
             
-            <p className="text-xl md:text-2xl text-white/80 mb-12 leading-relaxed font-light max-w-3xl mx-auto">
+            <p className="text-lg sm:text-xl md:text-2xl text-white/80 mb-12 leading-relaxed font-light max-w-3xl mx-auto px-4">
               Sumérgete en un viaje visual que revela la extraordinaria riqueza natural de Colombia mientras navegas
             </p>
 
@@ -119,26 +119,26 @@ const BiodiversityExperience: React.FC = () => {
               <Heart className="w-6 h-6 text-red-400" />
             </div>
 
-            <h2 className="text-4xl md:text-6xl font-unbounded font-light mb-8 text-white">
+            <h2 className="text-3xl sm:text-4xl md:text-6xl font-unbounded font-light mb-8 text-white">
               PROTEGE LA
               <br />
               <span className="text-green-400">BIODIVERSIDAD</span>
             </h2>
             
-            <p className="text-lg text-white/80 mb-12 leading-relaxed max-w-2xl mx-auto">
+            <p className="text-base sm:text-lg text-white/80 mb-12 leading-relaxed max-w-2xl mx-auto px-4">
               Cada especie que has conocido necesita tu ayuda. Únete al movimiento de turismo sostenible 
               y contribuye a la conservación de estos tesoros naturales.
             </p>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 px-4">
               <Link to="/marketplace">
-                <Button className="bg-green-500 hover:bg-green-600 text-white px-8 py-3 text-lg">
-                  <Globe className="w-5 h-5 mr-2" />
+                <Button className="bg-green-500 hover:bg-green-600 text-white px-6 sm:px-8 py-3 text-base sm:text-lg w-full sm:w-auto">
+                  <Globe className="w-4 sm:w-5 h-4 sm:h-5 mr-2" />
                   Explorar Experiencias
                 </Button>
               </Link>
               <Link to="/registro">
-                <Button variant="outline" className="border-white/30 text-white hover:bg-white/10 px-8 py-3 text-lg">
+                <Button variant="outline" className="border-white/30 text-white hover:bg-white/10 px-6 sm:px-8 py-3 text-base sm:text-lg w-full sm:w-auto">
                   Crear Experiencia Sostenible
                 </Button>
               </Link>
@@ -147,7 +147,7 @@ const BiodiversityExperience: React.FC = () => {
 
           {/* Stats Grid */}
           <motion.div 
-            className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-20"
+            className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8 mt-16 sm:mt-20 px-4"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
@@ -160,10 +160,10 @@ const BiodiversityExperience: React.FC = () => {
               { number: '524', label: 'Especies de Mamíferos' }
             ].map((stat, index) => (
               <div key={index} className="text-center">
-                <div className="text-3xl font-unbounded font-light text-green-400 mb-2">
+                <div className="text-xl sm:text-2xl md:text-3xl font-unbounded font-light text-green-400 mb-2">
                   {stat.number}
                 </div>
-                <div className="text-sm text-white/70 uppercase tracking-wide">
+                <div className="text-xs sm:text-sm text-white/70 uppercase tracking-wide">
                   {stat.label}
                 </div>
               </div>

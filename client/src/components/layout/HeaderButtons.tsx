@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Globe, LogIn, UserPlus, Building2, MapPin, Menu, X, Calendar, Ticket, Info, Users, Mail, Instagram, Twitter, Facebook } from "lucide-react";
+import { Globe, LogIn, UserPlus, Building2, MapPin, Menu, X, Calendar, Ticket, Info, Users, Mail, Instagram, Twitter, Facebook, Leaf } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
@@ -213,6 +213,16 @@ export function HeaderButtons({ showPortalButtons = false }: HeaderButtonsProps)
                 >
                   <Ticket className="w-6 h-6 mr-4" />
                   <span className="text-2xl font-black font-gasoek tracking-wider uppercase">Entradas</span>
+                </Button>
+              </Link>
+              
+              <Link to="/biodiversidad" onClick={() => setIsMenuOpen(false)}>
+                <Button 
+                  variant="ghost"
+                  className="w-full justify-start text-yellow-400 hover:text-yellow-400 hover:bg-green-900/50 py-6"
+                >
+                  <Leaf className="w-6 h-6 mr-4" />
+                  <span className="text-2xl font-black font-gasoek tracking-wider uppercase">Biodiversidad</span>
                 </Button>
               </Link>
 

@@ -95,6 +95,326 @@ const biodiversityData: BiodiversityItem[] = [
       'El azul proviene de la estructura microscópica, no de pigmentos',
       'Pueden vivir hasta 137 días'
     ]
+  },
+  {
+    id: 'condor-andino',
+    title: 'Cóndor Andino',
+    description: 'Ave nacional de Colombia, planea majestuosamente por los Andes',
+    species: 'Vultur gryphus',
+    habitat: 'Montañas Andinas',
+    conservation: 'Near Threatened',
+    image: 'https://images.unsplash.com/photo-1444464666168-49d633b86797?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+    icon: Bird,
+    color: '#374151',
+    facts: [
+      'Puede volar hasta 300 km sin batir las alas',
+      'Vive hasta 100 años en cautiverio',
+      'Es símbolo de libertad en los Andes'
+    ]
+  },
+  {
+    id: 'oso-andino',
+    title: 'Oso Andino',
+    description: 'Único oso sudamericano, guardián de los bosques de niebla',
+    species: 'Tremarctos ornatus',
+    habitat: 'Bosque Andino',
+    conservation: 'Vulnerable',
+    image: 'https://images.unsplash.com/photo-1551969014-7d2c4cddf0b6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+    icon: Mountain,
+    color: '#92400e',
+    facts: [
+      'Construye nidos en los árboles para dormir',
+      'Dispersa semillas ayudando a regenerar bosques',
+      'Puede trepar árboles de más de 30 metros'
+    ]
+  },
+  {
+    id: 'gallito-de-roca',
+    title: 'Gallito de Roca',
+    description: 'Ave nacional del Perú, también presente en Colombia',
+    species: 'Rupicola peruvianus',
+    habitat: 'Selva Nublada',
+    conservation: 'Least Concern',
+    image: 'https://images.unsplash.com/photo-1444464666168-49d633b86797?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+    icon: Bird,
+    color: '#dc2626',
+    facts: [
+      'Los machos tienen una cresta semicircular distintiva',
+      'Realizan danzas elaboradas para cortejar',
+      'Construyen nidos en acantilados rocosos'
+    ]
+  },
+  {
+    id: 'tapir-amazonico',
+    title: 'Tapir Amazónico',
+    description: 'Mamífero herbívoro, jardinero de la selva amazónica',
+    species: 'Tapirus terrestris',
+    habitat: 'Selva Amazónica',
+    conservation: 'Vulnerable',
+    image: 'https://images.unsplash.com/photo-1551969014-7d2c4cddf0b6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+    icon: Mountain,
+    color: '#6b7280',
+    facts: [
+      'Puede pesar hasta 320 kg',
+      'Su trompa flexible les ayuda a alimentarse',
+      'Son excelentes nadadores y buceadores'
+    ]
+  },
+  {
+    id: 'guacamaya-azul',
+    title: 'Guacamaya Azul y Amarilla',
+    description: 'Loro gigante de colores vibrantes, embajador de la Amazonía',
+    species: 'Ara ararauna',
+    habitat: 'Selva Tropical',
+    conservation: 'Least Concern',
+    image: 'https://images.unsplash.com/photo-1444464666168-49d633b86797?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+    icon: Bird,
+    color: '#2563eb',
+    facts: [
+      'Pueden vivir más de 80 años',
+      'Su pico puede romper nueces muy duras',
+      'Forman parejas de por vida'
+    ]
+  },
+  {
+    id: 'perezoso-tridactilo',
+    title: 'Perezoso Tridáctilo',
+    description: 'Mamífero de movimientos lentos, símbolo de tranquilidad',
+    species: 'Bradypus variegatus',
+    habitat: 'Selva Tropical',
+    conservation: 'Least Concern',
+    image: 'https://images.unsplash.com/photo-1551969014-7d2c4cddf0b6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+    icon: TreePine,
+    color: '#059669',
+    facts: [
+      'Solo bajan del árbol una vez por semana',
+      'Pueden girar su cabeza 270 grados',
+      'Las algas crecen en su pelaje dándole camuflaje'
+    ]
+  },
+  {
+    id: 'mono-aullador',
+    title: 'Mono Aullador Rojo',
+    description: 'Primate de voz potente, despertador natural de la selva',
+    species: 'Alouatta seniculus',
+    habitat: 'Selva Tropical',
+    conservation: 'Least Concern',
+    image: 'https://images.unsplash.com/photo-1551969014-7d2c4cddf0b6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+    icon: Mountain,
+    color: '#dc2626',
+    facts: [
+      'Su grito se escucha a 5 km de distancia',
+      'Pasan 80% del tiempo descansando',
+      'Su cola prensil actúa como quinta extremidad'
+    ]
+  },
+  {
+    id: 'cocodrilo-orinoco',
+    title: 'Cocodrilo del Orinoco',
+    description: 'Reptil gigante, depredador apex de los llanos orientales',
+    species: 'Crocodylus intermedius',
+    habitat: 'Ríos y Llanos',
+    conservation: 'Critically Endangered',
+    image: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+    icon: Waves,
+    color: '#065f46',
+    facts: [
+      'Puede medir hasta 7 metros de longitud',
+      'Es el cocodrilo más grande de Sudamérica',
+      'Las hembras cuidan sus crías por 2 años'
+    ]
+  },
+  {
+    id: 'rana-dorada',
+    title: 'Rana Dorada Venenosa',
+    description: 'Anfibio pequeño pero letal, joya tóxica de la selva',
+    species: 'Phyllobates aurotaenia',
+    habitat: 'Selva Húmeda',
+    conservation: 'Endangered',
+    image: 'https://images.unsplash.com/photo-1444464666168-49d633b86797?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+    icon: Leaf,
+    color: '#f59e0b',
+    facts: [
+      'Su veneno era usado por indígenas en flechas',
+      'Una sola rana tiene veneno para 10 personas',
+      'Solo mide 5 cm pero es extremadamente peligrosa'
+    ]
+  },
+  {
+    id: 'iguana-verde',
+    title: 'Iguana Verde',
+    description: 'Reptil herbívoro, dragón moderno de las costas tropicales',
+    species: 'Iguana iguana',
+    habitat: 'Bosque Seco Tropical',
+    conservation: 'Least Concern',
+    image: 'https://images.unsplash.com/photo-1444464666168-49d633b86797?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+    icon: Sun,
+    color: '#16a34a',
+    facts: [
+      'Pueden medir hasta 2 metros de longitud',
+      'Son excelentes nadadores',
+      'Pueden quedarse inmóviles por horas tomando sol'
+    ]
+  },
+  {
+    id: 'anaconda',
+    title: 'Anaconda Verde',
+    description: 'Serpiente gigante, constrictora poderosa de los humedales',
+    species: 'Eunectes murinus',
+    habitat: 'Humedales',
+    conservation: 'Least Concern',
+    image: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+    icon: Waves,
+    color: '#166534',
+    facts: [
+      'Es la serpiente más pesada del mundo',
+      'Puede medir hasta 9 metros de longitud',
+      'Da a luz crías vivas, no pone huevos'
+    ]
+  },
+  {
+    id: 'nutria-gigante',
+    title: 'Nutria Gigante',
+    description: 'Mamífero acuático social, pescador experto del Amazonas',
+    species: 'Pteronura brasiliensis',
+    habitat: 'Ríos Amazónicos',
+    conservation: 'Endangered',
+    image: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+    icon: Fish,
+    color: '#92400e',
+    facts: [
+      'Puede medir hasta 1.8 metros de longitud',
+      'Viven en grupos familiares de hasta 15 individuos',
+      'Cada individuo tiene un patrón único en el cuello'
+    ]
+  },
+  {
+    id: 'tortuga-carey',
+    title: 'Tortuga Carey',
+    description: 'Reptil marino milenario, navegante de los océanos tropicales',
+    species: 'Eretmochelys imbricata',
+    habitat: 'Océano y Arrecifes',
+    conservation: 'Critically Endangered',
+    image: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+    icon: Waves,
+    color: '#0891b2',
+    facts: [
+      'Pueden vivir más de 100 años',
+      'Navegan miles de kilómetros usando campos magnéticos',
+      'Sus caparazones eran muy valorados históricamente'
+    ]
+  },
+  {
+    id: 'colibri-chupasavia',
+    title: 'Colibrí Chupasavia',
+    description: 'Ave diminuta de vuelo único, joya voladora de los Andes',
+    species: 'Trochilidae',
+    habitat: 'Bosque Andino',
+    conservation: 'Least Concern',
+    image: 'https://images.unsplash.com/photo-1444464666168-49d633b86797?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+    icon: Bird,
+    color: '#22c55e',
+    facts: [
+      'Baten sus alas hasta 80 veces por segundo',
+      'Son los únicos pájaros que pueden volar hacia atrás',
+      'Su corazón late 1,200 veces por minuto'
+    ]
+  },
+  {
+    id: 'armadillo-gigante',
+    title: 'Armadillo Gigante',
+    description: 'Mamífero acorazado, excavador experto de la sabana',
+    species: 'Priodontes maximus',
+    habitat: 'Sabana y Selva',
+    conservation: 'Vulnerable',
+    image: 'https://images.unsplash.com/photo-1551969014-7d2c4cddf0b6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+    icon: Mountain,
+    color: '#78716c',
+    facts: [
+      'Puede pesar hasta 54 kg',
+      'Excava madrigueras de hasta 6 metros',
+      'Sus garras pueden ser de 20 cm de largo'
+    ]
+  },
+  {
+    id: 'tiburon-ballena',
+    title: 'Tiburón Ballena',
+    description: 'Pez más grande del mundo, gigante gentil del Caribe colombiano',
+    species: 'Rhincodon typus',
+    habitat: 'Océano Caribe',
+    conservation: 'Endangered',
+    image: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+    icon: Fish,
+    color: '#1e40af',
+    facts: [
+      'Puede medir hasta 18 metros de longitud',
+      'Se alimenta únicamente de plancton',
+      'Cada individuo tiene un patrón único de manchas'
+    ]
+  },
+  {
+    id: 'manta-raya',
+    title: 'Manta Raya Gigante',
+    description: 'Pez cartilaginoso elegante, bailarina de las aguas caribeñas',
+    species: 'Mobula birostris',
+    habitat: 'Aguas Oceánicas',
+    conservation: 'Vulnerable',
+    image: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+    icon: Waves,
+    color: '#6366f1',
+    facts: [
+      'Su envergadura puede superar los 7 metros',
+      'Pueden saltar completamente fuera del agua',
+      'Poseen el cerebro más grande entre los peces'
+    ]
+  },
+  {
+    id: 'boa-constrictora',
+    title: 'Boa Constrictora',
+    description: 'Serpiente poderosa, cazadora silenciosa de múltiples hábitats',
+    species: 'Boa constrictor',
+    habitat: 'Diversos Ecosistemas',
+    conservation: 'Least Concern',
+    image: 'https://images.unsplash.com/photo-1444464666168-49d633b86797?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+    icon: Mountain,
+    color: '#a16207',
+    facts: [
+      'No es venenosa, mata por constricción',
+      'Puede vivir hasta 30 años',
+      'Detecta presas por su calor corporal'
+    ]
+  },
+  {
+    id: 'capibara',
+    title: 'Capibara',
+    description: 'Roedor más grande del mundo, mamífero sociable de humedales',
+    species: 'Hydrochoerus hydrochaeris',
+    habitat: 'Humedales y Ríos',
+    conservation: 'Least Concern',
+    image: 'https://images.unsplash.com/photo-1551969014-7d2c4cddf0b6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+    icon: Waves,
+    color: '#a3a3a3',
+    facts: [
+      'Puede pesar hasta 66 kg',
+      'Viven en grupos de hasta 30 individuos',
+      'Son excelentes nadadores y pueden bucear'
+    ]
+  },
+  {
+    id: 'ocelote',
+    title: 'Ocelote',
+    description: 'Felino manchado, cazador nocturno de múltiples ecosistemas',
+    species: 'Leopardus pardalis',
+    habitat: 'Selva y Bosque Seco',
+    conservation: 'Least Concern',
+    image: 'https://images.unsplash.com/photo-1551969014-7d2c4cddf0b6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+    icon: Mountain,
+    color: '#f97316',
+    facts: [
+      'Cada ocelote tiene un patrón único de manchas',
+      'Son excelentes trepadores y nadadores',
+      'Tienen visión nocturna 6 veces mejor que los humanos'
+    ]
   }
 ];
 
@@ -126,7 +446,7 @@ export const BiodiversityReveal: React.FC = () => {
 
   // Track scroll position to reveal items
   useEffect(() => {
-    const unsubscribe = scrollYProgress.onChange((latest) => {
+    const unsubscribe = scrollYProgress.on("change", (latest) => {
       const index = Math.floor(latest * biodiversityData.length);
       setActiveIndex(Math.min(index, biodiversityData.length - 1));
       setIsVisible(latest > 0.1 && latest < 0.9);
@@ -140,7 +460,7 @@ export const BiodiversityReveal: React.FC = () => {
   return (
     <div ref={containerRef} className="min-h-[500vh] relative">
       {/* Fixed Content Container */}
-      <div className="sticky top-0 h-screen w-full overflow-hidden">
+      <div className="sticky top-0 h-screen w-full overflow-hidden relative">
         
         {/* Background Gradient */}
         <motion.div 
@@ -196,7 +516,7 @@ export const BiodiversityReveal: React.FC = () => {
             </motion.div>
 
             {/* Species Showcase */}
-            <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
               
               {/* Species Image */}
               <motion.div 
@@ -210,7 +530,7 @@ export const BiodiversityReveal: React.FC = () => {
                   <img 
                     src={currentItem.image} 
                     alt={currentItem.title}
-                    className="w-full h-96 object-cover"
+                    className="w-full h-64 md:h-96 object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
                   
@@ -256,31 +576,31 @@ export const BiodiversityReveal: React.FC = () => {
                 transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
               >
                 <div>
-                  <h3 className="text-4xl font-unbounded font-light text-white mb-4">
+                  <h3 className="text-2xl md:text-4xl font-unbounded font-light text-white mb-4">
                     {currentItem.title}
                   </h3>
-                  <p className="text-lg text-white/80 mb-6 leading-relaxed">
+                  <p className="text-base md:text-lg text-white/80 mb-6 leading-relaxed">
                     {currentItem.description}
                   </p>
                 </div>
 
                 {/* Species Details */}
-                <div className="grid grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                   <div className="space-y-2">
-                    <p className="text-sm text-white/60 uppercase tracking-wide">Especie</p>
-                    <p className="text-white font-light italic">{currentItem.species}</p>
+                    <p className="text-xs md:text-sm text-white/60 uppercase tracking-wide">Especie</p>
+                    <p className="text-sm md:text-base text-white font-light italic">{currentItem.species}</p>
                   </div>
                   <div className="space-y-2">
-                    <p className="text-sm text-white/60 uppercase tracking-wide">Hábitat</p>
-                    <p className="text-white font-light">{currentItem.habitat}</p>
+                    <p className="text-xs md:text-sm text-white/60 uppercase tracking-wide">Hábitat</p>
+                    <p className="text-sm md:text-base text-white font-light">{currentItem.habitat}</p>
                   </div>
                 </div>
 
                 {/* Conservation Status */}
-                <div className="flex items-center gap-4">
-                  <span className="text-sm text-white/60 uppercase tracking-wide">Estado:</span>
+                <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4">
+                  <span className="text-xs md:text-sm text-white/60 uppercase tracking-wide">Estado:</span>
                   <span 
-                    className="px-4 py-2 rounded-full text-sm font-medium text-white border-2"
+                    className="px-3 md:px-4 py-1 md:py-2 rounded-full text-xs md:text-sm font-medium text-white border-2 w-fit"
                     style={{ 
                       borderColor: getConservationColor(currentItem.conservation),
                       backgroundColor: `${getConservationColor(currentItem.conservation)}20`
@@ -292,7 +612,7 @@ export const BiodiversityReveal: React.FC = () => {
 
                 {/* Fun Facts */}
                 <div className="space-y-4">
-                  <p className="text-sm text-white/60 uppercase tracking-wide">Datos Curiosos</p>
+                  <p className="text-xs md:text-sm text-white/60 uppercase tracking-wide">Datos Curiosos</p>
                   <div className="space-y-3">
                     {currentItem.facts.map((fact, index) => (
                       <motion.div 
@@ -306,7 +626,7 @@ export const BiodiversityReveal: React.FC = () => {
                           className="w-2 h-2 rounded-full mt-2 flex-shrink-0"
                           style={{ backgroundColor: currentItem.color }}
                         />
-                        <p className="text-white/80 text-sm leading-relaxed">{fact}</p>
+                        <p className="text-white/80 text-xs md:text-sm leading-relaxed">{fact}</p>
                       </motion.div>
                     ))}
                   </div>
