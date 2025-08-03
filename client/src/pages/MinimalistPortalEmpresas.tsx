@@ -105,119 +105,11 @@ const MinimalistPortalEmpresas = () => {
     </AnimatePresence>
   );
 
-  const renderDesktopSidebar = () => (
-    <div className="hidden lg:flex flex-col w-64 bg-black/30 backdrop-blur-xl border-r border-white/10 min-h-screen">
-      <div className="p-6">
-        <div className="mb-8">
-          <h1 className="text-xl font-medium text-white mb-2">Portal Empresas</h1>
-          <p className="text-sm text-white/60">
-            {user?.companyName || 'Tu empresa'}
-          </p>
-        </div>
-        
-        <nav className="space-y-1">
-          {navItems.map((item) => {
-            const Icon = item.icon;
-            const isActive = activeView === item.id;
-            return (
-              <Button
-                key={item.id}
-                variant="ghost"
-                onClick={() => handleNavigation(item.id)}
-                className={`w-full justify-start text-white hover:bg-white/10 transition-colors ${
-                  isActive ? 'bg-white/20 border-l-2 border-green-400' : ''
-                }`}
-              >
-                <Icon className={`w-4 h-4 mr-3 ${isActive ? 'text-green-400' : 'text-white/70'}`} />
-                <span className={isActive ? 'font-medium' : ''}>{item.label}</span>
-              </Button>
-            );
-          })}
-        </nav>
-      </div>
-      
-      {/* Sidebar Footer */}
-      <div className="mt-auto p-6 border-t border-white/10">
-        <div className="text-xs text-white/50 text-center">
-          Festival NATUR 2025
-        </div>
-      </div>
-    </div>
-  );
+  // Sidebar removed - navigation now in HeaderButtons
 
   const renderMapView = () => (
-    <div className="relative h-full">
-      {/* Floating Header Overlay */}
-      <div className="absolute top-4 left-4 right-4 z-20">
-        <div className="bg-black/50 backdrop-blur-xl rounded-lg p-4 border border-white/10">
-          <h1 className="text-xl lg:text-2xl font-light mb-1 text-white">
-            Hola, {user?.companyName || user?.firstName || 'Empresa'}
-          </h1>
-          <p className="text-sm text-white/70">
-            Explora el ecosistema de turismo sostenible
-          </p>
-        </div>
-      </div>
-
-      {/* Floating Stats Overlay */}
-      <div className="absolute top-24 left-4 right-4 z-20">
-        <div className="grid grid-cols-4 gap-2">
-          {[
-            { label: "Experiencias", value: "3", color: "text-yellow-400" },
-            { label: "Vistas", value: "1.2K", color: "text-blue-400" },
-            { label: "Contactos", value: "8", color: "text-green-400" },
-            { label: "Rating", value: "4.8", color: "text-pink-400" }
-          ].map((stat, index) => (
-            <motion.div
-              key={stat.label}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
-            >
-              <div className="bg-black/50 backdrop-blur-xl rounded-lg p-2 border border-white/10">
-                <div className="text-center">
-                  <div className={`text-lg font-bold ${stat.color} mb-1`}>
-                    {stat.value}
-                  </div>
-                  <div className="text-xs text-white/60">{stat.label}</div>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-
-      {/* Floating Actions Overlay */}
-      <div className="absolute bottom-4 left-4 right-4 z-20">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-2">
-          <Button 
-            onClick={() => setActiveView('experiences')}
-            className="h-12 bg-black/50 backdrop-blur-xl border border-green-500/30 text-white hover:bg-green-600/30"
-          >
-            <Plus className="w-4 h-4 mr-2" />
-            Nueva Experiencia
-          </Button>
-          <Button 
-            onClick={() => setActiveView('network')}
-            className="h-12 bg-black/50 backdrop-blur-xl border border-blue-500/30 text-white hover:bg-blue-600/30"
-          >
-            <Building2 className="w-4 h-4 mr-2" />
-            Ver Red
-          </Button>
-          <Button 
-            onClick={() => setActiveView('messages')}
-            className="h-12 bg-black/50 backdrop-blur-xl border border-purple-500/30 text-white hover:bg-purple-600/30"
-          >
-            <MessageCircle className="w-4 h-4 mr-2" />
-            Mensajes
-          </Button>
-        </div>
-      </div>
-
-      {/* Full Size Interactive Map */}
-      <div className="absolute inset-0 z-10">
-        <InteractiveMap />
-      </div>
+    <div className="absolute inset-0">
+      <InteractiveMap />
     </div>
   );
 
@@ -413,43 +305,27 @@ const MinimalistPortalEmpresas = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-green-900">
-      <HeaderButtons showPortalButtons={false} />
+      <HeaderButtons 
+        showPortalButtons={false} 
+        showPortalEmpresasNav={true}
+        navItems={navItems}
+        activeView={activeView}
+        onNavigation={handleNavigation}
+      />
       
-      {/* Mobile Header */}
-      <div className="lg:hidden bg-black/30 backdrop-blur-xl border-b border-white/10 px-4 py-3 mt-16 sticky top-16 z-30">
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-lg font-medium text-white">Portal Empresas</h1>
-            <p className="text-xs text-white/60">{navItems.find(item => item.id === activeView)?.label}</p>
-          </div>
-          <Button 
-            variant="ghost" 
-            size="sm"
-            onClick={() => setShowMobileMenu(true)}
-            className="text-white hover:bg-white/10"
+      {/* Main Content - Full Screen */}
+      <div className="relative">
+        <main className="h-screen">
+          <motion.div
+            key={activeView}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+            className="h-full"
           >
-            <Menu className="w-5 h-5" />
-          </Button>
-        </div>
-      </div>
-
-      <div className="flex">
-        {renderDesktopSidebar()}
-        
-        {/* Main Content */}
-        <div className="flex-1">
-          <main className={activeView === 'map' ? 'h-screen' : 'p-4 lg:p-8'}>
-            <motion.div
-              key={activeView}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3 }}
-              className={activeView === 'map' ? 'h-full' : ''}
-            >
-              {renderContent()}
-            </motion.div>
-          </main>
-        </div>
+            {renderContent()}
+          </motion.div>
+        </main>
       </div>
 
       {renderMobileNav()}
