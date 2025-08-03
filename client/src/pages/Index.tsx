@@ -88,23 +88,47 @@ const Index = () => {
         const colombiaMapOpacity = Math.max(0, Math.min(1, (scrollProgress - 0.3) * 3));
         colombiaMapRef.current.style.opacity = colombiaMapOpacity.toString();
 
-        // Animate content sections
+        // Animate content sections with sequential fade in/out
         const sections = document.querySelectorAll('.content-section');
+        const totalSections = sections.length;
+        const sectionScrollRange = windowHeight * 1.5; // Each section needs 1.5 screen heights
+        
         sections.forEach((section, index) => {
           const sectionElement = section as HTMLElement;
-          const sectionTop = sectionElement.offsetTop;
-          const sectionHeight = sectionElement.offsetHeight;
-          const sectionProgress = Math.max(0, Math.min(1, (scrollY - sectionTop + windowHeight) / (sectionHeight + windowHeight)));
+          const startScroll = windowHeight + (index * sectionScrollRange);
+          const endScroll = startScroll + sectionScrollRange;
+          const currentSectionProgress = Math.max(0, Math.min(1, (scrollY - startScroll) / sectionScrollRange));
           
-          // Parallax text animation
-          const translateY = (1 - sectionProgress) * 100;
-          const opacity = Math.max(0, Math.min(1, sectionProgress * 2 - 0.2));
-          const scale = 0.8 + sectionProgress * 0.2;
+          let opacity = 0;
+          let translateY = 50;
+          let scale = 0.9;
+          
+          // Fade in when entering
+          if (scrollY >= startScroll && scrollY <= startScroll + sectionScrollRange * 0.3) {
+            const fadeInProgress = (scrollY - startScroll) / (sectionScrollRange * 0.3);
+            opacity = fadeInProgress;
+            translateY = 50 * (1 - fadeInProgress);
+            scale = 0.9 + (0.1 * fadeInProgress);
+          }
+          // Stay visible in the middle
+          else if (scrollY > startScroll + sectionScrollRange * 0.3 && scrollY < startScroll + sectionScrollRange * 0.7) {
+            opacity = 1;
+            translateY = 0;
+            scale = 1;
+          }
+          // Fade out when leaving
+          else if (scrollY >= startScroll + sectionScrollRange * 0.7 && scrollY <= endScroll) {
+            const fadeOutProgress = (scrollY - (startScroll + sectionScrollRange * 0.7)) / (sectionScrollRange * 0.3);
+            opacity = 1 - fadeOutProgress;
+            translateY = -50 * fadeOutProgress;
+            scale = 1 - (0.1 * fadeOutProgress);
+          }
           
           const content = sectionElement.querySelector('.section-content') as HTMLElement;
           if (content) {
             content.style.transform = `translateY(${translateY}px) scale(${scale})`;
             content.style.opacity = opacity.toString();
+            content.style.transition = 'all 0.1s ease-out';
           }
         });
       };
@@ -158,11 +182,11 @@ const Index = () => {
       </div>
 
       {/* Content Sections with Colombia Background */}
-      <div className="relative z-10">
+      <div className="relative z-10" style={{ height: '600vh' }}>
         {/* Slide 1 — Potencia en peligro */}
-        <section className="content-section min-h-screen flex items-center justify-center px-8">
+        <section className="content-section fixed inset-0 flex items-center justify-center px-8">
           <div className="section-content max-w-4xl text-center text-white bg-black/80 backdrop-blur-sm rounded-3xl p-12 border border-yellow-400/20"
-               style={{ transform: 'translateY(100px) scale(0.8)', opacity: 0, transition: 'none' }}>
+               style={{ transform: 'translateY(50px) scale(0.9)', opacity: 0 }}>
             <h2 className="text-4xl md:text-6xl font-gasoek text-yellow-400 mb-8 font-black drop-shadow-2xl">
               Slide 1 — Potencia en peligro
             </h2>
@@ -176,9 +200,9 @@ const Index = () => {
         </section>
 
         {/* Slide 2 — Turismo mal entendido */}
-        <section className="content-section min-h-screen flex items-center justify-center px-8">
+        <section className="content-section fixed inset-0 flex items-center justify-center px-8">
           <div className="section-content max-w-4xl text-center text-white bg-black/80 backdrop-blur-sm rounded-3xl p-12 border border-yellow-400/20"
-               style={{ transform: 'translateY(100px) scale(0.8)', opacity: 0, transition: 'none' }}>
+               style={{ transform: 'translateY(50px) scale(0.9)', opacity: 0 }}>
             <h2 className="text-4xl md:text-6xl font-gasoek text-yellow-400 mb-8 font-black drop-shadow-2xl">
               Slide 2 — Turismo mal entendido
             </h2>
@@ -192,9 +216,9 @@ const Index = () => {
         </section>
 
         {/* Slide 3 — Consumo vs. conservación */}
-        <section className="content-section min-h-screen flex items-center justify-center px-8">
+        <section className="content-section fixed inset-0 flex items-center justify-center px-8">
           <div className="section-content max-w-4xl text-center text-white bg-black/80 backdrop-blur-sm rounded-3xl p-12 border border-yellow-400/20"
-               style={{ transform: 'translateY(100px) scale(0.8)', opacity: 0, transition: 'none' }}>
+               style={{ transform: 'translateY(50px) scale(0.9)', opacity: 0 }}>
             <h2 className="text-4xl md:text-6xl font-gasoek text-yellow-400 mb-8 font-black drop-shadow-2xl">
               Slide 3 — Consumo vs. conservación
             </h2>
