@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { InteractiveMap } from "@/components/dashboard/InteractiveMap";
-import { SimpleChat } from "@/components/messaging/SimpleChat";
+import { WhatsAppChat } from "@/components/messaging/WhatsAppChat";
 import TwitterProfileSection from "@/components/profile/TwitterProfileSection";
 import { HeaderButtons } from "@/components/layout/HeaderButtons";
 
@@ -176,15 +176,10 @@ const MinimalistPortalEmpresas = () => {
   );
 
   const renderMessagesView = () => (
-    <div className="p-4 space-y-4">
-      <h2 className="text-xl font-light text-white mb-4">Mensajes</h2>
-      <Card className="bg-white/10 backdrop-blur-sm border-white/20">
-        <CardContent className="p-0">
-          <div className="h-[calc(100vh-200px)] min-h-96">
-            <SimpleChat />
-          </div>
-        </CardContent>
-      </Card>
+    <div className="h-full">
+      <div className="h-[calc(100vh-64px)] md:h-[calc(100vh-80px)]">
+        <WhatsAppChat />
+      </div>
     </div>
   );
 
