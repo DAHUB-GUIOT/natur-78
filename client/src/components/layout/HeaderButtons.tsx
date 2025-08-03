@@ -83,58 +83,7 @@ export function HeaderButtons({
             )}
           </div>
 
-          {/* Portal Empresas Navigation - conditional */}
-          {showPortalEmpresasNav && (
-            <div className="relative">
-              <Button
-                onClick={() => setIsPortalNavOpen(!isPortalNavOpen)}
-                size="sm"
-                variant="ghost"
-                className={`p-2 transition-all ${
-                  isPortalNavOpen 
-                    ? 'bg-green-600 text-yellow-400' 
-                    : 'text-white hover:bg-white/10'
-                }`}
-              >
-                <Building2 className="w-5 h-5" />
-              </Button>
-              
-              <AnimatePresence>
-                {isPortalNavOpen && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    className="absolute right-0 top-full mt-2 w-48 bg-black/90 backdrop-blur-xl border border-white/20 rounded-lg shadow-lg z-50"
-                  >
-                    <div className="p-2">
-                      {navItems.map((item) => {
-                        const Icon = item.icon;
-                        const isActive = activeView === item.id;
-                        return (
-                          <button
-                            key={item.id}
-                            onClick={() => {
-                              onNavigation?.(item.id);
-                              setIsPortalNavOpen(false);
-                            }}
-                            className={`w-full flex items-center px-3 py-2 text-sm rounded-md transition-colors ${
-                              isActive 
-                                ? 'bg-green-600 text-yellow-400' 
-                                : 'text-white hover:bg-white/10'
-                            }`}
-                          >
-                            <Icon className={`w-4 h-4 mr-3 ${isActive ? 'text-yellow-400' : 'text-white/70'}`} />
-                            {item.label}
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-          )}
+          {/* Portal Empresas Navigation removed - only one button needed */}
 
           {/* Tickets Dropdown - always visible */}
           <div className="hidden md:block">
