@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { 
   Map, Building2, Star, MessageCircle, Settings, ShieldCheck, 
-  Home, Users, Calendar, BarChart3
+  Home, Users, Calendar, BarChart3, User
 } from "lucide-react";
 
 interface SimpleSidebarProps {
@@ -61,6 +61,12 @@ const SimpleSidebar: React.FC<SimpleSidebarProps> = ({
       icon: MessageCircle, 
       color: "text-white",
       badge: messageCount > 0 ? messageCount : undefined
+    },
+    { 
+      id: "perfil", 
+      label: "Mi Perfil", 
+      icon: User, 
+      color: "text-white"
     },
     { 
       id: "ajustes", 

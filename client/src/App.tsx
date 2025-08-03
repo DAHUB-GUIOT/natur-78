@@ -39,6 +39,7 @@ import Tickets from "./pages/Tickets";
 import SessionDetail from "./pages/SessionDetail";
 import Noticias from "./pages/Noticias";
 import BiodiversityExperience from "./pages/BiodiversityExperience";
+import CompanyProfilePage from "./pages/CompanyProfilePage";
 import { AuthProvider } from "./contexts/AuthContext";
 
 // Create QueryClient outside component to prevent recreation on renders
@@ -78,6 +79,7 @@ const App = () => (
             <Route path="/dashboard" component={Dashboard} />
             <Route path="/portal-empresas/auth" component={PortalEmpresasAuth} />
             <Route path="/portal-empresas" component={PortalEmpresasDashboard} />
+            <Route path="/company-profile" component={CompanyProfilePage} />
             <Route path="/portal-viajeros" component={PortalViajeros} />
             <Route path="/experiencia/:id" component={ExperienceDetail} />
             <Route path="/mapa" component={PortalViajeros} />

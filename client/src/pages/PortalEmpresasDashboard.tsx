@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { 
   Map, Building2, Star, MessageCircle, Settings, ShieldCheck, Plus,
-  Sun, Leaf, Zap, Globe, Users, TrendingUp, Calendar, Heart
+  Sun, Leaf, Zap, Globe, Users, TrendingUp, Calendar, Heart, User
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -18,6 +18,8 @@ import { GlassmorphismLayout, GlassBlock } from "@/components/layout/Glassmorphi
 import SolarBreadcrumb from "@/components/layout/SolarBreadcrumb";
 import EcoGrid from "@/components/layout/EcoGrid";
 import { HeaderButtons } from "@/components/layout/HeaderButtons";
+import OptimizedDashboardStats from "@/components/portal/OptimizedDashboardStats";
+import EnhancedExperienceManager from "@/components/portal/EnhancedExperienceManager";
 
 const PortalEmpresasDashboard = () => {
   // Enhanced state management for intelligent navigation
@@ -69,6 +71,7 @@ const PortalEmpresasDashboard = () => {
       'empresas': 'Directorio',
       'experiencias': 'Experiencias',
       'mensajes': 'Mensajes',
+      'perfil': 'Mi Perfil',
       'ajustes': 'Configuración',
       'admin': 'Administración'
     };
@@ -117,6 +120,7 @@ const PortalEmpresasDashboard = () => {
       'empresas': 'Directorio Empresarial',
       'experiencias': 'Gestión de Experiencias',
       'mensajes': 'Centro de Comunicación',
+      'perfil': 'Mi Perfil Empresarial',
       'ajustes': 'Configuración de Cuenta',
       'admin': 'Panel Administrativo'
     };
@@ -209,66 +213,8 @@ const PortalEmpresasDashboard = () => {
               ]} 
             />
 
-            {/* Glassmorphism Experience Grid */}
-            <EcoGrid>
-              {/* Create New Experience */}
-              <GlassBlock size="full" icon={<Plus size={24} />} className="solar-glow">
-                <div className="text-center">
-                  <div className="mb-6">
-                    <Star className="w-16 h-16 text-yellow-400 mx-auto mb-4 float-element" />
-                    <h3 className="text-hero mb-2">Crea tu Experiencia</h3>
-                    <p className="text-subtitle">Comparte ofertas turísticas sostenibles con viajeros conscientes</p>
-                  </div>
-                  <Button
-                    onClick={() => setShowExperienceForm(true)}
-                    className="btn-accent px-8 py-3 text-lg glow-on-hover"
-                  >
-                    <Plus className="w-5 h-5 mr-2" />
-                    Nueva Experiencia
-                  </Button>
-                </div>
-              </GlassBlock>
-
-              {/* Experience Stats */}
-              <GlassBlock size="medium" icon={<TrendingUp size={20} />}>
-                <div className="flex flex-col justify-between h-full">
-                  <div>
-                    <h3 className="text-title mb-2">Rendimiento</h3>
-                    <p className="text-body">Análisis de tus experiencias</p>
-                  </div>
-                  <div className="grid grid-cols-2 gap-4 mt-4">
-                    <div className="text-center">
-                      <div className="text-2xl font-bold text-green-400">0</div>
-                      <div className="text-caption">Publicadas</div>
-                    </div>
-                    <div className="text-center">
-                      <div className="text-2xl font-bold text-yellow-400">0</div>
-                      <div className="text-caption">Reservas</div>
-                    </div>
-                  </div>
-                </div>
-              </GlassBlock>
-
-              {/* Experience Categories */}
-              <GlassBlock size="medium" icon={<Leaf size={20} />}>
-                <div className="flex flex-col justify-between h-full">
-                  <div>
-                    <h3 className="text-title mb-2">Categorías Populares</h3>
-                    <p className="text-body">Tendencias en turismo sostenible</p>
-                  </div>
-                  <div className="space-y-2">
-                    <div className="flex justify-between items-center">
-                      <span className="text-caption">Ecoturismo</span>
-                      <div className="w-12 h-2 bg-green-400/30 rounded"></div>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-caption">Cultura Local</span>
-                      <div className="w-8 h-2 bg-yellow-400/30 rounded"></div>
-                    </div>
-                  </div>
-                </div>
-              </GlassBlock>
-            </EcoGrid>
+            {/* Enhanced Experience Manager */}
+            <EnhancedExperienceManager onCreateNew={() => setShowExperienceForm(true)} />
           </div>
         );
 
@@ -286,6 +232,78 @@ const PortalEmpresasDashboard = () => {
               <GlassBlock size="full" icon={<MessageCircle size={24} />}>
                 <div className="h-[400px]">
                   <SimpleChat />
+                </div>
+              </GlassBlock>
+            </EcoGrid>
+          </div>
+        );
+
+      case "perfil":
+        return (
+          <div className="space-y-8">
+            <SolarBreadcrumb 
+              items={[
+                { label: 'Portal', icon: <Building2 size={16} /> },
+                { label: 'Mi Perfil', current: true, icon: <User size={16} /> }
+              ]} 
+            />
+            
+            <EcoGrid>
+              <GlassBlock size="full" icon={<User size={24} />}>
+                <div className="max-w-4xl">
+                  <div className="text-center mb-8">
+                    <h2 className="text-3xl font-unbounded font-light mb-4">Mi Perfil Empresarial</h2>
+                    <p className="text-subtitle mb-6">Gestiona la información de tu empresa y mejora tu presencia en la plataforma</p>
+                    <Button 
+                      onClick={() => window.open('/company-profile', '_blank')}
+                      className="btn-accent px-8 py-3 text-lg glow-on-hover"
+                    >
+                      <User className="w-5 h-5 mr-2" />
+                      Abrir Perfil Completo
+                    </Button>
+                  </div>
+                  
+                  {/* Profile Preview */}
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
+                      <h3 className="text-xl font-unbounded font-light mb-4">Información Básica</h3>
+                      <div className="space-y-3">
+                        <div className="flex items-center gap-3">
+                          <Building2 className="w-5 h-5 text-green-400" />
+                          <div>
+                            <p className="text-sm text-gray-400">Empresa</p>
+                            <p className="text-white">{user?.companyName || 'EcoTurismo Sostenible'}</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <Star className="w-5 h-5 text-yellow-400" />
+                          <div>
+                            <p className="text-sm text-gray-400">Categoría</p>
+                            <p className="text-white">{user?.category || 'Turismo Sostenible'}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
+                      <h3 className="text-xl font-unbounded font-light mb-4">Estado del Perfil</h3>
+                      <div className="space-y-3">
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-gray-400">Completitud</span>
+                          <span className="text-green-400 font-medium">85%</span>
+                        </div>
+                        <div className="w-full bg-gray-700 rounded-full h-2">
+                          <div className="bg-green-400 h-2 rounded-full" style={{width: '85%'}}></div>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-gray-400">Verificación</span>
+                          <Badge className="bg-green-500/20 text-green-400 border-green-500/30">
+                            Verificado
+                          </Badge>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </GlassBlock>
             </EcoGrid>
@@ -318,9 +336,31 @@ const PortalEmpresasDashboard = () => {
             <SolarBreadcrumb 
               items={[
                 { label: 'Portal', icon: <Building2 size={16} /> },
-                { label: 'Explorador', current: true, icon: <Map size={16} /> }
+                { label: 'Dashboard', current: true, icon: <Map size={16} /> }
               ]} 
             />
+
+            {/* Welcome Section */}
+            <div className="text-center mb-8">
+              <h1 className="text-4xl font-unbounded font-light mb-4 text-white">
+                Bienvenido, {user?.companyName || user?.firstName || 'Empresa'}
+              </h1>
+              <p className="text-xl text-white/80 max-w-2xl mx-auto">
+                Gestiona tu presencia en la plataforma de turismo sostenible más grande de Colombia
+              </p>
+            </div>
+
+            {/* Dashboard Stats */}
+            <OptimizedDashboardStats user={user} />
+
+            {/* Interactive Map Section */}
+            <EcoGrid>
+              <GlassBlock size="full" icon={<Map size={24} />}>
+                <div className="h-[500px]">
+                  <InteractiveMap />
+                </div>
+              </GlassBlock>
+            </EcoGrid>
             
             <EcoGrid>
               {/* Welcome Dashboard */}
