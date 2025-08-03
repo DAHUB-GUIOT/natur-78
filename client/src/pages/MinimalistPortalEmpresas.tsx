@@ -146,77 +146,77 @@ const MinimalistPortalEmpresas = () => {
   );
 
   const renderMapView = () => (
-    <div className="space-y-4">
-      {/* Welcome Header */}
-      <div className="mb-6">
-        <h1 className="text-2xl lg:text-3xl font-light mb-2 text-white">
-          Hola, {user?.companyName || user?.firstName || 'Empresa'}
-        </h1>
-        <p className="text-white/70">
-          Explora el ecosistema de turismo sostenible
-        </p>
+    <div className="relative h-full">
+      {/* Floating Header Overlay */}
+      <div className="absolute top-4 left-4 right-4 z-20">
+        <div className="bg-black/50 backdrop-blur-xl rounded-lg p-4 border border-white/10">
+          <h1 className="text-xl lg:text-2xl font-light mb-1 text-white">
+            Hola, {user?.companyName || user?.firstName || 'Empresa'}
+          </h1>
+          <p className="text-sm text-white/70">
+            Explora el ecosistema de turismo sostenible
+          </p>
+        </div>
       </div>
 
-      {/* Quick Stats Bar */}
-      <div className="grid grid-cols-4 gap-3 mb-4">
-        {[
-          { label: "Experiencias", value: "3", color: "text-yellow-400" },
-          { label: "Vistas", value: "1.2K", color: "text-blue-400" },
-          { label: "Contactos", value: "8", color: "text-green-400" },
-          { label: "Rating", value: "4.8", color: "text-pink-400" }
-        ].map((stat, index) => (
-          <motion.div
-            key={stat.label}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.1 }}
-          >
-            <Card className="bg-white/10 backdrop-blur-sm border-white/20 p-3">
-              <CardContent className="p-0">
+      {/* Floating Stats Overlay */}
+      <div className="absolute top-24 left-4 right-4 z-20">
+        <div className="grid grid-cols-4 gap-2">
+          {[
+            { label: "Experiencias", value: "3", color: "text-yellow-400" },
+            { label: "Vistas", value: "1.2K", color: "text-blue-400" },
+            { label: "Contactos", value: "8", color: "text-green-400" },
+            { label: "Rating", value: "4.8", color: "text-pink-400" }
+          ].map((stat, index) => (
+            <motion.div
+              key={stat.label}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1 }}
+            >
+              <div className="bg-black/50 backdrop-blur-xl rounded-lg p-2 border border-white/10">
                 <div className="text-center">
-                  <div className={`text-lg lg:text-xl font-bold ${stat.color} mb-1`}>
+                  <div className={`text-lg font-bold ${stat.color} mb-1`}>
                     {stat.value}
                   </div>
                   <div className="text-xs text-white/60">{stat.label}</div>
                 </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-        ))}
+              </div>
+            </motion.div>
+          ))}
+        </div>
       </div>
 
-      {/* Main Interactive Map - Full Height */}
-      <Card className="bg-white/10 backdrop-blur-sm border-white/20">
-        <CardContent className="p-0">
-          <div className="h-[60vh] lg:h-[70vh] rounded-lg overflow-hidden">
-            <InteractiveMap />
-          </div>
-        </CardContent>
-      </Card>
+      {/* Floating Actions Overlay */}
+      <div className="absolute bottom-4 left-4 right-4 z-20">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-2">
+          <Button 
+            onClick={() => setActiveView('experiences')}
+            className="h-12 bg-black/50 backdrop-blur-xl border border-green-500/30 text-white hover:bg-green-600/30"
+          >
+            <Plus className="w-4 h-4 mr-2" />
+            Nueva Experiencia
+          </Button>
+          <Button 
+            onClick={() => setActiveView('network')}
+            className="h-12 bg-black/50 backdrop-blur-xl border border-blue-500/30 text-white hover:bg-blue-600/30"
+          >
+            <Building2 className="w-4 h-4 mr-2" />
+            Ver Red
+          </Button>
+          <Button 
+            onClick={() => setActiveView('messages')}
+            className="h-12 bg-black/50 backdrop-blur-xl border border-purple-500/30 text-white hover:bg-purple-600/30"
+          >
+            <MessageCircle className="w-4 h-4 mr-2" />
+            Mensajes
+          </Button>
+        </div>
+      </div>
 
-      {/* Quick Actions Row */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
-        <Button 
-          onClick={() => setActiveView('experiences')}
-          className="h-12 bg-green-600/20 border border-green-500/30 text-white hover:bg-green-600/30"
-        >
-          <Plus className="w-4 h-4 mr-2" />
-          Nueva Experiencia
-        </Button>
-        <Button 
-          onClick={() => setActiveView('network')}
-          className="h-12 bg-blue-600/20 border border-blue-500/30 text-white hover:bg-blue-600/30"
-        >
-          <Building2 className="w-4 h-4 mr-2" />
-          Ver Red
-        </Button>
-        <Button 
-          onClick={() => setActiveView('messages')}
-          className="h-12 bg-purple-600/20 border border-purple-500/30 text-white hover:bg-purple-600/30"
-        >
-          <MessageCircle className="w-4 h-4 mr-2" />
-          Mensajes
-        </Button>
+      {/* Full Size Interactive Map */}
+      <div className="absolute inset-0 z-10">
+        <InteractiveMap />
       </div>
     </div>
   );
@@ -438,12 +438,13 @@ const MinimalistPortalEmpresas = () => {
         
         {/* Main Content */}
         <div className="flex-1">
-          <main className="p-4 lg:p-8">
+          <main className={activeView === 'map' ? 'h-screen' : 'p-4 lg:p-8'}>
             <motion.div
               key={activeView}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3 }}
+              className={activeView === 'map' ? 'h-full' : ''}
             >
               {renderContent()}
             </motion.div>
