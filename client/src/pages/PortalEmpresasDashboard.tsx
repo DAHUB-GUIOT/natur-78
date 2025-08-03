@@ -398,6 +398,7 @@ const PortalEmpresasDashboard = () => {
   return (
     <GlassmorphismLayout showEcoElements={true} backgroundVariant="forest">
       <HeaderButtons showPortalButtons={true} />
+      <HeaderButtons showPortalButtons={true} />
       {/* Always-visible Interactive Map */}
       <div className="absolute inset-0 z-0">
         <InteractiveMap />
