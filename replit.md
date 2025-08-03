@@ -36,7 +36,7 @@ Preferred communication style: Simple, everyday language.
 - **Unified Authentication**: A single system for both "Empresas" (businesses) and "Con-Sentidos" (travelers), with distinct themed login/registration flows.
 - **Interactive Map**: Features a Mapbox-based 3D map with natural terrain and custom markers for businesses and experiences, serving as a central navigation element.
 - **Comprehensive Directories**:
-    - **Portal Empresas (B2B)**: A minimalist, mobile-first dashboard for businesses inspired by leading platforms. Features glassmorphism design with white text, interactive map integration, clean navigation, and streamlined UX for profile management, experiences, and networking.
+    - **Portal Empresas (B2B)**: A completely redesigned minimalist, mobile-first dashboard with full-screen interactive map as the home view. Features transparent header navigation with single hamburger button for Portal navigation (blue theme), completely removed sidebar, eliminated all floating overlays on map, and optimized all views for mobile-first experience with improved cards and touch-friendly interfaces.
     - **Portal Viajeros (B2C)**: A marketplace for travelers to browse, filter, and book sustainable tourism experiences.
 - **Experience Management**: A detailed 6-step wizard for businesses to create and manage their offerings, including complex pricing and operational details.
 - **Messaging System**: A simple, B2B-focused chat system allowing direct communication between users and companies.

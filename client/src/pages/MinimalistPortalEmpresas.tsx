@@ -114,32 +114,44 @@ const MinimalistPortalEmpresas = () => {
   );
 
   const renderNetworkView = () => (
-    <div className="space-y-6">
-      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-        <h2 className="text-xl font-light text-white">Red Empresarial</h2>
+    <div className="p-4 space-y-4">
+      {/* Mobile-First Header */}
+      <div className="mb-6">
+        <h2 className="text-xl font-light text-white mb-4">Red Empresarial</h2>
         
-        <div className="flex items-center gap-3">
-          <div className="relative flex-1 lg:w-64">
+        {/* Mobile-First Search and Filter */}
+        <div className="space-y-3">
+          <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/40 w-4 h-4" />
             <Input
               placeholder="Buscar empresas..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10 bg-white/10 border-white/20 text-white placeholder-white/40"
+              className="pl-10 bg-white/10 border-white/20 text-white placeholder-white/40 h-12"
             />
           </div>
           <Button
             variant="outline"
-            size="sm"
             onClick={() => setViewMode(viewMode === 'grid' ? 'list' : 'grid')}
-            className="border-white/30 text-white hover:bg-white/10"
+            className="w-full border-white/30 text-white hover:bg-white/10 h-12"
           >
-            {viewMode === 'grid' ? <List className="w-4 h-4" /> : <Grid className="w-4 h-4" />}
+            {viewMode === 'grid' ? (
+              <>
+                <List className="w-4 h-4 mr-2" />
+                Vista Lista
+              </>
+            ) : (
+              <>
+                <Grid className="w-4 h-4 mr-2" />
+                Vista Tarjetas
+              </>
+            )}
           </Button>
         </div>
       </div>
 
-      <div className={`grid gap-4 ${viewMode === 'grid' ? 'grid-cols-1 lg:grid-cols-2 xl:grid-cols-3' : 'grid-cols-1'}`}>
+      {/* Mobile-First Cards */}
+      <div className={`space-y-4 ${viewMode === 'grid' ? 'lg:grid lg:grid-cols-2 xl:grid-cols-3 lg:gap-4 lg:space-y-0' : ''}`}>
         {typedDirectoryUsers
           .filter((company: any) => 
             !searchQuery || 
@@ -155,26 +167,28 @@ const MinimalistPortalEmpresas = () => {
             >
               <Card className="bg-white/10 backdrop-blur-sm border-white/20 hover:bg-white/15 transition-colors">
                 <CardContent className="p-4">
-                  <div className="flex items-start justify-between mb-3">
-                    <div className="flex-1">
-                      <h3 className="font-medium text-white mb-1 line-clamp-1">
-                        {company.companyName || `${company.firstName} ${company.lastName}`}
-                      </h3>
-                      <p className="text-sm text-white/60 mb-2">{company.category}</p>
+                  <div className="space-y-3">
+                    <div className="flex items-start justify-between">
+                      <div className="flex-1 min-w-0">
+                        <h3 className="font-medium text-white mb-1 truncate">
+                          {company.companyName || `${company.firstName} ${company.lastName}`}
+                        </h3>
+                        <p className="text-sm text-white/60 mb-2 line-clamp-2">{company.category}</p>
+                      </div>
+                      <Badge variant="secondary" className="bg-white/10 text-white/80 text-xs ml-2 shrink-0">
+                        {company.location || 'Bogotá'}
+                      </Badge>
                     </div>
-                    <Badge variant="secondary" className="bg-white/10 text-white/80 text-xs">
-                      {company.location || 'Bogotá'}
-                    </Badge>
-                  </div>
-                  
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2 text-xs text-white/60">
-                      <Eye className="w-3 h-3" />
-                      <span>Ver perfil</span>
+                    
+                    <div className="flex items-center justify-between pt-2">
+                      <div className="flex items-center gap-2 text-xs text-white/60">
+                        <Eye className="w-4 h-4" />
+                        <span>Ver perfil</span>
+                      </div>
+                      <Button size="sm" className="bg-blue-600 hover:bg-blue-700 text-white px-4">
+                        Conectar
+                      </Button>
                     </div>
-                    <Button size="sm" className="bg-green-600 hover:bg-green-700 text-white">
-                      Conectar
-                    </Button>
                   </div>
                 </CardContent>
               </Card>
@@ -185,21 +199,21 @@ const MinimalistPortalEmpresas = () => {
   );
 
   const renderExperiencesView = () => (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
+    <div className="p-4 space-y-6">
+      <div className="flex flex-col space-y-4">
         <h2 className="text-xl font-light text-white">Mis Experiencias</h2>
-        <Button className="bg-green-600 hover:bg-green-700 text-white">
-          <Plus className="w-4 h-4 mr-2" />
-          Nueva
+        <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white h-12">
+          <Plus className="w-5 h-5 mr-2" />
+          Nueva Experiencia
         </Button>
       </div>
 
-      <div className="text-center py-12">
-        <Star className="w-16 h-16 text-white/30 mx-auto mb-4" />
-        <h3 className="text-lg font-light text-white mb-2">No tienes experiencias aún</h3>
-        <p className="text-white/60 mb-6">Crea tu primera experiencia turística sostenible</p>
-        <Button className="bg-green-600 hover:bg-green-700 text-white">
-          <Plus className="w-4 h-4 mr-2" />
+      <div className="text-center py-16">
+        <Star className="w-20 h-20 text-white/30 mx-auto mb-6" />
+        <h3 className="text-lg font-light text-white mb-3">No tienes experiencias aún</h3>
+        <p className="text-white/60 mb-8 px-4">Crea tu primera experiencia turística sostenible y comienza a conectar con viajeros conscientes</p>
+        <Button className="w-full max-w-sm bg-blue-600 hover:bg-blue-700 text-white h-12">
+          <Plus className="w-5 h-5 mr-2" />
           Crear Primera Experiencia
         </Button>
       </div>
@@ -207,11 +221,11 @@ const MinimalistPortalEmpresas = () => {
   );
 
   const renderMessagesView = () => (
-    <div className="space-y-6">
-      <h2 className="text-xl font-light text-white">Mensajes</h2>
+    <div className="p-4 space-y-4">
+      <h2 className="text-xl font-light text-white mb-4">Mensajes</h2>
       <Card className="bg-white/10 backdrop-blur-sm border-white/20">
         <CardContent className="p-0">
-          <div className="h-96">
+          <div className="h-[calc(100vh-200px)] min-h-96">
             <SimpleChat />
           </div>
         </CardContent>
@@ -220,29 +234,33 @@ const MinimalistPortalEmpresas = () => {
   );
 
   const renderProfileView = () => (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
+    <div className="p-4 space-y-6">
+      <div className="flex flex-col space-y-4">
         <h2 className="text-xl font-light text-white">Mi Perfil</h2>
         <Button 
           onClick={() => window.open('/company-profile', '_blank')}
-          className="bg-blue-600 hover:bg-blue-700 text-white"
+          className="w-full bg-blue-600 hover:bg-blue-700 text-white h-12"
         >
-          Editar Perfil
+          Editar Perfil Completo
         </Button>
       </div>
 
-      <div className="grid lg:grid-cols-2 gap-6">
+      <div className="space-y-4">
         <Card className="bg-white/10 backdrop-blur-sm border-white/20">
           <CardContent className="p-6">
             <h3 className="font-medium text-white mb-4">Información Básica</h3>
-            <div className="space-y-3">
+            <div className="space-y-4">
               <div>
-                <p className="text-sm text-white/60">Empresa</p>
-                <p className="text-white">{user?.companyName || 'Tu Empresa'}</p>
+                <p className="text-sm text-white/60 mb-1">Empresa</p>
+                <p className="text-white font-medium">{user?.companyName || 'Tu Empresa'}</p>
               </div>
               <div>
-                <p className="text-sm text-white/60">Categoría</p>
+                <p className="text-sm text-white/60 mb-1">Categoría</p>
                 <p className="text-white">{user?.category || 'Turismo Sostenible'}</p>
+              </div>
+              <div>
+                <p className="text-sm text-white/60 mb-1">Email</p>
+                <p className="text-white text-sm">{user?.email || 'No especificado'}</p>
               </div>
             </div>
           </CardContent>
@@ -251,17 +269,22 @@ const MinimalistPortalEmpresas = () => {
         <Card className="bg-white/10 backdrop-blur-sm border-white/20">
           <CardContent className="p-6">
             <h3 className="font-medium text-white mb-4">Estado del Perfil</h3>
-            <div className="space-y-3">
+            <div className="space-y-4">
               <div className="flex justify-between items-center">
                 <span className="text-sm text-white/60">Completitud</span>
-                <span className="text-green-400 font-medium">85%</span>
+                <span className="text-blue-400 font-medium">85%</span>
               </div>
-              <div className="w-full bg-white/10 rounded-full h-2">
-                <div className="bg-green-400 h-2 rounded-full" style={{width: '85%'}}></div>
+              <div className="w-full bg-white/10 rounded-full h-3">
+                <div className="bg-blue-400 h-3 rounded-full transition-all duration-500" style={{width: '85%'}}></div>
               </div>
-              <Badge className="bg-green-500/20 text-green-400 border-green-500/30">
-                Verificado
-              </Badge>
+              <div className="flex flex-wrap gap-2">
+                <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30">
+                  Verificado
+                </Badge>
+                <Badge className="bg-green-500/20 text-green-400 border-green-500/30">
+                  Activo
+                </Badge>
+              </div>
             </div>
           </CardContent>
         </Card>
@@ -270,8 +293,8 @@ const MinimalistPortalEmpresas = () => {
   );
 
   const renderSettingsView = () => (
-    <div className="space-y-6">
-      <h2 className="text-xl font-light text-white">Configuración</h2>
+    <div className="p-4 space-y-6">
+      <h2 className="text-xl font-light text-white mb-4">Configuración</h2>
       <Card className="bg-white/10 backdrop-blur-sm border-white/20">
         <CardContent className="p-6">
           <TwitterProfileSection />
@@ -313,15 +336,15 @@ const MinimalistPortalEmpresas = () => {
         onNavigation={handleNavigation}
       />
       
-      {/* Main Content - Full Screen */}
+      {/* Main Content - Mobile First */}
       <div className="relative">
-        <main className="h-screen">
+        <main className={activeView === 'map' ? 'h-screen' : 'min-h-screen pt-16'}>
           <motion.div
             key={activeView}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
-            className="h-full"
+            className={activeView === 'map' ? 'h-full' : 'min-h-screen bg-gradient-to-br from-gray-900 via-black to-blue-900'}
           >
             {renderContent()}
           </motion.div>

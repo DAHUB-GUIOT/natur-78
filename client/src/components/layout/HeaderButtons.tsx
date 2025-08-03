@@ -27,7 +27,7 @@ export function HeaderButtons({
     <>
       {/* Transparent header with logo and hamburger menu over background */}
       <div className={`fixed top-0 left-0 right-0 z-50 backdrop-blur-sm transition-all duration-300 ${
-        isTicketsOpen ? 'bg-yellow-400' : (isMenuOpen || isPortalNavOpen ? 'bg-green-800' : 'bg-black/10')
+        isTicketsOpen ? 'bg-yellow-400' : (isPortalNavOpen ? 'bg-blue-800' : (isMenuOpen ? 'bg-green-800' : 'bg-black/10'))
       }`}>
         <div className="flex items-center justify-between p-4">
           {/* Logo on the left */}
@@ -192,33 +192,21 @@ export function HeaderButtons({
 
           {/* Navigation buttons on the right */}
           <div className="flex items-center gap-2">
-            {/* Portal Empresas Navigation - Mobile */}
+            {/* Portal Empresas Navigation Button */}
             {showPortalEmpresasNav && (
               <Button 
                 variant="ghost" 
                 size="icon" 
                 onClick={() => setIsPortalNavOpen(!isPortalNavOpen)}
-                className={`w-10 h-10 touch-manipulation min-w-[44px] transition-colors duration-300 md:hidden ${
+                className={`w-10 h-10 touch-manipulation min-w-[44px] transition-colors duration-300 ${
                   isPortalNavOpen 
-                    ? 'bg-green-600 text-yellow-400' 
-                    : 'text-white hover:text-[#cad95e] hover:bg-white/10'
+                    ? 'bg-blue-600 text-white' 
+                    : 'text-white hover:text-blue-400 hover:bg-blue-600/20'
                 }`}
               >
                 <Building2 className="h-4 w-4" />
               </Button>
             )}
-            
-            <Button 
-              variant="ghost" 
-              size="icon" 
-              className={`w-10 h-10 touch-manipulation min-w-[44px] transition-colors duration-300 ${
-                isTicketsOpen 
-                  ? 'text-green-600 hover:text-green-700 hover:bg-green-600/10' 
-                  : (isMenuOpen ? 'text-yellow-400 hover:text-yellow-300 hover:bg-green-900/10' : 'text-white hover:text-[#cad95e] hover:bg-white/10')
-              }`}
-            >
-              <Globe className="h-4 w-4" />
-            </Button>
             
             {/* Hamburger menu button */}
             <Button 
@@ -241,16 +229,16 @@ export function HeaderButtons({
         </div>
       </div>
 
-      {/* Portal Empresas Mobile Navigation Overlay */}
+      {/* Portal Empresas Navigation Overlay - Mobile First */}
       <AnimatePresence>
         {isPortalNavOpen && showPortalEmpresasNav && (
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="fixed top-16 left-0 right-0 z-40 bg-black/90 backdrop-blur-xl border-b border-white/20"
+            className="fixed top-16 left-0 right-0 z-40 bg-blue-800 border-b border-blue-900"
           >
-            <div className="p-4 space-y-2">
+            <div className="p-4 space-y-3">
               {navItems.map((item) => {
                 const Icon = item.icon;
                 const isActive = activeView === item.id;
@@ -261,14 +249,16 @@ export function HeaderButtons({
                       onNavigation?.(item.id);
                       setIsPortalNavOpen(false);
                     }}
-                    className={`w-full flex items-center px-4 py-3 text-left rounded-lg transition-colors ${
+                    className={`w-full flex items-center px-4 py-6 text-left rounded-lg transition-colors ${
                       isActive 
-                        ? 'bg-green-600 text-yellow-400' 
-                        : 'text-white hover:bg-white/10'
+                        ? 'bg-white text-blue-800' 
+                        : 'text-white hover:bg-blue-700'
                     }`}
                   >
-                    <Icon className={`w-5 h-5 mr-3 ${isActive ? 'text-yellow-400' : 'text-white/70'}`} />
-                    <span className="font-medium">{item.label}</span>
+                    <Icon className={`w-6 h-6 mr-4 ${isActive ? 'text-blue-800' : 'text-blue-200'}`} />
+                    <span className={`text-xl font-black font-gasoek tracking-wider uppercase ${
+                      isActive ? 'text-blue-800' : 'text-white'
+                    }`}>{item.label}</span>
                   </button>
                 );
               })}
