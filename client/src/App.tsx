@@ -42,6 +42,7 @@ import Noticias from "./pages/Noticias";
 import BiodiversityExperience from "./pages/BiodiversityExperience";
 import CompanyProfilePage from "./pages/CompanyProfilePage";
 import { AuthProvider } from "./contexts/AuthContext";
+import React from "react";
 
 // Create QueryClient outside component to prevent recreation on renders
 const queryClient = new QueryClient();
@@ -103,6 +104,14 @@ const App = () => (
             </Route>
             <Route path="/noticias" component={Noticias} />
             <Route path="/biodiversidad" component={BiodiversityExperience} />
+            <Route path="/edit-profile" component={() => {
+              const EditProfile = React.lazy(() => import('./pages/EditProfile'));
+              return (
+                <React.Suspense fallback={<div>Loading...</div>}>
+                  <EditProfile />
+                </React.Suspense>
+              );
+            }} />
             <Route><NotFound /></Route>
           </Switch>
         </Router>

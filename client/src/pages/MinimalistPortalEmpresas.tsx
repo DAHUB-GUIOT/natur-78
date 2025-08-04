@@ -227,7 +227,12 @@ const MinimalistPortalEmpresas = () => {
           <h2 className="text-2xl font-bold text-white">{user?.companyName || 'Tu Empresa'}</h2>
           <p className="text-white/70">{user?.category || 'Turismo Sostenible'}</p>
         </div>
-
+        <Button 
+          onClick={() => window.location.href = '/edit-profile'}
+          className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-xl font-semibold shadow-lg transition-all duration-300 hover:shadow-xl"
+        >
+          Editar Perfil Completo
+        </Button>
       </div>
 
 
