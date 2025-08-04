@@ -73,27 +73,6 @@ const MinimalistPortalEmpresas = () => {
       {/* Header */}
       <div className="text-center space-y-3">
         <h2 className="text-2xl font-bold text-white">Red de Contactos</h2>
-        <p className="text-white/70">Conecta con empresas verificadas del ecosistema de turismo sostenible</p>
-      </div>
-
-      {/* Stats Section */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-        <div className="bg-white/10 backdrop-blur-sm border-white/20 rounded-xl p-4 text-center">
-          <div className="text-2xl font-bold text-blue-400">{typedDirectoryUsers.length}</div>
-          <div className="text-xs text-white/60">Empresas Conectadas</div>
-        </div>
-        <div className="bg-white/10 backdrop-blur-sm border-white/20 rounded-xl p-4 text-center">
-          <div className="text-2xl font-bold text-green-400">24</div>
-          <div className="text-xs text-white/60">Conversaciones</div>
-        </div>
-        <div className="bg-white/10 backdrop-blur-sm border-white/20 rounded-xl p-4 text-center">
-          <div className="text-2xl font-bold text-yellow-400">8</div>
-          <div className="text-xs text-white/60">Colaboraciones</div>
-        </div>
-        <div className="bg-white/10 backdrop-blur-sm border-white/20 rounded-xl p-4 text-center">
-          <div className="text-2xl font-bold text-purple-400">3</div>
-          <div className="text-xs text-white/60">Proyectos</div>
-        </div>
       </div>
 
       {/* Search Section */}
