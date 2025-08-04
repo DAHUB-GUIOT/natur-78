@@ -69,44 +69,55 @@ const MinimalistPortalEmpresas = () => {
   );
 
   const renderNetworkView = () => (
-    <div className="p-4 space-y-4">
-      {/* Mobile-First Header */}
-      <div className="mb-6">
-        <h2 className="text-xl font-light text-white mb-4">Red Empresarial</h2>
-        
-        {/* Mobile-First Search and Filter */}
-        <div className="space-y-3">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/40 w-4 h-4" />
-            <Input
-              placeholder="Buscar empresas..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10 bg-white/10 border-white/20 text-white placeholder-white/40 h-12"
-            />
-          </div>
-          <Button
-            variant="outline"
-            onClick={() => setViewMode(viewMode === 'grid' ? 'list' : 'grid')}
-            className="w-full border-white/30 text-white hover:bg-white/10 h-12"
-          >
-            {viewMode === 'grid' ? (
-              <>
-                <List className="w-4 h-4 mr-2" />
-                Vista Lista
-              </>
-            ) : (
-              <>
-                <Grid className="w-4 h-4 mr-2" />
-                Vista Tarjetas
-              </>
-            )}
-          </Button>
+    <div className="p-4 space-y-6 max-w-6xl mx-auto">
+      {/* Header */}
+      <div className="text-center space-y-3">
+        <h2 className="text-2xl font-bold text-white">Red de Contactos</h2>
+        <p className="text-white/70">Conecta con empresas verificadas del ecosistema de turismo sostenible</p>
+      </div>
+
+      {/* Stats Section */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+        <div className="bg-white/10 backdrop-blur-sm border-white/20 rounded-xl p-4 text-center">
+          <div className="text-2xl font-bold text-blue-400">{typedDirectoryUsers.length}</div>
+          <div className="text-xs text-white/60">Empresas Conectadas</div>
+        </div>
+        <div className="bg-white/10 backdrop-blur-sm border-white/20 rounded-xl p-4 text-center">
+          <div className="text-2xl font-bold text-green-400">24</div>
+          <div className="text-xs text-white/60">Conversaciones</div>
+        </div>
+        <div className="bg-white/10 backdrop-blur-sm border-white/20 rounded-xl p-4 text-center">
+          <div className="text-2xl font-bold text-yellow-400">8</div>
+          <div className="text-xs text-white/60">Colaboraciones</div>
+        </div>
+        <div className="bg-white/10 backdrop-blur-sm border-white/20 rounded-xl p-4 text-center">
+          <div className="text-2xl font-bold text-purple-400">3</div>
+          <div className="text-xs text-white/60">Proyectos</div>
         </div>
       </div>
 
-      {/* Mobile-First Cards */}
-      <div className={`space-y-4 ${viewMode === 'grid' ? 'lg:grid lg:grid-cols-2 xl:grid-cols-3 lg:gap-4 lg:space-y-0' : ''}`}>
+      {/* Search Section */}
+      <Card className="bg-white/10 backdrop-blur-sm border-white/20">
+        <CardContent className="p-4">
+          <div className="flex flex-col md:flex-row gap-4">
+            <div className="flex-1 relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/40 w-4 h-4" />
+              <Input
+                placeholder="Buscar empresas por nombre o categoría..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-10 bg-white/10 border-white/30 text-white placeholder:text-white/50 h-10"
+              />
+            </div>
+            <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6">
+              Filtrar
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Companies Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {typedDirectoryUsers
           .filter((company: any) => 
             !searchQuery || 
@@ -120,35 +131,85 @@ const MinimalistPortalEmpresas = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
             >
-              <Card className="bg-white/10 backdrop-blur-sm border-white/20 hover:bg-white/15 transition-colors">
-                <CardContent className="p-4">
-                  <div className="space-y-3">
-                    <div className="flex items-start justify-between">
-                      <div className="flex-1 min-w-0">
-                        <h3 className="font-medium text-white mb-1 truncate">
-                          {company.companyName || `${company.firstName} ${company.lastName}`}
-                        </h3>
-                        <p className="text-sm text-white/60 mb-2 line-clamp-2">{company.category}</p>
+              <Card className="bg-white/10 backdrop-blur-sm border-white/20 hover:bg-white/15 transition-all duration-300 hover:scale-105 hover:shadow-2xl">
+                <CardContent className="p-6">
+                  {/* Company Header */}
+                  <div className="flex items-start space-x-4 mb-4">
+                    <div className="relative">
+                      <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-green-500 rounded-xl flex items-center justify-center text-white font-bold text-lg shadow-lg">
+                        {(company.companyName || `${company.firstName} ${company.lastName}`).substring(0, 2).toUpperCase()}
                       </div>
-                      <Badge variant="secondary" className="bg-white/10 text-white/80 text-xs ml-2 shrink-0">
-                        {company.location || 'Bogotá'}
-                      </Badge>
+                      <div className="absolute -top-1 -right-1 w-6 h-6 bg-green-500 rounded-full border-2 border-white/20 flex items-center justify-center">
+                        <div className="w-2 h-2 bg-white rounded-full"></div>
+                      </div>
                     </div>
-                    
-                    <div className="flex items-center justify-between pt-2">
-                      <div className="flex items-center gap-2 text-xs text-white/60">
-                        <Eye className="w-4 h-4" />
-                        <span>Ver perfil</span>
+                    <div className="flex-1 min-w-0">
+                      <h3 className="font-bold text-white text-lg truncate">
+                        {company.companyName || `${company.firstName} ${company.lastName}`}
+                      </h3>
+                      <p className="text-white/70 text-sm">{company.category || 'Turismo Sostenible'}</p>
+                      <div className="flex items-center space-x-2 mt-1">
+                        <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30 text-xs px-2 py-0.5">
+                          Verificado
+                        </Badge>
                       </div>
-                      <Button size="sm" className="bg-blue-600 hover:bg-blue-700 text-white px-4">
-                        Conectar
-                      </Button>
+                    </div>
+                  </div>
+
+                  {/* Company Info */}
+                  <div className="space-y-3 mb-4">
+                    <p className="text-white/80 text-sm line-clamp-2 leading-relaxed">
+                      {company.description || 'Empresa especializada en experiencias de turismo sostenible y responsable.'}
+                    </p>
+                    
+                    <div className="grid grid-cols-2 gap-3 text-xs">
+                      <div className="flex items-center space-x-2 text-white/60">
+                        <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
+                        <span>{company.location || 'Bogotá, Colombia'}</span>
+                      </div>
+                      <div className="flex items-center space-x-2 text-white/60">
+                        <div className="w-2 h-2 bg-green-400 rounded-full"></div>
+                        <span>5-15 empleados</span>
+                      </div>
+                      <div className="flex items-center space-x-2 text-white/60">
+                        <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
+                        <span>⭐ 4.8 rating</span>
+                      </div>
+                      <div className="flex items-center space-x-2 text-white/60">
+                        <div className="w-2 h-2 bg-purple-400 rounded-full"></div>
+                        <span>12 experiencias</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Action Buttons */}
+                  <div className="flex space-x-2">
+                    <Button 
+                      size="sm" 
+                      className="flex-1 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold text-sm h-9 shadow-lg transition-all duration-300"
+                    >
+                      Contactar
+                    </Button>
+                  </div>
+
+                  {/* Connection Status */}
+                  <div className="mt-3 pt-3 border-t border-white/10">
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="text-white/50">Estado:</span>
+                      <span className="text-green-400 font-medium">● Conectado</span>
                     </div>
                   </div>
                 </CardContent>
               </Card>
             </motion.div>
           ))}
+      </div>
+
+      {/* Load More */}
+      <div className="text-center">
+        <Button variant="outline" className="border-white/30 text-white hover:bg-white/10 px-8 py-3">
+          Cargar Más Empresas
+        </Button>
       </div>
     </div>
   );
@@ -184,61 +245,187 @@ const MinimalistPortalEmpresas = () => {
   );
 
   const renderProfileView = () => (
-    <div className="p-4 space-y-6">
-      <div className="flex flex-col space-y-4">
-        <h2 className="text-xl font-light text-white">Mi Perfil</h2>
+    <div className="p-4 space-y-6 max-w-4xl mx-auto">
+      {/* Header Section */}
+      <div className="text-center space-y-4">
+        <div className="relative inline-block">
+          <div className="w-24 h-24 bg-gradient-to-br from-blue-500 to-blue-700 rounded-full flex items-center justify-center text-white text-2xl font-bold shadow-2xl">
+            {user?.companyName?.substring(0, 2).toUpperCase() || 'TU'}
+          </div>
+          <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-green-500 rounded-full border-4 border-white/20 flex items-center justify-center">
+            <div className="w-3 h-3 bg-white rounded-full"></div>
+          </div>
+        </div>
+        <div>
+          <h2 className="text-2xl font-bold text-white">{user?.companyName || 'Tu Empresa'}</h2>
+          <p className="text-white/70">{user?.category || 'Turismo Sostenible'}</p>
+        </div>
         <Button 
           onClick={() => window.open('/company-profile', '_blank')}
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white h-12"
+          className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-xl font-semibold shadow-lg transition-all duration-300 hover:shadow-xl"
         >
           Editar Perfil Completo
         </Button>
       </div>
 
-      <div className="space-y-4">
+      {/* Stats Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <Card className="bg-white/10 backdrop-blur-sm border-white/20 hover:bg-white/15 transition-all duration-300">
+          <CardContent className="p-6 text-center">
+            <div className="text-3xl font-bold text-blue-400 mb-2">12</div>
+            <div className="text-white/70 text-sm">Experiencias Creadas</div>
+          </CardContent>
+        </Card>
+        <Card className="bg-white/10 backdrop-blur-sm border-white/20 hover:bg-white/15 transition-all duration-300">
+          <CardContent className="p-6 text-center">
+            <div className="text-3xl font-bold text-green-400 mb-2">248</div>
+            <div className="text-white/70 text-sm">Reservas Recibidas</div>
+          </CardContent>
+        </Card>
+        <Card className="bg-white/10 backdrop-blur-sm border-white/20 hover:bg-white/15 transition-all duration-300">
+          <CardContent className="p-6 text-center">
+            <div className="text-3xl font-bold text-yellow-400 mb-2">4.8</div>
+            <div className="text-white/70 text-sm">Calificación Promedio</div>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Main Info Cards */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Company Information */}
         <Card className="bg-white/10 backdrop-blur-sm border-white/20">
           <CardContent className="p-6">
-            <h3 className="font-medium text-white mb-4">Información Básica</h3>
+            <h3 className="font-semibold text-white mb-6 flex items-center">
+              <div className="w-2 h-6 bg-blue-500 rounded-full mr-3"></div>
+              Información de la Empresa
+            </h3>
             <div className="space-y-4">
-              <div>
-                <p className="text-sm text-white/60 mb-1">Empresa</p>
-                <p className="text-white font-medium">{user?.companyName || 'Tu Empresa'}</p>
+              <div className="flex justify-between items-start">
+                <div className="flex-1">
+                  <p className="text-sm text-white/60 mb-1">Nombre de la Empresa</p>
+                  <p className="text-white font-medium">{user?.companyName || 'Tu Empresa'}</p>
+                </div>
               </div>
-              <div>
-                <p className="text-sm text-white/60 mb-1">Categoría</p>
-                <p className="text-white">{user?.category || 'Turismo Sostenible'}</p>
+              <div className="flex justify-between items-start">
+                <div className="flex-1">
+                  <p className="text-sm text-white/60 mb-1">Categoría Principal</p>
+                  <p className="text-white">{user?.category || 'Turismo Sostenible'}</p>
+                </div>
               </div>
-              <div>
-                <p className="text-sm text-white/60 mb-1">Email</p>
-                <p className="text-white text-sm">{user?.email || 'No especificado'}</p>
+              <div className="flex justify-between items-start">
+                <div className="flex-1">
+                  <p className="text-sm text-white/60 mb-1">Email de Contacto</p>
+                  <p className="text-white text-sm">{user?.email || 'No especificado'}</p>
+                </div>
+              </div>
+              <div className="flex justify-between items-start">
+                <div className="flex-1">
+                  <p className="text-sm text-white/60 mb-1">Teléfono</p>
+                  <p className="text-white text-sm">{user?.phone || '+57 300 123 4567'}</p>
+                </div>
+              </div>
+              <div className="flex justify-between items-start">
+                <div className="flex-1">
+                  <p className="text-sm text-white/60 mb-1">Ubicación</p>
+                  <p className="text-white text-sm">{user?.location || 'Bogotá, Colombia'}</p>
+                </div>
               </div>
             </div>
           </CardContent>
         </Card>
 
+        {/* Business Details */}
         <Card className="bg-white/10 backdrop-blur-sm border-white/20">
           <CardContent className="p-6">
-            <h3 className="font-medium text-white mb-4">Estado del Perfil</h3>
+            <h3 className="font-semibold text-white mb-6 flex items-center">
+              <div className="w-2 h-6 bg-green-500 rounded-full mr-3"></div>
+              Detalles del Negocio
+            </h3>
             <div className="space-y-4">
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-white/60">Completitud</span>
-                <span className="text-blue-400 font-medium">85%</span>
+              <div>
+                <p className="text-sm text-white/60 mb-1">Año de Fundación</p>
+                <p className="text-white">{user?.foundedYear || '2020'}</p>
               </div>
-              <div className="w-full bg-white/10 rounded-full h-3">
-                <div className="bg-blue-400 h-3 rounded-full transition-all duration-500" style={{width: '85%'}}></div>
+              <div>
+                <p className="text-sm text-white/60 mb-1">Número de Empleados</p>
+                <p className="text-white">{user?.employees || '5-10 empleados'}</p>
               </div>
-              <div className="flex flex-wrap gap-2">
-                <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30">
-                  Verificado
-                </Badge>
-                <Badge className="bg-green-500/20 text-green-400 border-green-500/30">
-                  Activo
-                </Badge>
+              <div>
+                <p className="text-sm text-white/60 mb-1">Sitio Web</p>
+                <p className="text-blue-400 text-sm underline cursor-pointer hover:text-blue-300">
+                  {user?.website || 'www.tuempresa.com'}
+                </p>
+              </div>
+              <div>
+                <p className="text-sm text-white/60 mb-1">Redes Sociales</p>
+                <div className="flex space-x-2 mt-2">
+                  <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white text-xs cursor-pointer hover:bg-blue-700">
+                    F
+                  </div>
+                  <div className="w-8 h-8 bg-blue-400 rounded-full flex items-center justify-center text-white text-xs cursor-pointer hover:bg-blue-500">
+                    T
+                  </div>
+                  <div className="w-8 h-8 bg-pink-500 rounded-full flex items-center justify-center text-white text-xs cursor-pointer hover:bg-pink-600">
+                    I
+                  </div>
+                </div>
               </div>
             </div>
           </CardContent>
         </Card>
       </div>
+
+      {/* Profile Status */}
+      <Card className="bg-white/10 backdrop-blur-sm border-white/20">
+        <CardContent className="p-6">
+          <h3 className="font-semibold text-white mb-6 flex items-center">
+            <div className="w-2 h-6 bg-yellow-500 rounded-full mr-3"></div>
+            Estado del Perfil
+          </h3>
+          <div className="space-y-6">
+            <div>
+              <div className="flex justify-between items-center mb-2">
+                <span className="text-white/70">Completitud del Perfil</span>
+                <span className="text-blue-400 font-semibold">85%</span>
+              </div>
+              <div className="w-full bg-white/10 rounded-full h-3">
+                <div className="bg-gradient-to-r from-blue-500 to-blue-600 h-3 rounded-full transition-all duration-500" style={{width: '85%'}}></div>
+              </div>
+              <p className="text-xs text-white/50 mt-2">Agrega más información para mejorar tu visibilidad</p>
+            </div>
+            
+            <div className="flex flex-wrap gap-3">
+              <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30 px-3 py-1">
+                ✓ Verificado
+              </Badge>
+              <Badge className="bg-green-500/20 text-green-400 border-green-500/30 px-3 py-1">
+                ✓ Activo
+              </Badge>
+              <Badge className="bg-yellow-500/20 text-yellow-400 border-yellow-500/30 px-3 py-1">
+                ⏳ Perfil Básico
+              </Badge>
+            </div>
+
+            <div className="pt-4 border-t border-white/20">
+              <h4 className="text-white font-medium mb-3">Próximos Pasos Sugeridos:</h4>
+              <ul className="space-y-2 text-sm text-white/70">
+                <li className="flex items-center">
+                  <div className="w-2 h-2 bg-blue-400 rounded-full mr-3"></div>
+                  Agregar fotos de alta calidad de tus experiencias
+                </li>
+                <li className="flex items-center">
+                  <div className="w-2 h-2 bg-blue-400 rounded-full mr-3"></div>
+                  Completar descripción detallada de servicios
+                </li>
+                <li className="flex items-center">
+                  <div className="w-2 h-2 bg-blue-400 rounded-full mr-3"></div>
+                  Obtener certificaciones de sostenibilidad
+                </li>
+              </ul>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 
