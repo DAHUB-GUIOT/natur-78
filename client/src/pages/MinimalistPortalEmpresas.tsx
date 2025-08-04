@@ -141,22 +141,10 @@ const MinimalistPortalEmpresas = () => {
                       {company.description || 'Empresa especializada en experiencias de turismo sostenible y responsable.'}
                     </p>
                     
-                    <div className="grid grid-cols-2 gap-3 text-xs">
+                    <div className="grid grid-cols-1 gap-3 text-xs">
                       <div className="flex items-center space-x-2 text-white/60">
                         <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
                         <span>{company.location || 'Bogotá, Colombia'}</span>
-                      </div>
-                      <div className="flex items-center space-x-2 text-white/60">
-                        <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-                        <span>5-15 empleados</span>
-                      </div>
-                      <div className="flex items-center space-x-2 text-white/60">
-                        <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
-                        <span>⭐ 4.8 rating</span>
-                      </div>
-                      <div className="flex items-center space-x-2 text-white/60">
-                        <div className="w-2 h-2 bg-purple-400 rounded-full"></div>
-                        <span>12 experiencias</span>
                       </div>
                     </div>
                   </div>
