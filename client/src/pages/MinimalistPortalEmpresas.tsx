@@ -247,27 +247,7 @@ const MinimalistPortalEmpresas = () => {
         </Button>
       </div>
 
-      {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card className="bg-white/10 backdrop-blur-sm border-white/20 hover:bg-white/15 transition-all duration-300">
-          <CardContent className="p-6 text-center">
-            <div className="text-3xl font-bold text-blue-400 mb-2">12</div>
-            <div className="text-white/70 text-sm">Experiencias Creadas</div>
-          </CardContent>
-        </Card>
-        <Card className="bg-white/10 backdrop-blur-sm border-white/20 hover:bg-white/15 transition-all duration-300">
-          <CardContent className="p-6 text-center">
-            <div className="text-3xl font-bold text-green-400 mb-2">248</div>
-            <div className="text-white/70 text-sm">Reservas Recibidas</div>
-          </CardContent>
-        </Card>
-        <Card className="bg-white/10 backdrop-blur-sm border-white/20 hover:bg-white/15 transition-all duration-300">
-          <CardContent className="p-6 text-center">
-            <div className="text-3xl font-bold text-yellow-400 mb-2">4.8</div>
-            <div className="text-white/70 text-sm">Calificación Promedio</div>
-          </CardContent>
-        </Card>
-      </div>
+
 
       {/* Main Info Cards */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
