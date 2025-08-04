@@ -176,7 +176,7 @@ const MinimalistPortalEmpresas = () => {
   );
 
   const renderMessagesView = () => (
-    <div className="h-full">
+    <div className="h-full bg-transparent">
       <div className="h-[calc(100vh-64px)] md:h-[calc(100vh-80px)]">
         <WhatsAppChat />
       </div>

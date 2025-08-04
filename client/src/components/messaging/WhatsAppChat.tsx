@@ -120,8 +120,8 @@ export function WhatsAppChat({ onClose }: WhatsAppChatProps) {
       {selectedCompany ? (
         /* Chat View - Mobile First */
         <div className="flex flex-col h-full">
-          {/* Chat Header - WhatsApp Style */}
-          <div className="flex items-center p-3 md:p-4 bg-green-700 border-b border-green-800">
+          {/* Chat Header - Transparent Style */}
+          <div className="flex items-center p-3 md:p-4 bg-transparent border-b border-white/20">
             <Button
               variant="ghost"
               size="sm"
@@ -131,7 +131,7 @@ export function WhatsAppChat({ onClose }: WhatsAppChatProps) {
               <ArrowLeft className="h-5 w-5" />
             </Button>
             <Avatar className="w-10 h-10 mr-3">
-              <AvatarFallback className="bg-green-600 text-white font-bold text-sm">
+              <AvatarFallback className="bg-white/20 text-white font-bold text-sm">
                 {selectedCompany.companyName.substring(0, 2).toUpperCase()}
               </AvatarFallback>
             </Avatar>
@@ -139,15 +139,15 @@ export function WhatsAppChat({ onClose }: WhatsAppChatProps) {
               <div className="flex items-center space-x-2">
                 <h3 className="text-white font-medium text-base md:text-lg truncate">{selectedCompany.companyName}</h3>
                 {selectedCompany.isVerified && (
-                  <CheckCircle className="h-4 w-4 text-green-200 flex-shrink-0" />
+                  <CheckCircle className="h-4 w-4 text-white flex-shrink-0" />
                 )}
               </div>
-              <p className="text-green-200 text-xs md:text-sm truncate">En línea</p>
+              <p className="text-white/70 text-xs md:text-sm truncate">En línea</p>
             </div>
           </div>
 
-          {/* Messages - WhatsApp Style */}
-<div className="flex-1 p-3 md:p-4 overflow-y-auto bg-gray-100 dark:bg-gray-800">
+          {/* Messages - Transparent Style */}
+          <div className="flex-1 p-3 md:p-4 overflow-y-auto bg-transparent">
             <div className="space-y-3">
               {getCurrentMessages().map((message) => (
                 <div
@@ -157,20 +157,20 @@ export function WhatsAppChat({ onClose }: WhatsAppChatProps) {
                   <div
                     className={`max-w-[280px] md:max-w-md px-3 py-2 rounded-lg relative ${
                       message.sender === 'me'
-                        ? 'bg-green-600 text-white rounded-br-sm'
-                        : 'bg-white/95 text-gray-800 rounded-bl-sm'
+                        ? 'bg-white/20 text-white rounded-br-sm'
+                        : 'bg-white/10 text-white rounded-bl-sm'
                     }`}
                   >
                     <p className="text-sm leading-relaxed">{message.content}</p>
                     <div className={`flex items-center justify-end mt-1 space-x-1 ${
-                      message.sender === 'me' ? 'text-green-100' : 'text-gray-500'
+                      message.sender === 'me' ? 'text-white/70' : 'text-white/50'
                     }`}>
                       <span className="text-xs">
                         {formatTime(message.timestamp)}
                       </span>
                       {message.sender === 'me' && (
                         <div className="flex">
-                          <CheckCircle className="h-3 w-3 text-green-200" />
+                          <CheckCircle className="h-3 w-3 text-white/70" />
                         </div>
                       )}
                     </div>
@@ -180,14 +180,14 @@ export function WhatsAppChat({ onClose }: WhatsAppChatProps) {
             </div>
           </div>
 
-          {/* Message Input - WhatsApp Style */}
-          <div className="p-3 md:p-4 bg-gray-50 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700">
-            <div className="flex items-center space-x-2 bg-white dark:bg-gray-800 rounded-full px-4 py-2 border border-gray-300 dark:border-gray-600">
+          {/* Message Input - Transparent Style */}
+          <div className="p-3 md:p-4 bg-transparent border-t border-white/20">
+            <div className="flex items-center space-x-2 bg-transparent rounded-full px-4 py-2 border border-white/30">
               <Input
                 value={messageText}
                 onChange={(e) => setMessageText(e.target.value)}
                 placeholder="Mensaje..."
-                className="flex-1 bg-transparent border-0 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:ring-0 focus:outline-none text-sm md:text-base h-auto py-2"
+                className="flex-1 bg-transparent border-0 text-white placeholder:text-white/60 focus:ring-0 focus:outline-none text-sm md:text-base h-auto py-2"
                 onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
               />
               <Button
@@ -196,7 +196,7 @@ export function WhatsAppChat({ onClose }: WhatsAppChatProps) {
                 size="sm"
                 className={`rounded-full p-2 min-h-[40px] min-w-[40px] touch-manipulation ${
                   messageText.trim() 
-                    ? 'bg-green-600 hover:bg-green-700 text-white' 
+                    ? 'bg-white/20 hover:bg-white/30 text-white' 
                     : 'bg-transparent text-white/50 cursor-not-allowed'
                 }`}
               >
@@ -209,18 +209,18 @@ export function WhatsAppChat({ onClose }: WhatsAppChatProps) {
         /* Contacts List - WhatsApp Style */
         <div className="flex flex-col h-full">
           {/* Header */}
-          <div className="p-4 bg-green-700 border-b border-green-800">
+          <div className="p-4 bg-transparent border-b border-white/20">
             <div className="flex items-center space-x-3">
               <MessageCircle className="h-6 w-6 text-white" />
               <h2 className="text-xl font-semibold text-white">Mensajes</h2>
-              <div className="bg-green-600 text-white px-2 py-1 text-xs rounded-full">
+              <div className="bg-white/20 text-white px-2 py-1 text-xs rounded-full">
                 B2B
               </div>
             </div>
           </div>
 
           {/* Conversations List */}
-          <div className="flex-1 overflow-y-auto bg-white dark:bg-gray-900">
+          <div className="flex-1 overflow-y-auto bg-transparent">
             {/* Active Conversations */}
             {savedConversations.length > 0 && (
               <div>
@@ -230,21 +230,21 @@ export function WhatsAppChat({ onClose }: WhatsAppChatProps) {
                     <div
                       key={conversation.id}
                       onClick={() => setSelectedCompany(verifiedCompanies.find(c => c.userId === conversation.userId) || null)}
-                      className="flex items-center p-4 hover:bg-gray-100 dark:hover:bg-gray-800 active:bg-gray-200 dark:active:bg-gray-700 cursor-pointer border-b border-gray-200 dark:border-gray-700 touch-manipulation"
+                      className="flex items-center p-4 hover:bg-white/10 active:bg-white/20 cursor-pointer border-b border-white/10 touch-manipulation"
                     >
                       <Avatar className="w-12 h-12 mr-3">
-                        <AvatarFallback className="bg-green-600 text-white font-bold">
+                        <AvatarFallback className="bg-white/20 text-white font-bold">
                           {conversation.companyName.substring(0, 2).toUpperCase()}
                         </AvatarFallback>
                       </Avatar>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center justify-between mb-1">
-                          <h3 className="text-gray-900 dark:text-white font-medium text-base truncate">{conversation.companyName}</h3>
-                          <span className="text-gray-500 dark:text-gray-400 text-xs">
+                          <h3 className="text-white font-medium text-base truncate">{conversation.companyName}</h3>
+                          <span className="text-white/60 text-xs">
                             {lastMessage ? formatTimeAgo(lastMessage.timestamp) : ''}
                           </span>
                         </div>
-                        <p className="text-gray-600 dark:text-gray-300 text-sm truncate">
+                        <p className="text-white/80 text-sm truncate">
                           {lastMessage 
                             ? (lastMessage.sender === 'me' ? '✓ ' : '') + lastMessage.content 
                             : 'Sin mensajes'
@@ -258,8 +258,8 @@ export function WhatsAppChat({ onClose }: WhatsAppChatProps) {
             )}
 
             {/* Available Companies */}
-            <div className="px-4 py-3 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800">
-              <h4 className="text-gray-700 dark:text-gray-300 font-medium text-sm mb-3">Empresas Disponibles</h4>
+            <div className="px-4 py-3 border-b border-white/20 bg-transparent">
+              <h4 className="text-white/80 font-medium text-sm mb-3">Empresas Disponibles</h4>
             </div>
             {verifiedCompanies.filter(company => 
               !savedConversations.some(conv => conv.userId === company.userId)
@@ -267,21 +267,21 @@ export function WhatsAppChat({ onClose }: WhatsAppChatProps) {
               <div
                 key={company.id}
                 onClick={() => setSelectedCompany(company)}
-                className="flex items-center p-4 hover:bg-gray-100 dark:hover:bg-gray-800 active:bg-gray-200 dark:active:bg-gray-700 cursor-pointer border-b border-gray-200 dark:border-gray-700 touch-manipulation"
+                className="flex items-center p-4 hover:bg-white/10 active:bg-white/20 cursor-pointer border-b border-white/10 touch-manipulation"
               >
                 <Avatar className="w-12 h-12 mr-3">
-                  <AvatarFallback className="bg-blue-600 text-white font-bold">
+                  <AvatarFallback className="bg-white/20 text-white font-bold">
                     {company.companyName.substring(0, 2).toUpperCase()}
                   </AvatarFallback>
                 </Avatar>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center space-x-2 mb-1">
-                    <h3 className="text-gray-900 dark:text-white font-medium text-base truncate">{company.companyName}</h3>
+                    <h3 className="text-white font-medium text-base truncate">{company.companyName}</h3>
                     {company.isVerified && (
-                      <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0" />
+                      <CheckCircle className="h-4 w-4 text-white flex-shrink-0" />
                     )}
                   </div>
-                  <p className="text-gray-600 dark:text-gray-300 text-sm truncate">{company.description}</p>
+                  <p className="text-white/80 text-sm truncate">{company.description}</p>
                 </div>
               </div>
             ))}
@@ -289,11 +289,11 @@ export function WhatsAppChat({ onClose }: WhatsAppChatProps) {
             {/* Empty State */}
             {savedConversations.length === 0 && verifiedCompanies.length === 0 && (
               <div className="flex flex-col items-center justify-center p-8 text-center">
-                <MessageCircle className="h-16 w-16 text-gray-400 mb-4" />
-                <h3 className="text-gray-600 dark:text-gray-300 text-lg font-medium mb-2">
+                <MessageCircle className="h-16 w-16 text-white/40 mb-4" />
+                <h3 className="text-white/70 text-lg font-medium mb-2">
                   No hay conversaciones
                 </h3>
-                <p className="text-gray-500 dark:text-gray-400 text-sm">
+                <p className="text-white/60 text-sm">
                   Las empresas aparecerán aquí cuando estén disponibles
                 </p>
               </div>
