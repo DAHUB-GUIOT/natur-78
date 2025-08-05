@@ -43,6 +43,7 @@ export interface IStorage {
   createConversation(conversation: InsertConversation): Promise<Conversation>;
   markMessageAsRead(messageId: number): Promise<void>;
   getOrCreateConversation(userId1: number, userId2: number): Promise<Conversation>;
+  searchUsers(query: string): Promise<User[]>;
 }
 
 export class MemStorage implements IStorage {
@@ -634,6 +635,20 @@ export class DatabaseStorage implements IStorage {
 
   async getAllUsers(): Promise<User[]> {
     const result = await db.select().from(users).orderBy(desc(users.createdAt));
+    return result;
+  }
+
+  async searchUsers(query: string): Promise<User[]> {
+    const result = await db.select().from(users)
+      .where(
+        or(
+          eq(users.email, `%${query}%`),
+          eq(users.firstName, `%${query}%`),
+          eq(users.lastName, `%${query}%`),
+          eq(users.companyName, `%${query}%`)
+        )
+      )
+      .limit(10);
     return result;
   }
 

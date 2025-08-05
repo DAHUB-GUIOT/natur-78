@@ -13,6 +13,7 @@ import { InteractiveMap } from "@/components/dashboard/InteractiveMap";
 import { WhatsAppChat } from "@/components/messaging/WhatsAppChat";
 import TwitterProfileSection from "@/components/profile/TwitterProfileSection";
 import { HeaderButtons } from "@/components/layout/HeaderButtons";
+import UserFlowManager from "@/components/userflow/UserFlowManager";
 
 const MinimalistPortalEmpresas = () => {
   const [activeView, setActiveView] = useState("map");
@@ -236,6 +237,11 @@ const MinimalistPortalEmpresas = () => {
       </div>
 
 
+
+      {/* User Flow Progress */}
+      <div className="mb-6">
+        <UserFlowManager />
+      </div>
 
       {/* Main Info Cards */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

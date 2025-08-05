@@ -173,7 +173,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
             phone: req.body.phone || '',
             website: req.body.website || '',
             isVerified: true,
-            isActive: true
+
           });
           
           console.log("✅ Portal Empresas Registration Complete - All Features Activated:");
@@ -909,6 +909,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Profile update route for user flow management
+  app.put("/api/auth/update-profile", requireAuth, async (req: any, res) => {
+    try {
+      const userId = req.user.id;
+      const updateData = req.body;
+      
+      const updatedUser = await storage.updateUser(userId, updateData);
+      res.json({ user: updatedUser });
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      res.status(500).json({ error: "Failed to update profile" });
+    }
+  });
+
   app.get("/api/messages/search-users", requireAuth, async (req: any, res) => {
     try {
       const query = req.query.q as string;
@@ -917,7 +931,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       const users = await storage.searchUsers(query);
-      res.json(users.filter(user => user.id !== req.user.id)); // Exclude current user
+      res.json(users.filter((user: any) => user.id !== req.user.id)); // Exclude current user
     } catch (error) {
       console.error("Error searching users:", error);
       res.status(500).json({ error: "Failed to search users" });

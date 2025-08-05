@@ -57,6 +57,11 @@ export const users = pgTable("users", {
   // Profile completion and verification
   profileCompletion: integer("profile_completion").default(0),
   isVerified: boolean("is_verified").default(false),
+  // Auto-generated contact card visibility
+  isContactCardVisible: boolean("is_contact_card_visible").default(true),
+  isMapVisible: boolean("is_map_visible").default(true),
+  // Verification levels
+  verificationLevel: text("verification_level").default("basic"), // basic, verified, certified, premium
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
@@ -235,6 +240,14 @@ export const experiences = pgTable("experiences", {
   // Status and metadata
   status: experienceStatusEnum("status").default("pendiente"),
   isActive: boolean("is_active").default(true),
+  
+  // Map visibility for travelers
+  isVisibleOnTravelerMap: boolean("is_visible_on_traveler_map").default(true),
+  
+  // Statistics
+  viewCount: integer("view_count").default(0),
+  rating: integer("rating").default(0), // 1-5 stars
+  totalReviews: integer("total_reviews").default(0),
   
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
