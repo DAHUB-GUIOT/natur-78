@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
+import { useLocation } from 'wouter';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { apiRequest } from "@/lib/queryClient";
 import { 
   Search, 
   Filter,
@@ -86,10 +89,41 @@ const contacts = [
   }
 ];
 
-export const ContactSearch = () => {
+interface ContactSearchProps {
+  onChatSelect?: (userId: number) => void;
+}
+
+export const ContactSearch = ({ onChatSelect }: ContactSearchProps) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('all');
   const [locationFilter, setLocationFilter] = useState('all');
+  const [, setLocation] = useLocation();
+  const queryClient = useQueryClient();
+
+  // Create or get conversation mutation
+  const createConversationMutation = useMutation({
+    mutationFn: async (receiverId: number) => {
+      return apiRequest('/api/conversations', {
+        method: 'POST',
+        body: JSON.stringify({ receiverId }),
+        headers: { 'Content-Type': 'application/json' }
+      });
+    },
+    onSuccess: (conversation, receiverId) => {
+      queryClient.invalidateQueries({ queryKey: ['/api/conversations'] });
+      if (onChatSelect) {
+        onChatSelect(receiverId);
+      }
+    }
+  });
+
+  const handleViewProfile = (contactId: number) => {
+    setLocation(`/profile/${contactId}`);
+  };
+
+  const handleSendMessage = (contactId: number) => {
+    createConversationMutation.mutate(contactId);
+  };
 
   const filteredContacts = contacts.filter(contact => {
     const matchesSearch = contact.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -248,6 +282,7 @@ export const ContactSearch = () => {
                   <Button 
                     size="sm" 
                     variant="outline"
+                    onClick={() => handleViewProfile(contact.id)}
                     data-testid={`button-view-profile-${contact.id}`}
                   >
                     <User className="h-3 w-3 mr-1" />
@@ -256,10 +291,12 @@ export const ContactSearch = () => {
                   <Button 
                     size="sm" 
                     variant="outline"
+                    onClick={() => handleSendMessage(contact.id)}
+                    disabled={createConversationMutation.isPending}
                     data-testid={`button-send-message-${contact.id}`}
                   >
                     <MessageCircle className="h-3 w-3 mr-1" />
-                    Enviar mensaje
+                    {createConversationMutation.isPending ? 'Enviando...' : 'Enviar mensaje'}
                   </Button>
                 </div>
               </div>

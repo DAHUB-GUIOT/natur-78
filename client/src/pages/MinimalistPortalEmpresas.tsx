@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useLocation } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   Map, Building2, Star, MessageCircle, Settings, User, Plus,
   Menu, X, Search, Filter, Grid, List, MapPin, Eye, TrendingUp
 } from "lucide-react";
+import { apiRequest } from "@/lib/queryClient";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -20,6 +22,32 @@ const MinimalistPortalEmpresas = () => {
   // Mobile menu removed - now handled by HeaderButtons
   const [searchQuery, setSearchQuery] = useState("");
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [, setLocation] = useLocation();
+  const queryClient = useQueryClient();
+
+  // Create or get conversation mutation
+  const createConversationMutation = useMutation({
+    mutationFn: async (receiverId: number) => {
+      return apiRequest('/api/conversations', {
+        method: 'POST',
+        body: JSON.stringify({ receiverId }),
+        headers: { 'Content-Type': 'application/json' }
+      });
+    },
+    onSuccess: (conversation, receiverId) => {
+      queryClient.invalidateQueries({ queryKey: ['/api/conversations'] });
+      // Switch to messages view and show the conversation
+      setActiveView('messages');
+    }
+  });
+
+  const handleViewProfile = (userId: number) => {
+    setLocation(`/profile/${userId}`);
+  };
+
+  const handleSendMessage = (userId: number) => {
+    createConversationMutation.mutate(userId);
+  };
 
   // Current user data fetch
   const { data: currentUser, isLoading: userLoading } = useQuery({
@@ -155,6 +183,7 @@ const MinimalistPortalEmpresas = () => {
                     <Button 
                       size="sm" 
                       className="flex-1 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold text-sm h-9 shadow-lg transition-all duration-300"
+                      onClick={() => handleViewProfile(company.id)}
                       data-testid={`button-view-profile-${company.id}`}
                     >
                       <User className="w-3 h-3 mr-1" />
@@ -164,10 +193,12 @@ const MinimalistPortalEmpresas = () => {
                       size="sm" 
                       variant="outline"
                       className="flex-1 border-white/30 text-white hover:bg-white/10 font-semibold text-sm h-9 shadow-lg transition-all duration-300"
+                      onClick={() => handleSendMessage(company.id)}
+                      disabled={createConversationMutation.isPending}
                       data-testid={`button-send-message-${company.id}`}
                     >
                       <MessageCircle className="w-3 h-3 mr-1" />
-                      Enviar mensaje
+                      {createConversationMutation.isPending ? 'Enviando...' : 'Enviar mensaje'}
                     </Button>
                   </div>
 

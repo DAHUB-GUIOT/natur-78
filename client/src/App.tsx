@@ -71,7 +71,7 @@ const App = () => (
             <Route path="/perfil">
               <MainLayout><Perfil /></MainLayout>
             </Route>
-            <Route path="/perfil/:username">
+            <Route path="/perfil-publico/:username">
               <MainLayout><PublicProfile /></MainLayout>
             </Route>
             <Route path="/admin" component={AdminDashboard} />
@@ -86,8 +86,8 @@ const App = () => (
             <Route path="/experiencia/:id" component={ExperienceDetail} />
             <Route path="/mapa" component={PortalViajeros} />
             <Route path="/plataforma" component={UnifiedPlatform} />
-            <Route path="/perfil/:userId" component={UserProfile} />
-            <Route path="/perfil/:id" component={Profile} />
+            <Route path="/profile/:userId" component={UserProfile} />
+            <Route path="/user-profile/:id" component={Profile} />
             <Route path="/perfil-empresarial/:id" component={EnhancedProfile} />
             <Route path="/empresa/:companyId" component={CompanyProfile} />
 

@@ -853,6 +853,23 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Create or get conversation
+  app.post("/api/conversations", requireAuth, async (req: any, res) => {
+    try {
+      const { receiverId } = req.body;
+      
+      if (!receiverId) {
+        return res.status(400).json({ error: "receiverId is required" });
+      }
+
+      const conversation = await storage.getOrCreateConversation(req.user.id, receiverId);
+      res.json(conversation);
+    } catch (error) {
+      console.error("Error creating/getting conversation:", error);
+      res.status(500).json({ error: "Failed to create conversation" });
+    }
+  });
+
   // Get messages between two users (simpler API for new chat)
   app.get("/api/messages", requireAuth, async (req: any, res) => {
     try {
@@ -1007,7 +1024,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/experiences/user/:id", async (req, res) => {
     try {
       const userId = parseInt(req.params.id);
-      const experiences = await storage.getUserExperiences(userId);
+      const experiences = await storage.getExperiences(userId);
       res.json(experiences);
     } catch (error) {
       console.error("Error fetching user experiences:", error);
