@@ -11,7 +11,7 @@ import {
   MapPin,
   Briefcase,
   MessageCircle,
-  UserPlus,
+  User,
   ExternalLink,
   Star,
   Building
@@ -245,13 +245,21 @@ export const ContactSearch = () => {
               <div className="flex items-center justify-between text-sm text-gray-500">
                 <span>{contact.connections} conexiones</span>
                 <div className="flex space-x-2">
-                  <Button size="sm" variant="outline">
-                    <MessageCircle className="h-3 w-3 mr-1" />
-                    Mensaje
+                  <Button 
+                    size="sm" 
+                    variant="outline"
+                    data-testid={`button-view-profile-${contact.id}`}
+                  >
+                    <User className="h-3 w-3 mr-1" />
+                    Ver perfil
                   </Button>
-                  <Button size="sm" variant="outline">
-                    <UserPlus className="h-3 w-3 mr-1" />
-                    Conectar
+                  <Button 
+                    size="sm" 
+                    variant="outline"
+                    data-testid={`button-send-message-${contact.id}`}
+                  >
+                    <MessageCircle className="h-3 w-3 mr-1" />
+                    Enviar mensaje
                   </Button>
                 </div>
               </div>

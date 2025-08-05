@@ -155,8 +155,19 @@ const MinimalistPortalEmpresas = () => {
                     <Button 
                       size="sm" 
                       className="flex-1 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold text-sm h-9 shadow-lg transition-all duration-300"
+                      data-testid={`button-view-profile-${company.id}`}
                     >
-                      Contactar
+                      <User className="w-3 h-3 mr-1" />
+                      Ver perfil
+                    </Button>
+                    <Button 
+                      size="sm" 
+                      variant="outline"
+                      className="flex-1 border-white/30 text-white hover:bg-white/10 font-semibold text-sm h-9 shadow-lg transition-all duration-300"
+                      data-testid={`button-send-message-${company.id}`}
+                    >
+                      <MessageCircle className="w-3 h-3 mr-1" />
+                      Enviar mensaje
                     </Button>
                   </div>
 
