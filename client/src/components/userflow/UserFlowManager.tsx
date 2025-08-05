@@ -30,7 +30,7 @@ const UserFlowManager: React.FC = () => {
 
   const { data: company } = useQuery({
     queryKey: ['/api/companies/me'],
-    enabled: !!user && user.role === 'empresa',
+    enabled: !!user && (user as any).role === 'empresa',
   });
 
   const { data: experiences = [] } = useQuery({
@@ -41,13 +41,14 @@ const UserFlowManager: React.FC = () => {
   const calculateProfileCompletion = () => {
     if (!user) return 0;
     
+    const userAny = user as any;
     const requiredFields = [
-      user.firstName,
-      user.lastName || user.companyName,
-      user.email,
-      user.phone,
-      user.city,
-      user.bio
+      userAny.firstName,
+      userAny.lastName || userAny.companyName,
+      userAny.email,
+      userAny.phone,
+      userAny.city,
+      userAny.bio
     ];
     
     const completedFields = requiredFields.filter(field => field && field.trim()).length;
@@ -74,14 +75,14 @@ const UserFlowManager: React.FC = () => {
       id: 'contact-card',
       title: '3. Tarjeta de Contacto',
       description: 'Ficha pública visible en directorio',
-      completed: !!user && user.isContactCardVisible !== false,
+      completed: !!user && (user as any).isContactCardVisible !== false,
       icon: Globe
     },
     {
       id: 'map-location',
       title: '4. Ubicación en Mapa',
       description: 'Punto geolocalizado visible en el mapa',
-      completed: !!user && !!user.coordinates && user.isMapVisible !== false,
+      completed: !!user && !!(user as any).coordinates && (user as any).isMapVisible !== false,
       icon: MapPin
     },
     {
@@ -96,7 +97,7 @@ const UserFlowManager: React.FC = () => {
       id: 'experiences',
       title: '6. Crear Experiencias',
       description: 'Experiencias/actividades creadas',
-      completed: experiences.length > 0,
+      completed: Array.isArray(experiences) && experiences.length > 0,
       action: () => window.location.href = '/experience-creator',
       icon: Star
     },
@@ -104,7 +105,7 @@ const UserFlowManager: React.FC = () => {
       id: 'traveler-map',
       title: '7. Mapa de Viajeros',
       description: 'Experiencias visibles para otros usuarios',
-      completed: experiences.some((exp: any) => exp.isVisibleOnTravelerMap && exp.status === 'aprobado'),
+      completed: Array.isArray(experiences) && experiences.some((exp: any) => exp.isVisibleOnTravelerMap && exp.status === 'aprobado'),
       icon: Users
     }
   ];
@@ -119,7 +120,7 @@ const UserFlowManager: React.FC = () => {
         body: JSON.stringify({
           isMapVisible: true,
           isContactCardVisible: true,
-          coordinates: user?.coordinates || { lat: 4.6097, lng: -74.0817 }
+          coordinates: (user as any)?.coordinates || { lat: 4.6097, lng: -74.0817 }
         }),
       });
     },
@@ -223,7 +224,7 @@ const UserFlowManager: React.FC = () => {
           </div>
         )}
         
-        {user.role === 'empresa' && !user.isMapVisible && (
+        {(user as any).role === 'empresa' && !(user as any).isMapVisible && (
           <Button
             onClick={() => enableMapVisibilityMutation.mutate()}
             disabled={enableMapVisibilityMutation.isPending}

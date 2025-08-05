@@ -14,6 +14,7 @@ export interface IStorage {
   getAllUsers(): Promise<User[]>;
   getUsers(): Promise<User[]>;
   updateUser(id: number, data: Partial<InsertUser>): Promise<User>;
+  searchUsers(query: string): Promise<User[]>;
   
   // User profile methods
   getUserProfile(userId: number): Promise<UserProfile | undefined>;
@@ -388,6 +389,19 @@ export class MemStorage implements IStorage {
       participant2Id: userId2
     });
   }
+
+  async getUsers(): Promise<User[]> {
+    return Array.from(this.users.values());
+  }
+
+  async searchUsers(query: string): Promise<User[]> {
+    return Array.from(this.users.values()).filter(user => 
+      user.email.includes(query) || 
+      (user.firstName && user.firstName.includes(query)) ||
+      (user.lastName && user.lastName.includes(query)) ||
+      (user.companyName && user.companyName.includes(query))
+    );
+  }
 }
 
 export class DatabaseStorage implements IStorage {
@@ -638,6 +652,10 @@ export class DatabaseStorage implements IStorage {
     return result;
   }
 
+  async getUsers(): Promise<User[]> {
+    return this.getAllUsers();
+  }
+
   async searchUsers(query: string): Promise<User[]> {
     const result = await db.select().from(users)
       .where(
@@ -666,54 +684,8 @@ export class DatabaseStorage implements IStorage {
     return result[0];
   }
 
-  async getAllUsers(): Promise<User[]> {
-    const result = await db.select().from(users).orderBy(desc(users.createdAt));
-    return result;
-  }
-
   async getUsers(): Promise<User[]> {
-    const result = await db.select().from(users).orderBy(desc(users.createdAt));
-    return result;
-  }
-  async getUser(id: number): Promise<any> {
-    try {
-      const [user] = await db.select().from(users).where(eq(users.id, id));
-      return user;
-    } catch (error) {
-      console.error("Database error fetching user:", error);
-      return undefined;
-    }
-  }
-
-  async updateUser(id: number, data: any): Promise<any> {
-    try {
-      const [updatedUser] = await db
-        .update(users)
-        .set({
-          ...data,
-          updatedAt: new Date()
-        })
-        .where(eq(users.id, id))
-        .returning();
-      return updatedUser;
-    } catch (error) {
-      console.error("Database error updating user:", error);
-      throw error;
-    }
-  }
-
-  async getUserExperiences(userId: number): Promise<any[]> {
-    try {
-      const userExperiences = await db
-        .select()
-        .from(experiences)
-        .where(eq(experiences.createdBy, userId))
-        .orderBy(experiences.createdAt);
-      return userExperiences;
-    } catch (error) {
-      console.error("Database error fetching user experiences:", error);
-      return [];
-    }
+    return this.getAllUsers();
   }
 }
 
