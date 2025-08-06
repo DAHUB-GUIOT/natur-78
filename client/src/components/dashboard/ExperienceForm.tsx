@@ -66,7 +66,7 @@ const ExperienceForm = ({ onClose }: { onClose: () => void }) => {
     additionalQuestions: "",
     
     // Languages & Guide
-    languages: [],
+    languages: [] as string[],
     guideType: "",
     
     // Passenger Data Required
@@ -93,7 +93,7 @@ const ExperienceForm = ({ onClose }: { onClose: () => void }) => {
       setFormData(prev => ({
         ...prev,
         [parent]: {
-          ...prev[parent as keyof typeof prev],
+          ...(prev[parent as keyof typeof prev] as any),
           [child]: value
         }
       }));

@@ -16,12 +16,15 @@ import { WhatsAppChat } from "@/components/messaging/WhatsAppChat";
 import TwitterProfileSection from "@/components/profile/TwitterProfileSection";
 import { HeaderButtons } from "@/components/layout/HeaderButtons";
 import UserFlowManager from "@/components/userflow/UserFlowManager";
+import ExperienceForm from "@/components/dashboard/ExperienceForm";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 
 const MinimalistPortalEmpresas = () => {
   const [activeView, setActiveView] = useState("map");
   // Mobile menu removed - now handled by HeaderButtons
   const [searchQuery, setSearchQuery] = useState("");
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [showExperienceForm, setShowExperienceForm] = useState(false);
   const [, setLocation] = useLocation();
   const queryClient = useQueryClient();
 
@@ -228,20 +231,45 @@ const MinimalistPortalEmpresas = () => {
     <div className="p-4 space-y-6">
       <div className="flex flex-col space-y-4">
         <h2 className="text-xl font-light text-white">Mis Experiencias</h2>
-        <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white h-12">
-          <Plus className="w-5 h-5 mr-2" />
-          Nueva Experiencia
-        </Button>
+        
+        {/* Single Button for Experience Creation with Step-by-Step Form */}
+        <Sheet open={showExperienceForm} onOpenChange={setShowExperienceForm}>
+          <SheetTrigger asChild>
+            <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white h-12">
+              <Plus className="w-5 h-5 mr-2" />
+              Nueva Experiencia
+            </Button>
+          </SheetTrigger>
+          <SheetContent 
+            side="right" 
+            className="w-full sm:max-w-2xl overflow-y-auto bg-gradient-to-br from-gray-900 via-black to-blue-900 border-white/20"
+          >
+            <SheetHeader>
+              <SheetTitle className="text-white text-xl font-light">
+                Crear Nueva Experiencia
+              </SheetTitle>
+            </SheetHeader>
+            <div className="mt-6">
+              <ExperienceForm onClose={() => setShowExperienceForm(false)} />
+            </div>
+          </SheetContent>
+        </Sheet>
       </div>
 
       <div className="text-center py-16">
         <Star className="w-20 h-20 text-white/30 mx-auto mb-6" />
         <h3 className="text-lg font-light text-white mb-3">No tienes experiencias aún</h3>
         <p className="text-white/60 mb-8 px-4">Crea tu primera experiencia turística sostenible y comienza a conectar con viajeros conscientes</p>
-        <Button className="w-full max-w-sm bg-blue-600 hover:bg-blue-700 text-white h-12">
-          <Plus className="w-5 h-5 mr-2" />
-          Crear Primera Experiencia
-        </Button>
+        
+        {/* Alternative button that also opens the same form */}
+        <Sheet open={showExperienceForm} onOpenChange={setShowExperienceForm}>
+          <SheetTrigger asChild>
+            <Button className="w-full max-w-sm bg-blue-600 hover:bg-blue-700 text-white h-12">
+              <Plus className="w-5 h-5 mr-2" />
+              Crear Primera Experiencia
+            </Button>
+          </SheetTrigger>
+        </Sheet>
       </div>
     </div>
   );
