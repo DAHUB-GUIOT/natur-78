@@ -92,8 +92,9 @@ Successfully implemented comprehensive user journey tracking:
 7. **Mapa de viajeros**: Experiences visible to travelers when approved
 
 ### User Management
-- **Traveler User Created**: dahub.tech@gmail.com (password: 12345678) - viajero role
-- **Dual Portal Access**: Users can switch between business and traveler views
+- **Business User**: dahub.tech@gmail.com (password: 12345678) - empresa role for Portal Empresas
+- **Traveler User**: dahub.viajero@gmail.com (password: 12345678) - viajero role for Portal Viajeros  
+- **Dual Portal Testing**: Separate accounts allow testing both portals independently
 - **Complete Profile Setup**: Auto-generated profiles with all required fields
 - **Portal Viajeros Navigation**: Main menu with two dropdowns (Experiencias and Mi Cuenta) similar to Portal Empresas design
 
