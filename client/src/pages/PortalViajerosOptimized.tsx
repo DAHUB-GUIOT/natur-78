@@ -5,7 +5,8 @@ import { motion } from "framer-motion";
 import { 
   Map, Heart, MessageCircle, User, Search, Star, MapPin, 
   Calendar, Clock, Users, DollarSign, Filter, LogOut, Settings,
-  Plane, Camera, BookOpen, TreePine, Waves, Mountain, Utensils
+  Plane, Camera, BookOpen, TreePine, Waves, Mountain, Utensils,
+  Home, UserPlus
 } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
 import { Button } from "@/components/ui/button";
@@ -46,6 +47,9 @@ const PortalViajerosOptimized = () => {
     staleTime: 2 * 60 * 1000,
     refetchOnWindowFocus: false,
   });
+
+  // Type guard for experiences
+  const typedExperiences = Array.isArray(experiences) ? experiences : [];
 
   const navItems = [
     { id: "mapa", label: "Mapa", icon: Map },
@@ -133,7 +137,7 @@ const PortalViajerosOptimized = () => {
             </Card>
           ))
         ) : (
-          experiences
+          typedExperiences
             .filter((exp: any) => 
               !searchQuery || 
               exp.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -224,7 +228,7 @@ const PortalViajerosOptimized = () => {
         )}
       </div>
 
-      {experiences.length === 0 && !experiencesLoading && (
+      {typedExperiences.length === 0 && !experiencesLoading && (
         <div className="text-center py-16">
           <Star className="w-20 h-20 text-white/30 mx-auto mb-6" />
           <h3 className="text-lg font-light text-white mb-3">No hay experiencias disponibles</h3>
@@ -387,6 +391,16 @@ const PortalViajerosOptimized = () => {
 
             {/* Center - Main Navigation Dropdowns */}
             <div className="hidden md:flex items-center space-x-4">
+              {/* Inicio Button */}
+              <Button 
+                variant="ghost" 
+                className="text-white hover:bg-white/10 font-medium px-4 py-2 rounded-xl transition-all duration-300"
+                onClick={() => setActiveView('mapa')}
+              >
+                <Home className="w-4 h-4 mr-2" />
+                Inicio
+              </Button>
+
               {/* Experiencias Dropdown */}
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -469,6 +483,16 @@ const PortalViajerosOptimized = () => {
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
+
+              {/* Registrarse Button */}
+              <Button 
+                variant="ghost" 
+                className="text-white hover:bg-white/10 font-medium px-4 py-2 rounded-xl transition-all duration-300 border border-white/20"
+                onClick={() => window.open('/register', '_blank')}
+              >
+                <UserPlus className="w-4 h-4 mr-2" />
+                Registrarse
+              </Button>
             </div>
 
             {/* Right Side - User Avatar (Mobile) */}
