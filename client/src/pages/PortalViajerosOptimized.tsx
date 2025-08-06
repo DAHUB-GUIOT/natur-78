@@ -43,10 +43,6 @@ const PortalViajerosOptimized = () => {
   // Public experiences fetch for travelers
   const { data: experiences = [], isLoading: experiencesLoading } = useQuery({
     queryKey: ["/api/experiences/public"],
-    queryFn: () => fetch("/api/experiences/public", { credentials: 'include' }).then(res => {
-      if (!res.ok) throw new Error(`${res.status}: ${res.statusText}`);
-      return res.json();
-    }),
     staleTime: 2 * 60 * 1000,
     refetchOnWindowFocus: false,
   });

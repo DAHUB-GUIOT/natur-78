@@ -519,6 +519,15 @@ export class DatabaseStorage implements IStorage {
     return result;
   }
 
+  async getPublicExperiences(): Promise<Experience[]> {
+    const result = await db
+      .select()
+      .from(experiences)
+      .where(eq(experiences.status, 'aprobado'))
+      .orderBy(desc(experiences.createdAt));
+    return result;
+  }
+
   async duplicateExperience(id: number, userId: number): Promise<Experience> {
     const originalExperience = await this.getExperience(id);
     if (!originalExperience) {
@@ -682,10 +691,6 @@ export class DatabaseStorage implements IStorage {
     }
     
     return result[0];
-  }
-
-  async getUsers(): Promise<User[]> {
-    return this.getAllUsers();
   }
 }
 

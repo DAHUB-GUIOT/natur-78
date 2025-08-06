@@ -421,9 +421,26 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Public experiences endpoint for travelers - MUST be before /:id route
+  app.get("/api/experiences/public", async (req, res) => {
+    try {
+      const experiences = await storage.getPublicExperiences();
+      res.json(experiences);
+    } catch (error) {
+      console.error("Get public experiences error:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+
   app.get("/api/experiences/:id", async (req, res) => {
     try {
       const experienceId = parseInt(req.params.id);
+      
+      // Validate that the ID is a valid number
+      if (isNaN(experienceId)) {
+        return res.status(400).json({ error: "Invalid experience ID" });
+      }
+      
       const experience = await storage.getExperience(experienceId);
       
       if (!experience) {
@@ -513,16 +530,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Get all experiences (public)
-  app.get("/api/experiences/public", async (req, res) => {
-    try {
-      const experiences = await storage.getAllExperiences();
-      res.json(experiences);
-    } catch (error) {
-      console.error("Get all experiences error:", error);
-      res.status(500).json({ error: "Internal server error" });
-    }
-  });
+  // Duplicate route removed - now handled above
 
   // Company routes - only return verified companies for contacts directory
   app.get("/api/companies", async (req, res) => {
