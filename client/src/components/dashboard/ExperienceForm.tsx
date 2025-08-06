@@ -613,6 +613,7 @@ const ExperienceForm = ({ onClose }: { onClose: () => void }) => {
           title: data.title,
           modality: data.modality,
           type: data.type,
+          category: "experiencia", // Default category for experiences
           adultPriceNet: data.adultPrice.net,
           adultPricePvp: data.adultPrice.pvp,
           childPriceNet: data.childPrice.net,
@@ -641,7 +642,7 @@ const ExperienceForm = ({ onClose }: { onClose: () => void }) => {
           voucherInfo: data.voucherInfo,
           faqs: data.faqs,
           additionalQuestions: data.additionalQuestions,
-          languages: data.languages,
+          languages: data.languages || [],
           guideType: data.guideType,
           passengerDataRequired: data.passengerData
         }),
@@ -678,70 +679,58 @@ const ExperienceForm = ({ onClose }: { onClose: () => void }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-      <Card className="w-full max-w-4xl max-h-[90vh] overflow-hidden backdrop-blur-xl bg-black/20 border border-white/30">
-        <CardHeader className="border-b border-white/20">
-          <div className="flex items-center justify-between">
-            <CardTitle className="text-white">Crear Nueva Experiencia</CardTitle>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={onClose}
-              className="text-white hover:bg-white/20"
-            >
-              <X className="w-4 h-4" />
-            </Button>
-          </div>
-          
-          {/* Progress Bar */}
-          <div className="flex items-center space-x-2 mt-4">
-            {Array.from({ length: totalSteps }, (_, i) => (
-              <div
-                key={i}
-                className={`flex-1 h-2 rounded-full ${
-                  i + 1 <= currentStep ? 'bg-green-600' : 'bg-white/20'
-                }`}
-              />
-            ))}
-          </div>
-          <p className="text-white/70 text-sm">Paso {currentStep} de {totalSteps}</p>
-        </CardHeader>
-
-        <CardContent className="p-6 overflow-y-auto max-h-[calc(90vh-200px)]">
-          {renderStep()}
-        </CardContent>
-
-        <div className="border-t border-white/20 p-4 flex items-center justify-between">
-          <Button
-            variant="outline"
-            onClick={() => setCurrentStep(Math.max(1, currentStep - 1))}
-            disabled={currentStep === 1}
-            className="border-white/30 text-white hover:bg-white/20"
-          >
-            Anterior
-          </Button>
-
-          <div className="flex space-x-2">
-            {currentStep === totalSteps ? (
-              <Button
-                onClick={handleSave}
-                disabled={createExperienceMutation.isPending}
-                className="bg-green-600 hover:bg-green-700 text-white"
-              >
-                <Save className="w-4 h-4 mr-2" />
-                {createExperienceMutation.isPending ? "Guardando..." : "Guardar Experiencia"}
-              </Button>
-            ) : (
-              <Button
-                onClick={() => setCurrentStep(Math.min(totalSteps, currentStep + 1))}
-                className="bg-green-600 hover:bg-green-700 text-white"
-              >
-                Siguiente
-              </Button>
-            )}
-          </div>
+    <div className="space-y-6">
+      {/* Progress Bar */}
+      <div className="space-y-2">
+        <div className="flex items-center space-x-2">
+          {Array.from({ length: totalSteps }, (_, i) => (
+            <div
+              key={i}
+              className={`flex-1 h-2 rounded-full transition-all duration-300 ${
+                i + 1 <= currentStep ? 'bg-blue-500' : 'bg-white/20'
+              }`}
+            />
+          ))}
         </div>
-      </Card>
+        <p className="text-white/70 text-sm text-center">Paso {currentStep} de {totalSteps}</p>
+      </div>
+
+      {/* Form Content */}
+      <div className="min-h-[400px]">
+        {renderStep()}
+      </div>
+
+      {/* Navigation Buttons */}
+      <div className="flex items-center justify-between pt-4 border-t border-white/20">
+        <Button
+          variant="outline"
+          onClick={() => setCurrentStep(Math.max(1, currentStep - 1))}
+          disabled={currentStep === 1}
+          className="border-white/30 text-white hover:bg-white/20"
+        >
+          Anterior
+        </Button>
+
+        <div className="flex space-x-2">
+          {currentStep === totalSteps ? (
+            <Button
+              onClick={handleSave}
+              disabled={createExperienceMutation.isPending}
+              className="bg-blue-600 hover:bg-blue-700 text-white"
+            >
+              <Save className="w-4 h-4 mr-2" />
+              {createExperienceMutation.isPending ? "Guardando..." : "Guardar Experiencia"}
+            </Button>
+          ) : (
+            <Button
+              onClick={() => setCurrentStep(Math.min(totalSteps, currentStep + 1))}
+              className="bg-blue-600 hover:bg-blue-700 text-white"
+            >
+              Siguiente
+            </Button>
+          )}
+        </div>
+      </div>
     </div>
   );
 };

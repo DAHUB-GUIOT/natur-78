@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useLocation } from "wouter";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { 
   Map, Building2, Star, MessageCircle, Settings, User, Plus,
-  Menu, X, Search, Filter, Grid, List, MapPin, Eye, TrendingUp
+  Search
 } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
 import { Button } from "@/components/ui/button";
@@ -21,9 +21,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/co
 
 const MinimalistPortalEmpresas = () => {
   const [activeView, setActiveView] = useState("map");
-  // Mobile menu removed - now handled by HeaderButtons
   const [searchQuery, setSearchQuery] = useState("");
-  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [showExperienceForm, setShowExperienceForm] = useState(false);
   const [, setLocation] = useLocation();
   const queryClient = useQueryClient();
@@ -89,10 +87,6 @@ const MinimalistPortalEmpresas = () => {
   const handleNavigation = (viewId: string) => {
     setActiveView(viewId);
   };
-
-  // Mobile navigation removed - now handled by HeaderButtons component
-
-  // Sidebar removed - navigation now in HeaderButtons
 
   const renderMapView = () => (
     <div className="absolute inset-0">
@@ -305,8 +299,6 @@ const MinimalistPortalEmpresas = () => {
           Editar Perfil Completo
         </Button>
       </div>
-
-
 
       {/* User Flow Progress */}
       <div className="mb-6">
