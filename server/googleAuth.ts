@@ -150,7 +150,10 @@ export function setupGoogleAuth(app: Express) {
           </script>
         `);
       } else {
-        res.redirect('/portal-empresas?auth=success');
+        // Redirect based on user role
+        const user = req.user as any;
+        const redirectUrl = user?.role === 'empresa' ? '/portal-empresas?auth=success' : '/portal-viajeros?auth=success';
+        res.redirect(redirectUrl);
       }
     }
   );

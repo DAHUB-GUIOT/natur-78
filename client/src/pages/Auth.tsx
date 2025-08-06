@@ -49,12 +49,16 @@ const Auth = () => {
         headers: { 'Content-Type': 'application/json' }
       });
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
       toast({
         title: "Inicio de sesión exitoso",
         description: "Redirigiendo...",
       });
-      const redirectUrl = isEmpresas ? '/portal-empresas' : '/portal-viajeros';
+      
+      // Redirect based on user role, not URL type
+      const userRole = data.user?.role || 'viajero';
+      const redirectUrl = userRole === 'empresa' ? '/portal-empresas' : '/portal-viajeros';
+      
       setTimeout(() => {
         window.location.href = redirectUrl;
       }, 1000);
