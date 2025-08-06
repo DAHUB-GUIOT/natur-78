@@ -24,14 +24,12 @@ import PublicProfile from "./pages/PublicProfile";
 import AdminOptimized from "./pages/AdminOptimized";
 import AdminDashboard from "./pages/AdminDashboard";
 import Dashboard from "./pages/Dashboard";
-import PortalEmpresasDashboard from "./pages/PortalEmpresasDashboard";
+
 import MinimalistPortalEmpresas from "./pages/MinimalistPortalEmpresas";
 import PortalEmpresasAuth from "./pages/PortalEmpresasAuth";
-import PortalViajeros from "./pages/PortalViajeros";
 import PortalViajerosNew from "./pages/PortalViajerosNew";
 import ExperienceDetail from "./pages/ExperienceDetail";
-import MapaPublicoOptimized from "./pages/MapaPublicoOptimized";
-import UnifiedPlatform from "./pages/UnifiedPlatform";
+
 import UserProfile from "./pages/UserProfile";
 import CompanyProfile from "./pages/CompanyProfile";
 import Profile from "./pages/Profile";
@@ -85,8 +83,7 @@ const App = () => (
             <Route path="/company-profile" component={CompanyProfilePage} />
             <Route path="/portal-viajeros" component={PortalViajerosNew} />
             <Route path="/experiencia/:id" component={ExperienceDetail} />
-            <Route path="/mapa" component={PortalViajeros} />
-            <Route path="/plataforma" component={UnifiedPlatform} />
+            <Route path="/mapa" component={PortalViajerosNew} />
             <Route path="/profile/:userId" component={UserProfile} />
             <Route path="/user-profile/:id" component={Profile} />
             <Route path="/perfil-empresarial/:id" component={EnhancedProfile} />

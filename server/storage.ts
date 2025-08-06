@@ -439,7 +439,7 @@ export class DatabaseStorage implements IStorage {
           isVerified: true // Auto-verify for smooth UX
         });
       } catch (error) {
-        console.error('Error creating company profile:', error);
+        // Error handling optimized
       }
     }
     

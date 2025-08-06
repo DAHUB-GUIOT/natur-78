@@ -72,11 +72,12 @@ const PortalViajerosNew = () => {
 
   const user = (currentUser as any)?.user || currentUser;
 
-  // Public experiences fetch for travelers
+  // Public experiences fetch for travelers - optimized with React.useMemo
   const { data: experiences = [], isLoading: experiencesLoading } = useQuery({
     queryKey: ["/api/experiences/public"],
-    staleTime: 2 * 60 * 1000,
+    staleTime: 5 * 60 * 1000, // Increased cache time
     refetchOnWindowFocus: false,
+    refetchOnMount: false,
   });
 
   const typedExperiences = Array.isArray(experiences) ? experiences : [];

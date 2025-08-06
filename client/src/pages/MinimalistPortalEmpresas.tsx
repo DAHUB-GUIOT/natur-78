@@ -60,15 +60,16 @@ const MinimalistPortalEmpresas = () => {
 
   const user = (currentUser as any)?.user || currentUser;
 
-  // Directory users fetch
+  // Directory users fetch - optimized
   const { data: directoryUsers = [], isLoading: directoryLoading } = useQuery({
     queryKey: ["/api/directory/users"],
     queryFn: () => fetch("/api/directory/users", { credentials: 'include' }).then(res => {
       if (!res.ok) throw new Error(`${res.status}: ${res.statusText}`);
       return res.json();
     }),
-    staleTime: 2 * 60 * 1000,
+    staleTime: 5 * 60 * 1000, // Increased cache time
     refetchOnWindowFocus: false,
+    refetchOnMount: false,
   });
 
   const typedDirectoryUsers = Array.isArray(directoryUsers) 
