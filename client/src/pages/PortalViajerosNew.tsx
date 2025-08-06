@@ -20,7 +20,7 @@ import UserFlowManager from "@/components/userflow/UserFlowManager";
 import AuthViajeros from "./AuthViajeros";
 
 const PortalViajerosNew = () => {
-  const [activeView, setActiveView] = useState("map");
+  const [activeView, setActiveView] = useState("experiencias"); // Changed default to experiencias
   const [searchQuery, setSearchQuery] = useState("");
   const [, setLocation] = useLocation();
   const queryClient = useQueryClient();
@@ -147,32 +147,42 @@ const PortalViajerosNew = () => {
   );
 
   const renderExperienciasView = () => (
-    <div className="p-4 space-y-6 max-w-6xl mx-auto">
-      {/* Header */}
-      <div className="text-center space-y-3">
-        <h2 className="text-2xl font-bold text-white">Experiencias Disponibles</h2>
-        <p className="text-white/70">Descubre aventuras sostenibles increíbles</p>
+    <div className="relative h-screen">
+      {/* Interactive Map for Experiences */}
+      <div className="absolute inset-0">
+        <InteractiveMap 
+          directoryUsers={typedExperiences}
+          onUserSelect={handleViewProfile}
+          onSendMessage={handleSendMessage}
+          isMessagingActive={createConversationMutation.isPending}
+          showExperiences={true}
+          mapTitle="Mapa de Experiencias"
+          mapSubtitle="Explora experiencias sostenibles en toda Colombia"
+        />
       </div>
 
-      {/* Search Section */}
-      <Card className="bg-white/10 backdrop-blur-sm border-white/20">
-        <CardContent className="p-4">
-          <div className="flex flex-col md:flex-row gap-4">
-            <div className="flex-1 relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/40 w-4 h-4" />
-              <Input
-                placeholder="Buscar experiencias por ubicación, tipo..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 bg-white/10 border-white/30 text-white placeholder:text-white/50 h-10"
-              />
+      {/* Floating Search Panel */}
+      <div className="absolute top-4 left-4 right-4 z-10">
+        <Card className="bg-black/60 backdrop-blur-sm border-white/20">
+          <CardContent className="p-4">
+            <div className="flex flex-col md:flex-row gap-4">
+              <div className="flex-1 relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/40 w-4 h-4" />
+                <Input
+                  placeholder="Buscar experiencias por ubicación, tipo..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="pl-10 bg-white/10 border-white/30 text-white placeholder:text-white/50 h-10"
+                />
+              </div>
+              <Button className="bg-green-600 hover:bg-green-700 text-white px-6">
+                <TreePine className="w-4 h-4 mr-2" />
+                Filtrar
+              </Button>
             </div>
-            <Button className="bg-green-600 hover:bg-green-700 text-white px-6">
-              Filtrar
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
+      </div>
 
       {/* Experiences Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -477,13 +487,13 @@ const PortalViajerosNew = () => {
       
       {/* Main Content - Mobile First */}
       <div className="relative">
-        <main className={activeView === 'map' ? 'h-screen' : 'min-h-screen pt-16'}>
+        <main className={(activeView === 'map' || activeView === 'experiencias') ? 'h-screen' : 'min-h-screen pt-16'}>
           <motion.div
             key={activeView}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
-            className={activeView === 'map' ? 'h-full' : 'min-h-screen bg-gradient-to-br from-gray-900 via-black to-blue-900'}
+            className={(activeView === 'map' || activeView === 'experiencias') ? 'h-full' : 'min-h-screen bg-gradient-to-br from-gray-900 via-black to-blue-900'}
           >
             {renderContent()}
           </motion.div>
