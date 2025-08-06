@@ -56,19 +56,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Authentication routes
   app.get("/api/auth/me", async (req, res) => {
     try {
-      console.log('Auth check - session:', req.session);
-      console.log('Auth check - userId:', req.session.userId);
-      
       // Support both session-based auth (Google OAuth) and custom session auth
       const userId = req.session.userId || (req.user as any)?.id;
       
       if (!userId) {
-        console.log('No userId in session');
         return res.status(401).json({ error: "Not authenticated" });
       }
 
       const user = await storage.getUser(userId);
-      console.log('Found user:', user ? { id: user.id, email: user.email } : 'null');
       
       if (!user) {
         return res.status(401).json({ error: "User not found" });

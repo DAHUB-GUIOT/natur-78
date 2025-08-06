@@ -28,6 +28,7 @@ import Dashboard from "./pages/Dashboard";
 import MinimalistPortalEmpresas from "./pages/MinimalistPortalEmpresas";
 import PortalEmpresasAuth from "./pages/PortalEmpresasAuth";
 import PortalViajerosNew from "./pages/PortalViajerosNew";
+import AuthViajeros from "./pages/AuthViajeros";
 import ExperienceDetail from "./pages/ExperienceDetail";
 
 import UserProfile from "./pages/UserProfile";
@@ -81,6 +82,7 @@ const App = () => (
             <Route path="/portal-empresas/auth" component={PortalEmpresasAuth} />
             <Route path="/portal-empresas" component={MinimalistPortalEmpresas} />
             <Route path="/company-profile" component={CompanyProfilePage} />
+            <Route path="/portal-viajeros/auth" component={AuthViajeros} />
             <Route path="/portal-viajeros" component={PortalViajerosNew} />
             <Route path="/experiencia/:id" component={ExperienceDetail} />
             <Route path="/mapa" component={PortalViajerosNew} />

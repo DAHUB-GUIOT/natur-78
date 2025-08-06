@@ -17,6 +17,7 @@ import { WhatsAppChat } from "@/components/messaging/WhatsAppChat";
 import TwitterProfileSection from "@/components/profile/TwitterProfileSection";
 import { HeaderButtons } from "@/components/layout/HeaderButtons";
 import UserFlowManager from "@/components/userflow/UserFlowManager";
+import AuthViajeros from "./AuthViajeros";
 
 const PortalViajerosNew = () => {
   const [activeView, setActiveView] = useState("map");
@@ -63,9 +64,9 @@ const PortalViajerosNew = () => {
   };
 
   // Current user data fetch
-  const { data: currentUser, isLoading: userLoading } = useQuery({
+  const { data: currentUser, isLoading: userLoading, error: userError } = useQuery({
     queryKey: ['/api/auth/me'],
-    retry: 3,
+    retry: 1,
     staleTime: 10 * 60 * 1000,
     refetchOnWindowFocus: false,
   });
@@ -447,6 +448,11 @@ const PortalViajerosNew = () => {
       default: return renderMapView();
     }
   };
+
+  // If user is not authenticated, show login page
+  if (userError || (!userLoading && !user)) {
+    return <AuthViajeros />;
+  }
 
   if (userLoading) {
     return (
