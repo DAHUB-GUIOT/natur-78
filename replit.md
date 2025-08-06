@@ -95,6 +95,7 @@ Successfully implemented comprehensive user journey tracking:
 - **Traveler User Created**: dahub.tech@gmail.com (password: 12345678) - viajero role
 - **Dual Portal Access**: Users can switch between business and traveler views
 - **Complete Profile Setup**: Auto-generated profiles with all required fields
+- **Portal Viajeros Navigation**: Main menu with two dropdowns (Experiencias and Mi Cuenta) similar to Portal Empresas design
 
 ### Technical Implementation
 - **UserFlowManager Component**: Real-time progress tracking with visual indicators and completion percentages

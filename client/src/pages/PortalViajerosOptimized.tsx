@@ -371,51 +371,145 @@ const PortalViajerosOptimized = () => {
       </div>
 
       {/* Header */}
-      <header className="relative z-50 bg-black/20 backdrop-blur-sm border-b border-white/10">
-        <div className="flex items-center justify-between px-4 py-3">
-          {/* Left Side - Logo and Title */}
-          <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 bg-gradient-to-br from-green-400 to-blue-500 rounded-lg flex items-center justify-center">
-              <TreePine className="w-5 h-5 text-white" />
+      <header className="relative z-50">
+        <div className="bg-transparent backdrop-blur-sm">
+          <div className="flex items-center justify-between px-4 py-3">
+            {/* Left Side - Logo and Brand */}
+            <div className="flex items-center space-x-3">
+              <div className="w-10 h-10 bg-gradient-to-br from-green-400 to-blue-500 rounded-xl flex items-center justify-center shadow-lg">
+                <TreePine className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <h1 className="text-white font-bold text-xl tracking-tight">Portal Viajeros</h1>
+                <p className="text-white/60 text-sm font-medium">Festival NATUR 2025</p>
+              </div>
             </div>
-            <div>
-              <h1 className="text-white font-bold text-lg">Portal Viajeros</h1>
-              <p className="text-white/60 text-xs">Festival NATUR</p>
-            </div>
-          </div>
 
-          {/* Right Side - User Menu */}
-          <div className="flex items-center space-x-3">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-                  <Avatar className="h-8 w-8">
-                    <AvatarImage src={user?.profilePicture} />
-                    <AvatarFallback className="bg-gradient-to-br from-green-500 to-blue-500 text-white">
-                      {user?.firstName?.substring(0, 1) || 'V'}
-                    </AvatarFallback>
-                  </Avatar>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-56 bg-black/90 backdrop-blur-sm border-white/20" align="end">
-                <DropdownMenuItem className="text-white hover:bg-white/10">
-                  <User className="mr-2 h-4 w-4" />
-                  Mi Perfil
-                </DropdownMenuItem>
-                <DropdownMenuItem className="text-white hover:bg-white/10">
-                  <Settings className="mr-2 h-4 w-4" />
-                  Configuración
-                </DropdownMenuItem>
-                <DropdownMenuSeparator className="bg-white/20" />
-                <DropdownMenuItem 
-                  className="text-white hover:bg-white/10"
-                  onClick={handleLogout}
-                >
-                  <LogOut className="mr-2 h-4 w-4" />
-                  Cerrar Sesión
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            {/* Center - Main Navigation Dropdowns */}
+            <div className="hidden md:flex items-center space-x-4">
+              {/* Experiencias Dropdown */}
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button 
+                    variant="ghost" 
+                    className="text-white hover:bg-white/10 font-medium px-4 py-2 rounded-xl transition-all duration-300"
+                  >
+                    <Star className="w-4 h-4 mr-2" />
+                    Experiencias
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-56 bg-black/90 backdrop-blur-sm border-white/20 rounded-xl">
+                  <DropdownMenuItem 
+                    className="text-white hover:bg-white/10 rounded-lg"
+                    onClick={() => setActiveView('experiencias')}
+                  >
+                    <Search className="mr-2 h-4 w-4" />
+                    Explorar Experiencias
+                  </DropdownMenuItem>
+                  <DropdownMenuItem 
+                    className="text-white hover:bg-white/10 rounded-lg"
+                    onClick={() => setActiveView('mapa')}
+                  >
+                    <Map className="mr-2 h-4 w-4" />
+                    Mapa Interactivo
+                  </DropdownMenuItem>
+                  <DropdownMenuItem 
+                    className="text-white hover:bg-white/10 rounded-lg"
+                    onClick={() => setActiveView('reservas')}
+                  >
+                    <Calendar className="mr-2 h-4 w-4" />
+                    Mis Reservas
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator className="bg-white/20" />
+                  <DropdownMenuItem className="text-white/60 hover:bg-white/10 rounded-lg">
+                    <Heart className="mr-2 h-4 w-4" />
+                    Favoritos
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+
+              {/* Mi Cuenta Dropdown */}
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button 
+                    variant="ghost" 
+                    className="text-white hover:bg-white/10 font-medium px-4 py-2 rounded-xl transition-all duration-300"
+                  >
+                    <User className="w-4 h-4 mr-2" />
+                    Mi Cuenta
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-56 bg-black/90 backdrop-blur-sm border-white/20 rounded-xl">
+                  <DropdownMenuItem 
+                    className="text-white hover:bg-white/10 rounded-lg"
+                    onClick={() => setActiveView('perfil')}
+                  >
+                    <User className="mr-2 h-4 w-4" />
+                    Mi Perfil
+                  </DropdownMenuItem>
+                  <DropdownMenuItem 
+                    className="text-white hover:bg-white/10 rounded-lg"
+                    onClick={() => setActiveView('mensajes')}
+                  >
+                    <MessageCircle className="mr-2 h-4 w-4" />
+                    Mensajes
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator className="bg-white/20" />
+                  <DropdownMenuItem className="text-white hover:bg-white/10 rounded-lg">
+                    <Settings className="mr-2 h-4 w-4" />
+                    Configuración
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator className="bg-white/20" />
+                  <DropdownMenuItem 
+                    className="text-white hover:bg-red-500/20 rounded-lg"
+                    onClick={handleLogout}
+                  >
+                    <LogOut className="mr-2 h-4 w-4" />
+                    Cerrar Sesión
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+
+            {/* Right Side - User Avatar (Mobile) */}
+            <div className="md:hidden">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" className="relative h-10 w-10 rounded-full">
+                    <Avatar className="h-10 w-10">
+                      <AvatarImage src={user?.profilePicture} />
+                      <AvatarFallback className="bg-gradient-to-br from-green-500 to-blue-500 text-white">
+                        {user?.firstName?.substring(0, 1) || 'V'}
+                      </AvatarFallback>
+                    </Avatar>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-56 bg-black/90 backdrop-blur-sm border-white/20 rounded-xl" align="end">
+                  <DropdownMenuItem 
+                    className="text-white hover:bg-white/10 rounded-lg"
+                    onClick={() => setActiveView('perfil')}
+                  >
+                    <User className="mr-2 h-4 w-4" />
+                    Mi Perfil
+                  </DropdownMenuItem>
+                  <DropdownMenuItem 
+                    className="text-white hover:bg-white/10 rounded-lg"
+                    onClick={() => setActiveView('mensajes')}
+                  >
+                    <MessageCircle className="mr-2 h-4 w-4" />
+                    Mensajes
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator className="bg-white/20" />
+                  <DropdownMenuItem 
+                    className="text-white hover:bg-red-500/20 rounded-lg"
+                    onClick={handleLogout}
+                  >
+                    <LogOut className="mr-2 h-4 w-4" />
+                    Cerrar Sesión
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
           </div>
         </div>
       </header>
