@@ -33,7 +33,7 @@ Preferred communication style: Simple, everyday language.
 - `migrations/`: Database migrations
 
 ### Key Features and Design Decisions
-- **Unified Authentication**: A single system for both "Empresas" (businesses) and "Con-Sentidos" (travelers), with distinct themed login/registration flows.
+- **Unified Authentication**: A single system allowing users to access both "Portal Empresas" (businesses) and "Portal Viajeros" (travelers) with the same credentials, featuring distinct themed login/registration flows for each portal.
 - **Interactive Map**: Features a Mapbox-based 3D map with natural terrain and custom markers for businesses and experiences, serving as a central navigation element.
 - **Comprehensive Directories**:
     - **Portal Empresas (B2B)**: A completely redesigned minimalist, mobile-first dashboard with full-screen interactive map as the home view. Features transparent header navigation with single hamburger button for Portal navigation (blue theme), completely removed sidebar, eliminated all floating overlays on map, and optimized all views for mobile-first experience with improved cards and touch-friendly interfaces.
@@ -69,7 +69,7 @@ Preferred communication style: Simple, everyday language.
 - `drizzle-kit`: Database migrations and introspection
 - `esbuild`: Fast JavaScript bundler for server
 
-## Recent Implementation (2025-08-06)
+## Recent Implementation (2025-08-07)
 
 ### Complete Platform Optimization
 Successfully optimized the entire platform for production:
@@ -92,9 +92,9 @@ Successfully implemented comprehensive user journey tracking:
 7. **Mapa de viajeros**: Experiences visible to travelers when approved
 
 ### User Management
-- **Business User**: dahub.tech@gmail.com (password: 12345678) - empresa role for Portal Empresas
-- **Traveler User**: dahub.viajero@gmail.com (password: 12345678) - viajero role for Portal Viajeros  
-- **Dual Portal Testing**: Separate accounts allow testing both portals independently
+- **Unified Authentication**: Users can access both portals with the same credentials
+- **Primary Test User**: dahub.tech@gmail.com (password: 12345678) - can access both Portal Empresas and Portal Viajeros
+- **Flexible Role System**: Business users can explore traveler experiences and vice versa
 - **Complete Profile Setup**: Auto-generated profiles with all required fields
 - **Portal Viajeros Navigation**: Main menu with two dropdowns (Experiencias and Mi Cuenta) similar to Portal Empresas design
 
@@ -104,3 +104,5 @@ Successfully implemented comprehensive user journey tracking:
 - **Automatic Profile Setup**: Upon registration, users get complete profiles and map locations
 - **Enhanced Messaging System**: Added searchUsers functionality with full-text search
 - **Optimized ExperienceForm**: Sheet-based 6-step creation process with validation
+- **Dark Theme Implementation**: Updated AuthViajeros page to match Portal Empresas dark theme with glassmorphism effects
+- **Unified Authentication Flow**: Confirmed cross-portal access - users can access both portals with same credentials
