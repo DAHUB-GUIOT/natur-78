@@ -151,7 +151,7 @@ const PortalViajerosNew = () => {
       {/* Interactive Map for Experiences */}
       <div className="absolute inset-0">
         <InteractiveMap 
-          directoryUsers={typedExperiences}
+          directoryUsers={typedDirectoryUsers}
           onUserSelect={handleViewProfile}
           onSendMessage={handleSendMessage}
           isMessagingActive={createConversationMutation.isPending}
@@ -184,119 +184,30 @@ const PortalViajerosNew = () => {
         </Card>
       </div>
 
-      {/* Experiences Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {experiencesLoading ? (
-          Array(6).fill(0).map((_, i) => (
-            <Card key={i} className="bg-white/10 backdrop-blur-sm border-white/20 animate-pulse">
-              <CardContent className="p-6">
-                <div className="h-40 bg-white/10 rounded-lg mb-4"></div>
-                <div className="h-4 bg-white/10 rounded mb-2"></div>
-                <div className="h-3 bg-white/10 rounded mb-4"></div>
-                <div className="flex justify-between">
-                  <div className="h-8 bg-white/10 rounded w-20"></div>
-                  <div className="h-8 bg-white/10 rounded w-16"></div>
+      {/* Experiences List Below Map - Hidden on Mobile */}
+      <div className="absolute bottom-4 left-4 right-4 z-10 hidden md:block">
+        <Card className="bg-black/60 backdrop-blur-sm border-white/20 max-h-60 overflow-y-auto">
+          <CardContent className="p-4">
+            <h3 className="text-white font-semibold mb-3">Experiencias Destacadas</h3>
+            <div className="space-y-2">
+              {typedDirectoryUsers.slice(0, 3).map((experience: any) => (
+                <div key={experience.id} className="flex items-center space-x-3 p-2 bg-white/5 rounded-lg hover:bg-white/10 transition-colors cursor-pointer">
+                  <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-blue-500 rounded-lg flex items-center justify-center">
+                    <Star className="w-5 h-5 text-white" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-white font-medium text-sm truncate">{experience.companyName || 'Experiencia Sostenible'}</p>
+                    <p className="text-white/60 text-xs truncate">{experience.city || 'Bogotá, Colombia'}</p>
+                  </div>
+                  <Button size="sm" className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 text-xs">
+                    Ver
+                  </Button>
                 </div>
-              </CardContent>
-            </Card>
-          ))
-        ) : (
-          typedExperiences
-            .filter((exp: any) => 
-              !searchQuery || 
-              exp.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-              exp.description?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-              exp.location?.toLowerCase().includes(searchQuery.toLowerCase())
-            )
-            .map((experience: any, index: number) => (
-              <motion.div
-                key={experience.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-              >
-                <Card className="bg-white/10 backdrop-blur-sm border-white/20 hover:bg-white/15 transition-all duration-300 hover:scale-105 hover:shadow-2xl">
-                  <CardContent className="p-6">
-                    {/* Experience Image Placeholder */}
-                    <div className="relative mb-4">
-                      <div className="w-full h-40 bg-gradient-to-br from-green-500 to-blue-500 rounded-lg flex items-center justify-center">
-                        <Plane className="w-8 h-8 text-white/60" />
-                      </div>
-                      <div className="absolute top-2 right-2">
-                        <Badge className="bg-green-500/80 text-white border-0">
-                          Disponible
-                        </Badge>
-                      </div>
-                      <Button 
-                        size="sm" 
-                        variant="ghost"
-                        className="absolute top-2 left-2 p-2 bg-black/40 hover:bg-black/60 text-white"
-                      >
-                        <Heart className="w-4 h-4" />
-                      </Button>
-                    </div>
-
-                    {/* Experience Info */}
-                    <div className="space-y-3">
-                      <div>
-                        <h3 className="font-bold text-white text-lg mb-1 line-clamp-1">
-                          {experience.title}
-                        </h3>
-                        <p className="text-white/70 text-sm line-clamp-2">
-                          {experience.description}
-                        </p>
-                      </div>
-
-                      <div className="grid grid-cols-2 gap-3 text-xs">
-                        <div className="flex items-center space-x-2 text-white/60">
-                          <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
-                          <span>{experience.location}</span>
-                        </div>
-                        <div className="flex items-center space-x-2 text-white/60">
-                          <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-                          <span>{experience.duration}</span>
-                        </div>
-                      </div>
-
-                      <div className="flex justify-between items-center pt-3 border-t border-white/20">
-                        <div className="text-left">
-                          <p className="text-xs text-white/60">Desde</p>
-                          <p className="text-xl font-bold text-white">
-                            ${experience.adultPricePvp || experience.adultPriceNet || 'N/A'}
-                          </p>
-                        </div>
-                        <div className="flex space-x-2">
-                          <Button
-                            size="sm"
-                            variant="outline"
-                            className="border-white/30 text-white hover:bg-white/20"
-                            onClick={() => setLocation(`/experiencia/${experience.id}`)}
-                          >
-                            Ver más
-                          </Button>
-                          <Button
-                            size="sm"
-                            className="bg-green-600 hover:bg-green-700 text-white"
-                          >
-                            Reservar
-                          </Button>
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))
-        )}
+              ))}
+            </div>
+          </CardContent>
+        </Card>
       </div>
-
-      {typedExperiences.length === 0 && !experiencesLoading && (
-        <div className="text-center py-16">
-          <Star className="w-20 h-20 text-white/30 mx-auto mb-6" />
-          <h3 className="text-lg font-light text-white mb-3">No hay experiencias disponibles</h3>
-          <p className="text-white/60 px-4">Las empresas están creando nuevas experiencias. ¡Vuelve pronto!</p>
-        </div>
-      )}
     </div>
   );
 
