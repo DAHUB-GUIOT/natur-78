@@ -30,7 +30,7 @@ const Auth = () => {
 
   const [loginData, setLoginData] = useState({
     email: isEmpresas ? "dahub.tech@gmail.com" : "",
-    password: isEmpresas ? "dahub123" : ""
+    password: isEmpresas ? "12345678" : ""
   });
 
   const [registerData, setRegisterData] = useState({
