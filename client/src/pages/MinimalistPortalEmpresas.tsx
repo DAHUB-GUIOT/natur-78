@@ -4,7 +4,7 @@ import { useLocation } from "wouter";
 import { motion } from "framer-motion";
 import { 
   Map, Building2, Star, MessageCircle, Settings, User, Plus,
-  Search
+  Search, MapPin
 } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
 import { Button } from "@/components/ui/button";
@@ -448,6 +448,37 @@ const MinimalistPortalEmpresas = () => {
   const renderSettingsView = () => (
     <div className="p-4 space-y-6">
       <h2 className="text-xl font-light text-white mb-4">Configuración</h2>
+      
+      {/* Portal Navigation */}
+      <Card className="bg-white/10 backdrop-blur-sm border-white/20">
+        <CardContent className="p-6">
+          <h3 className="text-white font-semibold mb-4 flex items-center">
+            <div className="w-2 h-6 bg-blue-500 rounded-full mr-3"></div>
+            Navegación entre Portales
+          </h3>
+          <div className="space-y-3">
+            <Button 
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white h-12 flex items-center justify-center"
+              onClick={() => setLocation('/portal-empresas')}
+            >
+              <Building2 className="w-5 h-5 mr-2" />
+              Portal Empresas (Actual)
+            </Button>
+            <Button 
+              variant="outline" 
+              className="w-full border-green-500/50 text-green-400 hover:bg-green-500/10 h-12 flex items-center justify-center"
+              onClick={() => setLocation('/portal-viajeros')}
+            >
+              <MapPin className="w-5 h-5 mr-2" />
+              Cambiar a Portal Viajeros
+            </Button>
+          </div>
+          <p className="text-xs text-white/50 mt-3">
+            Usa el mismo usuario para acceder a ambos portales y ver diferentes perspectivas
+          </p>
+        </CardContent>
+      </Card>
+
       <Card className="bg-white/10 backdrop-blur-sm border-white/20">
         <CardContent className="p-6">
           <TwitterProfileSection />

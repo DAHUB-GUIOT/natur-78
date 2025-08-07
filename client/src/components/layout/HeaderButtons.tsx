@@ -62,6 +62,7 @@ export function HeaderButtons({
                         : 'bg-white/10 border-[#cad95e] text-[#cad95e] hover:bg-[#cad95e] hover:text-black'
                     }`}
                   >
+                    <Building2 className="w-4 h-4 mr-2" />
                     Portal Empresas
                   </Button>
                 </Link>
@@ -76,7 +77,8 @@ export function HeaderButtons({
                         : 'bg-white/10 border-[#cad95e] text-[#cad95e] hover:bg-[#cad95e] hover:text-black'
                     }`}
                   >
-                    Mapa Turismo
+                    <MapPin className="w-4 h-4 mr-2" />
+                    Portal Viajeros
                   </Button>
                 </Link>
               </>

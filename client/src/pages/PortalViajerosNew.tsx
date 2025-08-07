@@ -4,7 +4,7 @@ import { useLocation } from "wouter";
 import { motion } from "framer-motion";
 import { 
   Map, Heart, Star, MessageCircle, Settings, User, Calendar,
-  Search, TreePine, Plane
+  Search, TreePine, Plane, Building2, MapPin
 } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
 import { Button } from "@/components/ui/button";
@@ -267,6 +267,37 @@ const PortalViajerosNew = () => {
   const renderSettingsView = () => (
     <div className="p-4 space-y-6">
       <h2 className="text-xl font-light text-white mb-4">Configuración</h2>
+      
+      {/* Portal Navigation */}
+      <Card className="bg-white/10 backdrop-blur-sm border-white/20">
+        <CardContent className="p-6">
+          <h3 className="text-white font-semibold mb-4 flex items-center">
+            <div className="w-2 h-6 bg-green-500 rounded-full mr-3"></div>
+            Navegación entre Portales
+          </h3>
+          <div className="space-y-3">
+            <Button 
+              variant="outline" 
+              className="w-full border-blue-500/50 text-blue-400 hover:bg-blue-500/10 h-12 flex items-center justify-center"
+              onClick={() => setLocation('/portal-empresas')}
+            >
+              <Building2 className="w-5 h-5 mr-2" />
+              Cambiar a Portal Empresas
+            </Button>
+            <Button 
+              className="w-full bg-green-600 hover:bg-green-700 text-white h-12 flex items-center justify-center"
+              onClick={() => setLocation('/portal-viajeros')}
+            >
+              <MapPin className="w-5 h-5 mr-2" />
+              Portal Viajeros (Actual)
+            </Button>
+          </div>
+          <p className="text-xs text-white/50 mt-3">
+            Usa el mismo usuario para acceder a ambos portales y ver diferentes perspectivas
+          </p>
+        </CardContent>
+      </Card>
+
       <Card className="bg-white/10 backdrop-blur-sm border-white/20">
         <CardContent className="p-6">
           <div className="space-y-4">
