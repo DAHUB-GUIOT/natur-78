@@ -120,7 +120,7 @@ const AuthViajeros = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 dark:from-green-950 dark:to-blue-950 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-green-900 flex items-center justify-center p-4">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -132,50 +132,52 @@ const AuthViajeros = () => {
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-            className="inline-flex items-center justify-center w-16 h-16 bg-green-100 dark:bg-green-900 rounded-full mb-4"
+            className="inline-flex items-center justify-center w-16 h-16 bg-green-600/20 backdrop-blur-sm border border-green-500/30 rounded-full mb-4"
           >
-            <TreePine className="w-8 h-8 text-green-600 dark:text-green-400" />
+            <TreePine className="w-8 h-8 text-green-400" />
           </motion.div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+          <h1 className="text-3xl font-bold text-white mb-2">
             Portal Viajeros
           </h1>
-          <p className="text-gray-600 dark:text-gray-400">
+          <p className="text-white/70">
             Descubre experiencias sostenibles únicas
           </p>
         </div>
 
-        <Card className="backdrop-blur-sm bg-white/80 dark:bg-gray-900/80 border-0 shadow-xl">
+        <Card className="backdrop-blur-sm bg-black/40 border border-white/20 shadow-xl">
           <CardHeader>
-            <CardTitle className="text-center">Acceso Viajeros</CardTitle>
+            <CardTitle className="text-center text-white">Acceso Viajeros</CardTitle>
           </CardHeader>
           <CardContent>
             <Tabs defaultValue="login" className="w-full">
-              <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="login">Iniciar Sesión</TabsTrigger>
-                <TabsTrigger value="register">Registrarse</TabsTrigger>
+              <TabsList className="grid w-full grid-cols-2 bg-white/10 border-white/20">
+                <TabsTrigger value="login" className="text-white data-[state=active]:bg-green-600 data-[state=active]:text-white">Iniciar Sesión</TabsTrigger>
+                <TabsTrigger value="register" className="text-white data-[state=active]:bg-green-600 data-[state=active]:text-white">Registrarse</TabsTrigger>
               </TabsList>
               
               <TabsContent value="login" className="space-y-4">
                 <form onSubmit={handleLogin} className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="email">Email</Label>
+                    <Label htmlFor="email" className="text-white">Email</Label>
                     <Input
                       id="email"
                       name="email"
                       type="email"
                       placeholder="tu@email.com"
                       required
+                      className="bg-white/10 border-white/30 text-white placeholder:text-white/50"
                       data-testid="input-email-login"
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="password">Contraseña</Label>
+                    <Label htmlFor="password" className="text-white">Contraseña</Label>
                     <Input
                       id="password"
                       name="password"
                       type="password"
                       placeholder="••••••••"
                       required
+                      className="bg-white/10 border-white/30 text-white placeholder:text-white/50"
                       data-testid="input-password-login"
                     />
                   </div>
@@ -194,45 +196,49 @@ const AuthViajeros = () => {
                 <form onSubmit={handleRegister} className="space-y-4">
                   <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <Label htmlFor="firstName">Nombre</Label>
+                      <Label htmlFor="firstName" className="text-white">Nombre</Label>
                       <Input
                         id="firstName"
                         name="firstName"
                         placeholder="Juan"
                         required
+                        className="bg-white/10 border-white/30 text-white placeholder:text-white/50"
                         data-testid="input-firstName"
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="lastName">Apellido</Label>
+                      <Label htmlFor="lastName" className="text-white">Apellido</Label>
                       <Input
                         id="lastName"
                         name="lastName"
                         placeholder="Pérez"
                         required
+                        className="bg-white/10 border-white/30 text-white placeholder:text-white/50"
                         data-testid="input-lastName"
                       />
                     </div>
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="email-register">Email</Label>
+                    <Label htmlFor="email-register" className="text-white">Email</Label>
                     <Input
                       id="email-register"
                       name="email"
                       type="email"
                       placeholder="tu@email.com"
                       required
+                      className="bg-white/10 border-white/30 text-white placeholder:text-white/50"
                       data-testid="input-email-register"
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="password-register">Contraseña</Label>
+                    <Label htmlFor="password-register" className="text-white">Contraseña</Label>
                     <Input
                       id="password-register"
                       name="password"
                       type="password"
                       placeholder="••••••••"
                       required
+                      className="bg-white/10 border-white/30 text-white placeholder:text-white/50"
                       data-testid="input-password-register"
                     />
                   </div>
@@ -251,16 +257,16 @@ const AuthViajeros = () => {
             <div className="mt-6">
               <div className="relative">
                 <div className="absolute inset-0 flex items-center">
-                  <span className="w-full border-t" />
+                  <span className="w-full border-t border-white/30" />
                 </div>
                 <div className="relative flex justify-center text-xs uppercase">
-                  <span className="bg-background px-2 text-muted-foreground">O continúa con</span>
+                  <span className="bg-black/40 px-2 text-white/70">O continúa con</span>
                 </div>
               </div>
               <Button
                 onClick={handleGoogleAuth}
                 variant="outline"
-                className="w-full mt-4"
+                className="w-full mt-4 bg-white/10 border-white/30 text-white hover:bg-white/20"
                 data-testid="button-google-auth"
               >
                 <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24">
@@ -289,7 +295,7 @@ const AuthViajeros = () => {
               <Button
                 variant="ghost"
                 onClick={() => setLocation("/")}
-                className="text-sm text-gray-600 dark:text-gray-400"
+                className="text-sm text-white/70 hover:text-white hover:bg-white/10"
                 data-testid="link-back-home"
               >
                 ← Volver al inicio
@@ -299,7 +305,7 @@ const AuthViajeros = () => {
         </Card>
 
         <div className="mt-8 text-center">
-          <div className="flex items-center justify-center space-x-6 text-sm text-gray-500 dark:text-gray-400">
+          <div className="flex items-center justify-center space-x-6 text-sm text-white/50">
             <div className="flex items-center">
               <Map className="w-4 h-4 mr-2" />
               Mapa interactivo
