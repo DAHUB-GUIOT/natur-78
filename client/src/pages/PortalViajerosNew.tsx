@@ -254,95 +254,13 @@ const PortalViajerosNew = () => {
   );
 
   const renderProfileView = () => (
-    <div className="p-4 space-y-6 max-w-4xl mx-auto">
-      {/* Profile Header */}
+    <div className="p-4 space-y-6">
+      <h2 className="text-xl font-light text-white mb-4">Mi Perfil</h2>
       <Card className="bg-white/10 backdrop-blur-sm border-white/20">
         <CardContent className="p-6">
-          <div className="flex flex-col md:flex-row items-center md:items-start space-y-4 md:space-y-0 md:space-x-6">
-            <div className="relative">
-              <Avatar className="w-24 h-24">
-                <AvatarImage src={user?.profilePicture} />
-                <AvatarFallback className="bg-gradient-to-br from-green-500 to-blue-500 text-white text-2xl">
-                  {user?.firstName?.substring(0, 1) || 'V'}
-                </AvatarFallback>
-              </Avatar>
-              <div className="absolute -bottom-1 -right-1 w-8 h-8 bg-green-500 rounded-full border-4 border-white/20 flex items-center justify-center">
-                <div className="w-3 h-3 bg-white rounded-full"></div>
-              </div>
-            </div>
-            
-            <div className="flex-1 text-center md:text-left">
-              <h2 className="text-2xl font-bold text-white mb-2">
-                {user?.firstName} {user?.lastName}
-              </h2>
-              <p className="text-white/70 mb-3">{user?.email}</p>
-              <div className="flex flex-wrap justify-center md:justify-start gap-2 mb-4">
-                <Badge className="bg-green-500/20 text-green-400 border-green-500/30">
-                  ✓ Viajero Verificado
-                </Badge>
-                <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30">
-                  🌍 Eco-Friendly
-                </Badge>
-              </div>
-              <Button className="bg-green-600 hover:bg-green-700 text-white">
-                Editar Perfil
-              </Button>
-            </div>
-          </div>
+          <TwitterProfileSection />
         </CardContent>
       </Card>
-
-      {/* Travel Preferences */}
-      <Card className="bg-white/10 backdrop-blur-sm border-white/20">
-        <CardContent className="p-6">
-          <h3 className="font-semibold text-white mb-6 flex items-center">
-            <div className="w-2 h-6 bg-green-500 rounded-full mr-3"></div>
-            Preferencias de Viaje
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <p className="text-sm text-white/60 mb-1">Tipos de Experiencia Favoritos</p>
-              <div className="flex flex-wrap gap-2">
-                <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30">Naturaleza</Badge>
-                <Badge className="bg-green-500/20 text-green-400 border-green-500/30">Aventura</Badge>
-                <Badge className="bg-purple-500/20 text-purple-400 border-purple-500/30">Cultural</Badge>
-              </div>
-            </div>
-            <div>
-              <p className="text-sm text-white/60 mb-1">Presupuesto Promedio</p>
-              <p className="text-white">$50,000 - $150,000 COP</p>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Profile Statistics */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <Card className="bg-white/10 backdrop-blur-sm border-white/20">
-          <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-green-400 mb-1">0</div>
-            <div className="text-xs text-white/60">Experiencias</div>
-          </CardContent>
-        </Card>
-        <Card className="bg-white/10 backdrop-blur-sm border-white/20">
-          <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-blue-400 mb-1">0</div>
-            <div className="text-xs text-white/60">Reservas</div>
-          </CardContent>
-        </Card>
-        <Card className="bg-white/10 backdrop-blur-sm border-white/20">
-          <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-purple-400 mb-1">0</div>
-            <div className="text-xs text-white/60">Favoritos</div>
-          </CardContent>
-        </Card>
-        <Card className="bg-white/10 backdrop-blur-sm border-white/20">
-          <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-yellow-400 mb-1">5.0</div>
-            <div className="text-xs text-white/60">Rating</div>
-          </CardContent>
-        </Card>
-      </div>
     </div>
   );
 
@@ -351,7 +269,39 @@ const PortalViajerosNew = () => {
       <h2 className="text-xl font-light text-white mb-4">Configuración</h2>
       <Card className="bg-white/10 backdrop-blur-sm border-white/20">
         <CardContent className="p-6">
-          <TwitterProfileSection />
+          <div className="space-y-4">
+            <div>
+              <h3 className="text-white font-semibold mb-3">Preferencias de Viaje</h3>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="text-white/70 text-sm">Tipo de experiencias</label>
+                  <div className="mt-1 flex flex-wrap gap-2">
+                    <Badge className="bg-green-500/20 text-green-400">Ecoturismo</Badge>
+                    <Badge className="bg-blue-500/20 text-blue-400">Aventura</Badge>
+                    <Badge className="bg-purple-500/20 text-purple-400">Cultural</Badge>
+                  </div>
+                </div>
+                <div>
+                  <label className="text-white/70 text-sm">Presupuesto</label>
+                  <div className="mt-1 text-white">$50,000 - $200,000 COP</div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="border-t border-white/20 pt-4">
+              <h3 className="text-white font-semibold mb-3">Notificaciones</h3>
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-white/70">Nuevas experiencias</span>
+                  <div className="w-10 h-6 bg-green-600 rounded-full"></div>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-white/70">Mensajes</span>
+                  <div className="w-10 h-6 bg-green-600 rounded-full"></div>
+                </div>
+              </div>
+            </div>
+          </div>
         </CardContent>
       </Card>
     </div>
@@ -366,7 +316,7 @@ const PortalViajerosNew = () => {
       case "messages": return renderMessagesView();
       case "profile": return renderProfileView();
       case "settings": return renderSettingsView();
-      default: return renderMapView();
+      default: return renderExperienciasView(); // Changed default to experiencias for travelers
     }
   };
 
