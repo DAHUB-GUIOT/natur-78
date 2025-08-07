@@ -30,7 +30,14 @@ const AuthViajeros = () => {
         title: "¡Bienvenido!",
         description: "Has iniciado sesión correctamente",
       });
-      window.location.reload(); // Refresh to update auth state
+      
+      // Redirect based on user role, not URL type
+      const userRole = data.user?.role || 'viajero';
+      const redirectUrl = userRole === 'empresa' ? '/portal-empresas' : '/portal-viajeros';
+      
+      setTimeout(() => {
+        window.location.href = redirectUrl;
+      }, 1000);
     },
     onError: (error: any) => {
       toast({
@@ -66,7 +73,11 @@ const AuthViajeros = () => {
         title: "¡Cuenta creada!",
         description: "Te has registrado correctamente como viajero",
       });
-      window.location.reload(); // Refresh to update auth state
+      
+      // Redirect to viajeros portal after registration
+      setTimeout(() => {
+        window.location.href = '/portal-viajeros';
+      }, 1000);
     },
     onError: (error: any) => {
       toast({
@@ -116,7 +127,7 @@ const AuthViajeros = () => {
   };
 
   const handleGoogleAuth = () => {
-    window.location.href = "/api/auth/google?role=viajero";
+    window.location.href = "/api/auth/google";
   };
 
   return (
@@ -164,6 +175,7 @@ const AuthViajeros = () => {
                       name="email"
                       type="email"
                       placeholder="tu@email.com"
+                      defaultValue="dahub.tech@gmail.com"
                       required
                       className="bg-white/10 border-white/30 text-white placeholder:text-white/50"
                       data-testid="input-email-login"
@@ -176,6 +188,7 @@ const AuthViajeros = () => {
                       name="password"
                       type="password"
                       placeholder="••••••••"
+                      defaultValue="12345678"
                       required
                       className="bg-white/10 border-white/30 text-white placeholder:text-white/50"
                       data-testid="input-password-login"
