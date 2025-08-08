@@ -34,8 +34,9 @@ const AuthViajeros = () => {
       console.log("✅ Login successful, redirecting to Portal Viajeros");
       
       // Always redirect to Portal Viajeros from viajeros auth page
+      // Use location.replace to ensure proper session cookie handling
       setTimeout(() => {
-        window.location.href = '/portal-viajeros';
+        window.location.replace('/portal-viajeros');
       }, 1000);
     },
     onError: (error: any) => {
