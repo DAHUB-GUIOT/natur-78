@@ -32,10 +32,10 @@ app.use(session({
   saveUninitialized: true, // Changed to true to ensure session cookie is set
   name: 'sessionId',
   cookie: {
-    secure: true, // Replit uses HTTPS, so secure should be true
+    secure: false, // Set to false for development
     httpOnly: true,
-    maxAge: 24 * 60 * 60 * 1000, // 24 hours
-    sameSite: 'none', // Required for cross-origin cookies in Replit environment
+    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+    sameSite: 'lax', // Changed to lax for better compatibility
     domain: undefined // Let the browser determine the domain
   }
 }));
