@@ -125,6 +125,11 @@ export function setupGoogleAuth(app: Express) {
   // Google auth routes with better error handling
   app.get('/api/auth/google', (req, res, next) => {
     console.log('Initiating Google OAuth flow');
+    // Store the portal context in the session for later redirect
+    const referrer = req.get('Referer') || '';
+    const isViajeros = referrer.includes('/portal-viajeros/auth') || referrer.includes('/auth/viajeros');
+    (req.session as any).portalContext = isViajeros ? 'viajeros' : 'empresas';
+    
     passport.authenticate('google', { 
       scope: ['profile', 'email'],
       prompt: 'select_account'
@@ -150,9 +155,10 @@ export function setupGoogleAuth(app: Express) {
           </script>
         `);
       } else {
-        // Redirect based on user role
-        const user = req.user as any;
-        const redirectUrl = user?.role === 'empresa' ? '/portal-empresas?auth=success' : '/portal-viajeros?auth=success';
+        // Redirect based on the portal context from which OAuth was initiated
+        const portalContext = (req.session as any).portalContext || 'empresas';
+        const redirectUrl = portalContext === 'viajeros' ? '/portal-viajeros?auth=success' : '/portal-empresas?auth=success';
+        delete (req.session as any).portalContext; // Clean up session
         res.redirect(redirectUrl);
       }
     }

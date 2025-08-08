@@ -31,12 +31,9 @@ const AuthViajeros = () => {
         description: "Has iniciado sesión correctamente",
       });
       
-      // Redirect based on user role, not URL type
-      const userRole = data.user?.role || 'viajero';
-      const redirectUrl = userRole === 'empresa' ? '/portal-empresas' : '/portal-viajeros';
-      
+      // Always redirect to Portal Viajeros from viajeros auth page
       setTimeout(() => {
-        window.location.href = redirectUrl;
+        window.location.href = '/portal-viajeros';
       }, 1000);
     },
     onError: (error: any) => {

@@ -55,9 +55,8 @@ const Auth = () => {
         description: "Redirigiendo...",
       });
       
-      // Redirect based on user role, not URL type
-      const userRole = data.user?.role || 'viajero';
-      const redirectUrl = userRole === 'empresa' ? '/portal-empresas' : '/portal-viajeros';
+      // Redirect based on the current portal context
+      const redirectUrl = isEmpresas ? '/portal-empresas' : '/portal-viajeros';
       
       setTimeout(() => {
         window.location.href = redirectUrl;
