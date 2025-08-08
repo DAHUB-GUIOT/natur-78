@@ -62,6 +62,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       console.log("🔍 Auth check - Session ID:", req.sessionID);
       console.log("🔍 Auth check - Session userId:", req.session.userId);
       console.log("🔍 Auth check - req.user:", req.user);
+      console.log("🔍 Auth check - Headers:", req.headers.cookie);
       console.log("🔍 Auth check - Final userId:", userId);
       
       if (!userId) {
@@ -112,7 +113,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
       console.log("✅ Login successful - Setting session userId:", user.id);
       console.log("✅ Login successful - Session ID:", req.sessionID);
       
-      res.json({ user: { id: user.id, email: user.email } });
+      // Force session save to ensure persistence before responding
+      req.session.save((err) => {
+        if (err) {
+          console.error("❌ Session save error:", err);
+          return res.status(500).json({ error: "Session save failed" });
+        } else {
+          console.log("✅ Session saved successfully");
+          res.json({ user: { id: user.id, email: user.email } });
+        }
+      });
     } catch (error) {
       console.error("Login error:", error);
       res.status(500).json({ error: "Internal server error" });

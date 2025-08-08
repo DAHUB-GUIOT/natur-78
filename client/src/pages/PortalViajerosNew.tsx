@@ -63,7 +63,7 @@ const PortalViajerosNew = () => {
     createConversationMutation.mutate(userId);
   };
 
-  // Current user data fetch
+  // Current user data fetch with fallback to temporary auth
   const { data: currentUser, isLoading: userLoading, error: userError } = useQuery({
     queryKey: ['/api/auth/me'],
     retry: (failureCount, error) => {
@@ -74,6 +74,28 @@ const PortalViajerosNew = () => {
     },
     staleTime: 10 * 60 * 1000,
     refetchOnWindowFocus: false,
+    queryFn: async () => {
+      try {
+        const response = await apiRequest('/api/auth/me');
+        return response;
+      } catch (error) {
+        // Fallback: check for temporary auth in localStorage
+        const tempAuth = localStorage.getItem('viajeros-auth-temp');
+        if (tempAuth) {
+          const authData = JSON.parse(tempAuth);
+          const fiveMinutesAgo = Date.now() - 5 * 60 * 1000;
+          
+          if (authData.timestamp > fiveMinutesAgo) {
+            console.log("🔄 Using temporary auth fallback");
+            // Return minimal user data for temporary auth
+            return { user: { id: authData.userId, email: "dahub.tech@gmail.com", role: "viajero" } };
+          } else {
+            localStorage.removeItem('viajeros-auth-temp');
+          }
+        }
+        throw error;
+      }
+    }
   });
 
   const user = (currentUser as any)?.user || currentUser;

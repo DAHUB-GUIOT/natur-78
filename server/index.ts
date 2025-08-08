@@ -29,13 +29,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(session({
   secret: process.env.SESSION_SECRET || 'festival-natur-secret-key-2025',
   resave: false,
-  saveUninitialized: false,
+  saveUninitialized: true, // Changed to true to ensure session cookie is set
   name: 'sessionId',
   cookie: {
     secure: true, // Replit uses HTTPS, so secure should be true
     httpOnly: true,
     maxAge: 24 * 60 * 60 * 1000, // 24 hours
-    sameSite: 'none' // Required for cross-origin cookies in Replit environment
+    sameSite: 'none', // Required for cross-origin cookies in Replit environment
+    domain: undefined // Let the browser determine the domain
   }
 }));
 

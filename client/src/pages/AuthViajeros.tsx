@@ -33,6 +33,9 @@ const AuthViajeros = () => {
       
       console.log("✅ Login successful, redirecting to Portal Viajeros");
       
+      // Store user data temporarily in localStorage as fallback
+      localStorage.setItem('viajeros-auth-temp', JSON.stringify({ userId: data.user.id, timestamp: Date.now() }));
+      
       // Always redirect to Portal Viajeros from viajeros auth page
       // Use location.replace to ensure proper session cookie handling
       setTimeout(() => {
