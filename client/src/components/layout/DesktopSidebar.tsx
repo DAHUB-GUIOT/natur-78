@@ -14,7 +14,8 @@ import {
   ChevronLeft,
   ChevronRight,
   TreePine,
-  Globe
+  Globe,
+  MapPin
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -25,6 +26,7 @@ interface DesktopSidebarProps {
   onNavigation: (viewId: string) => void;
   navItems: Array<{id: string; label: string; icon: React.ComponentType<any>}>;
   portalType?: 'empresas' | 'viajeros';
+  showHeaderButtons?: boolean;
 }
 
 export function DesktopSidebar({ 
@@ -33,7 +35,8 @@ export function DesktopSidebar({
   activeView, 
   onNavigation, 
   navItems,
-  portalType = 'empresas'
+  portalType = 'empresas',
+  showHeaderButtons = false
 }: DesktopSidebarProps) {
   
   const portalConfig = {
@@ -117,11 +120,59 @@ export function DesktopSidebar({
                 </div>
               </div>
 
+              {/* Portal Navigation - Show when showHeaderButtons is true */}
+              {showHeaderButtons && (
+                <div className="desktop-nav-section">
+                  <h3 className="desktop-nav-section-title">Navegación Portal</h3>
+                  <div className="space-y-1">
+                    <button
+                      onClick={() => window.location.href = '/auth/empresas'}
+                      className="desktop-nav-item"
+                    >
+                      <Building2 className="desktop-nav-item-icon" />
+                      <span>Portal Empresas</span>
+                      <Globe className="w-3 h-3 ml-auto opacity-60" />
+                    </button>
+                    <button
+                      onClick={() => window.location.href = '/'}
+                      className="desktop-nav-item"
+                    >
+                      <TreePine className="desktop-nav-item-icon" />
+                      <span>Inicio</span>
+                      <Globe className="w-3 h-3 ml-auto opacity-60" />
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* Tickets Section - Always show */}
+              <div className="desktop-nav-section">
+                <h3 className="desktop-nav-section-title">Festival</h3>
+                <div className="space-y-1">
+                  <button
+                    onClick={() => window.location.href = '/tickets'}
+                    className="desktop-nav-item bg-yellow-400/10 border border-yellow-400/20 hover:bg-yellow-400/20"
+                  >
+                    <Ticket className="desktop-nav-item-icon text-yellow-400" />
+                    <span className="text-yellow-400">Entradas Festival</span>
+                    <Globe className="w-3 h-3 ml-auto opacity-60" />
+                  </button>
+                  <button
+                    onClick={() => window.location.href = '/agenda'}
+                    className="desktop-nav-item"
+                  >
+                    <Calendar className="desktop-nav-item-icon" />
+                    <span>Agenda</span>
+                    <Globe className="w-3 h-3 ml-auto opacity-60" />
+                  </button>
+                </div>
+              </div>
+
               {/* Quick Actions */}
               <div className="desktop-nav-section">
                 <h3 className="desktop-nav-section-title">Acceso Rápido</h3>
                 <div className="space-y-1">
-                  {quickActions.map((action) => (
+                  {quickActions.filter(action => action.id !== 'agenda' && action.id !== 'tickets').map((action) => (
                     <button
                       key={action.id}
                       onClick={() => {

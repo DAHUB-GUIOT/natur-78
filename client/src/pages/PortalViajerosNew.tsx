@@ -164,19 +164,24 @@ const PortalViajerosNew = () => {
   };
 
   const renderMapView = () => (
-    <div className="relative h-screen">
+    <div className="relative h-full w-full">
       {/* Full-screen map */}
       <div className="absolute inset-0">
         <InteractiveMap experiences={typedExperiences} />
       </div>
 
-      {/* User Flow Manager - Top overlay */}
-      <div className="absolute top-4 left-4 right-4 z-50">
+      {/* Mobile User Flow Manager - Top overlay */}
+      <div className="absolute top-4 left-4 right-4 z-50 lg:hidden">
         <UserFlowManager />
       </div>
 
-      {/* Welcome overlay */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-40 max-w-sm w-full mx-4">
+      {/* Desktop User Flow Manager - Top right */}
+      <div className="absolute top-4 right-4 z-50 hidden lg:block">
+        <UserFlowManager />
+      </div>
+
+      {/* Welcome overlay - Mobile positioned differently */}
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-40 max-w-sm w-full mx-4 lg:bottom-12 lg:right-12 lg:left-auto lg:transform-none lg:mx-0">
         <Card className="bg-black/80 backdrop-blur-sm border-white/20">
           <CardContent className="p-4 text-center">
             <TreePine className="w-8 h-8 text-green-400 mx-auto mb-3" />
@@ -208,19 +213,19 @@ const PortalViajerosNew = () => {
   );
 
   const renderExperienciasView = () => (
-    <div className="relative h-screen">
-      {/* Interactive Map for Experiences */}
+    <div className="relative h-full w-full">
+      {/* Interactive Map for Experiences - Full size */}
       <div className="absolute inset-0">
         <InteractiveMap 
           experiences={typedExperiences}
         />
       </div>
 
-      {/* Mobile-First Search Panel */}
-      <div className="absolute top-4 left-2 right-2 md:left-4 md:right-4 z-10">
+      {/* Mobile Search Panel */}
+      <div className="absolute top-4 left-2 right-2 z-10 lg:hidden">
         <Card className="mobile-card bg-black/60 backdrop-blur-sm border-white/20">
-          <CardContent className="mobile-p-3 md:p-4">
-            <div className="flex flex-col md:flex-row gap-3 md:gap-4">
+          <CardContent className="mobile-p-3">
+            <div className="flex gap-3">
               <div className="flex-1 relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/40 w-4 h-4" />
                 <Input
@@ -230,89 +235,93 @@ const PortalViajerosNew = () => {
                   className="mobile-input pl-10 bg-white/10 border-white/30 text-white placeholder:text-white/50"
                 />
               </div>
-              <Button className="mobile-btn bg-green-600 hover:bg-green-700 text-white px-4 md:px-6">
-                <TreePine className="w-4 h-4 mr-2" />
-                Filtrar
+              <Button className="mobile-btn bg-green-600 hover:bg-green-700 text-white">
+                <TreePine className="w-4 h-4" />
               </Button>
             </div>
           </CardContent>
         </Card>
       </div>
 
-      {/* Experiences List Below Map - Hidden on Mobile */}
-      <div className="absolute bottom-4 left-4 right-4 z-10 hidden md:block">
-        <Card className="bg-black/60 backdrop-blur-sm border-white/20 max-h-60 overflow-y-auto">
+      {/* Desktop Search Panel - Top right */}
+      <div className="absolute top-4 right-4 z-10 hidden lg:block">
+        <Card className="bg-black/60 backdrop-blur-sm border-white/20 min-w-[320px]">
           <CardContent className="p-4">
-            <h3 className="text-white font-semibold mb-3">Experiencias Destacadas</h3>
-            <div className="space-y-2">
-              {typedDirectoryUsers.slice(0, 3).map((experience: any) => (
-                <div key={experience.id} className="flex items-center space-x-3 p-2 bg-white/5 rounded-lg hover:bg-white/10 transition-colors cursor-pointer">
-                  <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-blue-500 rounded-lg flex items-center justify-center">
-                    <Star className="w-5 h-5 text-white" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-white font-medium text-sm truncate">{experience.companyName || 'Experiencia Sostenible'}</p>
-                    <p className="text-white/60 text-xs truncate">{experience.city || 'Bogotá, Colombia'}</p>
-                  </div>
-                  <Button size="sm" className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 text-xs">
-                    Ver
-                  </Button>
-                </div>
-              ))}
+            <div className="flex gap-3 mb-3">
+              <div className="flex-1 relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/40 w-4 h-4" />
+                <Input
+                  placeholder="Buscar experiencias..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="pl-10 bg-white/10 border-white/30 text-white placeholder:text-white/50"
+                />
+              </div>
+              <Button size="sm" className="bg-green-600 hover:bg-green-700">
+                <Search className="w-4 h-4" />
+              </Button>
             </div>
+            <Button className="w-full bg-green-600/20 hover:bg-green-600/30 text-white border border-green-600/40">
+              <TreePine className="w-4 h-4 mr-2" />
+              Filtros Avanzados
+            </Button>
           </CardContent>
         </Card>
       </div>
+
+
     </div>
   );
 
   const renderReservasView = () => (
-    <div className="mobile-content space-y-6 max-w-4xl mx-auto">
-      <h2 className="mobile-text-2xl font-bold text-white">Mis Reservas</h2>
-      <div className="text-center py-16">
-        <Calendar className="w-16 h-16 md:w-20 md:h-20 text-white/30 mx-auto mb-6" />
-        <h3 className="mobile-text-lg font-light text-white mb-3">No tienes reservas aún</h3>
-        <p className="text-white/60 mb-8 mobile-p-4">Explora experiencias increíbles y haz tu primera reserva</p>
-        <Button 
-          className="mobile-btn bg-green-600 hover:bg-green-700 text-white"
-          onClick={() => setActiveView('experiencias')}
-        >
-          Explorar Experiencias
-        </Button>
+    <div className="h-full w-full flex flex-col bg-gradient-to-br from-gray-900 via-black to-green-900 p-4 lg:p-8">
+      <h2 className="text-2xl lg:text-3xl font-bold text-white mb-8">Mis Reservas</h2>
+      <div className="flex-1 flex items-center justify-center">
+        <div className="text-center max-w-md">
+          <Calendar className="w-20 h-20 text-white/30 mx-auto mb-6" />
+          <h3 className="text-xl font-light text-white mb-3">No tienes reservas aún</h3>
+          <p className="text-white/60 mb-8">Explora experiencias increíbles y haz tu primera reserva</p>
+          <Button 
+            className="bg-green-600 hover:bg-green-700 text-white px-8 py-3"
+            onClick={() => setActiveView('experiencias')}
+          >
+            Explorar Experiencias
+          </Button>
+        </div>
       </div>
     </div>
   );
 
   const renderFavoritosView = () => (
-    <div className="p-4 space-y-6 max-w-4xl mx-auto">
-      <h2 className="text-2xl font-bold text-white">Experiencias Favoritas</h2>
-      <div className="text-center py-16">
-        <Heart className="w-20 h-20 text-white/30 mx-auto mb-6" />
-        <h3 className="text-lg font-light text-white mb-3">No tienes favoritos aún</h3>
-        <p className="text-white/60 mb-8 px-4">Marca experiencias como favoritas para encontrarlas fácilmente</p>
-        <Button 
-          className="bg-green-600 hover:bg-green-700 text-white"
-          onClick={() => setActiveView('experiencias')}
-        >
-          Explorar Experiencias
-        </Button>
+    <div className="h-full w-full flex flex-col bg-gradient-to-br from-gray-900 via-black to-green-900 p-4 lg:p-8">
+      <h2 className="text-2xl lg:text-3xl font-bold text-white mb-8">Experiencias Favoritas</h2>
+      <div className="flex-1 flex items-center justify-center">
+        <div className="text-center max-w-md">
+          <Heart className="w-20 h-20 text-white/30 mx-auto mb-6" />
+          <h3 className="text-xl font-light text-white mb-3">No tienes favoritos aún</h3>
+          <p className="text-white/60 mb-8">Marca experiencias como favoritas para encontrarlas fácilmente</p>
+          <Button 
+            className="bg-green-600 hover:bg-green-700 text-white px-8 py-3"
+            onClick={() => setActiveView('experiencias')}
+          >
+            Explorar Experiencias
+          </Button>
+        </div>
       </div>
     </div>
   );
 
   const renderMessagesView = () => (
-    <div className="h-full bg-transparent">
-      <div className="h-[calc(100vh-64px)] md:h-[calc(100vh-80px)]">
-        <WhatsAppChat />
-      </div>
+    <div className="h-full w-full bg-transparent">
+      <WhatsAppChat />
     </div>
   );
 
   const renderProfileView = () => (
-    <div className="mobile-content space-y-6">
-      <h2 className="mobile-text-xl font-light text-white mb-4">Mi Perfil</h2>
-      <Card className="mobile-card bg-white/10 backdrop-blur-sm border-white/20">
-        <CardContent className="mobile-p-4 md:p-6">
+    <div className="h-full w-full bg-gradient-to-br from-gray-900 via-black to-green-900 p-4 lg:p-8 overflow-auto">
+      <h2 className="text-2xl lg:text-3xl font-light text-white mb-6">Mi Perfil</h2>
+      <Card className="bg-white/10 backdrop-blur-sm border-white/20 max-w-4xl">
+        <CardContent className="p-6">
           <TwitterProfileSection />
         </CardContent>
       </Card>
@@ -320,14 +329,15 @@ const PortalViajerosNew = () => {
   );
 
   const renderSettingsView = () => (
-    <div className="p-4 space-y-6">
-      <h2 className="text-xl font-light text-white mb-4">Configuración</h2>
+    <div className="h-full w-full bg-gradient-to-br from-gray-900 via-black to-green-900 p-4 lg:p-8 overflow-auto">
+      <h2 className="text-2xl lg:text-3xl font-light text-white mb-6">Configuración</h2>
       
       {/* Portal Navigation */}
-      <Card className="bg-white/10 backdrop-blur-sm border-white/20">
-        <CardContent className="p-6">
-          <h3 className="text-white font-semibold mb-4 flex items-center">
-            <div className="w-2 h-6 bg-green-500 rounded-full mr-3"></div>
+      <div className="space-y-6 max-w-2xl">
+        <Card className="bg-white/10 backdrop-blur-sm border-white/20">
+          <CardContent className="p-6">
+            <h3 className="text-white font-semibold mb-4 flex items-center">
+              <div className="w-2 h-6 bg-green-500 rounded-full mr-3"></div>
             Navegación entre Portales
           </h3>
           <div className="space-y-3">
@@ -390,6 +400,7 @@ const PortalViajerosNew = () => {
           </div>
         </CardContent>
       </Card>
+      </div>
     </div>
   );
 
@@ -424,15 +435,18 @@ const PortalViajerosNew = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-green-900">
-      <HeaderButtons 
-        showPortalButtons={false} 
-        showPortalEmpresasNav={true}
-        navItems={navItems}
-        activeView={activeView}
-        onNavigation={handleNavigation}
-      />
+      {/* Mobile only HeaderButtons */}
+      <div className="lg:hidden">
+        <HeaderButtons 
+          showPortalButtons={false} 
+          showPortalEmpresasNav={true}
+          navItems={navItems}
+          activeView={activeView}
+          onNavigation={handleNavigation}
+        />
+      </div>
       
-      {/* Desktop Sidebar */}
+      {/* Desktop Sidebar with HeaderButtons integrated */}
       <DesktopSidebar
         isOpen={sidebarOpen}
         onToggle={() => setSidebarOpen(!sidebarOpen)}
@@ -440,17 +454,18 @@ const PortalViajerosNew = () => {
         onNavigation={handleNavigation}
         navItems={navItems}
         portalType="viajeros"
+        showHeaderButtons={true}
       />
 
-      {/* Main Content with Desktop Sidebar Support */}
-      <div className={`mobile-content-full ${sidebarOpen ? 'lg:desktop-main-content' : 'lg:desktop-main-content lg:sidebar-hidden'}`}>
-        <main className={(activeView === 'map' || activeView === 'experiencias') ? 'mobile-map' : 'mobile-content'}>
+      {/* Full-screen Main Content */}
+      <div className={`fixed inset-0 ${sidebarOpen ? 'lg:pl-[200px]' : 'lg:pl-[60px]'} transition-all duration-300`}>
+        <main className="h-full w-full">
           <motion.div
             key={activeView}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.2 }}
-            className={(activeView === 'map' || activeView === 'experiencias') ? 'h-full mobile-fade-in' : 'min-h-screen bg-gradient-to-br from-gray-900 via-black to-blue-900 mobile-fade-in'}
+            className="h-full w-full"
           >
             {renderContent()}
           </motion.div>
