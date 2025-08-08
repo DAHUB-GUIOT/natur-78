@@ -4,7 +4,9 @@ import { useLocation } from "wouter";
 import { motion } from "framer-motion";
 import { 
   Map, Heart, Star, MessageCircle, Settings, User, Calendar,
-  Search, TreePine, Plane, Building2, MapPin
+  Search, TreePine, Plane, Building2, MapPin, Globe, Hotel, 
+  Utensils, Car, GraduationCap, Smartphone, Handshake, Leaf,
+  Camera, Coffee, Waves, Mountain
 } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
 import { Button } from "@/components/ui/button";
@@ -26,6 +28,36 @@ const PortalViajerosNew = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true); // Desktop sidebar state
   const [, setLocation] = useLocation();
   const queryClient = useQueryClient();
+
+  // Enhanced category and subcategory icon mapping for traveler portal
+  const getCategoryIcon = (category: string) => {
+    switch (category?.toLowerCase()) {
+      case 'agencias u operadores turísticos': return '🏢';
+      case 'alojamientos sostenibles': return '🏨';
+      case 'gastronomía sostenible': return '🍽️';
+      case 'movilidad y transporte ecológico': return '🚗';
+      case 'ong y fundaciones': return '❤️';
+      case 'educación y sensibilización ambiental': return '🎓';
+      case 'tecnología para el turismo sostenible': return '📱';
+      case 'aliados y patrocinadores': return '🤝';
+      default: return '🌱';
+    }
+  };
+
+  const getSubcategoryIcon = (subcategory: string) => {
+    const subcat = subcategory?.toLowerCase();
+    if (subcat?.includes('ecoturismo')) return '🌿';
+    if (subcat?.includes('aventura')) return '⛰️';
+    if (subcat?.includes('cultural')) return '🏛️';
+    if (subcat?.includes('gastronomico')) return '👨‍🍳';
+    if (subcat?.includes('educativo')) return '📚';
+    if (subcat?.includes('wellness')) return '🧘';
+    if (subcat?.includes('fotografia')) return '📸';
+    if (subcat?.includes('naturaleza')) return '🦋';
+    if (subcat?.includes('playa')) return '🏖️';
+    if (subcat?.includes('montaña')) return '🏔️';
+    return '⭐';
+  };
 
   // Navigation items for traveler portal
   const navItems = [

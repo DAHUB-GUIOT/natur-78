@@ -4,7 +4,9 @@ import { useLocation } from "wouter";
 import { motion } from "framer-motion";
 import { 
   Map, Building2, Star, MessageCircle, Settings, User, Plus,
-  Search, MapPin
+  Search, MapPin, Globe, Hotel, Utensils, Car, Heart, 
+  GraduationCap, Smartphone, Handshake, Leaf, TreePine,
+  Plane, Camera, Coffee, Waves, Mountain
 } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
 import { Button } from "@/components/ui/button";
@@ -27,6 +29,36 @@ const MinimalistPortalEmpresas = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true); // Desktop sidebar state
   const [, setLocation] = useLocation();
   const queryClient = useQueryClient();
+
+  // Category and subcategory icon mapping
+  const getCategoryIcon = (category: string) => {
+    switch (category?.toLowerCase()) {
+      case 'agencias u operadores turísticos': return '🏢';
+      case 'alojamientos sostenibles': return '🏨';
+      case 'gastronomía sostenible': return '🍽️';
+      case 'movilidad y transporte ecológico': return '🚗';
+      case 'ong y fundaciones': return '❤️';
+      case 'educación y sensibilización ambiental': return '🎓';
+      case 'tecnología para el turismo sostenible': return '📱';
+      case 'aliados y patrocinadores': return '🤝';
+      default: return '🌱';
+    }
+  };
+
+  const getSubcategoryIcon = (subcategory: string) => {
+    const subcat = subcategory?.toLowerCase();
+    if (subcat?.includes('ecoturismo')) return '🌿';
+    if (subcat?.includes('aventura')) return '⛰️';
+    if (subcat?.includes('cultural')) return '🏛️';
+    if (subcat?.includes('gastronomico')) return '👨‍🍳';
+    if (subcat?.includes('educativo')) return '📚';
+    if (subcat?.includes('wellness')) return '🧘';
+    if (subcat?.includes('fotografia')) return '📸';
+    if (subcat?.includes('naturaleza')) return '🦋';
+    if (subcat?.includes('playa')) return '🏖️';
+    if (subcat?.includes('montaña')) return '🏔️';
+    return '⭐';
+  };
 
   // Create or get conversation mutation
   const createConversationMutation = useMutation({
@@ -142,7 +174,7 @@ const MinimalistPortalEmpresas = () => {
             >
               <Card className="bg-white/10 backdrop-blur-sm border-white/20 hover:bg-white/15 transition-all duration-300 hover:scale-105 hover:shadow-2xl">
                 <CardContent className="p-6">
-                  {/* Company Header */}
+                  {/* Enhanced Company Header */}
                   <div className="flex items-start space-x-4 mb-4">
                     <div className="relative">
                       <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-green-500 rounded-xl flex items-center justify-center text-white font-bold text-lg shadow-lg">
@@ -153,28 +185,46 @@ const MinimalistPortalEmpresas = () => {
                       </div>
                     </div>
                     <div className="flex-1 min-w-0">
-                      <h3 className="font-bold text-white text-lg truncate">
+                      <h3 className="font-bold text-white text-lg truncate mb-2">
                         {company.companyName || `${company.firstName} ${company.lastName}`}
                       </h3>
-                      <p className="text-white/70 text-sm">{company.category || 'Turismo Sostenible'}</p>
-                      <div className="flex items-center space-x-2 mt-1">
-                        <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30 text-xs px-2 py-0.5">
+                      
+                      {/* Enhanced Subcategory Badges with Symbols */}
+                      <div className="flex flex-wrap gap-1 mb-2">
+                        {company.category && (
+                          <Badge variant="outline" className="text-green-400 border-green-400/50 bg-green-400/10 text-xs px-2 py-1">
+                            <span className="mr-1">{getCategoryIcon(company.category)}</span>
+                            {company.category.length > 20 ? company.category.substring(0, 20) + '...' : company.category}
+                          </Badge>
+                        )}
+                        {company.subcategory && (
+                          <Badge variant="outline" className="text-blue-400 border-blue-400/50 bg-blue-400/10 text-xs px-2 py-1">
+                            <span className="mr-1">{getSubcategoryIcon(company.subcategory)}</span>
+                            {company.subcategory}
+                          </Badge>
+                        )}
+                        <Badge variant="outline" className="text-yellow-400 border-yellow-400/50 bg-yellow-400/10 text-xs px-2 py-1">
+                          <span className="mr-1">✓</span>
                           Verificado
                         </Badge>
                       </div>
                     </div>
                   </div>
 
-                  {/* Company Info */}
+                  {/* Enhanced Company Info */}
                   <div className="space-y-3 mb-4">
                     <p className="text-white/80 text-sm line-clamp-2 leading-relaxed">
-                      {company.description || 'Empresa especializada en experiencias de turismo sostenible y responsable.'}
+                      {company.companyDescription || company.description || 'Empresa especializada en experiencias de turismo sostenible y responsable.'}
                     </p>
                     
-                    <div className="grid grid-cols-1 gap-3 text-xs">
+                    <div className="flex items-center justify-between text-xs">
                       <div className="flex items-center space-x-2 text-white/60">
-                        <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
-                        <span>{company.location || 'Bogotá, Colombia'}</span>
+                        <MapPin className="w-3 h-3" />
+                        <span>{company.location || 'Colombia'}</span>
+                      </div>
+                      <div className="flex items-center space-x-2 text-white/60">
+                        <Globe className="w-3 h-3" />
+                        <span>Portal NATUR</span>
                       </div>
                     </div>
                   </div>
