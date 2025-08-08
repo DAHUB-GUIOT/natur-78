@@ -71,14 +71,15 @@ Preferred communication style: Simple, everyday language.
 
 ## Recent Implementation (2025-08-08)
 
-### Desktop Navigation Enhancement with Glassmorphism Sidebar
-Successfully implemented advanced desktop navigation system:
+### Portal Empresas UI Optimization with Compact Sidebar
+Successfully implemented ultra-compact sidebar design with full-page map:
 
-1. **Glassmorphism Sidebar**: Added transparent sidebar with white fonts and blur effects for desktop
-2. **Responsive Design**: Mobile maintains hamburger menu, desktop shows elegant sidebar
-3. **Enhanced Company Cards**: Removed employee counts, added subcategory badges with symbols
-4. **Badge System**: Dynamic icons for categories (🏢 Agencias, 🏨 Alojamientos, 🍽️ Gastronomía, etc.)
-5. **Cross-Portal Consistency**: Applied improvements to both Portal Empresas and Portal Viajeros
+1. **Ultra-Compact Sidebar**: Reduced from 280px to 200px width with collapsible design (60px when collapsed)
+2. **Full-Screen Map**: Map view now uses full viewport height with absolute positioning for immersive experience
+3. **Enhanced Desktop/Mobile Differentiation**: Clear separation between mobile hamburger navigation and desktop sidebar
+4. **Green-Only Color Scheme**: Completely removed all blue accents, replaced with green gradients throughout interface
+5. **Improved Performance**: Optimized sidebar toggle animations and full-page map rendering
+6. **Responsive Breakpoints**: Better mobile-first design with enhanced touch-friendly interfaces
 
 ### Complete Platform Optimization (2025-08-07)
 Successfully optimized the entire platform for production:

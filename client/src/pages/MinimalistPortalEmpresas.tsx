@@ -124,7 +124,7 @@ const MinimalistPortalEmpresas = () => {
   };
 
   const renderMapView = () => (
-    <div className="absolute inset-0">
+    <div className="absolute inset-0 w-full h-full overflow-hidden">
       <InteractiveMap />
     </div>
   );
@@ -428,13 +428,13 @@ const MinimalistPortalEmpresas = () => {
               <div>
                 <p className="text-sm text-white/60 mb-1">Redes Sociales</p>
                 <div className="flex space-x-2 mt-2">
-                  <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white text-xs cursor-pointer hover:bg-blue-700">
+                  <div className="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center text-white text-xs cursor-pointer hover:bg-green-700">
                     F
                   </div>
-                  <div className="w-8 h-8 bg-blue-400 rounded-full flex items-center justify-center text-white text-xs cursor-pointer hover:bg-blue-500">
+                  <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white text-xs cursor-pointer hover:bg-green-600">
                     T
                   </div>
-                  <div className="w-8 h-8 bg-pink-500 rounded-full flex items-center justify-center text-white text-xs cursor-pointer hover:bg-pink-600">
+                  <div className="w-8 h-8 bg-green-400 rounded-full flex items-center justify-center text-white text-xs cursor-pointer hover:bg-green-500">
                     I
                   </div>
                 </div>
@@ -455,22 +455,22 @@ const MinimalistPortalEmpresas = () => {
             <div>
               <div className="flex justify-between items-center mb-2">
                 <span className="text-white/70">Completitud del Perfil</span>
-                <span className="text-blue-400 font-semibold">85%</span>
+                <span className="text-green-400 font-semibold">85%</span>
               </div>
               <div className="w-full bg-white/10 rounded-full h-3">
-                <div className="bg-gradient-to-r from-blue-500 to-blue-600 h-3 rounded-full transition-all duration-500" style={{width: '85%'}}></div>
+                <div className="bg-gradient-to-r from-green-500 to-green-600 h-3 rounded-full transition-all duration-500" style={{width: '85%'}}></div>
               </div>
               <p className="text-xs text-white/50 mt-2">Agrega más información para mejorar tu visibilidad</p>
             </div>
             
             <div className="flex flex-wrap gap-3">
-              <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30 px-3 py-1">
+              <Badge className="bg-green-500/20 text-green-400 border-green-500/30 px-3 py-1">
                 ✓ Verificado
               </Badge>
-              <Badge className="bg-green-500/20 text-green-400 border-green-500/30 px-3 py-1">
+              <Badge className="bg-green-600/20 text-green-300 border-green-600/30 px-3 py-1">
                 ✓ Activo
               </Badge>
-              <Badge className="bg-yellow-500/20 text-yellow-400 border-yellow-500/30 px-3 py-1">
+              <Badge className="bg-green-400/20 text-green-200 border-green-400/30 px-3 py-1">
                 ⏳ Perfil Básico
               </Badge>
             </div>
@@ -479,15 +479,15 @@ const MinimalistPortalEmpresas = () => {
               <h4 className="text-white font-medium mb-3">Próximos Pasos Sugeridos:</h4>
               <ul className="space-y-2 text-sm text-white/70">
                 <li className="flex items-center">
-                  <div className="w-2 h-2 bg-blue-400 rounded-full mr-3"></div>
+                  <div className="w-2 h-2 bg-green-400 rounded-full mr-3"></div>
                   Agregar fotos de alta calidad de tus experiencias
                 </li>
                 <li className="flex items-center">
-                  <div className="w-2 h-2 bg-blue-400 rounded-full mr-3"></div>
+                  <div className="w-2 h-2 bg-green-400 rounded-full mr-3"></div>
                   Completar descripción detallada de servicios
                 </li>
                 <li className="flex items-center">
-                  <div className="w-2 h-2 bg-blue-400 rounded-full mr-3"></div>
+                  <div className="w-2 h-2 bg-green-400 rounded-full mr-3"></div>
                   Obtener certificaciones de sostenibilidad
                 </li>
               </ul>
@@ -506,12 +506,12 @@ const MinimalistPortalEmpresas = () => {
       <Card className="bg-white/10 backdrop-blur-sm border-white/20">
         <CardContent className="p-6">
           <h3 className="text-white font-semibold mb-4 flex items-center">
-            <div className="w-2 h-6 bg-blue-500 rounded-full mr-3"></div>
+            <div className="w-2 h-6 bg-green-500 rounded-full mr-3"></div>
             Navegación entre Portales
           </h3>
           <div className="space-y-3">
             <Button 
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white h-12 flex items-center justify-center"
+              className="w-full bg-green-600 hover:bg-green-700 text-white h-12 flex items-center justify-center"
               onClick={() => setLocation('/portal-empresas')}
             >
               <Building2 className="w-5 h-5 mr-2" />
@@ -519,7 +519,7 @@ const MinimalistPortalEmpresas = () => {
             </Button>
             <Button 
               variant="outline" 
-              className="w-full border-green-500/50 text-green-400 hover:bg-green-500/10 h-12 flex items-center justify-center"
+              className="w-full border-green-400/50 text-green-300 hover:bg-green-400/10 h-12 flex items-center justify-center"
               onClick={() => setLocation('/portal-viajeros')}
             >
               <MapPin className="w-5 h-5 mr-2" />
@@ -573,32 +573,98 @@ const MinimalistPortalEmpresas = () => {
         onNavigation={handleNavigation}
       />
       
-      {/* Desktop Sidebar */}
-      <DesktopSidebar
-        isOpen={sidebarOpen}
-        onToggle={() => setSidebarOpen(!sidebarOpen)}
-        activeView={activeView}
-        onNavigation={handleNavigation}
-        navItems={navItems}
-        portalType="empresas"
-      />
-
-      {/* Main Content with Desktop Sidebar Support */}
-      <div className={`mobile-content-full ${sidebarOpen ? 'lg:desktop-main-content' : 'lg:desktop-main-content lg:sidebar-hidden'}`}>
-        <main className={activeView === 'map' ? 'mobile-map' : 'mobile-content'}>
-          <motion.div
-            key={activeView}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.2 }}
-            className={activeView === 'map' ? 'h-full mobile-fade-in' : 'min-h-screen bg-gradient-to-br from-gray-900 via-black to-blue-900 mobile-fade-in'}
-          >
-            {renderContent()}
-          </motion.div>
-        </main>
+      {/* Mobile View */}
+      <div className="lg:hidden pt-20">
+        {renderContent()}
       </div>
 
-      {/* Mobile navigation now handled by HeaderButtons */}
+      {/* Desktop View with Ultra-Compact Sidebar */}
+      <div className="hidden lg:flex h-screen pt-20">
+        {/* Compact Sidebar */}
+        <div className={`desktop-sidebar ${!sidebarOpen ? 'collapsed' : ''} transition-all duration-300`}>
+          <div className="flex flex-col h-full">
+            {/* Compact Header */}
+            <div className="flex items-center justify-between mb-4 pb-3 border-b border-white/10">
+              <div className={`${!sidebarOpen ? 'hidden' : 'block'}`}>
+                <h2 className="text-sm font-bold text-green-400 uppercase tracking-wide">Portal</h2>
+                <p className="text-xs text-white/60">Empresas</p>
+              </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setSidebarOpen(!sidebarOpen)}
+                className="h-6 w-6 p-0 hover:bg-white/10"
+              >
+                <span className="text-white text-xs">{sidebarOpen ? '←' : '→'}</span>
+              </Button>
+            </div>
+
+            {/* Compact Navigation */}
+            <div className="flex-1 space-y-1">
+              {[
+                { id: 'map', icon: '🗺️', label: 'Mapa', desc: 'Vista principal' },
+                { id: 'profile', icon: '👤', label: 'Perfil', desc: 'Mi información' },
+                { id: 'network', icon: '🏢', label: 'Red', desc: 'Empresas' },
+                { id: 'experiences', icon: '✨', label: 'Experiencias', desc: 'Gestionar' },
+                { id: 'messages', icon: '💬', label: 'Mensajes', desc: 'Chat' },
+                { id: 'settings', icon: '⚙️', label: 'Configuración', desc: 'Ajustes' }
+              ].map((item) => (
+                <button
+                  key={item.id}
+                  onClick={() => setActiveView(item.id)}
+                  className={`
+                    w-full flex items-center gap-3 p-2 rounded-lg transition-all duration-200
+                    ${activeView === item.id 
+                      ? 'bg-green-500/20 text-green-400 border-l-2 border-green-400' 
+                      : 'text-white/80 hover:bg-white/10 hover:text-green-400'
+                    }
+                  `}
+                >
+                  <span className="text-sm">{item.icon}</span>
+                  <div className={`${!sidebarOpen ? 'hidden' : 'block'} flex-1`}>
+                    <div className="text-xs font-medium text-left">{item.label}</div>
+                    <div className="text-xs text-white/50 text-left">{item.desc}</div>
+                  </div>
+                </button>
+              ))}
+            </div>
+
+            {/* User Flow Progress */}
+            <div className={`${!sidebarOpen ? 'hidden' : 'block'} mt-auto pt-3 border-t border-white/10`}>
+              <div className="text-xs text-white/60 mb-2">Progreso</div>
+              <div className="bg-white/10 rounded-full h-1.5">
+                <div className="bg-green-400 h-1.5 rounded-full w-3/4"></div>
+              </div>
+              <div className="text-xs text-white/50 mt-1">75% completado</div>
+            </div>
+          </div>
+        </div>
+        
+        {/* Full-Screen Main Content */}
+        <div className={`flex-1 h-full overflow-hidden transition-all duration-300 relative ${
+          !sidebarOpen ? 'ml-15' : 'ml-0'
+        }`}>
+          {renderContent()}
+        </div>
+      </div>
+
+      {/* WhatsApp Chat Integration */}
+      <WhatsAppChat />
+      
+      {/* User Flow Manager */}
+      <UserFlowManager />
+
+      {/* Experience Form Sheet */}
+      <Sheet open={showExperienceForm} onOpenChange={setShowExperienceForm}>
+        <SheetContent side="right" className="w-full sm:max-w-2xl p-0 bg-gradient-to-br from-gray-900 via-black to-green-900 border-l border-white/20">
+          <SheetHeader className="p-6 border-b border-white/20">
+            <SheetTitle className="text-white font-light">Crear Nueva Experiencia</SheetTitle>
+          </SheetHeader>
+          <div className="p-6">
+            <ExperienceForm onSuccess={() => setShowExperienceForm(false)} />
+          </div>
+        </SheetContent>
+      </Sheet>
     </div>
   );
 };

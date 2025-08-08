@@ -122,6 +122,56 @@ body {
     border-bottom: 2px solid rgba(202, 217, 94, 0.2);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   }
+
+  /* Compact Desktop Sidebar */
+  .desktop-sidebar {
+    position: fixed;
+    top: 80px;
+    left: 0;
+    width: 200px;
+    height: calc(100vh - 80px);
+    background: rgba(10, 26, 10, 0.95);
+    backdrop-filter: blur(40px);
+    border-right: 2px solid rgba(202, 217, 94, 0.25);
+    padding: 1rem 0.75rem;
+    overflow-y: auto;
+    z-index: 40;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 6px 0 30px rgba(0, 0, 0, 0.4);
+    transition: all 0.3s ease;
+  }
+
+  .desktop-sidebar.collapsed {
+    width: 60px;
+  }
+
+  .desktop-sidebar.collapsed .sidebar-text {
+    display: none;
+  }
+
+  /* Full-page map styles */
+  .map-container-full {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  /* Enhanced mobile differentiation */
+  @media (max-width: 1023px) {
+    .mobile-content {
+      padding: 1rem;
+      min-height: calc(100vh - 160px);
+    }
+    
+    .mobile-map {
+      height: calc(100vh - 80px);
+      position: relative;
+    }
+  }
 }
 
 /* Desktop navigation enhancements with glassmorphism sidebar */
@@ -253,14 +303,31 @@ body {
     opacity: 1;
   }
   
-  /* Content area adjustment for sidebar */
+  /* Content area adjustment for compact sidebar */
   .desktop-main-content {
-    margin-left: 280px;
+    margin-left: 200px;
     transition: all 0.3s ease;
   }
   
   .desktop-main-content.sidebar-hidden {
     margin-left: 0;
+  }
+
+  .desktop-main-content.sidebar-collapsed {
+    margin-left: 60px;
+  }
+
+  /* Remove duplicate sidebar styles from older implementation */
+  .desktop-sidebar-content,
+  .desktop-sidebar-header,
+  .desktop-sidebar-title,
+  .desktop-sidebar-subtitle,
+  .desktop-nav-section,
+  .desktop-nav-section-title,
+  .desktop-nav-item,
+  .desktop-nav-item-icon,
+  .desktop-sidebar-toggle {
+    display: none;
   }
   
   /* Sidebar toggle button */
