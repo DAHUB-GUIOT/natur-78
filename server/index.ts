@@ -14,10 +14,10 @@ app.use(session({
   saveUninitialized: false,
   name: 'sessionId',
   cookie: {
-    secure: false, // Set to true in production with HTTPS
+    secure: process.env.NODE_ENV === 'production', // Auto-detect based on environment
     httpOnly: true,
     maxAge: 24 * 60 * 60 * 1000, // 24 hours
-    sameSite: 'lax'
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax' // Fix for cross-origin in production
   }
 }));
 

@@ -66,7 +66,12 @@ const PortalViajerosNew = () => {
   // Current user data fetch
   const { data: currentUser, isLoading: userLoading, error: userError } = useQuery({
     queryKey: ['/api/auth/me'],
-    retry: 1,
+    retry: (failureCount, error) => {
+      console.log("🔍 Auth query error:", error);
+      // Only retry once for 401s, might be a temporary session issue
+      if (error?.message?.includes('401')) return failureCount < 1;
+      return failureCount < 2;
+    },
     staleTime: 10 * 60 * 1000,
     refetchOnWindowFocus: false,
   });

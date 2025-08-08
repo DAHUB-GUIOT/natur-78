@@ -31,6 +31,8 @@ const AuthViajeros = () => {
         description: "Has iniciado sesión correctamente",
       });
       
+      console.log("✅ Login successful, redirecting to Portal Viajeros");
+      
       // Always redirect to Portal Viajeros from viajeros auth page
       setTimeout(() => {
         window.location.href = '/portal-viajeros';
