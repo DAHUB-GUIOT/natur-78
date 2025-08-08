@@ -77,7 +77,7 @@ const About = () => {
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <Link to="/" className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-green-400 to-blue-500 rounded-lg flex items-center justify-center">
+              <div className="w-10 h-10 bg-gradient-to-br from-green-400 to-green-600 rounded-lg flex items-center justify-center">
                 <TreePine className="w-5 h-5 text-white" />
               </div>
               <div>
@@ -110,7 +110,7 @@ const About = () => {
             </Badge>
             <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
               Transformando el
-              <span className="bg-gradient-to-r from-green-400 to-blue-500 bg-clip-text text-transparent block">
+              <span className="bg-gradient-to-r from-green-400 to-green-600 bg-clip-text text-transparent block">
                 Turismo del Futuro
               </span>
             </h1>
@@ -147,7 +147,7 @@ const About = () => {
                 transition={{ delay: index * 0.1 }}
                 className="text-center"
               >
-                <div className="w-16 h-16 bg-gradient-to-br from-green-400 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                <div className="w-16 h-16 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
                   <stat.icon className="w-8 h-8 text-white" />
                 </div>
                 <h3 className="text-3xl md:text-4xl font-bold text-white mb-2">{stat.number}</h3>
@@ -169,7 +169,7 @@ const About = () => {
             >
               <Card className="bg-white/10 backdrop-blur-sm border-white/20 h-full">
                 <CardContent className="p-8">
-                  <div className="w-16 h-16 bg-gradient-to-br from-green-400 to-blue-500 rounded-full flex items-center justify-center mb-6">
+                  <div className="w-16 h-16 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center mb-6">
                     <Target className="w-8 h-8 text-white" />
                   </div>
                   <h2 className="text-2xl font-bold text-white mb-4">Nuestra Misión</h2>
@@ -268,7 +268,7 @@ const About = () => {
               >
                 <Card className="bg-white/10 backdrop-blur-sm border-white/20 hover:bg-white/15 transition-all duration-300">
                   <CardContent className="p-6 text-center">
-                    <div className="w-20 h-20 text-4xl rounded-full flex items-center justify-center mx-auto mb-4 bg-gradient-to-br from-green-400 to-blue-500">
+                    <div className="w-20 h-20 text-4xl rounded-full flex items-center justify-center mx-auto mb-4 bg-gradient-to-br from-green-400 to-green-600">
                       {member.image}
                     </div>
                     <h3 className="text-xl font-bold text-white mb-1">{member.name}</h3>
@@ -370,7 +370,7 @@ const About = () => {
         <div className="container mx-auto px-4">
           <div className="text-center">
             <div className="flex items-center justify-center space-x-3 mb-4">
-              <div className="w-8 h-8 bg-gradient-to-br from-green-400 to-blue-500 rounded-lg flex items-center justify-center">
+              <div className="w-8 h-8 bg-gradient-to-br from-green-400 to-green-600 rounded-lg flex items-center justify-center">
                 <TreePine className="w-4 h-4 text-white" />
               </div>
               <span className="font-bold text-white text-lg">Festival NATUR 2025</span>

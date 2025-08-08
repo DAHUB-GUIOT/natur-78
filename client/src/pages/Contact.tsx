@@ -18,7 +18,7 @@ const Contact = () => {
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <Link to="/" className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-green-400 to-blue-500 rounded-lg flex items-center justify-center">
+              <div className="w-10 h-10 bg-gradient-to-br from-green-400 to-green-600 rounded-lg flex items-center justify-center">
                 <TreePine className="w-5 h-5 text-white" />
               </div>
               <div>
@@ -51,7 +51,7 @@ const Contact = () => {
             </Badge>
             <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
               Hablemos del
-              <span className="bg-gradient-to-r from-green-400 to-blue-500 bg-clip-text text-transparent block">
+              <span className="bg-gradient-to-r from-green-400 to-green-600 bg-clip-text text-transparent block">
                 Futuro Sostenible
               </span>
             </h1>
@@ -87,7 +87,7 @@ const Contact = () => {
                     <Card className="bg-white/10 backdrop-blur-sm border-white/20">
                       <CardContent className="p-6">
                         <div className="flex items-start space-x-4">
-                          <div className="w-12 h-12 bg-gradient-to-br from-green-400 to-blue-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                          <div className="w-12 h-12 bg-gradient-to-br from-green-400 to-green-600 rounded-lg flex items-center justify-center flex-shrink-0">
                             <Mail className="w-6 h-6 text-white" />
                           </div>
                           <div>
@@ -133,7 +133,7 @@ const Contact = () => {
                     <Card className="bg-white/10 backdrop-blur-sm border-white/20">
                       <CardContent className="p-6">
                         <div className="flex items-start space-x-4">
-                          <div className="w-12 h-12 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                          <div className="w-12 h-12 bg-gradient-to-br from-green-400 to-green-600 rounded-lg flex items-center justify-center flex-shrink-0">
                             <MessageCircle className="w-6 h-6 text-white" />
                           </div>
                           <div>
@@ -267,7 +267,7 @@ const Contact = () => {
 
                       <Button 
                         type="submit"
-                        className="w-full bg-gradient-to-r from-green-500 to-blue-600 hover:from-green-600 hover:to-blue-700 text-white py-3"
+                        className="w-full bg-gradient-to-r from-green-500 to-green-700 hover:from-green-600 hover:to-green-800 text-white py-3"
                       >
                         <Send className="w-4 h-4 mr-2" />
                         Enviar Mensaje
@@ -350,7 +350,7 @@ const Contact = () => {
                 Únete al movimiento que está transformando el turismo hacia un futuro más sostenible
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button asChild className="bg-gradient-to-r from-green-500 to-blue-600 hover:from-green-600 hover:to-blue-700 text-white">
+                <Button asChild className="bg-gradient-to-r from-green-500 to-green-700 hover:from-green-600 hover:to-green-800 text-white">
                   <Link to="/tickets">
                     Obtener Entradas
                   </Link>

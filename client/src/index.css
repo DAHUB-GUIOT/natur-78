@@ -319,6 +319,20 @@ body {
   min-height: 100vh;
 }
 
+/* White button fix for dark text readability */
+.bg-white {
+  color: #000000 !important;
+}
+
+.bg-white:hover {
+  color: #000000 !important;
+}
+
+/* Ensure all white backgrounds have dark text */
+.text-white-bg {
+  color: #000000 !important;
+}
+
 /* Mobile-first form system */
 .mobile-form {
   padding: 1rem;
@@ -423,7 +437,7 @@ body {
     --solar-amber: #FFA500;
     --nature-green: #4A9B3B;
     --eco-mint: #7FE7A3;
-    --sky-blue: #87CEEB;
+    --sky-green: #7FE7A3;
     --earth-brown: #8B6B47;
     --energy-yellow: #F4E04D;
     --crystal-white: #F8F8FF;
@@ -479,8 +493,8 @@ body {
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 0%;
 
-    --primary: 0 0% 0%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 72 61% 58%;
+    --primary-foreground: 0 0% 0%;
 
     --secondary: 72 61% 58%;        /* #cad95e */
     --secondary-foreground: 0 0% 0%;
@@ -659,7 +673,7 @@ body {
   }
   
   .nature-gradient {
-    background: linear-gradient(135deg, var(--nature-green) 0%, var(--eco-mint) 50%, var(--sky-blue) 100%);
+    background: linear-gradient(135deg, var(--nature-green) 0%, var(--eco-mint) 50%, var(--sky-green) 100%);
   }
   
   .eco-border {

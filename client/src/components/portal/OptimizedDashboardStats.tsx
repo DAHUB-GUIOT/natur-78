@@ -57,7 +57,7 @@ const OptimizedDashboardStats: React.FC<OptimizedDashboardStatsProps> = ({ user 
       value: "1.2K",
       change: "+18% esta semana",
       icon: <Globe className="w-4 h-4 text-white" />,
-      color: "from-blue-500 to-indigo-500"
+      color: "from-green-500 to-green-700"
     },
     {
       title: "Contactos Nuevos",

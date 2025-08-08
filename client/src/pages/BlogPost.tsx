@@ -169,7 +169,7 @@ const BlogPost = () => {
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <Link to="/" className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-green-400 to-blue-500 rounded-lg flex items-center justify-center">
+              <div className="w-10 h-10 bg-gradient-to-br from-green-400 to-green-600 rounded-lg flex items-center justify-center">
                 <TreePine className="w-5 h-5 text-white" />
               </div>
               <div>
@@ -308,7 +308,7 @@ const BlogPost = () => {
                   <Card className="bg-white/10 backdrop-blur-sm border-white/20 hover:bg-white/15 transition-all duration-300 h-full">
                     <CardContent className="p-6">
                       <div className="flex items-center space-x-3 mb-4">
-                        <div className="w-12 h-12 text-2xl rounded-lg bg-gradient-to-br from-green-400 to-blue-500 flex items-center justify-center">
+                        <div className="w-12 h-12 text-2xl rounded-lg bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center">
                           {post.image}
                         </div>
                         <Badge variant="outline" className="text-white/70 border-white/30">

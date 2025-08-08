@@ -170,7 +170,7 @@ const EventDetail = () => {
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <Link to="/" className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-green-400 to-blue-500 rounded-lg flex items-center justify-center">
+              <div className="w-10 h-10 bg-gradient-to-br from-green-400 to-green-600 rounded-lg flex items-center justify-center">
                 <TreePine className="w-5 h-5 text-white" />
               </div>
               <div>
@@ -392,7 +392,7 @@ const EventDetail = () => {
                 >
                   <Card className="bg-white/10 backdrop-blur-sm border-white/20 hover:bg-white/15 transition-all duration-300">
                     <CardContent className="p-6 text-center">
-                      <div className="w-16 h-16 text-3xl rounded-full flex items-center justify-center mx-auto mb-4 bg-gradient-to-br from-green-400 to-blue-500">
+                      <div className="w-16 h-16 text-3xl rounded-full flex items-center justify-center mx-auto mb-4 bg-gradient-to-br from-green-400 to-green-600">
                         {speaker.image}
                       </div>
                       <h3 className="text-lg font-bold text-white mb-1">{speaker.name}</h3>

@@ -177,7 +177,7 @@ const MinimalistPortalEmpresas = () => {
                   {/* Enhanced Company Header */}
                   <div className="flex items-start space-x-4 mb-4">
                     <div className="relative">
-                      <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-green-500 rounded-xl flex items-center justify-center text-white font-bold text-lg shadow-lg">
+                      <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-green-700 rounded-xl flex items-center justify-center text-white font-bold text-lg shadow-lg">
                         {(company.companyName || `${company.firstName} ${company.lastName}`).substring(0, 2).toUpperCase()}
                       </div>
                       <div className="absolute -top-1 -right-1 w-6 h-6 bg-green-500 rounded-full border-2 border-white/20 flex items-center justify-center">
@@ -233,7 +233,7 @@ const MinimalistPortalEmpresas = () => {
                   <div className="flex space-x-2">
                     <Button 
                       size="sm" 
-                      className="flex-1 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold text-sm h-9 shadow-lg transition-all duration-300"
+                      className="flex-1 bg-gradient-to-r from-green-600 to-green-800 hover:from-blue-700 hover:to-blue-800 text-white font-semibold text-sm h-9 shadow-lg transition-all duration-300"
                       onClick={() => handleViewProfile(company.id)}
                       data-testid={`button-view-profile-${company.id}`}
                     >

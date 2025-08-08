@@ -187,7 +187,7 @@ export function ChatPage({ currentUserId, preSelectedUserId, onClose }: ChatPage
                   <ArrowLeft className="h-4 w-4" />
                 </Button>
               )}
-              <h1 className="text-xl font-sans bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
+              <h1 className="text-xl font-sans bg-gradient-to-r from-green-400 to-green-600 bg-clip-text text-transparent">
                 Mensajes
               </h1>
             </div>
@@ -218,7 +218,7 @@ export function ChatPage({ currentUserId, preSelectedUserId, onClose }: ChatPage
                 onClick={() => startNewConversation(user)}
                 className="flex items-center gap-3 p-2 rounded-lg hover:bg-cyan-500/10 cursor-pointer transition-all"
               >
-                <Avatar className="h-10 w-10 bg-gradient-to-br from-cyan-500 to-blue-500">
+                <Avatar className="h-10 w-10 bg-gradient-to-br from-green-500 to-green-700">
                   <AvatarFallback className="bg-transparent text-white font-bold">
                     {user.firstName?.[0] || user.email[0].toUpperCase()}
                   </AvatarFallback>
@@ -327,7 +327,7 @@ export function ChatPage({ currentUserId, preSelectedUserId, onClose }: ChatPage
                       <div
                         className={`max-w-xs lg:max-w-md px-4 py-3 rounded-2xl shadow-lg backdrop-blur-sm ${
                           isOwn
-                            ? "bg-gradient-to-r from-cyan-500 to-blue-500 text-white ml-auto"
+                            ? "bg-gradient-to-r from-green-500 to-green-700 text-white ml-auto"
                             : "bg-gray-700/80 text-white mr-auto border border-gray-600/50"
                         }`}
                       >
@@ -389,7 +389,7 @@ export function ChatPage({ currentUserId, preSelectedUserId, onClose }: ChatPage
                   <Button
                     onClick={handleSendMessage}
                     disabled={sendMessageMutation.isPending}
-                    className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white rounded-full p-3 shadow-lg"
+                    className="bg-gradient-to-r from-green-500 to-green-700 hover:from-cyan-600 hover:to-blue-600 text-white rounded-full p-3 shadow-lg"
                   >
                     <Send className="h-4 w-4" />
                   </Button>
@@ -409,7 +409,7 @@ export function ChatPage({ currentUserId, preSelectedUserId, onClose }: ChatPage
           /* Empty State */
           <div className="flex-1 flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
             <div className="text-center p-8">
-              <div className="w-24 h-24 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-2xl">
+              <div className="w-24 h-24 bg-gradient-to-br from-green-500 to-green-700 rounded-full flex items-center justify-center mx-auto mb-6 shadow-2xl">
                 <Send className="h-12 w-12 text-white" />
               </div>
               <h3 className="text-xl font-semibold text-white mb-2">

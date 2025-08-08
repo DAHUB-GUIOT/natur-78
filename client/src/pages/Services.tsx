@@ -40,7 +40,7 @@ const Services = () => {
         'Marketplace B2B'
       ],
       icon: Users,
-      color: 'from-blue-500 to-cyan-600',
+      color: 'from-green-500 to-green-700',
       duration: 'Membresía anual',
       price: 'Desde $2.500.000 COP/año'
     },
@@ -88,7 +88,7 @@ const Services = () => {
         'Integración de pagos'
       ],
       icon: Lightbulb,
-      color: 'from-cyan-500 to-blue-600',
+      color: 'from-green-600 to-green-800',
       duration: '4-8 meses',
       price: 'Desde $8.000.000 COP'
     },
@@ -140,7 +140,7 @@ const Services = () => {
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <Link to="/" className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-green-400 to-blue-500 rounded-lg flex items-center justify-center">
+              <div className="w-10 h-10 bg-gradient-to-br from-green-400 to-green-600 rounded-lg flex items-center justify-center">
                 <TreePine className="w-5 h-5 text-white" />
               </div>
               <div>
@@ -173,7 +173,7 @@ const Services = () => {
             </Badge>
             <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
               Transformamos
-              <span className="bg-gradient-to-r from-green-400 to-blue-500 bg-clip-text text-transparent block">
+              <span className="bg-gradient-to-r from-green-400 to-green-600 bg-clip-text text-transparent block">
                 Tu Negocio Sostenible
               </span>
             </h1>
@@ -236,7 +236,7 @@ const Services = () => {
                           </div>
                         </div>
                         
-                        <Button className="w-full bg-gradient-to-r from-green-500 to-blue-600 hover:from-green-600 hover:to-blue-700 text-white">
+                        <Button className="w-full bg-gradient-to-r from-green-500 to-green-700 hover:from-green-600 hover:to-green-800 text-white">
                           Solicitar Información
                           <ArrowRight className="w-4 h-4 ml-2" />
                         </Button>
@@ -276,12 +276,12 @@ const Services = () => {
                 >
                   {/* Connection line */}
                   {index < process.length - 1 && (
-                    <div className="hidden lg:block absolute top-12 left-full w-full h-px bg-gradient-to-r from-green-400 to-blue-500 transform -translate-x-1/2" />
+                    <div className="hidden lg:block absolute top-12 left-full w-full h-px bg-gradient-to-r from-green-400 to-green-600 transform -translate-x-1/2" />
                   )}
                   
                   <Card className="bg-white/10 backdrop-blur-sm border-white/20 hover:bg-white/15 transition-all duration-300 relative z-10">
                     <CardContent className="p-6 text-center">
-                      <div className="w-12 h-12 bg-gradient-to-r from-green-400 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <div className="w-12 h-12 bg-gradient-to-r from-green-400 to-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
                         <span className="text-white font-bold">{step.step}</span>
                       </div>
                       <h3 className="text-lg font-bold text-white mb-3">{step.title}</h3>
@@ -315,7 +315,7 @@ const Services = () => {
                 >
                   <Card className="bg-white/10 backdrop-blur-sm border-white/20">
                     <CardContent className="p-6">
-                      <div className="w-12 h-12 bg-gradient-to-r from-green-400 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <div className="w-12 h-12 bg-gradient-to-r from-green-400 to-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
                         <stat.icon className="w-6 h-6 text-white" />
                       </div>
                       <h3 className="text-3xl font-bold text-white mb-2">{stat.number}</h3>
@@ -374,7 +374,7 @@ const Services = () => {
                   <Card className="bg-white/10 backdrop-blur-sm border-white/20 h-full">
                     <CardContent className="p-6">
                       <div className="flex items-center space-x-3 mb-4">
-                        <div className="w-12 h-12 text-2xl rounded-full bg-gradient-to-r from-green-400 to-blue-500 flex items-center justify-center">
+                        <div className="w-12 h-12 text-2xl rounded-full bg-gradient-to-r from-green-400 to-green-600 flex items-center justify-center">
                           {testimonial.image}
                         </div>
                         <div>
@@ -399,7 +399,7 @@ const Services = () => {
         <div className="container mx-auto px-4">
           <Card className="bg-gradient-to-r from-green-600/20 to-blue-600/20 backdrop-blur-sm border-green-400/30 max-w-4xl mx-auto">
             <CardContent className="p-8 text-center">
-              <div className="w-16 h-16 bg-gradient-to-r from-green-400 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-6">
+              <div className="w-16 h-16 bg-gradient-to-r from-green-400 to-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
                 <Heart className="w-8 h-8 text-white" />
               </div>
               <h3 className="text-2xl font-bold text-white mb-4">

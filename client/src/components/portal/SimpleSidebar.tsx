@@ -181,7 +181,7 @@ const SimpleSidebar: React.FC<SimpleSidebarProps> = ({
       {/* User indicator at bottom */}
       <div className="p-3">
         <div className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center">
-          <div className="w-6 h-6 bg-gradient-to-br from-blue-400 to-purple-400 rounded-full"></div>
+          <div className="w-6 h-6 bg-gradient-to-br from-green-400 to-green-600 rounded-full"></div>
         </div>
       </div>
     </motion.aside>

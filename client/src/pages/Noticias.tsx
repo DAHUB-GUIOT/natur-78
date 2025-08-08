@@ -86,7 +86,7 @@ const Noticias = () => {
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <Link to="/" className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-green-400 to-blue-500 rounded-lg flex items-center justify-center">
+              <div className="w-10 h-10 bg-gradient-to-br from-green-400 to-green-600 rounded-lg flex items-center justify-center">
                 <TreePine className="w-5 h-5 text-white" />
               </div>
               <div>
@@ -119,7 +119,7 @@ const Noticias = () => {
             </Badge>
             <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
               Noticias &
-              <span className="bg-gradient-to-r from-green-400 to-blue-500 bg-clip-text text-transparent block">
+              <span className="bg-gradient-to-r from-green-400 to-green-600 bg-clip-text text-transparent block">
                 Perspectivas
               </span>
             </h1>
@@ -157,7 +157,7 @@ const Noticias = () => {
                 <Card className="bg-white/10 backdrop-blur-sm border-white/20 hover:bg-white/15 transition-all duration-300 h-full group">
                   <CardContent className="p-0">
                     {/* Image Area */}
-                    <div className={`${index === 0 ? 'h-64' : 'h-48'} bg-gradient-to-br from-green-400 to-blue-500 rounded-t-lg flex items-center justify-center relative overflow-hidden`}>
+                    <div className={`${index === 0 ? 'h-64' : 'h-48'} bg-gradient-to-br from-green-400 to-green-600 rounded-t-lg flex items-center justify-center relative overflow-hidden`}>
                       <div className="text-6xl">{article.image}</div>
                       <Badge className="absolute top-4 left-4 bg-black/50 text-white border-white/30">
                         {article.category}
@@ -303,7 +303,7 @@ const Noticias = () => {
             {[
               { name: 'Sostenibilidad', icon: Leaf, count: 12, color: 'from-green-500 to-emerald-600' },
               { name: 'Experiencias', icon: Star, count: 8, color: 'from-purple-500 to-pink-600' },
-              { name: 'Tecnología', icon: Globe, count: 6, color: 'from-blue-500 to-cyan-600' },
+              { name: 'Tecnología', icon: Globe, count: 6, color: 'from-green-500 to-green-700' },
               { name: 'Comunidades', icon: Users, count: 10, color: 'from-orange-500 to-red-600' }
             ].map((category, index) => (
               <motion.div
@@ -330,9 +330,9 @@ const Noticias = () => {
       {/* Newsletter Section */}
       <section className="py-16">
         <div className="container mx-auto px-4">
-          <Card className="bg-gradient-to-r from-green-600/20 to-blue-600/20 backdrop-blur-sm border-green-400/30 max-w-4xl mx-auto">
+          <Card className="bg-gradient-to-r from-green-600/20 to-green-800/20 backdrop-blur-sm border-green-400/30 max-w-4xl mx-auto">
             <CardContent className="p-8 text-center">
-              <div className="w-16 h-16 bg-gradient-to-r from-green-400 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-6">
+              <div className="w-16 h-16 bg-gradient-to-r from-green-400 to-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
                 <Heart className="w-8 h-8 text-white" />
               </div>
               <h3 className="text-2xl font-bold text-white mb-4">
@@ -348,7 +348,7 @@ const Noticias = () => {
                   placeholder="Tu email"
                   className="flex-1 px-4 py-3 bg-white/10 border border-white/30 rounded-lg text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-green-400"
                 />
-                <Button className="bg-gradient-to-r from-green-500 to-blue-600 hover:from-green-600 hover:to-blue-700 text-white px-6 py-3">
+                <Button className="bg-gradient-to-r from-green-500 to-green-700 hover:from-green-600 hover:to-green-800 text-white px-6 py-3">
                   Suscribirse
                 </Button>
               </div>
@@ -365,7 +365,7 @@ const Noticias = () => {
         <div className="container mx-auto px-4">
           <div className="text-center">
             <div className="flex items-center justify-center space-x-3 mb-4">
-              <div className="w-8 h-8 bg-gradient-to-br from-green-400 to-blue-500 rounded-lg flex items-center justify-center">
+              <div className="w-8 h-8 bg-gradient-to-br from-green-400 to-green-600 rounded-lg flex items-center justify-center">
                 <TreePine className="w-4 h-4 text-white" />
               </div>
               <span className="font-bold text-white text-lg">Festival NATUR 2025</span>

@@ -584,7 +584,7 @@ const EditProfile: React.FC = () => {
           <Button
             onClick={handleSave}
             disabled={updateProfileMutation.isPending}
-            className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold px-8"
+            className="bg-gradient-to-r from-green-600 to-green-800 hover:from-blue-700 hover:to-blue-800 text-white font-semibold px-8"
           >
             {updateProfileMutation.isPending ? 'Guardando...' : 'Guardar Cambios'}
           </Button>

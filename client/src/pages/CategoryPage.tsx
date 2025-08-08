@@ -36,7 +36,7 @@ const CategoryPage = () => {
       title: 'Movilidad Ecológica',
       description: 'Opciones de transporte que minimizan el impacto ambiental',
       icon: '🚗',
-      color: 'from-blue-500 to-cyan-600'
+      color: 'from-green-500 to-green-700'
     },
     'experiencias': {
       title: 'Experiencias Auténticas',
@@ -231,7 +231,7 @@ const CategoryPage = () => {
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <Link to="/" className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-green-400 to-blue-500 rounded-lg flex items-center justify-center">
+              <div className="w-10 h-10 bg-gradient-to-br from-green-400 to-green-600 rounded-lg flex items-center justify-center">
                 <TreePine className="w-5 h-5 text-white" />
               </div>
               <div>
