@@ -178,10 +178,7 @@ const PortalViajerosNew = () => {
       {/* Interactive Map for Experiences */}
       <div className="absolute inset-0">
         <InteractiveMap 
-          directoryUsers={typedDirectoryUsers}
-          onUserSelect={handleViewProfile}
-          onSendMessage={handleSendMessage}
-          isMessagingActive={createConversationMutation.isPending}
+          experiences={typedExperiences}
         />
       </div>
 

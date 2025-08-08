@@ -96,10 +96,11 @@ const MinimalistPortalEmpresas = () => {
   );
 
   const renderNetworkView = () => (
-    <div className="p-4 space-y-6 max-w-6xl mx-auto">
-      {/* Header */}
+    <div className="mobile-content space-y-6 max-w-6xl mx-auto">
+      {/* Enhanced Desktop Header */}
       <div className="text-center space-y-3">
-        <h2 className="text-2xl font-bold text-white">Red de Contactos</h2>
+        <h2 className="mobile-text-xl md:text-2xl lg:text-3xl font-bold text-white">Red de Contactos</h2>
+        <p className="text-white/60 mobile-text-sm lg:text-base">Conecta con empresas sostenibles verificadas</p>
       </div>
 
       {/* Search Section */}
@@ -122,8 +123,8 @@ const MinimalistPortalEmpresas = () => {
         </CardContent>
       </Card>
 
-      {/* Companies Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {/* Enhanced Desktop Companies Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
         {typedDirectoryUsers
           .filter((company: any) => 
             !searchQuery || 
