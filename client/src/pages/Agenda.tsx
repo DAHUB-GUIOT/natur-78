@@ -519,11 +519,11 @@ export function Agenda() {
   };
 
   return (
-    <div className="min-h-screen bg-black relative overflow-hidden">
+    <div className="min-h-screen bg-[#FCF8EE] relative overflow-hidden">
       {/* Add HeaderButtons with the same menu as homepage */}
       <HeaderButtons showPortalButtons={true} />
 
-      {/* Organic Background Textures */}
+      {/* Organic Background Textures - Same as homepage */}
       <div className="fixed inset-0 z-0">
         <div className="absolute inset-0 opacity-5">
           <svg className="w-full h-full" viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg">
@@ -545,8 +545,8 @@ export function Agenda() {
           className="w-full h-full object-cover opacity-10 blur-3xl"
         />
         
-        {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black opacity-90"></div>
+        {/* Homepage-style Gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#FCF8EE]/90 via-[#f5f0e4]/80 to-[#eee8db]/90"></div>
       </div>
 
       {/* Mobile-First Title Section */}
@@ -554,12 +554,12 @@ export function Agenda() {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-8 md:mb-16">
             <div className="inline-block">
-              <h1 className="text-4xl md:text-6xl lg:text-8xl font-unbounded font-light mb-4 md:mb-6 tracking-wider leading-none" style={{ color: '#cad95e', textShadow: '0 0 20px rgba(202, 217, 94, 0.3)' }}>
+              <h1 className="text-4xl md:text-6xl lg:text-8xl font-unbounded font-light mb-4 md:mb-6 tracking-wider leading-none" style={{ color: '#191C0F', textShadow: '0 0 20px rgba(202, 217, 94, 0.3)' }}>
                 AGENDA
               </h1>
-              <div className="w-full h-1 bg-gradient-to-r from-transparent via-white/30 to-transparent mb-4"></div>
+              <div className="w-full h-1 bg-gradient-to-r from-transparent via-[#cad95e]/50 to-transparent mb-4"></div>
             </div>
-            <p className="mobile-text-sm md:text-lg text-white/60 max-w-2xl mx-auto mt-6 md:mt-8 font-mono">
+            <p className="mobile-text-sm md:text-lg text-[#191C0F]/80 max-w-2xl mx-auto mt-6 md:mt-8 font-mono">
               Festival NATUR 2025 • Turismo Sostenible • Noviembre 14-15
             </p>
           </div>
@@ -569,20 +569,20 @@ export function Agenda() {
       {/* Mobile-First Controls Bar */}
       <div className="relative z-20 mobile-p-4 md:px-6 mb-8 md:mb-12">
         <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-4 md:gap-6 bg-black/40 backdrop-blur-xl border border-white/10 mobile-p-4 md:p-6 rounded-none">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-4 md:gap-6 bg-white/40 backdrop-blur-xl border border-[#cad95e]/20 mobile-p-4 md:p-6 rounded-lg shadow-lg">
             
             {/* Agenda Tabs - Brutalist Style */}
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full lg:w-auto">
-              <TabsList className="grid w-full grid-cols-2 bg-transparent border border-white/20 p-1 rounded-none">
+              <TabsList className="grid w-full grid-cols-2 bg-transparent border border-[#cad95e]/30 p-1 rounded-lg">
                 <TabsTrigger 
                   value="vive-natur" 
-                  className="data-[state=active]:bg-white data-[state=active]:text-black text-white/70 font-mono text-sm tracking-wide rounded-none border-r border-white/20"
+                  className="data-[state=active]:bg-[#cad95e] data-[state=active]:text-[#191C0F] text-[#191C0F]/70 font-mono text-sm tracking-wide rounded-md border-r border-[#cad95e]/20"
                 >
                   VIVE NATUR
                 </TabsTrigger>
                 <TabsTrigger 
                   value="natur-pro"
-                  className="data-[state=active]:bg-white data-[state=active]:text-black text-white/70 font-mono text-sm tracking-wide rounded-none"
+                  className="data-[state=active]:bg-[#cad95e] data-[state=active]:text-[#191C0F] text-[#191C0F]/70 font-mono text-sm tracking-wide rounded-md"
                 >
                   NATUR PRO
                 </TabsTrigger>
@@ -592,11 +592,11 @@ export function Agenda() {
             {/* Filter Controls */}
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-2">
-                <Filter className="w-4 h-4 text-white/50" />
+                <Filter className="w-4 h-4 text-[#191C0F]/50" />
                 <select 
                   value={filterType} 
                   onChange={(e) => setFilterType(e.target.value)}
-                  className="bg-black/60 border border-white/20 text-white text-sm px-4 py-2 rounded-none font-mono tracking-wide focus:outline-none focus:border-white/40"
+                  className="bg-white/60 border border-[#cad95e]/30 text-[#191C0F] text-sm px-4 py-2 rounded-lg font-mono tracking-wide focus:outline-none focus:border-[#cad95e]/60"
                 >
                   <option value="all">TODOS</option>
                   <option value="panel">PANELS</option>
@@ -634,14 +634,14 @@ export function Agenda() {
 
             {Object.entries(agendaData).map(([key, agenda]) => (
               <TabsContent key={key} value={key} className="mt-8">
-                {/* Agenda Header */}
-                <Card className="bg-black/20 backdrop-blur-md border-white/20 mb-8">
+                {/* Agenda Header - Homepage style */}
+                <Card className="bg-white/80 backdrop-blur-md border-[#cad95e]/30 mb-8 shadow-lg">
                   <CardHeader className="text-center">
-                    <CardTitle className="text-2xl md:text-3xl font-sans text-white mb-2">
+                    <CardTitle className="text-2xl md:text-3xl font-sans text-[#191C0F] mb-2">
                       {agenda.title}
                     </CardTitle>
-                    <p className="text-lg text-white/80 mb-4">{agenda.subtitle}</p>
-                    <div className="flex flex-wrap justify-center gap-4 text-sm text-white/70">
+                    <p className="text-lg text-[#191C0F]/80 mb-4">{agenda.subtitle}</p>
+                    <div className="flex flex-wrap justify-center gap-4 text-sm text-[#191C0F]/70">
                       <div className="flex items-center gap-2">
                         <Clock className="w-4 h-4" />
                         {agenda.horario}
@@ -657,7 +657,7 @@ export function Agenda() {
                 {/* Days and Sessions */}
                 {agenda.days.map((day, dayIndex) => (
                   <div key={dayIndex} className="mb-12">
-                    <h2 className="text-3xl font-sans mb-6 text-center" style={{ color: agenda.color }}>
+                    <h2 className="text-3xl font-sans mb-6 text-center text-[#191C0F]">
                       {day.day}
                     </h2>
                     
@@ -668,7 +668,7 @@ export function Agenda() {
                         .map((session, sessionIndex) => (
                         <Card 
                           key={sessionIndex}
-                          className="bg-black/60 backdrop-blur-sm border-2 border-white/10 hover:border-white/30 transition-all duration-500 group rounded-none overflow-hidden hover:shadow-2xl hover:shadow-lime-500/20"
+                          className="bg-white/90 backdrop-blur-sm border-2 border-[#cad95e]/20 hover:border-[#cad95e]/50 transition-all duration-500 group rounded-lg overflow-hidden hover:shadow-2xl hover:shadow-[#cad95e]/20"
                         >
                           <div className="relative overflow-hidden">
                             <img 
@@ -677,19 +677,19 @@ export function Agenda() {
                               className="w-full h-48 object-cover grayscale hover:grayscale-0 transition-all duration-700 group-hover:scale-110"
                             />
                             
-                            {/* Glowing overlay */}
-                            <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80"></div>
+                            {/* Light overlay for homepage style */}
+                            <div className="absolute inset-0 bg-gradient-to-t from-[#191C0F]/50 via-transparent to-transparent opacity-60"></div>
                             
-                            {/* Type badge */}
+                            {/* Type badge - homepage style */}
                             <div className="absolute top-4 left-4">
-                              <div className="bg-black/80 border border-white/20 px-3 py-1 font-mono text-xs tracking-widest text-white">
+                              <div className="bg-[#cad95e] border border-[#cad95e] px-3 py-1 font-mono text-xs tracking-widest text-[#191C0F]">
                                 {session.type.toUpperCase()}
                               </div>
                             </div>
                             
-                            {/* Time badge */}
+                            {/* Time badge - homepage style */}
                             <div className="absolute top-4 right-4">
-                              <div className="bg-black/80 border border-white/20 px-3 py-1 font-mono text-xs tracking-widest text-white">
+                              <div className="bg-white/90 border border-[#cad95e] px-3 py-1 font-mono text-xs tracking-widest text-[#191C0F]">
                                 {session.time}
                               </div>
                             </div>
@@ -700,10 +700,10 @@ export function Agenda() {
                                 e.stopPropagation();
                                 addToAgenda(session.title);
                               }}
-                              className={`absolute bottom-4 right-4 w-8 h-8 border-2 flex items-center justify-center transition-all duration-300 ${
+                              className={`absolute bottom-4 right-4 w-8 h-8 border-2 flex items-center justify-center transition-all duration-300 rounded-md ${
                                 myAgenda.has(session.title) 
-                                  ? 'bg-lime-400 border-lime-400 text-black' 
-                                  : 'bg-black/60 border-white/20 text-white hover:border-lime-400'
+                                  ? 'bg-[#cad95e] border-[#cad95e] text-[#191C0F]' 
+                                  : 'bg-white/80 border-[#cad95e]/30 text-[#191C0F] hover:border-[#cad95e]'
                               }`}
                             >
                               <Star className="w-4 h-4" fill={myAgenda.has(session.title) ? 'currentColor' : 'transparent'} />
@@ -711,40 +711,40 @@ export function Agenda() {
                           </div>
                           
                           <CardContent className="p-6 space-y-4">
-                            <h3 className="font-sans font-medium text-white text-lg leading-tight group-hover:text-lime-400 transition-colors duration-300">
+                            <h3 className="font-sans font-medium text-[#191C0F] text-lg leading-tight group-hover:text-[#97b53f] transition-colors duration-300">
                               {session.title}
                             </h3>
                             
                             {session.description && (
-                              <p className="text-sm text-white/60 leading-relaxed">
+                              <p className="text-sm text-[#191C0F]/70 leading-relaxed">
                                 {session.description}
                               </p>
                             )}
                             
-                            {/* Speakers */}
+                            {/* Speakers - homepage style */}
                             <div className="space-y-2">
-                              <div className="flex items-center gap-2 text-xs text-white/40 font-mono tracking-wider">
+                              <div className="flex items-center gap-2 text-xs text-[#191C0F]/60 font-mono tracking-wider">
                                 <Users className="w-3 h-3" />
                                 SPEAKERS
                               </div>
                               {session.speakers.slice(0, 2).map((speaker, speakerIndex) => (
-                                <div key={speakerIndex} className="text-sm text-white/80 font-mono">
+                                <div key={speakerIndex} className="text-sm text-[#191C0F]/80 font-mono">
                                   {speaker}
                                 </div>
                               ))}
                               
                               {session.speakers.length > 2 && (
-                                <div className="text-xs text-white/50 font-mono">
+                                <div className="text-xs text-[#191C0F]/50 font-mono">
                                   +{session.speakers.length - 2} MÁS
                                 </div>
                               )}
                               
                               {session.moderator && (
-                                <div className="pt-2 border-t border-white/10">
-                                  <div className="text-xs text-white/40 font-mono tracking-wider mb-1">
+                                <div className="pt-2 border-t border-[#cad95e]/20">
+                                  <div className="text-xs text-[#191C0F]/60 font-mono tracking-wider mb-1">
                                     MODERACIÓN
                                   </div>
-                                  <div className="text-sm text-white/80 font-mono">
+                                  <div className="text-sm text-[#191C0F]/80 font-mono">
                                     {session.moderator}
                                   </div>
                                 </div>
@@ -757,7 +757,7 @@ export function Agenda() {
                                 asChild
                                 variant="outline" 
                                 size="sm" 
-                                className="w-full bg-transparent border-white/20 text-white/70 hover:bg-white/10 hover:border-white/40 rounded-none font-mono text-xs tracking-wider"
+                                className="w-full bg-transparent border-[#cad95e]/30 text-[#191C0F]/70 hover:bg-[#cad95e]/10 hover:border-[#cad95e] rounded-lg font-mono text-xs tracking-wider"
                               >
                                 <Link to={`/evento/${session.id}`}>
                                   <Eye className="w-3 h-3 mr-2" />
@@ -777,10 +777,10 @@ export function Agenda() {
         </div>
       </main>
 
-      {/* Session Detail Modal */}
+      {/* Session Detail Modal - Homepage style */}
       {selectedSession && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-          <Card className="bg-black/90 backdrop-blur-md border-white/20 max-w-2xl w-full max-h-[90vh] overflow-auto">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#191C0F]/80 backdrop-blur-sm">
+          <Card className="bg-white/95 backdrop-blur-md border-[#cad95e]/30 max-w-2xl w-full max-h-[90vh] overflow-auto shadow-2xl">
             <div className="relative">
               <img 
                 src={selectedSession.image} 
@@ -790,10 +790,10 @@ export function Agenda() {
               <Button 
                 variant="ghost" 
                 size="sm"
-                className="absolute top-4 right-4 bg-black/60 text-white hover:bg-black/80"
+                className="absolute top-4 right-4 bg-white/90 text-[#191C0F] hover:bg-white border border-[#cad95e]/30"
                 onClick={() => setSelectedSession(null)}
               >
-                ✕
+                <X className="w-4 h-4" />
               </Button>
             </div>
             
@@ -805,40 +805,40 @@ export function Agenda() {
                     {selectedSession.type.charAt(0).toUpperCase() + selectedSession.type.slice(1)}
                   </span>
                 </Badge>
-                <Badge className="bg-white/10 text-white border-white/20">
+                <Badge className="bg-[#cad95e]/20 text-[#191C0F] border-[#cad95e]/30">
                   {selectedSession.time}
                 </Badge>
               </div>
               
-              <h2 className="text-2xl font-sans font-medium text-white mb-4">
+              <h2 className="text-2xl font-sans font-medium text-[#191C0F] mb-4">
                 {selectedSession.title}
               </h2>
               
               {selectedSession.description && (
-                <p className="text-white/80 mb-6">
+                <p className="text-[#191C0F]/80 mb-6">
                   {selectedSession.description}
                 </p>
               )}
               
               <div className="space-y-4">
-                <h3 className="text-lg font-sans font-normal text-white">Speakers:</h3>
+                <h3 className="text-lg font-sans font-normal text-[#191C0F]">Speakers:</h3>
                 {selectedSession.speakers.map((speaker: string, index: number) => (
                   <div key={index} className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
-                      <User className="w-5 h-5 text-white" />
+                    <div className="w-10 h-10 rounded-full bg-[#cad95e]/20 flex items-center justify-center">
+                      <User className="w-5 h-5 text-[#191C0F]" />
                     </div>
-                    <span className="text-white/80">{speaker}</span>
+                    <span className="text-[#191C0F]/80">{speaker}</span>
                   </div>
                 ))}
                 
                 {selectedSession.moderator && (
-                  <div className="pt-4 border-t border-white/20">
-                    <h4 className="text-sm font-sans font-normal text-white/70 mb-2">Moderación:</h4>
+                  <div className="pt-4 border-t border-[#cad95e]/20">
+                    <h4 className="text-sm font-sans font-normal text-[#191C0F]/70 mb-2">Moderación:</h4>
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
-                        <Users className="w-4 h-4 text-white/70" />
+                      <div className="w-8 h-8 rounded-full bg-[#cad95e]/10 flex items-center justify-center">
+                        <Users className="w-4 h-4 text-[#191C0F]/70" />
                       </div>
-                      <span className="text-white/70">{selectedSession.moderator}</span>
+                      <span className="text-[#191C0F]/70">{selectedSession.moderator}</span>
                     </div>
                   </div>
                 )}
