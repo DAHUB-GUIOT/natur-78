@@ -41,6 +41,12 @@ import SessionDetail from "./pages/SessionDetail";
 import Noticias from "./pages/Noticias";
 import BiodiversityExperience from "./pages/BiodiversityExperience";
 import CompanyProfilePage from "./pages/CompanyProfilePage";
+import About from "./pages/About";
+import BlogPost from "./pages/BlogPost";
+import EventDetail from "./pages/EventDetail";
+import CategoryPage from "./pages/CategoryPage";
+import Contact from "./pages/Contact";
+import Services from "./pages/Services";
 import { AuthProvider } from "./contexts/AuthContext";
 import React from "react";
 
@@ -103,6 +109,12 @@ const App = () => (
               <MainLayout><Marketplace /></MainLayout>
             </Route>
             <Route path="/noticias" component={Noticias} />
+            <Route path="/blog/:slug" component={BlogPost} />
+            <Route path="/about" component={About} />
+            <Route path="/contact" component={Contact} />
+            <Route path="/services" component={Services} />
+            <Route path="/evento/:id" component={EventDetail} />
+            <Route path="/categoria/:category" component={CategoryPage} />
             <Route path="/biodiversidad" component={BiodiversityExperience} />
             <Route path="/edit-profile" component={() => {
               const EditProfile = React.lazy(() => import('./pages/EditProfile'));

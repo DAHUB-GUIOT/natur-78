@@ -750,16 +750,17 @@ export function Agenda() {
                             
                             {/* Action buttons */}
                             <div className="flex gap-2 pt-4">
-                              <Link href={`/sesion/${session.id}`} className="flex-1">
-                                <Button 
-                                  variant="outline" 
-                                  size="sm" 
-                                  className="w-full bg-transparent border-white/20 text-white/70 hover:bg-white/10 hover:border-white/40 rounded-none font-mono text-xs tracking-wider"
-                                >
+                              <Button 
+                                asChild
+                                variant="outline" 
+                                size="sm" 
+                                className="w-full bg-transparent border-white/20 text-white/70 hover:bg-white/10 hover:border-white/40 rounded-none font-mono text-xs tracking-wider"
+                              >
+                                <Link to={`/evento/${session.id}`}>
                                   <Eye className="w-3 h-3 mr-2" />
                                   VER MÁS
-                                </Button>
-                              </Link>
+                                </Link>
+                              </Button>
                             </div>
                           </CardContent>
                         </Card>
