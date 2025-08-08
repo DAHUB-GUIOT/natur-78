@@ -546,27 +546,27 @@ export function Agenda() {
         <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black opacity-90"></div>
       </div>
 
-      {/* Main Title Section */}
-      <header className="relative z-20 px-6 py-12">
+      {/* Mobile-First Title Section */}
+      <header className="relative z-20 mobile-p-4 md:px-6 py-8 md:py-12">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
+          <div className="text-center mb-8 md:mb-16">
             <div className="inline-block">
-              <h1 className="text-6xl md:text-8xl font-unbounded font-light mb-6 tracking-wider leading-none" style={{ color: '#cad95e', textShadow: '0 0 20px rgba(202, 217, 94, 0.3)' }}>
+              <h1 className="text-4xl md:text-6xl lg:text-8xl font-unbounded font-light mb-4 md:mb-6 tracking-wider leading-none" style={{ color: '#cad95e', textShadow: '0 0 20px rgba(202, 217, 94, 0.3)' }}>
                 AGENDA
               </h1>
               <div className="w-full h-1 bg-gradient-to-r from-transparent via-white/30 to-transparent mb-4"></div>
             </div>
-            <p className="text-lg text-white/60 max-w-2xl mx-auto mt-8 font-mono">
+            <p className="mobile-text-sm md:text-lg text-white/60 max-w-2xl mx-auto mt-6 md:mt-8 font-mono">
               Festival NATUR 2025 • Turismo Sostenible • Noviembre 14-15
             </p>
           </div>
         </div>
       </header>
 
-      {/* Controls Bar */}
-      <div className="relative z-20 px-6 mb-12">
+      {/* Mobile-First Controls Bar */}
+      <div className="relative z-20 mobile-p-4 md:px-6 mb-8 md:mb-12">
         <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-6 bg-black/40 backdrop-blur-xl border border-white/10 p-6 rounded-none">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-4 md:gap-6 bg-black/40 backdrop-blur-xl border border-white/10 mobile-p-4 md:p-6 rounded-none">
             
             {/* Agenda Tabs - Brutalist Style */}
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full lg:w-auto">

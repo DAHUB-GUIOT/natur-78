@@ -223,15 +223,15 @@ const MinimalistPortalEmpresas = () => {
   );
 
   const renderExperiencesView = () => (
-    <div className="p-4 space-y-6">
+    <div className="mobile-content space-y-6">
       <div className="flex flex-col space-y-4">
-        <h2 className="text-xl font-light text-white">Mis Experiencias</h2>
+        <h2 className="mobile-text-xl font-light text-white">Mis Experiencias</h2>
         
-        {/* Single Button for Experience Creation with Step-by-Step Form */}
+        {/* Mobile-First Button for Experience Creation */}
         <Sheet open={showExperienceForm} onOpenChange={setShowExperienceForm}>
           <SheetTrigger asChild>
-            <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white h-12">
-              <Plus className="w-5 h-5 mr-2" />
+            <Button className="mobile-btn w-full bg-blue-600 hover:bg-blue-700 text-white">
+              <Plus className="w-4 h-4 md:w-5 md:h-5 mr-2" />
               Nueva Experiencia
             </Button>
           </SheetTrigger>
@@ -278,20 +278,20 @@ const MinimalistPortalEmpresas = () => {
   );
 
   const renderProfileView = () => (
-    <div className="p-4 space-y-6 max-w-4xl mx-auto">
-      {/* Header Section */}
+    <div className="mobile-content space-y-6 max-w-4xl mx-auto">
+      {/* Mobile-First Header Section */}
       <div className="text-center space-y-4">
         <div className="relative inline-block">
-          <div className="w-24 h-24 bg-gradient-to-br from-blue-500 to-blue-700 rounded-full flex items-center justify-center text-white text-2xl font-bold shadow-2xl">
+          <div className="w-20 h-20 md:w-24 md:h-24 bg-gradient-to-br from-blue-500 to-blue-700 rounded-full flex items-center justify-center text-white mobile-text-xl md:text-2xl font-bold shadow-2xl">
             {user?.companyName?.substring(0, 2).toUpperCase() || 'TU'}
           </div>
-          <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-green-500 rounded-full border-4 border-white/20 flex items-center justify-center">
-            <div className="w-3 h-3 bg-white rounded-full"></div>
+          <div className="absolute -bottom-2 -right-2 w-6 h-6 md:w-8 md:h-8 bg-green-500 rounded-full border-4 border-white/20 flex items-center justify-center">
+            <div className="w-2 h-2 md:w-3 md:h-3 bg-white rounded-full"></div>
           </div>
         </div>
         <div>
-          <h2 className="text-2xl font-bold text-white">{user?.companyName || 'Tu Empresa'}</h2>
-          <p className="text-white/70">{user?.category || 'Turismo Sostenible'}</p>
+          <h2 className="mobile-text-xl md:text-2xl font-bold text-white">{user?.companyName || 'Tu Empresa'}</h2>
+          <p className="text-white/70 mobile-text-sm">{user?.category || 'Turismo Sostenible'}</p>
         </div>
         <Button 
           onClick={() => window.location.href = '/edit-profile'}
@@ -520,15 +520,15 @@ const MinimalistPortalEmpresas = () => {
         onNavigation={handleNavigation}
       />
       
-      {/* Main Content - Mobile First */}
-      <div className="relative">
-        <main className={activeView === 'map' ? 'h-screen' : 'min-h-screen pt-16'}>
+      {/* Mobile-First Main Content */}
+      <div className="mobile-content-full">
+        <main className={activeView === 'map' ? 'mobile-map' : 'mobile-content'}>
           <motion.div
             key={activeView}
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
-            className={activeView === 'map' ? 'h-full' : 'min-h-screen bg-gradient-to-br from-gray-900 via-black to-blue-900'}
+            transition={{ duration: 0.2 }}
+            className={activeView === 'map' ? 'h-full mobile-fade-in' : 'min-h-screen bg-gradient-to-br from-gray-900 via-black to-blue-900 mobile-fade-in'}
           >
             {renderContent()}
           </motion.div>

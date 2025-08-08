@@ -216,7 +216,7 @@ const Auth = () => {
                         type="email"
                         value={loginData.email}
                         onChange={(e) => setLoginData(prev => ({ ...prev, email: e.target.value }))}
-                        className="pl-12 border-2 bg-white/10 backdrop-blur-sm text-white font-medium text-lg p-4 placeholder-white/60 border-[#cad95e]"
+                        className="mobile-input pl-12 border-2 bg-white/10 backdrop-blur-sm text-white font-medium placeholder-white/60 border-[#cad95e]"
                         placeholder="tu@email.com"
                         required
                       />
@@ -234,7 +234,7 @@ const Auth = () => {
                         type="password"
                         value={loginData.password}
                         onChange={(e) => setLoginData(prev => ({ ...prev, password: e.target.value }))}
-                        className="pl-12 border-2 bg-white/10 backdrop-blur-sm text-white font-medium text-lg p-4 placeholder-white/60 border-[#cad95e]"
+                        className="mobile-input pl-12 border-2 bg-white/10 backdrop-blur-sm text-white font-medium placeholder-white/60 border-[#cad95e]"
                         placeholder="••••••••"
                         required
                       />

@@ -134,12 +134,12 @@ const AuthViajeros = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-green-900 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-green-900 mobile-content-full">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="w-full max-w-md"
+        className="w-full max-w-md mx-auto mobile-fade-in"
       >
         <div className="text-center mb-8">
           <motion.div
@@ -158,11 +158,11 @@ const AuthViajeros = () => {
           </p>
         </div>
 
-        <Card className="backdrop-blur-sm bg-black/40 border border-white/20 shadow-xl">
-          <CardHeader>
-            <CardTitle className="text-center text-white">Acceso Viajeros</CardTitle>
+        <Card className="mobile-card bg-black/40 border-white/20 shadow-xl">
+          <CardHeader className="mobile-p-4">
+            <CardTitle className="text-center text-white mobile-text-xl">Acceso Viajeros</CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="mobile-p-4">
             <Tabs defaultValue="login" className="w-full">
               <TabsList className="grid w-full grid-cols-2 bg-white/10 border-white/20">
                 <TabsTrigger value="login" className="text-white data-[state=active]:bg-green-600 data-[state=active]:text-white">Iniciar Sesión</TabsTrigger>
@@ -172,7 +172,7 @@ const AuthViajeros = () => {
               <TabsContent value="login" className="space-y-4">
                 <form onSubmit={handleLogin} className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="email" className="text-white">Email</Label>
+                    <Label htmlFor="email" className="text-white mobile-text-sm">Email</Label>
                     <Input
                       id="email"
                       name="email"
@@ -180,12 +180,12 @@ const AuthViajeros = () => {
                       placeholder="tu@email.com"
                       defaultValue="dahub.tech@gmail.com"
                       required
-                      className="bg-white/10 border-white/30 text-white placeholder:text-white/50"
+                      className="mobile-input bg-white/10 border-white/30 text-white placeholder:text-white/50"
                       data-testid="input-email-login"
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="password" className="text-white">Contraseña</Label>
+                    <Label htmlFor="password" className="text-white mobile-text-sm">Contraseña</Label>
                     <Input
                       id="password"
                       name="password"
@@ -193,13 +193,13 @@ const AuthViajeros = () => {
                       placeholder="••••••••"
                       defaultValue="12345678"
                       required
-                      className="bg-white/10 border-white/30 text-white placeholder:text-white/50"
+                      className="mobile-input bg-white/10 border-white/30 text-white placeholder:text-white/50"
                       data-testid="input-password-login"
                     />
                   </div>
                   <Button 
                     type="submit" 
-                    className="w-full bg-green-600 hover:bg-green-700"
+                    className="mobile-btn w-full bg-green-600 hover:bg-green-700"
                     disabled={loginMutation.isPending}
                     data-testid="button-login"
                   >
@@ -209,58 +209,58 @@ const AuthViajeros = () => {
               </TabsContent>
               
               <TabsContent value="register" className="space-y-4">
-                <form onSubmit={handleRegister} className="space-y-4">
-                  <div className="grid grid-cols-2 gap-4">
+                <form onSubmit={handleRegister} className="mobile-form space-y-4">
+                  <div className="mobile-grid-2 gap-3">
                     <div className="space-y-2">
-                      <Label htmlFor="firstName" className="text-white">Nombre</Label>
+                      <Label htmlFor="firstName" className="text-white mobile-text-sm">Nombre</Label>
                       <Input
                         id="firstName"
                         name="firstName"
                         placeholder="Juan"
                         required
-                        className="bg-white/10 border-white/30 text-white placeholder:text-white/50"
+                        className="mobile-input bg-white/10 border-white/30 text-white placeholder:text-white/50"
                         data-testid="input-firstName"
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="lastName" className="text-white">Apellido</Label>
+                      <Label htmlFor="lastName" className="text-white mobile-text-sm">Apellido</Label>
                       <Input
                         id="lastName"
                         name="lastName"
                         placeholder="Pérez"
                         required
-                        className="bg-white/10 border-white/30 text-white placeholder:text-white/50"
+                        className="mobile-input bg-white/10 border-white/30 text-white placeholder:text-white/50"
                         data-testid="input-lastName"
                       />
                     </div>
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="email-register" className="text-white">Email</Label>
+                    <Label htmlFor="email-register" className="text-white mobile-text-sm">Email</Label>
                     <Input
                       id="email-register"
                       name="email"
                       type="email"
                       placeholder="tu@email.com"
                       required
-                      className="bg-white/10 border-white/30 text-white placeholder:text-white/50"
+                      className="mobile-input bg-white/10 border-white/30 text-white placeholder:text-white/50"
                       data-testid="input-email-register"
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="password-register" className="text-white">Contraseña</Label>
+                    <Label htmlFor="password-register" className="text-white mobile-text-sm">Contraseña</Label>
                     <Input
                       id="password-register"
                       name="password"
                       type="password"
                       placeholder="••••••••"
                       required
-                      className="bg-white/10 border-white/30 text-white placeholder:text-white/50"
+                      className="mobile-input bg-white/10 border-white/30 text-white placeholder:text-white/50"
                       data-testid="input-password-register"
                     />
                   </div>
                   <Button 
                     type="submit" 
-                    className="w-full bg-green-600 hover:bg-green-700"
+                    className="mobile-btn w-full bg-green-600 hover:bg-green-700"
                     disabled={registerMutation.isPending}
                     data-testid="button-register"
                   >

@@ -182,27 +182,24 @@ const PortalViajerosNew = () => {
           onUserSelect={handleViewProfile}
           onSendMessage={handleSendMessage}
           isMessagingActive={createConversationMutation.isPending}
-          showExperiences={true}
-          mapTitle="Mapa de Experiencias"
-          mapSubtitle="Explora experiencias sostenibles en toda Colombia"
         />
       </div>
 
-      {/* Floating Search Panel */}
-      <div className="absolute top-4 left-4 right-4 z-10">
-        <Card className="bg-black/60 backdrop-blur-sm border-white/20">
-          <CardContent className="p-4">
-            <div className="flex flex-col md:flex-row gap-4">
+      {/* Mobile-First Search Panel */}
+      <div className="absolute top-4 left-2 right-2 md:left-4 md:right-4 z-10">
+        <Card className="mobile-card bg-black/60 backdrop-blur-sm border-white/20">
+          <CardContent className="mobile-p-3 md:p-4">
+            <div className="flex flex-col md:flex-row gap-3 md:gap-4">
               <div className="flex-1 relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/40 w-4 h-4" />
                 <Input
-                  placeholder="Buscar experiencias por ubicación, tipo..."
+                  placeholder="Buscar experiencias..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10 bg-white/10 border-white/30 text-white placeholder:text-white/50 h-10"
+                  className="mobile-input pl-10 bg-white/10 border-white/30 text-white placeholder:text-white/50"
                 />
               </div>
-              <Button className="bg-green-600 hover:bg-green-700 text-white px-6">
+              <Button className="mobile-btn bg-green-600 hover:bg-green-700 text-white px-4 md:px-6">
                 <TreePine className="w-4 h-4 mr-2" />
                 Filtrar
               </Button>
@@ -239,14 +236,14 @@ const PortalViajerosNew = () => {
   );
 
   const renderReservasView = () => (
-    <div className="p-4 space-y-6 max-w-4xl mx-auto">
-      <h2 className="text-2xl font-bold text-white">Mis Reservas</h2>
+    <div className="mobile-content space-y-6 max-w-4xl mx-auto">
+      <h2 className="mobile-text-2xl font-bold text-white">Mis Reservas</h2>
       <div className="text-center py-16">
-        <Calendar className="w-20 h-20 text-white/30 mx-auto mb-6" />
-        <h3 className="text-lg font-light text-white mb-3">No tienes reservas aún</h3>
-        <p className="text-white/60 mb-8 px-4">Explora experiencias increíbles y haz tu primera reserva</p>
+        <Calendar className="w-16 h-16 md:w-20 md:h-20 text-white/30 mx-auto mb-6" />
+        <h3 className="mobile-text-lg font-light text-white mb-3">No tienes reservas aún</h3>
+        <p className="text-white/60 mb-8 mobile-p-4">Explora experiencias increíbles y haz tu primera reserva</p>
         <Button 
-          className="bg-green-600 hover:bg-green-700 text-white"
+          className="mobile-btn bg-green-600 hover:bg-green-700 text-white"
           onClick={() => setActiveView('experiencias')}
         >
           Explorar Experiencias
@@ -281,10 +278,10 @@ const PortalViajerosNew = () => {
   );
 
   const renderProfileView = () => (
-    <div className="p-4 space-y-6">
-      <h2 className="text-xl font-light text-white mb-4">Mi Perfil</h2>
-      <Card className="bg-white/10 backdrop-blur-sm border-white/20">
-        <CardContent className="p-6">
+    <div className="mobile-content space-y-6">
+      <h2 className="mobile-text-xl font-light text-white mb-4">Mi Perfil</h2>
+      <Card className="mobile-card bg-white/10 backdrop-blur-sm border-white/20">
+        <CardContent className="mobile-p-4 md:p-6">
           <TwitterProfileSection />
         </CardContent>
       </Card>
@@ -404,22 +401,20 @@ const PortalViajerosNew = () => {
         onNavigation={handleNavigation}
       />
       
-      {/* Main Content - Mobile First */}
-      <div className="relative">
-        <main className={(activeView === 'map' || activeView === 'experiencias') ? 'h-screen' : 'min-h-screen pt-16'}>
+      {/* Mobile-First Main Content */}
+      <div className="mobile-content-full">
+        <main className={(activeView === 'map' || activeView === 'experiencias') ? 'mobile-map' : 'mobile-content'}>
           <motion.div
             key={activeView}
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
-            className={(activeView === 'map' || activeView === 'experiencias') ? 'h-full' : 'min-h-screen bg-gradient-to-br from-gray-900 via-black to-blue-900'}
+            transition={{ duration: 0.2 }}
+            className={(activeView === 'map' || activeView === 'experiencias') ? 'h-full mobile-fade-in' : 'min-h-screen bg-gradient-to-br from-gray-900 via-black to-blue-900 mobile-fade-in'}
           >
             {renderContent()}
           </motion.div>
         </main>
       </div>
-
-      {/* Mobile navigation handled by HeaderButtons */}
     </div>
   );
 };

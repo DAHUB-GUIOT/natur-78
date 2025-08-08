@@ -50,28 +50,28 @@ const Tickets = () => {
       <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=2070')] bg-cover bg-center opacity-10"></div>
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
       
-      {/* Organic floating shapes */}
-      <div className="absolute top-20 left-10 w-32 h-32 bg-green-400/10 rounded-full blur-xl animate-pulse"></div>
-      <div className="absolute top-40 right-20 w-24 h-24 bg-yellow-400/15 rounded-full blur-lg animate-pulse delay-1000"></div>
-      <div className="absolute bottom-20 left-1/4 w-40 h-40 bg-emerald-400/8 rounded-full blur-2xl animate-pulse delay-2000"></div>
+      {/* Mobile-First Organic floating shapes */}
+      <div className="absolute top-16 left-4 md:top-20 md:left-10 w-20 h-20 md:w-32 md:h-32 bg-green-400/10 rounded-full blur-xl animate-pulse"></div>
+      <div className="absolute top-32 right-8 md:top-40 md:right-20 w-16 h-16 md:w-24 md:h-24 bg-yellow-400/15 rounded-full blur-lg animate-pulse delay-1000"></div>
+      <div className="absolute bottom-16 left-1/4 w-24 h-24 md:w-40 md:h-40 bg-emerald-400/8 rounded-full blur-2xl animate-pulse delay-2000"></div>
 
-      {/* Navigation */}
-      <nav className="relative z-50 flex items-center justify-between p-6 backdrop-blur-md bg-black/20 border-b border-white/10">
-        <Link to="/" className="text-2xl font-bold text-yellow-400 hover:text-yellow-300 transition-colors font-gasoek">
+      {/* Mobile-First Navigation */}
+      <nav className="relative z-50 flex items-center justify-between mobile-p-4 md:p-6 backdrop-blur-md bg-black/20 border-b border-white/10">
+        <Link to="/" className="mobile-text-xl md:text-2xl font-bold text-yellow-400 hover:text-yellow-300 transition-colors font-gasoek">
           NATUR
         </Link>
-        <div className="flex items-center gap-4">
-          <Link to="/portal-empresas" className="text-white/80 hover:text-white transition-colors text-sm uppercase tracking-wide">
-            Portal Empresas
+        <div className="flex items-center gap-2 md:gap-4">
+          <Link to="/portal-empresas" className="text-white/80 hover:text-white transition-colors mobile-text-xs md:text-sm uppercase tracking-wide">
+            <span className="hidden md:inline">Portal </span>Empresas
           </Link>
-          <Link to="/portal-viajeros" className="text-white/80 hover:text-white transition-colors text-sm uppercase tracking-wide">
+          <Link to="/portal-viajeros" className="text-white/80 hover:text-white transition-colors mobile-text-xs md:text-sm uppercase tracking-wide">
             Experiencias
           </Link>
         </div>
       </nav>
 
-      {/* Main Content */}
-      <div className="relative z-10 container mx-auto px-6 py-12">
+      {/* Mobile-First Main Content */}
+      <div className="relative z-10 container mx-auto mobile-p-4 md:px-6 py-8 md:py-12">
         {/* Header */}
         <div className="text-center mb-16">
           <h1 className="text-5xl md:text-7xl font-bold text-yellow-400 mb-6 font-gasoek uppercase tracking-wide">
