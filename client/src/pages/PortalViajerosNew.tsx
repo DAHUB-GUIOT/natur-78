@@ -16,12 +16,14 @@ import { InteractiveMap } from "@/components/dashboard/InteractiveMap";
 import { WhatsAppChat } from "@/components/messaging/WhatsAppChat";
 import TwitterProfileSection from "@/components/profile/TwitterProfileSection";
 import { HeaderButtons } from "@/components/layout/HeaderButtons";
+import { DesktopSidebar } from "@/components/layout/DesktopSidebar";
 import UserFlowManager from "@/components/userflow/UserFlowManager";
 import AuthViajeros from "./AuthViajeros";
 
 const PortalViajerosNew = () => {
   const [activeView, setActiveView] = useState("experiencias"); // Changed default to experiencias
   const [searchQuery, setSearchQuery] = useState("");
+  const [sidebarOpen, setSidebarOpen] = useState(true); // Desktop sidebar state
   const [, setLocation] = useLocation();
   const queryClient = useQueryClient();
 
@@ -398,8 +400,18 @@ const PortalViajerosNew = () => {
         onNavigation={handleNavigation}
       />
       
-      {/* Mobile-First Main Content */}
-      <div className="mobile-content-full">
+      {/* Desktop Sidebar */}
+      <DesktopSidebar
+        isOpen={sidebarOpen}
+        onToggle={() => setSidebarOpen(!sidebarOpen)}
+        activeView={activeView}
+        onNavigation={handleNavigation}
+        navItems={navItems}
+        portalType="viajeros"
+      />
+
+      {/* Main Content with Desktop Sidebar Support */}
+      <div className={`mobile-content-full ${sidebarOpen ? 'lg:desktop-main-content' : 'lg:desktop-main-content lg:sidebar-hidden'}`}>
         <main className={(activeView === 'map' || activeView === 'experiencias') ? 'mobile-map' : 'mobile-content'}>
           <motion.div
             key={activeView}

@@ -124,7 +124,7 @@ body {
   }
 }
 
-/* Desktop navigation enhancements */
+/* Desktop navigation enhancements with glassmorphism sidebar */
 @media (min-width: 1024px) {
   .desktop-nav-enhanced {
     background: rgba(10, 26, 10, 0.8);
@@ -149,30 +149,142 @@ body {
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
   }
   
-  .desktop-dropdown-enhanced {
-    background: rgba(30, 58, 138, 0.95);
-    backdrop-filter: blur(30px);
-    border: 2px solid rgba(59, 130, 246, 0.3);
-    border-radius: 1rem;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
-    min-width: 280px;
+  /* Glassmorphism Sidebar for Desktop */
+  .desktop-sidebar {
+    position: fixed;
+    top: 80px;
+    left: 0;
+    width: 280px;
+    height: calc(100vh - 80px);
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(25px);
+    border-right: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 4px 0 30px rgba(0, 0, 0, 0.2);
+    z-index: 40;
+    overflow-y: auto;
+    transition: all 0.3s ease;
+  }
+  
+  .desktop-sidebar.hidden {
+    transform: translateX(-100%);
+  }
+  
+  .desktop-sidebar-content {
+    padding: 2rem 1.5rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .desktop-sidebar-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  }
+  
+  .desktop-sidebar-title {
+    color: white;
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    opacity: 0.9;
+  }
+  
+  .desktop-sidebar-subtitle {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.85rem;
+    margin-top: 0.25rem;
+  }
+  
+  .desktop-nav-section {
+    margin-bottom: 2rem;
+  }
+  
+  .desktop-nav-section-title {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+    padding-left: 0.5rem;
   }
   
   .desktop-nav-item {
-    padding: 0.75rem 1rem;
-    margin: 0.25rem;
-    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.875rem 1rem;
+    margin: 0.25rem 0;
+    border-radius: 0.75rem;
+    color: white;
+    font-weight: 500;
+    font-size: 0.95rem;
     transition: all 0.2s ease;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    width: 100%;
+    text-align: left;
   }
   
   .desktop-nav-item:hover {
-    background: rgba(59, 130, 246, 0.2);
+    background: rgba(255, 255, 255, 0.12);
     transform: translateX(4px);
+    color: rgba(202, 217, 94, 1);
   }
   
   .desktop-nav-item.active {
-    background: rgba(59, 130, 246, 0.3);
-    border-left: 3px solid rgba(59, 130, 246, 0.8);
+    background: rgba(202, 217, 94, 0.15);
+    color: rgba(202, 217, 94, 1);
+    border-left: 3px solid rgba(202, 217, 94, 0.8);
+    font-weight: 600;
+  }
+  
+  .desktop-nav-item-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    flex-shrink: 0;
+    opacity: 0.8;
+  }
+  
+  .desktop-nav-item.active .desktop-nav-item-icon {
+    opacity: 1;
+  }
+  
+  /* Content area adjustment for sidebar */
+  .desktop-main-content {
+    margin-left: 280px;
+    transition: all 0.3s ease;
+  }
+  
+  .desktop-main-content.sidebar-hidden {
+    margin-left: 0;
+  }
+  
+  /* Sidebar toggle button */
+  .desktop-sidebar-toggle {
+    position: fixed;
+    top: 90px;
+    left: 15px;
+    z-index: 50;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 0.5rem;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    transition: all 0.2s ease;
+  }
+  
+  .desktop-sidebar-toggle:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: scale(1.05);
   }
 }
 

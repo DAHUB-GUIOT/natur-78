@@ -15,6 +15,7 @@ import { InteractiveMap } from "@/components/dashboard/InteractiveMap";
 import { WhatsAppChat } from "@/components/messaging/WhatsAppChat";
 import TwitterProfileSection from "@/components/profile/TwitterProfileSection";
 import { HeaderButtons } from "@/components/layout/HeaderButtons";
+import { DesktopSidebar } from "@/components/layout/DesktopSidebar";
 import UserFlowManager from "@/components/userflow/UserFlowManager";
 import ExperienceForm from "@/components/dashboard/ExperienceForm";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
@@ -23,6 +24,7 @@ const MinimalistPortalEmpresas = () => {
   const [activeView, setActiveView] = useState("map");
   const [searchQuery, setSearchQuery] = useState("");
   const [showExperienceForm, setShowExperienceForm] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(true); // Desktop sidebar state
   const [, setLocation] = useLocation();
   const queryClient = useQueryClient();
 
@@ -521,8 +523,18 @@ const MinimalistPortalEmpresas = () => {
         onNavigation={handleNavigation}
       />
       
-      {/* Mobile-First Main Content */}
-      <div className="mobile-content-full">
+      {/* Desktop Sidebar */}
+      <DesktopSidebar
+        isOpen={sidebarOpen}
+        onToggle={() => setSidebarOpen(!sidebarOpen)}
+        activeView={activeView}
+        onNavigation={handleNavigation}
+        navItems={navItems}
+        portalType="empresas"
+      />
+
+      {/* Main Content with Desktop Sidebar Support */}
+      <div className={`mobile-content-full ${sidebarOpen ? 'lg:desktop-main-content' : 'lg:desktop-main-content lg:sidebar-hidden'}`}>
         <main className={activeView === 'map' ? 'mobile-map' : 'mobile-content'}>
           <motion.div
             key={activeView}
