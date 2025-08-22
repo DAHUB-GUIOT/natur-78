@@ -78,6 +78,7 @@ interface InteractiveMapProps {
 export const InteractiveMap = ({ experiences = [], selectedCategory, showMarkers = false, onMarkerClick }: InteractiveMapProps) => {
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<mapboxgl.Map | null>(null);
+  const isUnmounted = useRef(false);
   const [selectedFilter, setSelectedFilter] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCompany, setSelectedCompany] = useState<any>(null);
@@ -92,7 +93,7 @@ export const InteractiveMap = ({ experiences = [], selectedCategory, showMarkers
 
   // Initialize map
   useEffect(() => {
-    if (map.current) return; // Initialize map only once
+    if (map.current || isUnmounted.current) return; // Initialize map only once
     
     // Set the Mapbox access token
     mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_PUBLIC_KEY || '';
@@ -166,16 +167,23 @@ export const InteractiveMap = ({ experiences = [], selectedCategory, showMarkers
     });
 
     return () => {
+      isUnmounted.current = true;
       if (map.current) {
         try {
-          // Check if map is still valid before removing
-          if (map.current.getContainer() && map.current.getContainer().parentNode) {
-            map.current.remove();
+          // Use a more robust cleanup approach
+          const mapInstance = map.current;
+          map.current = null; // Clear reference first
+          
+          // Check if map container still exists and is attached
+          const container = mapInstance.getContainer?.();
+          if (container && container.parentNode && document.contains(container)) {
+            // Only remove if the map is still properly loaded
+            if (mapInstance._loaded !== false && typeof mapInstance.remove === 'function') {
+              mapInstance.remove();
+            }
           }
         } catch (error) {
-          // Silently handle map cleanup errors
-        } finally {
-          map.current = null;
+          // Completely silent cleanup - any errors are handled gracefully
         }
       }
     };
@@ -183,7 +191,7 @@ export const InteractiveMap = ({ experiences = [], selectedCategory, showMarkers
 
   // Update markers when filtered companies or experiences change
   useEffect(() => {
-    if (!map.current) return;
+    if (!map.current || isUnmounted.current) return;
 
     // Clear existing markers
     const existingMarkers = document.querySelectorAll('.mapbox-marker');
