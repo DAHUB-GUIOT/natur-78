@@ -142,7 +142,7 @@ const UserFlowManager: React.FC = () => {
       queryClient.invalidateQueries({ queryKey: ['/api/auth/me'] });
     },
     onError: (error) => {
-      console.warn('Failed to update map visibility:', error);
+      // Silently handle map visibility errors
     }
   });
 
@@ -165,7 +165,7 @@ const UserFlowManager: React.FC = () => {
       queryClient.invalidateQueries({ queryKey: ['/api/auth/me'] });
     },
     onError: (error) => {
-      console.warn('Failed to update profile completion:', error);
+      // Silently handle profile completion errors
     }
   });
 
@@ -174,7 +174,7 @@ const UserFlowManager: React.FC = () => {
       try {
         updateProfileCompletionMutation.mutate();
       } catch (error) {
-        console.warn('Failed to trigger profile completion update:', error);
+        // Silently handle profile completion trigger errors
       }
     }
   }, [user]);

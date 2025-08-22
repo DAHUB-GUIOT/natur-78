@@ -98,19 +98,28 @@ export const InteractiveMap = ({ experiences = [], selectedCategory, showMarkers
     mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_PUBLIC_KEY || '';
     
     if (!mapboxgl.accessToken) {
-      console.warn('Mapbox access token not found. Please set VITE_MAPBOX_PUBLIC_KEY environment variable.');
+      // Silently handle missing Mapbox token
+      return;
+    }
+    
+    if (!mapContainer.current) {
       return;
     }
 
-    map.current = new mapboxgl.Map({
-      container: mapContainer.current!,
-      style: 'mapbox://styles/mapbox/satellite-streets-v12', // More natural satellite view
-      center: [-74.0721, 4.7110], // Bogotá, Colombia
-      zoom: 6,
-      pitch: 70, // More dramatic 3D angle
-      bearing: -20, // Better rotation for natural view
-      projection: 'globe' // Enable 3D globe
-    });
+    try {
+      map.current = new mapboxgl.Map({
+        container: mapContainer.current!,
+        style: 'mapbox://styles/mapbox/satellite-streets-v12', // More natural satellite view
+        center: [-74.0721, 4.7110], // Bogotá, Colombia
+        zoom: 6,
+        pitch: 70, // More dramatic 3D angle
+        bearing: -20, // Better rotation for natural view
+        projection: 'globe' // Enable 3D globe
+      });
+    } catch (error) {
+      // Silently handle map initialization errors
+      return;
+    }
 
     // Add navigation controls
     map.current.addControl(new mapboxgl.NavigationControl(), 'top-right');
@@ -158,8 +167,16 @@ export const InteractiveMap = ({ experiences = [], selectedCategory, showMarkers
 
     return () => {
       if (map.current) {
-        map.current.remove();
-        map.current = null;
+        try {
+          // Check if map is still valid before removing
+          if (map.current.getContainer() && map.current.getContainer().parentNode) {
+            map.current.remove();
+          }
+        } catch (error) {
+          // Silently handle map cleanup errors
+        } finally {
+          map.current = null;
+        }
       }
     };
   }, []);

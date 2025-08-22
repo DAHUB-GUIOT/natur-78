@@ -69,7 +69,6 @@ const PortalViajerosNew = () => {
     },
     onError: (error) => {
       // Silently handle conversation creation errors
-      console.warn('Failed to create conversation:', error);
     }
   });
 
