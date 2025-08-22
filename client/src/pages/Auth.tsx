@@ -268,15 +268,15 @@ const Auth = () => {
                       <h3 className="text-2xl font-bold text-[#cad95e]">
                         Registro Empresarial Completo
                       </h3>
-                      <p className="text-white/80 text-lg leading-relaxed">
-                        Para acceder al Portal Empresas necesitas completar tu registro con toda la información de tu empresa.
+                      <p className="text-white/80 text-base leading-relaxed">
+                        Completa el registro con la información de tu empresa para acceder al portal.
                       </p>
                       <p className="text-white/60 text-sm">
-                        Incluye detalles de empresa, servicios, ubicación, horarios, certificaciones, redes sociales y más.
+                        Proceso simplificado con verificación por email.
                       </p>
                     </div>
 
-                    <Link to="/registro-empresa">
+                    <Link to="/registro">
                       <Button
                         className="w-full text-black py-4 font-bold text-lg shadow-xl hover:opacity-90"
                         style={{ backgroundColor: '#cad95e' }}
