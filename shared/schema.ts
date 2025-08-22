@@ -34,6 +34,8 @@ export const users = pgTable("users", {
   role: userRoleEnum("role").default("viajero").notNull(),
   isActive: boolean("is_active").default(true).notNull(),
   emailVerified: boolean("email_verified").default(false).notNull(),
+  verificationToken: text("verification_token"), // For email verification
+  verificationTokenExpiry: timestamp("verification_token_expiry"),
   // Location fields for map positioning
   address: text("address"),
   city: text("city"),
@@ -54,6 +56,14 @@ export const users = pgTable("users", {
   businessType: text("business_type"),
   yearsExperience: integer("years_experience"),
   teamSize: integer("team_size"),
+  // Enhanced company fields for complete registration
+  companyDescription: text("company_description"),
+  companyCategory: text("company_category"), // Main business category
+  companySubcategory: text("company_subcategory"), // Specific subcategory
+  servicesOffered: jsonb("services_offered"), // Array of services
+  operatingHours: jsonb("operating_hours"), // Business hours
+  targetMarket: text("target_market"),
+  registrationComplete: boolean("registration_complete").default(false),
   // Profile completion and verification
   profileCompletion: integer("profile_completion").default(0),
   isVerified: boolean("is_verified").default(false),
