@@ -112,19 +112,7 @@ const MinimalistPortalEmpresas = () => {
 
   const user = (currentUser as any)?.user || currentUser;
 
-  // Show loading state if user is being fetched
-  if (userLoading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 flex items-center justify-center">
-        <div className="text-center space-y-4">
-          <div className="w-12 h-12 border-4 border-green-400 border-t-transparent rounded-full animate-spin mx-auto"></div>
-          <p className="text-white text-lg">Cargando Portal Empresas...</p>
-        </div>
-      </div>
-    );
-  }
-
-  // Directory users fetch - optimized and conditional
+  // Directory users fetch - ALL HOOKS MUST BE CALLED BEFORE CONDITIONAL RETURNS
   const { data: directoryUsers = [], isLoading: directoryLoading } = useQuery({
     queryKey: ["/api/directory/users"],
     queryFn: async () => {
@@ -134,7 +122,7 @@ const MinimalistPortalEmpresas = () => {
     staleTime: 10 * 60 * 1000, // Cache for 10 minutes
     refetchOnWindowFocus: false,
     refetchOnMount: false,
-    enabled: !!user, // Only fetch when user is authenticated
+    enabled: !!user && !userLoading, // Only fetch when user is authenticated and loaded
   });
 
   // Show loading state if user is being fetched
