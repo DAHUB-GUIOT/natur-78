@@ -249,6 +249,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
         address, city, country, phone, website, operatingHours
       } = req.body;
 
+      console.log("📋 Company registration attempt:", { 
+        email, 
+        companyName, 
+        companyCategory, 
+        hasDescription: !!companyDescription,
+        servicesCount: servicesOffered?.length || 0
+      });
+
       // Validate required fields
       if (!email || !password || !companyName || !companyCategory) {
         return res.status(400).json({ error: "Missing required fields" });
@@ -284,24 +292,29 @@ export async function registerRoutes(app: Express): Promise<Server> {
         country: country || 'Colombia',
         phone,
         website,
-        companyDescription,
-        companyCategory,
-        companySubcategory,
-        servicesOffered,
-        targetMarket,
+        companyDescription: companyDescription || '',
+        companyCategory: companyCategory || '',
+        companySubcategory: companySubcategory || '',
+        servicesOffered: servicesOffered || [],
+        targetMarket: targetMarket || '',
         yearsExperience: yearsExperience || 0,
         teamSize: teamSize || 0,
-        operatingHours,
-        businessType: req.body.businessType,
+        operatingHours: operatingHours || {},
+        businessType: req.body.businessType || '',
         certifications: req.body.certifications || [],
         socialMedia: req.body.socialMedia || {},
-        businessLicense: req.body.businessLicense,
-        taxId: req.body.taxId,
-        emergencyContact: req.body.emergencyContact,
+        businessLicense: req.body.businessLicense || '',
+        taxId: req.body.taxId || '',
+        emergencyContact: req.body.emergencyContact || {},
         sustainabilityPractices: req.body.sustainabilityPractices || [],
         accessibilityFeatures: req.body.accessibilityFeatures || [],
         languages: req.body.languages || ['Español'],
         registrationComplete: true,
+        profileCompletion: 100,
+        isVerified: false,
+        isContactCardVisible: true,
+        isMapVisible: true,
+        verificationLevel: 'basic',
         // Set default coordinates for Bogotá if not provided
         coordinates: { lat: 4.7110, lng: -74.0721 }
       };
