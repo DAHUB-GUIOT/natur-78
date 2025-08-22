@@ -20,11 +20,11 @@ export default function Heart() {
   });
 
   const handleSubscribe = (plan: string) => {
-    console.log("Subscribing to plan:", plan, "Billing type:", billingType);
+
   };
 
   const handleContribute = (campaignId: string, amount?: number) => {
-    console.log("Contributing to campaign:", campaignId, "Amount:", amount || "Not specified");
+
   };
 
   return (

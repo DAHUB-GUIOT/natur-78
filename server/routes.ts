@@ -59,14 +59,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Support both session-based auth (Google OAuth) and custom session auth
       const userId = req.session.userId || (req.user as any)?.id;
       
-      console.log("🔍 Auth check - Session ID:", req.sessionID);
-      console.log("🔍 Auth check - Session userId:", req.session.userId);
-      console.log("🔍 Auth check - req.user:", req.user);
-      console.log("🔍 Auth check - Headers:", req.headers.cookie);
-      console.log("🔍 Auth check - Final userId:", userId);
-      
       if (!userId) {
-        console.log("❌ No userId found in session or req.user");
         return res.status(401).json({ error: "Not authenticated" });
       }
 
@@ -109,9 +102,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       // Set session with user ID
       req.session.userId = user.id;
-      
-      console.log("✅ Login successful - Setting session userId:", user.id);
-      console.log("✅ Login successful - Session ID:", req.sessionID);
       
       // Force session save to ensure persistence before responding
       req.session.save((err) => {

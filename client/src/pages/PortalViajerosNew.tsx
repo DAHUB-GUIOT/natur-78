@@ -4,16 +4,14 @@ import { useLocation } from "wouter";
 import { motion } from "framer-motion";
 import { 
   Map, Heart, Star, MessageCircle, Settings, User, Calendar,
-  Search, TreePine, Plane, Building2, MapPin, Globe, Hotel, 
-  Utensils, Car, GraduationCap, Smartphone, Handshake, Leaf,
-  Camera, Coffee, Waves, Mountain
+  Search, TreePine, Building2, MapPin
 } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+
 import { InteractiveMap } from "@/components/dashboard/InteractiveMap";
 import { WhatsAppChat } from "@/components/messaging/WhatsAppChat";
 import TwitterProfileSection from "@/components/profile/TwitterProfileSection";
@@ -25,39 +23,11 @@ import AuthViajeros from "./AuthViajeros";
 const PortalViajerosNew = () => {
   const [activeView, setActiveView] = useState("experiencias"); // Changed default to experiencias
   const [searchQuery, setSearchQuery] = useState("");
-  const [sidebarOpen, setSidebarOpen] = useState(true); // Desktop sidebar state
+  const [sidebarOpen, setSidebarOpen] = useState(window.innerWidth >= 1024); // Responsive default
   const [, setLocation] = useLocation();
   const queryClient = useQueryClient();
 
-  // Enhanced category and subcategory icon mapping for traveler portal
-  const getCategoryIcon = (category: string) => {
-    switch (category?.toLowerCase()) {
-      case 'agencias u operadores turísticos': return '🏢';
-      case 'alojamientos sostenibles': return '🏨';
-      case 'gastronomía sostenible': return '🍽️';
-      case 'movilidad y transporte ecológico': return '🚗';
-      case 'ong y fundaciones': return '❤️';
-      case 'educación y sensibilización ambiental': return '🎓';
-      case 'tecnología para el turismo sostenible': return '📱';
-      case 'aliados y patrocinadores': return '🤝';
-      default: return '🌱';
-    }
-  };
 
-  const getSubcategoryIcon = (subcategory: string) => {
-    const subcat = subcategory?.toLowerCase();
-    if (subcat?.includes('ecoturismo')) return '🌿';
-    if (subcat?.includes('aventura')) return '⛰️';
-    if (subcat?.includes('cultural')) return '🏛️';
-    if (subcat?.includes('gastronomico')) return '👨‍🍳';
-    if (subcat?.includes('educativo')) return '📚';
-    if (subcat?.includes('wellness')) return '🧘';
-    if (subcat?.includes('fotografia')) return '📸';
-    if (subcat?.includes('naturaleza')) return '🦋';
-    if (subcat?.includes('playa')) return '🏖️';
-    if (subcat?.includes('montaña')) return '🏔️';
-    return '⭐';
-  };
 
   // Navigation items for traveler portal
   const navItems = [
@@ -74,7 +44,7 @@ const PortalViajerosNew = () => {
     setActiveView(viewId);
   };
 
-  // Create or get conversation mutation
+  // Create conversation mutation - optimized
   const createConversationMutation = useMutation({
     mutationFn: async (receiverId: number) => {
       return apiRequest('/api/conversations', {
@@ -83,7 +53,7 @@ const PortalViajerosNew = () => {
         headers: { 'Content-Type': 'application/json' }
       });
     },
-    onSuccess: (conversation, receiverId) => {
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['/api/conversations'] });
       setActiveView('messages');
     }
@@ -97,67 +67,41 @@ const PortalViajerosNew = () => {
     createConversationMutation.mutate(userId);
   };
 
-  // Current user data fetch with fallback to temporary auth
+  // Current user data fetch with improved error handling
   const { data: currentUser, isLoading: userLoading, error: userError } = useQuery({
     queryKey: ['/api/auth/me'],
-    retry: (failureCount, error) => {
-      console.log("🔍 Auth query error:", error);
-      // Only retry once for 401s, might be a temporary session issue
-      if (error?.message?.includes('401')) return failureCount < 1;
-      return failureCount < 2;
-    },
-    staleTime: 10 * 60 * 1000,
+    retry: false, // Don't retry authentication failures
+    staleTime: 5 * 60 * 1000,
     refetchOnWindowFocus: false,
     queryFn: async () => {
-      try {
-        const response = await apiRequest('/api/auth/me');
-        return response;
-      } catch (error) {
-        // Fallback: check for temporary auth in localStorage
-        const tempAuth = localStorage.getItem('viajeros-auth-temp');
-        if (tempAuth) {
-          const authData = JSON.parse(tempAuth);
-          const fiveMinutesAgo = Date.now() - 5 * 60 * 1000;
-          
-          if (authData.timestamp > fiveMinutesAgo) {
-            console.log("🔄 Using temporary auth fallback");
-            // Return minimal user data for temporary auth
-            return { user: { id: authData.userId, email: "dahub.tech@gmail.com", role: "viajero" } };
-          } else {
-            localStorage.removeItem('viajeros-auth-temp');
-          }
-        }
-        throw error;
-      }
+      const response = await apiRequest('/api/auth/me');
+      return response;
     }
   });
 
   const user = (currentUser as any)?.user || currentUser;
 
-  // Public experiences fetch for travelers - optimized with React.useMemo
+  // Public experiences fetch for travelers - optimized
   const { data: experiences = [], isLoading: experiencesLoading } = useQuery({
     queryKey: ["/api/experiences/public"],
-    staleTime: 5 * 60 * 1000, // Increased cache time
+    staleTime: 15 * 60 * 1000, // Cache for 15 minutes
     refetchOnWindowFocus: false,
     refetchOnMount: false,
+    enabled: !!user // Only fetch if user is authenticated
   });
 
   const typedExperiences = Array.isArray(experiences) ? experiences : [];
 
-  // Companies directory for messaging
+  // Companies directory for messaging - optimized
   const { data: directoryUsers = [], isLoading: directoryLoading } = useQuery({
     queryKey: ["/api/directory/users"],
-    queryFn: () => fetch("/api/directory/users", { credentials: 'include' }).then(res => {
-      if (!res.ok) throw new Error(`${res.status}: ${res.statusText}`);
-      return res.json();
-    }),
-    staleTime: 2 * 60 * 1000,
+    staleTime: 10 * 60 * 1000, // Cache for 10 minutes
     refetchOnWindowFocus: false,
+    refetchOnMount: false,
+    enabled: !!user // Only fetch if user is authenticated
   });
 
-  const typedDirectoryUsers = Array.isArray(directoryUsers) 
-    ? directoryUsers.filter((user: any) => user.role === 'empresa') 
-    : [];
+  const typedDirectoryUsers = Array.isArray(directoryUsers) ? directoryUsers : [];
 
   const handleLogout = () => {
     window.location.href = '/api/auth/logout';
@@ -338,25 +282,25 @@ const PortalViajerosNew = () => {
           <CardContent className="p-6">
             <h3 className="text-white font-semibold mb-4 flex items-center">
               <div className="w-2 h-6 bg-green-500 rounded-full mr-3"></div>
-            Navegación entre Portales
-          </h3>
-          <div className="space-y-3">
-            <Button 
-              variant="outline" 
-              className="w-full border-blue-500/50 text-blue-400 hover:bg-blue-500/10 h-12 flex items-center justify-center"
-              onClick={() => setLocation('/portal-empresas')}
-            >
-              <Building2 className="w-5 h-5 mr-2" />
-              Cambiar a Portal Empresas
-            </Button>
-            <Button 
-              className="w-full bg-green-600 hover:bg-green-700 text-white h-12 flex items-center justify-center"
-              onClick={() => setLocation('/portal-viajeros')}
-            >
-              <MapPin className="w-5 h-5 mr-2" />
-              Portal Viajeros (Actual)
-            </Button>
-          </div>
+              Navegación entre Portales
+            </h3>
+            <div className="space-y-3">
+              <Button 
+                variant="outline" 
+                className="w-full border-green-500/50 text-green-400 hover:bg-green-500/10 h-12 flex items-center justify-center"
+                onClick={() => setLocation('/auth/empresas')}
+              >
+                <Building2 className="w-5 h-5 mr-2" />
+                Cambiar a Portal Empresas
+              </Button>
+              <Button 
+                className="w-full bg-green-600 hover:bg-green-700 text-white h-12 flex items-center justify-center"
+                onClick={() => setLocation('/')}
+              >
+                <TreePine className="w-5 h-5 mr-2" />
+                Ir al Inicio
+              </Button>
+            </div>
           <p className="text-xs text-white/50 mt-3">
             Usa el mismo usuario para acceder a ambos portales y ver diferentes perspectivas
           </p>

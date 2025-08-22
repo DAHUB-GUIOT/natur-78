@@ -2,12 +2,7 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { 
-  Map, 
   Building2, 
-  Star, 
-  MessageCircle, 
-  User, 
-  Settings,
   Calendar,
   Ticket,
   Users,
@@ -15,7 +10,7 @@ import {
   ChevronRight,
   TreePine,
   Globe,
-  MapPin
+  User
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -57,8 +52,6 @@ export function DesktopSidebar({
   const config = portalConfig[portalType];
 
   const quickActions = [
-    { id: "agenda", label: "Agenda Festival", icon: Calendar, external: true, path: "/agenda" },
-    { id: "tickets", label: "Entradas", icon: Ticket, external: true, path: "/tickets" },
     { id: "directory", label: "Directorio", icon: Users, external: false }
   ];
 
@@ -172,23 +165,14 @@ export function DesktopSidebar({
               <div className="desktop-nav-section">
                 <h3 className="desktop-nav-section-title">Acceso Rápido</h3>
                 <div className="space-y-1">
-                  {quickActions.filter(action => action.id !== 'agenda' && action.id !== 'tickets').map((action) => (
+                  {quickActions.map((action) => (
                     <button
                       key={action.id}
-                      onClick={() => {
-                        if (action.external && action.path) {
-                          window.location.href = action.path;
-                        } else {
-                          onNavigation(action.id);
-                        }
-                      }}
+                      onClick={() => onNavigation(action.id)}
                       className="desktop-nav-item"
                     >
                       <action.icon className="desktop-nav-item-icon" />
                       <span>{action.label}</span>
-                      {action.external && (
-                        <Globe className="w-3 h-3 ml-auto opacity-60" />
-                      )}
                     </button>
                   ))}
                 </div>
