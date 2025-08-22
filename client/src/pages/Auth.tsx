@@ -260,82 +260,122 @@ const Auth = () => {
 
               {/* Register Tab */}
               <TabsContent value="register">
-                <form onSubmit={handleRegister} className="space-y-4">
-                  <div className="space-y-3">
-                    <Label htmlFor="register-firstName" className="font-bold text-lg text-[#cad95e]">
-                      Nombre
-                    </Label>
-                    <Input
-                      id="register-firstName"
-                      type="text"
-                      value={registerData.firstName}
-                      onChange={(e) => setRegisterData(prev => ({ ...prev, firstName: e.target.value }))}
-                      className="border-2 bg-white/10 backdrop-blur-sm text-white font-medium text-lg p-4 placeholder-white/60 border-[#cad95e]"
-                      placeholder="Tu nombre"
-                      required
-                    />
-                  </div>
+                {isEmpresas ? (
+                  // For empresas, redirect to comprehensive company registration
+                  <div className="space-y-6 text-center">
+                    <div className="space-y-4">
+                      <Building2 className="w-20 h-20 mx-auto text-[#cad95e]" />
+                      <h3 className="text-2xl font-bold text-[#cad95e]">
+                        Registro Empresarial Completo
+                      </h3>
+                      <p className="text-white/80 text-lg leading-relaxed">
+                        Para acceder al Portal Empresas necesitas completar tu registro con toda la información de tu empresa.
+                      </p>
+                      <p className="text-white/60 text-sm">
+                        Incluye detalles de empresa, servicios, ubicación, horarios, certificaciones, redes sociales y más.
+                      </p>
+                    </div>
 
-                  <div className="space-y-3">
-                    <Label htmlFor="register-lastName" className="font-bold text-lg text-[#cad95e]">
-                      Apellido
-                    </Label>
-                    <Input
-                      id="register-lastName"
-                      type="text"
-                      value={registerData.lastName}
-                      onChange={(e) => setRegisterData(prev => ({ ...prev, lastName: e.target.value }))}
-                      className="border-2 bg-white/10 backdrop-blur-sm text-white font-medium text-lg p-4 placeholder-white/60 border-[#cad95e]"
-                      placeholder="Tu apellido"
-                      required
-                    />
-                  </div>
+                    <Link to="/registro-empresa">
+                      <Button
+                        className="w-full text-black py-4 font-bold text-lg shadow-xl hover:opacity-90"
+                        style={{ backgroundColor: '#cad95e' }}
+                      >
+                        Completar Registro Empresarial
+                      </Button>
+                    </Link>
 
-                  <div className="space-y-3">
-                    <Label htmlFor="register-email" className="font-bold text-lg text-[#cad95e]">
-                      Correo electrónico
-                    </Label>
-                    <div className="relative">
-                      <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-[#cad95e]" />
+                    <div className="pt-4 border-t border-white/20">
+                      <p className="text-white/60 text-sm">
+                        ¿Ya completaste tu registro? 
+                        <button 
+                          onClick={() => setActiveTab('login')}
+                          className="text-[#cad95e] hover:underline ml-2"
+                        >
+                          Inicia sesión aquí
+                        </button>
+                      </p>
+                    </div>
+                  </div>
+                ) : (
+                  // For viajeros, keep the simple registration form
+                  <form onSubmit={handleRegister} className="space-y-4">
+                    <div className="space-y-3">
+                      <Label htmlFor="register-firstName" className="font-bold text-lg text-[#cad95e]">
+                        Nombre
+                      </Label>
                       <Input
-                        id="register-email"
-                        type="email"
-                        value={registerData.email}
-                        onChange={(e) => setRegisterData(prev => ({ ...prev, email: e.target.value }))}
-                        className="pl-12 border-2 bg-white/10 backdrop-blur-sm text-white font-medium text-lg p-4 placeholder-white/60 border-[#cad95e]"
-                        placeholder="tu@email.com"
+                        id="register-firstName"
+                        type="text"
+                        value={registerData.firstName}
+                        onChange={(e) => setRegisterData(prev => ({ ...prev, firstName: e.target.value }))}
+                        className="border-2 bg-white/10 backdrop-blur-sm text-white font-medium text-lg p-4 placeholder-white/60 border-[#cad95e]"
+                        placeholder="Tu nombre"
                         required
                       />
                     </div>
-                  </div>
 
-                  <div className="space-y-3">
-                    <Label htmlFor="register-password" className="font-bold text-lg text-[#cad95e]">
-                      Contraseña
-                    </Label>
-                    <div className="relative">
-                      <Lock className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-[#cad95e]" />
+                    <div className="space-y-3">
+                      <Label htmlFor="register-lastName" className="font-bold text-lg text-[#cad95e]">
+                        Apellido
+                      </Label>
                       <Input
-                        id="register-password"
-                        type="password"
-                        value={registerData.password}
-                        onChange={(e) => setRegisterData(prev => ({ ...prev, password: e.target.value }))}
-                        className="pl-12 border-2 bg-white/10 backdrop-blur-sm text-white font-medium text-lg p-4 placeholder-white/60 border-[#cad95e]"
-                        placeholder="••••••••"
+                        id="register-lastName"
+                        type="text"
+                        value={registerData.lastName}
+                        onChange={(e) => setRegisterData(prev => ({ ...prev, lastName: e.target.value }))}
+                        className="border-2 bg-white/10 backdrop-blur-sm text-white font-medium text-lg p-4 placeholder-white/60 border-[#cad95e]"
+                        placeholder="Tu apellido"
                         required
                       />
                     </div>
-                  </div>
 
-                  <Button
-                    type="submit"
-                    className="w-full text-black py-4 font-bold text-lg shadow-xl hover:opacity-90"
-                    style={{ backgroundColor: '#cad95e' }}
-                    disabled={registerMutation.isPending}
-                  >
-                    {registerMutation.isPending ? "Creando cuenta..." : "Crear Cuenta"}
-                  </Button>
-                </form>
+                    <div className="space-y-3">
+                      <Label htmlFor="register-email" className="font-bold text-lg text-[#cad95e]">
+                        Correo electrónico
+                      </Label>
+                      <div className="relative">
+                        <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-[#cad95e]" />
+                        <Input
+                          id="register-email"
+                          type="email"
+                          value={registerData.email}
+                          onChange={(e) => setRegisterData(prev => ({ ...prev, email: e.target.value }))}
+                          className="pl-12 border-2 bg-white/10 backdrop-blur-sm text-white font-medium text-lg p-4 placeholder-white/60 border-[#cad95e]"
+                          placeholder="tu@email.com"
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    <div className="space-y-3">
+                      <Label htmlFor="register-password" className="font-bold text-lg text-[#cad95e]">
+                        Contraseña
+                      </Label>
+                      <div className="relative">
+                        <Lock className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-[#cad95e]" />
+                        <Input
+                          id="register-password"
+                          type="password"
+                          value={registerData.password}
+                          onChange={(e) => setRegisterData(prev => ({ ...prev, password: e.target.value }))}
+                          className="pl-12 border-2 bg-white/10 backdrop-blur-sm text-white font-medium text-lg p-4 placeholder-white/60 border-[#cad95e]"
+                          placeholder="••••••••"
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    <Button
+                      type="submit"
+                      className="w-full text-black py-4 font-bold text-lg shadow-xl hover:opacity-90"
+                      style={{ backgroundColor: '#cad95e' }}
+                      disabled={registerMutation.isPending}
+                    >
+                      {registerMutation.isPending ? "Creando cuenta..." : "Crear Cuenta"}
+                    </Button>
+                  </form>
+                )}
               </TabsContent>
             </Tabs>
           </CardContent>

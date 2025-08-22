@@ -296,6 +296,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         lastName,
         companyName,
         role: 'empresa' as const,
+        authProvider: 'local',
         isActive: false, // Inactive until email verified
         emailVerified: false,
         verificationToken,
