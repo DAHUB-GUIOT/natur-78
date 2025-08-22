@@ -688,7 +688,7 @@ const MinimalistPortalEmpresas = () => {
       {/* WhatsApp Chat Integration */}
       <WhatsAppChat />
       
-      {/* User Flow Manager - Removed for simplified dashboard */}
+      {/* Profile configuration removed - all information captured during registration */}
 
       {/* Experience Form Sheet */}
       <Sheet open={showExperienceForm} onOpenChange={setShowExperienceForm}>

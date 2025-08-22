@@ -103,11 +103,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(401).json({ error: "Invalid credentials" });
       }
 
-      // Check if email is verified for empresa users
-      if (user.role === 'empresa' && !user.emailVerified) {
+      // Check if email is verified AND registration complete for empresa users
+      if (user.role === 'empresa' && (!user.emailVerified || !user.registrationComplete)) {
         return res.status(403).json({ 
-          error: "Email not verified", 
-          message: "Please verify your email before logging in" 
+          error: user.emailVerified 
+            ? "Complete company registration is required for portal access"
+            : "Email not verified", 
+          message: user.emailVerified 
+            ? "Please complete your company registration to access the portal"
+            : "Please verify your email before logging in",
+          requiresVerification: !user.emailVerified,
+          requiresRegistration: !user.registrationComplete
         });
       }
 
@@ -266,6 +272,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const existingUser = await storage.getUserByEmail(email);
       if (existingUser) {
         return res.status(400).json({ error: "Email already registered" });
+      }
+
+      // Validate complete company information is provided (required for empresa portal access)
+      if (!companyDescription || !companyCategory || !servicesOffered || servicesOffered.length === 0) {
+        return res.status(400).json({ 
+          error: "Complete company information is required for empresa registration" 
+        });
       }
 
       // Hash password
