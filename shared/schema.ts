@@ -36,6 +36,16 @@ export const users = pgTable("users", {
   emailVerified: boolean("email_verified").default(false).notNull(),
   verificationToken: text("verification_token"), // For email verification
   verificationTokenExpiry: timestamp("verification_token_expiry"),
+  
+  // Additional business registration fields
+  businessLicense: text("business_license"),
+  taxId: text("tax_id"),
+  certifications: text("certifications").array(),
+  socialMedia: jsonb("social_media"),
+  emergencyContact: jsonb("emergency_contact"),
+  sustainabilityPractices: text("sustainability_practices").array(),
+  accessibilityFeatures: text("accessibility_features").array(),
+  languages: text("languages").array(),
   // Location fields for map positioning
   address: text("address"),
   city: text("city"),
