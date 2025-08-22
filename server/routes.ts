@@ -267,7 +267,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const verificationToken = crypto.randomBytes(32).toString('hex');
       const verificationTokenExpiry = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours
 
-      // Create user with complete company data
+      // Create user with complete company data including all new fields
       const userData = {
         email,
         password: hashedPassword,
@@ -292,6 +292,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
         yearsExperience: yearsExperience || 0,
         teamSize: teamSize || 0,
         operatingHours,
+        businessType: req.body.businessType,
+        certifications: req.body.certifications || [],
+        socialMedia: req.body.socialMedia || {},
+        businessLicense: req.body.businessLicense,
+        taxId: req.body.taxId,
+        emergencyContact: req.body.emergencyContact,
+        sustainabilityPractices: req.body.sustainabilityPractices || [],
+        accessibilityFeatures: req.body.accessibilityFeatures || [],
+        languages: req.body.languages || ['Español'],
         registrationComplete: true,
         // Set default coordinates for Bogotá if not provided
         coordinates: { lat: 4.7110, lng: -74.0721 }
