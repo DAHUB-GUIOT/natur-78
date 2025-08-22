@@ -51,6 +51,9 @@ import CategoryPage from "./pages/CategoryPage";
 import Contact from "./pages/Contact";
 import Services from "./pages/Services";
 import { AuthProvider } from "./contexts/AuthContext";
+import CompanyRegistration from "./pages/CompanyRegistration";
+import VerificationPending from "./pages/VerificationPending";
+import EmailVerification from "./pages/EmailVerification";
 import React from "react";
 
 // Create QueryClient outside component to prevent recreation on renders
@@ -72,7 +75,9 @@ const App = () => {
               <ContrastEnhancer />
               <Switch>
             <Route path="/" component={Index} />
-            <Route path="/registro" component={Register} />
+            <Route path="/registro" component={CompanyRegistration} />
+            <Route path="/verificacion-pendiente" component={VerificationPending} />
+            <Route path="/verificar-email" component={EmailVerification} />
             <Route path="/con-sentidos" component={ConSentidosRegister} />
             <Route path="/auth/empresas" component={AuthEmpresas} />
             <Route path="/auth/consentidos" component={AuthConSentidos} />

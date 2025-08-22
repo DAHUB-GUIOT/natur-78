@@ -8,6 +8,9 @@ import { z } from "zod";
 import passport from 'passport';
 import { setupGoogleAuth } from './googleAuth';
 import { desc, eq, and, or } from "drizzle-orm";
+import { sendVerificationEmail, sendAdminNotification } from "./emailService";
+import crypto from "crypto";
+import bcrypt from "bcryptjs";
 
 // Extend Express Request type to include session and admin user
 declare module 'express-session' {
@@ -96,7 +99,24 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       const user = await storage.getUserByEmail(email);
-      if (!user || user.password !== password) {
+      if (!user) {
+        return res.status(401).json({ error: "Invalid credentials" });
+      }
+
+      // Check if email is verified for empresa users
+      if (user.role === 'empresa' && !user.emailVerified) {
+        return res.status(403).json({ 
+          error: "Email not verified", 
+          message: "Please verify your email before logging in" 
+        });
+      }
+
+      // Verify password (using bcrypt for hashed passwords or plain comparison for legacy)
+      const isPasswordValid = user.password?.startsWith('$2') 
+        ? await bcrypt.compare(password, user.password)
+        : user.password === password;
+
+      if (!isPasswordValid) {
         return res.status(401).json({ error: "Invalid credentials" });
       }
 
@@ -216,6 +236,141 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
       console.error("Registration error:", error);
       res.status(500).json({ error: "Internal server error" });
+    }
+  });
+
+  // Company registration endpoint with email verification
+  app.post("/api/auth/register-company", async (req, res) => {
+    try {
+      const {
+        email, password, firstName, lastName, companyName,
+        companyDescription, companyCategory, companySubcategory,
+        servicesOffered, targetMarket, yearsExperience, teamSize,
+        address, city, country, phone, website, operatingHours
+      } = req.body;
+
+      // Validate required fields
+      if (!email || !password || !companyName || !companyCategory) {
+        return res.status(400).json({ error: "Missing required fields" });
+      }
+
+      // Check if user already exists
+      const existingUser = await storage.getUserByEmail(email);
+      if (existingUser) {
+        return res.status(400).json({ error: "Email already registered" });
+      }
+
+      // Hash password
+      const hashedPassword = await bcrypt.hash(password, 10);
+
+      // Generate verification token
+      const verificationToken = crypto.randomBytes(32).toString('hex');
+      const verificationTokenExpiry = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours
+
+      // Create user with complete company data
+      const userData = {
+        email,
+        password: hashedPassword,
+        firstName,
+        lastName,
+        companyName,
+        role: 'empresa' as const,
+        isActive: false, // Inactive until email verified
+        emailVerified: false,
+        verificationToken,
+        verificationTokenExpiry,
+        address,
+        city,
+        country: country || 'Colombia',
+        phone,
+        website,
+        companyDescription,
+        companyCategory,
+        companySubcategory,
+        servicesOffered,
+        targetMarket,
+        yearsExperience: yearsExperience || 0,
+        teamSize: teamSize || 0,
+        operatingHours,
+        registrationComplete: true,
+        // Set default coordinates for Bogotá if not provided
+        coordinates: { lat: 4.7110, lng: -74.0721 }
+      };
+
+      const user = await storage.createUser(userData);
+
+      // Send verification email
+      const emailSent = await sendVerificationEmail(
+        email,
+        `${firstName} ${lastName}`,
+        companyName,
+        verificationToken
+      );
+
+      // Send admin notification
+      await sendAdminNotification(
+        `${firstName} ${lastName}`,
+        companyName,
+        email,
+        companyCategory
+      );
+
+      console.log("✅ Company Registration Complete - Email verification required");
+      console.log(`📧 Verification email sent: ${emailSent ? 'Success' : 'Failed'}`);
+
+      res.status(201).json({
+        message: "Company registered successfully. Please check your email for verification.",
+        user: {
+          id: user.id,
+          email: user.email,
+          companyName: user.companyName,
+          emailVerified: user.emailVerified
+        },
+        emailSent
+      });
+    } catch (error) {
+      console.error("Company registration error:", error);
+      res.status(500).json({ error: "Registration failed" });
+    }
+  });
+
+  // Email verification endpoint
+  app.get("/api/auth/verify-email", async (req, res) => {
+    try {
+      const { token } = req.query;
+
+      if (!token) {
+        return res.status(400).json({ error: "Verification token required" });
+      }
+
+      const user = await storage.getUserByVerificationToken(token as string);
+      
+      if (!user) {
+        return res.status(400).json({ error: "Invalid or expired verification token" });
+      }
+
+      // Check if token is expired
+      if (user.verificationTokenExpiry && new Date() > user.verificationTokenExpiry) {
+        return res.status(400).json({ error: "Verification token has expired" });
+      }
+
+      // Update user as verified and active
+      await storage.updateUser(user.id, {
+        emailVerified: true,
+        isActive: true,
+        verificationToken: null,
+        verificationTokenExpiry: null
+      });
+
+      console.log(`✅ Email verified for user: ${user.email}`);
+
+      res.json({ 
+        message: "Email verified successfully. You can now access your account.",
+        verified: true
+      });
+    } catch (error) {
+      console.error("Email verification error:", error);
+      res.status(500).json({ error: "Verification failed" });
     }
   });
 
