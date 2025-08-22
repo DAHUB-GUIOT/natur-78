@@ -84,27 +84,76 @@ const MinimalistPortalEmpresas = () => {
     createConversationMutation.mutate(userId);
   };
 
-  // Current user data fetch
-  const { data: currentUser, isLoading: userLoading } = useQuery({
+  // Current user data fetch - improved for loading issues
+  const { data: currentUser, isLoading: userLoading, error: userError } = useQuery({
     queryKey: ['/api/auth/me'],
-    retry: 3,
-    staleTime: 10 * 60 * 1000,
-    refetchOnWindowFocus: false,
+    retry: (failureCount, error: any) => {
+      // Don't retry on 401 errors (authentication issues)
+      if (error?.message?.includes('401')) return false;
+      return failureCount < 2;
+    },
+    staleTime: 5 * 60 * 1000,
+    refetchOnWindowFocus: true, // Enable refetch to handle login transitions
+    refetchOnMount: true,
+    queryFn: async () => {
+      try {
+        const response = await apiRequest('/api/auth/me');
+        return response;
+      } catch (error) {
+        if (error instanceof Error && error.message.includes('401')) {
+          // Redirect to login on authentication failure
+          window.location.href = '/portal-empresas/auth';
+          throw error;
+        }
+        throw error;
+      }
+    }
   });
 
   const user = (currentUser as any)?.user || currentUser;
 
-  // Directory users fetch - optimized
+  // Show loading state if user is being fetched
+  if (userLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 flex items-center justify-center">
+        <div className="text-center space-y-4">
+          <div className="w-12 h-12 border-4 border-green-400 border-t-transparent rounded-full animate-spin mx-auto"></div>
+          <p className="text-white text-lg">Cargando Portal Empresas...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Directory users fetch - optimized and conditional
   const { data: directoryUsers = [], isLoading: directoryLoading } = useQuery({
     queryKey: ["/api/directory/users"],
-    queryFn: () => fetch("/api/directory/users", { credentials: 'include' }).then(res => {
-      if (!res.ok) throw new Error(`${res.status}: ${res.statusText}`);
-      return res.json();
-    }),
-    staleTime: 5 * 60 * 1000, // Increased cache time
+    queryFn: async () => {
+      const response = await apiRequest("/api/directory/users");
+      return response;
+    },
+    staleTime: 10 * 60 * 1000, // Cache for 10 minutes
     refetchOnWindowFocus: false,
     refetchOnMount: false,
+    enabled: !!user, // Only fetch when user is authenticated
   });
+
+  // Show loading state if user is being fetched
+  if (userLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 flex items-center justify-center">
+        <div className="text-center space-y-4">
+          <div className="w-12 h-12 border-4 border-green-400 border-t-transparent rounded-full animate-spin mx-auto"></div>
+          <p className="text-white text-lg">Cargando Portal Empresas...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Redirect to auth if no user data after loading
+  if (!userLoading && !user) {
+    window.location.href = '/portal-empresas/auth';
+    return null;
+  }
 
   const typedDirectoryUsers = Array.isArray(directoryUsers) 
     ? directoryUsers.filter((user: any) => user.role === 'empresa') 
@@ -661,7 +710,10 @@ const MinimalistPortalEmpresas = () => {
             <SheetTitle className="text-white font-light">Crear Nueva Experiencia</SheetTitle>
           </SheetHeader>
           <div className="p-6">
-            <ExperienceForm onSuccess={() => setShowExperienceForm(false)} />
+            <ExperienceForm onClose={() => {
+              setShowExperienceForm(false);
+              queryClient.invalidateQueries({ queryKey: ['/api/experiences'] });
+            }} />
           </div>
         </SheetContent>
       </Sheet>

@@ -25,9 +25,8 @@ const PortalEmpresasAuth = () => {
         title: "Inicio de sesión exitoso",
         description: "Redirigiendo al portal...",
       });
-      setTimeout(() => {
-        window.location.href = '/portal-empresas';
-      }, 1000);
+      // Immediate redirect to prevent loading delays
+      window.location.replace('/portal-empresas');
     },
     onError: (error: any) => {
       toast({
