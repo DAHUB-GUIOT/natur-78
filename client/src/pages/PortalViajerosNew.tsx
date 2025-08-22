@@ -23,7 +23,13 @@ import AuthViajeros from "./AuthViajeros";
 const PortalViajerosNew = () => {
   const [activeView, setActiveView] = useState("experiencias"); // Changed default to experiencias
   const [searchQuery, setSearchQuery] = useState("");
-  const [sidebarOpen, setSidebarOpen] = useState(window.innerWidth >= 1024); // Responsive default
+  const [sidebarOpen, setSidebarOpen] = useState(() => {
+    try {
+      return window.innerWidth >= 1024;
+    } catch (error) {
+      return false; // Default for SSR
+    }
+  });
   const [, setLocation] = useLocation();
   const queryClient = useQueryClient();
 
@@ -44,18 +50,26 @@ const PortalViajerosNew = () => {
     setActiveView(viewId);
   };
 
-  // Create conversation mutation - optimized
+  // Create conversation mutation - optimized with error handling
   const createConversationMutation = useMutation({
     mutationFn: async (receiverId: number) => {
-      return apiRequest('/api/conversations', {
-        method: 'POST',
-        body: JSON.stringify({ receiverId }),
-        headers: { 'Content-Type': 'application/json' }
-      });
+      try {
+        return await apiRequest('/api/conversations', {
+          method: 'POST',
+          body: JSON.stringify({ receiverId }),
+          headers: { 'Content-Type': 'application/json' }
+        });
+      } catch (error) {
+        throw error;
+      }
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['/api/conversations'] });
       setActiveView('messages');
+    },
+    onError: (error) => {
+      // Silently handle conversation creation errors
+      console.warn('Failed to create conversation:', error);
     }
   });
 
@@ -74,8 +88,16 @@ const PortalViajerosNew = () => {
     staleTime: 5 * 60 * 1000,
     refetchOnWindowFocus: false,
     queryFn: async () => {
-      const response = await apiRequest('/api/auth/me');
-      return response;
+      try {
+        const response = await apiRequest('/api/auth/me');
+        return response;
+      } catch (error) {
+        // Handle auth errors gracefully
+        if (error instanceof Error && error.message.includes('401')) {
+          throw new Error('Authentication required');
+        }
+        throw error;
+      }
     }
   });
 

@@ -26,16 +26,22 @@ const UserFlowManager: React.FC = () => {
 
   const { data: user } = useQuery({
     queryKey: ['/api/auth/me'],
+    retry: false,
+    staleTime: 5 * 60 * 1000,
   });
 
   const { data: company } = useQuery({
     queryKey: ['/api/companies/me'],
     enabled: !!user && (user as any).role === 'empresa',
+    retry: false,
+    staleTime: 5 * 60 * 1000,
   });
 
   const { data: experiences = [] } = useQuery({
     queryKey: ['/api/experiences'],
     enabled: !!user,
+    retry: false,
+    staleTime: 5 * 60 * 1000,
   });
 
   const calculateProfileCompletion = () => {
@@ -115,14 +121,18 @@ const UserFlowManager: React.FC = () => {
 
   const enableMapVisibilityMutation = useMutation({
     mutationFn: async () => {
-      return await apiRequest('/api/auth/update-profile', {
-        method: 'PUT',
-        body: JSON.stringify({
-          isMapVisible: true,
-          isContactCardVisible: true,
-          coordinates: (user as any)?.coordinates || { lat: 4.6097, lng: -74.0817 }
-        }),
-      });
+      try {
+        return await apiRequest('/api/auth/update-profile', {
+          method: 'PUT',
+          body: JSON.stringify({
+            isMapVisible: true,
+            isContactCardVisible: true,
+            coordinates: (user as any)?.coordinates || { lat: 4.6097, lng: -74.0817 }
+          }),
+        });
+      } catch (error) {
+        throw error;
+      }
     },
     onSuccess: () => {
       toast({
@@ -131,27 +141,41 @@ const UserFlowManager: React.FC = () => {
       });
       queryClient.invalidateQueries({ queryKey: ['/api/auth/me'] });
     },
+    onError: (error) => {
+      console.warn('Failed to update map visibility:', error);
+    }
   });
 
   const updateProfileCompletionMutation = useMutation({
     mutationFn: async () => {
-      const completion = calculateProfileCompletion();
-      return await apiRequest('/api/auth/update-profile', {
-        method: 'PUT',
-        body: JSON.stringify({
-          profileCompletion: completion,
-          verificationLevel: completion >= 100 ? 'verified' : 'basic'
-        }),
-      });
+      try {
+        const completion = calculateProfileCompletion();
+        return await apiRequest('/api/auth/update-profile', {
+          method: 'PUT',
+          body: JSON.stringify({
+            profileCompletion: completion,
+            verificationLevel: completion >= 100 ? 'verified' : 'basic'
+          }),
+        });
+      } catch (error) {
+        throw error;
+      }
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['/api/auth/me'] });
     },
+    onError: (error) => {
+      console.warn('Failed to update profile completion:', error);
+    }
   });
 
   useEffect(() => {
-    if (user) {
-      updateProfileCompletionMutation.mutate();
+    if (user && !updateProfileCompletionMutation.isPending) {
+      try {
+        updateProfileCompletionMutation.mutate();
+      } catch (error) {
+        console.warn('Failed to trigger profile completion update:', error);
+      }
     }
   }, [user]);
 

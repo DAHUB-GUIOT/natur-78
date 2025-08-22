@@ -43,6 +43,9 @@ import BiodiversityExperience from "./pages/BiodiversityExperience";
 import CompanyProfilePage from "./pages/CompanyProfilePage";
 import About from "./pages/About";
 import BlogPost from "./pages/BlogPost";
+import ErrorBoundary from "@/components/ErrorBoundary";
+import { setupGlobalErrorHandlers } from "@/lib/errorHandler";
+import { useEffect } from "react";
 import EventDetail from "./pages/EventDetail";
 import CategoryPage from "./pages/CategoryPage";
 import Contact from "./pages/Contact";
@@ -53,15 +56,21 @@ import React from "react";
 // Create QueryClient outside component to prevent recreation on renders
 const queryClient = new QueryClient();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <AuthProvider>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <Router>
-          <ContrastEnhancer />
-          <Switch>
+const App = () => {
+  useEffect(() => {
+    setupGlobalErrorHandlers();
+  }, []);
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <ErrorBoundary>
+          <TooltipProvider>
+            <Toaster />
+            <Sonner />
+            <Router>
+              <ContrastEnhancer />
+              <Switch>
             <Route path="/" component={Index} />
             <Route path="/registro" component={Register} />
             <Route path="/con-sentidos" component={ConSentidosRegister} />
@@ -128,8 +137,10 @@ const App = () => (
           </Switch>
         </Router>
       </TooltipProvider>
-    </AuthProvider>
-  </QueryClientProvider>
+    </ErrorBoundary>
+  </AuthProvider>
+</QueryClientProvider>
 );
+};
 
 export default App;
