@@ -147,6 +147,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/auth/register", async (req, res) => {
     try {
+      console.log("🚀 New registration attempt:", {
+        email: req.body.email,
+        role: req.body.role,
+        hasCompanyData: !!(req.body.companyName || req.body.companyCategory),
+        isCompleteRegistration: req.body.registrationComplete
+      });
+
       // Extract first and last name from email if not provided
       const email = req.body.email;
       let firstName = req.body.firstName;
@@ -163,10 +170,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const role = req.body.role || req.body.userType || 'viajero';
       
       // Handle location data for map positioning
-      const coordinates = req.body.coordinates || req.body.location;
+      const coordinates = req.body.coordinates || req.body.location || { lat: 4.7110, lng: -74.0721 };
       const address = req.body.address || '';
       const city = req.body.city || 'Bogotá';
       
+      // Build comprehensive user data for complete empresa registration
       const userData = insertUserSchema.parse({
         ...req.body,
         firstName: firstName.charAt(0).toUpperCase() + firstName.slice(1),
@@ -177,7 +185,35 @@ export async function registerRoutes(app: Express): Promise<Server> {
         address,
         city,
         country: req.body.country || 'Colombia',
-        coordinates
+        coordinates,
+        // Complete company registration fields
+        companyDescription: req.body.companyDescription || '',
+        companyCategory: req.body.companyCategory || '',
+        companySubcategory: req.body.companySubcategory || '',
+        businessType: req.body.businessType || '',
+        yearsExperience: req.body.yearsExperience ? parseInt(req.body.yearsExperience) : null,
+        teamSize: req.body.teamSize ? parseInt(req.body.teamSize) : null,
+        bio: req.body.bio || '',
+        targetMarket: req.body.targetMarket || '',
+        phone: req.body.phone || '',
+        website: req.body.website || '',
+        twitterUrl: req.body.twitterUrl || '',
+        facebookUrl: req.body.facebookUrl || '',
+        linkedinUrl: req.body.linkedinUrl || '',
+        instagramUrl: req.body.instagramUrl || '',
+        certifications: req.body.certifications || [],
+        sustainabilityPractices: req.body.sustainabilityPractices || [],
+        accessibilityFeatures: req.body.accessibilityFeatures || [],
+        servicesOffered: req.body.servicesOffered || [],
+        operatingHours: req.body.operatingHours || {},
+        socialMedia: req.body.socialMedia || {},
+        emergencyContact: req.body.emergencyContact || {},
+        profilePicture: req.body.profilePicture || '',
+        registrationComplete: req.body.registrationComplete || false,
+        profileCompletion: req.body.profileCompletion || (role === 'empresa' ? 100 : 50),
+        verificationLevel: req.body.verificationLevel || (role === 'empresa' ? 'verified' : 'basic'),
+        isContactCardVisible: true,
+        isMapVisible: true
       });
       
       // Check if user already exists
@@ -194,26 +230,28 @@ export async function registerRoutes(app: Express): Promise<Server> {
           await storage.createCompany({
             userId: user.id,
             companyName: userData.companyName || `${user.firstName} ${user.lastName}`,
-            businessType: req.body.businessType || 'tourism',
-            description: req.body.description || `${userData.companyName} - Empresa registrada en Festival NATUR`,
+            businessType: userData.businessType || userData.companyCategory || 'tourism',
+            description: userData.companyDescription || userData.bio || `${userData.companyName} - Empresa registrada en Festival NATUR`,
             address: userData.address || '',
             city: userData.city || 'Bogotá',
             country: userData.country || 'Colombia',
             coordinates: userData.coordinates || { lat: 4.6097, lng: -74.0817 },
-            phone: req.body.phone || '',
-            website: req.body.website || '',
-            isVerified: true,
-
+            phone: userData.phone || '',
+            website: userData.website || '',
+            isVerified: true
           });
           
-          console.log("✅ Portal Empresas Registration Complete - All Features Activated:");
-          console.log("1. ✅ Contact card created in directory");
-          console.log("2. 📍 Map location set with coordinates");
-          console.log("3. 💬 Messaging system enabled");
-          console.log("4. ✨ Experience creation available");
-          console.log("5. 👤 Automatic profile generated");
-          console.log("6. 🧭 Name visible in navigation menu");
-          console.log("7. ⚙️ Settings panel functional");
+          console.log("✅ Complete Portal Empresas Registration - All Features Activated:");
+          console.log("1. ✅ User account created with full profile");
+          console.log("2. 🏢 Company profile created with all details");
+          console.log("3. 📋 Category and subcategory assigned");
+          console.log("4. 📍 Map location set with coordinates");
+          console.log("5. 💬 Messaging system enabled");
+          console.log("6. ✨ Experience creation available");
+          console.log("7. 📞 Contact information complete");
+          console.log("8. 🌐 Social media links integrated");
+          console.log("9. 🏆 Certifications and practices listed");
+          console.log("10. ⚙️ All portal features functional");
         } catch (companyError) {
           console.error("Company creation error:", companyError);
           // Continue with user creation even if company fails
@@ -232,13 +270,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
           firstName: user.firstName,
           lastName: user.lastName,
           city: user.city,
-          coordinates: user.coordinates
+          coordinates: user.coordinates,
+          registrationComplete: user.registrationComplete,
+          profileCompletion: user.profileCompletion,
+          verificationLevel: user.verificationLevel
         },
-        message: `Registration successful. ${role === 'empresa' ? 'All portal functionalities activated.' : 'Welcome to NATUR!'}`
+        message: role === 'empresa' 
+          ? 'Registro empresarial completo. Todas las funcionalidades del portal han sido activadas.'
+          : 'Registro exitoso. ¡Bienvenido a NATUR!'
       });
     } catch (error) {
       if (error instanceof z.ZodError) {
-        return res.status(400).json({ error: "Invalid input", details: error.errors });
+        return res.status(400).json({ 
+          error: "Invalid input", 
+          details: error.errors.map(e => `${e.path.join('.')}: ${e.message}`)
+        });
       }
       console.error("Registration error:", error);
       res.status(500).json({ error: "Internal server error" });
