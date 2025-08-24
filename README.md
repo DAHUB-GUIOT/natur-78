@@ -2,6 +2,57 @@
 
 Una plataforma integral que conecta empresas de turismo sostenible con viajeros conscientes, centrada en la biodiversidad y prácticas regenerativas de Colombia.
 
+## ✨ Nuevo: Sistema de Registro Empresarial Completo
+
+Registro empresarial de 6 pasos que crea automáticamente perfiles completos:
+
+1. **Información Personal** - Datos básicos y credenciales
+2. **Información Empresarial** - Categorías, subcategorías y descripción
+3. **Ubicación y Contacto** - Dirección, ciudad y sitio web
+4. **Perfil y Servicios** - Foto de perfil, biografía y mercado objetivo
+5. **Certificaciones** - Prácticas sostenibles (opcional)
+6. **Redes Sociales** - Links a plataformas sociales (opcional)
+
+## 🚀 Configuración Local
+
+**Para ejecutar el proyecto localmente, consulta [SETUP-LOCAL.md](./SETUP-LOCAL.md)**
+
+### Inicio Rápido
+
+```bash
+# 1. Clonar el repositorio
+git clone https://github.com/DAHUB-GUIOT/natur-78.git
+cd natur-78
+
+# 2. Instalar dependencias
+npm install
+
+# 3. Configurar variables de entorno
+cp .env.example .env
+# Editar .env con tus credenciales de base de datos
+
+# 4. Configurar base de datos
+npm run db:push
+
+# 5. Ejecutar servidor de desarrollo
+npm run dev
+```
+
+**Servidor disponible:** `http://localhost:5000`
+
+### Solución Rápida de Problemas
+
+```bash
+# Probar conexión a base de datos
+node scripts/test-db-connection.js
+
+# Configuración automática
+node scripts/setup-local.js
+
+# Resetear completamente
+rm -rf node_modules package-lock.json && npm install
+```
+
 ## 🚀 Stack Tecnológico
 
 ### Backend
