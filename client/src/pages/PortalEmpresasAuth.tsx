@@ -254,27 +254,27 @@ const PortalEmpresasAuth = () => {
       return (
         <form onSubmit={handleLogin} className="space-y-6">
           <div className="space-y-2">
-            <Label className="text-sm text-gray-800 dark:text-white font-medium pl-3">
+            <Label className="text-sm text-gray-800 dark:text-white font-medium">
               Correo Electrónico
             </Label>
             <Input
               type="email"
               value={loginData.email}
               onChange={(e) => setLoginData({...loginData, email: e.target.value})}
-              className="h-12 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 pl-4"
+              className="h-12 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 pl-4 pr-4"
               placeholder=""
               required
             />
           </div>
           <div className="space-y-2">
-            <Label className="text-sm text-gray-800 dark:text-white font-medium pl-3">
+            <Label className="text-sm text-gray-800 dark:text-white font-medium">
               Contraseña
             </Label>
             <Input
               type="password"
               value={loginData.password}
               onChange={(e) => setLoginData({...loginData, password: e.target.value})}
-              className="h-12 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 pl-4"
+              className="h-12 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 pl-4 pr-4"
               placeholder=""
               required
             />
