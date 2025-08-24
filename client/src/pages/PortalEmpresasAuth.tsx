@@ -9,6 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { HeaderButtons } from "@/components/layout/HeaderButtons";
+import { GoogleAuthButton } from "@/components/GoogleAuthButton";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronRight, ChevronLeft, Upload, MapPin, Building, User, Camera, Check, ArrowLeft } from "lucide-react";
 
@@ -20,8 +21,8 @@ const PortalEmpresasAuth = () => {
 
   // Login State
   const [loginData, setLoginData] = useState({
-    email: "dahub.tech@gmail.com",
-    password: "dahub123"
+    email: "",
+    password: ""
   });
 
   // Registration State
@@ -253,28 +254,28 @@ const PortalEmpresasAuth = () => {
       return (
         <form onSubmit={handleLogin} className="space-y-6">
           <div className="space-y-2">
-            <Label className="text-sm text-gray-800 dark:text-white font-medium">
+            <Label className="text-sm text-gray-800 dark:text-white font-medium pl-3">
               Correo Electrónico
             </Label>
             <Input
               type="email"
               value={loginData.email}
               onChange={(e) => setLoginData({...loginData, email: e.target.value})}
-              className="h-12 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700"
-              placeholder="tu@empresa.com"
+              className="h-12 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 pl-4"
+              placeholder=""
               required
             />
           </div>
           <div className="space-y-2">
-            <Label className="text-sm text-gray-800 dark:text-white font-medium">
+            <Label className="text-sm text-gray-800 dark:text-white font-medium pl-3">
               Contraseña
             </Label>
             <Input
               type="password"
               value={loginData.password}
               onChange={(e) => setLoginData({...loginData, password: e.target.value})}
-              className="h-12 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700"
-              placeholder="••••••••"
+              className="h-12 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 pl-4"
+              placeholder=""
               required
             />
           </div>
@@ -285,6 +286,21 @@ const PortalEmpresasAuth = () => {
           >
             {loginMutation.isPending ? "Iniciando sesión..." : "Ingresar al Portal"}
           </Button>
+          
+          {/* Google OAuth Separator */}
+          <div className="mt-6">
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <span className="w-full border-t border-gray-200 dark:border-gray-700" />
+              </div>
+              <div className="relative flex justify-center text-xs uppercase">
+                <span className="px-2 text-gray-600 dark:text-gray-400">O</span>
+              </div>
+            </div>
+            <div className="mt-4">
+              <GoogleAuthButton />
+            </div>
+          </div>
         </form>
       );
     }
