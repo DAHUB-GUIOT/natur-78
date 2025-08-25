@@ -54,6 +54,8 @@ import { AuthProvider } from "./contexts/AuthContext";
 import ComprehensiveCompanyRegistration from "./pages/ComprehensiveCompanyRegistration";
 import VerificationPending from "./pages/VerificationPending";
 import EmailVerification from "./pages/EmailVerification";
+import EditProfileFacebook from "./pages/EditProfileFacebook";
+import ConfiguracionEmpresa from "./pages/ConfiguracionEmpresa";
 import React from "react";
 
 // Create QueryClient outside component to prevent recreation on renders
@@ -130,14 +132,8 @@ const App = () => {
             <Route path="/evento/:id" component={EventDetail} />
             <Route path="/categoria/:category" component={CategoryPage} />
             <Route path="/biodiversidad" component={BiodiversityExperience} />
-            <Route path="/edit-profile" component={() => {
-              const EditProfile = React.lazy(() => import('./pages/EditProfile'));
-              return (
-                <React.Suspense fallback={<div>Loading...</div>}>
-                  <EditProfile />
-                </React.Suspense>
-              );
-            }} />
+            <Route path="/edit-profile" component={EditProfileFacebook} />
+            <Route path="/configuracion" component={ConfiguracionEmpresa} />
             <Route><NotFound /></Route>
           </Switch>
         </Router>
