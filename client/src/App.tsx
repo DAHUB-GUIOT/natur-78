@@ -100,7 +100,7 @@ const App = () => {
               <MainLayout><AdminOptimized /></MainLayout>
             </Route>
             <Route path="/dashboard" component={Dashboard} />
-            <Route path="/auth/empresas" component={PortalEmpresasAuth} />
+            <Route path="/portal-empresas/auth" component={PortalEmpresasAuth} />
             <Route path="/portal-empresas" component={MinimalistPortalEmpresas} />
             <Route path="/company-profile" component={CompanyProfilePage} />
             <Route path="/portal-viajeros/auth" component={AuthViajeros} />
