@@ -139,8 +139,8 @@ const Auth = () => {
 
   // Login State
   const [loginData, setLoginData] = useState({
-    email: isEmpresas ? "dahub.tech@gmail.com" : "",
-    password: isEmpresas ? "dahub123" : ""
+    email: isEmpresas ? "nicolasdominguez2603@gmail.com" : "",
+    password: isEmpresas ? "test123456" : ""
   });
 
   // Complete Registration State - ALL 15 steps for empresas
@@ -404,62 +404,62 @@ const Auth = () => {
     }
   };
 
-  // Load DaHub test data function (for empresas only)
-  const loadDaHubTestData = () => {
+  // Load EcoVentura test data function (for empresas only)
+  const loadTestData = () => {
     if (!isEmpresas) return;
     
     setRegistrationData({
-      firstName: "David",
-      lastName: "Hub",
-      email: "dahub.tech@gmail.com",
-      password: "dahub123",
-      confirmPassword: "dahub123",
-      phone: "+57 300 456 7890",
-      companyName: "DaHub Technologies",
-      businessType: "Tecnología",
-      companyCategory: "Tecnología para el Turismo Sostenible",
-      companySubcategory: "Plataformas Digitales",
-      companyDescription: "Empresa de tecnología especializada en soluciones digitales para el turismo sostenible. Desarrollamos plataformas innovadoras que conectan viajeros con experiencias auténticas.",
+      firstName: "Nicolas",
+      lastName: "Rodriguez",
+      email: "nicolasdominguez2603@gmail.com",
+      password: "test123456",
+      confirmPassword: "test123456",
+      phone: "+57 305 987 6543",
+      companyName: "EcoVentura Colombia",
+      businessType: "Turismo",
+      companyCategory: "Agencias u Operadores Turísticos",
+      companySubcategory: "Operador Turístico Especializado en Ecoturismo",
+      companyDescription: "Operadora turística especializada en experiencias de ecoturismo y aventura sostenible en Colombia. Promovemos la conservación del medio ambiente mientras ofrecemos experiencias únicas en contacto con la naturaleza.",
       yearsExperience: "8",
-      teamSize: "12",
-      address: "Carrera 11 #93-07, Chapinero",
+      teamSize: "25",
+      address: "Carrera 15 #85-32, Zona Rosa",
       city: "Bogotá",
       country: "Colombia",
-      website: "https://dahub.tech",
-      coordinates: { lat: 4.6789, lng: -74.0489 },
+      website: "https://ecoventuracolombia.co",
+      coordinates: { lat: 4.6659, lng: -74.0567 },
       profilePicture: "",
-      bio: "DaHub Technologies es una empresa pionera en el desarrollo de soluciones tecnológicas para el turismo sostenible. Nuestra misión es crear herramientas digitales que faciliten conexiones auténticas entre viajeros y comunidades locales, promoviendo prácticas responsables y experiencias transformadoras.",
-      servicesOffered: ["Desarrollo de plataformas", "Consultoría tecnológica", "Análisis de datos"],
-      targetMarket: "Empresas de turismo sostenible, ONGs ambientales, comunidades locales",
+      bio: "EcoVentura Colombia es una operadora turística comprometida con la sostenibilidad y la conservación. Ofrecemos experiencias únicas de ecoturismo que conectan a los viajeros con la biodiversidad colombiana, promoviendo el desarrollo de las comunidades locales y la protección del medio ambiente.",
+      servicesOffered: ["Tours de ecoturismo", "Avistamiento de aves", "Caminatas ecológicas", "Turismo rural comunitario"],
+      targetMarket: "Viajeros conscientes, amantes de la naturaleza, grupos ecológicos",
       operatingHours: {},
-      certifications: ["ISO 27001", "B Corp Certification"],
-      sustainabilityPractices: ["Hosting verde", "Código eficiente", "Trabajo remoto"],
-      accessibilityFeatures: ["Interfaces accesibles", "Soporte multiidioma"],
+      certifications: ["Rainforest Alliance", "Travelife Certified", "ISO 14001"],
+      sustainabilityPractices: ["Turismo carbono neutro", "Apoyo a comunidades locales", "Conservación de flora y fauna"],
+      accessibilityFeatures: ["Senderos adaptados", "Guías especializados", "Transporte accesible"],
       socialMedia: {},
-      linkedinUrl: "https://linkedin.com/company/dahub-tech",
-      facebookUrl: "",
-      instagramUrl: "https://instagram.com/dahub.tech",
-      twitterUrl: "https://twitter.com/dahubtech",
+      linkedinUrl: "https://linkedin.com/company/ecoventura-colombia",
+      facebookUrl: "https://facebook.com/ecoventuracol",
+      instagramUrl: "https://instagram.com/ecoventuracolombia",
+      twitterUrl: "https://twitter.com/ecoventuracol",
       emergencyContact: {
-        name: "Ana García",
-        phone: "+57 300 123 4567",
-        email: "ana.garcia@dahub.tech",
-        relationship: "Directora de Operaciones"
+        name: "María Fernández",
+        phone: "+57 312 456 7890",
+        email: "emergencias@ecoventuracolombia.co",
+        relationship: "Coordinadora de Seguridad"
       },
       messagingEnabled: true,
-      messagingBio: "¡Hola! Somos DaHub Technologies. Estamos aquí para ayudarte a desarrollar soluciones tecnológicas innovadoras para tu empresa de turismo sostenible. Conectemos y creemos algo increíble juntos.",
+      messagingBio: "¡Hola! Somos EcoVentura Colombia. Estamos aquí para ayudarte a descubrir la increíble biodiversidad de Colombia a través de experiencias de ecoturismo sostenible. Conectemos con la naturaleza y las comunidades locales.",
       acceptsInquiries: true,
       responseTimeHours: 12,
       experienceSetupComplete: true,
       defaultExperienceCategory: "ecoturismo",
-      defaultMeetingPoint: "Oficinas DaHub - Carrera 11 #93-07",
-      defaultCancellationPolicy: "Cancelación gratuita hasta 48 horas antes de la consulta. Reagendamos sin costo adicional con 24 horas de anticipación.",
-      businessLicense: "CM-2023-456789",
-      taxId: "900123456-1",
+      defaultMeetingPoint: "Oficinas EcoVentura - Carrera 15 #85-32",
+      defaultCancellationPolicy: "Cancelación gratuita hasta 72 horas antes del tour. Reagendamos sin costo adicional por condiciones climáticas adversas.",
+      businessLicense: "TUR-2023-987654",
+      taxId: "900987654-3",
       languages: ["Español", "Inglés", "Portugués"],
       acceptTerms: true,
       paymentMethods: ["transferencia", "tarjeta"],
-      invoiceEmail: "dahub.tech@gmail.com",
+      invoiceEmail: "nicolasdominguez2603@gmail.com",
       taxInformation: "Régimen simplificado",
       emailNotifications: true,
       smsNotifications: false,
@@ -473,7 +473,7 @@ const Auth = () => {
     
     toast({
       title: "Datos de prueba cargados",
-      description: "Se han cargado los datos completos de DaHub Technologies",
+      description: "Se han cargado los datos completos de EcoVentura Colombia",
     });
   };
 
@@ -1566,10 +1566,10 @@ const Auth = () => {
                               type="button"
                               variant="outline"
                               size="sm"
-                              onClick={() => loadDaHubTestData()}
+                              onClick={() => loadTestData()}
                               className="text-xs"
                             >
-                              🔧 Cargar Datos de Prueba (DaHub)
+                              🔧 Cargar Datos de Prueba (EcoVentura)
                             </Button>
                           </div>
                         </>
@@ -1656,8 +1656,8 @@ const Auth = () => {
                   {isEmpresas && (
                     <div className="mt-6 p-4 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg">
                       <h3 className="text-sm font-semibold text-gray-800 dark:text-white mb-2">Cuenta de prueba:</h3>
-                      <p className="text-xs text-gray-600 dark:text-gray-400">Email: dahub.tech@gmail.com</p>
-                      <p className="text-xs text-gray-600 dark:text-gray-400">Contraseña: dahub123</p>
+                      <p className="text-xs text-gray-600 dark:text-gray-400">Email: nicolasdominguez2603@gmail.com</p>
+                      <p className="text-xs text-gray-600 dark:text-gray-400">Contraseña: test123456</p>
                     </div>
                   )}
                 </>
