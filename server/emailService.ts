@@ -17,17 +17,31 @@ interface EmailParams {
   subject: string;
   text?: string;
   html?: string;
+  replyTo?: string;
+  headers?: Record<string, string>;
 }
 
 export async function sendEmail(params: EmailParams): Promise<boolean> {
   try {
-    await mailService.send({
+    const mailData: any = {
       to: params.to,
-      from: params.from,
+      from: {
+        email: params.from,
+        name: 'Festival NATUR'
+      },
       subject: params.subject,
       text: params.text || '',
       html: params.html,
-    });
+      replyTo: params.replyTo || params.from,
+      headers: {
+        'X-Priority': '3',
+        'X-Mailer': 'Festival NATUR Platform',
+        'List-Unsubscribe': '<mailto:unsubscribe@festivalnatur.com>',
+        ...params.headers
+      }
+    };
+    
+    await mailService.send(mailData);
     return true;
   } catch (error) {
     console.error('SendGrid email error:', error);
@@ -49,7 +63,7 @@ export async function sendVerificationEmail(
     <html>
     <head>
       <meta charset="utf-8">
-      <title>Verificación de Email - Festival NATUR</title>
+      <title>Confirma tu registro - Festival NATUR</title>
       <style>
         body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
         .container { max-width: 600px; margin: 0 auto; padding: 20px; }
@@ -63,36 +77,34 @@ export async function sendVerificationEmail(
       <div class="container">
         <div class="header">
           <h1 style="margin:0; font-size: 2.5em; font-weight: bold;">NATUR</h1>
-          <p style="margin:5px 0 0 0; font-size: 1.2em;">Festival de Turismo Sostenible</p>
+          <p style="margin:5px 0 0 0; font-size: 1.2em;">Festival de Turismo Sostenible 2025</p>
         </div>
         
         <div class="content">
-          <h2>¡Bienvenido al Festival NATUR!</h2>
-          <p>Hola <strong>${userName}</strong>,</p>
+          <h2>Bienvenido ${userName}</h2>
+          <p>Tu registro de <strong>${companyName}</strong> está casi listo.</p>
           
-          <p>Gracias por registrar <strong>${companyName}</strong> en nuestra plataforma de turismo sostenible.</p>
-          
-          <p>Para completar tu registro y activar tu cuenta empresarial, por favor verifica tu dirección de correo electrónico:</p>
+          <p>Solo necesitas confirmar tu dirección de correo para activar tu cuenta:</p>
           
           <div style="text-align: center;">
-            <a href="${verificationUrl}" class="button">VERIFICAR MI EMAIL</a>
+            <a href="${verificationUrl}" class="button">Confirmar mi cuenta</a>
           </div>
           
-          <p>Una vez verificado tu email, podrás:</p>
+          <p>Con tu cuenta activa tendrás acceso a:</p>
           <ul>
-            <li>Acceder al Portal Empresas completo</li>
-            <li>Aparecer en el directorio de empresas sostenibles</li>
-            <li>Crear y gestionar experiencias turísticas</li>
-            <li>Conectar con otros empresarios del sector</li>
-            <li>Participar en la red de turismo sostenible</li>
+            <li>Portal empresarial completo</li>
+            <li>Directorio de empresas sostenibles</li>
+            <li>Creación de experiencias turísticas</li>
+            <li>Red de networking empresarial</li>
+            <li>Participación en el festival 2025</li>
           </ul>
           
-          <p>Si el botón no funciona, copia y pega este enlace en tu navegador:</p>
+          <p>Si el botón no funciona, usa este enlace:</p>
           <p style="word-break: break-all; background: #eee; padding: 10px; border-radius: 3px;">${verificationUrl}</p>
           
-          <p><strong>Importante:</strong> Este enlace expira en 24 horas por seguridad.</p>
+          <p>Este enlace es válido por 24 horas.</p>
           
-          <p>¡Esperamos verte pronto en el Festival NATUR 2025!</p>
+          <p>Nos vemos en NATUR 2025.</p>
           
           <p>Saludos cordiales,<br>
           <strong>Equipo Festival NATUR</strong></p>
@@ -110,9 +122,14 @@ export async function sendVerificationEmail(
   return await sendEmail({
     to: userEmail,
     from: process.env.SENDGRID_FROM_EMAIL!,
-    subject: 'Verifica tu email - Festival NATUR',
+    subject: `${userName}, confirma tu registro en NATUR`,
     html: htmlContent,
-    text: `Hola ${userName}, gracias por registrar ${companyName} en Festival NATUR. Para verificar tu email, visita: ${verificationUrl}`
+    text: `Hola ${userName}, confirma tu registro de ${companyName} en Festival NATUR visitando: ${verificationUrl}`,
+    replyTo: process.env.SENDGRID_FROM_EMAIL!,
+    headers: {
+      'X-Entity-Type': 'account-verification',
+      'Precedence': 'bulk'
+    }
   });
 }
 
