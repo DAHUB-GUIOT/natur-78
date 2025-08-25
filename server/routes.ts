@@ -275,11 +275,27 @@ export async function registerRoutes(app: Express): Promise<Server> {
         defaultExperienceCategory: req.body.defaultExperienceCategory || '',
         defaultMeetingPoint: req.body.defaultMeetingPoint || '',
         defaultCancellationPolicy: req.body.defaultCancellationPolicy || '',
-        // Additional new fields from 10-step registration
+        // Additional new fields from 15-step registration
         businessLicense: req.body.businessLicense || '',
         taxId: req.body.taxId || '',
         languages: req.body.languages || [],
-        acceptTerms: req.body.acceptTerms || false
+        acceptTerms: req.body.acceptTerms || false,
+        // Payment configuration
+        paymentMethods: JSON.stringify(req.body.paymentMethods || []),
+        invoiceEmail: req.body.invoiceEmail || '',
+        taxInformation: req.body.taxInformation || '',
+        // Notification preferences
+        emailNotifications: req.body.emailNotifications ?? true,
+        smsNotifications: req.body.smsNotifications ?? false,
+        marketingEmails: req.body.marketingEmails ?? true,
+        // Security settings
+        twoFactorEnabled: req.body.twoFactorEnabled ?? false,
+        loginNotifications: req.body.loginNotifications ?? true,
+        // API settings
+        apiAccess: req.body.apiAccess ?? false,
+        webhookUrl: req.body.webhookUrl || '',
+        // Final configuration
+        setupComplete: req.body.setupComplete ?? true
       });
       
       // Check if user already exists

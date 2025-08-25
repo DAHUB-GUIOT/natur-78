@@ -96,6 +96,27 @@ export const users = pgTable("users", {
   // Complete registration fields
   acceptTerms: boolean("accept_terms").default(false),
   
+  // Payment configuration
+  paymentMethods: text("payment_methods").default("[]"),
+  invoiceEmail: text("invoice_email").default(""),
+  taxInformation: text("tax_information").default(""),
+  
+  // Notification preferences
+  emailNotifications: boolean("email_notifications").default(true),
+  smsNotifications: boolean("sms_notifications").default(false),
+  marketingEmails: boolean("marketing_emails").default(true),
+  
+  // Security settings
+  twoFactorEnabled: boolean("two_factor_enabled").default(false),
+  loginNotifications: boolean("login_notifications").default(true),
+  
+  // API settings
+  apiAccess: boolean("api_access").default(false),
+  webhookUrl: text("webhook_url").default(""),
+  
+  // Final configuration
+  setupComplete: boolean("setup_complete").default(false),
+  
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });

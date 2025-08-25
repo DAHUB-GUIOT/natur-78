@@ -25,7 +25,7 @@ const PortalEmpresasAuth = () => {
     password: ""
   });
 
-  // Complete Registration State - ALL 10 steps
+  // Complete Registration State - ALL 15 steps
   const [registrationData, setRegistrationData] = useState({
     firstName: "",
     lastName: "",
@@ -58,7 +58,12 @@ const PortalEmpresasAuth = () => {
     facebookUrl: "",
     instagramUrl: "",
     twitterUrl: "",
-    emergencyContact: {},
+    emergencyContact: {
+      name: "",
+      phone: "",
+      email: "",
+      relationship: ""
+    },
     // Step 5: Messaging Configuration
     messagingEnabled: true,
     messagingBio: "",
@@ -73,7 +78,23 @@ const PortalEmpresasAuth = () => {
     businessLicense: "",
     taxId: "",
     languages: [] as string[],
-    acceptTerms: false
+    acceptTerms: false,
+    // Step 11: Payment Configuration
+    paymentMethods: [] as string[],
+    invoiceEmail: "",
+    taxInformation: "",
+    // Step 12: Notification Preferences
+    emailNotifications: true,
+    smsNotifications: false,
+    marketingEmails: true,
+    // Step 13: Security Settings
+    twoFactorEnabled: false,
+    loginNotifications: true,
+    // Step 14: API Settings
+    apiAccess: false,
+    webhookUrl: "",
+    // Step 15: Final Configuration
+    setupComplete: false
   });
 
   // Company categories and subcategories
@@ -218,7 +239,7 @@ const PortalEmpresasAuth = () => {
   };
 
   const handleNextStep = () => {
-    if (currentStep < 10) {
+    if (currentStep < 15) {
       setCurrentStep(currentStep + 1);
     }
   };
@@ -295,7 +316,23 @@ const PortalEmpresasAuth = () => {
       businessLicense: "CM-2023-456789",
       taxId: "900123456-1",
       languages: ["Español", "Inglés", "Portugués"],
-      acceptTerms: true
+      acceptTerms: true,
+      // Payment configuration
+      paymentMethods: ["transferencia", "tarjeta"],
+      invoiceEmail: "dahub.tech@gmail.com",
+      taxInformation: "Régimen simplificado",
+      // Notification preferences
+      emailNotifications: true,
+      smsNotifications: false,
+      marketingEmails: true,
+      // Security settings
+      twoFactorEnabled: false,
+      loginNotifications: true,
+      // API settings
+      apiAccess: false,
+      webhookUrl: "",
+      // Final configuration
+      setupComplete: true
     });
     
     toast({
@@ -329,6 +366,16 @@ const PortalEmpresasAuth = () => {
         return true; // Social media - optional
       case 10:
         return !!(registrationData.emergencyContact.name && registrationData.emergencyContact.phone && registrationData.acceptTerms);
+      case 11:
+        return true; // Payment configuration - optional initially
+      case 12:
+        return true; // Notification preferences - optional
+      case 13:
+        return true; // Security and privacy settings - optional
+      case 14:
+        return true; // API integration settings - optional
+      case 15:
+        return true; // Final review - always valid
       default:
         return false;
     }
@@ -1000,6 +1047,273 @@ const PortalEmpresasAuth = () => {
           </div>
         );
 
+      case 11:
+        return (
+          <div className="space-y-6">
+            <div className="text-center mb-6">
+              <Briefcase className="mx-auto h-12 w-12 text-[#CAD95E] mb-4" />
+              <h3 className="text-xl font-bold text-gray-800 dark:text-white">Configuración de Pagos</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">Configura tus métodos de pago y facturación</p>
+            </div>
+            
+            <div className="space-y-2">
+              <Label className="text-sm font-medium">Métodos de Pago Aceptados</Label>
+              <div className="space-y-2">
+                <div className="flex items-center space-x-2">
+                  <input
+                    type="checkbox"
+                    id="transferencia"
+                    checked={registrationData.paymentMethods.includes("transferencia")}
+                    onChange={(e) => {
+                      const methods = e.target.checked 
+                        ? [...registrationData.paymentMethods, "transferencia"]
+                        : registrationData.paymentMethods.filter(m => m !== "transferencia");
+                      setRegistrationData({...registrationData, paymentMethods: methods});
+                    }}
+                  />
+                  <Label htmlFor="transferencia" className="text-sm">Transferencia Bancaria</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <input
+                    type="checkbox"
+                    id="tarjeta"
+                    checked={registrationData.paymentMethods.includes("tarjeta")}
+                    onChange={(e) => {
+                      const methods = e.target.checked 
+                        ? [...registrationData.paymentMethods, "tarjeta"]
+                        : registrationData.paymentMethods.filter(m => m !== "tarjeta");
+                      setRegistrationData({...registrationData, paymentMethods: methods});
+                    }}
+                  />
+                  <Label htmlFor="tarjeta" className="text-sm">Tarjeta de Crédito/Débito</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <input
+                    type="checkbox"
+                    id="efectivo"
+                    checked={registrationData.paymentMethods.includes("efectivo")}
+                    onChange={(e) => {
+                      const methods = e.target.checked 
+                        ? [...registrationData.paymentMethods, "efectivo"]
+                        : registrationData.paymentMethods.filter(m => m !== "efectivo");
+                      setRegistrationData({...registrationData, paymentMethods: methods});
+                    }}
+                  />
+                  <Label htmlFor="efectivo" className="text-sm">Efectivo</Label>
+                </div>
+              </div>
+            </div>
+            
+            <div className="space-y-2">
+              <Label className="text-sm font-medium">Email para Facturación</Label>
+              <Input
+                type="email"
+                value={registrationData.invoiceEmail}
+                onChange={(e) => setRegistrationData({...registrationData, invoiceEmail: e.target.value})}
+                placeholder="facturacion@empresa.com"
+              />
+            </div>
+            
+            <div className="space-y-2">
+              <Label className="text-sm font-medium">Información Fiscal</Label>
+              <Input
+                value={registrationData.taxInformation}
+                onChange={(e) => setRegistrationData({...registrationData, taxInformation: e.target.value})}
+                placeholder="Ej: Régimen simplificado, Gran contribuyente, etc."
+              />
+            </div>
+          </div>
+        );
+
+      case 12:
+        return (
+          <div className="space-y-6">
+            <div className="text-center mb-6">
+              <Mail className="mx-auto h-12 w-12 text-[#CAD95E] mb-4" />
+              <h3 className="text-xl font-bold text-gray-800 dark:text-white">Configuración de Notificaciones</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">Configura cómo quieres recibir notificaciones</p>
+            </div>
+            
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <Label className="text-sm font-medium">Notificaciones por Email</Label>
+                  <p className="text-xs text-gray-500">Recibe actualizaciones importantes por correo</p>
+                </div>
+                <input
+                  type="checkbox"
+                  checked={registrationData.emailNotifications}
+                  onChange={(e) => setRegistrationData({...registrationData, emailNotifications: e.target.checked})}
+                  className="rounded"
+                />
+              </div>
+              
+              <div className="flex items-center justify-between">
+                <div>
+                  <Label className="text-sm font-medium">Notificaciones por SMS</Label>
+                  <p className="text-xs text-gray-500">Alertas críticas por mensaje de texto</p>
+                </div>
+                <input
+                  type="checkbox"
+                  checked={registrationData.smsNotifications}
+                  onChange={(e) => setRegistrationData({...registrationData, smsNotifications: e.target.checked})}
+                  className="rounded"
+                />
+              </div>
+              
+              <div className="flex items-center justify-between">
+                <div>
+                  <Label className="text-sm font-medium">Emails de Marketing</Label>
+                  <p className="text-xs text-gray-500">Recibe ofertas y novedades del festival</p>
+                </div>
+                <input
+                  type="checkbox"
+                  checked={registrationData.marketingEmails}
+                  onChange={(e) => setRegistrationData({...registrationData, marketingEmails: e.target.checked})}
+                  className="rounded"
+                />
+              </div>
+            </div>
+          </div>
+        );
+
+      case 13:
+        return (
+          <div className="space-y-6">
+            <div className="text-center mb-6">
+              <Shield className="mx-auto h-12 w-12 text-[#CAD95E] mb-4" />
+              <h3 className="text-xl font-bold text-gray-800 dark:text-white">Configuración de Seguridad</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">Protege tu cuenta empresarial</p>
+            </div>
+            
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <Label className="text-sm font-medium">Autenticación de Dos Factores</Label>
+                  <p className="text-xs text-gray-500">Agrega una capa extra de seguridad</p>
+                </div>
+                <input
+                  type="checkbox"
+                  checked={registrationData.twoFactorEnabled}
+                  onChange={(e) => setRegistrationData({...registrationData, twoFactorEnabled: e.target.checked})}
+                  className="rounded"
+                />
+              </div>
+              
+              <div className="flex items-center justify-between">
+                <div>
+                  <Label className="text-sm font-medium">Notificaciones de Inicio de Sesión</Label>
+                  <p className="text-xs text-gray-500">Te avisamos cuando alguien accede a tu cuenta</p>
+                </div>
+                <input
+                  type="checkbox"
+                  checked={registrationData.loginNotifications}
+                  onChange={(e) => setRegistrationData({...registrationData, loginNotifications: e.target.checked})}
+                  className="rounded"
+                />
+              </div>
+            </div>
+          </div>
+        );
+
+      case 14:
+        return (
+          <div className="space-y-6">
+            <div className="text-center mb-6">
+              <Building className="mx-auto h-12 w-12 text-[#CAD95E] mb-4" />
+              <h3 className="text-xl font-bold text-gray-800 dark:text-white">Configuración de API</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">Configuraciones avanzadas para integraciones</p>
+            </div>
+            
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <Label className="text-sm font-medium">Acceso a API</Label>
+                  <p className="text-xs text-gray-500">Habilita integraciones con sistemas externos</p>
+                </div>
+                <input
+                  type="checkbox"
+                  checked={registrationData.apiAccess}
+                  onChange={(e) => setRegistrationData({...registrationData, apiAccess: e.target.checked})}
+                  className="rounded"
+                />
+              </div>
+              
+              {registrationData.apiAccess && (
+                <div className="space-y-2">
+                  <Label className="text-sm font-medium">URL de Webhook (Opcional)</Label>
+                  <Input
+                    value={registrationData.webhookUrl}
+                    onChange={(e) => setRegistrationData({...registrationData, webhookUrl: e.target.value})}
+                    placeholder="https://tu-servidor.com/webhook"
+                  />
+                  <p className="text-xs text-gray-500">URL donde enviaremos notificaciones de eventos</p>
+                </div>
+              )}
+            </div>
+          </div>
+        );
+
+      case 15:
+        return (
+          <div className="space-y-6">
+            <div className="text-center mb-6">
+              <Check className="mx-auto h-12 w-12 text-[#CAD95E] mb-4" />
+              <h3 className="text-xl font-bold text-gray-800 dark:text-white">¡Configuración Completa!</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">Revisa y confirma toda tu información</p>
+            </div>
+            
+            <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4">
+              <h4 className="font-semibold text-green-800 dark:text-green-200 mb-2">✅ Configuración Empresarial 100% Completa</h4>
+              <ul className="text-sm text-green-700 dark:text-green-300 space-y-1">
+                <li>• Información personal y empresarial completa</li>
+                <li>• Ubicación y contacto configurados</li>
+                <li>• Perfil y servicios definidos</li>
+                <li>• Sistema de mensajería activado</li>
+                <li>• Configuración de experiencias lista</li>
+                <li>• Horarios de operación establecidos</li>
+                <li>• Idiomas y certificaciones agregadas</li>
+                <li>• Redes sociales conectadas</li>
+                <li>• Contacto de emergencia configurado</li>
+                <li>• Métodos de pago definidos</li>
+                <li>• Notificaciones personalizadas</li>
+                <li>• Seguridad reforzada</li>
+                <li>• Integraciones API configuradas</li>
+              </ul>
+            </div>
+            
+            <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+              <h4 className="font-semibold text-blue-800 dark:text-blue-200 mb-2">🚀 Funciones Activadas</h4>
+              <ul className="text-sm text-blue-700 dark:text-blue-300 space-y-1">
+                <li>• Perfil visible en directorio empresarial</li>
+                <li>• Aparición en mapa interactivo</li>
+                <li>• Sistema de mensajería B2B activo</li>
+                <li>• Creación de experiencias habilitada</li>
+                <li>• Acceso completo al Portal Empresas</li>
+                <li>• Verificación automática: VERIFIED</li>
+              </ul>
+            </div>
+            
+            <div className="text-center">
+              <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                Tu cuenta empresarial estará completamente configurada y lista para usar.
+              </p>
+              <div className="flex items-center justify-center space-x-2">
+                <input
+                  type="checkbox"
+                  id="finalAccept"
+                  checked={registrationData.setupComplete}
+                  onChange={(e) => setRegistrationData({...registrationData, setupComplete: e.target.checked})}
+                  required
+                />
+                <Label htmlFor="finalAccept" className="text-sm">
+                  Confirmo que todos los datos son correctos y acepto crear mi cuenta empresarial
+                </Label>
+              </div>
+            </div>
+          </div>
+        );
+
       default:
         return null;
     }
@@ -1131,7 +1445,7 @@ const PortalEmpresasAuth = () => {
                     <span>Anterior</span>
                   </Button>
                   
-                  {currentStep < 10 ? (
+                  {currentStep < 15 ? (
                     <Button
                       onClick={handleNextStep}
                       disabled={!validateStep(currentStep)}
