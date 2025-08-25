@@ -274,7 +274,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
         experienceSetupComplete: req.body.experienceSetupComplete ?? true,
         defaultExperienceCategory: req.body.defaultExperienceCategory || '',
         defaultMeetingPoint: req.body.defaultMeetingPoint || '',
-        defaultCancellationPolicy: req.body.defaultCancellationPolicy || ''
+        defaultCancellationPolicy: req.body.defaultCancellationPolicy || '',
+        // Additional new fields from 10-step registration
+        businessLicense: req.body.businessLicense || '',
+        taxId: req.body.taxId || '',
+        languages: req.body.languages || [],
+        acceptTerms: req.body.acceptTerms || false
       });
       
       // Check if user already exists

@@ -11,7 +11,7 @@ import { useToast } from "@/hooks/use-toast";
 import { HeaderButtons } from "@/components/layout/HeaderButtons";
 import { GoogleAuthButton } from "@/components/GoogleAuthButton";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronRight, ChevronLeft, Upload, MapPin, Building, User, Camera, Check, ArrowLeft } from "lucide-react";
+import { ChevronRight, ChevronLeft, Upload, MapPin, Building, User, Camera, Check, ArrowLeft, Mail, Briefcase, Clock, Languages, Shield } from "lucide-react";
 
 const PortalEmpresasAuth = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -25,7 +25,7 @@ const PortalEmpresasAuth = () => {
     password: ""
   });
 
-  // Registration State
+  // Complete Registration State - ALL 10 steps
   const [registrationData, setRegistrationData] = useState({
     firstName: "",
     lastName: "",
@@ -58,7 +58,22 @@ const PortalEmpresasAuth = () => {
     facebookUrl: "",
     instagramUrl: "",
     twitterUrl: "",
-    emergencyContact: {}
+    emergencyContact: {},
+    // Step 5: Messaging Configuration
+    messagingEnabled: true,
+    messagingBio: "",
+    acceptsInquiries: true,
+    responseTimeHours: 24,
+    // Step 6: Experience Configuration
+    experienceSetupComplete: true,
+    defaultExperienceCategory: "",
+    defaultMeetingPoint: "",
+    defaultCancellationPolicy: "",
+    // Step 7-10: Additional fields
+    businessLicense: "",
+    taxId: "",
+    languages: [] as string[],
+    acceptTerms: false
   });
 
   // Company categories and subcategories
@@ -203,7 +218,7 @@ const PortalEmpresasAuth = () => {
   };
 
   const handleNextStep = () => {
-    if (currentStep < 6) {
+    if (currentStep < 10) {
       setCurrentStep(currentStep + 1);
     }
   };
@@ -226,6 +241,69 @@ const PortalEmpresasAuth = () => {
     registrationMutation.mutate(registrationData);
   };
 
+  // Load DaHub test data function
+  const loadDaHubTestData = () => {
+    setRegistrationData({
+      firstName: "David",
+      lastName: "Hub",
+      email: "dahub.tech@gmail.com",
+      password: "12345678",
+      confirmPassword: "12345678",
+      phone: "+57 300 456 7890",
+      companyName: "DaHub Technologies",
+      businessType: "Tecnología",
+      companyCategory: "Tecnología para el Turismo Sostenible",
+      companySubcategory: "Plataformas Digitales",
+      companyDescription: "Empresa de tecnología especializada en soluciones digitales para el turismo sostenible. Desarrollamos plataformas innovadoras que conectan viajeros con experiencias auténticas.",
+      yearsExperience: "8",
+      teamSize: "12",
+      address: "Carrera 11 #93-07, Chapinero",
+      city: "Bogotá",
+      country: "Colombia",
+      website: "https://dahub.tech",
+      coordinates: { lat: 4.6789, lng: -74.0489 },
+      profilePicture: "",
+      bio: "DaHub Technologies es una empresa pionera en el desarrollo de soluciones tecnológicas para el turismo sostenible. Nuestra misión es crear herramientas digitales que faciliten conexiones auténticas entre viajeros y comunidades locales, promoviendo prácticas responsables y experiencias transformadoras.",
+      servicesOffered: ["Desarrollo de plataformas", "Consultoría tecnológica", "Análisis de datos"],
+      targetMarket: "Empresas de turismo sostenible, ONGs ambientales, comunidades locales",
+      operatingHours: {},
+      certifications: ["ISO 27001", "B Corp Certification"],
+      sustainabilityPractices: ["Hosting verde", "Código eficiente", "Trabajo remoto"],
+      accessibilityFeatures: ["Interfaces accesibles", "Soporte multiidioma"],
+      socialMedia: {},
+      linkedinUrl: "https://linkedin.com/company/dahub-tech",
+      facebookUrl: "",
+      instagramUrl: "https://instagram.com/dahub.tech",
+      twitterUrl: "https://twitter.com/dahubtech",
+      emergencyContact: {
+        name: "Ana García",
+        phone: "+57 300 123 4567",
+        email: "ana.garcia@dahub.tech",
+        relationship: "Directora de Operaciones"
+      },
+      // New messaging configuration
+      messagingEnabled: true,
+      messagingBio: "¡Hola! Somos DaHub Technologies. Estamos aquí para ayudarte a desarrollar soluciones tecnológicas innovadoras para tu empresa de turismo sostenible. Conectemos y creemos algo increíble juntos.",
+      acceptsInquiries: true,
+      responseTimeHours: 12,
+      // New experience configuration
+      experienceSetupComplete: true,
+      defaultExperienceCategory: "ecoturismo",
+      defaultMeetingPoint: "Oficinas DaHub - Carrera 11 #93-07",
+      defaultCancellationPolicy: "Cancelación gratuita hasta 48 horas antes de la consulta. Reagendamos sin costo adicional con 24 horas de anticipación.",
+      // Additional fields
+      businessLicense: "CM-2023-456789",
+      taxId: "900123456-1",
+      languages: ["Español", "Inglés", "Portugués"],
+      acceptTerms: true
+    });
+    
+    toast({
+      title: "Datos de prueba cargados",
+      description: "Se han cargado los datos completos de DaHub Technologies",
+    });
+  };
+
   const validateStep = (step: number): boolean => {
     switch (step) {
       case 1:
@@ -240,9 +318,17 @@ const PortalEmpresasAuth = () => {
       case 4:
         return !!(registrationData.bio && registrationData.targetMarket);
       case 5:
-        return true; // Optional step
+        return !!(registrationData.messagingBio && registrationData.responseTimeHours);
       case 6:
-        return true; // Optional step
+        return !!(registrationData.defaultExperienceCategory && registrationData.defaultMeetingPoint);
+      case 7:
+        return true; // Operating hours - optional
+      case 8:
+        return registrationData.languages.length > 0;
+      case 9:
+        return true; // Social media - optional
+      case 10:
+        return !!(registrationData.emergencyContact.name && registrationData.emergencyContact.phone && registrationData.acceptTerms);
       default:
         return false;
     }
@@ -593,9 +679,174 @@ const PortalEmpresasAuth = () => {
         return (
           <div className="space-y-6">
             <div className="text-center mb-6">
-              <Check className="mx-auto h-12 w-12 text-[#CAD95E] mb-4" />
-              <h3 className="text-xl font-bold text-gray-800 dark:text-white">Certificaciones</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Opcional: Agrega tus certificaciones y prácticas sostenibles</p>
+              <Mail className="mx-auto h-12 w-12 text-[#CAD95E] mb-4" />
+              <h3 className="text-xl font-bold text-gray-800 dark:text-white">Configuración de Mensajería</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">Configura cómo los clientes pueden contactarte</p>
+            </div>
+            
+            <div className="space-y-2">
+              <Label className="text-sm font-medium">Mensaje de Bienvenida *</Label>
+              <Textarea
+                value={registrationData.messagingBio}
+                onChange={(e) => setRegistrationData({...registrationData, messagingBio: e.target.value})}
+                placeholder="Hola! Somos [Tu Empresa]. Estamos aquí para ayudarte a planificar tu experiencia perfecta..."
+                rows={4}
+                required
+              />
+            </div>
+            
+            <div className="space-y-2">
+              <Label className="text-sm font-medium">Tiempo de Respuesta (horas) *</Label>
+              <Input
+                type="number"
+                value={registrationData.responseTimeHours}
+                onChange={(e) => setRegistrationData({...registrationData, responseTimeHours: parseInt(e.target.value) || 24})}
+                placeholder="24"
+                min="1"
+                max="72"
+                required
+              />
+            </div>
+            
+            <div className="flex items-center space-x-2">
+              <input
+                type="checkbox"
+                id="acceptsInquiries"
+                checked={registrationData.acceptsInquiries}
+                onChange={(e) => setRegistrationData({...registrationData, acceptsInquiries: e.target.checked})}
+                className="rounded"
+              />
+              <Label htmlFor="acceptsInquiries" className="text-sm">Acepto recibir consultas de clientes</Label>
+            </div>
+          </div>
+        );
+
+      case 6:
+        return (
+          <div className="space-y-6">
+            <div className="text-center mb-6">
+              <Briefcase className="mx-auto h-12 w-12 text-[#CAD95E] mb-4" />
+              <h3 className="text-xl font-bold text-gray-800 dark:text-white">Configuración de Experiencias</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">Prepara la creación de tus experiencias</p>
+            </div>
+            
+            <div className="space-y-2">
+              <Label className="text-sm font-medium">Categoría Principal de Experiencias *</Label>
+              <Select 
+                value={registrationData.defaultExperienceCategory} 
+                onValueChange={(value) => setRegistrationData({...registrationData, defaultExperienceCategory: value})}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Selecciona categoría principal" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="ecoturismo">Ecoturismo</SelectItem>
+                  <SelectItem value="aventura">Turismo de Aventura</SelectItem>
+                  <SelectItem value="cultural">Turismo Cultural</SelectItem>
+                  <SelectItem value="gastronómico">Turismo Gastronómico</SelectItem>
+                  <SelectItem value="rural">Turismo Rural</SelectItem>
+                  <SelectItem value="bienestar">Turismo de Bienestar</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            
+            <div className="space-y-2">
+              <Label className="text-sm font-medium">Punto de Encuentro por Defecto *</Label>
+              <Input
+                value={registrationData.defaultMeetingPoint}
+                onChange={(e) => setRegistrationData({...registrationData, defaultMeetingPoint: e.target.value})}
+                placeholder="Ej: Lobby del hotel, Plaza principal, Estación de metro..."
+                required
+              />
+            </div>
+            
+            <div className="space-y-2">
+              <Label className="text-sm font-medium">Política de Cancelación por Defecto *</Label>
+              <Textarea
+                value={registrationData.defaultCancellationPolicy}
+                onChange={(e) => setRegistrationData({...registrationData, defaultCancellationPolicy: e.target.value})}
+                placeholder="Cancelación gratuita hasta 24 horas antes. Reembolso del 50% entre 24-48 horas..."
+                rows={3}
+                required
+              />
+            </div>
+          </div>
+        );
+
+      case 7:
+        return (
+          <div className="space-y-6">
+            <div className="text-center mb-6">
+              <Clock className="mx-auto h-12 w-12 text-[#CAD95E] mb-4" />
+              <h3 className="text-xl font-bold text-gray-800 dark:text-white">Horarios de Operación</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">Define cuándo estás disponible</p>
+            </div>
+            
+            <div className="space-y-4">
+              {["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"].map((day, index) => (
+                <div key={day} className="flex items-center space-x-4">
+                  <div className="w-20 text-sm font-medium">{day}</div>
+                  <div className="flex items-center space-x-2">
+                    <Input
+                      type="time"
+                      defaultValue="09:00"
+                      className="w-24"
+                      placeholder="09:00"
+                    />
+                    <span>-</span>
+                    <Input
+                      type="time"
+                      defaultValue="18:00"
+                      className="w-24"
+                      placeholder="18:00"
+                    />
+                  </div>
+                  <label className="flex items-center space-x-2">
+                    <input type="checkbox" className="rounded" />
+                    <span className="text-sm">Cerrado</span>
+                  </label>
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+
+      case 8:
+        return (
+          <div className="space-y-6">
+            <div className="text-center mb-6">
+              <Languages className="mx-auto h-12 w-12 text-[#CAD95E] mb-4" />
+              <h3 className="text-xl font-bold text-gray-800 dark:text-white">Idiomas y Certificaciones</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">Información profesional adicional</p>
+            </div>
+            
+            <div className="space-y-2">
+              <Label className="text-sm font-medium">Idiomas que Manejas *</Label>
+              <div className="grid grid-cols-3 gap-2">
+                {["Español", "Inglés", "Francés", "Portugués", "Alemán", "Italiano"].map((lang) => (
+                  <label key={lang} className="flex items-center space-x-2">
+                    <input
+                      type="checkbox"
+                      checked={registrationData.languages.includes(lang)}
+                      onChange={(e) => {
+                        if (e.target.checked) {
+                          setRegistrationData({
+                            ...registrationData,
+                            languages: [...registrationData.languages, lang]
+                          });
+                        } else {
+                          setRegistrationData({
+                            ...registrationData,
+                            languages: registrationData.languages.filter(l => l !== lang)
+                          });
+                        }
+                      }}
+                      className="rounded"
+                    />
+                    <span className="text-sm">{lang}</span>
+                  </label>
+                ))}
+              </div>
             </div>
             
             <div className="space-y-2">
@@ -617,20 +868,10 @@ const PortalEmpresasAuth = () => {
                 rows={3}
               />
             </div>
-            
-            <div className="space-y-2">
-              <Label className="text-sm font-medium">Características de Accesibilidad</Label>
-              <Textarea
-                value={registrationData.accessibilityFeatures.join('\n')}
-                onChange={(e) => setRegistrationData({...registrationData, accessibilityFeatures: e.target.value.split('\n').filter(a => a.trim())})}
-                placeholder="Ej: Acceso para sillas de ruedas, señalización braille..."
-                rows={3}
-              />
-            </div>
           </div>
         );
 
-      case 6:
+      case 9:
         return (
           <div className="space-y-6">
             <div className="text-center mb-6">
@@ -638,7 +879,7 @@ const PortalEmpresasAuth = () => {
                 <span className="text-black font-bold">@</span>
               </div>
               <h3 className="text-xl font-bold text-gray-800 dark:text-white">Redes Sociales</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Opcional: Conecta tus redes sociales</p>
+              <p className="text-sm text-gray-600 dark:text-gray-400">Conecta tus redes sociales</p>
             </div>
             
             <div className="grid grid-cols-1 gap-4">
@@ -676,6 +917,84 @@ const PortalEmpresasAuth = () => {
                   onChange={(e) => setRegistrationData({...registrationData, twitterUrl: e.target.value})}
                   placeholder="https://www.twitter.com/tu-empresa"
                 />
+              </div>
+            </div>
+          </div>
+        );
+
+      case 10:
+        return (
+          <div className="space-y-6">
+            <div className="text-center mb-6">
+              <Shield className="mx-auto h-12 w-12 text-[#CAD95E] mb-4" />
+              <h3 className="text-xl font-bold text-gray-800 dark:text-white">Contacto de Emergencia</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">Información de contacto de emergencia</p>
+            </div>
+            
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label className="text-sm font-medium">Nombre Completo *</Label>
+                <Input
+                  value={registrationData.emergencyContact.name || ""}
+                  onChange={(e) => setRegistrationData({
+                    ...registrationData, 
+                    emergencyContact: {
+                      ...registrationData.emergencyContact,
+                      name: e.target.value
+                    }
+                  })}
+                  placeholder="Juan Pérez"
+                  required
+                />
+              </div>
+              
+              <div className="space-y-2">
+                <Label className="text-sm font-medium">Teléfono *</Label>
+                <Input
+                  value={registrationData.emergencyContact.phone || ""}
+                  onChange={(e) => setRegistrationData({
+                    ...registrationData,
+                    emergencyContact: {
+                      ...registrationData.emergencyContact,
+                      phone: e.target.value
+                    }
+                  })}
+                  placeholder="+57 300 123 4567"
+                  required
+                />
+              </div>
+            </div>
+            
+            <div className="space-y-2">
+              <Label className="text-sm font-medium">Email *</Label>
+              <Input
+                type="email"
+                value={registrationData.emergencyContact.email || ""}
+                onChange={(e) => setRegistrationData({
+                  ...registrationData,
+                  emergencyContact: {
+                    ...registrationData.emergencyContact,
+                    email: e.target.value
+                  }
+                })}
+                placeholder="contacto@empresa.com"
+                required
+              />
+            </div>
+            
+            <div className="space-y-4 mt-6">
+              <div className="flex items-center space-x-2">
+                <input
+                  type="checkbox"
+                  id="acceptTerms"
+                  checked={registrationData.acceptTerms}
+                  onChange={(e) => setRegistrationData({...registrationData, acceptTerms: e.target.checked})}
+                  className="rounded"
+                  required
+                />
+                <Label htmlFor="acceptTerms" className="text-sm">
+                  Acepto los términos y condiciones y la política de privacidad *
+                </Label>
               </div>
             </div>
           </div>
@@ -757,15 +1076,28 @@ const PortalEmpresasAuth = () => {
                         Registro Empresarial Completo
                       </CardTitle>
                       <p className="text-gray-600 dark:text-gray-400 text-sm">
-                        Paso {currentStep} de 6 - Crea tu perfil empresarial completo
+                        Paso {currentStep} de 10 - Configuración completa ANTES del login
                       </p>
                       
                       {/* Progress Bar */}
                       <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 mt-4">
                         <div 
                           className="bg-[#CAD95E] h-2 rounded-full transition-all duration-300"
-                          style={{ width: `${(currentStep / 6) * 100}%` }}
+                          style={{ width: `${(currentStep / 10) * 100}%` }}
                         ></div>
+                      </div>
+                      
+                      {/* Load Test Data Button */}
+                      <div className="mt-4 text-center">
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          onClick={() => loadDaHubTestData()}
+                          className="text-xs"
+                        >
+                          🔧 Cargar Datos de Prueba (DaHub)
+                        </Button>
                       </div>
                     </>
                   )}
@@ -799,7 +1131,7 @@ const PortalEmpresasAuth = () => {
                     <span>Anterior</span>
                   </Button>
                   
-                  {currentStep < 6 ? (
+                  {currentStep < 10 ? (
                     <Button
                       onClick={handleNextStep}
                       disabled={!validateStep(currentStep)}

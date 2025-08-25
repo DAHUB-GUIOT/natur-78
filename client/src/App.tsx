@@ -77,7 +77,6 @@ const App = () => {
               <ContrastEnhancer />
               <Switch>
             <Route path="/" component={Index} />
-            <Route path="/registro" component={ComprehensiveCompanyRegistration} />
             <Route path="/verificacion-pendiente" component={VerificationPending} />
             <Route path="/verificar-email" component={EmailVerification} />
             <Route path="/con-sentidos" component={ConSentidosRegister} />
