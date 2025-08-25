@@ -259,7 +259,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Generate verification token for email verification
       const verificationToken = crypto.randomBytes(32).toString('hex');
       userData.emailVerificationToken = verificationToken;
-      userData.emailVerified = false;
+      userData.emailVerified = true; // Temporarily auto-verify until SendGrid is configured
 
       const user = await storage.createUser(userData);
       
@@ -354,6 +354,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Company registration endpoint with email verification
+  // NOTE: Email verification temporarily disabled - users auto-verified until SendGrid is properly configured
   app.post("/api/auth/register-company", async (req, res) => {
     try {
       const {
@@ -405,8 +406,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         companyName,
         role: 'empresa' as const,
         authProvider: 'local',
-        isActive: false, // Inactive until email verified
-        emailVerified: false,
+        isActive: true, // Temporarily auto-activate until SendGrid is configured
+        emailVerified: true, // Temporarily auto-verify until SendGrid is configured
         verificationToken,
         verificationTokenExpiry,
         address,
