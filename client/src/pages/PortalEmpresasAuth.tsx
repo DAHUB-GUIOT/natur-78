@@ -1390,14 +1390,14 @@ const PortalEmpresasAuth = () => {
                         Registro Empresarial Completo
                       </CardTitle>
                       <p className="text-gray-600 dark:text-gray-400 text-sm">
-                        Paso {currentStep} de 10 - Configuración completa ANTES del login
+                        Paso {currentStep} de 15 - Configuración completa ANTES del login
                       </p>
                       
                       {/* Progress Bar */}
                       <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 mt-4">
                         <div 
                           className="bg-[#CAD95E] h-2 rounded-full transition-all duration-300"
-                          style={{ width: `${(currentStep / 10) * 100}%` }}
+                          style={{ width: `${(currentStep / 15) * 100}%` }}
                         ></div>
                       </div>
                       
