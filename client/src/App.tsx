@@ -80,7 +80,6 @@ const App = () => {
             <Route path="/verificacion-pendiente" component={VerificationPending} />
             <Route path="/verificar-email" component={EmailVerification} />
             <Route path="/con-sentidos" component={ConSentidosRegister} />
-            <Route path="/auth/empresas" component={AuthEmpresas} />
             <Route path="/auth/consentidos" component={AuthConSentidos} />
             <Route path="/reserva" component={Reservation} />
             <Route path="/experiencias">
@@ -100,7 +99,7 @@ const App = () => {
               <MainLayout><AdminOptimized /></MainLayout>
             </Route>
             <Route path="/dashboard" component={Dashboard} />
-            <Route path="/portal-empresas/auth" component={PortalEmpresasAuth} />
+            <Route path="/auth/empresas" component={PortalEmpresasAuth} />
             <Route path="/portal-empresas" component={MinimalistPortalEmpresas} />
             <Route path="/company-profile" component={CompanyProfilePage} />
             <Route path="/portal-viajeros/auth" component={AuthViajeros} />
