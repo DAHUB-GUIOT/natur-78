@@ -105,7 +105,7 @@ export async function sendVerificationEmail(
 
   return await sendEmail({
     to: userEmail,
-    from: 'no-reply@festivalnatur.com',
+    from: 'festivalnatur@gmail.com', // Cambiar por tu email verificado en SendGrid
     subject: 'Verifica tu email - Festival NATUR',
     html: htmlContent,
     text: `Hola ${userName}, gracias por registrar ${companyName} en Festival NATUR. Para verificar tu email, visita: ${verificationUrl}`
@@ -163,7 +163,7 @@ export async function sendAdminNotification(
 
   return await sendEmail({
     to: 'festivalnatur@gmail.com',
-    from: 'no-reply@festivalnatur.com',
+    from: 'festivalnatur@gmail.com', // Cambiar por tu email verificado en SendGrid
     subject: `Nueva empresa registrada: ${companyName}`,
     html: htmlContent,
     text: `Nueva empresa registrada: ${companyName} por ${userName} (${userEmail}) en categoría ${companyCategory}`
