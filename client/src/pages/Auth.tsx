@@ -409,53 +409,53 @@ const Auth = () => {
     if (!isEmpresas) return;
     
     setRegistrationData({
-      firstName: "Nicolas",
-      lastName: "Rodriguez",
+      firstName: "Sofia",
+      lastName: "Mendoza",
       email: "nicolasdominguez2603@gmail.com",
       password: "test123456",
       confirmPassword: "test123456",
-      phone: "+57 305 987 6543",
-      companyName: "EcoVentura Colombia",
-      businessType: "Turismo",
-      companyCategory: "Agencias u Operadores Turísticos",
-      companySubcategory: "Operador Turístico Especializado en Ecoturismo",
-      companyDescription: "Operadora turística especializada en experiencias de ecoturismo y aventura sostenible en Colombia. Promovemos la conservación del medio ambiente mientras ofrecemos experiencias únicas en contacto con la naturaleza.",
-      yearsExperience: "8",
-      teamSize: "25",
-      address: "Carrera 15 #85-32, Zona Rosa",
+      phone: "+57 310 234 5678",
+      companyName: "Sabor Andino Sostenible",
+      businessType: "Gastronomía",
+      companyCategory: "Gastronomía Sostenible",
+      companySubcategory: "Restaurante Km 0",
+      companyDescription: "Restaurante de cocina ancestral colombiana con ingredientes locales y prácticas sostenibles. Rescatamos sabores tradicionales mientras apoyamos a productores locales y promovemos la agricultura regenerativa.",
+      yearsExperience: "6",
+      teamSize: "18",
+      address: "Calle 70 #11-45, La Macarena",
       city: "Bogotá",
       country: "Colombia",
-      website: "https://ecoventuracolombia.co",
-      coordinates: { lat: 4.6659, lng: -74.0567 },
+      website: "https://saborandinosost.com",
+      coordinates: { lat: 4.6533, lng: -74.0648 },
       profilePicture: "",
-      bio: "EcoVentura Colombia es una operadora turística comprometida con la sostenibilidad y la conservación. Ofrecemos experiencias únicas de ecoturismo que conectan a los viajeros con la biodiversidad colombiana, promoviendo el desarrollo de las comunidades locales y la protección del medio ambiente.",
-      servicesOffered: ["Tours de ecoturismo", "Avistamiento de aves", "Caminatas ecológicas", "Turismo rural comunitario"],
-      targetMarket: "Viajeros conscientes, amantes de la naturaleza, grupos ecológicos",
+      bio: "Sabor Andino Sostenible rescata los sabores ancestrales colombianos con un enfoque 100% sostenible. Trabajamos directamente con productores locales, campesinos y comunidades indígenas para traer a tu mesa ingredientes frescos, orgánicos y de comercio justo. Cada plato cuenta una historia de tradición, innovación y respeto por la tierra.",
+      servicesOffered: ["Cocina ancestral", "Menús estacionales", "Cenas temáticas", "Talleres gastronómicos", "Catering sostenible"],
+      targetMarket: "Food lovers, turistas gastronómicos, familias conscientes, eventos corporativos",
       operatingHours: {},
-      certifications: ["Rainforest Alliance", "Travelife Certified", "ISO 14001"],
-      sustainabilityPractices: ["Turismo carbono neutro", "Apoyo a comunidades locales", "Conservación de flora y fauna"],
-      accessibilityFeatures: ["Senderos adaptados", "Guías especializados", "Transporte accesible"],
+      certifications: ["Comercio Justo Fairtrade", "Orgánico Certificado", "Km 0 Colombia"],
+      sustainabilityPractices: ["Zero waste", "Compostaje orgánico", "Energía solar", "Agricultura regenerativa"],
+      accessibilityFeatures: ["Acceso para sillas de ruedas", "Menús en braille", "Espacios adaptados"],
       socialMedia: {},
-      linkedinUrl: "https://linkedin.com/company/ecoventura-colombia",
-      facebookUrl: "https://facebook.com/ecoventuracol",
-      instagramUrl: "https://instagram.com/ecoventuracolombia",
-      twitterUrl: "https://twitter.com/ecoventuracol",
+      linkedinUrl: "https://linkedin.com/company/sabor-andino-sostenible",
+      facebookUrl: "https://facebook.com/saborandinosost",
+      instagramUrl: "https://instagram.com/saborandinosost",
+      twitterUrl: "https://twitter.com/saborandino",
       emergencyContact: {
-        name: "María Fernández",
-        phone: "+57 312 456 7890",
-        email: "emergencias@ecoventuracolombia.co",
-        relationship: "Coordinadora de Seguridad"
+        name: "Carlos Rojas",
+        phone: "+57 315 678 9012",
+        email: "gerencia@saborandinosost.com",
+        relationship: "Gerente General"
       },
       messagingEnabled: true,
-      messagingBio: "¡Hola! Somos EcoVentura Colombia. Estamos aquí para ayudarte a descubrir la increíble biodiversidad de Colombia a través de experiencias de ecoturismo sostenible. Conectemos con la naturaleza y las comunidades locales.",
+      messagingBio: "¡Hola! Somos Sabor Andino Sostenible. Estamos aquí para llevarte en un viaje gastronómico por los sabores ancestrales de Colombia. Conectemos a través de la comida, las tradiciones y el amor por nuestra tierra.",
       acceptsInquiries: true,
       responseTimeHours: 12,
       experienceSetupComplete: true,
-      defaultExperienceCategory: "ecoturismo",
-      defaultMeetingPoint: "Oficinas EcoVentura - Carrera 15 #85-32",
-      defaultCancellationPolicy: "Cancelación gratuita hasta 72 horas antes del tour. Reagendamos sin costo adicional por condiciones climáticas adversas.",
-      businessLicense: "TUR-2023-987654",
-      taxId: "900987654-3",
+      defaultExperienceCategory: "gastronomia",
+      defaultMeetingPoint: "Restaurante Sabor Andino - Calle 70 #11-45",
+      defaultCancellationPolicy: "Cancelación gratuita hasta 24 horas antes de la reserva. Modificaciones sin costo hasta 4 horas antes del servicio.",
+      businessLicense: "GAS-2023-345678",
+      taxId: "900345678-2",
       languages: ["Español", "Inglés", "Portugués"],
       acceptTerms: true,
       paymentMethods: ["transferencia", "tarjeta"],
@@ -473,7 +473,7 @@ const Auth = () => {
     
     toast({
       title: "Datos de prueba cargados",
-      description: "Se han cargado los datos completos de EcoVentura Colombia",
+      description: "Se han cargado los datos completos de Sabor Andino Sostenible",
     });
   };
 
@@ -1569,7 +1569,7 @@ const Auth = () => {
                               onClick={() => loadTestData()}
                               className="text-xs"
                             >
-                              🔧 Cargar Datos de Prueba (EcoVentura)
+                              🍽️ Cargar Datos de Prueba (Restaurante)
                             </Button>
                           </div>
                         </>
