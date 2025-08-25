@@ -1,99 +1,181 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import { useLocation } from "wouter";
-import { Link } from "wouter";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Building2, MapPin, Mail, Lock, ArrowLeft, ArrowRight, User, Phone, Globe, Clock, Award, Shield } from "lucide-react";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
+import { GoogleAuthButton } from "@/components/GoogleAuthButton";
 import { motion, AnimatePresence } from "framer-motion";
-
-
-// Company categories for registration
-const COMPANY_CATEGORIES = [
-  { value: "agencias-operadores", label: "Agencias u Operadores Turísticos" },
-  { value: "alojamientos", label: "Alojamientos Sostenibles" },
-  { value: "gastronomia", label: "Gastronomía Sostenible" },
-  { value: "movilidad", label: "Movilidad y Transporte Ecológico" },
-  { value: "ong-fundaciones", label: "ONG y Fundaciones" },
-  { value: "educacion", label: "Educación y Sensibilización Ambiental" },
-  { value: "tecnologia", label: "Tecnología para el Turismo Sostenible" },
-  { value: "aliados", label: "Aliados y Patrocinadores" }
-];
+import { ChevronRight, ChevronLeft, Upload, MapPin, Building, User, Camera, Check, ArrowLeft, Mail, Briefcase, Clock, Languages, Shield, Building2 } from "lucide-react";
 
 const Auth = () => {
   const [location] = useLocation();
   const { toast } = useToast();
-  const [activeTab, setActiveTab] = useState<'login' | 'register'>('login');
-  const [registrationStep, setRegistrationStep] = useState(1);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   
   // Determine if this is empresas or consentidos based on URL
   const isEmpresas = location.includes('empresas');
-  const IconComponent = isEmpresas ? Building2 : MapPin;
   
-  const currentConfig = {
-    title: isEmpresas ? "Portal Empresas" : "Con-Sentidos",
-    subtitle: isEmpresas 
-      ? "Conecta tu empresa con el ecosistema de turismo sostenible"
-      : "Descubre experiencias auténticas y conecta con viajeros conscientes"
-  };
+  // State management
+  const [isLogin, setIsLogin] = useState(true);
+  const [currentStep, setCurrentStep] = useState(1);
 
+  // Login State
   const [loginData, setLoginData] = useState({
     email: isEmpresas ? "dahub.tech@gmail.com" : "",
-    password: isEmpresas ? "12345678" : ""
+    password: isEmpresas ? "dahub123" : ""
   });
 
-  // Enhanced registration data for empresas
-  const [companyRegisterData, setCompanyRegisterData] = useState({
-    // Step 1: Personal Info
+  // Complete Registration State - ALL 15 steps for empresas
+  const [registrationData, setRegistrationData] = useState({
     firstName: "",
     lastName: "",
     email: "",
     password: "",
-    // Step 2: Company Basics
+    confirmPassword: "",
+    phone: "",
     companyName: "",
-    companyDescription: "",
+    businessType: "",
     companyCategory: "",
     companySubcategory: "",
-    // Step 3: Contact & Location
-    phone: "",
-    website: "",
+    companyDescription: "",
+    yearsExperience: "",
+    teamSize: "",
     address: "",
-    city: "Bogotá",
+    city: "",
     country: "Colombia",
-    // Step 4: Business Details
+    website: "",
+    coordinates: { lat: 4.7110, lng: -74.0721 },
+    profilePicture: "",
+    bio: "",
     servicesOffered: [] as string[],
     targetMarket: "",
-    yearsExperience: 0,
-    teamSize: 1,
-    // Step 5: Certifications & Social
+    operatingHours: {},
     certifications: [] as string[],
-    socialMedia: {
-      instagram: "",
-      facebook: "",
-      twitter: "",
-      linkedin: ""
+    sustainabilityPractices: [] as string[],
+    accessibilityFeatures: [] as string[],
+    socialMedia: {},
+    linkedinUrl: "",
+    facebookUrl: "",
+    instagramUrl: "",
+    twitterUrl: "",
+    emergencyContact: {
+      name: "",
+      phone: "",
+      email: "",
+      relationship: ""
     },
-    // Step 6: Terms
+    // Step 5: Messaging Configuration
+    messagingEnabled: true,
+    messagingBio: "",
+    acceptsInquiries: true,
+    responseTimeHours: 24,
+    // Step 6: Experience Configuration
+    experienceSetupComplete: true,
+    defaultExperienceCategory: "",
+    defaultMeetingPoint: "",
+    defaultCancellationPolicy: "",
+    // Step 7-10: Additional fields
+    businessLicense: "",
+    taxId: "",
+    languages: [] as string[],
     acceptTerms: false,
-    acceptPrivacy: false
+    // Step 11: Payment Configuration
+    paymentMethods: [] as string[],
+    invoiceEmail: "",
+    taxInformation: "",
+    // Step 12: Notification Preferences
+    emailNotifications: true,
+    smsNotifications: false,
+    marketingEmails: true,
+    // Step 13: Security Settings
+    twoFactorEnabled: false,
+    loginNotifications: true,
+    // Step 14: API Settings
+    apiAccess: false,
+    webhookUrl: "",
+    // Step 15: Final Configuration
+    setupComplete: false
   });
 
-  const [registerData, setRegisterData] = useState({
+  // Simple registration data for non-empresas
+  const [simpleRegisterData, setSimpleRegisterData] = useState({
     email: "",
     password: "",
     firstName: "",
     lastName: "",
-    userType: isEmpresas ? "empresa" : "viajero"
+    userType: "viajero"
   });
 
+  // Company categories and subcategories for empresas
+  const companyCategories = {
+    "Agencias u Operadores Turísticos": [
+      "Turismo de aventura y deportes extremos",
+      "Ecoturismo y turismo de naturaleza",
+      "Turismo cultural y patrimonial",
+      "Turismo rural y agroturismo",
+      "Turismo gastronómico",
+      "Turismo de bienestar y salud",
+      "Turismo educativo y científico"
+    ],
+    "Alojamientos Sostenibles": [
+      "Hoteles ecológicos",
+      "Ecolodges y cabañas",
+      "Glamping sostenible",
+      "Hostales verdes",
+      "Casas rurales",
+      "Alojamientos comunitarios"
+    ],
+    "Gastronomía Sostenible": [
+      "Restaurantes farm-to-table",
+      "Comida orgánica local",
+      "Cocina tradicional",
+      "Productos artesanales",
+      "Experiencias gastronómicas"
+    ],
+    "Movilidad y Transporte Ecológico": [
+      "Transporte eléctrico",
+      "Bicicletas y cicloturismo",
+      "Transporte público sostenible",
+      "Vehículos híbridos",
+      "Caminatas y senderismo"
+    ],
+    "ONG y Fundaciones": [
+      "Conservación ambiental",
+      "Desarrollo comunitario",
+      "Educación ambiental",
+      "Investigación científica",
+      "Proyectos sociales"
+    ],
+    "Educación y Sensibilización Ambiental": [
+      "Centros de interpretación",
+      "Programas educativos",
+      "Talleres ambientales",
+      "Capacitación sostenible",
+      "Investigación aplicada"
+    ],
+    "Tecnología para el Turismo Sostenible": [
+      "Aplicaciones móviles",
+      "Plataformas digitales",
+      "IoT ambiental",
+      "Realidad aumentada",
+      "Análisis de datos"
+    ],
+    "Aliados y Patrocinadores": [
+      "Empresas privadas",
+      "Instituciones públicas",
+      "Organizaciones internacionales",
+      "Medios de comunicación",
+      "Proveedores de servicios"
+    ]
+  };
+
+  // Login mutation
   const loginMutation = useMutation({
     mutationFn: async (credentials: { email: string; password: string }) => {
       return await apiRequest('/api/auth/login', {
@@ -102,18 +184,14 @@ const Auth = () => {
         headers: { 'Content-Type': 'application/json' }
       });
     },
-    onSuccess: (data) => {
+    onSuccess: () => {
       toast({
         title: "Inicio de sesión exitoso",
-        description: "Redirigiendo...",
+        description: "Redirigiendo al portal...",
       });
       
-      // Redirect based on the current portal context
       const redirectUrl = isEmpresas ? '/portal-empresas' : '/portal-viajeros';
-      
-      setTimeout(() => {
-        window.location.href = redirectUrl;
-      }, 1000);
+      window.location.replace(redirectUrl);
     },
     onError: (error: any) => {
       toast({
@@ -124,363 +202,21 @@ const Auth = () => {
     },
   });
 
-  // Step validation function
-  const isStepValid = (step: number) => {
-    switch (step) {
-      case 1:
-        return companyRegisterData.firstName && companyRegisterData.lastName && 
-               companyRegisterData.email && companyRegisterData.password.length >= 8;
-      case 2:
-        return companyRegisterData.companyName && companyRegisterData.companyDescription.length >= 50 && 
-               companyRegisterData.companyCategory;
-      case 3:
-        return companyRegisterData.phone && companyRegisterData.address && companyRegisterData.city;
-      case 4:
-        return companyRegisterData.servicesOffered.length > 0 && companyRegisterData.targetMarket;
-      case 5:
-        return true; // Optional step
-      case 6:
-        return companyRegisterData.acceptTerms && companyRegisterData.acceptPrivacy;
-      default:
-        return false;
-    }
-  };
-
-  // Render step functions
-  const renderPersonalInfoStep = () => (
-    <div className="space-y-4">
-      <div className="text-center mb-4">
-        <User className="w-8 h-8 mx-auto text-[#cad95e] mb-2" />
-        <h3 className="text-lg font-bold text-[#cad95e]">Información Personal</h3>
-      </div>
-      
-      <div className="grid grid-cols-2 gap-3">
-        <div>
-          <Label className="text-[#cad95e] font-medium">Nombre *</Label>
-          <Input
-            value={companyRegisterData.firstName}
-            onChange={(e) => setCompanyRegisterData(prev => ({ ...prev, firstName: e.target.value }))}
-            className="bg-white/10 border-[#cad95e] text-white"
-            placeholder="Tu nombre"
-          />
-        </div>
-        <div>
-          <Label className="text-[#cad95e] font-medium">Apellido *</Label>
-          <Input
-            value={companyRegisterData.lastName}
-            onChange={(e) => setCompanyRegisterData(prev => ({ ...prev, lastName: e.target.value }))}
-            className="bg-white/10 border-[#cad95e] text-white"
-            placeholder="Tu apellido"
-          />
-        </div>
-      </div>
-      
-      <div>
-        <Label className="text-[#cad95e] font-medium">Email *</Label>
-        <Input
-          type="email"
-          value={companyRegisterData.email}
-          onChange={(e) => setCompanyRegisterData(prev => ({ ...prev, email: e.target.value }))}
-          className="bg-white/10 border-[#cad95e] text-white"
-          placeholder="tu@email.com"
-        />
-      </div>
-      
-      <div>
-        <Label className="text-[#cad95e] font-medium">Contraseña *</Label>
-        <Input
-          type="password"
-          value={companyRegisterData.password}
-          onChange={(e) => setCompanyRegisterData(prev => ({ ...prev, password: e.target.value }))}
-          className="bg-white/10 border-[#cad95e] text-white"
-          placeholder="Mínimo 8 caracteres"
-        />
-      </div>
-    </div>
-  );
-
-  const renderCompanyBasicsStep = () => (
-    <div className="space-y-4">
-      <div className="text-center mb-4">
-        <Building2 className="w-8 h-8 mx-auto text-[#cad95e] mb-2" />
-        <h3 className="text-lg font-bold text-[#cad95e]">Información de la Empresa</h3>
-      </div>
-      
-      <div>
-        <Label className="text-[#cad95e] font-medium">Nombre de la Empresa *</Label>
-        <Input
-          value={companyRegisterData.companyName}
-          onChange={(e) => setCompanyRegisterData(prev => ({ ...prev, companyName: e.target.value }))}
-          className="bg-white/10 border-[#cad95e] text-white"
-          placeholder="Nombre de tu empresa"
-        />
-      </div>
-      
-      <div>
-        <Label className="text-[#cad95e] font-medium">Descripción *</Label>
-        <Textarea
-          value={companyRegisterData.companyDescription}
-          onChange={(e) => setCompanyRegisterData(prev => ({ ...prev, companyDescription: e.target.value }))}
-          className="bg-white/10 border-[#cad95e] text-white min-h-[80px]"
-          placeholder="Describe tu empresa (mínimo 50 caracteres)"
-        />
-        <div className="text-xs text-white/60 mt-1">{companyRegisterData.companyDescription.length}/50 mínimo</div>
-      </div>
-      
-      <div>
-        <Label className="text-[#cad95e] font-medium">Categoría *</Label>
-        <Select value={companyRegisterData.companyCategory} onValueChange={(value) => setCompanyRegisterData(prev => ({ ...prev, companyCategory: value }))}>
-          <SelectTrigger className="bg-white/10 border-[#cad95e] text-white">
-            <SelectValue placeholder="Selecciona una categoría" />
-          </SelectTrigger>
-          <SelectContent>
-            {COMPANY_CATEGORIES.map((category) => (
-              <SelectItem key={category.value} value={category.value}>
-                {category.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
-    </div>
-  );
-
-  const renderContactLocationStep = () => (
-    <div className="space-y-4">
-      <div className="text-center mb-4">
-        <Phone className="w-8 h-8 mx-auto text-[#cad95e] mb-2" />
-        <h3 className="text-lg font-bold text-[#cad95e]">Contacto y Ubicación</h3>
-      </div>
-      
-      <div>
-        <Label className="text-[#cad95e] font-medium">Teléfono *</Label>
-        <Input
-          value={companyRegisterData.phone}
-          onChange={(e) => setCompanyRegisterData(prev => ({ ...prev, phone: e.target.value }))}
-          className="bg-white/10 border-[#cad95e] text-white"
-          placeholder="+57 300 123 4567"
-        />
-      </div>
-      
-      <div>
-        <Label className="text-[#cad95e] font-medium">Sitio Web</Label>
-        <Input
-          type="url"
-          value={companyRegisterData.website}
-          onChange={(e) => setCompanyRegisterData(prev => ({ ...prev, website: e.target.value }))}
-          className="bg-white/10 border-[#cad95e] text-white"
-          placeholder="https://tuempresa.com"
-        />
-      </div>
-      
-      <div>
-        <Label className="text-[#cad95e] font-medium">Dirección *</Label>
-        <Input
-          value={companyRegisterData.address}
-          onChange={(e) => setCompanyRegisterData(prev => ({ ...prev, address: e.target.value }))}
-          className="bg-white/10 border-[#cad95e] text-white"
-          placeholder="Dirección completa"
-        />
-      </div>
-      
-      <div className="grid grid-cols-2 gap-3">
-        <div>
-          <Label className="text-[#cad95e] font-medium">Ciudad *</Label>
-          <Input
-            value={companyRegisterData.city}
-            onChange={(e) => setCompanyRegisterData(prev => ({ ...prev, city: e.target.value }))}
-            className="bg-white/10 border-[#cad95e] text-white"
-            placeholder="Bogotá"
-          />
-        </div>
-        <div>
-          <Label className="text-[#cad95e] font-medium">País</Label>
-          <Input
-            value={companyRegisterData.country}
-            onChange={(e) => setCompanyRegisterData(prev => ({ ...prev, country: e.target.value }))}
-            className="bg-white/10 border-[#cad95e] text-white"
-            placeholder="Colombia"
-          />
-        </div>
-      </div>
-    </div>
-  );
-
-  const renderBusinessDetailsStep = () => (
-    <div className="space-y-4">
-      <div className="text-center mb-4">
-        <Globe className="w-8 h-8 mx-auto text-[#cad95e] mb-2" />
-        <h3 className="text-lg font-bold text-[#cad95e]">Detalles del Negocio</h3>
-      </div>
-      
-      <div>
-        <Label className="text-[#cad95e] font-medium">Servicios Ofrecidos *</Label>
-        <Textarea
-          value={companyRegisterData.servicesOffered.join(', ')}
-          onChange={(e) => setCompanyRegisterData(prev => ({ ...prev, servicesOffered: e.target.value.split(', ').filter(s => s.trim()) }))}
-          className="bg-white/10 border-[#cad95e] text-white"
-          placeholder="Turismo ecológico, Senderismo, Aviturismo (separar por comas)"
-        />
-      </div>
-      
-      <div>
-        <Label className="text-[#cad95e] font-medium">Mercado Objetivo *</Label>
-        <Input
-          value={companyRegisterData.targetMarket}
-          onChange={(e) => setCompanyRegisterData(prev => ({ ...prev, targetMarket: e.target.value }))}
-          className="bg-white/10 border-[#cad95e] text-white"
-          placeholder="Familias, jóvenes aventureros, turistas internacionales..."
-        />
-      </div>
-      
-      <div className="grid grid-cols-2 gap-3">
-        <div>
-          <Label className="text-[#cad95e] font-medium">Años de Experiencia</Label>
-          <Input
-            type="number"
-            value={companyRegisterData.yearsExperience}
-            onChange={(e) => setCompanyRegisterData(prev => ({ ...prev, yearsExperience: parseInt(e.target.value) || 0 }))}
-            className="bg-white/10 border-[#cad95e] text-white"
-            placeholder="0"
-          />
-        </div>
-        <div>
-          <Label className="text-[#cad95e] font-medium">Tamaño del Equipo</Label>
-          <Input
-            type="number"
-            value={companyRegisterData.teamSize}
-            onChange={(e) => setCompanyRegisterData(prev => ({ ...prev, teamSize: parseInt(e.target.value) || 1 }))}
-            className="bg-white/10 border-[#cad95e] text-white"
-            placeholder="1"
-          />
-        </div>
-      </div>
-    </div>
-  );
-
-  const renderCertificationsSocialStep = () => (
-    <div className="space-y-4">
-      <div className="text-center mb-4">
-        <Award className="w-8 h-8 mx-auto text-[#cad95e] mb-2" />
-        <h3 className="text-lg font-bold text-[#cad95e]">Certificaciones y Redes Sociales</h3>
-      </div>
-      
-      <div>
-        <Label className="text-[#cad95e] font-medium">Certificaciones</Label>
-        <Textarea
-          value={companyRegisterData.certifications.join(', ')}
-          onChange={(e) => setCompanyRegisterData(prev => ({ ...prev, certifications: e.target.value.split(', ').filter(s => s.trim()) }))}
-          className="bg-white/10 border-[#cad95e] text-white"
-          placeholder="ISO 14001, Certificación de Sostenibilidad, etc. (separar por comas)"
-        />
-      </div>
-      
-      <div className="grid grid-cols-2 gap-3">
-        <div>
-          <Label className="text-[#cad95e] font-medium">Instagram</Label>
-          <Input
-            value={companyRegisterData.socialMedia.instagram}
-            onChange={(e) => setCompanyRegisterData(prev => ({ ...prev, socialMedia: { ...prev.socialMedia, instagram: e.target.value } }))}
-            className="bg-white/10 border-[#cad95e] text-white"
-            placeholder="@tuempresa"
-          />
-        </div>
-        <div>
-          <Label className="text-[#cad95e] font-medium">Facebook</Label>
-          <Input
-            value={companyRegisterData.socialMedia.facebook}
-            onChange={(e) => setCompanyRegisterData(prev => ({ ...prev, socialMedia: { ...prev.socialMedia, facebook: e.target.value } }))}
-            className="bg-white/10 border-[#cad95e] text-white"
-            placeholder="facebook.com/tuempresa"
-          />
-        </div>
-      </div>
-      
-      <div className="grid grid-cols-2 gap-3">
-        <div>
-          <Label className="text-[#cad95e] font-medium">Twitter</Label>
-          <Input
-            value={companyRegisterData.socialMedia.twitter}
-            onChange={(e) => setCompanyRegisterData(prev => ({ ...prev, socialMedia: { ...prev.socialMedia, twitter: e.target.value } }))}
-            className="bg-white/10 border-[#cad95e] text-white"
-            placeholder="@tuempresa"
-          />
-        </div>
-        <div>
-          <Label className="text-[#cad95e] font-medium">LinkedIn</Label>
-          <Input
-            value={companyRegisterData.socialMedia.linkedin}
-            onChange={(e) => setCompanyRegisterData(prev => ({ ...prev, socialMedia: { ...prev.socialMedia, linkedin: e.target.value } }))}
-            className="bg-white/10 border-[#cad95e] text-white"
-            placeholder="linkedin.com/company/tuempresa"
-          />
-        </div>
-      </div>
-    </div>
-  );
-
-  const renderFinalStepConfirmation = () => (
-    <div className="space-y-4">
-      <div className="text-center mb-4">
-        <Shield className="w-8 h-8 mx-auto text-[#cad95e] mb-2" />
-        <h3 className="text-lg font-bold text-[#cad95e]">Confirmación Final</h3>
-      </div>
-      
-      <div className="bg-white/5 p-4 rounded-lg space-y-3">
-        <p className="text-white/80 text-sm">Resumen de tu registro:</p>
-        <div className="text-xs text-white/60 space-y-1">
-          <p><span className="font-medium">Empresa:</span> {companyRegisterData.companyName}</p>
-          <p><span className="font-medium">Email:</span> {companyRegisterData.email}</p>
-          <p><span className="font-medium">Categoría:</span> {COMPANY_CATEGORIES.find(c => c.value === companyRegisterData.companyCategory)?.label}</p>
-          <p><span className="font-medium">Ciudad:</span> {companyRegisterData.city}</p>
-        </div>
-      </div>
-      
-      <div className="space-y-3">
-        <div className="flex items-start space-x-3">
-          <Checkbox
-            id="terms"
-            checked={companyRegisterData.acceptTerms}
-            onCheckedChange={(checked) => setCompanyRegisterData(prev => ({ ...prev, acceptTerms: checked as boolean }))}
-          />
-          <label htmlFor="terms" className="text-sm text-white/80 leading-relaxed">
-            Acepto los <span className="text-[#cad95e] underline cursor-pointer">términos y condiciones</span> de Festival NATUR
-          </label>
-        </div>
-        
-        <div className="flex items-start space-x-3">
-          <Checkbox
-            id="privacy"
-            checked={companyRegisterData.acceptPrivacy}
-            onCheckedChange={(checked) => setCompanyRegisterData(prev => ({ ...prev, acceptPrivacy: checked as boolean }))}
-          />
-          <label htmlFor="privacy" className="text-sm text-white/80 leading-relaxed">
-            Acepto la <span className="text-[#cad95e] underline cursor-pointer">política de privacidad</span> y el tratamiento de mis datos
-          </label>
-        </div>
-      </div>
-    </div>
-  );
-
-  // Company registration mutation
-  const companyRegisterMutation = useMutation({
-    mutationFn: async (data: typeof companyRegisterData) => {
-      const payload = {
-        ...data,
+  // Registration mutation
+  const registrationMutation = useMutation({
+    mutationFn: async (userData: any) => {
+      const payload = isEmpresas ? {
+        ...userData,
         role: 'empresa',
-        servicesOffered: data.servicesOffered,
-        operatingHours: {
-          monday: { open: "09:00", close: "17:00", closed: false },
-          tuesday: { open: "09:00", close: "17:00", closed: false },
-          wednesday: { open: "09:00", close: "17:00", closed: false },
-          thursday: { open: "09:00", close: "17:00", closed: false },
-          friday: { open: "09:00", close: "17:00", closed: false },
-          saturday: { open: "09:00", close: "17:00", closed: false },
-          sunday: { open: "09:00", close: "17:00", closed: true }
-        }
+        registrationComplete: true,
+        profileCompletion: 100,
+        verificationLevel: 'verified'
+      } : {
+        ...userData,
+        role: 'viajero'
       };
-      
-      return await apiRequest('/api/auth/register-company', {
+
+      return await apiRequest('/api/auth/register', {
         method: 'POST',
         body: JSON.stringify(payload),
         headers: { 'Content-Type': 'application/json' }
@@ -488,361 +224,1334 @@ const Auth = () => {
     },
     onSuccess: () => {
       toast({
-        title: "¡Registro completado!",
-        description: "Se ha enviado un email de verificación. Revisa tu bandeja de entrada.",
+        title: "Registro exitoso",
+        description: isEmpresas 
+          ? "Tu cuenta empresarial ha sido creada. Revisa tu email para verificar tu cuenta."
+          : "Tu cuenta ha sido creada. Revisa tu email para verificar tu cuenta.",
       });
-      window.location.href = '/verificacion-pendiente?email=' + encodeURIComponent(companyRegisterData.email);
+      setIsLogin(true);
+      setCurrentStep(1);
     },
     onError: (error: any) => {
       toast({
         title: "Error en el registro",
-        description: error.message || "No se pudo completar el registro. Intenta de nuevo.",
+        description: error.message || "Error al crear la cuenta",
         variant: "destructive",
       });
-    }
+    },
   });
 
-  const handleCompanyRegister = () => {
-    companyRegisterMutation.mutate(companyRegisterData);
+  // File upload handler
+  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setRegistrationData(prev => ({
+          ...prev,
+          profilePicture: e.target?.result as string
+        }));
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
-  const registerMutation = useMutation({
-    mutationFn: async (userData: any) => {
-      return await apiRequest('/api/auth/register', {
-        method: 'POST',
-        body: JSON.stringify(userData),
-        headers: { 'Content-Type': 'application/json' }
-      });
-    },
-    onSuccess: () => {
-      toast({
-        title: "Registro exitoso",
-        description: "Redirigiendo...",
-      });
-      const redirectUrl = isEmpresas ? '/portal-empresas' : '/portal-viajeros';
-      setTimeout(() => {
-        window.location.href = redirectUrl;
-      }, 1000);
-    },
-    onError: (error: any) => {
-      toast({
-        title: "Error en registro",
-        description: error.message || "Error al crear cuenta",
-        variant: "destructive",
-      });
-    },
-  });
-
+  // Handlers
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     loginMutation.mutate(loginData);
   };
 
-  const handleRegister = (e: React.FormEvent) => {
-    e.preventDefault();
-    registerMutation.mutate(registerData);
+  const handleNextStep = () => {
+    if (isEmpresas && currentStep < 15) {
+      setCurrentStep(currentStep + 1);
+    } else if (!isEmpresas && currentStep < 6) {
+      setCurrentStep(currentStep + 1);
+    }
   };
 
-  return (
-    <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-green-900 via-gray-900 to-black">
-      {/* Navigation */}
-      <nav className="relative z-20 bg-gradient-to-r from-black/50 to-black/30 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <Link to="/">
-              <Button variant="ghost" className="text-white hover:bg-white/20">
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                Volver
-              </Button>
-            </Link>
+  const handlePrevStep = () => {
+    if (currentStep > 1) {
+      setCurrentStep(currentStep - 1);
+    }
+  };
+
+  const handleRegistrationSubmit = () => {
+    if (isEmpresas) {
+      if (registrationData.password !== registrationData.confirmPassword) {
+        toast({
+          title: "Error de validación",
+          description: "Las contraseñas no coinciden",
+          variant: "destructive",
+        });
+        return;
+      }
+      registrationMutation.mutate(registrationData);
+    } else {
+      registrationMutation.mutate(simpleRegisterData);
+    }
+  };
+
+  // Load DaHub test data function (for empresas only)
+  const loadDaHubTestData = () => {
+    if (!isEmpresas) return;
+    
+    setRegistrationData({
+      firstName: "David",
+      lastName: "Hub",
+      email: "dahub.tech@gmail.com",
+      password: "dahub123",
+      confirmPassword: "dahub123",
+      phone: "+57 300 456 7890",
+      companyName: "DaHub Technologies",
+      businessType: "Tecnología",
+      companyCategory: "Tecnología para el Turismo Sostenible",
+      companySubcategory: "Plataformas Digitales",
+      companyDescription: "Empresa de tecnología especializada en soluciones digitales para el turismo sostenible. Desarrollamos plataformas innovadoras que conectan viajeros con experiencias auténticas.",
+      yearsExperience: "8",
+      teamSize: "12",
+      address: "Carrera 11 #93-07, Chapinero",
+      city: "Bogotá",
+      country: "Colombia",
+      website: "https://dahub.tech",
+      coordinates: { lat: 4.6789, lng: -74.0489 },
+      profilePicture: "",
+      bio: "DaHub Technologies es una empresa pionera en el desarrollo de soluciones tecnológicas para el turismo sostenible. Nuestra misión es crear herramientas digitales que faciliten conexiones auténticas entre viajeros y comunidades locales, promoviendo prácticas responsables y experiencias transformadoras.",
+      servicesOffered: ["Desarrollo de plataformas", "Consultoría tecnológica", "Análisis de datos"],
+      targetMarket: "Empresas de turismo sostenible, ONGs ambientales, comunidades locales",
+      operatingHours: {},
+      certifications: ["ISO 27001", "B Corp Certification"],
+      sustainabilityPractices: ["Hosting verde", "Código eficiente", "Trabajo remoto"],
+      accessibilityFeatures: ["Interfaces accesibles", "Soporte multiidioma"],
+      socialMedia: {},
+      linkedinUrl: "https://linkedin.com/company/dahub-tech",
+      facebookUrl: "",
+      instagramUrl: "https://instagram.com/dahub.tech",
+      twitterUrl: "https://twitter.com/dahubtech",
+      emergencyContact: {
+        name: "Ana García",
+        phone: "+57 300 123 4567",
+        email: "ana.garcia@dahub.tech",
+        relationship: "Directora de Operaciones"
+      },
+      messagingEnabled: true,
+      messagingBio: "¡Hola! Somos DaHub Technologies. Estamos aquí para ayudarte a desarrollar soluciones tecnológicas innovadoras para tu empresa de turismo sostenible. Conectemos y creemos algo increíble juntos.",
+      acceptsInquiries: true,
+      responseTimeHours: 12,
+      experienceSetupComplete: true,
+      defaultExperienceCategory: "ecoturismo",
+      defaultMeetingPoint: "Oficinas DaHub - Carrera 11 #93-07",
+      defaultCancellationPolicy: "Cancelación gratuita hasta 48 horas antes de la consulta. Reagendamos sin costo adicional con 24 horas de anticipación.",
+      businessLicense: "CM-2023-456789",
+      taxId: "900123456-1",
+      languages: ["Español", "Inglés", "Portugués"],
+      acceptTerms: true,
+      paymentMethods: ["transferencia", "tarjeta"],
+      invoiceEmail: "dahub.tech@gmail.com",
+      taxInformation: "Régimen simplificado",
+      emailNotifications: true,
+      smsNotifications: false,
+      marketingEmails: true,
+      twoFactorEnabled: false,
+      loginNotifications: true,
+      apiAccess: false,
+      webhookUrl: "",
+      setupComplete: true
+    });
+    
+    toast({
+      title: "Datos de prueba cargados",
+      description: "Se han cargado los datos completos de DaHub Technologies",
+    });
+  };
+
+  const validateStep = (step: number): boolean => {
+    if (!isEmpresas) {
+      // Simple validation for non-empresas
+      switch (step) {
+        case 1:
+          return !!(simpleRegisterData.firstName && simpleRegisterData.lastName && 
+                   simpleRegisterData.email && simpleRegisterData.password);
+        default:
+          return false;
+      }
+    }
+
+    // Complex validation for empresas
+    switch (step) {
+      case 1:
+        return !!(registrationData.firstName && registrationData.lastName && 
+                 registrationData.email && registrationData.password && 
+                 registrationData.phone);
+      case 2:
+        return !!(registrationData.companyName && registrationData.companyCategory && 
+                 registrationData.companySubcategory && registrationData.companyDescription);
+      case 3:
+        return !!(registrationData.address && registrationData.city);
+      case 4:
+        return !!(registrationData.bio && registrationData.targetMarket);
+      case 5:
+        return !!(registrationData.messagingBio && registrationData.responseTimeHours);
+      case 6:
+        return !!(registrationData.defaultExperienceCategory && registrationData.defaultMeetingPoint);
+      case 7:
+        return true; // Operating hours - optional
+      case 8:
+        return registrationData.languages.length > 0;
+      case 9:
+        return true; // Social media - optional
+      case 10:
+        return !!(registrationData.emergencyContact.name && registrationData.emergencyContact.phone && registrationData.acceptTerms);
+      case 11:
+        return true; // Payment configuration - optional initially
+      case 12:
+        return true; // Notification preferences - optional
+      case 13:
+        return true; // Security and privacy settings - optional
+      case 14:
+        return true; // API integration settings - optional
+      case 15:
+        return true; // Final review - always valid
+      default:
+        return false;
+    }
+  };
+
+  // Render step components
+  const renderStep = () => {
+    if (isLogin) {
+      return (
+        <form onSubmit={handleLogin} className="space-y-6">
+          <div className="space-y-2">
+            <Label className="text-sm text-gray-800 dark:text-white font-medium">
+              Correo Electrónico
+            </Label>
+            <Input
+              type="email"
+              value={loginData.email}
+              onChange={(e) => setLoginData({...loginData, email: e.target.value})}
+              className="h-12 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 pl-4 pr-4"
+              placeholder=""
+              required
+            />
           </div>
-        </div>
-      </nav>
-      
-      {/* Main Content */}
-      <div className="relative z-10 flex items-center justify-center min-h-screen px-6 pt-20">
-        <div className="w-full max-w-md">
+          <div className="space-y-2">
+            <Label className="text-sm text-gray-800 dark:text-white font-medium">
+              Contraseña
+            </Label>
+            <Input
+              type="password"
+              value={loginData.password}
+              onChange={(e) => setLoginData({...loginData, password: e.target.value})}
+              className="h-12 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 pl-4 pr-4"
+              placeholder=""
+              required
+            />
+          </div>
+          <Button 
+            type="submit" 
+            className="w-full bg-[#CAD95E] hover:bg-[#b8c755] text-black font-bold text-sm uppercase tracking-wide h-12 transition-all duration-200"
+            disabled={loginMutation.isPending}
+          >
+            {loginMutation.isPending ? "Iniciando sesión..." : "Ingresar al Portal"}
+          </Button>
           
-          {/* Title Section */}
-          <div className="text-center mb-8">
-            <div className="flex items-center justify-center mb-6">
-              <div className="w-16 h-16 rounded-full flex items-center justify-center" style={{ backgroundColor: '#cad95e' }}>
-                <IconComponent className="w-8 h-8 text-black" />
+          {/* Google OAuth Separator */}
+          <div className="mt-6">
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <span className="w-full border-t border-gray-200 dark:border-gray-700" />
+              </div>
+              <div className="relative flex justify-center text-xs uppercase">
+                <span className="px-2 text-gray-600 dark:text-gray-400">O</span>
               </div>
             </div>
-            <h1 className="text-3xl md:text-4xl font-bold mb-4 font-gasoek tracking-wide text-[#cad95e]">
-              {currentConfig.title.toUpperCase()}
+            <div className="mt-4">
+              <GoogleAuthButton />
+            </div>
+          </div>
+        </form>
+      );
+    }
+
+    // For non-empresas, show simple registration
+    if (!isEmpresas) {
+      return (
+        <div className="space-y-6">
+          <div className="text-center mb-6">
+            <User className="mx-auto h-12 w-12 text-[#CAD95E] mb-4" />
+            <h3 className="text-xl font-bold text-gray-800 dark:text-white">Registro de Viajero</h3>
+            <p className="text-sm text-gray-600 dark:text-gray-400">Únete a nuestra comunidad</p>
+          </div>
+          
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label className="text-sm font-medium">Nombre *</Label>
+              <Input
+                value={simpleRegisterData.firstName}
+                onChange={(e) => setSimpleRegisterData({...simpleRegisterData, firstName: e.target.value})}
+                placeholder="Tu nombre"
+                required
+              />
+            </div>
+            <div className="space-y-2">
+              <Label className="text-sm font-medium">Apellido *</Label>
+              <Input
+                value={simpleRegisterData.lastName}
+                onChange={(e) => setSimpleRegisterData({...simpleRegisterData, lastName: e.target.value})}
+                placeholder="Tu apellido"
+                required
+              />
+            </div>
+          </div>
+          
+          <div className="space-y-2">
+            <Label className="text-sm font-medium">Email *</Label>
+            <Input
+              type="email"
+              value={simpleRegisterData.email}
+              onChange={(e) => setSimpleRegisterData({...simpleRegisterData, email: e.target.value})}
+              placeholder="tu@email.com"
+              required
+            />
+          </div>
+          
+          <div className="space-y-2">
+            <Label className="text-sm font-medium">Contraseña *</Label>
+            <Input
+              type="password"
+              value={simpleRegisterData.password}
+              onChange={(e) => setSimpleRegisterData({...simpleRegisterData, password: e.target.value})}
+              placeholder="••••••••"
+              required
+            />
+          </div>
+        </div>
+      );
+    }
+
+    // For empresas - show 15 step registration
+    switch (currentStep) {
+      case 1:
+        return (
+          <div className="space-y-6">
+            <div className="text-center mb-6">
+              <User className="mx-auto h-12 w-12 text-[#CAD95E] mb-4" />
+              <h3 className="text-xl font-bold text-gray-800 dark:text-white">Información Personal</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">Comenzemos con tu información básica</p>
+            </div>
+            
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label className="text-sm font-medium">Nombre *</Label>
+                <Input
+                  value={registrationData.firstName}
+                  onChange={(e) => setRegistrationData({...registrationData, firstName: e.target.value})}
+                  placeholder="Tu nombre"
+                  required
+                />
+              </div>
+              <div className="space-y-2">
+                <Label className="text-sm font-medium">Apellido *</Label>
+                <Input
+                  value={registrationData.lastName}
+                  onChange={(e) => setRegistrationData({...registrationData, lastName: e.target.value})}
+                  placeholder="Tu apellido"
+                  required
+                />
+              </div>
+            </div>
+            
+            <div className="space-y-2">
+              <Label className="text-sm font-medium">Email Empresarial *</Label>
+              <Input
+                type="email"
+                value={registrationData.email}
+                onChange={(e) => setRegistrationData({...registrationData, email: e.target.value})}
+                placeholder="tu@empresa.com"
+                required
+              />
+            </div>
+            
+            <div className="space-y-2">
+              <Label className="text-sm font-medium">Teléfono *</Label>
+              <Input
+                value={registrationData.phone}
+                onChange={(e) => setRegistrationData({...registrationData, phone: e.target.value})}
+                placeholder="+57 300 123 4567"
+                required
+              />
+            </div>
+            
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label className="text-sm font-medium">Contraseña *</Label>
+                <Input
+                  type="password"
+                  value={registrationData.password}
+                  onChange={(e) => setRegistrationData({...registrationData, password: e.target.value})}
+                  placeholder="••••••••"
+                  required
+                />
+              </div>
+              <div className="space-y-2">
+                <Label className="text-sm font-medium">Confirmar Contraseña *</Label>
+                <Input
+                  type="password"
+                  value={registrationData.confirmPassword}
+                  onChange={(e) => setRegistrationData({...registrationData, confirmPassword: e.target.value})}
+                  placeholder="••••••••"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+        );
+
+      case 2:
+        return (
+          <div className="space-y-6">
+            <div className="text-center mb-6">
+              <Building className="mx-auto h-12 w-12 text-[#CAD95E] mb-4" />
+              <h3 className="text-xl font-bold text-gray-800 dark:text-white">Información de la Empresa</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">Detalles sobre tu negocio</p>
+            </div>
+            
+            <div className="space-y-2">
+              <Label className="text-sm font-medium">Nombre de la Empresa *</Label>
+              <Input
+                value={registrationData.companyName}
+                onChange={(e) => setRegistrationData({...registrationData, companyName: e.target.value})}
+                placeholder="Nombre de tu empresa"
+                required
+              />
+            </div>
+            
+            <div className="space-y-2">
+              <Label className="text-sm font-medium">Categoría Principal *</Label>
+              <Select 
+                value={registrationData.companyCategory} 
+                onValueChange={(value) => setRegistrationData({...registrationData, companyCategory: value, companySubcategory: ""})}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Selecciona una categoría" />
+                </SelectTrigger>
+                <SelectContent>
+                  {Object.keys(companyCategories).map((category) => (
+                    <SelectItem key={category} value={category}>
+                      {category}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            
+            {registrationData.companyCategory && (
+              <div className="space-y-2">
+                <Label className="text-sm font-medium">Subcategoría *</Label>
+                <Select 
+                  value={registrationData.companySubcategory} 
+                  onValueChange={(value) => setRegistrationData({...registrationData, companySubcategory: value})}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Selecciona una subcategoría" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {companyCategories[registrationData.companyCategory as keyof typeof companyCategories]?.map((subcategory) => (
+                      <SelectItem key={subcategory} value={subcategory}>
+                        {subcategory}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
+            
+            <div className="space-y-2">
+              <Label className="text-sm font-medium">Descripción de la Empresa *</Label>
+              <Textarea
+                value={registrationData.companyDescription}
+                onChange={(e) => setRegistrationData({...registrationData, companyDescription: e.target.value})}
+                placeholder="Describe brevemente tu empresa y los servicios que ofreces..."
+                rows={4}
+                required
+              />
+            </div>
+            
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label className="text-sm font-medium">Años de Experiencia</Label>
+                <Input
+                  type="number"
+                  value={registrationData.yearsExperience}
+                  onChange={(e) => setRegistrationData({...registrationData, yearsExperience: e.target.value})}
+                  placeholder="5"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label className="text-sm font-medium">Tamaño del Equipo</Label>
+                <Input
+                  type="number"
+                  value={registrationData.teamSize}
+                  onChange={(e) => setRegistrationData({...registrationData, teamSize: e.target.value})}
+                  placeholder="10"
+                />
+              </div>
+            </div>
+          </div>
+        );
+
+      case 3:
+        return (
+          <div className="space-y-6">
+            <div className="text-center mb-6">
+              <MapPin className="mx-auto h-12 w-12 text-[#CAD95E] mb-4" />
+              <h3 className="text-xl font-bold text-gray-800 dark:text-white">Ubicación y Contacto</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">Donde te encuentras y cómo contactarte</p>
+            </div>
+            
+            <div className="space-y-2">
+              <Label className="text-sm font-medium">Dirección Completa *</Label>
+              <Input
+                value={registrationData.address}
+                onChange={(e) => setRegistrationData({...registrationData, address: e.target.value})}
+                placeholder="Calle 123 #45-67"
+                required
+              />
+            </div>
+            
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label className="text-sm font-medium">Ciudad *</Label>
+                <Input
+                  value={registrationData.city}
+                  onChange={(e) => setRegistrationData({...registrationData, city: e.target.value})}
+                  placeholder="Bogotá"
+                  required
+                />
+              </div>
+              <div className="space-y-2">
+                <Label className="text-sm font-medium">País *</Label>
+                <Select value={registrationData.country} onValueChange={(value) => setRegistrationData({...registrationData, country: value})}>
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="Colombia">Colombia</SelectItem>
+                    <SelectItem value="Ecuador">Ecuador</SelectItem>
+                    <SelectItem value="Perú">Perú</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+            
+            <div className="space-y-2">
+              <Label className="text-sm font-medium">Sitio Web</Label>
+              <Input
+                value={registrationData.website}
+                onChange={(e) => setRegistrationData({...registrationData, website: e.target.value})}
+                placeholder="https://tuempresa.com"
+              />
+            </div>
+          </div>
+        );
+
+      case 4:
+        return (
+          <div className="space-y-6">
+            <div className="text-center mb-6">
+              <Camera className="mx-auto h-12 w-12 text-[#CAD95E] mb-4" />
+              <h3 className="text-xl font-bold text-gray-800 dark:text-white">Perfil y Servicios</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">Imagen y descripción de tus servicios</p>
+            </div>
+            
+            <div className="space-y-2">
+              <Label className="text-sm font-medium">Foto de Perfil</Label>
+              <div className="flex items-center space-x-4">
+                {registrationData.profilePicture && (
+                  <img 
+                    src={registrationData.profilePicture} 
+                    alt="Preview" 
+                    className="w-16 h-16 rounded-full object-cover"
+                  />
+                )}
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => fileInputRef.current?.click()}
+                  className="flex items-center space-x-2"
+                >
+                  <Upload className="h-4 w-4" />
+                  <span>Subir Foto</span>
+                </Button>
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  onChange={handleFileUpload}
+                  className="hidden"
+                />
+              </div>
+            </div>
+            
+            <div className="space-y-2">
+              <Label className="text-sm font-medium">Bio de la Empresa *</Label>
+              <Textarea
+                value={registrationData.bio}
+                onChange={(e) => setRegistrationData({...registrationData, bio: e.target.value})}
+                placeholder="Cuenta la historia de tu empresa, tu misión y valores..."
+                rows={4}
+                required
+              />
+            </div>
+            
+            <div className="space-y-2">
+              <Label className="text-sm font-medium">Mercado Objetivo *</Label>
+              <Input
+                value={registrationData.targetMarket}
+                onChange={(e) => setRegistrationData({...registrationData, targetMarket: e.target.value})}
+                placeholder="Familias, parejas, aventureros, etc."
+                required
+              />
+            </div>
+          </div>
+        );
+
+      case 5:
+        return (
+          <div className="space-y-6">
+            <div className="text-center mb-6">
+              <Mail className="mx-auto h-12 w-12 text-[#CAD95E] mb-4" />
+              <h3 className="text-xl font-bold text-gray-800 dark:text-white">Configuración de Mensajería</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">Configura cómo quieres comunicarte con clientes</p>
+            </div>
+            
+            <div className="space-y-2">
+              <Label className="text-sm font-medium">Mensaje de Bienvenida *</Label>
+              <Textarea
+                value={registrationData.messagingBio}
+                onChange={(e) => setRegistrationData({...registrationData, messagingBio: e.target.value})}
+                placeholder="¡Hola! Bienvenido a nuestra empresa. Estamos aquí para ayudarte..."
+                rows={3}
+                required
+              />
+            </div>
+            
+            <div className="space-y-2">
+              <Label className="text-sm font-medium">Tiempo de Respuesta (horas) *</Label>
+              <Select 
+                value={registrationData.responseTimeHours.toString()} 
+                onValueChange={(value) => setRegistrationData({...registrationData, responseTimeHours: parseInt(value)})}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Selecciona tiempo de respuesta" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="1">1 hora</SelectItem>
+                  <SelectItem value="6">6 horas</SelectItem>
+                  <SelectItem value="12">12 horas</SelectItem>
+                  <SelectItem value="24">24 horas</SelectItem>
+                  <SelectItem value="48">48 horas</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+        );
+
+      case 6:
+        return (
+          <div className="space-y-6">
+            <div className="text-center mb-6">
+              <Briefcase className="mx-auto h-12 w-12 text-[#CAD95E] mb-4" />
+              <h3 className="text-xl font-bold text-gray-800 dark:text-white">Configuración de Experiencias</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">Configuración por defecto para tus experiencias</p>
+            </div>
+            
+            <div className="space-y-2">
+              <Label className="text-sm font-medium">Categoría de Experiencia por Defecto *</Label>
+              <Select 
+                value={registrationData.defaultExperienceCategory} 
+                onValueChange={(value) => setRegistrationData({...registrationData, defaultExperienceCategory: value})}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Selecciona una categoría" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="ecoturismo">Ecoturismo</SelectItem>
+                  <SelectItem value="aventura">Aventura</SelectItem>
+                  <SelectItem value="cultural">Cultural</SelectItem>
+                  <SelectItem value="gastronomico">Gastronómico</SelectItem>
+                  <SelectItem value="bienestar">Bienestar</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            
+            <div className="space-y-2">
+              <Label className="text-sm font-medium">Punto de Encuentro por Defecto *</Label>
+              <Input
+                value={registrationData.defaultMeetingPoint}
+                onChange={(e) => setRegistrationData({...registrationData, defaultMeetingPoint: e.target.value})}
+                placeholder="Plaza principal, hotel, oficina, etc."
+                required
+              />
+            </div>
+            
+            <div className="space-y-2">
+              <Label className="text-sm font-medium">Política de Cancelación por Defecto</Label>
+              <Textarea
+                value={registrationData.defaultCancellationPolicy}
+                onChange={(e) => setRegistrationData({...registrationData, defaultCancellationPolicy: e.target.value})}
+                placeholder="Describe tu política de cancelación..."
+                rows={3}
+              />
+            </div>
+          </div>
+        );
+
+      case 7:
+        return (
+          <div className="space-y-6">
+            <div className="text-center mb-6">
+              <Clock className="mx-auto h-12 w-12 text-[#CAD95E] mb-4" />
+              <h3 className="text-xl font-bold text-gray-800 dark:text-white">Horarios de Operación</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">Configura tus horarios de atención</p>
+            </div>
+            
+            <div className="text-center p-8">
+              <p className="text-gray-600 dark:text-gray-400">
+                Los horarios de operación se pueden configurar después del registro inicial.
+                Por ahora, continuemos con el proceso.
+              </p>
+            </div>
+          </div>
+        );
+
+      case 8:
+        return (
+          <div className="space-y-6">
+            <div className="text-center mb-6">
+              <Languages className="mx-auto h-12 w-12 text-[#CAD95E] mb-4" />
+              <h3 className="text-xl font-bold text-gray-800 dark:text-white">Idiomas y Certificaciones</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">Idiomas que hablas y certificaciones</p>
+            </div>
+            
+            <div className="space-y-4">
+              <Label className="text-sm font-medium">Idiomas que Hablas *</Label>
+              <div className="grid grid-cols-2 gap-2">
+                {["Español", "Inglés", "Francés", "Portugués", "Alemán", "Italiano"].map((lang) => (
+                  <div key={lang} className="flex items-center space-x-2">
+                    <input
+                      type="checkbox"
+                      id={lang}
+                      checked={registrationData.languages.includes(lang)}
+                      onChange={(e) => {
+                        const langs = e.target.checked 
+                          ? [...registrationData.languages, lang]
+                          : registrationData.languages.filter(l => l !== lang);
+                        setRegistrationData({...registrationData, languages: langs});
+                      }}
+                      className="rounded"
+                    />
+                    <Label htmlFor={lang} className="text-sm">{lang}</Label>
+                  </div>
+                ))}
+              </div>
+            </div>
+            
+            <div className="space-y-2">
+              <Label className="text-sm font-medium">Licencia Comercial</Label>
+              <Input
+                value={registrationData.businessLicense}
+                onChange={(e) => setRegistrationData({...registrationData, businessLicense: e.target.value})}
+                placeholder="Número de licencia comercial"
+              />
+            </div>
+            
+            <div className="space-y-2">
+              <Label className="text-sm font-medium">NIT/RUT</Label>
+              <Input
+                value={registrationData.taxId}
+                onChange={(e) => setRegistrationData({...registrationData, taxId: e.target.value})}
+                placeholder="123456789-1"
+              />
+            </div>
+          </div>
+        );
+
+      case 9:
+        return (
+          <div className="space-y-6">
+            <div className="text-center mb-6">
+              <User className="mx-auto h-12 w-12 text-[#CAD95E] mb-4" />
+              <h3 className="text-xl font-bold text-gray-800 dark:text-white">Redes Sociales</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">Conecta tus redes sociales (opcional)</p>
+            </div>
+            
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <Label className="text-sm font-medium">LinkedIn</Label>
+                <Input
+                  value={registrationData.linkedinUrl}
+                  onChange={(e) => setRegistrationData({...registrationData, linkedinUrl: e.target.value})}
+                  placeholder="https://linkedin.com/company/tuempresa"
+                />
+              </div>
+              
+              <div className="space-y-2">
+                <Label className="text-sm font-medium">Facebook</Label>
+                <Input
+                  value={registrationData.facebookUrl}
+                  onChange={(e) => setRegistrationData({...registrationData, facebookUrl: e.target.value})}
+                  placeholder="https://facebook.com/tuempresa"
+                />
+              </div>
+              
+              <div className="space-y-2">
+                <Label className="text-sm font-medium">Instagram</Label>
+                <Input
+                  value={registrationData.instagramUrl}
+                  onChange={(e) => setRegistrationData({...registrationData, instagramUrl: e.target.value})}
+                  placeholder="https://instagram.com/tuempresa"
+                />
+              </div>
+              
+              <div className="space-y-2">
+                <Label className="text-sm font-medium">Twitter/X</Label>
+                <Input
+                  value={registrationData.twitterUrl}
+                  onChange={(e) => setRegistrationData({...registrationData, twitterUrl: e.target.value})}
+                  placeholder="https://twitter.com/tuempresa"
+                />
+              </div>
+            </div>
+          </div>
+        );
+
+      case 10:
+        return (
+          <div className="space-y-6">
+            <div className="text-center mb-6">
+              <Shield className="mx-auto h-12 w-12 text-[#CAD95E] mb-4" />
+              <h3 className="text-xl font-bold text-gray-800 dark:text-white">Contacto de Emergencia</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">Información de contacto de emergencia</p>
+            </div>
+            
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label className="text-sm font-medium">Nombre Completo *</Label>
+                <Input
+                  value={registrationData.emergencyContact.name || ""}
+                  onChange={(e) => setRegistrationData({
+                    ...registrationData, 
+                    emergencyContact: {
+                      ...registrationData.emergencyContact,
+                      name: e.target.value
+                    }
+                  })}
+                  placeholder="Juan Pérez"
+                  required
+                />
+              </div>
+              
+              <div className="space-y-2">
+                <Label className="text-sm font-medium">Teléfono *</Label>
+                <Input
+                  value={registrationData.emergencyContact.phone || ""}
+                  onChange={(e) => setRegistrationData({
+                    ...registrationData,
+                    emergencyContact: {
+                      ...registrationData.emergencyContact,
+                      phone: e.target.value
+                    }
+                  })}
+                  placeholder="+57 300 123 4567"
+                  required
+                />
+              </div>
+            </div>
+            
+            <div className="space-y-2">
+              <Label className="text-sm font-medium">Email *</Label>
+              <Input
+                type="email"
+                value={registrationData.emergencyContact.email || ""}
+                onChange={(e) => setRegistrationData({
+                  ...registrationData,
+                  emergencyContact: {
+                    ...registrationData.emergencyContact,
+                    email: e.target.value
+                  }
+                })}
+                placeholder="contacto@empresa.com"
+                required
+              />
+            </div>
+            
+            <div className="space-y-4 mt-6">
+              <div className="flex items-center space-x-2">
+                <input
+                  type="checkbox"
+                  id="acceptTerms"
+                  checked={registrationData.acceptTerms}
+                  onChange={(e) => setRegistrationData({...registrationData, acceptTerms: e.target.checked})}
+                  className="rounded"
+                  required
+                />
+                <Label htmlFor="acceptTerms" className="text-sm">
+                  Acepto los términos y condiciones y la política de privacidad *
+                </Label>
+              </div>
+            </div>
+          </div>
+        );
+
+      case 11:
+        return (
+          <div className="space-y-6">
+            <div className="text-center mb-6">
+              <Briefcase className="mx-auto h-12 w-12 text-[#CAD95E] mb-4" />
+              <h3 className="text-xl font-bold text-gray-800 dark:text-white">Configuración de Pagos</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">Configura tus métodos de pago y facturación</p>
+            </div>
+            
+            <div className="space-y-2">
+              <Label className="text-sm font-medium">Métodos de Pago Aceptados</Label>
+              <div className="space-y-2">
+                <div className="flex items-center space-x-2">
+                  <input
+                    type="checkbox"
+                    id="transferencia"
+                    checked={registrationData.paymentMethods.includes("transferencia")}
+                    onChange={(e) => {
+                      const methods = e.target.checked 
+                        ? [...registrationData.paymentMethods, "transferencia"]
+                        : registrationData.paymentMethods.filter(m => m !== "transferencia");
+                      setRegistrationData({...registrationData, paymentMethods: methods});
+                    }}
+                  />
+                  <Label htmlFor="transferencia" className="text-sm">Transferencia Bancaria</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <input
+                    type="checkbox"
+                    id="tarjeta"
+                    checked={registrationData.paymentMethods.includes("tarjeta")}
+                    onChange={(e) => {
+                      const methods = e.target.checked 
+                        ? [...registrationData.paymentMethods, "tarjeta"]
+                        : registrationData.paymentMethods.filter(m => m !== "tarjeta");
+                      setRegistrationData({...registrationData, paymentMethods: methods});
+                    }}
+                  />
+                  <Label htmlFor="tarjeta" className="text-sm">Tarjeta de Crédito/Débito</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <input
+                    type="checkbox"
+                    id="efectivo"
+                    checked={registrationData.paymentMethods.includes("efectivo")}
+                    onChange={(e) => {
+                      const methods = e.target.checked 
+                        ? [...registrationData.paymentMethods, "efectivo"]
+                        : registrationData.paymentMethods.filter(m => m !== "efectivo");
+                      setRegistrationData({...registrationData, paymentMethods: methods});
+                    }}
+                  />
+                  <Label htmlFor="efectivo" className="text-sm">Efectivo</Label>
+                </div>
+              </div>
+            </div>
+            
+            <div className="space-y-2">
+              <Label className="text-sm font-medium">Email para Facturación</Label>
+              <Input
+                type="email"
+                value={registrationData.invoiceEmail}
+                onChange={(e) => setRegistrationData({...registrationData, invoiceEmail: e.target.value})}
+                placeholder="facturacion@empresa.com"
+              />
+            </div>
+            
+            <div className="space-y-2">
+              <Label className="text-sm font-medium">Información Fiscal</Label>
+              <Input
+                value={registrationData.taxInformation}
+                onChange={(e) => setRegistrationData({...registrationData, taxInformation: e.target.value})}
+                placeholder="Régimen simplificado, IVA, etc."
+              />
+            </div>
+          </div>
+        );
+
+      case 12:
+        return (
+          <div className="space-y-6">
+            <div className="text-center mb-6">
+              <Mail className="mx-auto h-12 w-12 text-[#CAD95E] mb-4" />
+              <h3 className="text-xl font-bold text-gray-800 dark:text-white">Configuración de Notificaciones</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">Configura cómo quieres recibir notificaciones</p>
+            </div>
+            
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <Label className="text-sm font-medium">Notificaciones por Email</Label>
+                  <p className="text-xs text-gray-500">Recibe actualizaciones importantes por email</p>
+                </div>
+                <input
+                  type="checkbox"
+                  checked={registrationData.emailNotifications}
+                  onChange={(e) => setRegistrationData({...registrationData, emailNotifications: e.target.checked})}
+                  className="rounded"
+                />
+              </div>
+              
+              <div className="flex items-center justify-between">
+                <div>
+                  <Label className="text-sm font-medium">Notificaciones SMS</Label>
+                  <p className="text-xs text-gray-500">Recibe notificaciones urgentes por SMS</p>
+                </div>
+                <input
+                  type="checkbox"
+                  checked={registrationData.smsNotifications}
+                  onChange={(e) => setRegistrationData({...registrationData, smsNotifications: e.target.checked})}
+                  className="rounded"
+                />
+              </div>
+              
+              <div className="flex items-center justify-between">
+                <div>
+                  <Label className="text-sm font-medium">Emails de Marketing</Label>
+                  <p className="text-xs text-gray-500">Recibe ofertas y novedades del festival</p>
+                </div>
+                <input
+                  type="checkbox"
+                  checked={registrationData.marketingEmails}
+                  onChange={(e) => setRegistrationData({...registrationData, marketingEmails: e.target.checked})}
+                  className="rounded"
+                />
+              </div>
+            </div>
+          </div>
+        );
+
+      case 13:
+        return (
+          <div className="space-y-6">
+            <div className="text-center mb-6">
+              <Shield className="mx-auto h-12 w-12 text-[#CAD95E] mb-4" />
+              <h3 className="text-xl font-bold text-gray-800 dark:text-white">Configuración de Seguridad</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">Configura la seguridad de tu cuenta</p>
+            </div>
+            
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <Label className="text-sm font-medium">Autenticación de Dos Factores</Label>
+                  <p className="text-xs text-gray-500">Agrega una capa extra de seguridad</p>
+                </div>
+                <input
+                  type="checkbox"
+                  checked={registrationData.twoFactorEnabled}
+                  onChange={(e) => setRegistrationData({...registrationData, twoFactorEnabled: e.target.checked})}
+                  className="rounded"
+                />
+              </div>
+              
+              <div className="flex items-center justify-between">
+                <div>
+                  <Label className="text-sm font-medium">Notificaciones de Login</Label>
+                  <p className="text-xs text-gray-500">Te avisamos cuando alguien acceda a tu cuenta</p>
+                </div>
+                <input
+                  type="checkbox"
+                  checked={registrationData.loginNotifications}
+                  onChange={(e) => setRegistrationData({...registrationData, loginNotifications: e.target.checked})}
+                  className="rounded"
+                />
+              </div>
+            </div>
+          </div>
+        );
+
+      case 14:
+        return (
+          <div className="space-y-6">
+            <div className="text-center mb-6">
+              <Building2 className="mx-auto h-12 w-12 text-[#CAD95E] mb-4" />
+              <h3 className="text-xl font-bold text-gray-800 dark:text-white">Configuración de API</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">Configuración para integraciones avanzadas</p>
+            </div>
+            
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <Label className="text-sm font-medium">Acceso API</Label>
+                  <p className="text-xs text-gray-500">Habilitar acceso programático a tu cuenta</p>
+                </div>
+                <input
+                  type="checkbox"
+                  checked={registrationData.apiAccess}
+                  onChange={(e) => setRegistrationData({...registrationData, apiAccess: e.target.checked})}
+                  className="rounded"
+                />
+              </div>
+              
+              {registrationData.apiAccess && (
+                <div className="space-y-2">
+                  <Label className="text-sm font-medium">URL de Webhook</Label>
+                  <Input
+                    value={registrationData.webhookUrl}
+                    onChange={(e) => setRegistrationData({...registrationData, webhookUrl: e.target.value})}
+                    placeholder="https://tuservidor.com/webhook"
+                  />
+                  <p className="text-xs text-gray-500">URL donde recibirás notificaciones automáticas</p>
+                </div>
+              )}
+            </div>
+          </div>
+        );
+
+      case 15:
+        return (
+          <div className="space-y-6">
+            <div className="text-center mb-6">
+              <Check className="mx-auto h-12 w-12 text-[#CAD95E] mb-4" />
+              <h3 className="text-xl font-bold text-gray-800 dark:text-white">Configuración Final</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">Revisa tu información antes de completar</p>
+            </div>
+            
+            <div className="space-y-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+              <div className="flex justify-between">
+                <span className="font-medium">Empresa:</span>
+                <span>{registrationData.companyName}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="font-medium">Email:</span>
+                <span>{registrationData.email}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="font-medium">Categoría:</span>
+                <span>{registrationData.companyCategory}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="font-medium">Ubicación:</span>
+                <span>{registrationData.city}, {registrationData.country}</span>
+              </div>
+            </div>
+            
+            <div className="text-center">
+              <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                Al completar el registro, confirmas que toda la información es correcta.
+              </p>
+            </div>
+          </div>
+        );
+
+      default:
+        return <div>Paso no encontrado</div>;
+    }
+  };
+
+  const currentConfig = {
+    title: isEmpresas ? "Portal Empresas" : "Con-Sentidos",
+    subtitle: isEmpresas 
+      ? "Conecta tu empresa con el ecosistema de turismo sostenible"
+      : "Descubre experiencias auténticas y conecta con viajeros conscientes"
+  };
+
+  const maxSteps = isEmpresas ? 15 : 6;
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-[#0a1a0a] via-[#1a2f1a] to-[#0f2a0f] relative overflow-hidden">
+      {/* Background Effects */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#cad95e]/10 via-transparent to-transparent"></div>
+      <div className="absolute top-0 left-0 w-full h-full opacity-20"></div>
+      
+      {/* Back to Home */}
+      <div className="absolute top-6 left-6">
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => window.location.href = '/'}
+          className="flex items-center space-x-2 bg-white/10 backdrop-blur-sm border-[#CAD95E]/30 text-white hover:bg-[#CAD95E]/20"
+        >
+          <ArrowLeft className="h-4 w-4" />
+          <span>Inicio</span>
+        </Button>
+      </div>
+      
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="w-full max-w-2xl">
+          {/* NATUR Branding */}
+          <div className="text-center mb-8">
+            <h1 className="text-4xl font-gasoek text-[#CAD95E] mb-2 uppercase tracking-wider">
+              NATUR
             </h1>
-            <p className="text-lg text-white max-w-2xl mx-auto font-medium">
-              {currentConfig.subtitle}
+            <p className="text-white text-lg">
+              {currentConfig.title}
             </p>
           </div>
 
-          {/* Auth Form */}
-          <Card className="shadow-2xl backdrop-blur-md bg-white/10 border-2 border-[#cad95e]">
-            <CardHeader className="backdrop-blur-md bg-white/5 border-b-2 border-[#cad95e]">
-              <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as 'login' | 'register')}>
-                <TabsList className="grid w-full grid-cols-2 bg-white/20">
-                  <TabsTrigger 
-                    value="login" 
-                    className="font-bold data-[state=active]:bg-white/20 text-[#cad95e]"
-                  >
-                    Iniciar Sesión
-                  </TabsTrigger>
-                  <TabsTrigger 
-                    value="register" 
-                    className="font-bold data-[state=active]:bg-white/20 text-[#cad95e]"
-                  >
-                    Registrarse
-                  </TabsTrigger>
-                </TabsList>
-              </Tabs>
+          <Card className="bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm border border-white/20 shadow-2xl">
+            <CardHeader className="text-center pb-4">
+              <div className="flex justify-center space-x-4 mb-6">
+                <Button
+                  variant={isLogin ? "default" : "outline"}
+                  onClick={() => setIsLogin(true)}
+                  className={isLogin ? "bg-[#CAD95E] text-black" : ""}
+                >
+                  Iniciar Sesión
+                </Button>
+                <Button
+                  variant={!isLogin ? "default" : "outline"}
+                  onClick={() => setIsLogin(false)}
+                  className={!isLogin ? "bg-[#CAD95E] text-black" : ""}
+                >
+                  {isEmpresas ? "Registrar Empresa" : "Registrarse"}
+                </Button>
+              </div>
+              
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={isLogin ? 'login' : 'register'}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  {isLogin ? (
+                    <>
+                      <CardTitle className="text-2xl text-gray-800 dark:text-white font-bold">
+                        Iniciar Sesión
+                      </CardTitle>
+                      <p className="text-gray-600 dark:text-gray-400 text-sm">
+                        Accede a tu cuenta
+                      </p>
+                    </>
+                  ) : (
+                    <>
+                      <CardTitle className="text-2xl text-gray-800 dark:text-white font-bold">
+                        {isEmpresas ? "Registro Empresarial Completo" : "Registro de Usuario"}
+                      </CardTitle>
+                      {isEmpresas ? (
+                        <>
+                          <p className="text-gray-600 dark:text-gray-400 text-sm">
+                            Paso {currentStep} de 15 - Configuración completa ANTES del login
+                          </p>
+                          
+                          {/* Progress Bar */}
+                          <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 mt-4">
+                            <div 
+                              className="bg-[#CAD95E] h-2 rounded-full transition-all duration-300"
+                              style={{ width: `${(currentStep / 15) * 100}%` }}
+                            ></div>
+                          </div>
+                          
+                          {/* Load Test Data Button */}
+                          <div className="mt-4 text-center">
+                            <Button
+                              type="button"
+                              variant="outline"
+                              size="sm"
+                              onClick={() => loadDaHubTestData()}
+                              className="text-xs"
+                            >
+                              🔧 Cargar Datos de Prueba (DaHub)
+                            </Button>
+                          </div>
+                        </>
+                      ) : (
+                        <p className="text-gray-600 dark:text-gray-400 text-sm">
+                          Únete a nuestra comunidad
+                        </p>
+                      )}
+                    </>
+                  )}
+                </motion.div>
+              </AnimatePresence>
             </CardHeader>
-          
-          <CardContent className="p-6">
-            <Tabs value={activeTab}>
-              {/* Login Tab */}
-              <TabsContent value="login">
-                <form onSubmit={handleLogin} className="space-y-4">
-                  {/* Google OAuth Button - Single instance */}
+            
+            <CardContent className="pt-2">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={isLogin ? 'login-form' : `step-${currentStep}`}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  {renderStep()}
+                </motion.div>
+              </AnimatePresence>
+              
+              {/* Navigation Buttons for Registration */}
+              {!isLogin && (
+                <div className="flex justify-between mt-8">
                   <Button
-                    type="button"
-                    className="w-full bg-white/90 border-2 border-gray-300 text-gray-700 hover:bg-white flex items-center justify-center gap-2 p-4"
-                    onClick={() => window.location.href = '/api/auth/google'}
+                    variant="outline"
+                    onClick={handlePrevStep}
+                    disabled={currentStep === 1}
+                    className="flex items-center space-x-2"
                   >
-                    <svg className="w-5 h-5" viewBox="0 0 24 24">
-                      <path
-                        fill="#4285F4"
-                        d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
-                      />
-                      <path
-                        fill="#34A853"
-                        d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
-                      />
-                      <path
-                        fill="#FBBC05"
-                        d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
-                      />
-                      <path
-                        fill="#EA4335"
-                        d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
-                      />
-                    </svg>
-                    Continuar con Google
+                    <ChevronLeft className="h-4 w-4" />
+                    <span>Anterior</span>
                   </Button>
                   
-                  <div className="relative">
-                    <div className="absolute inset-0 flex items-center">
-                      <div className="w-full border-t border-[#cad95e]" />
-                    </div>
-                    <div className="relative flex justify-center text-sm">
-                      <span className="px-2 bg-white/10 backdrop-blur-sm text-[#cad95e]">O continúa con email</span>
-                    </div>
-                  </div>
-                  
-                  <div className="space-y-3">
-                    <Label htmlFor="login-email" className="font-bold text-lg text-[#cad95e]">
-                      Correo electrónico
-                    </Label>
-                    <div className="relative">
-                      <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-[#cad95e]" />
-                      <Input
-                        id="login-email"
-                        type="email"
-                        value={loginData.email}
-                        onChange={(e) => setLoginData(prev => ({ ...prev, email: e.target.value }))}
-                        className="mobile-input pl-12 border-2 bg-white/10 backdrop-blur-sm text-white font-medium placeholder-white/60 border-[#cad95e]"
-                        placeholder="tu@email.com"
-                        required
-                      />
-                    </div>
-                  </div>
-
-                  <div className="space-y-3">
-                    <Label htmlFor="login-password" className="font-bold text-lg text-[#cad95e]">
-                      Contraseña
-                    </Label>
-                    <div className="relative">
-                      <Lock className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-[#cad95e]" />
-                      <Input
-                        id="login-password"
-                        type="password"
-                        value={loginData.password}
-                        onChange={(e) => setLoginData(prev => ({ ...prev, password: e.target.value }))}
-                        className="mobile-input pl-12 border-2 bg-white/10 backdrop-blur-sm text-white font-medium placeholder-white/60 border-[#cad95e]"
-                        placeholder="••••••••"
-                        required
-                      />
-                    </div>
-                  </div>
-
-                  <div className="flex items-center justify-between text-sm">
-                    <a href="#" className="hover:underline text-[#cad95e]">
-                      ¿Olvidaste tu contraseña?
-                    </a>
-                  </div>
-
-                  <Button
-                    type="submit"
-                    className="w-full text-black py-4 font-bold text-lg shadow-xl hover:opacity-90"
-                    style={{ backgroundColor: '#cad95e' }}
-                    disabled={loginMutation.isPending}
-                  >
-                    {loginMutation.isPending ? "Iniciando sesión..." : "Iniciar Sesión"}
-                  </Button>
-                </form>
-              </TabsContent>
-
-              {/* Register Tab */}
-              <TabsContent value="register">
-                {isEmpresas ? (
-                  // Multi-step company registration form
-                  <div className="space-y-4">
-                    {/* Progress Bar */}
-                    <div className="mb-6">
-                      <div className="flex justify-between text-xs text-white/60 mb-2">
-                        <span>Paso {registrationStep} de 6</span>
-                        <span>{Math.round((registrationStep / 6) * 100)}%</span>
-                      </div>
-                      <div className="w-full bg-white/10 rounded-full h-2">
-                        <motion.div 
-                          className="bg-[#cad95e] h-2 rounded-full transition-all duration-500"
-                          style={{ width: `${(registrationStep / 6) * 100}%` }}
-                          initial={{ width: 0 }}
-                          animate={{ width: `${(registrationStep / 6) * 100}%` }}
-                        />
-                      </div>
-                    </div>
-
-                    <AnimatePresence mode="wait">
-                      <motion.div
-                        key={registrationStep}
-                        initial={{ opacity: 0, x: 20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: -20 }}
-                        transition={{ duration: 0.3 }}
-                      >
-                        {registrationStep === 1 && renderPersonalInfoStep()}
-                        {registrationStep === 2 && renderCompanyBasicsStep()}
-                        {registrationStep === 3 && renderContactLocationStep()}
-                        {registrationStep === 4 && renderBusinessDetailsStep()}
-                        {registrationStep === 5 && renderCertificationsSocialStep()}
-                        {registrationStep === 6 && renderFinalStepConfirmation()}
-                      </motion.div>
-                    </AnimatePresence>
-
-                    {/* Navigation Buttons */}
-                    <div className="flex justify-between pt-4">
-                      <Button
-                        variant="outline"
-                        onClick={() => setRegistrationStep(prev => Math.max(1, prev - 1))}
-                        disabled={registrationStep === 1}
-                        className="border-[#cad95e] text-[#cad95e] hover:bg-[#cad95e]/10"
-                      >
-                        <ArrowLeft className="w-4 h-4 mr-2" />
-                        Anterior
-                      </Button>
-                      
-                      <Button
-                        onClick={() => {
-                          if (registrationStep === 6) {
-                            handleCompanyRegister();
-                          } else {
-                            setRegistrationStep(prev => Math.min(6, prev + 1));
-                          }
-                        }}
-                        className="text-black font-bold"
-                        style={{ backgroundColor: '#cad95e' }}
-                        disabled={!isStepValid(registrationStep)}
-                      >
-                        {registrationStep === 6 ? "Completar Registro" : "Siguiente"}
-                        {registrationStep < 6 && <ArrowRight className="w-4 h-4 ml-2" />}
-                      </Button>
-                    </div>
-                  </div>
-                ) : (
-                  // For viajeros, keep the simple registration form
-                  <form onSubmit={handleRegister} className="space-y-4">
-                    <div className="space-y-3">
-                      <Label htmlFor="register-firstName" className="font-bold text-lg text-[#cad95e]">
-                        Nombre
-                      </Label>
-                      <Input
-                        id="register-firstName"
-                        type="text"
-                        value={registerData.firstName}
-                        onChange={(e) => setRegisterData(prev => ({ ...prev, firstName: e.target.value }))}
-                        className="border-2 bg-white/10 backdrop-blur-sm text-white font-medium text-lg p-4 placeholder-white/60 border-[#cad95e]"
-                        placeholder="Tu nombre"
-                        required
-                      />
-                    </div>
-
-                    <div className="space-y-3">
-                      <Label htmlFor="register-lastName" className="font-bold text-lg text-[#cad95e]">
-                        Apellido
-                      </Label>
-                      <Input
-                        id="register-lastName"
-                        type="text"
-                        value={registerData.lastName}
-                        onChange={(e) => setRegisterData(prev => ({ ...prev, lastName: e.target.value }))}
-                        className="border-2 bg-white/10 backdrop-blur-sm text-white font-medium text-lg p-4 placeholder-white/60 border-[#cad95e]"
-                        placeholder="Tu apellido"
-                        required
-                      />
-                    </div>
-
-                    <div className="space-y-3">
-                      <Label htmlFor="register-email" className="font-bold text-lg text-[#cad95e]">
-                        Correo electrónico
-                      </Label>
-                      <div className="relative">
-                        <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-[#cad95e]" />
-                        <Input
-                          id="register-email"
-                          type="email"
-                          value={registerData.email}
-                          onChange={(e) => setRegisterData(prev => ({ ...prev, email: e.target.value }))}
-                          className="pl-12 border-2 bg-white/10 backdrop-blur-sm text-white font-medium text-lg p-4 placeholder-white/60 border-[#cad95e]"
-                          placeholder="tu@email.com"
-                          required
-                        />
-                      </div>
-                    </div>
-
-                    <div className="space-y-3">
-                      <Label htmlFor="register-password" className="font-bold text-lg text-[#cad95e]">
-                        Contraseña
-                      </Label>
-                      <div className="relative">
-                        <Lock className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-[#cad95e]" />
-                        <Input
-                          id="register-password"
-                          type="password"
-                          value={registerData.password}
-                          onChange={(e) => setRegisterData(prev => ({ ...prev, password: e.target.value }))}
-                          className="pl-12 border-2 bg-white/10 backdrop-blur-sm text-white font-medium text-lg p-4 placeholder-white/60 border-[#cad95e]"
-                          placeholder="••••••••"
-                          required
-                        />
-                      </div>
-                    </div>
-
+                  {currentStep < maxSteps ? (
                     <Button
-                      type="submit"
-                      className="w-full text-black py-4 font-bold text-lg shadow-xl hover:opacity-90"
-                      style={{ backgroundColor: '#cad95e' }}
-                      disabled={registerMutation.isPending}
+                      onClick={handleNextStep}
+                      disabled={!validateStep(currentStep)}
+                      className="bg-[#CAD95E] hover:bg-[#b8c755] text-black flex items-center space-x-2"
                     >
-                      {registerMutation.isPending ? "Creando cuenta..." : "Crear Cuenta"}
+                      <span>Siguiente</span>
+                      <ChevronRight className="h-4 w-4" />
                     </Button>
-                  </form>
-                )}
-              </TabsContent>
-            </Tabs>
-          </CardContent>
-        </Card>
+                  ) : (
+                    <Button
+                      onClick={handleRegistrationSubmit}
+                      disabled={registrationMutation.isPending}
+                      className="bg-[#CAD95E] hover:bg-[#b8c755] text-black flex items-center space-x-2"
+                    >
+                      <Check className="h-4 w-4" />
+                      <span>
+                        {registrationMutation.isPending ? "Registrando..." : "Completar Registro"}
+                      </span>
+                    </Button>
+                  )}
+                </div>
+              )}
+              
+              {/* Login Additional Options */}
+              {isLogin && (
+                <>
+                  <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
+                    <div className="text-center space-y-2">
+                      <p className="text-xs text-gray-600 dark:text-gray-400">
+                        {isEmpresas ? "¿No tienes una cuenta empresarial?" : "¿No tienes una cuenta?"}
+                      </p>
+                      <Button 
+                        variant="outline" 
+                        className="text-[#CAD95E] border-[#CAD95E] hover:bg-[#CAD95E] hover:text-black text-sm"
+                        onClick={() => setIsLogin(false)}
+                      >
+                        {isEmpresas ? "Registrar Empresa" : "Registrarse"}
+                      </Button>
+                    </div>
+                  </div>
+
+                  {/* Test Account Info for empresas */}
+                  {isEmpresas && (
+                    <div className="mt-6 p-4 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg">
+                      <h3 className="text-sm font-semibold text-gray-800 dark:text-white mb-2">Cuenta de prueba:</h3>
+                      <p className="text-xs text-gray-600 dark:text-gray-400">Email: dahub.tech@gmail.com</p>
+                      <p className="text-xs text-gray-600 dark:text-gray-400">Contraseña: dahub123</p>
+                    </div>
+                  )}
+                </>
+              )}
+            </CardContent>
+          </Card>
         </div>
       </div>
     </div>

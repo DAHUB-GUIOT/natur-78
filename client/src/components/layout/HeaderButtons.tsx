@@ -53,7 +53,7 @@ export function HeaderButtons({
             {/* Portal Buttons - Enhanced Desktop */}
             {showPortalButtons && (
               <>
-                <Link to="/portal-empresas/auth">
+                <Link to="/auth/empresas">
                   <Button 
                     size="default" 
                     variant="outline"
