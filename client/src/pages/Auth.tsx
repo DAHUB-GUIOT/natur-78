@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useLocation } from "wouter";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
@@ -17,6 +17,20 @@ const Auth = () => {
   const [location] = useLocation();
   const { toast } = useToast();
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Suppress ResizeObserver loop error
+  useEffect(() => {
+    const handleError = (event: ErrorEvent) => {
+      if (event.message.includes('ResizeObserver loop completed')) {
+        event.preventDefault();
+        return true;
+      }
+      return false;
+    };
+    
+    window.addEventListener('error', handleError);
+    return () => window.removeEventListener('error', handleError);
+  }, []);
   
   // Determine if this is empresas or consentidos based on URL
   const isEmpresas = location.includes('empresas');

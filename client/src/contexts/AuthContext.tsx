@@ -55,7 +55,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       
       return { data: { user: response.user }, error: null };
     } catch (error: any) {
-      console.error('Error signing up:', error);
+      // Error handling for sign up
       
       // Better error handling for different scenarios
       let errorMessage = 'Error en el registro';
@@ -97,7 +97,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       
       return { data: { user: response.user }, error: null };
     } catch (error: any) {
-      console.error('Error signing in:', error);
+      // Error handling for sign in
       return { data: null, error: { message: error.message || 'Error al iniciar sesión' } };
     }
   };
@@ -121,7 +121,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       // Redirect to home page
       window.location.href = '/';
     } catch (error) {
-      console.error('Error signing out:', error);
+      // Error handling for sign out
       // Even if backend fails, clear local state
       setUser(null);
       localStorage.removeItem('user');

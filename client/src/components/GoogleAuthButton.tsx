@@ -36,9 +36,8 @@ export const GoogleAuthButton: React.FC<GoogleAuthButtonProps> = ({ className })
       }, 1000);
 
     } catch (error) {
-      console.error('Google auth error:', error);
       setIsLoading(false);
-      // Fallback to direct redirect
+      // Fallback to direct redirect on error
       window.location.href = '/api/auth/google';
     }
   };

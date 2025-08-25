@@ -351,17 +351,7 @@ const ComprehensiveCompanyRegistration = () => {
 
   const registerMutation = useMutation({
     mutationFn: async (data: RegistrationForm) => {
-      console.log('🚀 COMPLETE Configuration Registration:', {
-        step: 'BEFORE_LOGIN_SETUP',
-        email: data.email,
-        company: data.companyName,
-        profileComplete: data.profileComplete,
-        messagingEnabled: data.messagingEnabled,
-        mapVisible: data.isMapVisible,
-        contactCardVisible: data.isContactCardVisible,
-        experienceSetupComplete: data.experienceSetupComplete,
-        registrationComplete: data.registrationComplete
-      });
+      // Complete registration with all portal features
       
       const response = await apiRequest('/api/auth/register', {
         method: 'POST',
@@ -378,15 +368,6 @@ const ComprehensiveCompanyRegistration = () => {
       return response;
     },
     onSuccess: (data) => {
-      console.log('✅ COMPLETE Registration successful - ALL portal features activated:', data);
-      console.log('🏢 Portal Empresas Features Activated:');
-      console.log('1. ✅ Complete profile setup');
-      console.log('2. 💬 Messaging system enabled');
-      console.log('3. 📋 Contact card created and visible');
-      console.log('4. 📍 Map location configured');
-      console.log('5. ✨ Experience creation ready');
-      console.log('6. 🌐 All contact methods active');
-      
       toast({
         title: "¡Registro Completo Exitoso!",
         description: "Tu empresa está lista. Todas las funciones del portal han sido activadas. Ya puedes iniciar sesión.",
@@ -401,7 +382,6 @@ const ComprehensiveCompanyRegistration = () => {
       setLocation('/login-empresa');
     },
     onError: (error: any) => {
-      console.error('❌ Complete registration error:', error);
       toast({
         title: "Error en el Registro Completo",
         description: error.message || "Por favor, intenta nuevamente",
@@ -453,7 +433,7 @@ const ComprehensiveCompanyRegistration = () => {
     const isDahubTest = urlParams.get('test') === 'dahub' || urlParams.get('company') === 'dahub';
     
     if (isDahubTest) {
-      console.log('🔧 Loading COMPLETE test data for DaHub Technologies');
+      // Loading test data for DaHub Technologies
       if (typeof window !== 'undefined') {
         window.localStorage.setItem('fillDahubData', 'true');
       }

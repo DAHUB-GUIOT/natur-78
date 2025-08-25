@@ -22,7 +22,7 @@ class ErrorBoundary extends Component<Props, State> {
   }
 
   public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.warn('ErrorBoundary caught an error:', error, errorInfo);
+    // Error boundary caught an error - handled gracefully
   }
 
   public render() {
