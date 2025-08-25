@@ -311,27 +311,31 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       const user = await storage.createUser(userData);
       
-      // Send verification email for empresa users
+      // Send verification email for empresa users (non-blocking)
       if (role === 'empresa' && userData.companyName) {
-        try {
-          const emailSent = await sendVerificationEmail(
-            userData.email,
-            `${userData.firstName} ${userData.lastName}`,
-            userData.companyName,
-            verificationToken
-          );
-          console.log(`📧 Verification email sent: ${emailSent ? 'Success' : 'Failed'}`);
-          
-          // Send admin notification
-          await sendAdminNotification(
-            `${userData.firstName} ${userData.lastName}`,
-            userData.companyName,
-            userData.email,
-            userData.companyCategory || 'Sin categoría'
-          );
-        } catch (emailError) {
-          console.error("Email sending error:", emailError);
-        }
+        // Send emails asynchronously without blocking registration
+        Promise.resolve().then(async () => {
+          try {
+            const emailSent = await sendVerificationEmail(
+              userData.email,
+              `${userData.firstName || ''} ${userData.lastName || ''}`,
+              userData.companyName || '',
+              verificationToken
+            );
+            console.log(`📧 Verification email sent: ${emailSent ? 'Success' : 'Failed'}`);
+            
+            // Send admin notification
+            await sendAdminNotification(
+              `${userData.firstName || ''} ${userData.lastName || ''}`,
+              userData.companyName || '',
+              userData.email,
+              userData.companyCategory || 'Sin categoría'
+            );
+          } catch (emailError) {
+            console.error("⚠️ Email sending error (non-blocking):", emailError);
+            // Email errors should not affect registration success
+          }
+        });
       }
       
       // For empresa users, create company profile automatically to activate all portal features
@@ -492,24 +496,30 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       const user = await storage.createUser(userData);
 
-      // Send verification email
-      const emailSent = await sendVerificationEmail(
-        email,
-        `${firstName} ${lastName}`,
-        companyName,
-        verificationToken
-      );
-
-      // Send admin notification
-      await sendAdminNotification(
-        `${firstName} ${lastName}`,
-        companyName,
-        email,
-        companyCategory
-      );
+      // Send verification email (non-blocking)
+      Promise.resolve().then(async () => {
+        try {
+          const emailSent = await sendVerificationEmail(
+            email,
+            `${firstName} ${lastName}`,
+            companyName,
+            verificationToken
+          );
+          console.log(`📧 Verification email sent: ${emailSent ? 'Success' : 'Failed'}`);
+          
+          // Send admin notification
+          await sendAdminNotification(
+            `${firstName} ${lastName}`,
+            companyName,
+            email,
+            companyCategory
+          );
+        } catch (emailError) {
+          console.error("⚠️ Email sending error (non-blocking):", emailError);
+        }
+      });
 
       console.log("✅ Company Registration Complete - Email verification required");
-      console.log(`📧 Verification email sent: ${emailSent ? 'Success' : 'Failed'}`);
 
       res.status(201).json({
         message: "Company registered successfully. Please check your email for verification.",
@@ -518,8 +528,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           email: user.email,
           companyName: user.companyName,
           emailVerified: user.emailVerified
-        },
-        emailSent
+        }
       });
     } catch (error) {
       console.error("Company registration error:", error);
