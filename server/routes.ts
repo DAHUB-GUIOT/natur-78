@@ -56,6 +56,23 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // Google OAuth routes are now handled in setupGoogleAuth
 
+  // Logout route
+  app.post("/api/auth/logout", async (req, res) => {
+    try {
+      req.session.destroy((err) => {
+        if (err) {
+          console.error("Session destroy error:", err);
+          return res.status(500).json({ error: "Could not log out" });
+        }
+        res.clearCookie('connect.sid');
+        res.json({ message: "Logged out successfully" });
+      });
+    } catch (error) {
+      console.error("Logout error:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+
   // Authentication routes
   app.get("/api/auth/me", async (req, res) => {
     try {

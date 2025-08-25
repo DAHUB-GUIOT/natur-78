@@ -10,9 +10,11 @@ import {
   ChevronRight,
   TreePine,
   Globe,
-  User
+  User,
+  LogOut
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useAuth } from '@/contexts/AuthContext';
 
 interface DesktopSidebarProps {
   isOpen: boolean;
@@ -33,6 +35,7 @@ export function DesktopSidebar({
   portalType = 'empresas',
   showHeaderButtons = false
 }: DesktopSidebarProps) {
+  const { signOut } = useAuth();
   
   const portalConfig = {
     empresas: {
@@ -179,7 +182,7 @@ export function DesktopSidebar({
               </div>
 
               {/* User Status */}
-              <div className="mt-auto">
+              <div className="mt-auto space-y-3">
                 <div className="p-4 rounded-xl bg-white/5 border border-white/10">
                   <div className="flex items-center gap-3">
                     <div className="w-8 h-8 bg-gradient-to-r from-green-400 to-green-600 rounded-full flex items-center justify-center">
@@ -191,6 +194,16 @@ export function DesktopSidebar({
                     </div>
                   </div>
                 </div>
+                
+                {/* Logout Button */}
+                <Button
+                  onClick={signOut}
+                  className="w-full bg-red-500/20 hover:bg-red-500/30 border border-red-500/30 text-red-200 hover:text-white transition-all duration-200"
+                  variant="outline"
+                >
+                  <LogOut className="w-4 h-4 mr-2" />
+                  Cerrar Sesión
+                </Button>
               </div>
             </div>
           </motion.div>

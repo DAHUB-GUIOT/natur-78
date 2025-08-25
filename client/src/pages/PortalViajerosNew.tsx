@@ -4,7 +4,7 @@ import { useLocation } from "wouter";
 import { motion } from "framer-motion";
 import { 
   Map, Heart, Star, MessageCircle, Settings, User, Calendar,
-  Search, TreePine, Building2, MapPin
+  Search, TreePine, Building2, MapPin, LogOut
 } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
 import { Button } from "@/components/ui/button";
@@ -18,9 +18,11 @@ import TwitterProfileSection from "@/components/profile/TwitterProfileSection";
 import { HeaderButtons } from "@/components/layout/HeaderButtons";
 import { DesktopSidebar } from "@/components/layout/DesktopSidebar";
 import UserFlowManager from "@/components/userflow/UserFlowManager";
+import { useAuth } from '@/contexts/AuthContext';
 import AuthViajeros from "./AuthViajeros";
 
 const PortalViajerosNew = () => {
+  const { signOut } = useAuth();
   const [activeView, setActiveView] = useState("experiencias"); // Changed default to experiencias
   const [searchQuery, setSearchQuery] = useState("");
   const [sidebarOpen, setSidebarOpen] = useState(() => {

@@ -104,15 +104,28 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const signOut = async () => {
     try {
+      // Call backend logout endpoint
+      await apiRequest('/api/auth/logout', {
+        method: 'POST',
+      });
+      
+      // Clear local state
       setUser(null);
       localStorage.removeItem('user');
+      
       toast({
         title: "Sesión cerrada",
         description: "Has cerrado sesión correctamente",
       });
+      
+      // Redirect to home page
+      window.location.href = '/';
     } catch (error) {
       console.error('Error signing out:', error);
-      throw error;
+      // Even if backend fails, clear local state
+      setUser(null);
+      localStorage.removeItem('user');
+      window.location.href = '/';
     }
   };
 

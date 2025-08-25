@@ -6,7 +6,7 @@ import {
   Map, Building2, Star, MessageCircle, Settings, User, Plus,
   Search, MapPin, Globe, Hotel, Utensils, Car, Heart, 
   GraduationCap, Smartphone, Handshake, Leaf, TreePine,
-  Plane, Camera, Coffee, Waves, Mountain
+  Plane, Camera, Coffee, Waves, Mountain, LogOut
 } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
 import { Button } from "@/components/ui/button";
@@ -21,8 +21,10 @@ import { DesktopSidebar } from "@/components/layout/DesktopSidebar";
 import UserFlowManager from "@/components/userflow/UserFlowManager";
 import ExperienceForm from "@/components/dashboard/ExperienceForm";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { useAuth } from '@/contexts/AuthContext';
 
 const MinimalistPortalEmpresas = () => {
+  const { signOut } = useAuth();
   const [activeView, setActiveView] = useState("map");
   const [searchQuery, setSearchQuery] = useState("");
   const [showExperienceForm, setShowExperienceForm] = useState(false);
@@ -383,12 +385,22 @@ const MinimalistPortalEmpresas = () => {
           <h2 className="mobile-text-xl md:text-2xl font-bold text-white">{user?.companyName || 'Tu Empresa'}</h2>
           <p className="text-white/70 mobile-text-sm">{user?.category || 'Turismo Sostenible'}</p>
         </div>
-        <Button 
-          onClick={() => window.location.href = '/edit-profile'}
-          className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-xl font-semibold shadow-lg transition-all duration-300 hover:shadow-xl"
-        >
-          Editar Perfil Completo
-        </Button>
+        <div className="flex gap-3 justify-center">
+          <Button 
+            onClick={() => window.location.href = '/edit-profile'}
+            className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-xl font-semibold shadow-lg transition-all duration-300 hover:shadow-xl"
+          >
+            Editar Perfil Completo
+          </Button>
+          <Button 
+            onClick={signOut}
+            className="bg-red-500/20 hover:bg-red-500/30 border border-red-500/30 text-red-200 hover:text-white px-6 py-3 rounded-xl font-semibold shadow-lg transition-all duration-300 hover:shadow-xl"
+            variant="outline"
+          >
+            <LogOut className="w-4 h-4 mr-2" />
+            Cerrar Sesión
+          </Button>
+        </div>
       </div>
 
       {/* User Flow Progress */}
