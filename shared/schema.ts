@@ -80,6 +80,16 @@ export const users = pgTable("users", {
   // Auto-generated contact card visibility
   isContactCardVisible: boolean("is_contact_card_visible").default(true),
   isMapVisible: boolean("is_map_visible").default(true),
+  // Messaging configuration fields
+  messagingEnabled: boolean("messaging_enabled").default(true),
+  messagingBio: text("messaging_bio"),
+  acceptsInquiries: boolean("accepts_inquiries").default(true),
+  responseTimeHours: integer("response_time_hours").default(24),
+  // Experience creation setup fields
+  experienceSetupComplete: boolean("experience_setup_complete").default(false),
+  defaultExperienceCategory: text("default_experience_category"),
+  defaultMeetingPoint: text("default_meeting_point"),
+  defaultCancellationPolicy: text("default_cancellation_policy"),
   // Verification levels
   verificationLevel: text("verification_level").default("basic"), // basic, verified, certified, premium
   createdAt: timestamp("created_at").defaultNow().notNull(),

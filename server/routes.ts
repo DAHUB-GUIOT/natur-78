@@ -263,8 +263,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
         registrationComplete: req.body.registrationComplete || false,
         profileCompletion: req.body.profileCompletion || (role === 'empresa' ? 100 : 50),
         verificationLevel: req.body.verificationLevel || (role === 'empresa' ? 'verified' : 'basic'),
-        isContactCardVisible: true,
-        isMapVisible: true
+        isContactCardVisible: req.body.isContactCardVisible ?? true,
+        isMapVisible: req.body.isMapVisible ?? true,
+        // New messaging configuration fields
+        messagingEnabled: req.body.messagingEnabled ?? true,
+        messagingBio: req.body.messagingBio || '',
+        acceptsInquiries: req.body.acceptsInquiries ?? true,
+        responseTimeHours: req.body.responseTimeHours || 24,
+        // New experience creation setup fields  
+        experienceSetupComplete: req.body.experienceSetupComplete ?? true,
+        defaultExperienceCategory: req.body.defaultExperienceCategory || '',
+        defaultMeetingPoint: req.body.defaultMeetingPoint || '',
+        defaultCancellationPolicy: req.body.defaultCancellationPolicy || ''
       });
       
       // Check if user already exists
@@ -275,7 +285,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       // Generate verification token for email verification
       const verificationToken = crypto.randomBytes(32).toString('hex');
-      userData.emailVerificationToken = verificationToken;
+      userData.verificationToken = verificationToken;
       userData.emailVerified = true; // Temporarily auto-verify until SendGrid is configured
 
       const user = await storage.createUser(userData);

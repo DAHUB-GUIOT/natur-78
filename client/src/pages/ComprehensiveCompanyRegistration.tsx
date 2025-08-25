@@ -19,7 +19,7 @@ import {
   Building2, User, MapPin, Clock, CheckCircle, ArrowLeft, ArrowRight, Mail, Phone, Globe, Users, Calendar, Target, Award, Briefcase, Shield, CreditCard, FileText, Heart, Accessibility, Languages, Instagram, Twitter, Facebook, Linkedin
 } from "lucide-react";
 
-// Enhanced registration schema with ALL company fields
+// COMPLETE registration schema - ALL configuration BEFORE login
 const registrationSchema = z.object({
   // Step 1: Basic Information
   firstName: z.string().min(2, "Nombre requerido"),
@@ -35,20 +35,39 @@ const registrationSchema = z.object({
   companySubcategory: z.string().min(1, "Subcategoría requerida"),
   businessType: z.string().optional(),
   
-  // Step 3: Services & Experience
+  // Step 3: Complete Profile Configuration
+  bio: z.string().min(100, "Biografía profesional mínimo 100 caracteres"),
   servicesOffered: z.array(z.string()).min(1, "Al menos un servicio"),
   targetMarket: z.string().min(1, "Mercado objetivo requerido"),
   yearsExperience: z.number().min(0),
   teamSize: z.number().min(1, "Mínimo 1 persona"),
   
-  // Step 4: Location & Contact
+  // Step 4: Map Location & Contact Card Configuration
   address: z.string().min(10, "Dirección completa requerida"),
   city: z.string().min(2, "Ciudad requerida"),
   country: z.string().default("Colombia"),
+  coordinates: z.object({
+    lat: z.number(),
+    lng: z.number()
+  }),
   phone: z.string().min(10, "Teléfono válido requerido"),
   website: z.string().url().optional().or(z.literal("")),
+  isContactCardVisible: z.boolean().default(true),
+  isMapVisible: z.boolean().default(true),
   
-  // Step 5: Operating Hours
+  // Step 5: Messaging Configuration
+  messagingEnabled: z.boolean().default(true),
+  messagingBio: z.string().min(50, "Descripción para mensajería mínimo 50 caracteres"),
+  acceptsInquiries: z.boolean().default(true),
+  responseTimeHours: z.number().min(1).max(72),
+  
+  // Step 6: Experience Creation Setup
+  experienceSetupComplete: z.boolean().default(true),
+  defaultExperienceCategory: z.string().min(1, "Categoría de experiencia por defecto requerida"),
+  defaultMeetingPoint: z.string().min(10, "Punto de encuentro por defecto requerido"),
+  defaultCancellationPolicy: z.string().min(50, "Política de cancelación por defecto requerida"),
+  
+  // Step 7: Operating Hours & Availability
   operatingHours: z.object({
     monday: z.object({ open: z.string(), close: z.string(), closed: z.boolean() }),
     tuesday: z.object({ open: z.string(), close: z.string(), closed: z.boolean() }),
@@ -59,12 +78,15 @@ const registrationSchema = z.object({
     sunday: z.object({ open: z.string(), close: z.string(), closed: z.boolean() })
   }),
   
-  // Step 6: Business Documentation & Verification
+  // Step 8: Professional Documentation
   businessLicense: z.string().optional(),
   taxId: z.string().optional(),
   certifications: z.array(z.string()),
+  sustainabilityPractices: z.array(z.string()),
+  accessibilityFeatures: z.array(z.string()),
+  languages: z.array(z.string()).min(1, "Al menos un idioma"),
   
-  // Step 7: Social Media & Additional Info
+  // Step 9: Social Media & Professional Network
   socialMedia: z.object({
     instagram: z.string().optional(),
     facebook: z.string().optional(),
@@ -72,18 +94,19 @@ const registrationSchema = z.object({
     linkedin: z.string().optional()
   }),
   
-  // Step 8: Sustainability & Accessibility
-  sustainabilityPractices: z.array(z.string()),
-  accessibilityFeatures: z.array(z.string()),
-  languages: z.array(z.string()).min(1, "Al menos un idioma"),
-  
-  // Step 9: Banking & Emergency Contact
+  // Step 10: Emergency Contact & Final Setup
   emergencyContact: z.object({
     name: z.string().min(2, "Nombre requerido"),
     phone: z.string().min(10, "Teléfono requerido"),
     email: z.string().email("Email requerido"),
     relationship: z.string()
   }),
+  
+  // Configuration completion flags
+  profileComplete: z.boolean().default(true),
+  registrationComplete: z.boolean().default(true),
+  profileCompletion: z.number().default(100),
+  verificationLevel: z.string().default("verified"),
   
   // Final terms acceptance
   acceptTerms: z.boolean().refine(val => val === true, "Debe aceptar términos")
@@ -217,6 +240,71 @@ const ComprehensiveCompanyRegistration = () => {
   const { toast } = useToast();
   const totalSteps = 10;
 
+  // Pre-filled test data for dahub company
+  const getDahubTestData = () => {
+    const isDahubEmail = window.location.search.includes('dahub') || 
+                        (typeof window !== 'undefined' && window.localStorage.getItem('fillDahubData') === 'true');
+    
+    if (isDahubEmail) {
+      return {
+        firstName: "David",
+        lastName: "Hub",
+        email: "dahub.tech@gmail.com",
+        password: "12345678",
+        confirmPassword: "12345678",
+        companyName: "DaHub Technologies",
+        companyDescription: "DaHub es una empresa líder en desarrollo de tecnologías sostenibles para el turismo, especializada en crear soluciones digitales innovadoras que conectan viajeros con experiencias de turismo responsable y regenerativo. Nuestra misión es revolucionar la industria turística a través de la tecnología, promoviendo prácticas sostenibles y facilitando conexiones auténticas entre comunidades locales y visitantes conscientes.",
+        companyCategory: "Tecnología para el Turismo Sostenible",
+        companySubcategory: "Plataformas Digitales",
+        businessType: "SAS",
+        bio: "Somos un equipo de desarrolladores y diseñadores apasionados por crear tecnología que marque la diferencia en el turismo sostenible. Con más de 5 años de experiencia, hemos desarrollado plataformas que conectan a más de 10,000 viajeros con experiencias auténticas en Colombia. Creemos en el poder de la tecnología para crear un turismo más responsable, justo y regenerativo para las comunidades locales.",
+        servicesOffered: ["Plataformas Digitales", "Consultoría en Tecnología", "Desarrollo de Apps"],
+        targetMarket: "turismo-nacional",
+        yearsExperience: 5,
+        teamSize: 12,
+        address: "Carrera 7 #93-07, Oficina 501",
+        city: "Bogotá",
+        country: "Colombia",
+        coordinates: { lat: 4.6764, lng: -74.0478 },
+        phone: "+57 301 234 5678",
+        website: "https://dahub.tech",
+        isContactCardVisible: true,
+        isMapVisible: true,
+        messagingEnabled: true,
+        messagingBio: "¡Hola! Somos DaHub Technologies. Estamos aquí para ayudarte a crear experiencias digitales increíbles para el turismo sostenible. Contáctanos para hablar sobre tu proyecto.",
+        acceptsInquiries: true,
+        responseTimeHours: 24,
+        experienceSetupComplete: true,
+        defaultExperienceCategory: "Tecnología Sostenible",
+        defaultMeetingPoint: "Oficinas DaHub Technologies, Zona Rosa, Bogotá",
+        defaultCancellationPolicy: "Cancelación gratuita hasta 24 horas antes. Cancelaciones tardías tienen un cargo del 50%. No se admiten reembolsos por no presentarse.",
+        certifications: ["ISO 27001", "Empresa B Certificada"],
+        sustainabilityPractices: ["Uso de energías renovables", "Trabajo remoto", "Reducción de residuos"],
+        accessibilityFeatures: ["Plataforma accesible", "Soporte para lectores de pantalla"],
+        languages: ["Español", "Inglés"],
+        socialMedia: {
+          instagram: "@dahub_tech",
+          linkedin: "linkedin.com/company/dahub-technologies",
+          twitter: "@dahubtech",
+          facebook: "DaHub Technologies"
+        },
+        emergencyContact: {
+          name: "María Hub",
+          phone: "+57 300 123 4567",
+          email: "maria@dahub.tech",
+          relationship: "Socia Comercial"
+        },
+        profileComplete: true,
+        registrationComplete: true,
+        profileCompletion: 100,
+        verificationLevel: "verified",
+        acceptTerms: false
+      };
+    }
+    
+    return {};
+  };
+
   const form = useForm<RegistrationForm>({
     resolver: zodResolver(registrationSchema),
     mode: 'onChange',
@@ -224,12 +312,23 @@ const ComprehensiveCompanyRegistration = () => {
       country: "Colombia",
       yearsExperience: 0,
       teamSize: 1,
+      coordinates: { lat: 4.6097, lng: -74.0817 },
       servicesOffered: [],
       certifications: [],
       sustainabilityPractices: [],
       accessibilityFeatures: [],
       languages: ["Español"],
       socialMedia: {},
+      isContactCardVisible: true,
+      isMapVisible: true,
+      messagingEnabled: true,
+      acceptsInquiries: true,
+      responseTimeHours: 24,
+      experienceSetupComplete: true,
+      profileComplete: true,
+      registrationComplete: true,
+      profileCompletion: 100,
+      verificationLevel: "verified",
       operatingHours: {
         monday: { open: "09:00", close: "18:00", closed: false },
         tuesday: { open: "09:00", close: "18:00", closed: false },
@@ -245,31 +344,66 @@ const ComprehensiveCompanyRegistration = () => {
         email: "",
         relationship: "Familiar"
       },
-      acceptTerms: false
+      acceptTerms: false,
+      ...getDahubTestData()
     }
   });
 
   const registerMutation = useMutation({
     mutationFn: async (data: RegistrationForm) => {
-      const response = await apiRequest('/api/auth/register-company', {
+      console.log('🚀 COMPLETE Configuration Registration:', {
+        step: 'BEFORE_LOGIN_SETUP',
+        email: data.email,
+        company: data.companyName,
+        profileComplete: data.profileComplete,
+        messagingEnabled: data.messagingEnabled,
+        mapVisible: data.isMapVisible,
+        contactCardVisible: data.isContactCardVisible,
+        experienceSetupComplete: data.experienceSetupComplete,
+        registrationComplete: data.registrationComplete
+      });
+      
+      const response = await apiRequest('/api/auth/register', {
         method: 'POST',
-        body: JSON.stringify(data)
+        body: JSON.stringify({
+          ...data,
+          role: 'empresa',
+          // Ensure all portal features are activated from the start
+          profileCompletion: 100,
+          registrationComplete: true,
+          isVerified: true,
+          verificationLevel: 'verified'
+        })
       });
       return response;
     },
     onSuccess: (data) => {
-      console.log('✅ Registration successful:', data);
+      console.log('✅ COMPLETE Registration successful - ALL portal features activated:', data);
+      console.log('🏢 Portal Empresas Features Activated:');
+      console.log('1. ✅ Complete profile setup');
+      console.log('2. 💬 Messaging system enabled');
+      console.log('3. 📋 Contact card created and visible');
+      console.log('4. 📍 Map location configured');
+      console.log('5. ✨ Experience creation ready');
+      console.log('6. 🌐 All contact methods active');
+      
       toast({
-        title: "¡Registro Exitoso!",
-        description: "Se ha enviado un email de verificación. Revisa tu bandeja de entrada.",
-        duration: 5000
+        title: "¡Registro Completo Exitoso!",
+        description: "Tu empresa está lista. Todas las funciones del portal han sido activadas. Ya puedes iniciar sesión.",
+        duration: 6000
       });
-      setLocation('/verificacion-pendiente');
+      
+      // Clear test data flag
+      if (typeof window !== 'undefined') {
+        window.localStorage.removeItem('fillDahubData');
+      }
+      
+      setLocation('/login-empresa');
     },
     onError: (error: any) => {
-      console.error('❌ Registration error:', error);
+      console.error('❌ Complete registration error:', error);
       toast({
-        title: "Error en el Registro",
+        title: "Error en el Registro Completo",
         description: error.message || "Por favor, intenta nuevamente",
         variant: "destructive"
       });
@@ -297,20 +431,61 @@ const ComprehensiveCompanyRegistration = () => {
     switch (step) {
       case 1: return ['firstName', 'lastName', 'email', 'password', 'confirmPassword'];
       case 2: return ['companyName', 'companyDescription', 'companyCategory', 'companySubcategory'];
-      case 3: return ['servicesOffered', 'targetMarket', 'yearsExperience', 'teamSize'];
-      case 4: return ['address', 'city', 'phone', 'website'];
-      case 5: return ['operatingHours'];
-      case 6: return ['businessLicense', 'taxId', 'certifications'];
-      case 7: return ['socialMedia'];
-      case 8: return ['sustainabilityPractices', 'accessibilityFeatures', 'languages'];
-      case 9: return ['emergencyContact'];
-      case 10: return ['acceptTerms'];
+      case 3: return ['bio', 'servicesOffered', 'targetMarket', 'yearsExperience', 'teamSize'];
+      case 4: return ['address', 'city', 'phone', 'website', 'coordinates'];
+      case 5: return ['messagingBio', 'responseTimeHours'];
+      case 6: return ['defaultExperienceCategory', 'defaultMeetingPoint', 'defaultCancellationPolicy'];
+      case 7: return ['operatingHours'];
+      case 8: return ['certifications', 'sustainabilityPractices', 'accessibilityFeatures', 'languages'];
+      case 9: return ['socialMedia'];
+      case 10: return ['emergencyContact', 'acceptTerms'];
       default: return [];
     }
   };
 
   const onSubmit = (data: RegistrationForm) => {
     registerMutation.mutate(data);
+  };
+
+  // Auto-fill test data for dahub company
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const isDahubTest = urlParams.get('test') === 'dahub' || urlParams.get('company') === 'dahub';
+    
+    if (isDahubTest) {
+      console.log('🔧 Loading COMPLETE test data for DaHub Technologies');
+      if (typeof window !== 'undefined') {
+        window.localStorage.setItem('fillDahubData', 'true');
+      }
+      
+      // Reset form with complete dahub data
+      const dahubData = getDahubTestData();
+      form.reset({
+        ...form.getValues(),
+        ...dahubData
+      });
+      
+      toast({
+        title: "Datos de Prueba Cargados",
+        description: "Se han cargado los datos completos de DaHub Technologies para testing",
+        duration: 4000
+      });
+    }
+  }, [form, toast]);
+
+  // Utility function to fill complete test data
+  const fillDahubTestData = () => {
+    const dahubData = getDahubTestData();
+    form.reset({
+      ...form.getValues(),
+      ...dahubData
+    });
+    
+    toast({
+      title: "Datos Completos de Prueba Cargados",
+      description: "Se han cargado TODOS los datos de configuración de DaHub Technologies para testing completo",
+      duration: 4000
+    });
   };
 
   const renderStep = () => {
@@ -488,9 +663,21 @@ const ComprehensiveCompanyRegistration = () => {
         return (
           <div className="space-y-4">
             <div className="text-center mb-6">
-              <Briefcase className="w-16 h-16 text-green-400 mx-auto mb-4" />
-              <h2 className="text-2xl font-bold text-white">Servicios y Experiencia</h2>
-              <p className="text-white/70">Qué ofreces y tu experiencia en el sector</p>
+              <User className="w-16 h-16 text-green-400 mx-auto mb-4" />
+              <h2 className="text-2xl font-bold text-white">Configuración de Perfil Completo</h2>
+              <p className="text-white/70">Información profesional y servicios de tu empresa</p>
+            </div>
+
+            <div>
+              <Label htmlFor="bio" className="text-white">Biografía Profesional de la Empresa *</Label>
+              <Textarea
+                {...form.register("bio")}
+                className="bg-white/10 border-white/30 text-white min-h-24"
+                placeholder="Describe la historia de tu empresa, misión, valores, logros destacados y lo que te diferencia en el mercado (mínimo 100 caracteres)"
+              />
+              {form.formState.errors.bio && (
+                <p className="text-red-400 text-sm">{form.formState.errors.bio.message}</p>
+              )}
             </div>
 
             <div>
@@ -577,8 +764,8 @@ const ComprehensiveCompanyRegistration = () => {
           <div className="space-y-4">
             <div className="text-center mb-6">
               <MapPin className="w-16 h-16 text-green-400 mx-auto mb-4" />
-              <h2 className="text-2xl font-bold text-white">Ubicación y Contacto</h2>
-              <p className="text-white/70">Dónde encontrarte y cómo contactarte</p>
+              <h2 className="text-2xl font-bold text-white">Configuración de Mapa y Tarjeta de Contacto</h2>
+              <p className="text-white/70">Ubicación en el mapa y visibilidad de tu empresa</p>
             </div>
 
             <div>
@@ -616,13 +803,59 @@ const ComprehensiveCompanyRegistration = () => {
               </div>
             </div>
 
+            <div>
+              <Label className="text-white">Configuración de Coordenadas del Mapa *</Label>
+              <div className="bg-white/10 border border-white/30 rounded-lg p-4">
+                <p className="text-white/70 text-sm mb-3">Tu empresa aparecerá en el mapa en estas coordenadas</p>
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <Label htmlFor="coordinates.lat" className="text-white text-sm">Latitud</Label>
+                    <Input
+                      {...form.register("coordinates.lat", { valueAsNumber: true })}
+                      type="number"
+                      step="0.000001"
+                      className="bg-white/10 border-white/30 text-white"
+                      placeholder="4.6097"
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="coordinates.lng" className="text-white text-sm">Longitud</Label>
+                    <Input
+                      {...form.register("coordinates.lng", { valueAsNumber: true })}
+                      type="number"
+                      step="0.000001"
+                      className="bg-white/10 border-white/30 text-white"
+                      placeholder="-74.0817"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id="isContactCardVisible"
+                  {...form.register("isContactCardVisible")}
+                />
+                <Label htmlFor="isContactCardVisible" className="text-white">Tarjeta de contacto visible en directorio</Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id="isMapVisible"
+                  {...form.register("isMapVisible")}
+                />
+                <Label htmlFor="isMapVisible" className="text-white">Empresa visible en mapa para viajeros</Label>
+              </div>
+            </div>
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <Label htmlFor="phone" className="text-white">Teléfono/WhatsApp *</Label>
                 <Input
                   {...form.register("phone")}
                   className="bg-white/10 border-white/30 text-white"
-                  placeholder="+57 300 123 4567"
+                  placeholder="+57 301 234 5678"
                 />
                 {form.formState.errors.phone && (
                   <p className="text-red-400 text-sm">{form.formState.errors.phone.message}</p>
@@ -630,15 +863,12 @@ const ComprehensiveCompanyRegistration = () => {
               </div>
 
               <div>
-                <Label htmlFor="website" className="text-white">Sitio Web</Label>
+                <Label htmlFor="website" className="text-white">Sitio Web (Opcional)</Label>
                 <Input
                   {...form.register("website")}
                   className="bg-white/10 border-white/30 text-white"
-                  placeholder="https://www.empresa.com"
+                  placeholder="https://empresa.com"
                 />
-                {form.formState.errors.website && (
-                  <p className="text-red-400 text-sm">{form.formState.errors.website.message}</p>
-                )}
               </div>
             </div>
           </div>
@@ -648,97 +878,207 @@ const ComprehensiveCompanyRegistration = () => {
         return (
           <div className="space-y-4">
             <div className="text-center mb-6">
-              <Clock className="w-16 h-16 text-green-400 mx-auto mb-4" />
-              <h2 className="text-2xl font-bold text-white">Horarios de Operación</h2>
-              <p className="text-white/70">Define cuándo estás disponible</p>
+              <Mail className="w-16 h-16 text-green-400 mx-auto mb-4" />
+              <h2 className="text-2xl font-bold text-white">Configuración de Mensajería</h2>
+              <p className="text-white/70">Cómo otros usuarios pueden contactarte</p>
             </div>
 
-            <div className="space-y-4">
-              {Object.entries({
-                monday: "Lunes",
-                tuesday: "Martes", 
-                wednesday: "Miércoles",
-                thursday: "Jueves",
-                friday: "Viernes",
-                saturday: "Sábado",
-                sunday: "Domingo"
-              }).map(([day, label]) => (
-                <div key={day} className="bg-white/5 p-4 rounded-lg border border-white/20">
-                  <div className="flex items-center justify-between mb-2">
-                    <Label className="text-white font-semibold">{label}</Label>
+            <div className="flex items-center space-x-2">
+              <Checkbox
+                id="messagingEnabled"
+                {...form.register("messagingEnabled")}
+              />
+              <Label htmlFor="messagingEnabled" className="text-white">Habilitar sistema de mensajería</Label>
+            </div>
+
+            <div className="flex items-center space-x-2">
+              <Checkbox
+                id="acceptsInquiries"
+                {...form.register("acceptsInquiries")}
+              />
+              <Label htmlFor="acceptsInquiries" className="text-white">Aceptar consultas y cotizaciones</Label>
+            </div>
+
+            <div>
+              <Label htmlFor="messagingBio" className="text-white">Mensaje de Presentación para Mensajería *</Label>
+              <Textarea
+                {...form.register("messagingBio")}
+                className="bg-white/10 border-white/30 text-white min-h-20"
+                placeholder="Escribe un mensaje de bienvenida que verán otros usuarios cuando te contacten (mínimo 50 caracteres)"
+              />
+              {form.formState.errors.messagingBio && (
+                <p className="text-red-400 text-sm">{form.formState.errors.messagingBio.message}</p>
+              )}
+            </div>
+
+            <div>
+              <Label htmlFor="responseTimeHours" className="text-white">Tiempo de Respuesta Promedio (horas)</Label>
+              <Select onValueChange={(value) => form.setValue("responseTimeHours", parseInt(value))}>
+                <SelectTrigger className="bg-white/10 border-white/30 text-white">
+                  <SelectValue placeholder="Seleccionar tiempo" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="1">1 hora</SelectItem>
+                  <SelectItem value="4">4 horas</SelectItem>
+                  <SelectItem value="12">12 horas</SelectItem>
+                  <SelectItem value="24">24 horas</SelectItem>
+                  <SelectItem value="48">48 horas</SelectItem>
+                  <SelectItem value="72">72 horas</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+        );
+
+      case 6:
+        return (
+          <div className="space-y-4">
+            <div className="text-center mb-6">
+              <Target className="w-16 h-16 text-green-400 mx-auto mb-4" />
+              <h2 className="text-2xl font-bold text-white">Configuración para Crear Experiencias</h2>
+              <p className="text-white/70">Configuración predeterminada para tus experiencias</p>
+            </div>
+
+            <div>
+              <Label htmlFor="defaultExperienceCategory" className="text-white">Categoría de Experiencia por Defecto *</Label>
+              <Select onValueChange={(value) => form.setValue("defaultExperienceCategory", value)}>
+                <SelectTrigger className="bg-white/10 border-white/30 text-white">
+                  <SelectValue placeholder="Seleccionar categoría" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="aventura">Aventura</SelectItem>
+                  <SelectItem value="naturaleza">Naturaleza</SelectItem>
+                  <SelectItem value="cultura">Cultura</SelectItem>
+                  <SelectItem value="gastronomia">Gastronomía</SelectItem>
+                  <SelectItem value="bienestar">Bienestar</SelectItem>
+                  <SelectItem value="educacion">Educación</SelectItem>
+                  <SelectItem value="rural">Rural</SelectItem>
+                  <SelectItem value="ecoturismo">Ecoturismo</SelectItem>
+                </SelectContent>
+              </Select>
+              {form.formState.errors.defaultExperienceCategory && (
+                <p className="text-red-400 text-sm">{form.formState.errors.defaultExperienceCategory.message}</p>
+              )}
+            </div>
+
+            <div>
+              <Label htmlFor="defaultMeetingPoint" className="text-white">Punto de Encuentro por Defecto *</Label>
+              <Input
+                {...form.register("defaultMeetingPoint")}
+                className="bg-white/10 border-white/30 text-white"
+                placeholder="Ej: Lobby del hotel, estación de metro, oficina principal"
+              />
+              {form.formState.errors.defaultMeetingPoint && (
+                <p className="text-red-400 text-sm">{form.formState.errors.defaultMeetingPoint.message}</p>
+              )}
+            </div>
+
+            <div>
+              <Label htmlFor="defaultCancellationPolicy" className="text-white">Política de Cancelación por Defecto *</Label>
+              <Textarea
+                {...form.register("defaultCancellationPolicy")}
+                className="bg-white/10 border-white/30 text-white min-h-20"
+                placeholder="Ej: Cancelación gratuita hasta 24 horas antes. Cancelaciones tardías tienen un cargo del 50%."
+              />
+              {form.formState.errors.defaultCancellationPolicy && (
+                <p className="text-red-400 text-sm">{form.formState.errors.defaultCancellationPolicy.message}</p>
+              )}
+            </div>
+          </div>
+        );
+
+      case 7:
+        return (
+          <div className="space-y-4">
+            <div className="text-center mb-6">
+              <Clock className="w-16 h-16 text-green-400 mx-auto mb-4" />
+              <h2 className="text-2xl font-bold text-white">Horarios de Operación</h2>
+              <p className="text-white/70">Cuándo está disponible tu empresa</p>
+            </div>
+
+            {['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'].map((day) => {
+              const dayNames = {
+                monday: 'Lunes',
+                tuesday: 'Martes', 
+                wednesday: 'Miércoles',
+                thursday: 'Jueves',
+                friday: 'Viernes',
+                saturday: 'Sábado',
+                sunday: 'Domingo'
+              };
+
+              return (
+                <div key={day} className="bg-white/5 border border-white/20 rounded-lg p-4">
+                  <div className="flex items-center justify-between mb-3">
+                    <Label className="text-white font-semibold">{dayNames[day as keyof typeof dayNames]}</Label>
                     <div className="flex items-center space-x-2">
                       <Checkbox
                         id={`${day}-closed`}
-                        checked={form.watch(`operatingHours.${day}.closed` as any)}
-                        onCheckedChange={(checked) => {
-                          form.setValue(`operatingHours.${day}.closed` as any, !!checked);
-                        }}
+                        {...form.register(`operatingHours.${day}.closed` as any)}
                       />
-                      <Label htmlFor={`${day}-closed`} className="text-white/70 text-sm">Cerrado</Label>
+                      <Label htmlFor={`${day}-closed`} className="text-white text-sm">Cerrado</Label>
                     </div>
                   </div>
                   
                   {!form.watch(`operatingHours.${day}.closed` as any) && (
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-2 gap-3">
                       <div>
-                        <Label className="text-white/70 text-sm">Apertura</Label>
+                        <Label htmlFor={`${day}-open`} className="text-white text-sm">Apertura</Label>
                         <Input
-                          type="time"
                           {...form.register(`operatingHours.${day}.open` as any)}
+                          type="time"
                           className="bg-white/10 border-white/30 text-white"
                         />
                       </div>
                       <div>
-                        <Label className="text-white/70 text-sm">Cierre</Label>
+                        <Label htmlFor={`${day}-close`} className="text-white text-sm">Cierre</Label>
                         <Input
-                          type="time"
                           {...form.register(`operatingHours.${day}.close` as any)}
+                          type="time"
                           className="bg-white/10 border-white/30 text-white"
                         />
                       </div>
                     </div>
                   )}
                 </div>
-              ))}
-            </div>
+              );
+            })}
           </div>
         );
 
-      // Continue with remaining steps...
-      case 6:
+      case 8:
         return (
           <div className="space-y-4">
             <div className="text-center mb-6">
-              <FileText className="w-16 h-16 text-green-400 mx-auto mb-4" />
-              <h2 className="text-2xl font-bold text-white">Documentación Legal</h2>
-              <p className="text-white/70">Información legal y certificaciones</p>
+              <Shield className="w-16 h-16 text-green-400 mx-auto mb-4" />
+              <h2 className="text-2xl font-bold text-white">Certificaciones y Prácticas</h2>
+              <p className="text-white/70">Licencias, certificaciones y prácticas sostenibles</p>
             </div>
 
             <div>
-              <Label htmlFor="businessLicense" className="text-white">Registro Mercantil/Cámara de Comercio</Label>
+              <Label htmlFor="businessLicense" className="text-white">Número de Licencia Comercial (Opcional)</Label>
               <Input
                 {...form.register("businessLicense")}
                 className="bg-white/10 border-white/30 text-white"
-                placeholder="Número de registro"
+                placeholder="Ej: 12345678-9"
               />
             </div>
 
             <div>
-              <Label htmlFor="taxId" className="text-white">NIT/RUT</Label>
+              <Label htmlFor="taxId" className="text-white">NIT / Número de Identificación Tributaria (Opcional)</Label>
               <Input
                 {...form.register("taxId")}
                 className="bg-white/10 border-white/30 text-white"
-                placeholder="Número de identificación tributaria"
+                placeholder="Ej: 900123456-7"
               />
             </div>
 
             <div>
-              <Label className="text-white">Certificaciones y Reconocimientos</Label>
-              <div className="grid grid-cols-2 gap-2 mt-2">
+              <Label className="text-white">Certificaciones (selecciona las que apliquen)</Label>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mt-2">
                 {[
-                  "ISO 14001", "Rainforest Alliance", "Travelife", "Green Key",
-                  "Registro Nacional de Turismo", "Sello Ambiental Colombiano",
-                  "Certificación Icontec", "Fair Trade", "B Corp", "LEED"
+                  "ISO 14001", "ISO 9001", "Rainforest Alliance", "Fair Trade",
+                  "B Corp", "Green Key", "Certificación ICONTEC", "Sello Ambiental"
                 ].map((cert) => (
                   <div key={cert} className="flex items-center space-x-2">
                     <Checkbox
@@ -757,82 +1097,10 @@ const ComprehensiveCompanyRegistration = () => {
                 ))}
               </div>
             </div>
-          </div>
-        );
-
-      case 7:
-        return (
-          <div className="space-y-4">
-            <div className="text-center mb-6">
-              <Globe className="w-16 h-16 text-green-400 mx-auto mb-4" />
-              <h2 className="text-2xl font-bold text-white">Redes Sociales</h2>
-              <p className="text-white/70">Conecta tus perfiles sociales</p>
-            </div>
-
-            <div className="space-y-4">
-              <div>
-                <Label htmlFor="instagram" className="text-white flex items-center">
-                  <Instagram className="w-4 h-4 mr-2" />
-                  Instagram
-                </Label>
-                <Input
-                  {...form.register("socialMedia.instagram")}
-                  className="bg-white/10 border-white/30 text-white"
-                  placeholder="https://instagram.com/tuempresa"
-                />
-              </div>
-
-              <div>
-                <Label htmlFor="facebook" className="text-white flex items-center">
-                  <Facebook className="w-4 h-4 mr-2" />
-                  Facebook
-                </Label>
-                <Input
-                  {...form.register("socialMedia.facebook")}
-                  className="bg-white/10 border-white/30 text-white"
-                  placeholder="https://facebook.com/tuempresa"
-                />
-              </div>
-
-              <div>
-                <Label htmlFor="twitter" className="text-white flex items-center">
-                  <Twitter className="w-4 h-4 mr-2" />
-                  Twitter/X
-                </Label>
-                <Input
-                  {...form.register("socialMedia.twitter")}
-                  className="bg-white/10 border-white/30 text-white"
-                  placeholder="https://twitter.com/tuempresa"
-                />
-              </div>
-
-              <div>
-                <Label htmlFor="linkedin" className="text-white flex items-center">
-                  <Linkedin className="w-4 h-4 mr-2" />
-                  LinkedIn
-                </Label>
-                <Input
-                  {...form.register("socialMedia.linkedin")}
-                  className="bg-white/10 border-white/30 text-white"
-                  placeholder="https://linkedin.com/company/tuempresa"
-                />
-              </div>
-            </div>
-          </div>
-        );
-
-      case 8:
-        return (
-          <div className="space-y-4">
-            <div className="text-center mb-6">
-              <Heart className="w-16 h-16 text-green-400 mx-auto mb-4" />
-              <h2 className="text-2xl font-bold text-white">Sostenibilidad y Accesibilidad</h2>
-              <p className="text-white/70">Tus prácticas responsables</p>
-            </div>
 
             <div>
-              <Label className="text-white">Prácticas de Sostenibilidad</Label>
-              <div className="grid grid-cols-2 gap-2 mt-2">
+              <Label className="text-white">Prácticas de Sostenibilidad (selecciona las que apliquen)</Label>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mt-2">
                 {SUSTAINABILITY_PRACTICES.map((practice) => (
                   <div key={practice} className="flex items-center space-x-2">
                     <Checkbox
@@ -853,8 +1121,8 @@ const ComprehensiveCompanyRegistration = () => {
             </div>
 
             <div>
-              <Label className="text-white">Características de Accesibilidad</Label>
-              <div className="grid grid-cols-2 gap-2 mt-2">
+              <Label className="text-white">Características de Accesibilidad (selecciona las que apliquen)</Label>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mt-2">
                 {ACCESSIBILITY_FEATURES.map((feature) => (
                   <div key={feature} className="flex items-center space-x-2">
                     <Checkbox
@@ -875,13 +1143,12 @@ const ComprehensiveCompanyRegistration = () => {
             </div>
 
             <div>
-              <Label className="text-white">Idiomas de Atención * (selecciona múltiples)</Label>
-              <div className="grid grid-cols-2 gap-2 mt-2">
+              <Label className="text-white">Idiomas (selecciona los que manejas) *</Label>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mt-2">
                 {LANGUAGES.map((language) => (
                   <div key={language} className="flex items-center space-x-2">
                     <Checkbox
                       id={language}
-                      defaultChecked={language === "Español"}
                       onCheckedChange={(checked) => {
                         const current = form.getValues("languages");
                         if (checked) {
@@ -906,66 +1173,58 @@ const ComprehensiveCompanyRegistration = () => {
         return (
           <div className="space-y-4">
             <div className="text-center mb-6">
-              <Shield className="w-16 h-16 text-green-400 mx-auto mb-4" />
-              <h2 className="text-2xl font-bold text-white">Contacto de Emergencia</h2>
-              <p className="text-white/70">Persona de contacto en caso de emergencias</p>
+              <Globe className="w-16 h-16 text-green-400 mx-auto mb-4" />
+              <h2 className="text-2xl font-bold text-white">Redes Sociales</h2>
+              <p className="text-white/70">Conecta tus perfiles sociales (opcional)</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <Label htmlFor="emergencyName" className="text-white">Nombre Completo *</Label>
+                <Label htmlFor="instagram" className="text-white flex items-center">
+                  <Instagram className="w-4 h-4 mr-2" />
+                  Instagram
+                </Label>
                 <Input
-                  {...form.register("emergencyContact.name")}
+                  {...form.register("socialMedia.instagram")}
                   className="bg-white/10 border-white/30 text-white"
-                  placeholder="Nombre del contacto"
+                  placeholder="@tu_empresa"
                 />
-                {form.formState.errors.emergencyContact?.name && (
-                  <p className="text-red-400 text-sm">{form.formState.errors.emergencyContact.name.message}</p>
-                )}
               </div>
 
               <div>
-                <Label htmlFor="emergencyRelationship" className="text-white">Relación</Label>
-                <Select onValueChange={(value) => form.setValue("emergencyContact.relationship", value)}>
-                  <SelectTrigger className="bg-white/10 border-white/30 text-white">
-                    <SelectValue placeholder="Seleccionar relación" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="Familiar">Familiar</SelectItem>
-                    <SelectItem value="Socio">Socio/a</SelectItem>
-                    <SelectItem value="Empleado">Empleado/a</SelectItem>
-                    <SelectItem value="Consultor">Consultor/a</SelectItem>
-                    <SelectItem value="Abogado">Abogado/a</SelectItem>
-                    <SelectItem value="Contador">Contador/a</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <Label htmlFor="emergencyPhone" className="text-white">Teléfono *</Label>
+                <Label htmlFor="facebook" className="text-white flex items-center">
+                  <Facebook className="w-4 h-4 mr-2" />
+                  Facebook
+                </Label>
                 <Input
-                  {...form.register("emergencyContact.phone")}
+                  {...form.register("socialMedia.facebook")}
                   className="bg-white/10 border-white/30 text-white"
-                  placeholder="+57 300 123 4567"
+                  placeholder="Tu Empresa"
                 />
-                {form.formState.errors.emergencyContact?.phone && (
-                  <p className="text-red-400 text-sm">{form.formState.errors.emergencyContact.phone.message}</p>
-                )}
               </div>
 
               <div>
-                <Label htmlFor="emergencyEmail" className="text-white">Email *</Label>
+                <Label htmlFor="twitter" className="text-white flex items-center">
+                  <Twitter className="w-4 h-4 mr-2" />
+                  Twitter/X
+                </Label>
                 <Input
-                  {...form.register("emergencyContact.email")}
-                  type="email"
+                  {...form.register("socialMedia.twitter")}
                   className="bg-white/10 border-white/30 text-white"
-                  placeholder="contacto@email.com"
+                  placeholder="@tu_empresa"
                 />
-                {form.formState.errors.emergencyContact?.email && (
-                  <p className="text-red-400 text-sm">{form.formState.errors.emergencyContact.email.message}</p>
-                )}
+              </div>
+
+              <div>
+                <Label htmlFor="linkedin" className="text-white flex items-center">
+                  <Linkedin className="w-4 h-4 mr-2" />
+                  LinkedIn
+                </Label>
+                <Input
+                  {...form.register("socialMedia.linkedin")}
+                  className="bg-white/10 border-white/30 text-white"
+                  placeholder="linkedin.com/company/tu-empresa"
+                />
               </div>
             </div>
           </div>
@@ -973,58 +1232,100 @@ const ComprehensiveCompanyRegistration = () => {
 
       case 10:
         return (
-          <div className="space-y-6">
+          <div className="space-y-4">
             <div className="text-center mb-6">
               <CheckCircle className="w-16 h-16 text-green-400 mx-auto mb-4" />
-              <h2 className="text-2xl font-bold text-white">Confirmación Final</h2>
-              <p className="text-white/70">Revisa y confirma tu información</p>
+              <h2 className="text-2xl font-bold text-white">Configuración Final</h2>
+              <p className="text-white/70">Contacto de emergencia y confirmación</p>
             </div>
 
-            <div className="bg-white/5 border border-white/20 rounded-lg p-6 space-y-4">
-              <h3 className="text-xl font-semibold text-white">Resumen de Registro</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+            <div className="bg-green-500/20 border border-green-400/30 rounded-lg p-4">
+              <h3 className="text-green-400 font-bold mb-2">✅ Configuración Completa</h3>
+              <div className="space-y-1 text-sm text-white/90">
+                <p>• Perfil completo de empresa configurado</p>
+                <p>• Sistema de mensajería habilitado</p>
+                <p>• Tarjeta de contacto creada</p>
+                <p>• Ubicación en mapa configurada</p>
+                <p>• Configuración para crear experiencias lista</p>
+                <p>• Todas las funciones del portal activadas</p>
+              </div>
+            </div>
+
+            <div>
+              <Label className="text-white text-lg font-bold">Contacto de Emergencia</Label>
+              <p className="text-white/70 text-sm mb-3">Información de contacto de emergencia para tu empresa</p>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <p className="text-white/70">Empresa:</p>
-                  <p className="text-white font-semibold">{form.watch("companyName")}</p>
+                  <Label htmlFor="emergencyContact.name" className="text-white">Nombre Completo *</Label>
+                  <Input
+                    {...form.register("emergencyContact.name")}
+                    className="bg-white/10 border-white/30 text-white"
+                    placeholder="Nombre del contacto"
+                  />
+                  {form.formState.errors.emergencyContact?.name && (
+                    <p className="text-red-400 text-sm">{form.formState.errors.emergencyContact.name.message}</p>
+                  )}
                 </div>
+
                 <div>
-                  <p className="text-white/70">Categoría:</p>
-                  <p className="text-white font-semibold">{form.watch("companyCategory")}</p>
+                  <Label htmlFor="emergencyContact.phone" className="text-white">Teléfono *</Label>
+                  <Input
+                    {...form.register("emergencyContact.phone")}
+                    className="bg-white/10 border-white/30 text-white"
+                    placeholder="+57 300 123 4567"
+                  />
+                  {form.formState.errors.emergencyContact?.phone && (
+                    <p className="text-red-400 text-sm">{form.formState.errors.emergencyContact.phone.message}</p>
+                  )}
                 </div>
+
                 <div>
-                  <p className="text-white/70">Email:</p>
-                  <p className="text-white font-semibold">{form.watch("email")}</p>
+                  <Label htmlFor="emergencyContact.email" className="text-white">Email *</Label>
+                  <Input
+                    {...form.register("emergencyContact.email")}
+                    type="email"
+                    className="bg-white/10 border-white/30 text-white"
+                    placeholder="contacto@empresa.com"
+                  />
+                  {form.formState.errors.emergencyContact?.email && (
+                    <p className="text-red-400 text-sm">{form.formState.errors.emergencyContact.email.message}</p>
+                  )}
                 </div>
+
                 <div>
-                  <p className="text-white/70">Ciudad:</p>
-                  <p className="text-white font-semibold">{form.watch("city")}</p>
+                  <Label htmlFor="emergencyContact.relationship" className="text-white">Relación</Label>
+                  <Select onValueChange={(value) => form.setValue("emergencyContact.relationship", value)}>
+                    <SelectTrigger className="bg-white/10 border-white/30 text-white">
+                      <SelectValue placeholder="Seleccionar relación" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Socio">Socio</SelectItem>
+                      <SelectItem value="Familiar">Familiar</SelectItem>
+                      <SelectItem value="Gerente">Gerente</SelectItem>
+                      <SelectItem value="Contador">Contador</SelectItem>
+                      <SelectItem value="Abogado">Abogado</SelectItem>
+                      <SelectItem value="Otro">Otro</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
               </div>
             </div>
 
-            <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
-              <h4 className="text-green-300 font-semibold mb-2">Qué sucederá después:</h4>
-              <ul className="text-white/80 text-sm space-y-1">
-                <li>• Recibirás un email de verificación</li>
-                <li>• Debes hacer clic en el enlace para activar tu cuenta</li>
-                <li>• Una vez verificado, tendrás acceso completo al Portal Empresas</li>
-                <li>• Podrás crear experiencias, conectar con empresarios y aparecer en el directorio</li>
-              </ul>
+            <div className="mt-6">
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id="acceptTerms"
+                  {...form.register("acceptTerms")}
+                />
+                <Label htmlFor="acceptTerms" className="text-white">
+                  Acepto los términos y condiciones de uso de Festival NATUR
+                </Label>
+              </div>
+              {form.formState.errors.acceptTerms && (
+                <p className="text-red-400 text-sm">{form.formState.errors.acceptTerms.message}</p>
+              )}
             </div>
-
-            <div className="flex items-center space-x-2">
-              <Checkbox
-                id="acceptTerms"
-                {...form.register("acceptTerms")}
-                required
-              />
-              <Label htmlFor="acceptTerms" className="text-white text-sm">
-                Acepto los términos y condiciones de Festival NATUR *
-              </Label>
-            </div>
-            {form.formState.errors.acceptTerms && (
-              <p className="text-red-400 text-sm">{form.formState.errors.acceptTerms.message}</p>
-            )}
           </div>
         );
 
@@ -1034,85 +1335,86 @@ const ComprehensiveCompanyRegistration = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-green-900">
-      <HeaderButtons showPortalButtons={true} />
+    <div className="min-h-screen bg-gradient-to-br from-green-900 via-green-800 to-green-700 py-8">
+      <HeaderButtons />
       
-      <div className="container mx-auto px-4 py-8">
-        <div className="max-w-4xl mx-auto">
-          {/* Header */}
-          <div className="text-center mb-8">
-            <h1 className="text-4xl font-gasoek text-green-400 mb-2 uppercase tracking-wider">
-              NATUR
-            </h1>
-            <p className="text-white text-lg">
-              Registro Completo de Empresa
+      <div className="container mx-auto px-4 max-w-4xl">
+        <Card className="bg-black/20 backdrop-blur-sm border-white/10">
+          <CardHeader className="text-center">
+            <CardTitle className="text-3xl font-bold text-white mb-2">
+              Configuración Completa ANTES del Login
+            </CardTitle>
+            <p className="text-white/70">
+              Festival NATUR 2025 - Configura TODAS las funciones antes de acceder al portal
             </p>
-            <p className="text-white/60 text-sm mt-2">
-              Información integral para acceder al Portal Empresas
-            </p>
-          </div>
-
-          {/* Progress Bar */}
-          <div className="mb-8">
-            <div className="flex justify-between items-center mb-2">
-              <span className="text-white/70 text-sm">Paso {currentStep} de {totalSteps}</span>
-              <span className="text-white/70 text-sm">{Math.round(progress)}%</span>
+            
+            <div className="mt-4 bg-blue-500/20 border border-blue-400/30 rounded-lg p-3">
+              <p className="text-blue-400 text-sm font-medium">
+                🚀 Este proceso configura: Perfil • Mensajería • Contacto • Experiencias • Mapa
+              </p>
             </div>
-            <Progress value={progress} className="h-2 bg-white/20" />
-          </div>
+            
+            <div className="mt-6">
+              <Progress value={progress} className="h-2" />
+              <p className="text-white/60 text-sm mt-2">
+                Paso {currentStep} de {totalSteps} - Configuración ANTES del login
+              </p>
+            </div>
+            
+            {/* Test data button for developers */}
+            <div className="mt-4">
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={fillDahubTestData}
+                className="bg-yellow-500/20 border-yellow-400/30 text-yellow-400 hover:bg-yellow-500/30"
+              >
+                🔧 Cargar Datos de Prueba (DaHub)
+              </Button>
+            </div>
+          </CardHeader>
 
-          {/* Form */}
-          <Card className="bg-white/10 backdrop-blur-sm border-white/20">
-            <CardContent className="p-8">
-              <form onSubmit={form.handleSubmit(onSubmit)}>
-                {renderStep()}
-                
-                {/* Navigation Buttons */}
-                <div className="flex justify-between mt-8">
+          <CardContent className="p-6">
+            <form onSubmit={form.handleSubmit(onSubmit)}>
+              {renderStep()}
+              
+              <div className="flex justify-between mt-8">
+                {currentStep > 1 && (
                   <Button
                     type="button"
                     variant="outline"
                     onClick={prevStep}
-                    disabled={currentStep === 1}
-                    className="text-white border-white/30 hover:bg-white/10"
+                    className="bg-white/10 border-white/30 text-white hover:bg-white/20"
                   >
                     <ArrowLeft className="w-4 h-4 mr-2" />
                     Anterior
                   </Button>
-                  
-                  {currentStep < totalSteps ? (
-                    <Button
-                      type="button"
-                      onClick={nextStep}
-                      className="bg-green-400 hover:bg-green-500 text-black"
-                    >
-                      Siguiente
-                      <ArrowRight className="w-4 h-4 ml-2" />
-                    </Button>
-                  ) : (
-                    <Button
-                      type="submit"
-                      disabled={registerMutation.isPending}
-                      className="bg-green-400 hover:bg-green-500 text-black"
-                    >
-                      {registerMutation.isPending ? (
-                        <>
-                          <div className="w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin mr-2"></div>
-                          Registrando...
-                        </>
-                      ) : (
-                        <>
-                          <CheckCircle className="w-4 h-4 mr-2" />
-                          Completar Registro
-                        </>
-                      )}
-                    </Button>
-                  )}
-                </div>
-              </form>
-            </CardContent>
-          </Card>
-        </div>
+                )}
+                
+                {currentStep < totalSteps ? (
+                  <Button
+                    type="button"
+                    onClick={nextStep}
+                    className="bg-green-600 hover:bg-green-700 text-white ml-auto"
+                  >
+                    Siguiente
+                    <ArrowRight className="w-4 h-4 ml-2" />
+                  </Button>
+                ) : (
+                  <Button
+                    type="submit"
+                    disabled={registerMutation.isPending}
+                    className="bg-green-600 hover:bg-green-700 text-white ml-auto"
+                  >
+                    {registerMutation.isPending ? "Activando Portal..." : "🚀 Activar Portal Completo"}
+                    <CheckCircle className="w-4 h-4 ml-2" />
+                  </Button>
+                )}
+              </div>
+            </form>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );
