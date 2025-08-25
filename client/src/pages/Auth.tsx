@@ -13,6 +13,92 @@ import { GoogleAuthButton } from "@/components/GoogleAuthButton";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronRight, ChevronLeft, Upload, MapPin, Building, User, Camera, Check, ArrowLeft, Mail, Briefcase, Clock, Languages, Shield, Building2 } from "lucide-react";
 
+// Company categories with comprehensive subcategories
+const companyCategories = {
+  "Agencias u Operadores Turísticos": [
+    "Agencia de Viajes Minorista",
+    "Agencia de Viajes Mayorista", 
+    "Operador Turístico Receptivo",
+    "Operador Turístico Emisivo",
+    "Turismo de Aventura",
+    "Ecoturismo y Turismo de Naturaleza",
+    "Turismo Cultural y Patrimonial",
+    "Turismo Rural y Agroturismo",
+    "Turismo de Bienestar y Salud",
+    "Turismo Educativo",
+    "Turismo Corporativo y de Incentivos",
+    "Turismo Gastronómico",
+    "Turismo Deportivo",
+    "Turismo Científico"
+  ],
+  "Alojamientos Sostenibles": [
+    "Ecolodges y Hoteles Ecológicos",
+    "Cabañas y Glamping Sostenible",
+    "Hostales Verdes",
+    "Casas Rurales Sostenibles",
+    "Hoteles Boutique Ecológicos",
+    "Resorts Sostenibles",
+    "Albergues Ecológicos",
+    "Camping Ecológico"
+  ],
+  "Gastronomía Sostenible": [
+    "Restaurantes Farm-to-Table",
+    "Cocina Local y Regional",
+    "Restaurantes Orgánicos",
+    "Food Trucks Sostenibles",
+    "Bares y Cafeterías Verdes",
+    "Experiencias Gastronómicas",
+    "Productos Artesanales",
+    "Mercados Locales"
+  ],
+  "Movilidad y Transporte Ecológico": [
+    "Transporte Eléctrico",
+    "Bicicletas y E-bikes",
+    "Transporte Público Sostenible",
+    "Car Sharing Verde",
+    "Transporte Fluvial Ecológico",
+    "Senderismo y Trekking",
+    "Transporte en Vehículos Híbridos"
+  ],
+  "ONG y Fundaciones": [
+    "Conservación Ambiental",
+    "Educación Ambiental",
+    "Desarrollo Comunitario",
+    "Investigación Científica",
+    "Protección de Fauna",
+    "Reforestación",
+    "Gestión de Residuos",
+    "Energías Renovables"
+  ],
+  "Educación y Sensibilización Ambiental": [
+    "Centros de Interpretación",
+    "Programas Educativos",
+    "Talleres Ambientales",
+    "Investigación Aplicada",
+    "Capacitación Empresarial",
+    "Educación Infantil Ambiental",
+    "Formación Profesional Verde"
+  ],
+  "Tecnología para el Turismo Sostenible": [
+    "Plataformas Digitales",
+    "Apps de Turismo Verde",
+    "Sistemas de Gestión Ambiental",
+    "IoT para Turismo",
+    "Inteligencia Artificial",
+    "Realidad Virtual/Aumentada",
+    "Blockchain para Turismo"
+  ],
+  "Aliados y Patrocinadores": [
+    "Instituciones Financieras Verdes",
+    "Empresas de Tecnología Sostenible",
+    "Medios de Comunicación",
+    "Organismos Internacionales",
+    "Gobierno y Entes Reguladores",
+    "Universidades e Instituciones Académicas",
+    "Certificadoras Ambientales"
+  ]
+};
+
 const Auth = () => {
   const [location] = useLocation();
   const { toast } = useToast();
@@ -22,14 +108,26 @@ const Auth = () => {
   useEffect(() => {
     const handleError = (event: ErrorEvent) => {
       if (event.message.includes('ResizeObserver loop completed')) {
+        event.stopImmediatePropagation();
         event.preventDefault();
         return true;
       }
       return false;
     };
+
+    const handleUnhandledRejection = (event: PromiseRejectionEvent) => {
+      if (event.reason && event.reason.message && event.reason.message.includes('ResizeObserver loop completed')) {
+        event.preventDefault();
+        return true;
+      }
+    };
     
     window.addEventListener('error', handleError);
-    return () => window.removeEventListener('error', handleError);
+    window.addEventListener('unhandledrejection', handleUnhandledRejection);
+    return () => {
+      window.removeEventListener('error', handleError);
+      window.removeEventListener('unhandledrejection', handleUnhandledRejection);
+    };
   }, []);
   
   // Determine if this is empresas or consentidos based on URL
