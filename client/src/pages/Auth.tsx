@@ -409,53 +409,53 @@ const Auth = () => {
     if (!isEmpresas) return;
     
     setRegistrationData({
-      firstName: "Sofia",
-      lastName: "Mendoza",
+      firstName: "Alejandro",
+      lastName: "Torres",
       email: "nicolasdominguez2603@gmail.com",
       password: "test123456",
       confirmPassword: "test123456",
-      phone: "+57 310 234 5678",
-      companyName: "Sabor Andino Sostenible",
-      businessType: "Gastronomía",
-      companyCategory: "Gastronomía Sostenible",
-      companySubcategory: "Restaurante Km 0",
-      companyDescription: "Restaurante de cocina ancestral colombiana con ingredientes locales y prácticas sostenibles. Rescatamos sabores tradicionales mientras apoyamos a productores locales y promovemos la agricultura regenerativa.",
-      yearsExperience: "6",
-      teamSize: "18",
-      address: "Calle 70 #11-45, La Macarena",
-      city: "Bogotá",
+      phone: "+57 318 765 4321",
+      companyName: "Verde Canopy Lodge",
+      businessType: "Alojamiento",
+      companyCategory: "Alojamientos Sostenibles",
+      companySubcategory: "Eco-Lodge de Lujo",
+      companyDescription: "Eco-lodge de lujo ubicado en plena Amazonia colombiana, ofrecemos una experiencia inmersiva en la naturaleza con el máximo confort y respeto ambiental. Nuestras cabañas elevadas permiten observar la vida silvestre mientras disfrutas de servicios de clase mundial.",
+      yearsExperience: "12",
+      teamSize: "35",
+      address: "Km 15 Vía Leticia - Puerto Nariño",
+      city: "Leticia",
       country: "Colombia",
-      website: "https://saborandinosost.com",
-      coordinates: { lat: 4.6533, lng: -74.0648 },
+      website: "https://verdecanopylodge.com",
+      coordinates: { lat: -4.2153, lng: -69.9406 },
       profilePicture: "",
-      bio: "Sabor Andino Sostenible rescata los sabores ancestrales colombianos con un enfoque 100% sostenible. Trabajamos directamente con productores locales, campesinos y comunidades indígenas para traer a tu mesa ingredientes frescos, orgánicos y de comercio justo. Cada plato cuenta una historia de tradición, innovación y respeto por la tierra.",
-      servicesOffered: ["Cocina ancestral", "Menús estacionales", "Cenas temáticas", "Talleres gastronómicos", "Catering sostenible"],
-      targetMarket: "Food lovers, turistas gastronómicos, familias conscientes, eventos corporativos",
+      bio: "Verde Canopy Lodge es un refugio de lujo sostenible en el corazón de la Amazonia colombiana. Nuestras cabañas elevadas ofrecen vistas espectaculares del dosel amazónico mientras respetamos completamente el ecosistema. Trabajamos con comunidades indígenas locales para brindar experiencias auténticas de conexión con la naturaleza.",
+      servicesOffered: ["Alojamiento de lujo", "Tours de observación de fauna", "Experiencias culturales indígenas", "Canopy tours", "Spa natural"],
+      targetMarket: "Ecoturistas de lujo, biólogos, fotógrafos de naturaleza, viajeros conscientes",
       operatingHours: {},
-      certifications: ["Comercio Justo Fairtrade", "Orgánico Certificado", "Km 0 Colombia"],
-      sustainabilityPractices: ["Zero waste", "Compostaje orgánico", "Energía solar", "Agricultura regenerativa"],
-      accessibilityFeatures: ["Acceso para sillas de ruedas", "Menús en braille", "Espacios adaptados"],
+      certifications: ["Green Globe Certified", "Rainforest Alliance", "IUCN Protected Area"],
+      sustainabilityPractices: ["Energía 100% solar", "Captación de agua lluvia", "Arquitectura sostenible", "Conservación de biodiversidad"],
+      accessibilityFeatures: ["Senderos adaptados", "Cabañas accesibles", "Guías especializados"],
       socialMedia: {},
-      linkedinUrl: "https://linkedin.com/company/sabor-andino-sostenible",
-      facebookUrl: "https://facebook.com/saborandinosost",
-      instagramUrl: "https://instagram.com/saborandinosost",
-      twitterUrl: "https://twitter.com/saborandino",
+      linkedinUrl: "https://linkedin.com/company/verde-canopy-lodge",
+      facebookUrl: "https://facebook.com/verdecanopylodge",
+      instagramUrl: "https://instagram.com/verdecanopylodge",
+      twitterUrl: "https://twitter.com/verdecanopy",
       emergencyContact: {
-        name: "Carlos Rojas",
-        phone: "+57 315 678 9012",
-        email: "gerencia@saborandinosost.com",
-        relationship: "Gerente General"
+        name: "Diana Aguilar",
+        phone: "+57 320 123 4567",
+        email: "emergencias@verdecanopylodge.com",
+        relationship: "Coordinadora de Operaciones"
       },
       messagingEnabled: true,
-      messagingBio: "¡Hola! Somos Sabor Andino Sostenible. Estamos aquí para llevarte en un viaje gastronómico por los sabores ancestrales de Colombia. Conectemos a través de la comida, las tradiciones y el amor por nuestra tierra.",
+      messagingBio: "¡Hola! Somos Verde Canopy Lodge. Estamos aquí para ofrecerte una experiencia única en la Amazonia colombiana, donde el lujo se encuentra con la naturaleza. Conectemos con la biodiversidad más rica del planeta.",
       acceptsInquiries: true,
       responseTimeHours: 12,
       experienceSetupComplete: true,
-      defaultExperienceCategory: "gastronomia",
-      defaultMeetingPoint: "Restaurante Sabor Andino - Calle 70 #11-45",
-      defaultCancellationPolicy: "Cancelación gratuita hasta 24 horas antes de la reserva. Modificaciones sin costo hasta 4 horas antes del servicio.",
-      businessLicense: "GAS-2023-345678",
-      taxId: "900345678-2",
+      defaultExperienceCategory: "ecoturismo",
+      defaultMeetingPoint: "Verde Canopy Lodge - Recepción Principal",
+      defaultCancellationPolicy: "Cancelación gratuita hasta 7 días antes del check-in. Modificaciones sin costo hasta 48 horas antes de la llegada.",
+      businessLicense: "HOT-2023-789012",
+      taxId: "900789012-4",
       languages: ["Español", "Inglés", "Portugués"],
       acceptTerms: true,
       paymentMethods: ["transferencia", "tarjeta"],
@@ -473,7 +473,7 @@ const Auth = () => {
     
     toast({
       title: "Datos de prueba cargados",
-      description: "Se han cargado los datos completos de Sabor Andino Sostenible",
+      description: "Se han cargado los datos completos de Verde Canopy Lodge",
     });
   };
 
@@ -1569,7 +1569,7 @@ const Auth = () => {
                               onClick={() => loadTestData()}
                               className="text-xs"
                             >
-                              🍽️ Cargar Datos de Prueba (Restaurante)
+                              🌿 Cargar Datos de Prueba (Eco-Lodge)
                             </Button>
                           </div>
                         </>
