@@ -90,6 +90,40 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Email verification endpoint
+  app.get("/api/auth/verify-email", async (req, res) => {
+    try {
+      const { token } = req.query;
+      
+      if (!token) {
+        return res.status(400).json({ error: "Verification token is required" });
+      }
+      
+      const user = await storage.getUserByVerificationToken(token as string);
+      
+      if (!user) {
+        return res.status(400).json({ error: "Invalid or expired verification token" });
+      }
+      
+      // Update user email verification status
+      await storage.verifyUserEmail(user.id);
+      
+      console.log(`✅ Email verified for user: ${user.email}`);
+      
+      res.json({ 
+        message: "Email verified successfully! You can now access all portal features.",
+        user: {
+          id: user.id,
+          email: user.email,
+          emailVerified: true
+        }
+      });
+    } catch (error) {
+      console.error("Email verification error:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+
   app.post("/api/auth/login", async (req, res) => {
     try {
       const { email, password } = req.body;
@@ -222,7 +256,35 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ error: "User already exists" });
       }
 
+      // Generate verification token for email verification
+      const verificationToken = crypto.randomBytes(32).toString('hex');
+      userData.emailVerificationToken = verificationToken;
+      userData.emailVerified = false;
+
       const user = await storage.createUser(userData);
+      
+      // Send verification email for empresa users
+      if (role === 'empresa' && userData.companyName) {
+        try {
+          const emailSent = await sendVerificationEmail(
+            userData.email,
+            `${userData.firstName} ${userData.lastName}`,
+            userData.companyName,
+            verificationToken
+          );
+          console.log(`📧 Verification email sent: ${emailSent ? 'Success' : 'Failed'}`);
+          
+          // Send admin notification
+          await sendAdminNotification(
+            `${userData.firstName} ${userData.lastName}`,
+            userData.companyName,
+            userData.email,
+            userData.companyCategory || 'Sin categoría'
+          );
+        } catch (emailError) {
+          console.error("Email sending error:", emailError);
+        }
+      }
       
       // For empresa users, create company profile automatically to activate all portal features
       if (role === 'empresa') {
@@ -276,7 +338,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           verificationLevel: user.verificationLevel
         },
         message: role === 'empresa' 
-          ? 'Registro empresarial completo. Todas las funcionalidades del portal han sido activadas.'
+          ? 'Registro empresarial completo. Por favor verifica tu email para activar todas las funcionalidades.'
           : 'Registro exitoso. ¡Bienvenido a NATUR!'
       });
     } catch (error) {

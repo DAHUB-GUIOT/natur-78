@@ -9,6 +9,7 @@ export interface IStorage {
   getUser(id: number): Promise<User | undefined>;
   getUserByEmail(email: string): Promise<User | undefined>;
   getUserByVerificationToken(token: string): Promise<User | undefined>;
+  verifyUserEmail(userId: number): Promise<User>;
   getUserByGoogleId(googleId: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
   createGoogleUser(userData: any): Promise<User>;
@@ -73,8 +74,25 @@ export class MemStorage implements IStorage {
 
   async getUserByVerificationToken(token: string): Promise<User | undefined> {
     return Array.from(this.users.values()).find(
-      (user) => user.verificationToken === token,
+      (user) => user.emailVerificationToken === token,
     );
+  }
+
+  async verifyUserEmail(userId: number): Promise<User> {
+    const user = this.users.get(userId);
+    if (!user) {
+      throw new Error('User not found');
+    }
+    
+    const updatedUser = {
+      ...user,
+      emailVerified: true,
+      emailVerificationToken: null,
+      updatedAt: new Date()
+    };
+    
+    this.users.set(userId, updatedUser);
+    return updatedUser;
   }
 
   async getUserByGoogleId(googleId: string): Promise<User | undefined> {
@@ -501,7 +519,25 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getUserByVerificationToken(token: string): Promise<User | undefined> {
-    const result = await db.select().from(users).where(eq(users.verificationToken, token)).limit(1);
+    const result = await db.select().from(users).where(eq(users.emailVerificationToken, token)).limit(1);
+    return result[0];
+  }
+
+  async verifyUserEmail(userId: number): Promise<User> {
+    const result = await db
+      .update(users)
+      .set({ 
+        emailVerified: true, 
+        emailVerificationToken: null,
+        updatedAt: new Date()
+      })
+      .where(eq(users.id, userId))
+      .returning();
+    
+    if (result.length === 0) {
+      throw new Error('User not found');
+    }
+    
     return result[0];
   }
 
