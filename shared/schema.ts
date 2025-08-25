@@ -92,6 +92,10 @@ export const users = pgTable("users", {
   defaultCancellationPolicy: text("default_cancellation_policy"),
   // Verification levels
   verificationLevel: text("verification_level").default("basic"), // basic, verified, certified, premium
+  
+  // Complete registration fields
+  acceptTerms: boolean("accept_terms").default(false),
+  
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
