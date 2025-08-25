@@ -4,6 +4,10 @@ if (!process.env.SENDGRID_API_KEY) {
   throw new Error("SENDGRID_API_KEY environment variable must be set");
 }
 
+if (!process.env.SENDGRID_FROM_EMAIL) {
+  throw new Error("SENDGRID_FROM_EMAIL environment variable must be set");
+}
+
 const mailService = new MailService();
 mailService.setApiKey(process.env.SENDGRID_API_KEY!);
 
@@ -105,7 +109,7 @@ export async function sendVerificationEmail(
 
   return await sendEmail({
     to: userEmail,
-    from: 'festivalnatur@gmail.com', // Cambiar por tu email verificado en SendGrid
+    from: process.env.SENDGRID_FROM_EMAIL!,
     subject: 'Verifica tu email - Festival NATUR',
     html: htmlContent,
     text: `Hola ${userName}, gracias por registrar ${companyName} en Festival NATUR. Para verificar tu email, visita: ${verificationUrl}`
@@ -162,8 +166,8 @@ export async function sendAdminNotification(
   `;
 
   return await sendEmail({
-    to: 'festivalnatur@gmail.com',
-    from: 'festivalnatur@gmail.com', // Cambiar por tu email verificado en SendGrid
+    to: process.env.SENDGRID_FROM_EMAIL!,
+    from: process.env.SENDGRID_FROM_EMAIL!,
     subject: `Nueva empresa registrada: ${companyName}`,
     html: htmlContent,
     text: `Nueva empresa registrada: ${companyName} por ${userName} (${userEmail}) en categoría ${companyCategory}`
