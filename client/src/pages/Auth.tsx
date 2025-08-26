@@ -104,74 +104,74 @@ const Auth = () => {
   const { toast } = useToast();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // Función para autocompletar con datos de prueba en Medellín
+  // Función para autocompletar con datos de prueba en Santander
   const fillEcoToursTestData = () => {
     setRegistrationData({
-      firstName: "Nicolás",
-      lastName: "Domínguez",
-      email: "nicolasdominguez2603@gmail.com",
-      password: "natur123456",
-      confirmPassword: "natur123456",
-      phone: "+57 4 312 5689",
-      companyName: "EcoAventuras Antioquia",
+      firstName: "María Fernanda",
+      lastName: "García",
+      email: "festivalnatur2025@gmail.com",
+      password: "festivalnatur123",
+      confirmPassword: "festivalnatur123",
+      phone: "+57 7 645 8923",
+      companyName: "Senderos del Chicamocha",
       businessType: "SAS",
       companyCategory: "Agencias u Operadores Turísticos",
-      companySubcategory: "Ecoturismo y Turismo de Naturaleza",
-      companyDescription: "Operador turístico especializado en aventuras sostenibles en Antioquia. Conectamos a los viajeros con la rica biodiversidad de la región paisa a través de experiencias auténticas que promueven la conservación y el desarrollo de las comunidades locales.",
-      yearsExperience: "8",
-      teamSize: "15",
-      address: "Carrera 70 #45-32, Laureles",
-      city: "Medellín",
+      companySubcategory: "Turismo de Aventura",
+      companyDescription: "Operador turístico especializado en aventuras extremas y ecoturismo en el Cañón del Chicamocha y la cordillera Oriental. Ofrecemos experiencias únicas de parapente, rafting, rappel y senderismo en uno de los paisajes más espectaculares de Colombia, promoviendo el turismo sostenible y el desarrollo de las comunidades locales santandereanas.",
+      yearsExperience: "10",
+      teamSize: "22",
+      address: "Calle 35 #16-42, Cabecera del Llano",
+      city: "Bucaramanga",
       country: "Colombia",
-      website: "www.ecoaventurasantioquia.co",
-      coordinates: { lat: 6.2476, lng: -75.5658 },
+      website: "www.senderosdelchicamocha.co",
+      coordinates: { lat: 7.1194, lng: -73.1227 },
       profilePicture: "",
-      bio: "Empresa antioqueña dedicada al ecoturismo y aventuras sostenibles. Con 8 años de experiencia explorando los tesoros naturales de Antioquia, ofrecemos tours que combinan adrenalina, educación ambiental y apoyo a las comunidades rurales. Nuestro equipo de guías locales certificados garantiza experiencias seguras e inolvidables.",
-      servicesOffered: ["Senderismo ecológico", "Canopy y tirolesas", "Avistamiento de aves", "Tours de café sostenible", "Rafting responsable", "Turismo rural comunitario"] as string[],
-      targetMarket: "Aventureros nacionales e internacionales, familias, grupos corporativos",
+      bio: "Empresa santandereana líder en turismo de aventura con más de una década conectando viajeros con la majestuosidad del Cañón del Chicamocha. Nuestro equipo de guías certificados en deportes extremos y ecoturismo garantiza experiencias seguras e inolvidables mientras promovemos la conservación del patrimonio natural de Santander.",
+      servicesOffered: ["Parapente en el Chicamocha", "Rafting en río Fonce", "Rappel y escalada", "Senderismo ecológico", "Tours fotográficos", "Espeleología", "Ciclomontañismo"] as string[],
+      targetMarket: "Aventureros extremos, fotógrafos de naturaleza, grupos familiares, turistas internacionales",
       operatingHours: {
-        "lunes": "7:00 AM - 6:00 PM",
-        "martes": "7:00 AM - 6:00 PM", 
-        "miercoles": "7:00 AM - 6:00 PM",
-        "jueves": "7:00 AM - 6:00 PM",
-        "viernes": "7:00 AM - 6:00 PM",
-        "sabado": "6:00 AM - 7:00 PM",
-        "domingo": "7:00 AM - 5:00 PM"
+        "lunes": "6:00 AM - 6:00 PM",
+        "martes": "6:00 AM - 6:00 PM", 
+        "miercoles": "6:00 AM - 6:00 PM",
+        "jueves": "6:00 AM - 6:00 PM",
+        "viernes": "6:00 AM - 6:00 PM",
+        "sabado": "5:00 AM - 7:00 PM",
+        "domingo": "5:00 AM - 7:00 PM"
       },
-      certifications: ["RNT - Registro Nacional de Turismo", "Certificación de Turismo Sostenible Colombia", "ISO 14001:2015 Gestión Ambiental"] as string[],
-      sustainabilityPractices: ["Apoyo a economías locales", "Reforestación con especies nativas", "Manejo responsable de residuos", "Energías limpias", "Educación ambiental", "Comercio justo con comunidades"] as string[],
-      accessibilityFeatures: ["Rutas adaptadas para diferentes niveles físicos", "Equipos de seguridad certificados", "Guías especializados", "Transporte cómodo"] as string[],
+      certifications: ["RNT - Registro Nacional de Turismo", "Certificación IRATA para trabajos en altura", "Norma NTC-ISO 21101 Turismo de Aventura", "Certificación de Guías Especializados SENA"] as string[],
+      sustainabilityPractices: ["Conservación del Cañón del Chicamocha", "Apoyo a artesanos locales", "Uso de equipos ecológicos", "Programas de reforestación", "Educación ambiental a turistas", "Comercio justo con comunidades"] as string[],
+      accessibilityFeatures: ["Tours adaptados según nivel de experiencia", "Equipos de seguridad de última generación", "Guías especializados bilingües", "Transporte 4x4 especializado"] as string[],
       socialMedia: {
-        instagram: "@ecoaventuras_antioquia",
-        linkedin: "linkedin.com/company/ecoaventuras-antioquia",
-        twitter: "@ecoaventuras_ant",
-        facebook: "EcoAventuras Antioquia"
+        instagram: "@senderos_chicamocha",
+        linkedin: "linkedin.com/company/senderos-del-chicamocha",
+        twitter: "@senderosChica",
+        facebook: "Senderos del Chicamocha"
       },
-      linkedinUrl: "https://linkedin.com/company/ecoaventuras-antioquia",
-      facebookUrl: "https://facebook.com/ecoaventuras-antioquia",
-      instagramUrl: "https://instagram.com/ecoaventuras_antioquia",
-      twitterUrl: "https://twitter.com/ecoaventuras_ant",
+      linkedinUrl: "https://linkedin.com/company/senderos-del-chicamocha",
+      facebookUrl: "https://facebook.com/senderos-chicamocha",
+      instagramUrl: "https://instagram.com/senderos_chicamocha",
+      twitterUrl: "https://twitter.com/senderosChica",
       emergencyContact: {
-        name: "Carlos Andrés Ruiz",
-        phone: "+57 314 567 8901",
-        email: "emergencias@ecoaventurasantioquia.co",
-        relationship: "Coordinador de Seguridad y Operaciones"
+        name: "Jorge Alberto Peña",
+        phone: "+57 311 789 4567",
+        email: "emergencias@senderosdelchicamocha.co",
+        relationship: "Coordinador de Seguridad y Rescate"
       },
       messagingEnabled: true,
-      messagingBio: "¡Hola! Soy Nicolás de EcoAventuras Antioquia. Estoy aquí para ayudarte a descubrir los paisajes más hermosos de nuestra bella Antioquia de forma sostenible y segura. ¡Escríbeme para planear tu próxima aventura!",
+      messagingBio: "¡Hola! Soy María Fernanda de Senderos del Chicamocha. Especialista en turismo de aventura con más de 10 años de experiencia. Estoy aquí para ayudarte a vivir la adrenalina del Cañón del Chicamocha de forma segura y sostenible. ¡Contáctame para tu próxima aventura extrema!",
       acceptsInquiries: true,
-      responseTimeHours: 6,
+      responseTimeHours: 4,
       experienceSetupComplete: true,
-      defaultExperienceCategory: "Ecoturismo y Turismo de Naturaleza",
-      defaultMeetingPoint: "Estación Metro San Antonio, Centro de Medellín",
-      defaultCancellationPolicy: "Cancelación gratuita hasta 72 horas antes del tour. Cancelaciones entre 24-72 horas tienen cargo del 30%. Menos de 24 horas: 50% de cargo.",
-      businessLicense: "RNT-67890-2024",
-      taxId: "900987654-3",
-      languages: ["Español", "Inglés", "Portugués básico"] as string[],
+      defaultExperienceCategory: "Turismo de Aventura",
+      defaultMeetingPoint: "Terminal de Transportes de Bucaramanga",
+      defaultCancellationPolicy: "Cancelación gratuita hasta 48 horas antes. Entre 24-48 horas: cargo del 40%. Menos de 24 horas: cargo del 60%. No hay reembolsos por condiciones climáticas adversas.",
+      businessLicense: "RNT-45678-2024",
+      taxId: "900456789-2",
+      languages: ["Español", "Inglés", "Alemán básico"] as string[],
       acceptTerms: false,
-      paymentMethods: ["Efectivo", "Tarjetas de crédito/débito", "Nequi", "Daviplata", "PSE"] as string[],
-      invoiceEmail: "contabilidad@ecoaventurasantioquia.co",
-      taxInformation: "Régimen ordinario - Actividad principal: 7911 - Servicios de agencias de viajes y operadores turísticos",
+      paymentMethods: ["Efectivo", "Tarjetas de crédito/débito", "Transferencias bancarias", "PSE", "Nequi"] as string[],
+      invoiceEmail: "facturacion@senderosdelchicamocha.co",
+      taxInformation: "Régimen ordinario - Actividad principal: 7911 - Servicios de turismo de aventura y ecoturismo",
       emailNotifications: true,
       smsNotifications: true,
       marketingEmails: true,
@@ -184,7 +184,7 @@ const Auth = () => {
 
     toast({
       title: "Datos de Prueba Cargados",
-      description: "Se han cargado los datos de EcoAventuras Antioquia (Medellín) para completar el registro",
+      description: "Se han cargado los datos de Senderos del Chicamocha (Bucaramanga) para completar el registro",
       duration: 4000
     });
   };
@@ -751,7 +751,7 @@ const Auth = () => {
                   data-testid="button-autofill-ecotours"
                 >
                   <Building2 className="w-4 h-4 mr-2" />
-                  Autocompletar con EcoAventuras Antioquia
+                  Autocompletar con Senderos del Chicamocha
                 </Button>
                 <p className="text-gray-500 dark:text-gray-500 text-xs mt-2">Carga datos de prueba para completar el registro más rápido</p>
               </div>
