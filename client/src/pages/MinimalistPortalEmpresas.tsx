@@ -86,26 +86,40 @@ const MinimalistPortalEmpresas = () => {
     createConversationMutation.mutate(userId);
   };
 
-  // Current user data fetch - improved for loading issues
+  // Current user data fetch - fixed to prevent aborted requests
   const { data: currentUser, isLoading: userLoading, error: userError } = useQuery({
     queryKey: ['/api/auth/me'],
     retry: (failureCount, error: any) => {
       // Don't retry on 401 errors (authentication issues)
-      if (error?.message?.includes('401')) return false;
-      return failureCount < 2;
+      if (error?.message?.includes('401') || error?.message?.includes('aborted')) return false;
+      return failureCount < 1; // Reduce retry attempts
     },
-    staleTime: 5 * 60 * 1000,
-    refetchOnWindowFocus: true, // Enable refetch to handle login transitions
+    staleTime: 10 * 60 * 1000, // Longer cache time
+    refetchOnWindowFocus: false, // Disable to prevent conflicts
     refetchOnMount: true,
+    refetchInterval: false, // Disable automatic refetching
     queryFn: async () => {
       try {
-        const response = await apiRequest('/api/auth/me');
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 8000); // 8 second timeout
+        
+        const response = await apiRequest('/api/auth/me', {
+          signal: controller.signal
+        });
+        
+        clearTimeout(timeoutId);
         return response;
       } catch (error) {
-        if (error instanceof Error && error.message.includes('401')) {
-          // Redirect to login on authentication failure
-          window.location.href = '/portal-empresas/auth';
-          throw error;
+        if (error instanceof Error) {
+          if (error.name === 'AbortError') {
+            console.log('Request was aborted due to timeout');
+            throw new Error('Request timeout - please try again');
+          }
+          if (error.message.includes('401')) {
+            // Use replace to avoid redirect loops
+            window.location.replace('/auth/empresas');
+            throw error;
+          }
         }
         throw error;
       }
@@ -114,16 +128,36 @@ const MinimalistPortalEmpresas = () => {
 
   const user = (currentUser as any)?.user || currentUser;
 
-  // Directory users fetch - ALL HOOKS MUST BE CALLED BEFORE CONDITIONAL RETURNS
-  const { data: directoryUsers = [], isLoading: directoryLoading } = useQuery({
+  // Directory users fetch - improved error handling and timeout
+  const { data: directoryUsers = [], isLoading: directoryLoading, error: directoryError } = useQuery({
     queryKey: ["/api/directory/users"],
     queryFn: async () => {
-      const response = await apiRequest("/api/directory/users");
-      return response;
+      try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 6000); // 6 second timeout
+        
+        const response = await apiRequest("/api/directory/users", {
+          signal: controller.signal
+        });
+        
+        clearTimeout(timeoutId);
+        return response;
+      } catch (error) {
+        if (error instanceof Error && error.name === 'AbortError') {
+          console.log('Directory request was aborted due to timeout');
+          throw new Error('Directory load timeout');
+        }
+        throw error;
+      }
     },
-    staleTime: 10 * 60 * 1000, // Cache for 10 minutes
+    staleTime: 15 * 60 * 1000, // Cache for 15 minutes
     refetchOnWindowFocus: false,
     refetchOnMount: false,
+    refetchInterval: false,
+    retry: (failureCount, error: any) => {
+      if (error?.message?.includes('aborted') || error?.message?.includes('timeout')) return false;
+      return failureCount < 1;
+    },
     enabled: !!user && !userLoading, // Only fetch when user is authenticated and loaded
   });
 

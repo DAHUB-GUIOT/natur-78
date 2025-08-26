@@ -6,12 +6,15 @@ const queryClient = new QueryClient({
       staleTime: 1000 * 60 * 5, // 5 minutes
       retry: (failureCount, error: any) => {
         if (error?.status === 404) return false;
-        return failureCount < 3;
+        if (error?.message?.includes('aborted') || error?.message?.includes('timeout')) return false;
+        return failureCount < 2; // Reduced retries
       },
-      queryFn: async ({ queryKey }: { queryKey: readonly unknown[] }) => {
+      refetchOnWindowFocus: false, // Prevent conflicts
+      refetchOnMount: true,
+      queryFn: async ({ queryKey, signal }: { queryKey: readonly unknown[]; signal?: AbortSignal }) => {
         const url = queryKey[0] as string;
         try {
-          return await apiRequest(url);
+          return await apiRequest(url, { signal });
         } catch (error) {
           throw error;
         }
@@ -20,7 +23,8 @@ const queryClient = new QueryClient({
     mutations: {
       retry: false,
       onError: (error) => {
-        // Silently handle mutation errors
+        // Silently handle mutation errors unless they're critical
+        console.log('Mutation error handled:', error);
       }
     }
   },
@@ -29,34 +33,82 @@ const queryClient = new QueryClient({
 // Default fetch function for API requests with improved error handling
 const apiRequest = async (url: string, options: RequestInit = {}) => {
   try {
-    const response = await fetch(url, {
-      headers: {
-        'Content-Type': 'application/json',
-        ...options.headers,
-      },
-      credentials: 'include', // Include cookies for authentication
-      ...options,
-    });
+    // Set a default timeout if no signal is provided
+    if (!options.signal) {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => {
+        controller.abort();
+      }, 10000); // 10 second default timeout
+      
+      options.signal = controller.signal;
+      
+      // Clear timeout on response
+      const originalSignal = options.signal;
+      options.signal = new AbortController().signal;
+      
+      const response = await fetch(url, {
+        headers: {
+          'Content-Type': 'application/json',
+          ...options.headers,
+        },
+        credentials: 'include', // Include cookies for authentication
+        signal: originalSignal,
+        ...options,
+      });
+      
+      clearTimeout(timeoutId);
 
-    if (!response.ok) {
-      // Try to get error details from response
-      let errorMessage = `${response.status}: ${response.statusText}`;
-      try {
-        const errorData = await response.json();
-        if (errorData.error) {
-          errorMessage = errorData.error;
+      if (!response.ok) {
+        // Try to get error details from response
+        let errorMessage = `${response.status}: ${response.statusText}`;
+        try {
+          const errorData = await response.json();
+          if (errorData.error) {
+            errorMessage = errorData.error;
+          }
+        } catch (e) {
+          // If response is not JSON, use status text
         }
-      } catch (e) {
-        // If response is not JSON, use status text
+        throw new Error(errorMessage);
       }
-      throw new Error(errorMessage);
-    }
 
-    return response.json();
+      return response.json();
+    } else {
+      // Use provided signal
+      const response = await fetch(url, {
+        headers: {
+          'Content-Type': 'application/json',
+          ...options.headers,
+        },
+        credentials: 'include', // Include cookies for authentication
+        ...options,
+      });
+
+      if (!response.ok) {
+        // Try to get error details from response
+        let errorMessage = `${response.status}: ${response.statusText}`;
+        try {
+          const errorData = await response.json();
+          if (errorData.error) {
+            errorMessage = errorData.error;
+          }
+        } catch (e) {
+          // If response is not JSON, use status text
+        }
+        throw new Error(errorMessage);
+      }
+
+      return response.json();
+    }
   } catch (error) {
-    // Handle network errors and other exceptions
-    if (error instanceof TypeError && error.message.includes('fetch')) {
-      throw new Error('Network error: Unable to connect to server');
+    // Handle specific error types
+    if (error instanceof Error) {
+      if (error.name === 'AbortError') {
+        throw new Error('Request was cancelled or timed out');
+      }
+      if (error.message.includes('fetch')) {
+        throw new Error('Network error: Unable to connect to server');
+      }
     }
     throw error;
   }
