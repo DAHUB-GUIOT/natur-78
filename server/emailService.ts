@@ -30,20 +30,11 @@ export async function sendEmail(params: EmailParams): Promise<boolean> {
         name: 'Festival NATUR'
       },
       subject: params.subject,
-      text: params.text || '',
       html: params.html,
       replyTo: params.replyTo || params.from,
+      // Solo custom headers seguros para SendGrid
       headers: {
-        'X-Priority': '3',
-        'X-Mailer': 'Festival NATUR Platform v1.0',
-        'List-Unsubscribe': '<mailto:unsubscribe@festivalnatur.com>',
         'X-Entity-Type': 'transactional',
-        'Authentication-Results': 'spf=pass smtp.mailfrom=festivalnatur@gmail.com',
-        'MIME-Version': '1.0',
-        'Content-Type': 'text/html; charset=UTF-8',
-        'Message-ID': `<${Date.now()}-${Math.random().toString(36)}@festivalnatur.com>`,
-        'Precedence': 'bulk',
-        'Auto-Submitted': 'auto-generated',
         ...params.headers
       },
       trackingSettings: {
@@ -60,19 +51,14 @@ export async function sendEmail(params: EmailParams): Promise<boolean> {
       mailSettings: {
         sandboxMode: {
           enable: false
-        },
-        bypassListManagement: {
-          enable: false
-        },
-        footer: {
-          enable: false
-        },
-        spamCheck: {
-          enable: true,
-          threshold: 1
         }
       }
     };
+    
+    // Agregar texto plano si no existe
+    if (params.text) {
+      mailData.text = params.text;
+    }
     
     await mailService.send(mailData);
     return true;
