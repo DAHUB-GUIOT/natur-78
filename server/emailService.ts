@@ -23,39 +23,15 @@ interface EmailParams {
 
 export async function sendEmail(params: EmailParams): Promise<boolean> {
   try {
+    // Configuración simple y directa
     const mailData: any = {
       to: params.to,
-      from: {
-        email: params.from,
-        name: 'Festival NATUR'
-      },
+      from: params.from,
       subject: params.subject,
-      html: params.html,
-      replyTo: params.replyTo || params.from,
-      // Solo custom headers seguros para SendGrid
-      headers: {
-        'X-Entity-Type': 'transactional',
-        ...params.headers
-      },
-      trackingSettings: {
-        clickTracking: {
-          enable: false
-        },
-        openTracking: {
-          enable: false
-        },
-        subscriptionTracking: {
-          enable: false
-        }
-      },
-      mailSettings: {
-        sandboxMode: {
-          enable: false
-        }
-      }
+      html: params.html
     };
     
-    // Agregar texto plano si no existe
+    // Solo agregar texto si existe
     if (params.text) {
       mailData.text = params.text;
     }
