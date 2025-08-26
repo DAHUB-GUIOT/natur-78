@@ -207,7 +207,7 @@ export const InteractiveMap = ({ experiences = [], selectedCategory, showMarkers
       // Add markers for experiences
       experiences.forEach((experience, index) => {
         const el = document.createElement('div');
-        el.className = 'mapbox-marker';
+        el.className = 'mapbox-marker experience-marker';
         
         // Create beautiful green experience marker
         const markerContainer = document.createElement('div');
@@ -246,44 +246,44 @@ export const InteractiveMap = ({ experiences = [], selectedCategory, showMarkers
           .setLngLat([position.lng, position.lat])
           .addTo(map.current!);
       });
-    } else {
-      // Add markers for registered companies from database
-      filteredCompanies.forEach((company: RegisteredCompany) => {
-        if (!company.coordinates) return; // Skip companies without location data
-        
-        const el = document.createElement('div');
-        el.className = 'mapbox-marker registered-company';
-        
-        // Create beautiful company bubble
-        const markerContainer = document.createElement('div');
-        markerContainer.className = 'bg-gradient-to-br from-lime-400 to-emerald-600 rounded-full p-3 shadow-xl border-3 border-white cursor-pointer hover:scale-125 transition-all duration-300 hover:shadow-2xl animate-pulse touch-manipulation';
-        markerContainer.style.cssText = `
-          width: 48px;
-          height: 48px;
-          box-shadow: 0 8px 32px rgba(34, 197, 94, 0.6);
-          backdrop-filter: blur(10px);
-          animation: pulse 3s infinite;
-          z-index: 10;
-        `;
-        
-        // Company icon in bubble
-        const iconContainer = document.createElement('div');
-        iconContainer.className = 'w-full h-full flex items-center justify-center text-white font-bold text-lg';
-        iconContainer.textContent = getCompanyIconText(company.companyCategory || 'empresa');
-        
-        markerContainer.appendChild(iconContainer);
-        el.appendChild(markerContainer);
-        
-        // Add click event for floating card
-        el.addEventListener('click', () => {
-          setSelectedCompany(company);
-        });
-
-        new mapboxgl.Marker(el)
-          .setLngLat([company.coordinates.lng, company.coordinates.lat])
-          .addTo(map.current!);
-      });
     }
+    
+    // Always add markers for registered companies from database
+    filteredCompanies.forEach((company: RegisteredCompany) => {
+      if (!company.coordinates) return; // Skip companies without location data
+      
+      const el = document.createElement('div');
+      el.className = 'mapbox-marker registered-company';
+      
+      // Create beautiful company bubble
+      const markerContainer = document.createElement('div');
+      markerContainer.className = 'bg-gradient-to-br from-emerald-500 to-teal-600 rounded-full p-2 shadow-xl border-2 border-white cursor-pointer hover:scale-110 transition-all duration-300 hover:shadow-2xl animate-pulse touch-manipulation';
+      markerContainer.style.cssText = `
+        width: 40px;
+        height: 40px;
+        box-shadow: 0 8px 32px rgba(6, 182, 212, 0.6);
+        backdrop-filter: blur(10px);
+        animation: pulse 3s infinite;
+        z-index: 10;
+      `;
+      
+      // Company icon in bubble
+      const iconContainer = document.createElement('div');
+      iconContainer.className = 'w-full h-full flex items-center justify-center text-white font-bold text-sm';
+      iconContainer.textContent = getCompanyIconText(company.companyCategory || 'empresa');
+      
+      markerContainer.appendChild(iconContainer);
+      el.appendChild(markerContainer);
+      
+      // Add click event for floating card
+      el.addEventListener('click', () => {
+        setSelectedCompany(company);
+      });
+
+      new mapboxgl.Marker(el)
+        .setLngLat([company.coordinates.lng, company.coordinates.lat])
+        .addTo(map.current!);
+    });
   }, [filteredCompanies, experiences, showMarkers, onMarkerClick]);
 
   const getMarkerIconText = (type: string) => {

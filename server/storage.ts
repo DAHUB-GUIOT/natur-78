@@ -506,6 +506,15 @@ export class MemStorage implements IStorage {
       (user.companyName && user.companyName.includes(query))
     );
   }
+
+  async getRegisteredCompaniesForMap(): Promise<User[]> {
+    return Array.from(this.users.values()).filter(user => 
+      user.role === 'empresa' && 
+      user.isActive && 
+      user.registrationComplete &&
+      user.coordinates
+    );
+  }
 }
 
 export class DatabaseStorage implements IStorage {
