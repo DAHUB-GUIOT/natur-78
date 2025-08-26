@@ -905,6 +905,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Get registered companies with locations for map bubbles
+  app.get("/api/companies/map", async (req, res) => {
+    try {
+      const registeredUsers = await storage.getRegisteredCompaniesForMap();
+      console.log(`Returning ${registeredUsers.length} registered companies for map bubbles`);
+      res.json(registeredUsers);
+    } catch (error) {
+      console.error("Get companies for map error:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+
   // Directory route - get all registered users for Portal Empresas
   app.get("/api/directory/users", async (req, res) => {
     try {

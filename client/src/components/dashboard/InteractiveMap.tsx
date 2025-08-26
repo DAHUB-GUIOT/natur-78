@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useQuery } from "@tanstack/react-query";
 import { 
   MapPin, 
   Building, 
@@ -15,45 +16,39 @@ import {
   Globe,
   Zap,
   Leaf,
-  X
+  X,
+  MessageCircle,
+  Facebook,
+  Twitter,
+  Instagram,
+  Linkedin,
+  ExternalLink
 } from "lucide-react";
+import { useLocation } from 'wouter';
 
-// Real companies data with updated Colombian locations
-const companies = [
-  {
-    id: 21,
-    name: "DaHub",
-    type: "startup",
-    category: "Tecnología",
-    location: { lat: 6.2088, lng: -75.5906, city: "Medellín, Poblado", country: "Colombia" },
-    stage: "growth",
-    employees: 8,
-    description: "Empresa de tecnología especializada en desarrollo de plataformas digitales para turismo sostenible. Creadores del ecosistema Festival NATUR.",
-    website: "www.dahub.tech"
-  },
-  {
-    id: 22,
-    name: "TripCol",
-    type: "ecosystem",
-    category: "Operador Turístico",
-    location: { lat: 11.2408, lng: -74.1990, city: "Santa Marta", country: "Colombia" },
-    stage: "established",
-    employees: 15,
-    description: "Operador turístico especializado en experiencias auténticas de turismo sostenible en la Costa Caribe colombiana.",
-    website: "www.tripcol.com"
-  },
-  {
-    id: 24,
-    name: "Festival NATUR",
-    type: "ecosystem",
-    category: "Organizador de Eventos",
-    location: { lat: 4.6533, lng: -74.0836, city: "Bogotá, Chapinero - CEFE", country: "Colombia" },
-    stage: "established",
-    employees: 20,
-    description: "Organizadores del Festival NATUR, el evento más importante de turismo sostenible en Colombia. Conectamos startups, empresas, viajeros y comunidades.",
-    website: "www.festivalnatur.com"
-  }
-];
+// Interface for registered company from API
+interface RegisteredCompany {
+  id: number;
+  companyName: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  companyDescription: string;
+  companyCategory: string;
+  companySubcategory: string;
+  coordinates: { lat: number; lng: number } | null;
+  address: string;
+  city: string;
+  country: string;
+  website: string;
+  phone: string;
+  facebookUrl: string;
+  twitterUrl: string;
+  instagramUrl: string;
+  linkedinUrl: string;
+  businessType: string;
+  createdAt: string;
+}
 
 interface Experience {
   id: number;
@@ -81,14 +76,25 @@ export const InteractiveMap = ({ experiences = [], selectedCategory, showMarkers
   const isUnmounted = useRef(false);
   const [selectedFilter, setSelectedFilter] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCompany, setSelectedCompany] = useState<any>(null);
+  const [selectedCompany, setSelectedCompany] = useState<RegisteredCompany | null>(null);
   const [showFilters, setShowFilters] = useState(false);
+  const [, setLocation] = useLocation();
 
-  const filteredCompanies = companies.filter(company => {
-    const matchesFilter = selectedFilter === 'all' || company.type === selectedFilter;
-    const matchesSearch = company.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         company.description.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesFilter && matchesSearch;
+  // Fetch registered companies from API
+  const { data: registeredCompanies = [], isLoading: isLoadingCompanies } = useQuery({
+    queryKey: ['/api/companies/map'],
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    gcTime: 10 * 60 * 1000, // 10 minutes (TanStack Query v5 uses gcTime instead of cacheTime)
+  });
+
+  const filteredCompanies = (registeredCompanies as RegisteredCompany[]).filter((company: RegisteredCompany) => {
+    const matchesFilter = selectedFilter === 'all' || 
+                         (selectedFilter === 'empresa' && company.companyCategory) ||
+                         (selectedFilter === company.companyCategory?.toLowerCase());
+    const matchesSearch = (company.companyName?.toLowerCase() || '').includes(searchQuery.toLowerCase()) ||
+                         (company.companyDescription?.toLowerCase() || '').includes(searchQuery.toLowerCase()) ||
+                         (company.companyCategory?.toLowerCase() || '').includes(searchQuery.toLowerCase());
+    return matchesFilter && matchesSearch && company.coordinates;
   });
 
   // Initialize map
@@ -241,46 +247,40 @@ export const InteractiveMap = ({ experiences = [], selectedCategory, showMarkers
           .addTo(map.current!);
       });
     } else {
-      // Add markers for filtered companies (original functionality)
-      filteredCompanies.forEach((company) => {
-        const el = document.createElement('div');
-        el.className = 'mapbox-marker';
+      // Add markers for registered companies from database
+      filteredCompanies.forEach((company: RegisteredCompany) => {
+        if (!company.coordinates) return; // Skip companies without location data
         
-        // Create mobile-optimized marker
+        const el = document.createElement('div');
+        el.className = 'mapbox-marker registered-company';
+        
+        // Create beautiful company bubble
         const markerContainer = document.createElement('div');
-        markerContainer.className = 'bg-gradient-to-br from-emerald-400 to-green-600 rounded-full p-2 md:p-3 shadow-xl border-2 md:border-3 border-white cursor-pointer hover:scale-110 md:hover:scale-125 transition-all duration-300 hover:shadow-2xl animate-pulse touch-manipulation';
+        markerContainer.className = 'bg-gradient-to-br from-lime-400 to-emerald-600 rounded-full p-3 shadow-xl border-3 border-white cursor-pointer hover:scale-125 transition-all duration-300 hover:shadow-2xl animate-pulse touch-manipulation';
         markerContainer.style.cssText = `
-          width: 36px;
-          height: 36px;
-          box-shadow: 0 6px 24px rgba(16, 185, 129, 0.4);
-          backdrop-filter: blur(8px);
-          animation: pulse 2s infinite;
-          min-width: 44px;
-          min-height: 44px;
+          width: 48px;
+          height: 48px;
+          box-shadow: 0 8px 32px rgba(34, 197, 94, 0.6);
+          backdrop-filter: blur(10px);
+          animation: pulse 3s infinite;
+          z-index: 10;
         `;
         
-        // Make marker larger on mobile
-        if (window.innerWidth < 768) {
-          markerContainer.style.width = '44px';
-          markerContainer.style.height = '44px';
-        }
-        
+        // Company icon in bubble
         const iconContainer = document.createElement('div');
-        iconContainer.className = 'w-full h-full flex items-center justify-center text-white font-bold text-sm';
-        
-        // Use beautiful green icons for companies
-        const iconText = getMarkerIconText(company.type);
-        iconContainer.textContent = iconText;
+        iconContainer.className = 'w-full h-full flex items-center justify-center text-white font-bold text-lg';
+        iconContainer.textContent = getCompanyIconText(company.companyCategory || 'empresa');
         
         markerContainer.appendChild(iconContainer);
         el.appendChild(markerContainer);
         
+        // Add click event for floating card
         el.addEventListener('click', () => {
           setSelectedCompany(company);
         });
 
         new mapboxgl.Marker(el)
-          .setLngLat([company.location.lng, company.location.lat])
+          .setLngLat([company.coordinates.lng, company.coordinates.lat])
           .addTo(map.current!);
       });
     }
@@ -299,32 +299,31 @@ export const InteractiveMap = ({ experiences = [], selectedCategory, showMarkers
     }
   };
 
-  const getCompanyIcon = (type: string) => {
-    switch (type) {
-      case 'startup':
-        return <Zap className="h-4 w-4 text-emerald-400" />;
-      case 'investor':
-        return <Building className="h-4 w-4 text-green-500" />;
-      case 'ecosystem':
-        return <Leaf className="h-4 w-4 text-lime-500" />;
+  const getCompanyIconText = (category: string) => {
+    switch (category?.toLowerCase()) {
+      case 'agencias u operadores turísticos':
+        return '🏝️';
+      case 'alojamientos sostenibles':
+        return '🏡';
+      case 'gastronomía sostenible':
+        return '🍃';
+      case 'movilidad y transporte ecológico':
+        return '🚲';
+      case 'ong y fundaciones':
+        return '🌍';
+      case 'educación y sensibilización ambiental':
+        return '📚';
+      case 'tecnología para el turismo sostenible':
+        return '💻';
+      case 'aliados y patrocinadores':
+        return '🤝';
       default:
-        return <Globe className="h-4 w-4 text-green-400" />;
+        return '🏢';
     }
   };
 
-  const getBadgeColor = (stage: string) => {
-    switch (stage) {
-      case 'idea':
-        return 'bg-yellow-100 text-yellow-800';
-      case 'mvp':
-        return 'bg-blue-100 text-blue-800';
-      case 'growth':
-        return 'bg-green-100 text-green-800';
-      case 'established':
-        return 'bg-purple-100 text-purple-800';
-      default:
-        return 'bg-gray-100 text-gray-800';
-    }
+  const handleChatRedirect = (companyId: number) => {
+    setLocation(`/portal-empresas/chat?company=${companyId}`);
   };
 
   return (
@@ -378,10 +377,14 @@ export const InteractiveMap = ({ experiences = [], selectedCategory, showMarkers
                     <SelectValue placeholder="Seleccionar" />
                   </SelectTrigger>
                   <SelectContent className="bg-gray-900 border-white/30">
-                    <SelectItem value="all" className="text-white hover:bg-white/20 h-8 text-xs">Todos</SelectItem>
-                    <SelectItem value="startup" className="text-white hover:bg-white/20 h-8 text-xs">Startups</SelectItem>
-                    <SelectItem value="investor" className="text-white hover:bg-white/20 h-8 text-xs">Inversores</SelectItem>
-                    <SelectItem value="ecosystem" className="text-white hover:bg-white/20 h-8 text-xs">Ecosistema</SelectItem>
+                    <SelectItem value="all" className="text-white hover:bg-white/20 h-8 text-xs">Todas las empresas</SelectItem>
+                    <SelectItem value="agencias u operadores turísticos" className="text-white hover:bg-white/20 h-8 text-xs">Operadores Turísticos</SelectItem>
+                    <SelectItem value="alojamientos sostenibles" className="text-white hover:bg-white/20 h-8 text-xs">Alojamientos</SelectItem>
+                    <SelectItem value="gastronomía sostenible" className="text-white hover:bg-white/20 h-8 text-xs">Gastronomía</SelectItem>
+                    <SelectItem value="movilidad y transporte ecológico" className="text-white hover:bg-white/20 h-8 text-xs">Transporte</SelectItem>
+                    <SelectItem value="ong y fundaciones" className="text-white hover:bg-white/20 h-8 text-xs">ONG</SelectItem>
+                    <SelectItem value="educación y sensibilización ambiental" className="text-white hover:bg-white/20 h-8 text-xs">Educación</SelectItem>
+                    <SelectItem value="tecnología para el turismo sostenible" className="text-white hover:bg-white/20 h-8 text-xs">Tecnología</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -395,78 +398,131 @@ export const InteractiveMap = ({ experiences = [], selectedCategory, showMarkers
         )}
       </div>
 
-      {/* Mobile-First Compact Company Info Panel */}
+      {/* Floating Company Card */}
       {selectedCompany && (
-        <div className="absolute bottom-2 left-2 right-2 md:bottom-6 md:left-80 md:right-6 z-40">
-          <Card className="backdrop-blur-xl bg-black/30 border border-white/30 rounded-xl shadow-2xl">
-            <CardHeader className="pb-2 p-3">
+        <div className="absolute bottom-4 left-4 right-4 md:bottom-6 md:left-6 md:right-6 z-50">
+          <Card className="backdrop-blur-xl bg-gradient-to-br from-white/95 to-white/85 border border-green-200/50 rounded-2xl shadow-2xl">
+            <CardHeader className="pb-3 p-4">
               <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-2 flex-1 min-w-0">
-                  <div className="p-1.5 bg-gradient-to-br from-green-400 to-green-600 rounded-lg shadow-lg flex-shrink-0">
-                    {getCompanyIcon(selectedCompany.type)}
+                <div className="flex items-center space-x-3 flex-1 min-w-0">
+                  <div className="p-2 bg-gradient-to-br from-lime-400 to-emerald-600 rounded-xl shadow-lg flex-shrink-0">
+                    <Building className="h-5 w-5 text-white" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <CardTitle className="text-white text-sm md:text-lg font-bold truncate">{selectedCompany.name}</CardTitle>
-                    <p className="text-white/80 text-xs md:text-sm font-medium truncate">{selectedCompany.category}</p>
+                    <div className="flex items-center space-x-2">
+                      <CardTitle className="text-gray-900 text-lg font-bold truncate">
+                        {selectedCompany.companyName}
+                      </CardTitle>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => setLocation(`/portal-empresas/chat?company=${selectedCompany.id}`)}
+                        className="text-green-600 hover:bg-green-50 rounded-lg p-1.5 min-h-[32px] min-w-[32px] touch-manipulation"
+                        title="Enviar mensaje"
+                      >
+                        <MessageCircle className="h-4 w-4" />
+                      </Button>
+                    </div>
+                    <p className="text-gray-600 text-sm font-medium truncate">
+                      {selectedCompany.companyCategory}
+                    </p>
                   </div>
                 </div>
-                <div className="flex items-center space-x-1 flex-shrink-0">
-                  <Badge className={`${getBadgeColor(selectedCompany.stage)} px-1.5 py-0.5 rounded-full font-semibold text-xs`}>
-                    {selectedCompany.stage}
-                  </Badge>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => setSelectedCompany(null)}
-                    className="text-white hover:bg-white/20 rounded-lg p-1.5 min-h-[36px] min-w-[36px] touch-manipulation"
-                  >
-                    <X className="h-3 w-3" />
-                  </Button>
-                </div>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setSelectedCompany(null)}
+                  className="text-gray-500 hover:bg-gray-100 rounded-lg p-1.5 min-h-[32px] min-w-[32px] touch-manipulation"
+                >
+                  <X className="h-4 w-4" />
+                </Button>
               </div>
             </CardHeader>
-            <CardContent className="space-y-2 p-3">
-              <p className="text-white/90 text-xs md:text-sm leading-relaxed line-clamp-2">{selectedCompany.description}</p>
+            <CardContent className="space-y-3 p-4 pt-0">
+              <p className="text-gray-700 text-sm leading-relaxed line-clamp-2">
+                {selectedCompany.companyDescription || 'Empresa registrada en Festival NATUR'}
+              </p>
               
-              {/* Compact mobile info grid */}
-              <div className="grid grid-cols-1 gap-2 md:grid-cols-3 md:gap-4">
-                <div className="flex items-center space-x-2 text-white/90 p-2 bg-white/5 rounded-lg">
-                  <MapPin className="h-3 w-3 flex-shrink-0" />
+              {/* Company Info Grid */}
+              <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
+                <div className="flex items-center space-x-2 text-gray-700 p-2 bg-gray-50 rounded-lg">
+                  <MapPin className="h-4 w-4 flex-shrink-0 text-green-600" />
                   <div className="flex-1 min-w-0">
-                    <p className="text-xs text-white/70 truncate">{selectedCompany.location.city}</p>
+                    <p className="text-sm truncate">{selectedCompany.city}, {selectedCompany.country}</p>
                   </div>
                 </div>
                 
-                <div className="flex items-center space-x-2 text-white/90 p-2 bg-white/5 rounded-lg">
-                  <Users className="h-3 w-3 flex-shrink-0" />
+                <div className="flex items-center space-x-2 text-gray-700 p-2 bg-gray-50 rounded-lg">
+                  <Building className="h-4 w-4 flex-shrink-0 text-green-600" />
                   <div className="flex-1 min-w-0">
-                    <p className="text-xs text-white/70">{selectedCompany.employees} empleados</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-center space-x-2 text-white/90 p-2 bg-white/5 rounded-lg">
-                  <Globe className="h-3 w-3 flex-shrink-0" />
-                  <div className="flex-1 min-w-0">
-                    <a 
-                      href={`https://${selectedCompany.website}`} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="text-xs text-green-300 hover:text-green-200 transition-colors underline truncate block"
-                    >
-                      {selectedCompany.website}
-                    </a>
+                    <p className="text-sm truncate">{selectedCompany.businessType || 'Turismo'}</p>
                   </div>
                 </div>
               </div>
               
-              {/* Compact action buttons */}
-              <div className="flex space-x-2 pt-2">
-                <Button className="flex-1 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-semibold rounded-lg h-8 text-xs touch-manipulation">
-                  Contactar
-                </Button>
-                <Button variant="outline" className="border-white/30 text-white hover:bg-white/10 rounded-lg h-8 px-3 text-xs touch-manipulation">
-                  Ver Perfil
-                </Button>
+              {/* Social Media and Website Links */}
+              <div className="flex items-center justify-between pt-2 border-t border-gray-200">
+                <div className="flex items-center space-x-2">
+                  {selectedCompany.website && (
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => window.open(`https://${selectedCompany.website}`, '_blank')}
+                      className="text-gray-600 hover:text-green-600 hover:bg-green-50 rounded-lg p-2 touch-manipulation"
+                      title="Sitio web"
+                    >
+                      <ExternalLink className="h-4 w-4" />
+                    </Button>
+                  )}
+                  {selectedCompany.facebookUrl && (
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => window.open(selectedCompany.facebookUrl, '_blank')}
+                      className="text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg p-2 touch-manipulation"
+                      title="Facebook"
+                    >
+                      <Facebook className="h-4 w-4" />
+                    </Button>
+                  )}
+                  {selectedCompany.twitterUrl && (
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => window.open(selectedCompany.twitterUrl, '_blank')}
+                      className="text-gray-600 hover:text-blue-400 hover:bg-blue-50 rounded-lg p-2 touch-manipulation"
+                      title="Twitter"
+                    >
+                      <Twitter className="h-4 w-4" />
+                    </Button>
+                  )}
+                  {selectedCompany.instagramUrl && (
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => window.open(selectedCompany.instagramUrl, '_blank')}
+                      className="text-gray-600 hover:text-pink-600 hover:bg-pink-50 rounded-lg p-2 touch-manipulation"
+                      title="Instagram"
+                    >
+                      <Instagram className="h-4 w-4" />
+                    </Button>
+                  )}
+                  {selectedCompany.linkedinUrl && (
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => window.open(selectedCompany.linkedinUrl, '_blank')}
+                      className="text-gray-600 hover:text-blue-700 hover:bg-blue-50 rounded-lg p-2 touch-manipulation"
+                      title="LinkedIn"
+                    >
+                      <Linkedin className="h-4 w-4" />
+                    </Button>
+                  )}
+                </div>
+                
+                <Badge className="bg-green-100 text-green-800 px-2 py-1 rounded-full font-semibold text-xs">
+                  Registrada
+                </Badge>
               </div>
             </CardContent>
           </Card>

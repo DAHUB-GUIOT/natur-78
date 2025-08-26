@@ -38,6 +38,7 @@ export interface IStorage {
   createCompany(company: InsertCompany): Promise<Company>;
   updateCompany(userId: number, company: Partial<InsertCompany>): Promise<Company>;
   getAllCompanies(): Promise<Company[]>;
+  getRegisteredCompaniesForMap(): Promise<User[]>;
   
   // Messaging methods
   getMessages(conversationId: number): Promise<Message[]>;
@@ -519,7 +520,7 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getUserByVerificationToken(token: string): Promise<User | undefined> {
-    const result = await db.select().from(users).where(eq(users.emailVerificationToken, token)).limit(1);
+    const result = await db.select().from(users).where(eq(users.verificationToken, token)).limit(1);
     return result[0];
   }
 
@@ -528,7 +529,7 @@ export class DatabaseStorage implements IStorage {
       .update(users)
       .set({ 
         emailVerified: true, 
-        emailVerificationToken: null,
+        verificationToken: null,
         updatedAt: new Date()
       })
       .where(eq(users.id, userId))
@@ -817,6 +818,19 @@ export class DatabaseStorage implements IStorage {
     }
     
     return result[0];
+  }
+
+  async getRegisteredCompaniesForMap(): Promise<User[]> {
+    const result = await db.select().from(users)
+      .where(
+        and(
+          eq(users.role, 'empresa'),
+          eq(users.isActive, true),
+          eq(users.registrationComplete, true)
+        )
+      )
+      .orderBy(desc(users.createdAt));
+    return result;
   }
 }
 
