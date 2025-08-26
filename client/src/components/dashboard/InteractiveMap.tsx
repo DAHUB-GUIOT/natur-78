@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useQuery } from "@tanstack/react-query";
+import { apiRequest } from "@/lib/queryClient";
 import { 
   MapPin, 
   Building, 
@@ -81,14 +82,44 @@ export const InteractiveMap = ({ experiences = [], selectedCategory, showMarkers
   const [, setLocation] = useLocation();
 
   // Fetch registered companies from API
-  const { data: registeredCompanies = [], isLoading: isLoadingCompanies } = useQuery({
+  const { data: registeredCompanies = [], isLoading: isLoadingCompanies, error: companiesError } = useQuery({
     queryKey: ['/api/companies/map'],
     staleTime: 5 * 60 * 1000, // 5 minutes
     gcTime: 10 * 60 * 1000, // 10 minutes (TanStack Query v5 uses gcTime instead of cacheTime)
+    retry: (failureCount, error: any) => {
+      if (error?.message?.includes('aborted') || error?.message?.includes('timeout')) return false;
+      return failureCount < 1;
+    },
+    refetchOnWindowFocus: false,
+    refetchOnMount: true,
+    queryFn: async () => {
+      try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 8000);
+        
+        const response = await apiRequest('/api/companies/map', {
+          signal: controller.signal
+        });
+        
+        clearTimeout(timeoutId);
+        console.log(`📍 Raw API Response:`, response);
+        return response;
+      } catch (error) {
+        if (error instanceof Error && error.name === 'AbortError') {
+          console.log('Companies map request was aborted due to timeout');
+          throw new Error('Companies load timeout');
+        }
+        console.error('Companies map request failed:', error);
+        throw error;
+      }
+    }
   });
 
-  // Debug log for companies data
+  // Debug log for companies data  
   console.log(`📍 InteractiveMap: Received ${registeredCompanies.length} companies from API`, registeredCompanies);
+  if (companiesError) {
+    console.error('📍 Companies API Error:', companiesError);
+  }
 
   const filteredCompanies = (registeredCompanies as RegisteredCompany[]).filter((company: RegisteredCompany) => {
     const matchesFilter = selectedFilter === 'all' || 
@@ -214,7 +245,12 @@ export const InteractiveMap = ({ experiences = [], selectedCategory, showMarkers
 
   // Update markers when filtered companies or experiences change
   useEffect(() => {
-    if (!map.current || isUnmounted.current) return;
+    console.log(`📍 useEffect triggered: map=${!!map.current}, unmounted=${isUnmounted.current}, filteredCompanies=${filteredCompanies.length}`);
+    
+    if (!map.current || isUnmounted.current) {
+      console.log('📍 useEffect early return: map not ready');
+      return;
+    }
 
     // Clear existing markers
     const existingMarkers = document.querySelectorAll('.mapbox-marker');
