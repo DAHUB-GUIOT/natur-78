@@ -909,8 +909,38 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/companies/map", async (req, res) => {
     try {
       const registeredUsers = await storage.getRegisteredCompaniesForMap();
-      console.log(`Returning ${registeredUsers.length} registered companies for map bubbles`);
-      res.json(registeredUsers);
+      console.log(`📍 Map Companies: Found ${registeredUsers.length} registered companies`);
+      
+      // Transform data to match InteractiveMap interface
+      const mapCompanies = registeredUsers.map(user => ({
+        id: user.id,
+        companyName: user.companyName || user.firstName + " " + user.lastName,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        companyDescription: user.companyDescription || user.bio || `${user.companyName} - ${user.companyCategory}`,
+        companyCategory: user.companyCategory || user.businessType || "Empresa",
+        companySubcategory: user.companySubcategory || "",
+        coordinates: user.coordinates,
+        address: user.address,
+        city: user.city,
+        country: user.country,
+        website: user.website,
+        phone: user.phone,
+        facebookUrl: user.facebookUrl,
+        twitterUrl: user.twitterUrl,
+        instagramUrl: user.instagramUrl,
+        linkedinUrl: user.linkedinUrl,
+        businessType: user.businessType,
+        createdAt: user.createdAt
+      })).filter(company => company.coordinates && company.coordinates.lat && company.coordinates.lng);
+      
+      console.log(`📍 Map Bubbles: Sending ${mapCompanies.length} companies with coordinates`);
+      if (mapCompanies.length > 0) {
+        console.log(`📍 First company: ${mapCompanies[0].companyName} at ${mapCompanies[0].city}`);
+      }
+      
+      res.json(mapCompanies);
     } catch (error) {
       console.error("Get companies for map error:", error);
       res.status(500).json({ error: "Internal server error" });

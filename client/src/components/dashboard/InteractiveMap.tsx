@@ -87,6 +87,9 @@ export const InteractiveMap = ({ experiences = [], selectedCategory, showMarkers
     gcTime: 10 * 60 * 1000, // 10 minutes (TanStack Query v5 uses gcTime instead of cacheTime)
   });
 
+  // Debug log for companies data
+  console.log(`📍 InteractiveMap: Received ${registeredCompanies.length} companies from API`, registeredCompanies);
+
   const filteredCompanies = (registeredCompanies as RegisteredCompany[]).filter((company: RegisteredCompany) => {
     const matchesFilter = selectedFilter === 'all' || 
                          (selectedFilter === 'empresa' && company.companyCategory) ||
@@ -94,7 +97,21 @@ export const InteractiveMap = ({ experiences = [], selectedCategory, showMarkers
     const matchesSearch = (company.companyName?.toLowerCase() || '').includes(searchQuery.toLowerCase()) ||
                          (company.companyDescription?.toLowerCase() || '').includes(searchQuery.toLowerCase()) ||
                          (company.companyCategory?.toLowerCase() || '').includes(searchQuery.toLowerCase());
-    return matchesFilter && matchesSearch && company.coordinates;
+    const hasValidCoordinates = company.coordinates && 
+                               typeof company.coordinates.lat === 'number' && 
+                               typeof company.coordinates.lng === 'number' &&
+                               company.coordinates.lat !== 0 && 
+                               company.coordinates.lng !== 0;
+    
+    console.log(`📍 Company Filter Check:`, {
+      name: company.companyName,
+      coordinates: company.coordinates,
+      hasValidCoordinates,
+      matchesFilter,
+      matchesSearch
+    });
+    
+    return matchesFilter && matchesSearch && hasValidCoordinates;
   });
 
   // Initialize map
@@ -249,7 +266,11 @@ export const InteractiveMap = ({ experiences = [], selectedCategory, showMarkers
     }
     
     // Always add markers for registered companies from database
-    filteredCompanies.forEach((company: RegisteredCompany) => {
+    console.log(`📍 Creating markers for ${filteredCompanies.length} filtered companies`);
+    
+    filteredCompanies.forEach((company: RegisteredCompany, index) => {
+      console.log(`📍 Creating marker ${index + 1} for ${company.companyName} at [${company.coordinates.lng}, ${company.coordinates.lat}]`);
+      
       if (!company.coordinates) return; // Skip companies without location data
       
       const el = document.createElement('div');
@@ -270,19 +291,26 @@ export const InteractiveMap = ({ experiences = [], selectedCategory, showMarkers
       // Company icon in bubble
       const iconContainer = document.createElement('div');
       iconContainer.className = 'w-full h-full flex items-center justify-center text-white font-bold text-sm';
-      iconContainer.textContent = getCompanyIconText(company.companyCategory || 'empresa');
+      const iconText = getCompanyIconText(company.companyCategory || 'empresa');
+      iconContainer.textContent = iconText;
+      
+      console.log(`📍 Icon for ${company.companyName}: "${iconText}" (category: ${company.companyCategory})`);
       
       markerContainer.appendChild(iconContainer);
       el.appendChild(markerContainer);
       
       // Add click event for floating card
       el.addEventListener('click', () => {
+        console.log(`📍 Marker clicked for ${company.companyName}`);
         setSelectedCompany(company);
       });
 
-      new mapboxgl.Marker(el)
+      // Create and add the marker
+      const marker = new mapboxgl.Marker(el)
         .setLngLat([company.coordinates.lng, company.coordinates.lat])
         .addTo(map.current!);
+      
+      console.log(`📍 Marker added successfully for ${company.companyName}`);
     });
   }, [filteredCompanies, experiences, showMarkers, onMarkerClick]);
 
