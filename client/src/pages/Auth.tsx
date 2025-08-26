@@ -104,6 +104,91 @@ const Auth = () => {
   const { toast } = useToast();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  // Función para autocompletar con datos de EcoTours Bogotá
+  const fillEcoToursTestData = () => {
+    setRegistrationData({
+      firstName: "Julián Eduardo",
+      lastName: "Domínguez",
+      email: "jedomingueza@unal.edu.co",
+      password: "festival123456",
+      confirmPassword: "festival123456",
+      phone: "+57 1 342 7890",
+      companyName: "EcoTours Bogotá",
+      businessType: "SAS",
+      companyCategory: "Agencias u Operadores Turísticos",
+      companySubcategory: "Turismo Urbano Sostenible",
+      companyDescription: "Agencia de turismo sostenible especializada en experiencias urbanas ecológicas en Bogotá. Promovemos el turismo responsable a través de recorridos que conectan a los visitantes con la biodiversidad urbana, los humedales de la capital y las iniciativas de agricultura urbana.",
+      yearsExperience: "5",
+      teamSize: "12",
+      address: "Calle 11 #5-51, La Candelaria",
+      city: "Bogotá",
+      country: "Colombia",
+      website: "www.ecotoursbogota.co",
+      coordinates: { lat: 4.6097, lng: -74.0817 },
+      profilePicture: "",
+      bio: "Agencia de turismo sostenible especializada en experiencias urbanas ecológicas. Con más de 5 años de experiencia en Bogotá, conectamos a los viajeros con la naturaleza urbana y las iniciativas sostenibles de la capital colombiana. Creemos en el turismo regenerativo que beneficia tanto a visitantes como a comunidades locales.",
+      servicesOffered: ["Tours urbanos ecológicos", "Visitas a humedales", "Recorridos de agricultura urbana", "Experiencias gastronómicas sostenibles"] as string[],
+      targetMarket: "turismo-nacional",
+      operatingHours: {
+        "lunes": "8:00 AM - 6:00 PM",
+        "martes": "8:00 AM - 6:00 PM", 
+        "miercoles": "8:00 AM - 6:00 PM",
+        "jueves": "8:00 AM - 6:00 PM",
+        "viernes": "8:00 AM - 6:00 PM",
+        "sabado": "9:00 AM - 5:00 PM",
+        "domingo": "9:00 AM - 5:00 PM"
+      },
+      certifications: ["Certificación en Turismo Sostenible - Ministerio de Comercio"] as string[],
+      sustainabilityPractices: ["Uso de transporte ecológico", "Trabajo con comunidades locales", "Reducción de residuos", "Conservación de humedales"] as string[],
+      accessibilityFeatures: ["Tours adaptados", "Rutas accesibles"] as string[],
+      socialMedia: {
+        instagram: "@ecotours_bogota",
+        linkedin: "linkedin.com/company/ecotours-bogota",
+        twitter: "@ecotoursbogota",
+        facebook: "EcoTours Bogotá"
+      },
+      linkedinUrl: "https://linkedin.com/company/ecotours-bogota",
+      facebookUrl: "https://facebook.com/ecotours-bogota",
+      instagramUrl: "https://instagram.com/ecotours_bogota",
+      twitterUrl: "https://twitter.com/ecotoursbogota",
+      emergencyContact: {
+        name: "Ana María Rodríguez",
+        phone: "+57 300 789 4567",
+        email: "ana@ecotoursbogota.co",
+        relationship: "Coordinadora de Tours"
+      },
+      messagingEnabled: true,
+      messagingBio: "¡Hola! Somos EcoTours Bogotá. Estamos aquí para mostrarte la cara sostenible y verde de nuestra hermosa capital. Contáctanos para vivir experiencias únicas que conectan con la naturaleza urbana.",
+      acceptsInquiries: true,
+      responseTimeHours: 24,
+      experienceSetupComplete: true,
+      defaultExperienceCategory: "Turismo Urbano Sostenible",
+      defaultMeetingPoint: "Plaza Bolívar, La Candelaria, Bogotá",
+      defaultCancellationPolicy: "Cancelación gratuita hasta 24 horas antes. Cancelaciones tardías tienen un cargo del 25%. No se admiten reembolsos por no presentarse debido a condiciones climáticas.",
+      businessLicense: "RNT-54321-2023",
+      taxId: "900654321-1",
+      languages: ["Español", "Inglés"] as string[],
+      acceptTerms: false,
+      paymentMethods: ["Efectivo", "Tarjetas de crédito/débito", "PSE"] as string[],
+      invoiceEmail: "facturacion@ecotoursbogota.co",
+      taxInformation: "Régimen simplificado - Actividad principal: 7911 - Servicios de agencias de viajes",
+      emailNotifications: true,
+      smsNotifications: true,
+      marketingEmails: true,
+      twoFactorEnabled: false,
+      loginNotifications: true,
+      apiAccess: false,
+      webhookUrl: "",
+      setupComplete: false
+    });
+
+    toast({
+      title: "Información Cargada",
+      description: "Se han cargado los datos de EcoTours Bogotá para autocompletar el registro",
+      duration: 4000
+    });
+  };
+
   // Suppress ResizeObserver loop error
   useEffect(() => {
     const handleError = (event: ErrorEvent) => {
@@ -652,6 +737,23 @@ const Auth = () => {
                   placeholder="••••••••"
                   required
                 />
+              </div>
+            </div>
+
+            {/* Botón de autocompletar información de prueba */}
+            <div className="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
+              <div className="text-center">
+                <p className="text-gray-600 dark:text-gray-400 text-sm mb-3">¿Quieres probar con datos de ejemplo?</p>
+                <Button
+                  type="button"
+                  onClick={fillEcoToursTestData}
+                  className="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2 rounded-lg transition-all duration-300 hover:scale-105"
+                  data-testid="button-autofill-ecotours"
+                >
+                  <Building2 className="w-4 h-4 mr-2" />
+                  Autocompletar con EcoTours Bogotá
+                </Button>
+                <p className="text-gray-500 dark:text-gray-500 text-xs mt-2">Carga datos de prueba para completar el registro más rápido</p>
               </div>
             </div>
           </div>
