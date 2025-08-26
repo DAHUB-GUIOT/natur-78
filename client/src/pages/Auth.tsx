@@ -412,78 +412,7 @@ const Auth = () => {
     }
   };
 
-  // Load EcoVentura test data function (for empresas only)
-  const loadTestData = () => {
-    if (!isEmpresas) return;
-    
-    setRegistrationData({
-      firstName: "Isabella",
-      lastName: "Vargas",
-      email: "festivalnatur2025@gmail.com",
-      password: "natur2025",
-      confirmPassword: "natur2025",
-      phone: "+57 314 892 7365",
-      companyName: "Senderos Ancestrales",
-      businessType: "Educación",
-      companyCategory: "Educación y Sensibilización Ambiental",
-      companySubcategory: "Centro de Interpretación Ambiental",
-      companyDescription: "Centro especializado en educación ambiental y cultural que rescata los saberes ancestrales de las comunidades indígenas. Ofrecemos programas educativos, talleres vivenciales y experiencias de inmersión cultural enfocados en la conservación y el respeto por la naturaleza.",
-      yearsExperience: "9",
-      teamSize: "22",
-      address: "Vereda El Paraíso, Finca La Esperanza",
-      city: "Villa de Leyva",
-      country: "Colombia",
-      website: "https://senderosancestrales.org",
-      coordinates: { lat: 5.6342, lng: -73.5264 },
-      profilePicture: "",
-      bio: "Senderos Ancestrales es un centro pionero en educación ambiental que rescata los saberes tradicionales de nuestros antepasados. Ubicados en Villa de Leyva, ofrecemos programas educativos únicos que combinan conocimiento científico con sabiduría ancestral, promoviendo la conservación y el respeto por la Pachamama.",
-      servicesOffered: ["Talleres de saberes ancestrales", "Programas educativos escolares", "Ceremonias de conexión con la tierra", "Huerta orgánica comunitaria", "Retiros de bienestar natural"],
-      targetMarket: "Instituciones educativas, familias conscientes, empresas con RSE, investigadores ambientales",
-      operatingHours: {},
-      certifications: ["UNESCO Catedra Educación", "SINA Certificado", "Bienestar Animal WSPA"],
-      sustainabilityPractices: ["Permacultura integral", "Medicina tradicional", "Construcción en tierra", "Semillas criollas"],
-      accessibilityFeatures: ["Espacios inclusivos", "Traducción a lenguas nativas", "Materiales táctiles"],
-      socialMedia: {},
-      linkedinUrl: "https://linkedin.com/company/senderos-ancestrales",
-      facebookUrl: "https://facebook.com/senderosancestrales",
-      instagramUrl: "https://instagram.com/senderos_ancestrales",
-      twitterUrl: "https://twitter.com/senderosanc",
-      emergencyContact: {
-        name: "Abuela Rosa María",
-        phone: "+57 321 987 6543",
-        email: "coordinacion@senderosancestrales.org",
-        relationship: "Sabia Ancestral y Coordinadora"
-      },
-      messagingEnabled: true,
-      messagingBio: "¡Hola! Somos Senderos Ancestrales. Estamos aquí para compartir la sabiduría de nuestros ancestros y conectarte con la Pachamama. Caminemos juntos por los senderos del conocimiento tradicional y la armonía con la naturaleza.",
-      acceptsInquiries: true,
-      responseTimeHours: 12,
-      experienceSetupComplete: true,
-      defaultExperienceCategory: "educacion",
-      defaultMeetingPoint: "Centro Senderos Ancestrales - Círculo Sagrado",
-      defaultCancellationPolicy: "Cancelación gratuita hasta 48 horas antes del taller. Reagendamos por clima o emergencias familiares.",
-      businessLicense: "EDU-2023-456789",
-      taxId: "900456789-1",
-      languages: ["Español", "Inglés", "Portugués"],
-      acceptTerms: true,
-      paymentMethods: ["transferencia", "tarjeta"],
-      invoiceEmail: "festivalnatur2025@gmail.com",
-      taxInformation: "Régimen simplificado",
-      emailNotifications: true,
-      smsNotifications: false,
-      marketingEmails: true,
-      twoFactorEnabled: false,
-      loginNotifications: true,
-      apiAccess: false,
-      webhookUrl: "",
-      setupComplete: true
-    });
-    
-    toast({
-      title: "Datos de prueba cargados",
-      description: "Se han cargado los datos completos de Senderos Ancestrales",
-    });
-  };
+  // Function removed - no conflicting test data needed
 
   const validateStep = (step: number): boolean => {
     if (!isEmpresas) {
@@ -1569,17 +1498,7 @@ const Auth = () => {
                           </div>
                           
                           {/* Load Test Data Button */}
-                          <div className="mt-4 text-center">
-                            <Button
-                              type="button"
-                              variant="outline"
-                              size="sm"
-                              onClick={() => loadTestData()}
-                              className="text-xs"
-                            >
-                              🌱 Cargar Datos de Prueba (Centro Educativo)
-                            </Button>
-                          </div>
+                          {/* Test data button removed - form already has correct data */}
                         </>
                       ) : (
                         <p className="text-gray-600 dark:text-gray-400 text-sm">
