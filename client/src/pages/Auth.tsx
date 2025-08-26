@@ -104,74 +104,74 @@ const Auth = () => {
   const { toast } = useToast();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // Función para autocompletar con datos de EcoTours Bogotá
+  // Función para autocompletar con datos de prueba en Medellín
   const fillEcoToursTestData = () => {
     setRegistrationData({
-      firstName: "Julián Eduardo",
+      firstName: "Nicolás",
       lastName: "Domínguez",
-      email: "jedomingueza@unal.edu.co",
-      password: "festival123456",
-      confirmPassword: "festival123456",
-      phone: "+57 1 342 7890",
-      companyName: "EcoTours Bogotá",
+      email: "nicolasdominguez2603@gmail.com",
+      password: "natur123456",
+      confirmPassword: "natur123456",
+      phone: "+57 4 312 5689",
+      companyName: "EcoAventuras Antioquia",
       businessType: "SAS",
       companyCategory: "Agencias u Operadores Turísticos",
-      companySubcategory: "Turismo Urbano Sostenible",
-      companyDescription: "Agencia de turismo sostenible especializada en experiencias urbanas ecológicas en Bogotá. Promovemos el turismo responsable a través de recorridos que conectan a los visitantes con la biodiversidad urbana, los humedales de la capital y las iniciativas de agricultura urbana.",
-      yearsExperience: "5",
-      teamSize: "12",
-      address: "Calle 11 #5-51, La Candelaria",
-      city: "Bogotá",
+      companySubcategory: "Ecoturismo y Turismo de Naturaleza",
+      companyDescription: "Operador turístico especializado en aventuras sostenibles en Antioquia. Conectamos a los viajeros con la rica biodiversidad de la región paisa a través de experiencias auténticas que promueven la conservación y el desarrollo de las comunidades locales.",
+      yearsExperience: "8",
+      teamSize: "15",
+      address: "Carrera 70 #45-32, Laureles",
+      city: "Medellín",
       country: "Colombia",
-      website: "www.ecotoursbogota.co",
-      coordinates: { lat: 4.6097, lng: -74.0817 },
+      website: "www.ecoaventurasantioquia.co",
+      coordinates: { lat: 6.2476, lng: -75.5658 },
       profilePicture: "",
-      bio: "Agencia de turismo sostenible especializada en experiencias urbanas ecológicas. Con más de 5 años de experiencia en Bogotá, conectamos a los viajeros con la naturaleza urbana y las iniciativas sostenibles de la capital colombiana. Creemos en el turismo regenerativo que beneficia tanto a visitantes como a comunidades locales.",
-      servicesOffered: ["Tours urbanos ecológicos", "Visitas a humedales", "Recorridos de agricultura urbana", "Experiencias gastronómicas sostenibles"] as string[],
-      targetMarket: "turismo-nacional",
+      bio: "Empresa antioqueña dedicada al ecoturismo y aventuras sostenibles. Con 8 años de experiencia explorando los tesoros naturales de Antioquia, ofrecemos tours que combinan adrenalina, educación ambiental y apoyo a las comunidades rurales. Nuestro equipo de guías locales certificados garantiza experiencias seguras e inolvidables.",
+      servicesOffered: ["Senderismo ecológico", "Canopy y tirolesas", "Avistamiento de aves", "Tours de café sostenible", "Rafting responsable", "Turismo rural comunitario"] as string[],
+      targetMarket: "Aventureros nacionales e internacionales, familias, grupos corporativos",
       operatingHours: {
-        "lunes": "8:00 AM - 6:00 PM",
-        "martes": "8:00 AM - 6:00 PM", 
-        "miercoles": "8:00 AM - 6:00 PM",
-        "jueves": "8:00 AM - 6:00 PM",
-        "viernes": "8:00 AM - 6:00 PM",
-        "sabado": "9:00 AM - 5:00 PM",
-        "domingo": "9:00 AM - 5:00 PM"
+        "lunes": "7:00 AM - 6:00 PM",
+        "martes": "7:00 AM - 6:00 PM", 
+        "miercoles": "7:00 AM - 6:00 PM",
+        "jueves": "7:00 AM - 6:00 PM",
+        "viernes": "7:00 AM - 6:00 PM",
+        "sabado": "6:00 AM - 7:00 PM",
+        "domingo": "7:00 AM - 5:00 PM"
       },
-      certifications: ["Certificación en Turismo Sostenible - Ministerio de Comercio"] as string[],
-      sustainabilityPractices: ["Uso de transporte ecológico", "Trabajo con comunidades locales", "Reducción de residuos", "Conservación de humedales"] as string[],
-      accessibilityFeatures: ["Tours adaptados", "Rutas accesibles"] as string[],
+      certifications: ["RNT - Registro Nacional de Turismo", "Certificación de Turismo Sostenible Colombia", "ISO 14001:2015 Gestión Ambiental"] as string[],
+      sustainabilityPractices: ["Apoyo a economías locales", "Reforestación con especies nativas", "Manejo responsable de residuos", "Energías limpias", "Educación ambiental", "Comercio justo con comunidades"] as string[],
+      accessibilityFeatures: ["Rutas adaptadas para diferentes niveles físicos", "Equipos de seguridad certificados", "Guías especializados", "Transporte cómodo"] as string[],
       socialMedia: {
-        instagram: "@ecotours_bogota",
-        linkedin: "linkedin.com/company/ecotours-bogota",
-        twitter: "@ecotoursbogota",
-        facebook: "EcoTours Bogotá"
+        instagram: "@ecoaventuras_antioquia",
+        linkedin: "linkedin.com/company/ecoaventuras-antioquia",
+        twitter: "@ecoaventuras_ant",
+        facebook: "EcoAventuras Antioquia"
       },
-      linkedinUrl: "https://linkedin.com/company/ecotours-bogota",
-      facebookUrl: "https://facebook.com/ecotours-bogota",
-      instagramUrl: "https://instagram.com/ecotours_bogota",
-      twitterUrl: "https://twitter.com/ecotoursbogota",
+      linkedinUrl: "https://linkedin.com/company/ecoaventuras-antioquia",
+      facebookUrl: "https://facebook.com/ecoaventuras-antioquia",
+      instagramUrl: "https://instagram.com/ecoaventuras_antioquia",
+      twitterUrl: "https://twitter.com/ecoaventuras_ant",
       emergencyContact: {
-        name: "Ana María Rodríguez",
-        phone: "+57 300 789 4567",
-        email: "ana@ecotoursbogota.co",
-        relationship: "Coordinadora de Tours"
+        name: "Carlos Andrés Ruiz",
+        phone: "+57 314 567 8901",
+        email: "emergencias@ecoaventurasantioquia.co",
+        relationship: "Coordinador de Seguridad y Operaciones"
       },
       messagingEnabled: true,
-      messagingBio: "¡Hola! Somos EcoTours Bogotá. Estamos aquí para mostrarte la cara sostenible y verde de nuestra hermosa capital. Contáctanos para vivir experiencias únicas que conectan con la naturaleza urbana.",
+      messagingBio: "¡Hola! Soy Nicolás de EcoAventuras Antioquia. Estoy aquí para ayudarte a descubrir los paisajes más hermosos de nuestra bella Antioquia de forma sostenible y segura. ¡Escríbeme para planear tu próxima aventura!",
       acceptsInquiries: true,
-      responseTimeHours: 24,
+      responseTimeHours: 6,
       experienceSetupComplete: true,
-      defaultExperienceCategory: "Turismo Urbano Sostenible",
-      defaultMeetingPoint: "Plaza Bolívar, La Candelaria, Bogotá",
-      defaultCancellationPolicy: "Cancelación gratuita hasta 24 horas antes. Cancelaciones tardías tienen un cargo del 25%. No se admiten reembolsos por no presentarse debido a condiciones climáticas.",
-      businessLicense: "RNT-54321-2023",
-      taxId: "900654321-1",
-      languages: ["Español", "Inglés"] as string[],
+      defaultExperienceCategory: "Ecoturismo y Turismo de Naturaleza",
+      defaultMeetingPoint: "Estación Metro San Antonio, Centro de Medellín",
+      defaultCancellationPolicy: "Cancelación gratuita hasta 72 horas antes del tour. Cancelaciones entre 24-72 horas tienen cargo del 30%. Menos de 24 horas: 50% de cargo.",
+      businessLicense: "RNT-67890-2024",
+      taxId: "900987654-3",
+      languages: ["Español", "Inglés", "Portugués básico"] as string[],
       acceptTerms: false,
-      paymentMethods: ["Efectivo", "Tarjetas de crédito/débito", "PSE"] as string[],
-      invoiceEmail: "facturacion@ecotoursbogota.co",
-      taxInformation: "Régimen simplificado - Actividad principal: 7911 - Servicios de agencias de viajes",
+      paymentMethods: ["Efectivo", "Tarjetas de crédito/débito", "Nequi", "Daviplata", "PSE"] as string[],
+      invoiceEmail: "contabilidad@ecoaventurasantioquia.co",
+      taxInformation: "Régimen ordinario - Actividad principal: 7911 - Servicios de agencias de viajes y operadores turísticos",
       emailNotifications: true,
       smsNotifications: true,
       marketingEmails: true,
@@ -183,8 +183,8 @@ const Auth = () => {
     });
 
     toast({
-      title: "Información Cargada",
-      description: "Se han cargado los datos de EcoTours Bogotá para autocompletar el registro",
+      title: "Datos de Prueba Cargados",
+      description: "Se han cargado los datos de EcoAventuras Antioquia (Medellín) para completar el registro",
       duration: 4000
     });
   };
@@ -751,7 +751,7 @@ const Auth = () => {
                   data-testid="button-autofill-ecotours"
                 >
                   <Building2 className="w-4 h-4 mr-2" />
-                  Autocompletar con EcoTours Bogotá
+                  Autocompletar con EcoAventuras Antioquia
                 </Button>
                 <p className="text-gray-500 dark:text-gray-500 text-xs mt-2">Carga datos de prueba para completar el registro más rápido</p>
               </div>
