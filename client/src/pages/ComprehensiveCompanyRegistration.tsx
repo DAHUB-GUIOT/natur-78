@@ -305,6 +305,64 @@ const ComprehensiveCompanyRegistration = () => {
     return {};
   };
 
+  // Pre-filled test data for EcoTours Bogotá
+  const getEcoToursTestData = () => {
+    return {
+      firstName: "Julián Eduardo",
+      lastName: "Domínguez",
+      email: "jedomingueza@unal.edu.co",
+      password: "festival123456",
+      confirmPassword: "festival123456",
+      companyName: "EcoTours Bogotá",
+      companyDescription: "Agencia de turismo sostenible especializada en experiencias urbanas ecológicas en Bogotá. Promovemos el turismo responsable a través de recorridos que conectan a los visitantes con la biodiversidad urbana, los humedales de la capital y las iniciativas de agricultura urbana.",
+      companyCategory: "Agencias u Operadores Turísticos",
+      companySubcategory: "Turismo Urbano Sostenible",
+      businessType: "SAS",
+      bio: "Agencia de turismo sostenible especializada en experiencias urbanas ecológicas. Con más de 5 años de experiencia en Bogotá, conectamos a los viajeros con la naturaleza urbana y las iniciativas sostenibles de la capital colombiana. Creemos en el turismo regenerativo que beneficia tanto a visitantes como a comunidades locales.",
+      servicesOffered: ["Tours urbanos ecológicos", "Visitas a humedales", "Recorridos de agricultura urbana", "Experiencias gastronómicas sostenibles"],
+      targetMarket: "turismo-nacional",
+      yearsExperience: 5,
+      teamSize: 12,
+      address: "Calle 11 #5-51, La Candelaria",
+      city: "Bogotá",
+      country: "Colombia",
+      coordinates: { lat: 4.6097, lng: -74.0817 },
+      phone: "+57 1 342 7890",
+      website: "www.ecotoursbogota.co",
+      isContactCardVisible: true,
+      isMapVisible: true,
+      messagingEnabled: true,
+      messagingBio: "¡Hola! Somos EcoTours Bogotá. Estamos aquí para mostrarte la cara sostenible y verde de nuestra hermosa capital. Contáctanos para vivir experiencias únicas que conectan con la naturaleza urbana.",
+      acceptsInquiries: true,
+      responseTimeHours: 24,
+      experienceSetupComplete: true,
+      defaultExperienceCategory: "Turismo Urbano Sostenible",
+      defaultMeetingPoint: "Plaza Bolívar, La Candelaria, Bogotá",
+      defaultCancellationPolicy: "Cancelación gratuita hasta 24 horas antes. Cancelaciones tardías tienen un cargo del 25%. No se admiten reembolsos por no presentarse debido a condiciones climáticas.",
+      certifications: ["Certificación en Turismo Sostenible - Ministerio de Comercio"],
+      sustainabilityPractices: ["Uso de transporte ecológico", "Trabajo con comunidades locales", "Reducción de residuos", "Conservación de humedales"],
+      accessibilityFeatures: ["Tours adaptados", "Rutas accesibles"],
+      languages: ["Español", "Inglés"],
+      socialMedia: {
+        instagram: "@ecotours_bogota",
+        linkedin: "linkedin.com/company/ecotours-bogota",
+        twitter: "@ecotoursbogota",
+        facebook: "EcoTours Bogotá"
+      },
+      emergencyContact: {
+        name: "Ana María Rodríguez",
+        phone: "+57 300 789 4567",
+        email: "ana@ecotoursbogota.co",
+        relationship: "Coordinadora de Tours"
+      },
+      profileComplete: false, // Set to false so user completes manually
+      registrationComplete: false,
+      profileCompletion: 35,
+      verificationLevel: "basic",
+      acceptTerms: false
+    };
+  };
+
   const form = useForm<RegistrationForm>({
     resolver: zodResolver(registrationSchema),
     mode: 'onChange',
@@ -468,6 +526,21 @@ const ComprehensiveCompanyRegistration = () => {
     });
   };
 
+  // Utility function to fill EcoTours Bogotá test data
+  const fillEcoToursTestData = () => {
+    const ecoToursData = getEcoToursTestData();
+    form.reset({
+      ...form.getValues(),
+      ...ecoToursData
+    });
+    
+    toast({
+      title: "Información Cargada",
+      description: "Se han cargado los datos de EcoTours Bogotá para autocompletar el registro",
+      duration: 4000
+    });
+  };
+
   const renderStep = () => {
     switch (currentStep) {
       case 1:
@@ -543,6 +616,23 @@ const ComprehensiveCompanyRegistration = () => {
                 {form.formState.errors.confirmPassword && (
                   <p className="text-red-400 text-sm">{form.formState.errors.confirmPassword.message}</p>
                 )}
+              </div>
+            </div>
+
+            {/* Botón de autocompletar información de prueba */}
+            <div className="mt-6 pt-4 border-t border-white/20">
+              <div className="text-center">
+                <p className="text-white/60 text-sm mb-3">¿Quieres probar con datos de ejemplo?</p>
+                <Button
+                  type="button"
+                  onClick={fillEcoToursTestData}
+                  className="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2 rounded-lg transition-all duration-300 hover:scale-105"
+                  data-testid="button-autofill-ecotours"
+                >
+                  <Building2 className="w-4 h-4 mr-2" />
+                  Autocompletar con EcoTours Bogotá
+                </Button>
+                <p className="text-white/50 text-xs mt-2">Carga datos de prueba para completar el registro más rápido</p>
               </div>
             </div>
           </div>
