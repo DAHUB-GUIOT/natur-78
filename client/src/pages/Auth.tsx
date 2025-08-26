@@ -139,8 +139,8 @@ const Auth = () => {
 
   // Login State
   const [loginData, setLoginData] = useState({
-    email: isEmpresas ? "nicolasdominguez2603@gmail.com" : "",
-    password: isEmpresas ? "test123456" : ""
+    email: isEmpresas ? "festivalnatur2025@gmail.com" : "",
+    password: isEmpresas ? "natur2025" : ""
   });
 
   // Complete Registration State - ALL 15 steps for empresas
@@ -409,57 +409,57 @@ const Auth = () => {
     if (!isEmpresas) return;
     
     setRegistrationData({
-      firstName: "Alejandro",
-      lastName: "Torres",
-      email: "nicolasdominguez2603@gmail.com",
-      password: "test123456",
-      confirmPassword: "test123456",
-      phone: "+57 318 765 4321",
-      companyName: "Verde Canopy Lodge",
-      businessType: "Alojamiento",
-      companyCategory: "Alojamientos Sostenibles",
-      companySubcategory: "Eco-Lodge de Lujo",
-      companyDescription: "Eco-lodge de lujo ubicado en plena Amazonia colombiana, ofrecemos una experiencia inmersiva en la naturaleza con el máximo confort y respeto ambiental. Nuestras cabañas elevadas permiten observar la vida silvestre mientras disfrutas de servicios de clase mundial.",
-      yearsExperience: "12",
-      teamSize: "35",
-      address: "Km 15 Vía Leticia - Puerto Nariño",
-      city: "Leticia",
+      firstName: "Isabella",
+      lastName: "Vargas",
+      email: "festivalnatur2025@gmail.com",
+      password: "natur2025",
+      confirmPassword: "natur2025",
+      phone: "+57 314 892 7365",
+      companyName: "Senderos Ancestrales",
+      businessType: "Educación",
+      companyCategory: "Educación y Sensibilización Ambiental",
+      companySubcategory: "Centro de Interpretación Ambiental",
+      companyDescription: "Centro especializado en educación ambiental y cultural que rescata los saberes ancestrales de las comunidades indígenas. Ofrecemos programas educativos, talleres vivenciales y experiencias de inmersión cultural enfocados en la conservación y el respeto por la naturaleza.",
+      yearsExperience: "9",
+      teamSize: "22",
+      address: "Vereda El Paraíso, Finca La Esperanza",
+      city: "Villa de Leyva",
       country: "Colombia",
-      website: "https://verdecanopylodge.com",
-      coordinates: { lat: -4.2153, lng: -69.9406 },
+      website: "https://senderosancestrales.org",
+      coordinates: { lat: 5.6342, lng: -73.5264 },
       profilePicture: "",
-      bio: "Verde Canopy Lodge es un refugio de lujo sostenible en el corazón de la Amazonia colombiana. Nuestras cabañas elevadas ofrecen vistas espectaculares del dosel amazónico mientras respetamos completamente el ecosistema. Trabajamos con comunidades indígenas locales para brindar experiencias auténticas de conexión con la naturaleza.",
-      servicesOffered: ["Alojamiento de lujo", "Tours de observación de fauna", "Experiencias culturales indígenas", "Canopy tours", "Spa natural"],
-      targetMarket: "Ecoturistas de lujo, biólogos, fotógrafos de naturaleza, viajeros conscientes",
+      bio: "Senderos Ancestrales es un centro pionero en educación ambiental que rescata los saberes tradicionales de nuestros antepasados. Ubicados en Villa de Leyva, ofrecemos programas educativos únicos que combinan conocimiento científico con sabiduría ancestral, promoviendo la conservación y el respeto por la Pachamama.",
+      servicesOffered: ["Talleres de saberes ancestrales", "Programas educativos escolares", "Ceremonias de conexión con la tierra", "Huerta orgánica comunitaria", "Retiros de bienestar natural"],
+      targetMarket: "Instituciones educativas, familias conscientes, empresas con RSE, investigadores ambientales",
       operatingHours: {},
-      certifications: ["Green Globe Certified", "Rainforest Alliance", "IUCN Protected Area"],
-      sustainabilityPractices: ["Energía 100% solar", "Captación de agua lluvia", "Arquitectura sostenible", "Conservación de biodiversidad"],
-      accessibilityFeatures: ["Senderos adaptados", "Cabañas accesibles", "Guías especializados"],
+      certifications: ["UNESCO Catedra Educación", "SINA Certificado", "Bienestar Animal WSPA"],
+      sustainabilityPractices: ["Permacultura integral", "Medicina tradicional", "Construcción en tierra", "Semillas criollas"],
+      accessibilityFeatures: ["Espacios inclusivos", "Traducción a lenguas nativas", "Materiales táctiles"],
       socialMedia: {},
-      linkedinUrl: "https://linkedin.com/company/verde-canopy-lodge",
-      facebookUrl: "https://facebook.com/verdecanopylodge",
-      instagramUrl: "https://instagram.com/verdecanopylodge",
-      twitterUrl: "https://twitter.com/verdecanopy",
+      linkedinUrl: "https://linkedin.com/company/senderos-ancestrales",
+      facebookUrl: "https://facebook.com/senderosancestrales",
+      instagramUrl: "https://instagram.com/senderos_ancestrales",
+      twitterUrl: "https://twitter.com/senderosanc",
       emergencyContact: {
-        name: "Diana Aguilar",
-        phone: "+57 320 123 4567",
-        email: "emergencias@verdecanopylodge.com",
-        relationship: "Coordinadora de Operaciones"
+        name: "Abuela Rosa María",
+        phone: "+57 321 987 6543",
+        email: "coordinacion@senderosancestrales.org",
+        relationship: "Sabia Ancestral y Coordinadora"
       },
       messagingEnabled: true,
-      messagingBio: "¡Hola! Somos Verde Canopy Lodge. Estamos aquí para ofrecerte una experiencia única en la Amazonia colombiana, donde el lujo se encuentra con la naturaleza. Conectemos con la biodiversidad más rica del planeta.",
+      messagingBio: "¡Hola! Somos Senderos Ancestrales. Estamos aquí para compartir la sabiduría de nuestros ancestros y conectarte con la Pachamama. Caminemos juntos por los senderos del conocimiento tradicional y la armonía con la naturaleza.",
       acceptsInquiries: true,
       responseTimeHours: 12,
       experienceSetupComplete: true,
-      defaultExperienceCategory: "ecoturismo",
-      defaultMeetingPoint: "Verde Canopy Lodge - Recepción Principal",
-      defaultCancellationPolicy: "Cancelación gratuita hasta 7 días antes del check-in. Modificaciones sin costo hasta 48 horas antes de la llegada.",
-      businessLicense: "HOT-2023-789012",
-      taxId: "900789012-4",
+      defaultExperienceCategory: "educacion",
+      defaultMeetingPoint: "Centro Senderos Ancestrales - Círculo Sagrado",
+      defaultCancellationPolicy: "Cancelación gratuita hasta 48 horas antes del taller. Reagendamos por clima o emergencias familiares.",
+      businessLicense: "EDU-2023-456789",
+      taxId: "900456789-1",
       languages: ["Español", "Inglés", "Portugués"],
       acceptTerms: true,
       paymentMethods: ["transferencia", "tarjeta"],
-      invoiceEmail: "nicolasdominguez2603@gmail.com",
+      invoiceEmail: "festivalnatur2025@gmail.com",
       taxInformation: "Régimen simplificado",
       emailNotifications: true,
       smsNotifications: false,
@@ -473,7 +473,7 @@ const Auth = () => {
     
     toast({
       title: "Datos de prueba cargados",
-      description: "Se han cargado los datos completos de Verde Canopy Lodge",
+      description: "Se han cargado los datos completos de Senderos Ancestrales",
     });
   };
 
@@ -1569,7 +1569,7 @@ const Auth = () => {
                               onClick={() => loadTestData()}
                               className="text-xs"
                             >
-                              🌿 Cargar Datos de Prueba (Eco-Lodge)
+                              🌱 Cargar Datos de Prueba (Centro Educativo)
                             </Button>
                           </div>
                         </>
@@ -1656,8 +1656,8 @@ const Auth = () => {
                   {isEmpresas && (
                     <div className="mt-6 p-4 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg">
                       <h3 className="text-sm font-semibold text-gray-800 dark:text-white mb-2">Cuenta de prueba:</h3>
-                      <p className="text-xs text-gray-600 dark:text-gray-400">Email: nicolasdominguez2603@gmail.com</p>
-                      <p className="text-xs text-gray-600 dark:text-gray-400">Contraseña: test123456</p>
+                      <p className="text-xs text-gray-600 dark:text-gray-400">Email: festivalnatur2025@gmail.com</p>
+                      <p className="text-xs text-gray-600 dark:text-gray-400">Contraseña: natur2025</p>
                     </div>
                   )}
                 </>
