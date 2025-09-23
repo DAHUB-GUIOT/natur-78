@@ -190,8 +190,8 @@ const PortalViajerosNew = () => {
 
       {/* Mobile Search Panel */}
       <div className="absolute top-4 left-2 right-2 z-10 lg:hidden">
-        <Card className="mobile-card bg-black/60 backdrop-blur-sm border-white/20">
-          <CardContent className="mobile-p-3">
+        <Card className="bg-black/60 backdrop-blur-sm border-white/20 rounded-xl shadow-lg">
+          <CardContent className="p-3 sm:p-4">
             <div className="flex gap-3">
               <div className="flex-1 relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/40 w-4 h-4" />
@@ -199,10 +199,10 @@ const PortalViajerosNew = () => {
                   placeholder="Buscar experiencias..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="mobile-input pl-10 bg-white/10 border-white/30 text-white placeholder:text-white/50"
+                  className="pl-10 bg-white/10 border-white/30 text-white placeholder:text-white/50 h-10 rounded-lg touch-manipulation"
                 />
               </div>
-              <Button className="mobile-btn bg-green-600 hover:bg-green-700 text-white">
+              <Button className="bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-lg min-h-[40px] touch-manipulation">
                 <TreePine className="w-4 h-4" />
               </Button>
             </div>
