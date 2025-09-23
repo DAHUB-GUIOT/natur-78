@@ -19,7 +19,6 @@ import TwitterProfileSection from "@/components/profile/TwitterProfileSection";
 import { HeaderButtons } from "@/components/layout/HeaderButtons";
 import { DesktopSidebar } from "@/components/layout/DesktopSidebar";
 import { MobileBottomNav } from "@/components/layout/MobileBottomNav";
-import UserFlowManager from "@/components/userflow/UserFlowManager";
 import ExperienceForm from "@/components/dashboard/ExperienceForm";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { useAuth } from '@/contexts/AuthContext';
@@ -458,10 +457,6 @@ const MinimalistPortalEmpresas = () => {
         </div>
       </div>
 
-      {/* User Flow Progress - Compact */}
-      <div className="mb-3">
-        <UserFlowManager />
-      </div>
 
       {/* Profile Stats - More compact */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
