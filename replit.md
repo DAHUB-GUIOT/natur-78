@@ -45,6 +45,27 @@ Preferred communication style: Simple, everyday language.
 - **7-Step User Flow System**: Complete user journey from registration to traveler map visibility with automatic feature activation, progress tracking, and verification levels.
 - **Facebook-Style Profile System**: Redesigned profile view with cover photo, circular profile picture, and Facebook-inspired layout. Includes a 4-tab edit profile system and a dedicated configuration page for account management, notifications, and privacy settings.
 
+## Recent Changes
+
+### Registration System Expansion (September 2025)
+- **New Tourism Categories**: Added Guía de turismo, Intérprete de idiomas, and DMC (Destination Management Company) to expand professional coverage
+- **Enhanced Subcategories**: Integrated Turismo comunitario, Turismo regenerativo, and Turismo de naturaleza as specialized tourism types
+- **Streamlined Registration Flow**: Reduced from 10+ steps to 4 essential steps:
+  1. Basic Information
+  2. Company Information  
+  3. Complete Profile Configuration
+  4. Location & Emergency Contact
+- **Smart Address Input**: Created MapboxAddressInput component with coordinate integration for Colombian cities
+- **Regional City Selector**: Implemented CitySelector with Colombian cities organized by regions (Andina, Caribe, Pacífica, Orinoquía, Amazónica)
+- **Enhanced Country Selection**: Updated CountrySelector with focus on Spanish-speaking countries and major tourism markets
+- **Form Validation**: Integrated all new components with proper form validation and error handling
+
+### Technical Improvements
+- Comprehensive UX/UI optimization across all Portal Empresas views with proper spacing and mobile responsiveness
+- Fixed overlapping elements and layout issues between sidebar, pages, and cards
+- Enhanced map view with improved mobile map point visibility and coordinate validation
+- Automated default values for removed registration steps to maintain data integrity
+
 ## External Dependencies
 
 - `@neondatabase/serverless`: Serverless PostgreSQL connection
