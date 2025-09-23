@@ -1183,3 +1183,22 @@ html.invert svg,
 html.invert canvas {
   filter: invert(1) hue-rotate(180deg);
 }
+
+/* ===== MOBILE NAVIGATION SUPPORT ===== */
+
+/* Mobile safe area support for iOS devices */
+.safe-area-pb {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* Mobile bottom navigation margin to avoid bottom nav overlap */
+.mb-mobile-nav {
+  margin-bottom: calc(72px + env(safe-area-inset-bottom));
+}
+
+/* Ensure mobile content doesn't get hidden behind bottom nav */
+@media (max-width: 1023px) {
+  .mobile-content-with-nav {
+    padding-bottom: calc(88px + env(safe-area-inset-bottom));
+  }
+}

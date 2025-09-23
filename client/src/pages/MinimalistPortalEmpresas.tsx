@@ -18,6 +18,7 @@ import { WhatsAppChat } from "@/components/messaging/WhatsAppChat";
 import TwitterProfileSection from "@/components/profile/TwitterProfileSection";
 import { HeaderButtons } from "@/components/layout/HeaderButtons";
 import { DesktopSidebar } from "@/components/layout/DesktopSidebar";
+import { MobileBottomNav } from "@/components/layout/MobileBottomNav";
 import UserFlowManager from "@/components/userflow/UserFlowManager";
 import ExperienceForm from "@/components/dashboard/ExperienceForm";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
@@ -203,11 +204,11 @@ const MinimalistPortalEmpresas = () => {
   );
 
   const renderNetworkView = () => (
-    <div className="mobile-content space-y-6 max-w-6xl mx-auto">
+    <div className="p-4 sm:p-6 md:p-8 space-y-6 max-w-6xl mx-auto">
       {/* Enhanced Desktop Header */}
       <div className="text-center space-y-3">
-        <h2 className="mobile-text-xl md:text-2xl lg:text-3xl font-bold text-white">Red de Contactos</h2>
-        <p className="text-white/60 mobile-text-sm lg:text-base">Conecta con empresas sostenibles verificadas</p>
+        <h2 className="text-xl sm:text-2xl md:text-2xl lg:text-3xl font-bold text-white">Red de Contactos</h2>
+        <p className="text-white/60 text-sm sm:text-base lg:text-base">Conecta con empresas sostenibles verificadas</p>
       </div>
 
       {/* Search Section */}
@@ -349,14 +350,14 @@ const MinimalistPortalEmpresas = () => {
   );
 
   const renderExperiencesView = () => (
-    <div className="mobile-content space-y-6">
+    <div className="p-4 sm:p-6 md:p-8 space-y-6">
       <div className="flex flex-col space-y-4">
-        <h2 className="mobile-text-xl font-light text-white">Mis Experiencias</h2>
+        <h2 className="text-xl sm:text-2xl font-light text-white">Mis Experiencias</h2>
         
         {/* Mobile-First Button for Experience Creation */}
         <Sheet open={showExperienceForm} onOpenChange={setShowExperienceForm}>
           <SheetTrigger asChild>
-            <Button className="mobile-btn w-full bg-blue-600 hover:bg-blue-700 text-white">
+            <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg min-h-[48px] touch-manipulation">
               <Plus className="w-4 h-4 md:w-5 md:h-5 mr-2" />
               Nueva Experiencia
             </Button>
@@ -404,7 +405,7 @@ const MinimalistPortalEmpresas = () => {
   );
 
   const renderProfileView = () => (
-    <div className="mobile-content space-y-6 max-w-4xl mx-auto">
+    <div className="p-4 sm:p-6 md:p-8 space-y-6 max-w-4xl mx-auto">
       {/* Cover Photo Section - Facebook Style */}
       <div className="relative w-full h-48 md:h-64 bg-gradient-to-r from-green-600 via-green-500 to-blue-600 rounded-xl overflow-hidden">
         <div className="absolute inset-0 bg-black/20"></div>
@@ -717,6 +718,13 @@ const MinimalistPortalEmpresas = () => {
 
       {/* WhatsApp Chat Integration */}
       <WhatsAppChat />
+      
+      {/* Mobile Bottom Navigation */}
+      <MobileBottomNav
+        items={navItems}
+        activeView={activeView}
+        onNavigation={handleNavigation}
+      />
       
       {/* Profile configuration removed - all information captured during registration */}
 

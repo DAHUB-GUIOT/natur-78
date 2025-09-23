@@ -17,6 +17,7 @@ import { WhatsAppChat } from "@/components/messaging/WhatsAppChat";
 import TwitterProfileSection from "@/components/profile/TwitterProfileSection";
 import { HeaderButtons } from "@/components/layout/HeaderButtons";
 import { DesktopSidebar } from "@/components/layout/DesktopSidebar";
+import { MobileBottomNav } from "@/components/layout/MobileBottomNav";
 import UserFlowManager from "@/components/userflow/UserFlowManager";
 import { useAuth } from '@/contexts/AuthContext';
 import AuthViajeros from "./AuthViajeros";
@@ -438,6 +439,13 @@ const PortalViajerosNew = () => {
           </motion.div>
         </main>
       </div>
+
+      {/* Mobile Bottom Navigation */}
+      <MobileBottomNav
+        items={navItems}
+        activeView={activeView}
+        onNavigation={handleNavigation}
+      />
     </div>
   );
 };
