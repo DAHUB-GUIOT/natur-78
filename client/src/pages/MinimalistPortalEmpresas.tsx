@@ -3,7 +3,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useLocation } from "wouter";
 import { motion } from "framer-motion";
 import { 
-  Map, Building2, Star, MessageCircle, Settings, User, Plus,
+  Map, Building2, Star, Settings, User, Plus,
   Search, MapPin, Globe, Hotel, Utensils, Car, Heart, 
   GraduationCap, Smartphone, Handshake, Leaf, TreePine,
   Plane, Camera, Coffee, Waves, Mountain, LogOut
@@ -187,7 +187,7 @@ const MinimalistPortalEmpresas = () => {
     { id: "map", label: "Mapa", icon: Map },
     { id: "network", label: "Red", icon: Building2 },
     { id: "experiences", label: "Experiencias", icon: Star },
-    { id: "messages", label: "Mensajes", icon: MessageCircle },
+    { id: "messages", label: "Mensajes", icon: () => <span>💬</span> },
     { id: "profile", label: "Perfil", icon: User },
     { id: "settings", label: "Ajustes", icon: Settings }
   ];
@@ -302,29 +302,16 @@ const MinimalistPortalEmpresas = () => {
                     </div>
                   </div>
 
-                  {/* Action Buttons */}
-                  <div className="flex space-x-2">
-                    <Button 
-                      size="sm" 
-                      className="flex-1 bg-gradient-to-r from-green-600 to-green-800 hover:from-blue-700 hover:to-blue-800 text-white font-semibold text-sm h-9 shadow-lg transition-all duration-300"
-                      onClick={() => handleViewProfile(company.id)}
-                      data-testid={`button-view-profile-${company.id}`}
-                    >
-                      <User className="w-3 h-3 mr-1" />
-                      Ver perfil
-                    </Button>
-                    <Button 
-                      size="sm" 
-                      variant="outline"
-                      className="flex-1 border-white/30 text-white hover:bg-white/10 font-semibold text-sm h-9 shadow-lg transition-all duration-300"
-                      onClick={() => handleSendMessage(company.id)}
-                      disabled={createConversationMutation.isPending}
-                      data-testid={`button-send-message-${company.id}`}
-                    >
-                      <MessageCircle className="w-3 h-3 mr-1" />
-                      {createConversationMutation.isPending ? 'Enviando...' : 'Enviar mensaje'}
-                    </Button>
-                  </div>
+                  {/* Action Button - Optimized */}
+                  <Button 
+                    size="sm" 
+                    className="w-full bg-gradient-to-r from-green-600 to-green-800 hover:from-blue-700 hover:to-blue-800 text-white font-semibold text-sm h-10 shadow-lg transition-all duration-300"
+                    onClick={() => handleViewProfile(company.id)}
+                    data-testid={`button-view-profile-${company.id}`}
+                  >
+                    <User className="w-4 h-4 mr-2" />
+                    Ver Perfil Completo
+                  </Button>
 
                   {/* Connection Status */}
                   <div className="mt-3 pt-3 border-t border-white/10">
@@ -726,8 +713,6 @@ const MinimalistPortalEmpresas = () => {
         </div>
       </div>
 
-      {/* WhatsApp Chat Integration */}
-      <WhatsAppChat />
       
       {/* Profile configuration removed - all information captured during registration */}
 
