@@ -405,7 +405,7 @@ const PortalViajerosNew = () => {
       {/* Mobile only HeaderButtons */}
       <div className="lg:hidden">
         <HeaderButtons 
-          showPortalButtons={false} 
+          showPortalButtons={true} 
           showPortalEmpresasNav={true}
           navItems={navItems}
           activeView={activeView}

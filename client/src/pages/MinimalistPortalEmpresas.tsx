@@ -633,7 +633,7 @@ const MinimalistPortalEmpresas = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-green-900">
       <HeaderButtons 
-        showPortalButtons={false} 
+        showPortalButtons={true} 
         showPortalEmpresasNav={true}
         navItems={navItems}
         activeView={activeView}
