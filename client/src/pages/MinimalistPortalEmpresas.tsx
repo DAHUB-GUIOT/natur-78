@@ -473,17 +473,6 @@ const MinimalistPortalEmpresas = () => {
           </CardContent>
         </Card>
       </div>
-        
-        {/* Alternative button that also opens the same form */}
-        <Sheet open={showExperienceForm} onOpenChange={setShowExperienceForm}>
-          <SheetTrigger asChild>
-            <Button className="w-full max-w-sm bg-blue-600 hover:bg-blue-700 text-white h-12">
-              <Plus className="w-5 h-5 mr-2" />
-              Crear Primera Experiencia
-            </Button>
-          </SheetTrigger>
-        </Sheet>
-      </div>
     </div>
   );
 
@@ -654,44 +643,100 @@ const MinimalistPortalEmpresas = () => {
   );
 
   const renderSettingsView = () => (
-    <div className="p-4 space-y-6">
-      <h2 className="text-xl font-light text-white mb-4">Configuración</h2>
-      
-      {/* Portal Navigation */}
-      <Card className="bg-white/10 backdrop-blur-sm border-white/20">
-        <CardContent className="p-6">
-          <h3 className="text-white font-semibold mb-4 flex items-center">
-            <div className="w-2 h-6 bg-green-500 rounded-full mr-3"></div>
-            Navegación entre Portales
-          </h3>
-          <div className="space-y-3">
-            <Button 
-              className="w-full bg-green-600 hover:bg-green-700 text-white h-12 flex items-center justify-center"
-              onClick={() => setLocation('/portal-empresas')}
-            >
-              <Building2 className="w-5 h-5 mr-2" />
-              Portal Empresas (Actual)
-            </Button>
-            <Button 
-              variant="outline" 
-              className="w-full border-green-400/50 text-green-300 hover:bg-green-400/10 h-12 flex items-center justify-center"
-              onClick={() => setLocation('/portal-viajeros')}
-            >
-              <MapPin className="w-5 h-5 mr-2" />
-              Cambiar a Portal Viajeros
-            </Button>
+    <div className="p-4 sm:p-6 md:p-8 space-y-8 max-w-4xl mx-auto">
+      {/* Enhanced Header */}
+      <div className="text-center space-y-4">
+        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white">Configuración</h2>
+        <p className="text-white/60 text-base lg:text-lg">Administra tu cuenta y preferencias del portal</p>
+      </div>
+
+      {/* Enhanced Portal Navigation */}
+      <Card className="bg-gradient-to-r from-green-600/20 to-blue-600/20 backdrop-blur-xl border-white/20 shadow-2xl">
+        <CardContent className="p-8">
+          <div className="flex items-center space-x-3 mb-6">
+            <div className="w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center">
+              <span className="text-2xl">🚀</span>
+            </div>
+            <div>
+              <h3 className="text-xl font-bold text-white">Navegación entre Portales</h3>
+              <p className="text-white/60 text-sm">Accede a ambos ecosistemas con una sola cuenta</p>
+            </div>
           </div>
-          <p className="text-xs text-white/50 mt-3">
-            Usa el mismo usuario para acceder a ambos portales y ver diferentes perspectivas
-          </p>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <Card className="bg-green-600/20 backdrop-blur-sm border-green-400/30 hover:bg-green-600/30 transition-all duration-300">
+              <CardContent className="p-6 text-center">
+                <div className="w-16 h-16 bg-green-500 rounded-xl flex items-center justify-center mx-auto mb-4 shadow-lg">
+                  <Building2 className="w-8 h-8 text-white" />
+                </div>
+                <h4 className="text-white font-bold text-lg mb-2">Portal Empresas</h4>
+                <p className="text-white/70 text-sm mb-4">Gestiona tu negocio sostenible</p>
+                <Badge className="bg-green-500 text-white font-semibold">Actual</Badge>
+              </CardContent>
+            </Card>
+            
+            <Card className="bg-blue-600/20 backdrop-blur-sm border-blue-400/30 hover:bg-blue-600/30 transition-all duration-300 cursor-pointer" onClick={() => setLocation('/portal-viajeros')}>
+              <CardContent className="p-6 text-center">
+                <div className="w-16 h-16 bg-blue-500 rounded-xl flex items-center justify-center mx-auto mb-4 shadow-lg">
+                  <MapPin className="w-8 h-8 text-white" />
+                </div>
+                <h4 className="text-white font-bold text-lg mb-2">Portal Viajeros</h4>
+                <p className="text-white/70 text-sm mb-4">Descubre experiencias únicas</p>
+                <Badge variant="outline" className="border-blue-400 text-blue-400">Cambiar</Badge>
+              </CardContent>
+            </Card>
+          </div>
         </CardContent>
       </Card>
 
-      <Card className="bg-white/10 backdrop-blur-sm border-white/20">
-        <CardContent className="p-6">
+      {/* Account Settings */}
+      <Card className="bg-white/5 backdrop-blur-xl border-white/20 shadow-xl">
+        <CardContent className="p-8">
+          <div className="flex items-center space-x-3 mb-6">
+            <div className="w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center">
+              <span className="text-2xl">⚙️</span>
+            </div>
+            <div>
+              <h3 className="text-xl font-bold text-white">Configuración de Cuenta</h3>
+              <p className="text-white/60 text-sm">Gestiona tu perfil y preferencias</p>
+            </div>
+          </div>
           <TwitterProfileSection />
         </CardContent>
       </Card>
+
+      {/* Quick Actions */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <Card className="bg-white/5 backdrop-blur-xl border-white/20 hover:bg-white/10 transition-all duration-300 cursor-pointer">
+          <CardContent className="p-6 text-center">
+            <div className="w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center mx-auto mb-4">
+              <span className="text-2xl">📊</span>
+            </div>
+            <h4 className="text-white font-semibold mb-2">Analytics</h4>
+            <p className="text-white/60 text-sm">Ver estadísticas de tu perfil y experiencias</p>
+          </CardContent>
+        </Card>
+        
+        <Card className="bg-white/5 backdrop-blur-xl border-white/20 hover:bg-white/10 transition-all duration-300 cursor-pointer">
+          <CardContent className="p-6 text-center">
+            <div className="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center mx-auto mb-4">
+              <span className="text-2xl">🔔</span>
+            </div>
+            <h4 className="text-white font-semibold mb-2">Notificaciones</h4>
+            <p className="text-white/60 text-sm">Configura tus preferencias de notificaciones</p>
+          </CardContent>
+        </Card>
+        
+        <Card className="bg-white/5 backdrop-blur-xl border-white/20 hover:bg-white/10 transition-all duration-300 cursor-pointer">
+          <CardContent className="p-6 text-center">
+            <div className="w-12 h-12 bg-red-500/20 rounded-xl flex items-center justify-center mx-auto mb-4">
+              <span className="text-2xl">🔐</span>
+            </div>
+            <h4 className="text-white font-semibold mb-2">Privacidad</h4>
+            <p className="text-white/60 text-sm">Controla la visibilidad de tu información</p>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 
