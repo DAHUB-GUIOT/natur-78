@@ -30,19 +30,19 @@ export function HeaderButtons({
       <div className={`fixed top-0 left-0 right-0 z-50 backdrop-blur-sm transition-all duration-300 ${
         isTicketsOpen ? 'bg-yellow-400' : (isPortalNavOpen ? 'bg-blue-800' : (isMenuOpen ? 'bg-green-800' : 'bg-black/10'))
       }`}>
-        <div className="flex items-center justify-between p-4">
-          {/* Logo on the left */}
+        <div className="flex items-center justify-between p-3 sm:p-4">
+          {/* Enhanced Logo - Mobile Optimized */}
           <Link to="/" className="flex items-center">
-            <div className="w-12 h-12 flex items-center justify-center">
-              <span className={`font-gasoek text-3xl font-bold drop-shadow-lg transition-colors duration-300 ${
+            <div className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center bg-[#cad95e]/20 rounded-lg border border-[#cad95e]/30">
+              <span className={`font-gasoek text-2xl sm:text-3xl font-bold drop-shadow-lg transition-colors duration-300 ${
                 isTicketsOpen ? 'text-green-600' : (isMenuOpen ? 'text-yellow-400' : 'text-yellow-400')
               }`}>N</span>
             </div>
-            <div className="ml-3 hidden sm:block">
-              <h1 className={`font-gasoek text-lg font-bold transition-colors duration-300 ${
+            <div className="ml-2 sm:ml-3">
+              <h1 className={`font-gasoek text-sm sm:text-lg font-bold transition-colors duration-300 ${
                 isTicketsOpen ? 'text-green-600' : (isMenuOpen ? 'text-yellow-400' : 'text-white')
               }`}>NATUR</h1>
-              <p className={`text-xs transition-colors duration-300 ${
+              <p className={`text-xs transition-colors duration-300 hidden xs:block ${
                 isTicketsOpen ? 'text-green-600/80' : (isMenuOpen ? 'text-yellow-400/80' : 'text-white/80')
               }`}>Festival 2025</p>
             </div>
@@ -222,22 +222,31 @@ export function HeaderButtons({
               </div>
             )}
             
-            {/* Hamburger menu button */}
+            {/* Enhanced Hamburger Menu Button - Mobile Optimized */}
             <Button 
               variant="ghost" 
               size="icon" 
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className={`w-10 h-10 touch-manipulation min-w-[44px] transition-colors duration-300 ${
+              className={`w-11 h-11 sm:w-12 sm:h-12 touch-manipulation min-w-[44px] rounded-lg border transition-all duration-300 ${
                 isTicketsOpen 
-                  ? 'text-green-600 hover:text-green-700 hover:bg-green-600/10' 
-                  : (isMenuOpen ? 'text-yellow-400 hover:text-yellow-300 hover:bg-green-900/10' : 'text-white hover:text-[#cad95e] hover:bg-white/10')
+                  ? 'text-green-600 hover:text-green-700 border-green-600/30 hover:bg-green-600/10 hover:border-green-600/50' 
+                  : (isMenuOpen 
+                      ? 'text-yellow-400 hover:text-yellow-300 border-yellow-400/50 bg-green-900/20 hover:bg-green-900/30' 
+                      : 'text-white hover:text-[#cad95e] border-white/20 hover:bg-white/10 hover:border-[#cad95e]/50'
+                    )
               }`}
+              data-testid="button-menu-toggle"
             >
-              {isMenuOpen ? (
-                <X className="h-4 w-4" />
-              ) : (
-                <Menu className="h-4 w-4" />
-              )}
+              <motion.div
+                animate={{ rotate: isMenuOpen ? 90 : 0 }}
+                transition={{ duration: 0.2 }}
+              >
+                {isMenuOpen ? (
+                  <X className="h-5 w-5 sm:h-6 sm:w-6" />
+                ) : (
+                  <Menu className="h-5 w-5 sm:h-6 sm:w-6" />
+                )}
+              </motion.div>
             </Button>
           </div>
         </div>
@@ -281,136 +290,151 @@ export function HeaderButtons({
         )}
       </AnimatePresence>
 
-      {/* Mobile Menu Overlay */}
+      {/* Enhanced Mobile Menu Overlay */}
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="fixed top-16 left-0 right-0 z-40 bg-green-800 border-b border-green-900"
+            initial={{ opacity: 0, y: -20, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -20, scale: 0.95 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+            className="fixed top-14 sm:top-16 left-0 right-0 z-40 bg-green-800/95 backdrop-blur-md border-b border-green-900/50 shadow-2xl"
           >
-            <div className="p-4 space-y-3">
-              {/* Portal Buttons */}
+            <div className="p-4 sm:p-6 space-y-2 max-h-[calc(100vh-80px)] overflow-y-auto">
+              {/* Enhanced Portal Buttons */}
               <Link to="/auth/empresas" onClick={() => setIsMenuOpen(false)}>
                 <Button 
                   variant="ghost"
-                  className="w-full justify-start text-yellow-400 hover:text-yellow-400 hover:bg-green-900/50 py-6"
+                  className="w-full justify-start text-yellow-400 hover:text-yellow-400 hover:bg-green-900/30 py-4 sm:py-6 rounded-lg border border-transparent hover:border-yellow-400/20 transition-all duration-200"
+                  data-testid="link-portal-empresas"
                 >
-                  <Building2 className="w-6 h-6 mr-4" />
-                  <span className="text-2xl font-black font-gasoek tracking-wider uppercase">Portal Empresas</span>
+                  <Building2 className="w-5 h-5 sm:w-6 sm:h-6 mr-3 sm:mr-4" />
+                  <span className="text-lg sm:text-2xl font-black font-gasoek tracking-wider uppercase">Portal Empresas</span>
                 </Button>
               </Link>
               
               <Link to="/portal-viajeros" onClick={() => setIsMenuOpen(false)}>
                 <Button 
                   variant="ghost"
-                  className="w-full justify-start text-yellow-400 hover:text-yellow-400 hover:bg-green-900/50 py-6"
+                  className="w-full justify-start text-yellow-400 hover:text-yellow-400 hover:bg-green-900/30 py-4 sm:py-6 rounded-lg border border-transparent hover:border-yellow-400/20 transition-all duration-200"
+                  data-testid="link-portal-viajeros"
                 >
-                  <MapPin className="w-6 h-6 mr-4" />
-                  <span className="text-2xl font-black font-gasoek tracking-wider uppercase">Mapa Turismo</span>
+                  <MapPin className="w-5 h-5 sm:w-6 sm:h-6 mr-3 sm:mr-4" />
+                  <span className="text-lg sm:text-2xl font-black font-gasoek tracking-wider uppercase">Mapa Turismo</span>
                 </Button>
               </Link>
 
-              {/* Divider */}
-              <div className="border-t border-yellow-400/30 my-6"></div>
+              {/* Enhanced Divider */}
+              <div className="border-t border-yellow-400/20 my-4 sm:my-6"></div>
 
-              {/* Event Information */}
+              {/* Enhanced Event Information */}
               <Link to="/agenda" onClick={() => setIsMenuOpen(false)}>
                 <Button 
                   variant="ghost"
-                  className="w-full justify-start text-yellow-400 hover:text-yellow-400 hover:bg-green-900/50 py-6"
+                  className="w-full justify-start text-yellow-400 hover:text-yellow-400 hover:bg-green-900/30 py-4 sm:py-6 rounded-lg border border-transparent hover:border-yellow-400/20 transition-all duration-200"
+                  data-testid="link-agenda"
                 >
-                  <Calendar className="w-6 h-6 mr-4" />
-                  <span className="text-2xl font-black font-gasoek tracking-wider uppercase">Agenda</span>
+                  <Calendar className="w-5 h-5 sm:w-6 sm:h-6 mr-3 sm:mr-4" />
+                  <span className="text-lg sm:text-2xl font-black font-gasoek tracking-wider uppercase">Agenda</span>
                 </Button>
               </Link>
               
               <Link to="/tickets" onClick={() => setIsMenuOpen(false)}>
                 <Button 
                   variant="ghost"
-                  className="w-full justify-start text-yellow-400 hover:text-yellow-400 hover:bg-green-900/50 py-6"
+                  className="w-full justify-start text-yellow-400 hover:text-yellow-400 hover:bg-green-900/30 py-4 sm:py-6 rounded-lg border border-transparent hover:border-yellow-400/20 transition-all duration-200"
+                  data-testid="link-tickets"
                 >
-                  <Ticket className="w-6 h-6 mr-4" />
-                  <span className="text-2xl font-black font-gasoek tracking-wider uppercase">Entradas</span>
+                  <Ticket className="w-5 h-5 sm:w-6 sm:h-6 mr-3 sm:mr-4" />
+                  <span className="text-lg sm:text-2xl font-black font-gasoek tracking-wider uppercase">Entradas</span>
                 </Button>
               </Link>
               
               <Link to="/biodiversidad" onClick={() => setIsMenuOpen(false)}>
                 <Button 
                   variant="ghost"
-                  className="w-full justify-start text-yellow-400 hover:text-yellow-400 hover:bg-green-900/50 py-6"
+                  className="w-full justify-start text-yellow-400 hover:text-yellow-400 hover:bg-green-900/30 py-4 sm:py-6 rounded-lg border border-transparent hover:border-yellow-400/20 transition-all duration-200"
+                  data-testid="link-biodiversidad"
                 >
-                  <Leaf className="w-6 h-6 mr-4" />
-                  <span className="text-2xl font-black font-gasoek tracking-wider uppercase">Biodiversidad</span>
+                  <Leaf className="w-5 h-5 sm:w-6 sm:h-6 mr-3 sm:mr-4" />
+                  <span className="text-lg sm:text-2xl font-black font-gasoek tracking-wider uppercase">Biodiversidad</span>
                 </Button>
               </Link>
 
-              {/* About Section */}
-              <div className="border-t border-yellow-400/30 my-6"></div>
+              {/* Enhanced About Section */}
+              <div className="border-t border-yellow-400/20 my-4 sm:my-6"></div>
               
               <Button 
                 variant="ghost"
-                className="w-full justify-start text-yellow-400 hover:text-yellow-400 hover:bg-green-900/50 py-6"
+                className="w-full justify-start text-yellow-400 hover:text-yellow-400 hover:bg-green-900/30 py-4 sm:py-6 rounded-lg border border-transparent hover:border-yellow-400/20 transition-all duration-200"
                 onClick={() => setIsMenuOpen(false)}
+                data-testid="button-sobre-natur"
               >
-                <Info className="w-6 h-6 mr-4" />
-                <span className="text-2xl font-black font-gasoek tracking-wider uppercase">Sobre NATUR</span>
+                <Info className="w-5 h-5 sm:w-6 sm:h-6 mr-3 sm:mr-4" />
+                <span className="text-lg sm:text-2xl font-black font-gasoek tracking-wider uppercase">Sobre NATUR</span>
               </Button>
 
               <Button 
                 variant="ghost"
-                className="w-full justify-start text-yellow-400 hover:text-yellow-400 hover:bg-green-900/50 py-6"
+                className="w-full justify-start text-yellow-400 hover:text-yellow-400 hover:bg-green-900/30 py-4 sm:py-6 rounded-lg border border-transparent hover:border-yellow-400/20 transition-all duration-200"
                 onClick={() => setIsMenuOpen(false)}
+                data-testid="button-quienes-somos"
               >
-                <Users className="w-6 h-6 mr-4" />
-                <span className="text-2xl font-black font-gasoek tracking-wider uppercase">Quiénes Somos</span>
+                <Users className="w-5 h-5 sm:w-6 sm:h-6 mr-3 sm:mr-4" />
+                <span className="text-lg sm:text-2xl font-black font-gasoek tracking-wider uppercase">Quiénes Somos</span>
               </Button>
 
               <Button 
                 variant="ghost"
-                className="w-full justify-start text-yellow-400 hover:text-yellow-400 hover:bg-green-900/50 py-6"
+                className="w-full justify-start text-yellow-400 hover:text-yellow-400 hover:bg-green-900/30 py-4 sm:py-6 rounded-lg border border-transparent hover:border-yellow-400/20 transition-all duration-200"
                 onClick={() => setIsMenuOpen(false)}
+                data-testid="button-contacto"
               >
-                <Mail className="w-6 h-6 mr-4" />
-                <span className="text-2xl font-black font-gasoek tracking-wider uppercase">Contacto</span>
+                <Mail className="w-5 h-5 sm:w-6 sm:h-6 mr-3 sm:mr-4" />
+                <span className="text-lg sm:text-2xl font-black font-gasoek tracking-wider uppercase">Contacto</span>
               </Button>
 
-              {/* Social Links */}
-              <div className="border-t border-yellow-400/30 my-6"></div>
+              {/* Enhanced Social Links */}
+              <div className="border-t border-yellow-400/20 my-4 sm:my-6"></div>
               
-              <div className="flex justify-center space-x-6">
-                <Button 
-                  variant="ghost"
-                  size="icon"
-                  className="text-yellow-400 hover:text-yellow-400 hover:bg-green-900/50 w-12 h-12"
-                >
-                  <Instagram className="w-8 h-8" />
-                </Button>
-                <Button 
-                  variant="ghost"
-                  size="icon"
-                  className="text-yellow-400 hover:text-yellow-400 hover:bg-green-900/50 w-12 h-12"
-                >
-                  <Twitter className="w-8 h-8" />
-                </Button>
-                <Button 
-                  variant="ghost"
-                  size="icon"
-                  className="text-yellow-400 hover:text-yellow-400 hover:bg-green-900/50 w-12 h-12"
-                >
-                  <Facebook className="w-8 h-8" />
-                </Button>
-              </div>
+              <div className="text-center">
+                <p className="text-yellow-400/80 text-sm sm:text-base mb-4 font-medium">Síguenos en redes</p>
+                <div className="flex justify-center space-x-4 sm:space-x-6 mb-4">
+                  <Button 
+                    variant="ghost"
+                    size="icon"
+                    className="text-yellow-400 hover:text-white hover:bg-green-900/30 w-10 h-10 sm:w-12 sm:h-12 rounded-lg border border-transparent hover:border-yellow-400/20 transition-all duration-200"
+                    data-testid="button-instagram"
+                  >
+                    <Instagram className="w-5 h-5 sm:w-6 sm:h-6" />
+                  </Button>
+                  <Button 
+                    variant="ghost"
+                    size="icon"
+                    className="text-yellow-400 hover:text-white hover:bg-green-900/30 w-10 h-10 sm:w-12 sm:h-12 rounded-lg border border-transparent hover:border-yellow-400/20 transition-all duration-200"
+                    data-testid="button-twitter"
+                  >
+                    <Twitter className="w-5 h-5 sm:w-6 sm:h-6" />
+                  </Button>
+                  <Button 
+                    variant="ghost"
+                    size="icon"
+                    className="text-yellow-400 hover:text-white hover:bg-green-900/30 w-10 h-10 sm:w-12 sm:h-12 rounded-lg border border-transparent hover:border-yellow-400/20 transition-all duration-200"
+                    data-testid="button-facebook"
+                  >
+                    <Facebook className="w-5 h-5 sm:w-6 sm:h-6" />
+                  </Button>
+                </div>
 
-              {/* Festival Info */}
-              <div className="text-center pt-6 border-t border-yellow-400/30">
-                <p className="text-yellow-400 text-lg font-gasoek font-bold tracking-wider">
-                  FESTIVAL NATUR 2025
-                </p>
-                <p className="text-yellow-300 text-sm font-bold tracking-wide">
-                  14-15 NOVIEMBRE • BOGOTÁ
-                </p>
+                {/* Enhanced Festival Info */}
+                <div className="bg-green-900/30 rounded-lg p-3 sm:p-4 border border-yellow-400/20">
+                  <p className="text-yellow-400 text-base sm:text-lg font-gasoek font-bold tracking-wider" data-testid="text-festival-name">
+                    FESTIVAL NATUR 2025
+                  </p>
+                  <p className="text-yellow-300 text-sm sm:text-base font-bold tracking-wide" data-testid="text-festival-date">
+                    14-15 NOVIEMBRE • BOGOTÁ
+                  </p>
+                </div>
               </div>
             </div>
           </motion.div>
