@@ -55,19 +55,17 @@ const registrationSchema = z.object({
   isContactCardVisible: z.boolean().default(true),
   isMapVisible: z.boolean().default(true),
   
-  // Step 5: Messaging Configuration
+  // Set default values for removed steps
   messagingEnabled: z.boolean().default(true),
-  messagingBio: z.string().min(50, "Descripción para mensajería mínimo 50 caracteres"),
+  messagingBio: z.string().default("Estamos listos para atender tus consultas"),
   acceptsInquiries: z.boolean().default(true),
-  responseTimeHours: z.number().min(1).max(72),
+  responseTimeHours: z.number().default(24),
   
-  // Step 6: Experience Creation Setup
   experienceSetupComplete: z.boolean().default(true),
-  defaultExperienceCategory: z.string().min(1, "Categoría de experiencia por defecto requerida"),
-  defaultMeetingPoint: z.string().min(10, "Punto de encuentro por defecto requerido"),
-  defaultCancellationPolicy: z.string().min(50, "Política de cancelación por defecto requerida"),
+  defaultExperienceCategory: z.string().default("Turismo Sostenible"),
+  defaultMeetingPoint: z.string().default("Por definir"),
+  defaultCancellationPolicy: z.string().default("Cancelación gratuita hasta 24 horas antes"),
   
-  // Step 7: Operating Hours & Availability
   operatingHours: z.object({
     monday: z.object({ open: z.string(), close: z.string(), closed: z.boolean() }),
     tuesday: z.object({ open: z.string(), close: z.string(), closed: z.boolean() }),
@@ -76,30 +74,40 @@ const registrationSchema = z.object({
     friday: z.object({ open: z.string(), close: z.string(), closed: z.boolean() }),
     saturday: z.object({ open: z.string(), close: z.string(), closed: z.boolean() }),
     sunday: z.object({ open: z.string(), close: z.string(), closed: z.boolean() })
+  }).default({
+    monday: { open: "09:00", close: "18:00", closed: false },
+    tuesday: { open: "09:00", close: "18:00", closed: false },
+    wednesday: { open: "09:00", close: "18:00", closed: false },
+    thursday: { open: "09:00", close: "18:00", closed: false },
+    friday: { open: "09:00", close: "18:00", closed: false },
+    saturday: { open: "09:00", close: "18:00", closed: false },
+    sunday: { open: "09:00", close: "18:00", closed: true }
   }),
   
-  // Step 8: Professional Documentation
   businessLicense: z.string().optional(),
   taxId: z.string().optional(),
-  certifications: z.array(z.string()),
-  sustainabilityPractices: z.array(z.string()),
-  accessibilityFeatures: z.array(z.string()),
-  languages: z.array(z.string()).min(1, "Al menos un idioma"),
+  certifications: z.array(z.string()).default([]),
+  sustainabilityPractices: z.array(z.string()).default([]),
+  accessibilityFeatures: z.array(z.string()).default([]),
+  languages: z.array(z.string()).default(["Español"]),
   
-  // Step 9: Social Media & Professional Network
   socialMedia: z.object({
     instagram: z.string().optional(),
     facebook: z.string().optional(),
     twitter: z.string().optional(),
     linkedin: z.string().optional()
-  }),
+  }).default({}),
   
-  // Step 10: Emergency Contact & Final Setup
   emergencyContact: z.object({
     name: z.string().min(2, "Nombre requerido"),
     phone: z.string().min(10, "Teléfono requerido"),
     email: z.string().email("Email requerido"),
     relationship: z.string()
+  }).default({
+    name: "",
+    phone: "",
+    email: "",
+    relationship: "Familiar"
   }),
   
   // Configuration completion flags
@@ -117,7 +125,7 @@ const registrationSchema = z.object({
 
 type RegistrationForm = z.infer<typeof registrationSchema>;
 
-// Company categories with comprehensive subcategories
+// Company categories with comprehensive subcategories including new ones
 const COMPANY_CATEGORIES = {
   "Agencias u Operadores Turísticos": [
     "Agencia de Viajes Minorista",
@@ -133,7 +141,31 @@ const COMPANY_CATEGORIES = {
     "Turismo Corporativo y de Incentivos",
     "Turismo Gastronómico",
     "Turismo Deportivo",
-    "Turismo Científico"
+    "Turismo Científico",
+    "Turismo Comunitario",
+    "Turismo Regenerativo",
+    "Turismo de Naturaleza"
+  ],
+  "Guía de Turismo": [
+    "Guía de Naturaleza y Ecoturismo",
+    "Guía Cultural e Histórico",
+    "Guía de Turismo de Aventura",
+    "Guía Gastronómico",
+    "Guía de Turismo Rural"
+  ],
+  "Intérprete de Idiomas": [
+    "Intérprete Español-Inglés",
+    "Intérprete Español-Francés",
+    "Intérprete de Lenguas Indígenas",
+    "Intérprete Español-Alemán",
+    "Intérprete Especializado en Turismo"
+  ],
+  "DMC (Destination Management Company)": [
+    "DMC Especializado en Ecoturismo",
+    "DMC de Turismo Cultural",
+    "DMC de Turismo Regenerativo",
+    "DMC de Turismo de Aventura",
+    "DMC Corporativo"
   ],
   "Alojamientos Sostenibles": [
     "Ecolodges y Hoteles Ecológicos",
@@ -238,7 +270,7 @@ const ComprehensiveCompanyRegistration = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [, setLocation] = useLocation();
   const { toast } = useToast();
-  const totalSteps = 10;
+  const totalSteps = 4;
 
   // Pre-filled test data for dahub company
   const getDahubTestData = () => {
@@ -470,13 +502,7 @@ const ComprehensiveCompanyRegistration = () => {
       case 1: return ['firstName', 'lastName', 'email', 'password', 'confirmPassword'];
       case 2: return ['companyName', 'companyDescription', 'companyCategory', 'companySubcategory'];
       case 3: return ['bio', 'servicesOffered', 'targetMarket', 'yearsExperience', 'teamSize'];
-      case 4: return ['address', 'city', 'phone', 'website', 'coordinates'];
-      case 5: return ['messagingBio', 'responseTimeHours'];
-      case 6: return ['defaultExperienceCategory', 'defaultMeetingPoint', 'defaultCancellationPolicy'];
-      case 7: return ['operatingHours'];
-      case 8: return ['certifications', 'sustainabilityPractices', 'accessibilityFeatures', 'languages'];
-      case 9: return ['socialMedia'];
-      case 10: return ['emergencyContact', 'acceptTerms'];
+      case 4: return ['address', 'city', 'phone', 'website', 'coordinates', 'emergencyContact', 'acceptTerms'];
       default: return [];
     }
   };
