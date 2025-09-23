@@ -18,6 +18,10 @@ import { HeaderButtons } from "@/components/layout/HeaderButtons";
 import { 
   Building2, User, MapPin, Clock, CheckCircle, ArrowLeft, ArrowRight, Mail, Phone, Globe, Users, Calendar, Target, Award, Briefcase, Shield, CreditCard, FileText, Heart, Accessibility, Languages, Instagram, Twitter, Facebook, Linkedin
 } from "lucide-react";
+import { CitySelector } from "@/components/ui/city-selector";
+import { CountrySelector } from "@/components/ui/country-selector";
+import { MapboxAddressInput } from "@/components/ui/mapbox-address-input";
+import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
 
 // COMPLETE registration schema - ALL configuration BEFORE login
 const registrationSchema = z.object({
@@ -857,117 +861,216 @@ const ComprehensiveCompanyRegistration = () => {
 
       case 4:
         return (
-          <div className="space-y-4">
-            <div className="text-center mb-6">
-              <MapPin className="w-16 h-16 text-green-400 mx-auto mb-4" />
-              <h2 className="text-2xl font-bold text-white">Configuración de Mapa y Tarjeta de Contacto</h2>
-              <p className="text-white/70">Ubicación en el mapa y visibilidad de tu empresa</p>
-            </div>
+          <Form {...form}>
+            <div className="space-y-6">
+              <div className="text-center mb-6">
+                <MapPin className="w-16 h-16 text-green-400 mx-auto mb-4" />
+                <h2 className="text-2xl font-bold text-white">Ubicación y Contacto Final</h2>
+                <p className="text-white/70">Datos finales para completar tu registro</p>
+              </div>
 
-            <div>
-              <Label htmlFor="address" className="text-white">Dirección Completa *</Label>
-              <Input
-                {...form.register("address")}
-                className="bg-white/10 border-white/30 text-white"
-                placeholder="Calle, carrera, número, barrio"
-              />
-              {form.formState.errors.address && (
-                <p className="text-red-400 text-sm">{form.formState.errors.address.message}</p>
-              )}
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <Label htmlFor="city" className="text-white">Ciudad *</Label>
-                <Input
-                  {...form.register("city")}
-                  className="bg-white/10 border-white/30 text-white"
-                  placeholder="Bogotá"
-                />
-                {form.formState.errors.city && (
-                  <p className="text-red-400 text-sm">{form.formState.errors.city.message}</p>
+              {/* Address with Mapbox Integration */}
+              <FormField
+                control={form.control}
+                name="address"
+                render={({ field }) => (
+                  <MapboxAddressInput 
+                    addressField={field}
+                    coordinatesField={{
+                      value: form.watch('coordinates') || { lat: 4.6097, lng: -74.0817 },
+                      onChange: (value) => form.setValue('coordinates', value)
+                    }}
+                    placeholder="Ej: Carrera 7 #93-07, Oficina 501, Bogotá"
+                  />
                 )}
-              </div>
+              />
 
-              <div>
-                <Label htmlFor="country" className="text-white">País</Label>
-                <Input
-                  {...form.register("country")}
-                  className="bg-white/10 border-white/30 text-white"
-                  placeholder="Colombia"
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* City Selector */}
+                <FormField
+                  control={form.control}
+                  name="city"
+                  render={({ field }) => (
+                    <CitySelector field={field} placeholder="Selecciona tu ciudad" />
+                  )}
+                />
+
+                {/* Country Selector */}
+                <FormField
+                  control={form.control}
+                  name="country"
+                  render={({ field }) => (
+                    <CountrySelector field={field} placeholder="Selecciona el país" />
+                  )}
                 />
               </div>
-            </div>
 
-            <div>
-              <Label className="text-white">Configuración de Coordenadas del Mapa *</Label>
-              <div className="bg-white/10 border border-white/30 rounded-lg p-4">
-                <p className="text-white/70 text-sm mb-3">Tu empresa aparecerá en el mapa en estas coordenadas</p>
-                <div className="grid grid-cols-2 gap-3">
-                  <div>
-                    <Label htmlFor="coordinates.lat" className="text-white text-sm">Latitud</Label>
-                    <Input
-                      {...form.register("coordinates.lat", { valueAsNumber: true })}
-                      type="number"
-                      step="0.000001"
-                      className="bg-white/10 border-white/30 text-white"
-                      placeholder="4.6097"
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="coordinates.lng" className="text-white text-sm">Longitud</Label>
-                    <Input
-                      {...form.register("coordinates.lng", { valueAsNumber: true })}
-                      type="number"
-                      step="0.000001"
-                      className="bg-white/10 border-white/30 text-white"
-                      placeholder="-74.0817"
-                    />
-                  </div>
+              {/* Contact Information */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <FormField
+                  control={form.control}
+                  name="phone"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="flex items-center gap-2 text-white">
+                        <Phone className="w-4 h-4" />
+                        Teléfono / WhatsApp *
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          className="bg-white/5 border-white/20 text-white"
+                          placeholder="+57 300 123 4567"
+                          data-testid="input-phone"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="website"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="flex items-center gap-2 text-white">
+                        <Globe className="w-4 h-4" />
+                        Sitio Web
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          className="bg-white/5 border-white/20 text-white"
+                          placeholder="https://tuempresa.com"
+                          data-testid="input-website"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+
+              {/* Emergency Contact */}
+              <div className="bg-white/5 backdrop-blur-sm border border-white/20 rounded-lg p-6">
+                <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                  <Shield className="w-5 h-5 text-green-400" />
+                  Contacto de Emergencia
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <FormField
+                    control={form.control}
+                    name="emergencyContact.name"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-white">Nombre completo *</FormLabel>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            className="bg-white/5 border-white/20 text-white"
+                            placeholder="Nombre del contacto"
+                            data-testid="input-emergency-name"
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="emergencyContact.phone"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-white">Teléfono *</FormLabel>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            className="bg-white/5 border-white/20 text-white"
+                            placeholder="+57 300 123 4567"
+                            data-testid="input-emergency-phone"
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="emergencyContact.email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-white">Email *</FormLabel>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            type="email"
+                            className="bg-white/5 border-white/20 text-white"
+                            placeholder="contacto@email.com"
+                            data-testid="input-emergency-email"
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="emergencyContact.relationship"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-white">Relación</FormLabel>
+                        <FormControl>
+                          <Select onValueChange={field.onChange} value={field.value}>
+                            <SelectTrigger className="bg-white/5 border-white/20 text-white">
+                              <SelectValue placeholder="Selecciona relación" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="Familiar">Familiar</SelectItem>
+                              <SelectItem value="Socio">Socio</SelectItem>
+                              <SelectItem value="Empleado">Empleado</SelectItem>
+                              <SelectItem value="Abogado">Abogado</SelectItem>
+                              <SelectItem value="Contador">Contador</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
                 </div>
               </div>
-            </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="flex items-center space-x-2">
-                <Checkbox
-                  id="isContactCardVisible"
-                  {...form.register("isContactCardVisible")}
-                />
-                <Label htmlFor="isContactCardVisible" className="text-white">Tarjeta de contacto visible en directorio</Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Checkbox
-                  id="isMapVisible"
-                  {...form.register("isMapVisible")}
-                />
-                <Label htmlFor="isMapVisible" className="text-white">Empresa visible en mapa para viajeros</Label>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <Label htmlFor="phone" className="text-white">Teléfono/WhatsApp *</Label>
-                <Input
-                  {...form.register("phone")}
-                  className="bg-white/10 border-white/30 text-white"
-                  placeholder="+57 301 234 5678"
-                />
-                {form.formState.errors.phone && (
-                  <p className="text-red-400 text-sm">{form.formState.errors.phone.message}</p>
-                )}
-              </div>
-
-              <div>
-                <Label htmlFor="website" className="text-white">Sitio Web (Opcional)</Label>
-                <Input
-                  {...form.register("website")}
-                  className="bg-white/10 border-white/30 text-white"
-                  placeholder="https://empresa.com"
+              {/* Terms Acceptance */}
+              <div className="bg-white/5 backdrop-blur-sm border border-white/20 rounded-lg p-6">
+                <FormField
+                  control={form.control}
+                  name="acceptTerms"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                      <FormControl>
+                        <Checkbox
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                          className="border-white/30"
+                          data-testid="checkbox-accept-terms"
+                        />
+                      </FormControl>
+                      <div className="space-y-1 leading-none">
+                        <FormLabel className="text-white">
+                          Acepto los términos y condiciones *
+                        </FormLabel>
+                        <p className="text-white/70 text-sm">
+                          Al registrarte, aceptas nuestros términos de servicio y política de privacidad del Festival NATUR 2025.
+                        </p>
+                      </div>
+                      <FormMessage />
+                    </FormItem>
+                  )}
                 />
               </div>
             </div>
-          </div>
+          </Form>
         );
 
       case 5:
