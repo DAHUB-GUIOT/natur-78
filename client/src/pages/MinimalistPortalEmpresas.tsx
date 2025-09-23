@@ -197,8 +197,44 @@ const MinimalistPortalEmpresas = () => {
   };
 
   const renderMapView = () => (
-    <div className="absolute inset-0 w-full h-full overflow-hidden">
-      <InteractiveMap />
+    <div className="absolute inset-0 w-full h-full overflow-hidden bg-gradient-to-br from-gray-900 via-black to-green-900">
+      {/* Map Header - Floating */}
+      <div className="absolute top-4 left-4 right-4 z-20 lg:top-6 lg:left-6 lg:right-6">
+        <Card className="bg-black/40 backdrop-blur-xl border-white/20 shadow-2xl">
+          <CardContent className="p-3 lg:p-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <h3 className="text-white font-semibold text-sm lg:text-base">Mapa Interactivo</h3>
+                <p className="text-white/60 text-xs lg:text-sm">Empresas verificadas en el ecosistema</p>
+              </div>
+              <Badge className="bg-green-500/20 text-green-400 border-green-400/30 text-xs">
+                En vivo
+              </Badge>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+      
+      {/* Interactive Map */}
+      <div className="w-full h-full">
+        <InteractiveMap />
+      </div>
+      
+      {/* Map Controls - Bottom Right */}
+      <div className="absolute bottom-4 right-4 z-20 lg:bottom-6 lg:right-6">
+        <Card className="bg-black/40 backdrop-blur-xl border-white/20 shadow-xl">
+          <CardContent className="p-2">
+            <div className="flex flex-col gap-2">
+              <Button size="sm" variant="ghost" className="text-white hover:bg-white/10 h-8 w-8 p-0">
+                <Plus className="w-4 h-4" />
+              </Button>
+              <Button size="sm" variant="ghost" className="text-white hover:bg-white/10 h-8 w-8 p-0">
+                <span className="text-lg">−</span>
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 
