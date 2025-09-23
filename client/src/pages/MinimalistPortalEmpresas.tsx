@@ -405,110 +405,110 @@ const MinimalistPortalEmpresas = () => {
   );
 
   const renderProfileView = () => (
-    <div className="p-4 sm:p-6 md:p-8 space-y-6 max-w-4xl mx-auto">
-      {/* Cover Photo Section - Facebook Style */}
-      <div className="relative w-full h-48 md:h-64 bg-gradient-to-r from-green-600 via-green-500 to-blue-600 rounded-xl overflow-hidden">
+    <div className="p-2 sm:p-4 md:p-6 space-y-3 max-w-3xl mx-auto">
+      {/* Cover Photo Section - More compact */}
+      <div className="relative w-full h-24 sm:h-32 md:h-40 bg-gradient-to-r from-green-600 via-green-500 to-blue-600 rounded-lg overflow-hidden">
         <div className="absolute inset-0 bg-black/20"></div>
-        <div className="absolute bottom-0 left-0 right-0 p-6">
-          <h1 className="text-2xl md:text-4xl font-bold text-white drop-shadow-lg">
+        <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-4">
+          <h1 className="text-lg sm:text-xl md:text-2xl font-bold text-white drop-shadow-lg">
             {user?.companyName || 'Tu Empresa'}
           </h1>
-          <p className="text-white/90 text-lg mt-1">{user?.category || 'Turismo Sostenible'}</p>
+          <p className="text-white/90 text-sm sm:text-base mt-1">{user?.category || 'Turismo Sostenible'}</p>
         </div>
       </div>
 
-      {/* Profile Header - Facebook Style */}
-      <div className="relative -mt-20 px-6">
-        <div className="flex flex-col md:flex-row md:items-end space-y-4 md:space-y-0 md:space-x-6">
-          {/* Profile Picture */}
+      {/* Profile Header - More compact */}
+      <div className="relative -mt-8 sm:-mt-12 px-3 sm:px-4">
+        <div className="flex flex-col sm:flex-row sm:items-end space-y-2 sm:space-y-0 sm:space-x-4">
+          {/* Profile Picture - Smaller */}
           <div className="relative">
-            <div className="w-32 h-32 md:w-40 md:h-40 bg-gradient-to-br from-green-500 to-blue-600 rounded-full border-4 border-white shadow-xl flex items-center justify-center text-white text-4xl md:text-5xl font-bold">
+            <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 bg-gradient-to-br from-green-500 to-blue-600 rounded-full border-2 border-white shadow-lg flex items-center justify-center text-white text-lg sm:text-xl md:text-2xl font-bold">
               {user?.companyName?.substring(0, 2).toUpperCase() || 'TU'}
             </div>
-            <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-green-500 rounded-full border-4 border-white flex items-center justify-center">
-              <div className="w-3 h-3 bg-white rounded-full"></div>
+            <div className="absolute -bottom-1 -right-1 w-4 h-4 sm:w-5 sm:h-5 bg-green-500 rounded-full border-2 border-white flex items-center justify-center">
+              <div className="w-2 h-2 bg-white rounded-full"></div>
             </div>
           </div>
 
-          {/* Profile Info */}
-          <div className="flex-1 md:pb-4">
-            <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">
+          {/* Profile Info - More compact */}
+          <div className="flex-1 sm:pb-2">
+            <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-1">
               {user?.companyName || 'Tu Empresa'}
             </h2>
-            <p className="text-white/70 text-lg mb-4">{user?.bio || 'Empresa comprometida con el turismo sostenible'}</p>
+            <p className="text-white/70 text-sm sm:text-base mb-2 line-clamp-2">{user?.bio || 'Empresa comprometida con el turismo sostenible'}</p>
             
-            {/* Action Buttons */}
-            <div className="flex flex-wrap gap-3">
+            {/* Action Buttons - Smaller */}
+            <div className="flex flex-wrap gap-2">
               <Button 
                 onClick={() => window.location.href = '/edit-profile'}
-                className="bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20 px-6 py-2 rounded-lg font-medium"
+                className="bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20 px-3 py-1 rounded-md font-medium text-sm h-8"
               >
-                <User className="w-4 h-4 mr-2" />
-                Editar Perfil
+                <User className="w-3 h-3 mr-1" />
+                Editar
               </Button>
               <Button 
                 onClick={() => window.location.href = '/configuracion'}
-                className="bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20 px-6 py-2 rounded-lg font-medium"
+                className="bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20 px-3 py-1 rounded-md font-medium text-sm h-8"
               >
-                <Settings className="w-4 h-4 mr-2" />
-                Configuración
+                <Settings className="w-3 h-3 mr-1" />
+                Config
               </Button>
             </div>
           </div>
         </div>
       </div>
 
-      {/* User Flow Progress */}
-      <div className="mb-6">
+      {/* User Flow Progress - Compact */}
+      <div className="mb-3">
         <UserFlowManager />
       </div>
 
-      {/* Profile Stats - Facebook Style */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <Card className="bg-white/10 backdrop-blur-sm border-white/20 text-center p-4">
-          <div className="text-2xl font-bold text-white">25</div>
-          <div className="text-white/60 text-sm">Experiencias</div>
+      {/* Profile Stats - More compact */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+        <Card className="bg-white/10 backdrop-blur-sm border-white/20 text-center p-2 sm:p-3">
+          <div className="text-lg sm:text-xl font-bold text-white">25</div>
+          <div className="text-white/60 text-xs">Experiencias</div>
         </Card>
-        <Card className="bg-white/10 backdrop-blur-sm border-white/20 text-center p-4">
-          <div className="text-2xl font-bold text-white">142</div>
-          <div className="text-white/60 text-sm">Contactos</div>
+        <Card className="bg-white/10 backdrop-blur-sm border-white/20 text-center p-2 sm:p-3">
+          <div className="text-lg sm:text-xl font-bold text-white">142</div>
+          <div className="text-white/60 text-xs">Contactos</div>
         </Card>
-        <Card className="bg-white/10 backdrop-blur-sm border-white/20 text-center p-4">
-          <div className="text-2xl font-bold text-white">4.8</div>
-          <div className="text-white/60 text-sm">Calificación</div>
+        <Card className="bg-white/10 backdrop-blur-sm border-white/20 text-center p-2 sm:p-3">
+          <div className="text-lg sm:text-xl font-bold text-white">4.8</div>
+          <div className="text-white/60 text-xs">Calificación</div>
         </Card>
-        <Card className="bg-white/10 backdrop-blur-sm border-white/20 text-center p-4">
-          <div className="text-2xl font-bold text-white">85%</div>
-          <div className="text-white/60 text-sm">Completitud</div>
+        <Card className="bg-white/10 backdrop-blur-sm border-white/20 text-center p-2 sm:p-3">
+          <div className="text-lg sm:text-xl font-bold text-white">85%</div>
+          <div className="text-white/60 text-xs">Completitud</div>
         </Card>
       </div>
 
-      {/* About Section - Facebook Style */}
+      {/* About Section - More compact */}
       <Card className="bg-white/10 backdrop-blur-sm border-white/20">
-        <CardContent className="p-6">
-          <h3 className="text-xl font-semibold text-white mb-4 flex items-center">
-            <Building2 className="w-5 h-5 mr-2" />
+        <CardContent className="p-3 sm:p-4">
+          <h3 className="text-lg font-semibold text-white mb-2 flex items-center">
+            <Building2 className="w-4 h-4 mr-2" />
             Acerca de {user?.companyName || 'la empresa'}
           </h3>
-          <div className="space-y-4 text-white/80">
-            <p>{user?.companyDescription || 'Empresa dedicada al turismo sostenible, comprometida con la conservación del medio ambiente y el desarrollo de experiencias únicas que conectan a los viajeros con la naturaleza.'}</p>
+          <div className="space-y-3 text-white/80">
+            <p className="text-sm line-clamp-3">{user?.companyDescription || 'Empresa dedicada al turismo sostenible, comprometida con la conservación del medio ambiente y el desarrollo de experiencias únicas.'}</p>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
-              <div className="flex items-center space-x-3">
-                <MapPin className="w-4 h-4 text-green-400" />
-                <span>{user?.address || 'Bogotá, Colombia'}</span>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-3">
+              <div className="flex items-center space-x-2">
+                <MapPin className="w-3 h-3 text-green-400" />
+                <span className="text-sm">{user?.address || 'Bogotá, Colombia'}</span>
               </div>
-              <div className="flex items-center space-x-3">
-                <Globe className="w-4 h-4 text-green-400" />
-                <span>{user?.website || 'www.empresa.com'}</span>
+              <div className="flex items-center space-x-2">
+                <Globe className="w-3 h-3 text-green-400" />
+                <span className="text-sm truncate">{user?.website || 'www.empresa.com'}</span>
               </div>
-              <div className="flex items-center space-x-3">
-                <Building2 className="w-4 h-4 text-green-400" />
-                <span>{user?.teamSize || '10-50'} empleados</span>
+              <div className="flex items-center space-x-2">
+                <Building2 className="w-3 h-3 text-green-400" />
+                <span className="text-sm">{user?.teamSize || '10-50'} empleados</span>
               </div>
-              <div className="flex items-center space-x-3">
-                <Star className="w-4 h-4 text-green-400" />
-                <span>Fundada en {user?.foundedYear || '2020'}</span>
+              <div className="flex items-center space-x-2">
+                <Star className="w-3 h-3 text-green-400" />
+                <span className="text-sm">Fundada en {user?.foundedYear || '2020'}</span>
               </div>
             </div>
           </div>

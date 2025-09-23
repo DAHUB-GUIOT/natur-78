@@ -286,10 +286,10 @@ const PortalViajerosNew = () => {
   );
 
   const renderProfileView = () => (
-    <div className="h-full w-full bg-gradient-to-br from-gray-900 via-black to-green-900 p-4 lg:p-8 overflow-auto">
-      <h2 className="text-2xl lg:text-3xl font-light text-white mb-6">Mi Perfil</h2>
-      <Card className="bg-white/10 backdrop-blur-sm border-white/20 max-w-4xl">
-        <CardContent className="p-6">
+    <div className="h-full w-full bg-gradient-to-br from-gray-900 via-black to-green-900 p-2 sm:p-4 lg:p-6 overflow-auto">
+      <h2 className="text-lg sm:text-xl lg:text-2xl font-light text-white mb-3 sm:mb-4">Mi Perfil</h2>
+      <Card className="bg-white/10 backdrop-blur-sm border-white/20 max-w-3xl">
+        <CardContent className="p-3 sm:p-4 lg:p-6">
           <TwitterProfileSection />
         </CardContent>
       </Card>
