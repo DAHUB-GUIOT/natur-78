@@ -29,11 +29,12 @@ export function Hero() {
         <div className="max-w-7xl w-full">
           <div className="max-w-4xl mx-auto text-center">
             {/* Festival NATUR Logo */}
-            <div className="mb-12">
+            <div className="mb-12 flex justify-center items-center">
               <img 
                 src={Festival_NATUR} 
                 alt="Festival NATUR 2025"
-                className="mx-auto max-w-lg w-full h-auto"
+                className="max-w-lg w-full h-auto"
+                style={{ maxWidth: '500px' }}
               />
             </div>
 
