@@ -241,27 +241,43 @@ const MinimalistPortalEmpresas = () => {
   const renderNetworkView = () => (
     <div className="p-4 sm:p-6 md:p-8 space-y-6 max-w-6xl mx-auto">
       {/* Enhanced Desktop Header */}
-      <div className="text-center space-y-3">
-        <h2 className="text-xl sm:text-2xl md:text-2xl lg:text-3xl font-bold text-white">Red de Contactos</h2>
-        <p className="text-white/60 text-sm sm:text-base lg:text-base">Conecta con empresas sostenibles verificadas</p>
+      <div className="text-center space-y-4 mb-8">
+        <div>
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-2">Directorio de Empresas</h2>
+          <p className="text-white/60 text-base lg:text-lg">Descubre empresas verificadas en el ecosistema NATUR</p>
+        </div>
+        <div className="flex flex-wrap justify-center gap-2">
+          <Badge className="bg-green-500/20 text-green-400 border-green-400/30">
+            {typedDirectoryUsers.length} Empresas Activas
+          </Badge>
+          <Badge className="bg-blue-500/20 text-blue-400 border-blue-400/30">
+            100% Verificadas
+          </Badge>
+        </div>
       </div>
 
-      {/* Search Section */}
-      <Card className="bg-white/10 backdrop-blur-sm border-white/20">
-        <CardContent className="p-4">
-          <div className="flex flex-col md:flex-row gap-4">
+      {/* Enhanced Search Section */}
+      <Card className="bg-white/5 backdrop-blur-xl border-white/20 shadow-2xl">
+        <CardContent className="p-6">
+          <div className="flex flex-col lg:flex-row gap-4">
             <div className="flex-1 relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/40 w-4 h-4" />
+              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white/40 w-5 h-5" />
               <Input
-                placeholder="Buscar empresas por nombre o categoría..."
+                placeholder="Buscar empresas por nombre, categoría o ubicación..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 bg-white/10 border-white/30 text-white placeholder:text-white/50 h-10"
+                className="pl-12 bg-white/10 border-white/20 text-white placeholder:text-white/40 h-12 text-base rounded-xl focus:border-green-400/50 focus:ring-green-400/20"
               />
             </div>
-            <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6">
-              Filtrar
-            </Button>
+            <div className="flex gap-2">
+              <Button className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white px-6 h-12 rounded-xl font-medium shadow-lg">
+                <Search className="w-4 h-4 mr-2" />
+                Buscar
+              </Button>
+              <Button variant="outline" className="border-white/20 text-white hover:bg-white/10 h-12 px-4 rounded-xl">
+                <span>🔽</span>
+              </Button>
+            </div>
           </div>
         </CardContent>
       </Card>
@@ -372,38 +388,91 @@ const MinimalistPortalEmpresas = () => {
   );
 
   const renderExperiencesView = () => (
-    <div className="p-4 sm:p-6 md:p-8 space-y-6">
-      <div className="flex flex-col space-y-4">
-        <h2 className="text-xl sm:text-2xl font-light text-white">Mis Experiencias</h2>
-        
-        {/* Mobile-First Button for Experience Creation */}
-        <Sheet open={showExperienceForm} onOpenChange={setShowExperienceForm}>
-          <SheetTrigger asChild>
-            <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg min-h-[48px] touch-manipulation">
-              <Plus className="w-4 h-4 md:w-5 md:h-5 mr-2" />
-              Nueva Experiencia
-            </Button>
-          </SheetTrigger>
-          <SheetContent 
-            side="right" 
-            className="w-full sm:max-w-2xl overflow-y-auto bg-gradient-to-br from-gray-900 via-black to-blue-900 border-white/20"
-          >
-            <SheetHeader>
-              <SheetTitle className="text-white text-xl font-light">
-                Crear Nueva Experiencia
-              </SheetTitle>
-            </SheetHeader>
-            <div className="mt-6">
-              <ExperienceForm onClose={() => setShowExperienceForm(false)} />
-            </div>
-          </SheetContent>
-        </Sheet>
+    <div className="p-4 sm:p-6 md:p-8 space-y-8 max-w-6xl mx-auto">
+      {/* Enhanced Header */}
+      <div className="text-center space-y-4">
+        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white">Mis Experiencias</h2>
+        <p className="text-white/60 text-base lg:text-lg">Gestiona y crea experiencias únicas de turismo sostenible</p>
+        <div className="flex justify-center gap-2">
+          <Badge className="bg-blue-500/20 text-blue-400 border-blue-400/30">
+            0 Experiencias Activas
+          </Badge>
+          <Badge className="bg-green-500/20 text-green-400 border-green-400/30">
+            Listo para crear
+          </Badge>
+        </div>
       </div>
 
-      <div className="text-center py-16">
-        <Star className="w-20 h-20 text-white/30 mx-auto mb-6" />
-        <h3 className="text-lg font-light text-white mb-3">No tienes experiencias aún</h3>
-        <p className="text-white/60 mb-8 px-4">Crea tu primera experiencia turística sostenible y comienza a conectar con viajeros conscientes</p>
+      {/* Enhanced CTA Section */}
+      <Card className="bg-gradient-to-r from-blue-600/20 to-green-600/20 backdrop-blur-xl border-white/20 shadow-2xl">
+        <CardContent className="p-8 text-center">
+          <div className="flex flex-col items-center space-y-6">
+            <div className="w-20 h-20 bg-gradient-to-r from-blue-500 to-green-500 rounded-2xl flex items-center justify-center shadow-2xl">
+              <Star className="w-10 h-10 text-white" />
+            </div>
+            
+            <div className="space-y-2">
+              <h3 className="text-2xl font-bold text-white">¡Comienza tu primera experiencia!</h3>
+              <p className="text-white/70 max-w-lg">Crea experiencias turísticas sostenibles y conecta con viajeros que buscan aventuras conscientes y responsables.</p>
+            </div>
+
+            <Sheet open={showExperienceForm} onOpenChange={setShowExperienceForm}>
+              <SheetTrigger asChild>
+                <Button className="bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 text-white py-4 px-8 rounded-xl text-lg font-semibold shadow-2xl hover:scale-105 transition-all duration-300">
+                  <Plus className="w-5 h-5 mr-2" />
+                  Crear Nueva Experiencia
+                </Button>
+              </SheetTrigger>
+              <SheetContent 
+                side="right" 
+                className="w-full sm:max-w-2xl overflow-y-auto bg-gradient-to-br from-gray-900 via-black to-blue-900 border-white/20"
+              >
+                <SheetHeader>
+                  <SheetTitle className="text-white text-xl font-light">
+                    Crear Nueva Experiencia
+                  </SheetTitle>
+                </SheetHeader>
+                <div className="mt-6">
+                  <ExperienceForm onClose={() => setShowExperienceForm(false)} />
+                </div>
+              </SheetContent>
+            </Sheet>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Benefits Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <Card className="bg-white/5 backdrop-blur-xl border-white/20 hover:bg-white/10 transition-all duration-300">
+          <CardContent className="p-6 text-center">
+            <div className="w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center mx-auto mb-4">
+              <span className="text-2xl">🌱</span>
+            </div>
+            <h4 className="text-white font-semibold mb-2">Turismo Sostenible</h4>
+            <p className="text-white/60 text-sm">Crea experiencias que respeten el medio ambiente y las comunidades locales.</p>
+          </CardContent>
+        </Card>
+        
+        <Card className="bg-white/5 backdrop-blur-xl border-white/20 hover:bg-white/10 transition-all duration-300">
+          <CardContent className="p-6 text-center">
+            <div className="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center mx-auto mb-4">
+              <span className="text-2xl">👥</span>
+            </div>
+            <h4 className="text-white font-semibold mb-2">Conecta Viajeros</h4>
+            <p className="text-white/60 text-sm">Alcanza una audiencia comprometida con el turismo consciente.</p>
+          </CardContent>
+        </Card>
+        
+        <Card className="bg-white/5 backdrop-blur-xl border-white/20 hover:bg-white/10 transition-all duration-300">
+          <CardContent className="p-6 text-center">
+            <div className="w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center mx-auto mb-4">
+              <span className="text-2xl">💡</span>
+            </div>
+            <h4 className="text-white font-semibold mb-2">Impacto Positivo</h4>
+            <p className="text-white/60 text-sm">Genera ingresos mientras contribuyes a un futuro más sostenible.</p>
+          </CardContent>
+        </Card>
+      </div>
         
         {/* Alternative button that also opens the same form */}
         <Sheet open={showExperienceForm} onOpenChange={setShowExperienceForm}>
