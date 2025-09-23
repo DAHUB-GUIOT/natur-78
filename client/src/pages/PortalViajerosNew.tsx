@@ -426,7 +426,7 @@ const PortalViajerosNew = () => {
       />
 
       {/* Full-screen Main Content */}
-      <div className={`fixed inset-0 ${sidebarOpen ? 'lg:pl-[200px]' : 'lg:pl-[60px]'} transition-all duration-300`}>
+      <div className={`fixed inset-0 ${sidebarOpen ? 'lg:pl-48' : 'lg:pl-16'} transition-all duration-300`}>
         <main className="h-full w-full">
           <motion.div
             key={activeView}

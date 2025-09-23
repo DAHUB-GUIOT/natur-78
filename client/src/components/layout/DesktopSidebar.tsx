@@ -1,19 +1,6 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { 
-  Building2, 
-  Calendar,
-  Ticket,
-  Users,
-  ChevronLeft,
-  ChevronRight,
-  TreePine,
-  Globe,
-  User,
-  LogOut
-} from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { LogOut } from "lucide-react";
 import { useAuth } from '@/contexts/AuthContext';
 
 interface DesktopSidebarProps {
@@ -36,179 +23,70 @@ export function DesktopSidebar({
   showHeaderButtons = false
 }: DesktopSidebarProps) {
   const { signOut } = useAuth();
-  
-  const portalConfig = {
-    empresas: {
-      title: "Portal Empresas",
-      subtitle: "Plataforma de negocios sostenibles",
-      color: "blue",
-      accent: "rgba(59, 130, 246, 0.2)"
-    },
-    viajeros: {
-      title: "Portal Viajeros", 
-      subtitle: "Experiencias de turismo consciente",
-      color: "green",
-      accent: "rgba(34, 197, 94, 0.2)"
-    }
-  };
-
-  const config = portalConfig[portalType];
-
-  const quickActions = [
-    { id: "directory", label: "Directorio", icon: Users, external: false }
-  ];
 
   return (
-    <>
-      {/* Sidebar Toggle Button - Always visible on desktop */}
-      <Button
-        onClick={onToggle}
-        className="desktop-sidebar-toggle hidden lg:flex"
-        size="icon"
-        variant="ghost"
+    <div className="hidden lg:block">
+      <div 
+        className={`fixed left-0 top-0 h-full z-40 bg-black/40 backdrop-blur-xl border-r border-white/20 transition-all duration-300 ${
+          isOpen ? 'w-48' : 'w-16'
+        }`}
       >
-        {isOpen ? <ChevronLeft className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
-      </Button>
-
-      {/* Glassmorphism Sidebar */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ x: -280, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            exit={{ x: -280, opacity: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="desktop-sidebar hidden lg:block"
-          >
-            <div className="desktop-sidebar-content">
-              {/* Header */}
-              <div className="desktop-sidebar-header">
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="w-10 h-10 bg-gradient-to-br from-green-400 to-green-600 rounded-lg flex items-center justify-center">
-                    <TreePine className="w-5 h-5 text-white" />
-                  </div>
-                  <div>
-                    <h2 className="desktop-sidebar-title">{config.title}</h2>
-                    <p className="desktop-sidebar-subtitle">{config.subtitle}</p>
-                  </div>
-                </div>
-                <Badge variant="outline" className="text-white border-white/30 bg-white/10">
-                  Festival NATUR 2025
-                </Badge>
+        <div className="flex flex-col h-full p-3">
+          {/* Ultra-Compact Header */}
+          <div className="flex items-center justify-between mb-6">
+            <div className={`${!isOpen ? 'hidden' : 'block'}`}>
+              <div className="w-8 h-8 bg-[#cad95e]/20 rounded-lg flex items-center justify-center border border-[#cad95e]/30">
+                <span className="text-yellow-400 font-gasoek text-lg font-bold">N</span>
               </div>
-
-              {/* Main Navigation */}
-              <div className="desktop-nav-section">
-                <h3 className="desktop-nav-section-title">Navegación Principal</h3>
-                <div className="space-y-1">
-                  {navItems.map((item) => (
-                    <button
-                      key={item.id}
-                      onClick={() => onNavigation(item.id)}
-                      className={`desktop-nav-item ${
-                        activeView === item.id ? 'active' : ''
-                      }`}
-                    >
-                      <item.icon className="desktop-nav-item-icon" />
-                      <span>{item.label}</span>
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Portal Navigation - Show when showHeaderButtons is true */}
-              {showHeaderButtons && (
-                <div className="desktop-nav-section">
-                  <h3 className="desktop-nav-section-title">Navegación Portal</h3>
-                  <div className="space-y-1">
-                    <button
-                      onClick={() => window.location.href = '/auth/empresas'}
-                      className="desktop-nav-item"
-                    >
-                      <Building2 className="desktop-nav-item-icon" />
-                      <span>Portal Empresas</span>
-                      <Globe className="w-3 h-3 ml-auto opacity-60" />
-                    </button>
-                    <button
-                      onClick={() => window.location.href = '/'}
-                      className="desktop-nav-item"
-                    >
-                      <TreePine className="desktop-nav-item-icon" />
-                      <span>Inicio</span>
-                      <Globe className="w-3 h-3 ml-auto opacity-60" />
-                    </button>
-                  </div>
-                </div>
-              )}
-
-              {/* Tickets Section - Always show */}
-              <div className="desktop-nav-section">
-                <h3 className="desktop-nav-section-title">Festival</h3>
-                <div className="space-y-1">
-                  <button
-                    onClick={() => window.location.href = '/tickets'}
-                    className="desktop-nav-item bg-yellow-400/10 border border-yellow-400/20 hover:bg-yellow-400/20"
-                  >
-                    <Ticket className="desktop-nav-item-icon text-yellow-400" />
-                    <span className="text-yellow-400">Entradas Festival</span>
-                    <Globe className="w-3 h-3 ml-auto opacity-60" />
-                  </button>
-                  <button
-                    onClick={() => window.location.href = '/agenda'}
-                    className="desktop-nav-item"
-                  >
-                    <Calendar className="desktop-nav-item-icon" />
-                    <span>Agenda</span>
-                    <Globe className="w-3 h-3 ml-auto opacity-60" />
-                  </button>
-                </div>
-              </div>
-
-              {/* Quick Actions */}
-              <div className="desktop-nav-section">
-                <h3 className="desktop-nav-section-title">Acceso Rápido</h3>
-                <div className="space-y-1">
-                  {quickActions.map((action) => (
-                    <button
-                      key={action.id}
-                      onClick={() => onNavigation(action.id)}
-                      className="desktop-nav-item"
-                    >
-                      <action.icon className="desktop-nav-item-icon" />
-                      <span>{action.label}</span>
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* User Status */}
-              <div className="mt-auto space-y-3">
-                <div className="p-4 rounded-xl bg-white/5 border border-white/10">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-gradient-to-r from-green-400 to-green-600 rounded-full flex items-center justify-center">
-                      <User className="w-4 h-4 text-white" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-white font-medium text-sm truncate">Usuario Activo</p>
-                      <p className="text-white/60 text-xs">Estado: Verificado</p>
-                    </div>
-                  </div>
-                </div>
-                
-                {/* Logout Button */}
-                <Button
-                  onClick={signOut}
-                  className="w-full bg-red-500/20 hover:bg-red-500/30 border border-red-500/30 text-red-200 hover:text-white transition-all duration-200"
-                  variant="outline"
-                >
-                  <LogOut className="w-4 h-4 mr-2" />
-                  Cerrar Sesión
-                </Button>
-              </div>
+              <p className="text-xs text-white/60 mt-1">{portalType === 'viajeros' ? 'Viajeros' : 'Empresas'}</p>
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={onToggle}
+              className="h-8 w-8 p-0 hover:bg-white/10 rounded-full"
+            >
+              <span className="text-white text-sm">{isOpen ? '←' : '→'}</span>
+            </Button>
+          </div>
+
+          {/* Ultra-Compact Navigation */}
+          <div className="flex-1 space-y-2">
+            {navItems.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => onNavigation(item.id)}
+                className={`
+                  w-full flex items-center gap-3 p-2 rounded-lg transition-all duration-200 relative
+                  ${activeView === item.id 
+                    ? 'bg-green-500/30 text-green-400' 
+                    : 'text-white/80 hover:bg-white/10 hover:text-green-400'
+                  }
+                `}
+                title={item.label}
+              >
+                <item.icon className="text-lg w-5 h-5" />
+                <span className={`${!isOpen ? 'hidden' : 'block'} text-sm font-medium`}>
+                  {item.label}
+                </span>
+                {activeView === item.id && <div className="absolute left-0 top-0 bottom-0 w-1 bg-green-400 rounded-r"></div>}
+              </button>
+            ))}
+          </div>
+
+          {/* Compact Footer - Logout */}
+          <div className={`${!isOpen ? 'hidden' : 'block'} mt-auto pt-4 border-t border-white/10`}>
+            <Button
+              onClick={signOut}
+              className="w-full bg-red-500/20 hover:bg-red-500/30 border border-red-500/30 text-red-200 hover:text-white transition-all duration-200 text-xs py-2"
+              variant="outline"
+            >
+              <LogOut className="w-3 h-3 mr-2" />
+              Salir
+            </Button>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }

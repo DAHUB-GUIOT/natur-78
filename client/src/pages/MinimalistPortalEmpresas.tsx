@@ -633,13 +633,16 @@ const MinimalistPortalEmpresas = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-green-900">
-      <HeaderButtons 
-        showPortalButtons={true} 
-        showPortalEmpresasNav={true}
-        navItems={navItems}
-        activeView={activeView}
-        onNavigation={handleNavigation}
-      />
+      {/* Mobile only HeaderButtons */}
+      <div className="lg:hidden">
+        <HeaderButtons 
+          showPortalButtons={true} 
+          showPortalEmpresasNav={true}
+          navItems={navItems}
+          activeView={activeView}
+          onNavigation={handleNavigation}
+        />
+      </div>
       
       {/* Mobile View */}
       <div className="lg:hidden pt-20">
@@ -647,70 +650,74 @@ const MinimalistPortalEmpresas = () => {
       </div>
 
       {/* Desktop View with Ultra-Compact Sidebar */}
-      <div className="hidden lg:flex h-screen pt-20">
-        {/* Compact Sidebar */}
-        <div className={`desktop-sidebar ${!sidebarOpen ? 'collapsed' : ''} transition-all duration-300`}>
-          <div className="flex flex-col h-full">
-            {/* Compact Header */}
-            <div className="flex items-center justify-between mb-4 pb-3 border-b border-white/10">
+      <div className="hidden lg:flex h-screen">
+        {/* Ultra-Compact Sidebar */}
+        <div className={`fixed left-0 top-0 h-full z-40 bg-black/40 backdrop-blur-xl border-r border-white/20 transition-all duration-300 ${
+          !sidebarOpen ? 'w-16' : 'w-48'
+        }`}>
+          <div className="flex flex-col h-full p-3">
+            {/* Ultra-Compact Header */}
+            <div className="flex items-center justify-between mb-6">
               <div className={`${!sidebarOpen ? 'hidden' : 'block'}`}>
-                <h2 className="text-sm font-bold text-green-400 uppercase tracking-wide">Portal</h2>
-                <p className="text-xs text-white/60">Empresas</p>
+                <div className="w-8 h-8 bg-[#cad95e]/20 rounded-lg flex items-center justify-center border border-[#cad95e]/30">
+                  <span className="text-yellow-400 font-gasoek text-lg font-bold">N</span>
+                </div>
+                <p className="text-xs text-white/60 mt-1">Portal</p>
               </div>
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => setSidebarOpen(!sidebarOpen)}
-                className="h-6 w-6 p-0 hover:bg-white/10"
+                className="h-8 w-8 p-0 hover:bg-white/10 rounded-full"
               >
-                <span className="text-white text-xs">{sidebarOpen ? '←' : '→'}</span>
+                <span className="text-white text-sm">{sidebarOpen ? '←' : '→'}</span>
               </Button>
             </div>
 
-            {/* Compact Navigation */}
-            <div className="flex-1 space-y-1">
+            {/* Ultra-Compact Navigation */}
+            <div className="flex-1 space-y-2">
               {[
-                { id: 'map', icon: '🗺️', label: 'Mapa', desc: 'Vista principal' },
-                { id: 'profile', icon: '👤', label: 'Perfil', desc: 'Mi información' },
-                { id: 'network', icon: '🏢', label: 'Red', desc: 'Empresas' },
-                { id: 'experiences', icon: '✨', label: 'Experiencias', desc: 'Gestionar' },
-                { id: 'messages', icon: '💬', label: 'Mensajes', desc: 'Chat' },
-                { id: 'settings', icon: '⚙️', label: 'Configuración', desc: 'Ajustes' }
+                { id: 'map', icon: '🗺️', label: 'Mapa' },
+                { id: 'profile', icon: '👤', label: 'Perfil' },
+                { id: 'network', icon: '🏢', label: 'Red' },
+                { id: 'experiences', icon: '✨', label: 'Experiencias' },
+                { id: 'messages', icon: '💬', label: 'Mensajes' },
+                { id: 'settings', icon: '⚙️', label: 'Config' }
               ].map((item) => (
                 <button
                   key={item.id}
                   onClick={() => setActiveView(item.id)}
                   className={`
-                    w-full flex items-center gap-3 p-2 rounded-lg transition-all duration-200
+                    w-full flex items-center gap-3 p-2 rounded-lg transition-all duration-200 relative
                     ${activeView === item.id 
-                      ? 'bg-green-500/20 text-green-400 border-l-2 border-green-400' 
+                      ? 'bg-green-500/30 text-green-400' 
                       : 'text-white/80 hover:bg-white/10 hover:text-green-400'
                     }
                   `}
+                  title={item.label}
                 >
-                  <span className="text-sm">{item.icon}</span>
-                  <div className={`${!sidebarOpen ? 'hidden' : 'block'} flex-1`}>
-                    <div className="text-xs font-medium text-left">{item.label}</div>
-                    <div className="text-xs text-white/50 text-left">{item.desc}</div>
-                  </div>
+                  <span className="text-lg">{item.icon}</span>
+                  <span className={`${!sidebarOpen ? 'hidden' : 'block'} text-sm font-medium`}>
+                    {item.label}
+                  </span>
+                  {activeView === item.id && <div className="absolute left-0 top-0 bottom-0 w-1 bg-green-400 rounded-r"></div>}
                 </button>
               ))}
             </div>
 
-            {/* User Flow Progress */}
-            <div className={`${!sidebarOpen ? 'hidden' : 'block'} mt-auto pt-3 border-t border-white/10`}>
-              <div className="text-xs text-white/60 mb-2">Progreso</div>
-              <div className="bg-white/10 rounded-full h-1.5">
-                <div className="bg-green-400 h-1.5 rounded-full w-3/4"></div>
+            {/* Compact Progress */}
+            <div className={`${!sidebarOpen ? 'hidden' : 'block'} mt-auto pt-4 border-t border-white/10`}>
+              <div className="text-xs text-white/50 mb-2">Progreso 75%</div>
+              <div className="bg-white/10 rounded-full h-1">
+                <div className="bg-green-400 h-1 rounded-full w-3/4"></div>
               </div>
-              <div className="text-xs text-white/50 mt-1">75% completado</div>
             </div>
           </div>
         </div>
         
         {/* Full-Screen Main Content */}
-        <div className={`flex-1 h-full overflow-hidden transition-all duration-300 relative ${
-          !sidebarOpen ? 'ml-15' : 'ml-0'
+        <div className={`flex-1 h-full overflow-hidden transition-all duration-300 ${
+          !sidebarOpen ? 'ml-16' : 'ml-48'
         }`}>
           {renderContent()}
         </div>
