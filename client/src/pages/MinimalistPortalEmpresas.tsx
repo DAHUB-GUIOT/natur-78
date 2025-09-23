@@ -719,13 +719,6 @@ const MinimalistPortalEmpresas = () => {
       {/* WhatsApp Chat Integration */}
       <WhatsAppChat />
       
-      {/* Mobile Bottom Navigation */}
-      <MobileBottomNav
-        items={navItems}
-        activeView={activeView}
-        onNavigation={handleNavigation}
-      />
-      
       {/* Profile configuration removed - all information captured during registration */}
 
       {/* Experience Form Sheet */}

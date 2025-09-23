@@ -26,9 +26,11 @@ export function HeaderButtons({
 
   return (
     <>
-      {/* Transparent header with logo and hamburger menu over background */}
-      <div className={`fixed top-0 left-0 right-0 z-50 backdrop-blur-sm transition-all duration-300 ${
-        isTicketsOpen ? 'bg-yellow-400' : (isPortalNavOpen ? 'bg-blue-800' : (isMenuOpen ? 'bg-green-800' : 'bg-black/10'))
+      {/* Glassmorphism header with transparent background */}
+      <div className={`fixed top-0 left-0 right-0 z-50 backdrop-blur-lg bg-black/10 border-b border-white/10 transition-all duration-300 ${
+        isTicketsOpen ? 'bg-yellow-400/20 backdrop-blur-xl border-yellow-400/20' : 
+        (isPortalNavOpen ? 'bg-blue-800/20 backdrop-blur-xl border-blue-400/20' : 
+        (isMenuOpen ? 'bg-green-800/20 backdrop-blur-xl border-green-400/20' : 'bg-black/10 backdrop-blur-lg border-white/10'))
       }`}>
         <div className="flex items-center justify-between p-3 sm:p-4">
           {/* Enhanced Logo - Mobile Optimized */}
@@ -57,10 +59,10 @@ export function HeaderButtons({
                   <Button 
                     size="default" 
                     variant="outline"
-                    className={`desktop-btn-enhanced border-2 font-medium backdrop-blur-sm ${
+                    className={`desktop-btn-enhanced border-2 font-medium backdrop-blur-md ${
                       isTicketsOpen 
-                        ? 'bg-green-600/10 border-green-600 text-green-600 hover:bg-green-600 hover:text-yellow-400' 
-                        : 'bg-white/10 border-[#cad95e] text-[#cad95e] hover:bg-[#cad95e] hover:text-black'
+                        ? 'bg-green-600/20 border-green-600 text-green-600 hover:bg-green-600 hover:text-yellow-400' 
+                        : 'bg-white/15 border-[#cad95e] text-[#cad95e] hover:bg-[#cad95e] hover:text-black'
                     }`}
                   >
                     <Building2 className="w-5 h-5 mr-2" />
@@ -72,10 +74,10 @@ export function HeaderButtons({
                   <Button 
                     size="default" 
                     variant="outline"
-                    className={`desktop-btn-enhanced border-2 font-medium backdrop-blur-sm ${
+                    className={`desktop-btn-enhanced border-2 font-medium backdrop-blur-md ${
                       isTicketsOpen 
-                        ? 'bg-green-600/10 border-green-600 text-green-600 hover:bg-green-600 hover:text-yellow-400' 
-                        : 'bg-white/10 border-[#cad95e] text-[#cad95e] hover:bg-[#cad95e] hover:text-black'
+                        ? 'bg-green-600/20 border-green-600 text-green-600 hover:bg-green-600 hover:text-yellow-400' 
+                        : 'bg-white/15 border-[#cad95e] text-[#cad95e] hover:bg-[#cad95e] hover:text-black'
                     }`}
                   >
                     <MapPin className="w-5 h-5 mr-2" />
@@ -95,7 +97,7 @@ export function HeaderButtons({
                 size="default" 
                 variant="outline"
                 onClick={() => setIsTicketsOpen(!isTicketsOpen)}
-                className={`desktop-btn-enhanced bg-yellow-400 border-2 border-yellow-400 text-black font-medium backdrop-blur-sm ${
+                className={`desktop-btn-enhanced bg-yellow-400 border-2 border-yellow-400 text-black font-medium backdrop-blur-md ${
                   isTicketsOpen ? 'scale-105 shadow-lg' : ''
                 }`}
               >
@@ -118,7 +120,7 @@ export function HeaderButtons({
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: -10, scale: 0.95 }}
                     transition={{ duration: 0.2 }}
-                    className="absolute top-full right-0 mt-2 w-80 bg-yellow-400/95 backdrop-blur-xl border-2 border-yellow-500/50 rounded-xl shadow-2xl z-50"
+                    className="absolute top-full right-0 mt-2 w-80 bg-yellow-400/90 backdrop-blur-xl border-2 border-yellow-500/30 rounded-xl shadow-2xl z-50"
                   >
                     <div className="p-6 space-y-4">
                       <div className="text-center">
@@ -229,10 +231,10 @@ export function HeaderButtons({
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className={`w-11 h-11 sm:w-12 sm:h-12 touch-manipulation min-w-[44px] rounded-lg border transition-all duration-300 ${
                 isTicketsOpen 
-                  ? 'text-green-600 hover:text-green-700 border-green-600/30 hover:bg-green-600/10 hover:border-green-600/50' 
+                  ? 'text-green-600 hover:text-green-700 border-green-600/30 hover:bg-green-600/20 hover:border-green-600/50' 
                   : (isMenuOpen 
                       ? 'text-yellow-400 hover:text-yellow-300 border-yellow-400/50 bg-green-900/20 hover:bg-green-900/30' 
-                      : 'text-white hover:text-[#cad95e] border-white/20 hover:bg-white/10 hover:border-[#cad95e]/50'
+                      : 'text-white hover:text-[#cad95e] border-white/20 hover:bg-white/15 hover:border-[#cad95e]/50'
                     )
               }`}
               data-testid="button-menu-toggle"
@@ -298,7 +300,7 @@ export function HeaderButtons({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -20, scale: 0.95 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
-            className="fixed top-14 sm:top-16 left-0 right-0 z-40 bg-green-800/95 backdrop-blur-md border-b border-green-900/50 shadow-2xl"
+            className="fixed top-14 sm:top-16 left-0 right-0 z-40 bg-green-800/20 backdrop-blur-xl border-b border-green-400/20 shadow-2xl"
           >
             <div className="p-4 sm:p-6 space-y-2 max-h-[calc(100vh-80px)] overflow-y-auto">
               {/* Enhanced Portal Buttons */}
