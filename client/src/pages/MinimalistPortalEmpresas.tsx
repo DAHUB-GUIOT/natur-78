@@ -633,7 +633,7 @@ const MinimalistPortalEmpresas = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-green-900">
-      {/* Mobile only HeaderButtons */}
+      {/* Mobile only HeaderButtons with full features */}
       <div className="lg:hidden">
         <HeaderButtons 
           showPortalButtons={true} 
@@ -643,6 +643,14 @@ const MinimalistPortalEmpresas = () => {
           onNavigation={handleNavigation}
         />
       </div>
+
+      {/* Desktop HeaderButtons - Only with Home button */}
+      <div className="hidden lg:block">
+        <HeaderButtons 
+          showPortalButtons={false}
+          showPortalEmpresasNav={false}
+        />
+      </div>
       
       {/* Mobile View */}
       <div className="lg:hidden pt-20">
@@ -650,7 +658,7 @@ const MinimalistPortalEmpresas = () => {
       </div>
 
       {/* Desktop View with Ultra-Compact Sidebar */}
-      <div className="hidden lg:flex h-screen">
+      <div className="hidden lg:flex h-screen pt-20">
         {/* Ultra-Compact Sidebar */}
         <div className={`fixed left-0 top-0 h-full z-40 bg-black/40 backdrop-blur-xl border-r border-white/20 transition-all duration-300 ${
           !sidebarOpen ? 'w-16' : 'w-48'
