@@ -46,7 +46,8 @@ import {
   Shield,
   Radio,
   Tractor,
-  Accessibility
+  Accessibility,
+  Mountain
 } from "lucide-react";
 import { CategoryType } from "../RegistrationForm";
 
@@ -80,7 +81,7 @@ const SubcategoryStep = ({ category, onSubcategorySelect, onBack }: SubcategoryS
         {
           id: "turismo-comunitario",
           icon: <Users className="w-5 h-5" />,
-          title: "Turismo comunitario y con enfoque territorial",
+          title: "Turismo comunitario",
           description: [
             "Trabajo con comunidades locales",
             "Experiencias territoriales auténticas"
@@ -123,12 +124,21 @@ const SubcategoryStep = ({ category, onSubcategorySelect, onBack }: SubcategoryS
           ]
         },
         {
-          id: "viajes-regenerativos",
+          id: "turismo-regenerativo",
           icon: <Recycle className="w-5 h-5" />,
-          title: "Viajes regenerativos",
+          title: "Turismo regenerativo",
           description: [
             "Experiencias que regeneran territorios",
             "Impacto positivo ambiental y social"
+          ]
+        },
+        {
+          id: "turismo-de-naturaleza",
+          icon: <Leaf className="w-5 h-5" />,
+          title: "Turismo de naturaleza",
+          description: [
+            "Experiencias en contacto directo con la naturaleza",
+            "Conservación y educación ambiental"
           ]
         },
         {
@@ -420,6 +430,102 @@ const SubcategoryStep = ({ category, onSubcategorySelect, onBack }: SubcategoryS
           description: [
             "Contenido educativo digital",
             "Materiales pedagógicos innovadores"
+          ]
+        }
+      ];
+      break;
+
+    case "tour-guide":
+      subcategories = [
+        {
+          id: "guia-naturaleza",
+          icon: <Map className="w-5 h-5" />,
+          title: "Guía de naturaleza y ecoturismo",
+          description: [
+            "Especializado en fauna y flora local",
+            "Educación ambiental y conservación"
+          ]
+        },
+        {
+          id: "guia-cultural",
+          icon: <Building2 className="w-5 h-5" />,
+          title: "Guía cultural e histórico",
+          description: [
+            "Patrimonio cultural y tradiciones",
+            "Historia local y sitios arqueológicos"
+          ]
+        },
+        {
+          id: "guia-aventura",
+          icon: <Mountain className="w-5 h-5" />,
+          title: "Guía de turismo de aventura",
+          description: [
+            "Actividades extremas y deportes",
+            "Seguridad en actividades de riesgo"
+          ]
+        }
+      ];
+      break;
+
+    case "interpreter":
+      subcategories = [
+        {
+          id: "interprete-ingles",
+          icon: <Globe className="w-5 h-5" />,
+          title: "Intérprete Español-Inglés",
+          description: [
+            "Traducción simultánea y consecutiva",
+            "Especializado en turismo sostenible"
+          ]
+        },
+        {
+          id: "interprete-frances",
+          icon: <Globe className="w-5 h-5" />,
+          title: "Intérprete Español-Francés",
+          description: [
+            "Comunicación intercultural",
+            "Experiencias turísticas francófonas"
+          ]
+        },
+        {
+          id: "interprete-lenguas-indigenas",
+          icon: <Users className="w-5 h-5" />,
+          title: "Intérprete de lenguas indígenas",
+          description: [
+            "Preservación cultural y lingüística",
+            "Turismo comunitario indígena"
+          ]
+        }
+      ];
+      break;
+
+    case "dmc":
+      subcategories = [
+        {
+          id: "dmc-ecoturismo",
+          icon: <Leaf className="w-5 h-5" />,
+          title: "DMC especializado en ecoturismo",
+          description: [
+            "Gestión integral de destinos naturales",
+            "Programas de conservación"
+          ]
+        },
+        {
+          id: "dmc-cultural",
+          icon: <Building2 className="w-5 h-5" />,
+          title: "DMC de turismo cultural",
+          description: [
+            "Patrimonio y tradiciones locales",
+            "Experiencias culturales auténticas"
+          ]
+        },
+        {
+          id: "dmc-regenerativo",
+          icon: <Recycle className="w-5 h-5" />,
+          title: "DMC de turismo regenerativo",
+          description: [
+            "Impacto positivo en comunidades",
+            "Restauración de ecosistemas"
           ]
         }
       ];

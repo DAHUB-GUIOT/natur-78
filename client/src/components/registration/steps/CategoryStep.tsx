@@ -8,7 +8,8 @@ import {
   Heart, 
   GraduationCap, 
   Lightbulb, 
-  Handshake 
+  Handshake,
+  Building2
 } from "lucide-react";
 import { CategoryType } from "../RegistrationForm";
 
@@ -156,6 +157,58 @@ const CategoryStep = ({ onCategorySelect }: CategoryStepProps) => {
                 </h4>
                 <p className="text-xs text-gray-300 leading-relaxed">
                   Soluciones tecnológicas que apoyan la transformación sostenible del sector turístico.
+                </p>
+              </div>
+            </div>
+          </button>
+
+          {/* New Categories */}
+          <button
+            onClick={() => onCategorySelect("tour-guide")}
+            className="p-4 bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg hover:bg-white/20 transition-all duration-200 text-left group"
+          >
+            <div className="flex items-start gap-3">
+              <Map className="w-6 h-6 text-green-400 mt-1 group-hover:scale-110 transition-transform" />
+              <div className="flex-1">
+                <h4 className="font-medium text-white text-sm mb-2">
+                  🗺️ Guía de Turismo
+                </h4>
+                <p className="text-xs text-gray-300 leading-relaxed">
+                  Profesionales especializados en guiar y acompañar experiencias turísticas sostenibles.
+                </p>
+              </div>
+            </div>
+          </button>
+
+          <button
+            onClick={() => onCategorySelect("interpreter")}
+            className="p-4 bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg hover:bg-white/20 transition-all duration-200 text-left group"
+          >
+            <div className="flex items-start gap-3">
+              <GraduationCap className="w-6 h-6 text-green-400 mt-1 group-hover:scale-110 transition-transform" />
+              <div className="flex-1">
+                <h4 className="font-medium text-white text-sm mb-2">
+                  🗣️ Intérprete de Idiomas
+                </h4>
+                <p className="text-xs text-gray-300 leading-relaxed">
+                  Profesionales que facilitan la comunicación intercultural en experiencias de turismo sostenible.
+                </p>
+              </div>
+            </div>
+          </button>
+
+          <button
+            onClick={() => onCategorySelect("dmc")}
+            className="p-4 bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg hover:bg-white/20 transition-all duration-200 text-left group"
+          >
+            <div className="flex items-start gap-3">
+              <Building2 className="w-6 h-6 text-green-400 mt-1 group-hover:scale-110 transition-transform" />
+              <div className="flex-1">
+                <h4 className="font-medium text-white text-sm mb-2">
+                  🏢 DMC (Destination Management Company)
+                </h4>
+                <p className="text-xs text-gray-300 leading-relaxed">
+                  Empresas especializadas en gestión integral de destinos turísticos sostenibles.
                 </p>
               </div>
             </div>

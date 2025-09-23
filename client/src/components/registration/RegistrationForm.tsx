@@ -33,7 +33,7 @@ import { useToast } from "@/components/ui/use-toast";
 import RegistrationAuth from "../auth/RegistrationAuth";
 import { createUserProfile } from "@/services/profileService";
 
-export type CategoryType = "sponsor" | "ecosystem" | "startup" | "attendee";
+export type CategoryType = "sponsor" | "ecosystem" | "startup" | "attendee" | "investor" | "mentor" | "other" | "digital-nomad" | "tour-guide" | "interpreter" | "dmc";
 export type SubcategoryType = string;
 
 const RegistrationForm = () => {
