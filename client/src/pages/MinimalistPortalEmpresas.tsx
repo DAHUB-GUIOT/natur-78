@@ -197,7 +197,7 @@ const MinimalistPortalEmpresas = () => {
   };
 
   const renderMapView = () => (
-    <div className="absolute inset-0 w-full h-full overflow-hidden bg-gradient-to-br from-gray-900 via-black to-green-900">
+    <div className="relative w-full h-full overflow-hidden bg-gradient-to-br from-gray-900 via-black to-green-900 min-h-[calc(100vh-5rem)] lg:min-h-[calc(100vh-5rem)]">
       {/* Map Header - Floating */}
       <div className="absolute top-4 left-4 right-4 z-20 lg:top-6 lg:left-6 lg:right-6">
         <Card className="bg-black/40 backdrop-blur-xl border-white/20 shadow-2xl">
@@ -216,7 +216,7 @@ const MinimalistPortalEmpresas = () => {
       </div>
       
       {/* Interactive Map */}
-      <div className="w-full h-full">
+      <div className="w-full h-full min-h-[calc(100vh-5rem)]">
         <InteractiveMap />
       </div>
       
@@ -785,12 +785,14 @@ const MinimalistPortalEmpresas = () => {
       </div>
       
       {/* Mobile View */}
-      <div className="lg:hidden pt-20">
-        {renderContent()}
+      <div className="lg:hidden">
+        <div className="pt-20">
+          {renderContent()}
+        </div>
       </div>
 
       {/* Desktop View with Ultra-Compact Sidebar */}
-      <div className="hidden lg:flex h-screen pt-20">
+      <div className="hidden lg:flex h-screen">
         {/* Ultra-Compact Sidebar */}
         <div className={`fixed left-0 top-0 h-full z-40 bg-black/40 backdrop-blur-xl border-r border-white/20 transition-all duration-300 ${
           !sidebarOpen ? 'w-16' : 'w-48'
@@ -856,7 +858,7 @@ const MinimalistPortalEmpresas = () => {
         </div>
         
         {/* Full-Screen Main Content */}
-        <div className={`flex-1 h-full overflow-hidden transition-all duration-300 ${
+        <div className={`flex-1 h-full overflow-hidden transition-all duration-300 pt-20 ${
           !sidebarOpen ? 'ml-16' : 'ml-48'
         }`}>
           {renderContent()}
