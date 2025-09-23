@@ -305,9 +305,13 @@ export const InteractiveMap = ({ experiences = [], selectedCategory, showMarkers
     console.log(`📍 Creating markers for ${filteredCompanies.length} filtered companies`);
     
     filteredCompanies.forEach((company: RegisteredCompany, index) => {
-      console.log(`📍 Creating marker ${index + 1} for ${company.companyName} at [${company.coordinates.lng}, ${company.coordinates.lat}]`);
+      // Skip companies without valid coordinates
+      if (!company.coordinates || typeof company.coordinates.lat !== 'number' || typeof company.coordinates.lng !== 'number') {
+        console.log(`📍 Skipping ${company.companyName} - invalid coordinates:`, company.coordinates);
+        return;
+      }
       
-      if (!company.coordinates) return; // Skip companies without location data
+      console.log(`📍 Creating marker ${index + 1} for ${company.companyName} at [${company.coordinates.lng}, ${company.coordinates.lat}]`);
       
       const el = document.createElement('div');
       el.className = 'mapbox-marker registered-company';
@@ -464,7 +468,7 @@ export const InteractiveMap = ({ experiences = [], selectedCategory, showMarkers
 
       {/* Floating Company Card */}
       {selectedCompany && (
-        <div className="absolute bottom-4 left-4 right-4 md:bottom-6 md:left-6 md:right-6 z-50">
+        <div className="absolute bottom-4 left-4 right-4 md:bottom-6 md:left-6 md:right-6 z-50 max-h-[60vh] overflow-y-auto">
           <Card className="backdrop-blur-xl bg-gradient-to-br from-white/95 to-white/85 border border-green-200/50 rounded-2xl shadow-2xl">
             <CardHeader className="pb-3 p-4">
               <div className="flex items-center justify-between">
