@@ -96,6 +96,24 @@ const companyCategories = {
     "Gobierno y Entes Reguladores",
     "Universidades e Instituciones Académicas",
     "Certificadoras Ambientales"
+  ],
+  "Guía de turismo": [
+    "Guía de Turismo de Naturaleza",
+    "Guía de Turismo Cultural",
+    "Guía de Turismo de Aventura",
+    "Guía de Turismo Gastronómico",
+    "Guía de Turismo Urbano",
+    "Guía de Turismo Rural",
+    "Guía de Turismo Especializado"
+  ],
+  "Intérprete de idiomas": [
+    "Intérprete de Inglés",
+    "Intérprete de Francés",
+    "Intérprete de Portugués",
+    "Intérprete de Alemán",
+    "Intérprete de Italiano",
+    "Intérprete de Idiomas Indígenas",
+    "Intérprete Multilingüe"
   ]
 };
 
