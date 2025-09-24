@@ -1138,6 +1138,26 @@ const Auth = () => {
                   </SelectContent>
                 </Select>
               </div>
+              <div className="space-y-2">
+                <Label className="text-sm font-medium">Ciudad *</Label>
+                <Select 
+                  value={registrationData.city} 
+                  onValueChange={(value) => setRegistrationData({...registrationData, city: value})}
+                  disabled={!registrationData.country}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder={registrationData.country ? "Selecciona una ciudad" : "Primero selecciona un país"} />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {registrationData.country && countryCityMap[registrationData.country] ? 
+                      countryCityMap[registrationData.country].map((city: string) => (
+                        <SelectItem key={city} value={city}>{city}</SelectItem>
+                      )) : 
+                      <SelectItem value="none" disabled>No hay ciudades disponibles</SelectItem>
+                    }
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
             
             <div className="space-y-2">
