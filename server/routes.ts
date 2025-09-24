@@ -934,33 +934,39 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const blogs = [
         {
           id: 1,
-          title: "El Futuro del Turismo Sostenible en Colombia",
-          description: "Exploramos las tendencias emergentes en el turismo sostenible y cómo las empresas colombianas están liderando el cambio hacia prácticas más responsables con el medio ambiente.",
-          image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500&h=300&fit=crop",
-          category: "Sostenibilidad",
-          readTime: "5 min",
-          publishedDate: "2025-09-20",
-          slug: "futuro-turismo-sostenible-colombia"
+          title: "Turismo Regenerativo en los Cafetales Colombianos",
+          description: "Explora cómo las fincas cafeteras del Eje Cafetero están implementando prácticas regenerativas que no solo conservan el ecosistema, sino que lo mejoran, creando experiencias únicas para los viajeros conscientes.",
+          image: "/api/image/colombia_coffee_plan_975065b6.jpg",
+          category: "Turismo Regenerativo",
+          readTime: "6 min lectura",
+          publishedDate: "2025-01-20",
+          slug: "turismo-regenerativo-cafetales-colombianos",
+          author: "María Alejandra Rodríguez",
+          authorRole: "Experta en Turismo Sostenible"
         },
         {
           id: 2,
-          title: "Guía Completa: Certificaciones Ambientales para Empresas Turísticas",
-          description: "Todo lo que necesitas saber sobre las principales certificaciones ambientales disponibles para empresas del sector turístico y cómo pueden impulsar tu negocio.",
-          image: "https://images.unsplash.com/photo-1473654729523-203e25dfda10?w=500&h=300&fit=crop",
-          category: "Certificaciones",
-          readTime: "7 min",
-          publishedDate: "2025-09-18",
-          slug: "certificaciones-ambientales-empresas-turisticas"
+          title: "Conservación de la Biodiversidad: Alianzas Exitosas",
+          description: "Descubre cómo las empresas de turismo están trabajando con comunidades locales para proteger la rica biodiversidad de Colombia, generando ingresos sostenibles y preservando ecosistemas únicos.",
+          image: "/api/image/biodiversity_conserv_33d23d5e.jpg",
+          category: "Conservación",
+          readTime: "5 min lectura",
+          publishedDate: "2025-01-15",
+          slug: "conservacion-biodiversidad-alianzas",
+          author: "Carlos Eduardo Martínez",
+          authorRole: "Biólogo Conservacionista"
         },
         {
           id: 3,
-          title: "Casos de Éxito: Empresas que Transformaron el Turismo Local",
-          description: "Conoce historias inspiradoras de empresas que han logrado transformar sus comunidades a través del turismo responsable y las prácticas regenerativas.",
-          image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=500&h=300&fit=crop",
-          category: "Casos de Éxito",
-          readTime: "6 min",
-          publishedDate: "2025-09-15",
-          slug: "casos-exito-empresas-turismo-local"
+          title: "Ecoturismo Comunitario: Casos de Éxito en Colombia",
+          description: "Conoce las historias inspiradoras de comunidades que han transformado sus territorios en destinos de ecoturismo, preservando sus tradiciones mientras generan oportunidades económicas sostenibles.",
+          image: "/api/image/sustainable_tourism,_75db2cd6.jpg",
+          category: "Turismo Comunitario",
+          readTime: "7 min lectura",
+          publishedDate: "2025-01-10",
+          slug: "ecoturismo-comunitario-casos-exito",
+          author: "Ana Sofía López",
+          authorRole: "Coordinadora de Turismo Comunitario"
         }
       ];
 

@@ -20,8 +20,6 @@ export function PortalEmpresasLayout({ children }: PortalEmpresasLayoutProps) {
     if (location.includes('/portal-empresas/red')) return 'network';
     if (location.includes('/portal-empresas/experiencias')) return 'experiences';
     if (location.includes('/portal-empresas/mensajes')) return 'messages';
-    if (location.includes('/portal-empresas/perfil')) return 'profile';
-    if (location.includes('/portal-empresas/config')) return 'settings';
     return 'home'; // default to home
   };
 
@@ -32,9 +30,7 @@ export function PortalEmpresasLayout({ children }: PortalEmpresasLayoutProps) {
     { id: "map", label: "Mapa", icon: Map },
     { id: "network", label: "Red", icon: Building2 },
     { id: "experiences", label: "Experiencias", icon: Star },
-    { id: "messages", label: "Mensajes", icon: MessageCircle },
-    { id: "profile", label: "Perfil", icon: User },
-    { id: "settings", label: "Config", icon: Settings }
+    { id: "messages", label: "Chat", icon: MessageCircle }
   ];
 
   const handleNavigation = (viewId: string) => {
@@ -43,9 +39,7 @@ export function PortalEmpresasLayout({ children }: PortalEmpresasLayoutProps) {
       map: '/portal-empresas/mapa',
       network: '/portal-empresas/red',
       experiences: '/portal-empresas/experiencias',
-      messages: '/portal-empresas/mensajes',
-      profile: '/portal-empresas/perfil',
-      settings: '/portal-empresas/config'
+      messages: '/portal-empresas/mensajes'
     };
     
     window.location.href = routeMap[viewId as keyof typeof routeMap] || '/portal-empresas';

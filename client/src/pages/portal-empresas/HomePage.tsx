@@ -78,11 +78,9 @@ export default function HomePage() {
 
   const navigationLinks = [
     { id: "mapa", label: "Mapa Interactivo", icon: Map, path: "/portal-empresas/mapa", description: "Explora empresas de turismo sostenible" },
-    { id: "perfil", label: "Mi Perfil", icon: UserIcon, path: "/portal-empresas/perfil", description: "Gestiona tu información empresarial" },
     { id: "red", label: "Red de Contactos", icon: Network, path: "/portal-empresas/red", description: "Conecta con otras empresas" },
     { id: "experiencias", label: "Experiencias", icon: Star, path: "/portal-empresas/experiencias", description: "Crea y gestiona experiencias" },
-    { id: "mensajes", label: "Mensajes", icon: MessageCircle, path: "/portal-empresas/mensajes", description: "Comunicación directa" },
-    { id: "configuracion", label: "Configuración", icon: Settings, path: "/portal-empresas/config", description: "Ajustes de cuenta" },
+    { id: "chat", label: "Chat", icon: MessageCircle, path: "/portal-empresas/mensajes", description: "Comunicación directa con empresas" },
   ];
 
   return (
