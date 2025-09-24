@@ -25,7 +25,7 @@ export const MobileBottomNav = ({
     <div 
       className={cn(
         "fixed bottom-0 left-0 right-0 z-50 lg:hidden",
-        "bg-black/90 backdrop-blur-xl border-t border-white/20",
+        "bg-white/5 backdrop-blur-2xl border-t border-white/10 shadow-lg",
         "px-2 py-2 safe-area-pb",
         className
       )}
@@ -41,11 +41,11 @@ export const MobileBottomNav = ({
               key={item.id}
               onClick={() => onNavigation(item.id)}
               className={cn(
-                "flex flex-col items-center justify-center px-2 py-2 rounded-xl transition-all duration-200",
+                "flex flex-col items-center justify-center px-2 py-2 rounded-xl transition-all duration-200 backdrop-blur-lg",
                 "min-h-[56px] min-w-[48px] touch-manipulation",
                 isActive 
-                  ? "bg-green-600/20 text-green-400" 
-                  : "text-white/70 hover:text-white hover:bg-white/10"
+                  ? "bg-white/20 text-green-400 border border-white/30 shadow-sm" 
+                  : "text-white/80 hover:text-white hover:bg-white/15 border border-transparent"
               )}
               data-testid={`nav-${item.id}`}
             >

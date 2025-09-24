@@ -27,7 +27,7 @@ export function DesktopSidebar({
   return (
     <div className="hidden lg:block">
       <div 
-        className={`fixed left-0 top-0 h-full z-40 bg-black/40 backdrop-blur-xl border-r border-white/20 transition-all duration-300 ${
+        className={`fixed left-0 top-0 h-full z-40 bg-white/5 backdrop-blur-2xl border-r border-white/10 shadow-lg transition-all duration-300 ${
           isOpen ? 'w-48' : 'w-16'
         }`}
       >
@@ -35,8 +35,8 @@ export function DesktopSidebar({
           {/* Ultra-Compact Header */}
           <div className="flex items-center justify-between mb-6">
             <div className={`${!isOpen ? 'hidden' : 'block'}`}>
-              <div className="w-8 h-8 bg-[#cad95e]/20 rounded-lg flex items-center justify-center border border-[#cad95e]/30">
-                <span className="text-yellow-400 font-gasoek text-lg font-bold">N</span>
+              <div className="w-8 h-8 bg-white/10 backdrop-blur-lg rounded-lg flex items-center justify-center border border-white/20 shadow-sm">
+                <span className="text-green-400 font-gasoek text-lg font-bold">N</span>
               </div>
               <p className="text-xs text-white/60 mt-1">{portalType === 'viajeros' ? 'Viajeros' : 'Empresas'}</p>
             </div>
@@ -44,7 +44,7 @@ export function DesktopSidebar({
               variant="ghost"
               size="sm"
               onClick={onToggle}
-              className="h-8 w-8 p-0 hover:bg-white/10 rounded-full"
+              className="h-8 w-8 p-0 hover:bg-white/20 rounded-full backdrop-blur-lg"
             >
               <span className="text-white text-sm">{isOpen ? '←' : '→'}</span>
             </Button>
@@ -57,10 +57,10 @@ export function DesktopSidebar({
                 key={item.id}
                 onClick={() => onNavigation(item.id)}
                 className={`
-                  w-full flex items-center gap-3 p-2 rounded-lg transition-all duration-200 relative
+                  w-full flex items-center gap-3 p-2 rounded-lg transition-all duration-200 relative backdrop-blur-lg
                   ${activeView === item.id 
-                    ? 'bg-green-500/30 text-green-400' 
-                    : 'text-white/80 hover:bg-white/10 hover:text-green-400'
+                    ? 'bg-white/20 text-green-400 border border-white/30 shadow-sm' 
+                    : 'text-white/90 hover:bg-white/15 hover:text-green-400 border border-transparent'
                   }
                 `}
                 title={item.label}
@@ -75,10 +75,10 @@ export function DesktopSidebar({
           </div>
 
           {/* Compact Footer - Logout */}
-          <div className={`${!isOpen ? 'hidden' : 'block'} mt-auto pt-4 border-t border-white/10`}>
+          <div className={`${!isOpen ? 'hidden' : 'block'} mt-auto pt-4 border-t border-white/20`}>
             <Button
               onClick={signOut}
-              className="w-full bg-red-500/20 hover:bg-red-500/30 border border-red-500/30 text-red-200 hover:text-white transition-all duration-200 text-xs py-2"
+              className="w-full bg-white/10 hover:bg-white/20 border border-white/30 text-white/80 hover:text-white transition-all duration-200 text-xs py-2 backdrop-blur-lg"
               variant="outline"
             >
               <LogOut className="w-3 h-3 mr-2" />
