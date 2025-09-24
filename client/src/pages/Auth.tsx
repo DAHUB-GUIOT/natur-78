@@ -928,7 +928,7 @@ const Auth = () => {
                 setRegistrationData({
                   ...registrationData, 
                   address,
-                  coordinates: coordinates || null
+                  coordinates: coordinates || registrationData.coordinates
                 });
               }}
               label="Dirección Completa"
