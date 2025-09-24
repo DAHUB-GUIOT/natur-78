@@ -20,7 +20,7 @@ export default function MapaPage() {
   }) as { data: any[]; isLoading: boolean };
 
   return (
-    <div className="relative w-full h-full overflow-hidden bg-gradient-to-br from-gray-900 via-black to-green-900 min-h-[calc(100vh-5rem)] lg:min-h-[calc(100vh-5rem)]">
+    <div className="portal-empresas-content relative w-full h-full overflow-hidden bg-gradient-to-br from-gray-900 via-black to-green-900 min-h-[calc(100vh-5rem)] lg:min-h-[calc(100vh-5rem)]">
       {/* Map Header - Floating */}
       <div className="absolute top-4 left-4 right-4 z-20 lg:top-6 lg:left-6 lg:right-6">
         <Card className="bg-white/10 backdrop-blur-xl border-white/20 shadow-2xl">

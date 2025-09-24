@@ -60,7 +60,7 @@ export default function PerfilPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-green-900 p-4 lg:p-6">
+    <div className="portal-empresas-content min-h-screen bg-gradient-to-br from-gray-900 via-black to-green-900 p-4 lg:p-6">
       {/* Profile Header */}
       <Card className="bg-white/10 backdrop-blur-xl border-white/20 mb-6">
         <CardContent className="p-6 lg:p-8">

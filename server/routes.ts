@@ -896,6 +896,81 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Portal stats endpoint
+  app.get("/api/portal/stats", async (req, res) => {
+    try {
+      const registeredUsers = await storage.getAllUsers();
+      const companies = registeredUsers.filter(user => user.role === 'empresa');
+      const travelers = registeredUsers.filter(user => user.role === 'viajero');
+      
+      // Get recent companies (last 6 registered)
+      const recentCompanies = companies
+        .sort((a, b) => new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime())
+        .slice(0, 6)
+        .map(company => ({
+          id: company.id,
+          companyName: company.companyName,
+          companyCategory: company.companyCategory,
+          city: company.city,
+          country: company.country,
+          createdAt: company.createdAt,
+        }));
+
+      res.json({
+        totalCompanies: companies.length,
+        totalTravelers: travelers.length,
+        totalUsers: registeredUsers.length,
+        recentCompanies,
+      });
+    } catch (error) {
+      console.error('❌ Error fetching portal stats:', error);
+      res.status(500).json({ error: 'Failed to fetch portal stats' });
+    }
+  });
+
+  // Featured blogs endpoint
+  app.get("/api/portal/blogs", async (req, res) => {
+    try {
+      const blogs = [
+        {
+          id: 1,
+          title: "El Futuro del Turismo Sostenible en Colombia",
+          description: "Exploramos las tendencias emergentes en el turismo sostenible y cómo las empresas colombianas están liderando el cambio hacia prácticas más responsables con el medio ambiente.",
+          image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500&h=300&fit=crop",
+          category: "Sostenibilidad",
+          readTime: "5 min",
+          publishedDate: "2025-09-20",
+          slug: "futuro-turismo-sostenible-colombia"
+        },
+        {
+          id: 2,
+          title: "Guía Completa: Certificaciones Ambientales para Empresas Turísticas",
+          description: "Todo lo que necesitas saber sobre las principales certificaciones ambientales disponibles para empresas del sector turístico y cómo pueden impulsar tu negocio.",
+          image: "https://images.unsplash.com/photo-1473654729523-203e25dfda10?w=500&h=300&fit=crop",
+          category: "Certificaciones",
+          readTime: "7 min",
+          publishedDate: "2025-09-18",
+          slug: "certificaciones-ambientales-empresas-turisticas"
+        },
+        {
+          id: 3,
+          title: "Casos de Éxito: Empresas que Transformaron el Turismo Local",
+          description: "Conoce historias inspiradoras de empresas que han logrado transformar sus comunidades a través del turismo responsable y las prácticas regenerativas.",
+          image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=500&h=300&fit=crop",
+          category: "Casos de Éxito",
+          readTime: "6 min",
+          publishedDate: "2025-09-15",
+          slug: "casos-exito-empresas-turismo-local"
+        }
+      ];
+
+      res.json(blogs);
+    } catch (error) {
+      console.error('❌ Error fetching blogs:', error);
+      res.status(500).json({ error: 'Failed to fetch blogs' });
+    }
+  });
+
   // Get registered companies with locations for map bubbles
   app.get("/api/companies/map", async (req, res) => {
     try {
