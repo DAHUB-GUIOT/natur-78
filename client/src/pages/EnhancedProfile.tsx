@@ -16,6 +16,8 @@ import {
 } from "lucide-react";
 import { useLocation } from "wouter";
 import { apiRequest } from "@/lib/queryClient";
+import { ProfileMap } from "@/components/ui/ProfileMap";
+import { useEffect, useRef } from "react";
 
 export default function EnhancedProfile() {
   const [location] = useLocation();
@@ -327,6 +329,16 @@ export default function EnhancedProfile() {
             </CardContent>
           </Card>
         </div>
+
+        {/* Company Location Map */}
+        {profileData && (profileData.address || profileData.coordinates) && (
+          <ProfileMap
+            address={profileData.address || `${profileData.city}, ${profileData.country}`}
+            coordinates={profileData.coordinates}
+            companyName={profileData.companyName || profileData.firstName}
+            className="col-span-full"
+          />
+        )}
 
         {/* Content tabs */}
         <Card className="backdrop-blur-xl bg-gray-900/40 border border-gray-600/30">
