@@ -468,7 +468,7 @@ const Auth = () => {
   };
 
   const handleNextStep = () => {
-    if (isEmpresas && currentStep < 4) {
+    if (isEmpresas && currentStep < 10) {
       setCurrentStep(currentStep + 1);
     } else if (!isEmpresas && currentStep < 6) {
       setCurrentStep(currentStep + 1);
@@ -1267,7 +1267,7 @@ const Auth = () => {
       : "Descubre experiencias auténticas y conecta con viajeros conscientes"
   };
 
-  const maxSteps = isEmpresas ? 4 : 6;
+  const maxSteps = isEmpresas ? 10 : 6;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#0a1a0a] via-[#1a2f1a] to-[#0f2a0f] relative overflow-hidden">
@@ -1339,19 +1339,19 @@ const Auth = () => {
                   ) : (
                     <>
                       <CardTitle className="text-2xl text-gray-800 dark:text-white font-bold">
-                        {isEmpresas ? "Registro Empresarial Simplificado" : "Registro de Usuario"}
+                        {isEmpresas ? "Registro Empresarial Completo" : "Registro de Usuario"}
                       </CardTitle>
                       {isEmpresas ? (
                         <>
                           <p className="text-gray-600 dark:text-gray-400 text-sm">
-                            Paso {currentStep} de 4 - Registro rápido
+                            Paso {currentStep} de 10 - Configuración completa
                           </p>
                           
                           {/* Progress Bar */}
                           <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 mt-4">
                             <div 
                               className="bg-[#CAD95E] h-2 rounded-full transition-all duration-300"
-                              style={{ width: `${(currentStep / 4) * 100}%` }}
+                              style={{ width: `${(currentStep / 10) * 100}%` }}
                             ></div>
                           </div>
                           
