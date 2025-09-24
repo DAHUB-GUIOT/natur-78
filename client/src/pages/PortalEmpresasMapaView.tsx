@@ -1,7 +1,7 @@
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
-import { Building2, MapPin, ArrowLeft } from "lucide-react";
+import { Building2, MapPin, ArrowLeft, User } from "lucide-react";
 import { InteractiveMap } from "@/components/dashboard/InteractiveMap";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -84,9 +84,21 @@ const PortalEmpresasMapaView = () => {
               </h1>
             </div>
           </div>
-          <Badge className="bg-green-600/20 text-green-300 border-green-500/50">
-            {filteredCompanies.length} empresas ubicadas
-          </Badge>
+          <div className="flex items-center gap-3">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setLocation('/portal-empresas/perfil')}
+              className="text-white hover:bg-white/10"
+              data-testid="button-perfil"
+            >
+              <User className="w-4 h-4 mr-2" />
+              Mi Perfil
+            </Button>
+            <Badge className="bg-green-600/20 text-green-300 border-green-500/50">
+              {filteredCompanies.length} empresas ubicadas
+            </Badge>
+          </div>
         </div>
       </motion.header>
 

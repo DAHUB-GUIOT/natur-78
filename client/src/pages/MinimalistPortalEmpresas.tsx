@@ -32,6 +32,11 @@ const MinimalistPortalEmpresas = () => {
   const [, setLocation] = useLocation();
   const queryClient = useQueryClient();
 
+  // Redirect to map view by default
+  React.useEffect(() => {
+    setLocation('/portal-empresas/mapa');
+  }, [setLocation]);
+
   // Category and subcategory icon mapping
   const getCategoryIcon = (category: string) => {
     switch (category?.toLowerCase()) {

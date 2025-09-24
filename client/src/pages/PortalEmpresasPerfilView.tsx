@@ -42,6 +42,18 @@ const PortalEmpresasPerfilView = () => {
                 </h1>
               </div>
             </div>
+            <div className="flex items-center gap-3">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setLocation('/portal-empresas/mapa')}
+                className="text-white hover:bg-white/10"
+                data-testid="button-mapa"
+              >
+                <MapPin className="w-4 h-4 mr-2" />
+                Ver Mapa
+              </Button>
+            </div>
           </div>
         </motion.header>
 
