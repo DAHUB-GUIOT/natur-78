@@ -26,7 +26,6 @@ import AdminDashboard from "./pages/AdminDashboard";
 import Dashboard from "./pages/Dashboard";
 
 import MinimalistPortalEmpresas from "./pages/MinimalistPortalEmpresas";
-import PortalEmpresasAuth from "./pages/PortalEmpresasAuth";
 import PortalViajerosNew from "./pages/PortalViajerosNew";
 import AuthViajeros from "./pages/AuthViajeros";
 import ExperienceDetail from "./pages/ExperienceDetail";

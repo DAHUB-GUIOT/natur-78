@@ -404,6 +404,33 @@ const Auth = () => {
       "Organizaciones internacionales",
       "Medios de comunicación",
       "Proveedores de servicios"
+    ],
+    "Guía de turismo": [
+      "Guía de Turismo de Naturaleza",
+      "Guía de Turismo Cultural",
+      "Guía de Turismo de Aventura",
+      "Guía de Turismo Gastronómico",
+      "Guía de Turismo Urbano",
+      "Guía de Turismo Rural",
+      "Guía de Turismo Especializado"
+    ],
+    "Intérprete de idiomas": [
+      "Intérprete de Inglés",
+      "Intérprete de Francés",
+      "Intérprete de Portugués",
+      "Intérprete de Alemán",
+      "Intérprete de Italiano",
+      "Intérprete de Idiomas Indígenas",
+      "Intérprete Multilingüe"
+    ],
+    "DMC (Destination Management Company)": [
+      "DMC para Turismo de Lujo",
+      "DMC para Turismo Corporativo",
+      "DMC para Turismo de Aventura",
+      "DMC para Turismo Cultural",
+      "DMC para Turismo MICE",
+      "DMC para Turismo de Naturaleza",
+      "DMC Especializado Regional"
     ]
   };
 
