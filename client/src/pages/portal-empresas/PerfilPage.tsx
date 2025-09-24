@@ -15,7 +15,7 @@ export default function PerfilPage() {
   const { data: currentUser, isLoading: userLoading } = useQuery({
     queryKey: ['/api/auth/me'],
     staleTime: 10 * 60 * 1000,
-  }) as { data: any; isLoading: boolean };
+  });
 
   // Calculate profile completion
   const calculateProfileCompletion = (user: any) => {
@@ -174,12 +174,24 @@ export default function PerfilPage() {
             </h3>
           </CardHeader>
           <CardContent className="space-y-3">
+            {currentUser.companyCategory && (
+              <div className="flex items-center justify-between">
+                <span className="text-white/70 text-sm">Categoría</span>
+                <Badge className="bg-green-600/20 text-green-300">
+                  {currentUser.companyCategory}
+                </Badge>
+              </div>
+            )}
+            {currentUser.companySubcategory && (
+              <div className="flex items-center justify-between">
+                <span className="text-white/70 text-sm">Subcategoría</span>
+                <span className="text-white font-medium text-sm">{currentUser.companySubcategory}</span>
+              </div>
+            )}
             {currentUser.businessType && (
               <div className="flex items-center justify-between">
                 <span className="text-white/70 text-sm">Tipo de empresa</span>
-                <Badge className="bg-green-600/20 text-green-300">
-                  {currentUser.businessType}
-                </Badge>
+                <span className="text-white font-medium text-sm">{currentUser.businessType}</span>
               </div>
             )}
             {currentUser.yearsExperience && (
@@ -192,12 +204,6 @@ export default function PerfilPage() {
               <div className="flex items-center justify-between">
                 <span className="text-white/70 text-sm">Tamaño del equipo</span>
                 <span className="text-white font-medium">{currentUser.teamSize} personas</span>
-              </div>
-            )}
-            {currentUser.specialization && (
-              <div className="flex items-center justify-between">
-                <span className="text-white/70 text-sm">Especialización</span>
-                <span className="text-white font-medium">{currentUser.specialization}</span>
               </div>
             )}
           </CardContent>
@@ -238,6 +244,99 @@ export default function PerfilPage() {
             </div>
           </CardContent>
         </Card>
+      </div>
+
+      {/* Company Description */}
+      {currentUser?.companyDescription && (
+        <Card className="bg-white/10 backdrop-blur-xl border-white/20 mb-6">
+          <CardHeader>
+            <h3 className="text-lg font-semibold text-white">Descripción de la Empresa</h3>
+          </CardHeader>
+          <CardContent>
+            <p className="text-white/80 leading-relaxed">{currentUser.companyDescription}</p>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Services and Certifications Row */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+        {/* Services Offered */}
+        {currentUser?.servicesOffered && Array.isArray(currentUser.servicesOffered) && currentUser.servicesOffered.length > 0 && (
+          <Card className="bg-white/10 backdrop-blur-xl border-white/20">
+            <CardHeader>
+              <h3 className="text-lg font-semibold text-white">Servicios Ofrecidos</h3>
+            </CardHeader>
+            <CardContent>
+              <div className="flex flex-wrap gap-2">
+                {currentUser.servicesOffered.map((service: string, index: number) => (
+                  <Badge key={index} className="bg-blue-600/20 text-blue-300 border-blue-500/30">
+                    {service}
+                  </Badge>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
+        {/* Certifications */}
+        {currentUser?.certifications && Array.isArray(currentUser.certifications) && currentUser.certifications.length > 0 && (
+          <Card className="bg-white/10 backdrop-blur-xl border-white/20">
+            <CardHeader>
+              <h3 className="text-lg font-semibold text-white">Certificaciones</h3>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-2">
+                {currentUser.certifications.map((cert: string, index: number) => (
+                  <div key={index} className="flex items-center gap-2">
+                    <div className="w-2 h-2 bg-green-400 rounded-full flex-shrink-0"></div>
+                    <span className="text-white/80 text-sm">{cert}</span>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        )}
+      </div>
+
+      {/* Sustainability and Accessibility */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+        {/* Sustainability Practices */}
+        {currentUser?.sustainabilityPractices && Array.isArray(currentUser.sustainabilityPractices) && currentUser.sustainabilityPractices.length > 0 && (
+          <Card className="bg-white/10 backdrop-blur-xl border-white/20">
+            <CardHeader>
+              <h3 className="text-lg font-semibold text-white">Prácticas Sostenibles</h3>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-2">
+                {currentUser.sustainabilityPractices.map((practice: string, index: number) => (
+                  <div key={index} className="flex items-center gap-2">
+                    <div className="w-2 h-2 bg-green-400 rounded-full flex-shrink-0"></div>
+                    <span className="text-white/80 text-sm">{practice}</span>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
+        {/* Accessibility Features */}
+        {currentUser?.accessibilityFeatures && Array.isArray(currentUser.accessibilityFeatures) && currentUser.accessibilityFeatures.length > 0 && (
+          <Card className="bg-white/10 backdrop-blur-xl border-white/20">
+            <CardHeader>
+              <h3 className="text-lg font-semibold text-white">Características de Accesibilidad</h3>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-2">
+                {currentUser.accessibilityFeatures.map((feature: string, index: number) => (
+                  <div key={index} className="flex items-center gap-2">
+                    <div className="w-2 h-2 bg-blue-400 rounded-full flex-shrink-0"></div>
+                    <span className="text-white/80 text-sm">{feature}</span>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        )}
       </div>
 
       {/* Location Map */}
