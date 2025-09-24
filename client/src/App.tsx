@@ -42,6 +42,7 @@ import ExperienciasPage from "./pages/portal-empresas/ExperienciasPage";
 import MensajesPage from "./pages/portal-empresas/MensajesPage";
 import PerfilPage from "./pages/portal-empresas/PerfilPage";
 import ConfigPage from "./pages/portal-empresas/ConfigPage";
+import { PortalEmpresasLayout } from "./components/layout/PortalEmpresasLayout";
 
 import Tickets from "./pages/Tickets";
 import SessionDetail from "./pages/SessionDetail";
@@ -109,12 +110,24 @@ const App = () => {
             <Route path="/auth/empresas" component={AuthEmpresas} />
             
             {/* Portal Empresas subpages - specific routes first */}
-            <Route path="/portal-empresas/mapa" component={MapaPage} />
-            <Route path="/portal-empresas/red" component={RedPage} />
-            <Route path="/portal-empresas/experiencias" component={ExperienciasPage} />
-            <Route path="/portal-empresas/mensajes" component={MensajesPage} />
-            <Route path="/portal-empresas/perfil" component={PerfilPage} />
-            <Route path="/portal-empresas/config" component={ConfigPage} />
+            <Route path="/portal-empresas/mapa">
+              <PortalEmpresasLayout><MapaPage /></PortalEmpresasLayout>
+            </Route>
+            <Route path="/portal-empresas/red">
+              <PortalEmpresasLayout><RedPage /></PortalEmpresasLayout>
+            </Route>
+            <Route path="/portal-empresas/experiencias">
+              <PortalEmpresasLayout><ExperienciasPage /></PortalEmpresasLayout>
+            </Route>
+            <Route path="/portal-empresas/mensajes">
+              <PortalEmpresasLayout><MensajesPage /></PortalEmpresasLayout>
+            </Route>
+            <Route path="/portal-empresas/perfil">
+              <PortalEmpresasLayout><PerfilPage /></PortalEmpresasLayout>
+            </Route>
+            <Route path="/portal-empresas/config">
+              <PortalEmpresasLayout><ConfigPage /></PortalEmpresasLayout>
+            </Route>
             
             {/* Main portal route - should be last to avoid conflicts */}
             <Route path="/portal-empresas" component={MinimalistPortalEmpresas} />
