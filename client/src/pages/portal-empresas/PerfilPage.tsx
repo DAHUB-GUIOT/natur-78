@@ -15,7 +15,7 @@ export default function PerfilPage() {
   const { data: currentUser, isLoading: userLoading } = useQuery({
     queryKey: ['/api/auth/me'],
     staleTime: 10 * 60 * 1000,
-  });
+  }) as { data: any; isLoading: boolean };
 
   // Calculate profile completion
   const calculateProfileCompletion = (user: any) => {
