@@ -5,12 +5,17 @@ import { motion } from "framer-motion";
 import { 
   Search, Building2, Users, TrendingUp, MapPin, ArrowRight,
   BookOpen, Calendar, ExternalLink, Globe, Mail, Phone,
-  Map, Star, MessageCircle, Settings, User as UserIcon, Network
+  Map, Star, MessageCircle, Settings, User as UserIcon, Network, Sparkles
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+
+// Import images
+import heroImage from '@assets/stock_images/sustainable_tourism,_9d122b10.jpg';
+import ecoImage from '@assets/stock_images/sustainable_tourism,_cc0575db.jpg';
+import businessImage from '@assets/stock_images/sustainable_tourism,_7b3bfc3e.jpg';
 
 interface PortalStats {
   totalCompanies: number;
@@ -87,52 +92,115 @@ export default function HomePage() {
     <div className="portal-empresas-content">
       <div className="max-w-7xl mx-auto px-4 lg:px-6 py-8 space-y-12">
         
-        {/* Hero Section with Statistics */}
+        {/* Hero Section with Split Layout */}
         <motion.section 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-center space-y-8"
+          transition={{ duration: 0.8 }}
+          className="relative overflow-hidden rounded-3xl"
         >
-          <div className="space-y-4">
-            <h2 className="text-4xl lg:text-6xl font-gasoek text-white leading-tight">
-              Bienvenido al Portal <span className="text-green-400">Empresas</span>
-            </h2>
-            <p className="text-xl text-white/80 max-w-3xl mx-auto">
-              Conecta, crece y transforma el turismo sostenible en Colombia. 
-              Únete a una red de empresas comprometidas con el futuro del planeta.
-            </p>
-          </div>
-
-          {/* Statistics Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-            <Card className="bg-white/10 backdrop-blur-xl border-white/20">
-              <CardContent className="p-6 text-center">
-                <Building2 className="w-8 h-8 text-green-400 mx-auto mb-3" />
-                <div className="text-3xl font-bold text-white mb-1">
-                  {statsLoading ? "..." : stats?.totalCompanies || 0}
+          {/* Background with overlay */}
+          <div className="absolute inset-0 bg-gradient-to-br from-green-900/90 via-black/80 to-purple-900/90 z-10"></div>
+          <div 
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{ backgroundImage: `url(${heroImage})` }}
+          ></div>
+          
+          {/* Content */}
+          <div className="relative z-20 lg:grid lg:grid-cols-2 lg:gap-12 p-8 lg:p-16 min-h-[600px] flex items-center">
+            {/* Left side - Text content */}
+            <motion.div 
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="space-y-6 lg:space-y-8 text-center lg:text-left"
+            >
+              <div className="space-y-4">
+                <div className="flex items-center justify-center lg:justify-start gap-2 mb-4">
+                  <Sparkles className="w-6 h-6 text-green-400" />
+                  <span className="text-green-400 font-semibold">Festival NATUR 2025</span>
                 </div>
-                <p className="text-white/60 text-sm">Empresas Registradas</p>
-              </CardContent>
-            </Card>
-            <Card className="bg-white/10 backdrop-blur-xl border-white/20">
-              <CardContent className="p-6 text-center">
-                <Users className="w-8 h-8 text-blue-400 mx-auto mb-3" />
-                <div className="text-3xl font-bold text-white mb-1">
-                  {statsLoading ? "..." : stats?.totalTravelers || 0}
-                </div>
-                <p className="text-white/60 text-sm">Viajeros Conectados</p>
-              </CardContent>
-            </Card>
-            <Card className="bg-white/10 backdrop-blur-xl border-white/20">
-              <CardContent className="p-6 text-center">
-                <TrendingUp className="w-8 h-8 text-purple-400 mx-auto mb-3" />
-                <div className="text-3xl font-bold text-white mb-1">
-                  {statsLoading ? "..." : stats?.totalUsers || 0}
-                </div>
-                <p className="text-white/60 text-sm">Total Usuarios</p>
-              </CardContent>
-            </Card>
+                <h1 className="text-4xl lg:text-6xl font-gasoek text-white leading-tight">
+                  Portal <span className="text-green-400 relative">
+                    Empresas
+                    <div className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-green-400 to-blue-400 rounded-full"></div>
+                  </span>
+                </h1>
+                <p className="text-xl lg:text-2xl text-white/90 leading-relaxed">
+                  Conecta, crece y transforma el turismo sostenible en Colombia. 
+                  Únete a una red de empresas comprometidas con el futuro del planeta.
+                </p>
+              </div>
+              
+              {/* Action buttons */}
+              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                <Button 
+                  className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-full font-semibold text-lg shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
+                  data-testid="button-explore-map"
+                >
+                  <Map className="w-5 h-5 mr-2" />
+                  Explorar Mapa
+                </Button>
+                <Button 
+                  variant="outline" 
+                  className="border-white/30 bg-white/10 backdrop-blur-lg text-white hover:bg-white/20 px-8 py-3 rounded-full font-semibold text-lg shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
+                  data-testid="button-join-network"
+                >
+                  <Network className="w-5 h-5 mr-2" />
+                  Únete a la Red
+                </Button>
+              </div>
+            </motion.div>
+            
+            {/* Right side - Statistics cards overlay */}
+            <motion.div 
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="mt-8 lg:mt-0 grid grid-cols-1 gap-4"
+            >
+              <Card className="bg-white/15 backdrop-blur-xl border-white/20 shadow-2xl hover:bg-white/20 transition-all duration-300">
+                <CardContent className="p-6">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <div className="text-3xl lg:text-4xl font-bold text-white mb-1">
+                        {statsLoading ? "..." : stats?.totalCompanies || 0}
+                      </div>
+                      <p className="text-white/70 font-medium">Empresas Registradas</p>
+                    </div>
+                    <Building2 className="w-10 h-10 text-green-400" />
+                  </div>
+                </CardContent>
+              </Card>
+              
+              <Card className="bg-white/15 backdrop-blur-xl border-white/20 shadow-2xl hover:bg-white/20 transition-all duration-300">
+                <CardContent className="p-6">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <div className="text-3xl lg:text-4xl font-bold text-white mb-1">
+                        {statsLoading ? "..." : stats?.totalTravelers || 0}
+                      </div>
+                      <p className="text-white/70 font-medium">Viajeros Conectados</p>
+                    </div>
+                    <Users className="w-10 h-10 text-blue-400" />
+                  </div>
+                </CardContent>
+              </Card>
+              
+              <Card className="bg-white/15 backdrop-blur-xl border-white/20 shadow-2xl hover:bg-white/20 transition-all duration-300">
+                <CardContent className="p-6">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <div className="text-3xl lg:text-4xl font-bold text-white mb-1">
+                        {statsLoading ? "..." : stats?.totalUsers || 0}
+                      </div>
+                      <p className="text-white/70 font-medium">Total Usuarios</p>
+                    </div>
+                    <TrendingUp className="w-10 h-10 text-purple-400" />
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
           </div>
         </motion.section>
 

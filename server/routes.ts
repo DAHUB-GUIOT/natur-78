@@ -10,6 +10,7 @@ import { setupGoogleAuth } from './googleAuth';
 import { desc, eq, and, or } from "drizzle-orm";
 import { sendVerificationEmail, sendAdminNotification } from "./emailService";
 import crypto from "crypto";
+import path from "path";
 import bcrypt from "bcryptjs";
 
 // Extend Express Request type to include session and admin user
@@ -974,6 +975,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error('❌ Error fetching blogs:', error);
       res.status(500).json({ error: 'Failed to fetch blogs' });
+    }
+  });
+
+  // Serve stock images endpoint
+  app.get('/api/image/:filename', (req, res) => {
+    try {
+      const filename = req.params.filename;
+      const imagePath = path.join(process.cwd(), 'attached_assets', 'stock_images', filename);
+      res.sendFile(imagePath);
+    } catch (error) {
+      console.error('❌ Error serving image:', error);
+      res.status(404).json({ error: 'Image not found' });
     }
   });
 
