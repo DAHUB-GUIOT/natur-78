@@ -114,6 +114,15 @@ const companyCategories = {
     "Intérprete de Italiano",
     "Intérprete de Idiomas Indígenas",
     "Intérprete Multilingüe"
+  ],
+  "DMC (Destination Management Company)": [
+    "DMC para Turismo de Lujo",
+    "DMC para Turismo Corporativo",
+    "DMC para Turismo de Aventura",
+    "DMC para Turismo Cultural",
+    "DMC para Turismo MICE",
+    "DMC para Turismo de Naturaleza",
+    "DMC Especializado Regional"
   ]
 };
 
