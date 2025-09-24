@@ -36,6 +36,7 @@ import Profile from "./pages/Profile";
 import EnhancedProfile from "./pages/EnhancedProfile";
 
 // Portal Empresas subpages
+import HomePage from "./pages/portal-empresas/HomePage";
 import MapaPage from "./pages/portal-empresas/MapaPage";
 import RedPage from "./pages/portal-empresas/RedPage";
 import ExperienciasPage from "./pages/portal-empresas/ExperienciasPage";
@@ -109,7 +110,7 @@ const App = () => {
             <Route path="/dashboard" component={Dashboard} />
             <Route path="/auth/empresas" component={AuthEmpresas} />
             
-            {/* Portal Empresas subpages - specific routes first */}
+            {/* Portal Empresas routes with sidebar layout */}
             <Route path="/portal-empresas/mapa">
               <PortalEmpresasLayout><MapaPage /></PortalEmpresasLayout>
             </Route>
@@ -129,8 +130,10 @@ const App = () => {
               <PortalEmpresasLayout><ConfigPage /></PortalEmpresasLayout>
             </Route>
             
-            {/* Main portal route - should be last to avoid conflicts */}
-            <Route path="/portal-empresas" component={MinimalistPortalEmpresas} />
+            {/* Main portal route with sidebar layout */}
+            <Route path="/portal-empresas">
+              <PortalEmpresasLayout><HomePage /></PortalEmpresasLayout>
+            </Route>
             <Route path="/company-profile" component={CompanyProfilePage} />
             <Route path="/portal-viajeros/auth" component={AuthViajeros} />
             <Route path="/portal-viajeros" component={PortalViajerosNew} />

@@ -15,18 +15,20 @@ export function PortalEmpresasLayout({ children }: PortalEmpresasLayoutProps) {
 
   // Get current active view from URL
   const getActiveView = () => {
+    if (location === '/portal-empresas') return 'home';
     if (location.includes('/portal-empresas/mapa')) return 'map';
     if (location.includes('/portal-empresas/red')) return 'network';
     if (location.includes('/portal-empresas/experiencias')) return 'experiences';
     if (location.includes('/portal-empresas/mensajes')) return 'messages';
     if (location.includes('/portal-empresas/perfil')) return 'profile';
     if (location.includes('/portal-empresas/config')) return 'settings';
-    return 'map'; // default
+    return 'home'; // default to home
   };
 
   const activeView = getActiveView();
 
   const navItems = [
+    { id: "home", label: "Inicio", icon: Building2 },
     { id: "map", label: "Mapa", icon: Map },
     { id: "network", label: "Red", icon: Building2 },
     { id: "experiences", label: "Experiencias", icon: Star },
@@ -37,6 +39,7 @@ export function PortalEmpresasLayout({ children }: PortalEmpresasLayoutProps) {
 
   const handleNavigation = (viewId: string) => {
     const routeMap = {
+      home: '/portal-empresas',
       map: '/portal-empresas/mapa',
       network: '/portal-empresas/red',
       experiences: '/portal-empresas/experiencias',
@@ -45,7 +48,7 @@ export function PortalEmpresasLayout({ children }: PortalEmpresasLayoutProps) {
       settings: '/portal-empresas/config'
     };
     
-    window.location.href = routeMap[viewId as keyof typeof routeMap] || '/portal-empresas/mapa';
+    window.location.href = routeMap[viewId as keyof typeof routeMap] || '/portal-empresas';
   };
 
   return (
