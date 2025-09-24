@@ -35,6 +35,14 @@ import CompanyProfile from "./pages/CompanyProfile";
 import Profile from "./pages/Profile";
 import EnhancedProfile from "./pages/EnhancedProfile";
 
+// Portal Empresas subpages
+import MapaPage from "./pages/portal-empresas/MapaPage";
+import RedPage from "./pages/portal-empresas/RedPage";
+import ExperienciasPage from "./pages/portal-empresas/ExperienciasPage";
+import MensajesPage from "./pages/portal-empresas/MensajesPage";
+import PerfilPage from "./pages/portal-empresas/PerfilPage";
+import ConfigPage from "./pages/portal-empresas/ConfigPage";
+
 import Tickets from "./pages/Tickets";
 import SessionDetail from "./pages/SessionDetail";
 import Noticias from "./pages/Noticias";
@@ -99,6 +107,16 @@ const App = () => {
             </Route>
             <Route path="/dashboard" component={Dashboard} />
             <Route path="/auth/empresas" component={AuthEmpresas} />
+            
+            {/* Portal Empresas subpages - specific routes first */}
+            <Route path="/portal-empresas/mapa" component={MapaPage} />
+            <Route path="/portal-empresas/red" component={RedPage} />
+            <Route path="/portal-empresas/experiencias" component={ExperienciasPage} />
+            <Route path="/portal-empresas/mensajes" component={MensajesPage} />
+            <Route path="/portal-empresas/perfil" component={PerfilPage} />
+            <Route path="/portal-empresas/config" component={ConfigPage} />
+            
+            {/* Main portal route - should be last to avoid conflicts */}
             <Route path="/portal-empresas" component={MinimalistPortalEmpresas} />
             <Route path="/company-profile" component={CompanyProfilePage} />
             <Route path="/portal-viajeros/auth" component={AuthViajeros} />
