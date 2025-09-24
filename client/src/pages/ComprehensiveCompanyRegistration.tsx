@@ -878,7 +878,7 @@ const ComprehensiveCompanyRegistration = () => {
                     addressField={field}
                     coordinatesField={{
                       value: form.watch('coordinates') || { lat: 4.6097, lng: -74.0817 },
-                      onChange: (value) => form.setValue('coordinates', value)
+                      onChange: (value: any) => form.setValue('coordinates', value)
                     }}
                     placeholder="Ej: Carrera 7 #93-07, Oficina 501, Bogotá"
                   />
