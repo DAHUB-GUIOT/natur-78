@@ -353,7 +353,10 @@ const Auth = () => {
       "Turismo rural y agroturismo",
       "Turismo gastronómico",
       "Turismo de bienestar y salud",
-      "Turismo educativo y científico"
+      "Turismo educativo y científico",
+      "Turismo comunitario",
+      "Turismo regenerativo",
+      "Turismo de naturaleza"
     ],
     "Alojamientos Sostenibles": [
       "Hoteles ecológicos",
