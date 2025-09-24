@@ -504,15 +504,42 @@ const Auth = () => {
         headers: { 'Content-Type': 'application/json' }
       });
     },
-    onSuccess: () => {
+    onSuccess: async (response) => {
       toast({
         title: "Registro exitoso",
         description: isEmpresas 
-          ? "Tu cuenta empresarial ha sido creada. Revisa tu email para verificar tu cuenta."
-          : "Tu cuenta ha sido creada. Revisa tu email para verificar tu cuenta.",
+          ? "Tu cuenta empresarial ha sido creada. Iniciando sesión automáticamente..."
+          : "Tu cuenta ha sido creada. Iniciando sesión automáticamente...",
       });
-      setIsLogin(true);
-      setCurrentStep(1);
+      
+      // Automatic login after successful registration
+      try {
+        const email = isEmpresas ? registrationData.email : simpleRegisterData.email;
+        const password = isEmpresas ? registrationData.password : simpleRegisterData.password;
+        
+        const loginResponse = await apiRequest('/api/auth/login', {
+          method: 'POST',
+          body: JSON.stringify({ email, password }),
+          headers: { 'Content-Type': 'application/json' }
+        });
+        
+        // Redirect to appropriate portal
+        const redirectUrl = isEmpresas ? '/portal-empresas' : '/portal-viajeros';
+        toast({
+          title: "Inicio de sesión automático exitoso",
+          description: "Redirigiendo al portal...",
+        });
+        window.location.replace(redirectUrl);
+        
+      } catch (error) {
+        console.error('Auto-login failed:', error);
+        toast({
+          title: "Registro exitoso",
+          description: "Por favor inicia sesión con tus credenciales.",
+        });
+        setIsLogin(true);
+        setCurrentStep(1);
+      }
     },
     onError: (error: any) => {
       toast({
