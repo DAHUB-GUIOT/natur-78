@@ -468,7 +468,7 @@ const Auth = () => {
   };
 
   const handleNextStep = () => {
-    if (isEmpresas && currentStep < 15) {
+    if (isEmpresas && currentStep < 4) {
       setCurrentStep(currentStep + 1);
     } else if (!isEmpresas && currentStep < 6) {
       setCurrentStep(currentStep + 1);
@@ -524,22 +524,12 @@ const Auth = () => {
         return !!(registrationData.address && registrationData.city);
       case 4:
         return !!(registrationData.bio && registrationData.targetMarket);
-      case 5:
-        return !!(registrationData.messagingBio && registrationData.responseTimeHours);
-      case 6:
-        return !!(registrationData.defaultExperienceCategory && registrationData.defaultMeetingPoint);
-      case 7:
-        return true; // Operating hours - optional
       case 8:
         return registrationData.languages.length > 0;
       case 9:
         return true; // Social media - optional
       case 10:
         return !!(registrationData.emergencyContact.name && registrationData.emergencyContact.phone && registrationData.acceptTerms);
-      case 11:
-        return true; // Payment configuration - optional initially
-      case 12:
-        return true; // Notification preferences - optional
       case 13:
         return true; // Security and privacy settings - optional
       case 14:
@@ -968,114 +958,8 @@ const Auth = () => {
           </div>
         );
 
-      case 5:
-        return (
-          <div className="space-y-6">
-            <div className="text-center mb-6">
-              <Mail className="mx-auto h-12 w-12 text-[#CAD95E] mb-4" />
-              <h3 className="text-xl font-bold text-gray-800 dark:text-white">Configuración de Mensajería</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Configura cómo quieres comunicarte con clientes</p>
-            </div>
-            
-            <div className="space-y-2">
-              <Label className="text-sm font-medium">Mensaje de Bienvenida *</Label>
-              <Textarea
-                value={registrationData.messagingBio}
-                onChange={(e) => setRegistrationData({...registrationData, messagingBio: e.target.value})}
-                placeholder="¡Hola! Bienvenido a nuestra empresa. Estamos aquí para ayudarte..."
-                rows={3}
-                required
-              />
-            </div>
-            
-            <div className="space-y-2">
-              <Label className="text-sm font-medium">Tiempo de Respuesta (horas) *</Label>
-              <Select 
-                value={registrationData.responseTimeHours.toString()} 
-                onValueChange={(value) => setRegistrationData({...registrationData, responseTimeHours: parseInt(value)})}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Selecciona tiempo de respuesta" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="1">1 hora</SelectItem>
-                  <SelectItem value="6">6 horas</SelectItem>
-                  <SelectItem value="12">12 horas</SelectItem>
-                  <SelectItem value="24">24 horas</SelectItem>
-                  <SelectItem value="48">48 horas</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-        );
 
-      case 6:
-        return (
-          <div className="space-y-6">
-            <div className="text-center mb-6">
-              <Briefcase className="mx-auto h-12 w-12 text-[#CAD95E] mb-4" />
-              <h3 className="text-xl font-bold text-gray-800 dark:text-white">Configuración de Experiencias</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Configuración por defecto para tus experiencias</p>
-            </div>
-            
-            <div className="space-y-2">
-              <Label className="text-sm font-medium">Categoría de Experiencia por Defecto *</Label>
-              <Select 
-                value={registrationData.defaultExperienceCategory} 
-                onValueChange={(value) => setRegistrationData({...registrationData, defaultExperienceCategory: value})}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Selecciona una categoría" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="ecoturismo">Ecoturismo</SelectItem>
-                  <SelectItem value="aventura">Aventura</SelectItem>
-                  <SelectItem value="cultural">Cultural</SelectItem>
-                  <SelectItem value="gastronomico">Gastronómico</SelectItem>
-                  <SelectItem value="bienestar">Bienestar</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            
-            <div className="space-y-2">
-              <Label className="text-sm font-medium">Punto de Encuentro por Defecto *</Label>
-              <Input
-                value={registrationData.defaultMeetingPoint}
-                onChange={(e) => setRegistrationData({...registrationData, defaultMeetingPoint: e.target.value})}
-                placeholder="Plaza principal, hotel, oficina, etc."
-                required
-              />
-            </div>
-            
-            <div className="space-y-2">
-              <Label className="text-sm font-medium">Política de Cancelación por Defecto</Label>
-              <Textarea
-                value={registrationData.defaultCancellationPolicy}
-                onChange={(e) => setRegistrationData({...registrationData, defaultCancellationPolicy: e.target.value})}
-                placeholder="Describe tu política de cancelación..."
-                rows={3}
-              />
-            </div>
-          </div>
-        );
 
-      case 7:
-        return (
-          <div className="space-y-6">
-            <div className="text-center mb-6">
-              <Clock className="mx-auto h-12 w-12 text-[#CAD95E] mb-4" />
-              <h3 className="text-xl font-bold text-gray-800 dark:text-white">Horarios de Operación</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Configura tus horarios de atención</p>
-            </div>
-            
-            <div className="text-center p-8">
-              <p className="text-gray-600 dark:text-gray-400">
-                Los horarios de operación se pueden configurar después del registro inicial.
-                Por ahora, continuemos con el proceso.
-              </p>
-            </div>
-          </div>
-        );
 
       case 8:
         return (
@@ -1256,135 +1140,7 @@ const Auth = () => {
           </div>
         );
 
-      case 11:
-        return (
-          <div className="space-y-6">
-            <div className="text-center mb-6">
-              <Briefcase className="mx-auto h-12 w-12 text-[#CAD95E] mb-4" />
-              <h3 className="text-xl font-bold text-gray-800 dark:text-white">Configuración de Pagos</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Configura tus métodos de pago y facturación</p>
-            </div>
-            
-            <div className="space-y-2">
-              <Label className="text-sm font-medium">Métodos de Pago Aceptados</Label>
-              <div className="space-y-2">
-                <div className="flex items-center space-x-2">
-                  <input
-                    type="checkbox"
-                    id="transferencia"
-                    checked={registrationData.paymentMethods.includes("transferencia")}
-                    onChange={(e) => {
-                      const methods = e.target.checked 
-                        ? [...registrationData.paymentMethods, "transferencia"]
-                        : registrationData.paymentMethods.filter(m => m !== "transferencia");
-                      setRegistrationData({...registrationData, paymentMethods: methods});
-                    }}
-                  />
-                  <Label htmlFor="transferencia" className="text-sm">Transferencia Bancaria</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <input
-                    type="checkbox"
-                    id="tarjeta"
-                    checked={registrationData.paymentMethods.includes("tarjeta")}
-                    onChange={(e) => {
-                      const methods = e.target.checked 
-                        ? [...registrationData.paymentMethods, "tarjeta"]
-                        : registrationData.paymentMethods.filter(m => m !== "tarjeta");
-                      setRegistrationData({...registrationData, paymentMethods: methods});
-                    }}
-                  />
-                  <Label htmlFor="tarjeta" className="text-sm">Tarjeta de Crédito/Débito</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <input
-                    type="checkbox"
-                    id="efectivo"
-                    checked={registrationData.paymentMethods.includes("efectivo")}
-                    onChange={(e) => {
-                      const methods = e.target.checked 
-                        ? [...registrationData.paymentMethods, "efectivo"]
-                        : registrationData.paymentMethods.filter(m => m !== "efectivo");
-                      setRegistrationData({...registrationData, paymentMethods: methods});
-                    }}
-                  />
-                  <Label htmlFor="efectivo" className="text-sm">Efectivo</Label>
-                </div>
-              </div>
-            </div>
-            
-            <div className="space-y-2">
-              <Label className="text-sm font-medium">Email para Facturación</Label>
-              <Input
-                type="email"
-                value={registrationData.invoiceEmail}
-                onChange={(e) => setRegistrationData({...registrationData, invoiceEmail: e.target.value})}
-                placeholder="facturacion@empresa.com"
-              />
-            </div>
-            
-            <div className="space-y-2">
-              <Label className="text-sm font-medium">Información Fiscal</Label>
-              <Input
-                value={registrationData.taxInformation}
-                onChange={(e) => setRegistrationData({...registrationData, taxInformation: e.target.value})}
-                placeholder="Régimen simplificado, IVA, etc."
-              />
-            </div>
-          </div>
-        );
 
-      case 12:
-        return (
-          <div className="space-y-6">
-            <div className="text-center mb-6">
-              <Mail className="mx-auto h-12 w-12 text-[#CAD95E] mb-4" />
-              <h3 className="text-xl font-bold text-gray-800 dark:text-white">Configuración de Notificaciones</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Configura cómo quieres recibir notificaciones</p>
-            </div>
-            
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <Label className="text-sm font-medium">Notificaciones por Email</Label>
-                  <p className="text-xs text-gray-500">Recibe actualizaciones importantes por email</p>
-                </div>
-                <input
-                  type="checkbox"
-                  checked={registrationData.emailNotifications}
-                  onChange={(e) => setRegistrationData({...registrationData, emailNotifications: e.target.checked})}
-                  className="rounded"
-                />
-              </div>
-              
-              <div className="flex items-center justify-between">
-                <div>
-                  <Label className="text-sm font-medium">Notificaciones SMS</Label>
-                  <p className="text-xs text-gray-500">Recibe notificaciones urgentes por SMS</p>
-                </div>
-                <input
-                  type="checkbox"
-                  checked={registrationData.smsNotifications}
-                  onChange={(e) => setRegistrationData({...registrationData, smsNotifications: e.target.checked})}
-                  className="rounded"
-                />
-              </div>
-              
-              <div className="flex items-center justify-between">
-                <div>
-                  <Label className="text-sm font-medium">Emails de Marketing</Label>
-                  <p className="text-xs text-gray-500">Recibe ofertas y novedades del festival</p>
-                </div>
-                <input
-                  type="checkbox"
-                  checked={registrationData.marketingEmails}
-                  onChange={(e) => setRegistrationData({...registrationData, marketingEmails: e.target.checked})}
-                  className="rounded"
-                />
-              </div>
-            </div>
-          </div>
-        );
 
       case 13:
         return (
@@ -1511,7 +1267,7 @@ const Auth = () => {
       : "Descubre experiencias auténticas y conecta con viajeros conscientes"
   };
 
-  const maxSteps = isEmpresas ? 15 : 6;
+  const maxSteps = isEmpresas ? 4 : 6;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#0a1a0a] via-[#1a2f1a] to-[#0f2a0f] relative overflow-hidden">
@@ -1583,19 +1339,19 @@ const Auth = () => {
                   ) : (
                     <>
                       <CardTitle className="text-2xl text-gray-800 dark:text-white font-bold">
-                        {isEmpresas ? "Registro Empresarial Completo" : "Registro de Usuario"}
+                        {isEmpresas ? "Registro Empresarial Simplificado" : "Registro de Usuario"}
                       </CardTitle>
                       {isEmpresas ? (
                         <>
                           <p className="text-gray-600 dark:text-gray-400 text-sm">
-                            Paso {currentStep} de 15 - Configuración completa ANTES del login
+                            Paso {currentStep} de 4 - Registro rápido
                           </p>
                           
                           {/* Progress Bar */}
                           <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 mt-4">
                             <div 
                               className="bg-[#CAD95E] h-2 rounded-full transition-all duration-300"
-                              style={{ width: `${(currentStep / 15) * 100}%` }}
+                              style={{ width: `${(currentStep / 4) * 100}%` }}
                             ></div>
                           </div>
                           
