@@ -27,7 +27,7 @@ export default function ConfigPage() {
   const { data: currentUser, isLoading } = useQuery({
     queryKey: ['/api/auth/me'],
     staleTime: 10 * 60 * 1000,
-  });
+  }) as { data: any; isLoading: boolean };
 
   // Form states for different sections
   const [profileData, setProfileData] = useState({

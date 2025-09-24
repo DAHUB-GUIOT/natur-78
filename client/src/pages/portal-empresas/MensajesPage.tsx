@@ -16,7 +16,7 @@ export default function MensajesPage() {
     queryKey: ['/api/conversations'],
     staleTime: 30 * 1000, // 30 seconds
     refetchInterval: 30 * 1000, // Auto-refresh every 30 seconds
-  });
+  }) as { data: any[]; isLoading: boolean };
 
   // Filter conversations
   const filteredConversations = conversations.filter((conv: any) => {
@@ -152,10 +152,9 @@ export default function MensajesPage() {
         {/* Chat Area */}
         <div className="flex-1 lg:flex hidden">
           {selectedConversation ? (
-            <WhatsAppChat 
-              conversationId={selectedConversation}
-              className="w-full h-full"
-            />
+            <div className="w-full h-full">
+              <WhatsAppChat />
+            </div>
           ) : (
             <div className="flex-1 flex items-center justify-center bg-white/5 backdrop-blur-xl">
               <div className="text-center">
@@ -183,10 +182,9 @@ export default function MensajesPage() {
                 <MoreVertical className="w-5 h-5" />
               </Button>
             </div>
-            <WhatsAppChat 
-              conversationId={selectedConversation}
-              className="h-[calc(100vh-80px)]"
-            />
+            <div className="h-[calc(100vh-80px)]">
+              <WhatsAppChat />
+            </div>
           </div>
         )}
       </div>

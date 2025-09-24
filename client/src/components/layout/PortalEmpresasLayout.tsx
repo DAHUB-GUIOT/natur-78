@@ -66,7 +66,7 @@ export function PortalEmpresasLayout({ children }: PortalEmpresasLayoutProps) {
               </div>
             </div>
             <HeaderButtons 
-              portalType="empresas" 
+              showPortalEmpresasNav={true}
               className="bg-white/10 backdrop-blur-lg border border-white/20" 
             />
           </div>
@@ -96,7 +96,7 @@ export function PortalEmpresasLayout({ children }: PortalEmpresasLayoutProps) {
                 <p className="text-white/60 text-sm">Portal Empresas</p>
               </div>
               <HeaderButtons 
-                portalType="empresas" 
+                showPortalEmpresasNav={true}
                 className="bg-white/10 backdrop-blur-lg border border-white/20" 
               />
             </div>

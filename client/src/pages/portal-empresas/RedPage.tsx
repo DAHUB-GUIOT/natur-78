@@ -17,7 +17,7 @@ export default function RedPage() {
   const { data: allCompanies = [], isLoading: companiesLoading } = useQuery({
     queryKey: ['/api/users/companies'],
     staleTime: 5 * 60 * 1000,
-  });
+  }) as { data: any[]; isLoading: boolean };
 
   // Create conversation mutation
   const createConversationMutation = useMutation({

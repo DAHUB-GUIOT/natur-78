@@ -17,7 +17,7 @@ export default function MapaPage() {
   const { data: allCompanies = [], isLoading: companiesLoading } = useQuery({
     queryKey: ['/api/users/companies'],
     staleTime: 5 * 60 * 1000,
-  });
+  }) as { data: any[]; isLoading: boolean };
 
   return (
     <div className="relative w-full h-full overflow-hidden bg-gradient-to-br from-gray-900 via-black to-green-900 min-h-[calc(100vh-5rem)] lg:min-h-[calc(100vh-5rem)]">
@@ -94,9 +94,6 @@ export default function MapaPage() {
       {/* Full-Screen Interactive Map */}
       <div className="absolute inset-0 z-0">
         <InteractiveMap
-          companies={allCompanies}
-          searchQuery={searchQuery}
-          isLoading={companiesLoading}
           className="w-full h-full"
           data-testid="interactive-map"
         />

@@ -15,7 +15,7 @@ export default function PerfilPage() {
   const { data: currentUser, isLoading: userLoading } = useQuery({
     queryKey: ['/api/auth/me'],
     staleTime: 10 * 60 * 1000,
-  });
+  }) as { data: any; isLoading: boolean };
 
   // Calculate profile completion
   const calculateProfileCompletion = (user: any) => {
@@ -251,11 +251,16 @@ export default function PerfilPage() {
       )}
 
       {/* Profile Feed/Activity Section */}
-      <TwitterProfileSection 
-        userData={currentUser}
-        userPosts={[]}
-        isOwner={true}
-      />
+      {currentUser && (
+        <div className="mt-6">
+          <Card className="bg-white/10 backdrop-blur-xl border-white/20">
+            <CardContent className="p-6">
+              <h3 className="text-white text-lg font-semibold mb-4">Actividad Reciente</h3>
+              <p className="text-white/60">No hay actividad reciente para mostrar.</p>
+            </CardContent>
+          </Card>
+        </div>
+      )}
     </div>
   );
 }

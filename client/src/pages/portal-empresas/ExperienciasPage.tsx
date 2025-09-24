@@ -18,7 +18,7 @@ export default function ExperienciasPage() {
   const { data: experiences = [], isLoading: experiencesLoading } = useQuery({
     queryKey: ['/api/experiences/my'],
     staleTime: 5 * 60 * 1000,
-  });
+  }) as { data: any[]; isLoading: boolean };
 
   // Filter experiences
   const filteredExperiences = experiences.filter((exp: any) => {
