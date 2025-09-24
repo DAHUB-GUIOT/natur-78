@@ -209,31 +209,44 @@ export default function HomePage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="space-y-6"
+          className="space-y-8"
         >
-          <div className="text-center space-y-2">
-            <h3 className="text-2xl font-gasoek text-white">Buscar Empresas</h3>
-            <p className="text-white/70">Encuentra empresas de turismo sostenible por nombre, categoría o ubicación</p>
+          <div className="text-center space-y-4">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="inline-flex items-center gap-2 bg-green-600/20 backdrop-blur-lg border border-green-500/30 rounded-full px-6 py-2"
+            >
+              <Search className="w-4 h-4 text-green-400" />
+              <span className="text-green-400 font-semibold text-sm">Directorio de Empresas</span>
+            </motion.div>
+            <h3 className="text-3xl lg:text-4xl font-gasoek text-white">Buscar Empresas Sostenibles</h3>
+            <p className="text-xl text-white/80 max-w-2xl mx-auto">Encuentra empresas de turismo sostenible por nombre, categoría o ubicación</p>
           </div>
 
-          <Card className="bg-white/10 backdrop-blur-xl border-white/20">
-            <CardContent className="p-6">
-              <div className="flex flex-col lg:flex-row gap-4">
+          <Card className="bg-white/10 backdrop-blur-xl border-white/20 shadow-2xl hover:bg-white/15 transition-all duration-300">
+            <CardContent className="p-8">
+              <div className="flex flex-col lg:flex-row gap-6">
                 <div className="flex-1 relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/60 w-5 h-5" />
+                  <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white/60 w-6 h-6" />
                   <Input
-                    placeholder="Buscar empresas..."
+                    placeholder="Buscar empresas sostenibles..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="bg-white/10 border-white/20 text-white placeholder:text-white/60 pl-12"
+                    className="bg-white/10 border-white/20 text-white placeholder:text-white/60 pl-14 py-4 text-lg rounded-xl shadow-lg hover:bg-white/15 focus:bg-white/15 transition-all duration-300"
                     data-testid="input-search-companies"
                   />
                 </div>
-                <div className="flex gap-2">
+                <div className="flex flex-wrap gap-3">
                   <Button
                     variant={searchFilter === "all" ? "default" : "outline"}
                     onClick={() => setSearchFilter("all")}
-                    className="bg-white/10 border-white/20 text-white hover:bg-white/20"
+                    className={`px-6 py-3 rounded-xl font-semibold transition-all duration-300 ${
+                      searchFilter === "all" 
+                        ? "bg-green-600 hover:bg-green-700 text-white shadow-lg" 
+                        : "bg-white/10 border-white/20 text-white hover:bg-white/20 hover:scale-105"
+                    }`}
                     data-testid="filter-all"
                   >
                     Todo
@@ -241,7 +254,11 @@ export default function HomePage() {
                   <Button
                     variant={searchFilter === "name" ? "default" : "outline"}
                     onClick={() => setSearchFilter("name")}
-                    className="bg-white/10 border-white/20 text-white hover:bg-white/20"
+                    className={`px-6 py-3 rounded-xl font-semibold transition-all duration-300 ${
+                      searchFilter === "name" 
+                        ? "bg-green-600 hover:bg-green-700 text-white shadow-lg" 
+                        : "bg-white/10 border-white/20 text-white hover:bg-white/20 hover:scale-105"
+                    }`}
                     data-testid="filter-name"
                   >
                     Nombre
@@ -249,7 +266,11 @@ export default function HomePage() {
                   <Button
                     variant={searchFilter === "category" ? "default" : "outline"}
                     onClick={() => setSearchFilter("category")}
-                    className="bg-white/10 border-white/20 text-white hover:bg-white/20"
+                    className={`px-6 py-3 rounded-xl font-semibold transition-all duration-300 ${
+                      searchFilter === "category" 
+                        ? "bg-green-600 hover:bg-green-700 text-white shadow-lg" 
+                        : "bg-white/10 border-white/20 text-white hover:bg-white/20 hover:scale-105"
+                    }`}
                     data-testid="filter-category"
                   >
                     Categoría
@@ -257,7 +278,11 @@ export default function HomePage() {
                   <Button
                     variant={searchFilter === "location" ? "default" : "outline"}
                     onClick={() => setSearchFilter("location")}
-                    className="bg-white/10 border-white/20 text-white hover:bg-white/20"
+                    className={`px-6 py-3 rounded-xl font-semibold transition-all duration-300 ${
+                      searchFilter === "location" 
+                        ? "bg-green-600 hover:bg-green-700 text-white shadow-lg" 
+                        : "bg-white/10 border-white/20 text-white hover:bg-white/20 hover:scale-105"
+                    }`}
                     data-testid="filter-location"
                   >
                     Ubicación
@@ -271,14 +296,14 @@ export default function HomePage() {
                   <h4 className="text-white font-semibold mb-3">
                     Resultados de búsqueda ({filteredCompanies.length})
                   </h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-h-80 overflow-y-auto">
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-h-96 overflow-y-auto custom-scrollbar">
                     {filteredCompanies.slice(0, 9).map((company) => (
-                      <Card key={company.id} className="bg-white/5 backdrop-blur-sm border-white/10 hover:bg-white/10 transition-all duration-200">
-                        <CardContent className="p-4">
-                          <h5 className="text-white font-semibold mb-1">{company.companyName}</h5>
-                          <p className="text-white/60 text-sm mb-2">{company.companyCategory}</p>
-                          <div className="flex items-center text-white/50 text-xs">
-                            <MapPin className="w-3 h-3 mr-1" />
+                      <Card key={company.id} className="bg-white/10 backdrop-blur-lg border-white/20 hover:bg-white/20 hover:scale-105 transition-all duration-300 shadow-xl">
+                        <CardContent className="p-6">
+                          <h5 className="text-white font-bold text-lg mb-2">{company.companyName}</h5>
+                          <Badge className="bg-green-600/80 text-white mb-3">{company.companyCategory}</Badge>
+                          <div className="flex items-center text-white/70 text-sm">
+                            <MapPin className="w-4 h-4 mr-2 text-green-400" />
                             {company.city}, {company.country}
                           </div>
                         </CardContent>
@@ -286,9 +311,11 @@ export default function HomePage() {
                     ))}
                   </div>
                   {filteredCompanies.length > 9 && (
-                    <p className="text-white/60 text-sm mt-3 text-center">
-                      Y {filteredCompanies.length - 9} empresas más...
-                    </p>
+                    <div className="mt-6 text-center">
+                      <Badge className="bg-blue-600/80 text-white px-4 py-2">
+                        Y {filteredCompanies.length - 9} empresas más...
+                      </Badge>
+                    </div>
                   )}
                 </div>
               )}
