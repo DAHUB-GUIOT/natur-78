@@ -1217,3 +1217,32 @@ html.invert canvas {
     padding-bottom: calc(88px + env(safe-area-inset-bottom));
   }
 }
+
+/* Enhanced scroll for portal empresas layout */
+.portal-empresas-content {
+  scroll-behavior: smooth;
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: calc(100vh - 5rem);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(202, 217, 94, 0.4) transparent;
+}
+
+.portal-empresas-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.portal-empresas-content::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+}
+
+.portal-empresas-content::-webkit-scrollbar-thumb {
+  background: rgba(202, 217, 94, 0.4);
+  border-radius: 4px;
+  transition: background 0.3s ease;
+}
+
+.portal-empresas-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(202, 217, 94, 0.6);
+}
