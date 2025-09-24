@@ -524,17 +524,17 @@ const Auth = () => {
         return !!(registrationData.address && registrationData.city);
       case 4:
         return !!(registrationData.bio && registrationData.targetMarket);
-      case 8:
+      case 5:
         return registrationData.languages.length > 0;
-      case 9:
+      case 6:
         return true; // Social media - optional
-      case 10:
+      case 7:
         return !!(registrationData.emergencyContact.name && registrationData.emergencyContact.phone && registrationData.acceptTerms);
-      case 13:
+      case 8:
         return true; // Security and privacy settings - optional
-      case 14:
+      case 9:
         return true; // API integration settings - optional
-      case 15:
+      case 10:
         return true; // Final review - always valid
       default:
         return false;
@@ -961,7 +961,7 @@ const Auth = () => {
 
 
 
-      case 8:
+      case 5:
         return (
           <div className="space-y-6">
             <div className="text-center mb-6">
@@ -1013,7 +1013,7 @@ const Auth = () => {
           </div>
         );
 
-      case 9:
+      case 6:
         return (
           <div className="space-y-6">
             <div className="text-center mb-6">
@@ -1062,7 +1062,7 @@ const Auth = () => {
           </div>
         );
 
-      case 10:
+      case 7:
         return (
           <div className="space-y-6">
             <div className="text-center mb-6">
@@ -1142,7 +1142,7 @@ const Auth = () => {
 
 
 
-      case 13:
+      case 8:
         return (
           <div className="space-y-6">
             <div className="text-center mb-6">
@@ -1181,7 +1181,7 @@ const Auth = () => {
           </div>
         );
 
-      case 14:
+      case 9:
         return (
           <div className="space-y-6">
             <div className="text-center mb-6">
@@ -1219,7 +1219,7 @@ const Auth = () => {
           </div>
         );
 
-      case 15:
+      case 10:
         return (
           <div className="space-y-6">
             <div className="text-center mb-6">
