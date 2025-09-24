@@ -1086,22 +1086,22 @@ const ComprehensiveCompanyRegistration = () => {
         <Card className="bg-black/20 backdrop-blur-sm border-white/10">
           <CardHeader className="text-center">
             <CardTitle className="text-3xl font-bold text-white mb-2">
-              Configuración Completa ANTES del Login
+              Registro Empresarial Simplificado
             </CardTitle>
             <p className="text-white/70">
-              Festival NATUR 2025 - Configura TODAS las funciones antes de acceder al portal
+              Festival NATUR 2025 - Solo 4 pasos para registrar tu empresa
             </p>
             
-            <div className="mt-4 bg-blue-500/20 border border-blue-400/30 rounded-lg p-3">
-              <p className="text-blue-400 text-sm font-medium">
-                🚀 Este proceso configura: Perfil • Mensajería • Contacto • Experiencias • Mapa
+            <div className="mt-4 bg-green-500/20 border border-green-400/30 rounded-lg p-3">
+              <p className="text-green-400 text-sm font-medium">
+                ✅ Registro rápido: Información básica • Empresa • Perfil • Ubicación
               </p>
             </div>
             
             <div className="mt-6">
               <Progress value={progress} className="h-2" />
               <p className="text-white/60 text-sm mt-2">
-                Paso {currentStep} de {totalSteps} - Configuración ANTES del login
+                Paso {currentStep} de {totalSteps} - Registro simplificado
               </p>
             </div>
             
