@@ -1073,461 +1073,6 @@ const ComprehensiveCompanyRegistration = () => {
           </Form>
         );
 
-      case 5:
-        return (
-          <div className="space-y-4">
-            <div className="text-center mb-6">
-              <Mail className="w-16 h-16 text-green-400 mx-auto mb-4" />
-              <h2 className="text-2xl font-bold text-white">Configuración de Mensajería</h2>
-              <p className="text-white/70">Cómo otros usuarios pueden contactarte</p>
-            </div>
-
-            <div className="flex items-center space-x-2">
-              <Checkbox
-                id="messagingEnabled"
-                {...form.register("messagingEnabled")}
-              />
-              <Label htmlFor="messagingEnabled" className="text-white">Habilitar sistema de mensajería</Label>
-            </div>
-
-            <div className="flex items-center space-x-2">
-              <Checkbox
-                id="acceptsInquiries"
-                {...form.register("acceptsInquiries")}
-              />
-              <Label htmlFor="acceptsInquiries" className="text-white">Aceptar consultas y cotizaciones</Label>
-            </div>
-
-            <div>
-              <Label htmlFor="messagingBio" className="text-white">Mensaje de Presentación para Mensajería *</Label>
-              <Textarea
-                {...form.register("messagingBio")}
-                className="bg-white/10 border-white/30 text-white min-h-20"
-                placeholder="Escribe un mensaje de bienvenida que verán otros usuarios cuando te contacten (mínimo 50 caracteres)"
-              />
-              {form.formState.errors.messagingBio && (
-                <p className="text-red-400 text-sm">{form.formState.errors.messagingBio.message}</p>
-              )}
-            </div>
-
-            <div>
-              <Label htmlFor="responseTimeHours" className="text-white">Tiempo de Respuesta Promedio (horas)</Label>
-              <Select onValueChange={(value) => form.setValue("responseTimeHours", parseInt(value))}>
-                <SelectTrigger className="bg-white/10 border-white/30 text-white">
-                  <SelectValue placeholder="Seleccionar tiempo" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="1">1 hora</SelectItem>
-                  <SelectItem value="4">4 horas</SelectItem>
-                  <SelectItem value="12">12 horas</SelectItem>
-                  <SelectItem value="24">24 horas</SelectItem>
-                  <SelectItem value="48">48 horas</SelectItem>
-                  <SelectItem value="72">72 horas</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-        );
-
-      case 6:
-        return (
-          <div className="space-y-4">
-            <div className="text-center mb-6">
-              <Target className="w-16 h-16 text-green-400 mx-auto mb-4" />
-              <h2 className="text-2xl font-bold text-white">Configuración para Crear Experiencias</h2>
-              <p className="text-white/70">Configuración predeterminada para tus experiencias</p>
-            </div>
-
-            <div>
-              <Label htmlFor="defaultExperienceCategory" className="text-white">Categoría de Experiencia por Defecto *</Label>
-              <Select onValueChange={(value) => form.setValue("defaultExperienceCategory", value)}>
-                <SelectTrigger className="bg-white/10 border-white/30 text-white">
-                  <SelectValue placeholder="Seleccionar categoría" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="aventura">Aventura</SelectItem>
-                  <SelectItem value="naturaleza">Naturaleza</SelectItem>
-                  <SelectItem value="cultura">Cultura</SelectItem>
-                  <SelectItem value="gastronomia">Gastronomía</SelectItem>
-                  <SelectItem value="bienestar">Bienestar</SelectItem>
-                  <SelectItem value="educacion">Educación</SelectItem>
-                  <SelectItem value="rural">Rural</SelectItem>
-                  <SelectItem value="ecoturismo">Ecoturismo</SelectItem>
-                </SelectContent>
-              </Select>
-              {form.formState.errors.defaultExperienceCategory && (
-                <p className="text-red-400 text-sm">{form.formState.errors.defaultExperienceCategory.message}</p>
-              )}
-            </div>
-
-            <div>
-              <Label htmlFor="defaultMeetingPoint" className="text-white">Punto de Encuentro por Defecto *</Label>
-              <Input
-                {...form.register("defaultMeetingPoint")}
-                className="bg-white/10 border-white/30 text-white"
-                placeholder="Ej: Lobby del hotel, estación de metro, oficina principal"
-              />
-              {form.formState.errors.defaultMeetingPoint && (
-                <p className="text-red-400 text-sm">{form.formState.errors.defaultMeetingPoint.message}</p>
-              )}
-            </div>
-
-            <div>
-              <Label htmlFor="defaultCancellationPolicy" className="text-white">Política de Cancelación por Defecto *</Label>
-              <Textarea
-                {...form.register("defaultCancellationPolicy")}
-                className="bg-white/10 border-white/30 text-white min-h-20"
-                placeholder="Ej: Cancelación gratuita hasta 24 horas antes. Cancelaciones tardías tienen un cargo del 50%."
-              />
-              {form.formState.errors.defaultCancellationPolicy && (
-                <p className="text-red-400 text-sm">{form.formState.errors.defaultCancellationPolicy.message}</p>
-              )}
-            </div>
-          </div>
-        );
-
-      case 7:
-        return (
-          <div className="space-y-4">
-            <div className="text-center mb-6">
-              <Clock className="w-16 h-16 text-green-400 mx-auto mb-4" />
-              <h2 className="text-2xl font-bold text-white">Horarios de Operación</h2>
-              <p className="text-white/70">Cuándo está disponible tu empresa</p>
-            </div>
-
-            {['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'].map((day) => {
-              const dayNames = {
-                monday: 'Lunes',
-                tuesday: 'Martes', 
-                wednesday: 'Miércoles',
-                thursday: 'Jueves',
-                friday: 'Viernes',
-                saturday: 'Sábado',
-                sunday: 'Domingo'
-              };
-
-              return (
-                <div key={day} className="bg-white/5 border border-white/20 rounded-lg p-4">
-                  <div className="flex items-center justify-between mb-3">
-                    <Label className="text-white font-semibold">{dayNames[day as keyof typeof dayNames]}</Label>
-                    <div className="flex items-center space-x-2">
-                      <Checkbox
-                        id={`${day}-closed`}
-                        {...form.register(`operatingHours.${day}.closed` as any)}
-                      />
-                      <Label htmlFor={`${day}-closed`} className="text-white text-sm">Cerrado</Label>
-                    </div>
-                  </div>
-                  
-                  {!form.watch(`operatingHours.${day}.closed` as any) && (
-                    <div className="grid grid-cols-2 gap-3">
-                      <div>
-                        <Label htmlFor={`${day}-open`} className="text-white text-sm">Apertura</Label>
-                        <Input
-                          {...form.register(`operatingHours.${day}.open` as any)}
-                          type="time"
-                          className="bg-white/10 border-white/30 text-white"
-                        />
-                      </div>
-                      <div>
-                        <Label htmlFor={`${day}-close`} className="text-white text-sm">Cierre</Label>
-                        <Input
-                          {...form.register(`operatingHours.${day}.close` as any)}
-                          type="time"
-                          className="bg-white/10 border-white/30 text-white"
-                        />
-                      </div>
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        );
-
-      case 8:
-        return (
-          <div className="space-y-4">
-            <div className="text-center mb-6">
-              <Shield className="w-16 h-16 text-green-400 mx-auto mb-4" />
-              <h2 className="text-2xl font-bold text-white">Certificaciones y Prácticas</h2>
-              <p className="text-white/70">Licencias, certificaciones y prácticas sostenibles</p>
-            </div>
-
-            <div>
-              <Label htmlFor="businessLicense" className="text-white">Número de Licencia Comercial (Opcional)</Label>
-              <Input
-                {...form.register("businessLicense")}
-                className="bg-white/10 border-white/30 text-white"
-                placeholder="Ej: 12345678-9"
-              />
-            </div>
-
-            <div>
-              <Label htmlFor="taxId" className="text-white">NIT / Número de Identificación Tributaria (Opcional)</Label>
-              <Input
-                {...form.register("taxId")}
-                className="bg-white/10 border-white/30 text-white"
-                placeholder="Ej: 900123456-7"
-              />
-            </div>
-
-            <div>
-              <Label className="text-white">Certificaciones (selecciona las que apliquen)</Label>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mt-2">
-                {[
-                  "ISO 14001", "ISO 9001", "Rainforest Alliance", "Fair Trade",
-                  "B Corp", "Green Key", "Certificación ICONTEC", "Sello Ambiental"
-                ].map((cert) => (
-                  <div key={cert} className="flex items-center space-x-2">
-                    <Checkbox
-                      id={cert}
-                      onCheckedChange={(checked) => {
-                        const current = form.getValues("certifications");
-                        if (checked) {
-                          form.setValue("certifications", [...current, cert]);
-                        } else {
-                          form.setValue("certifications", current.filter(c => c !== cert));
-                        }
-                      }}
-                    />
-                    <Label htmlFor={cert} className="text-white text-sm">{cert}</Label>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div>
-              <Label className="text-white">Prácticas de Sostenibilidad (selecciona las que apliquen)</Label>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mt-2">
-                {SUSTAINABILITY_PRACTICES.map((practice) => (
-                  <div key={practice} className="flex items-center space-x-2">
-                    <Checkbox
-                      id={practice}
-                      onCheckedChange={(checked) => {
-                        const current = form.getValues("sustainabilityPractices");
-                        if (checked) {
-                          form.setValue("sustainabilityPractices", [...current, practice]);
-                        } else {
-                          form.setValue("sustainabilityPractices", current.filter(p => p !== practice));
-                        }
-                      }}
-                    />
-                    <Label htmlFor={practice} className="text-white text-sm">{practice}</Label>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div>
-              <Label className="text-white">Características de Accesibilidad (selecciona las que apliquen)</Label>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mt-2">
-                {ACCESSIBILITY_FEATURES.map((feature) => (
-                  <div key={feature} className="flex items-center space-x-2">
-                    <Checkbox
-                      id={feature}
-                      onCheckedChange={(checked) => {
-                        const current = form.getValues("accessibilityFeatures");
-                        if (checked) {
-                          form.setValue("accessibilityFeatures", [...current, feature]);
-                        } else {
-                          form.setValue("accessibilityFeatures", current.filter(f => f !== feature));
-                        }
-                      }}
-                    />
-                    <Label htmlFor={feature} className="text-white text-sm">{feature}</Label>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div>
-              <Label className="text-white">Idiomas (selecciona los que manejas) *</Label>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mt-2">
-                {LANGUAGES.map((language) => (
-                  <div key={language} className="flex items-center space-x-2">
-                    <Checkbox
-                      id={language}
-                      onCheckedChange={(checked) => {
-                        const current = form.getValues("languages");
-                        if (checked) {
-                          form.setValue("languages", [...current, language]);
-                        } else {
-                          form.setValue("languages", current.filter(l => l !== language));
-                        }
-                      }}
-                    />
-                    <Label htmlFor={language} className="text-white text-sm">{language}</Label>
-                  </div>
-                ))}
-              </div>
-              {form.formState.errors.languages && (
-                <p className="text-red-400 text-sm">{form.formState.errors.languages.message}</p>
-              )}
-            </div>
-          </div>
-        );
-
-      case 9:
-        return (
-          <div className="space-y-4">
-            <div className="text-center mb-6">
-              <Globe className="w-16 h-16 text-green-400 mx-auto mb-4" />
-              <h2 className="text-2xl font-bold text-white">Redes Sociales</h2>
-              <p className="text-white/70">Conecta tus perfiles sociales (opcional)</p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <Label htmlFor="instagram" className="text-white flex items-center">
-                  <Instagram className="w-4 h-4 mr-2" />
-                  Instagram
-                </Label>
-                <Input
-                  {...form.register("socialMedia.instagram")}
-                  className="bg-white/10 border-white/30 text-white"
-                  placeholder="@tu_empresa"
-                />
-              </div>
-
-              <div>
-                <Label htmlFor="facebook" className="text-white flex items-center">
-                  <Facebook className="w-4 h-4 mr-2" />
-                  Facebook
-                </Label>
-                <Input
-                  {...form.register("socialMedia.facebook")}
-                  className="bg-white/10 border-white/30 text-white"
-                  placeholder="Tu Empresa"
-                />
-              </div>
-
-              <div>
-                <Label htmlFor="twitter" className="text-white flex items-center">
-                  <Twitter className="w-4 h-4 mr-2" />
-                  Twitter/X
-                </Label>
-                <Input
-                  {...form.register("socialMedia.twitter")}
-                  className="bg-white/10 border-white/30 text-white"
-                  placeholder="@tu_empresa"
-                />
-              </div>
-
-              <div>
-                <Label htmlFor="linkedin" className="text-white flex items-center">
-                  <Linkedin className="w-4 h-4 mr-2" />
-                  LinkedIn
-                </Label>
-                <Input
-                  {...form.register("socialMedia.linkedin")}
-                  className="bg-white/10 border-white/30 text-white"
-                  placeholder="linkedin.com/company/tu-empresa"
-                />
-              </div>
-            </div>
-          </div>
-        );
-
-      case 10:
-        return (
-          <div className="space-y-4">
-            <div className="text-center mb-6">
-              <CheckCircle className="w-16 h-16 text-green-400 mx-auto mb-4" />
-              <h2 className="text-2xl font-bold text-white">Configuración Final</h2>
-              <p className="text-white/70">Contacto de emergencia y confirmación</p>
-            </div>
-
-            <div className="bg-green-500/20 border border-green-400/30 rounded-lg p-4">
-              <h3 className="text-green-400 font-bold mb-2">✅ Configuración Completa</h3>
-              <div className="space-y-1 text-sm text-white/90">
-                <p>• Perfil completo de empresa configurado</p>
-                <p>• Sistema de mensajería habilitado</p>
-                <p>• Tarjeta de contacto creada</p>
-                <p>• Ubicación en mapa configurada</p>
-                <p>• Configuración para crear experiencias lista</p>
-                <p>• Todas las funciones del portal activadas</p>
-              </div>
-            </div>
-
-            <div>
-              <Label className="text-white text-lg font-bold">Contacto de Emergencia</Label>
-              <p className="text-white/70 text-sm mb-3">Información de contacto de emergencia para tu empresa</p>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <Label htmlFor="emergencyContact.name" className="text-white">Nombre Completo *</Label>
-                  <Input
-                    {...form.register("emergencyContact.name")}
-                    className="bg-white/10 border-white/30 text-white"
-                    placeholder="Nombre del contacto"
-                  />
-                  {form.formState.errors.emergencyContact?.name && (
-                    <p className="text-red-400 text-sm">{form.formState.errors.emergencyContact.name.message}</p>
-                  )}
-                </div>
-
-                <div>
-                  <Label htmlFor="emergencyContact.phone" className="text-white">Teléfono *</Label>
-                  <Input
-                    {...form.register("emergencyContact.phone")}
-                    className="bg-white/10 border-white/30 text-white"
-                    placeholder="+57 300 123 4567"
-                  />
-                  {form.formState.errors.emergencyContact?.phone && (
-                    <p className="text-red-400 text-sm">{form.formState.errors.emergencyContact.phone.message}</p>
-                  )}
-                </div>
-
-                <div>
-                  <Label htmlFor="emergencyContact.email" className="text-white">Email *</Label>
-                  <Input
-                    {...form.register("emergencyContact.email")}
-                    type="email"
-                    className="bg-white/10 border-white/30 text-white"
-                    placeholder="contacto@empresa.com"
-                  />
-                  {form.formState.errors.emergencyContact?.email && (
-                    <p className="text-red-400 text-sm">{form.formState.errors.emergencyContact.email.message}</p>
-                  )}
-                </div>
-
-                <div>
-                  <Label htmlFor="emergencyContact.relationship" className="text-white">Relación</Label>
-                  <Select onValueChange={(value) => form.setValue("emergencyContact.relationship", value)}>
-                    <SelectTrigger className="bg-white/10 border-white/30 text-white">
-                      <SelectValue placeholder="Seleccionar relación" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="Socio">Socio</SelectItem>
-                      <SelectItem value="Familiar">Familiar</SelectItem>
-                      <SelectItem value="Gerente">Gerente</SelectItem>
-                      <SelectItem value="Contador">Contador</SelectItem>
-                      <SelectItem value="Abogado">Abogado</SelectItem>
-                      <SelectItem value="Otro">Otro</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-6">
-              <div className="flex items-center space-x-2">
-                <Checkbox
-                  id="acceptTerms"
-                  {...form.register("acceptTerms")}
-                />
-                <Label htmlFor="acceptTerms" className="text-white">
-                  Acepto los términos y condiciones de uso de Festival NATUR
-                </Label>
-              </div>
-              {form.formState.errors.acceptTerms && (
-                <p className="text-red-400 text-sm">{form.formState.errors.acceptTerms.message}</p>
-              )}
-            </div>
-          </div>
-        );
-
       default:
         return null;
     }
@@ -1565,49 +1110,59 @@ const ComprehensiveCompanyRegistration = () => {
               <Button
                 type="button"
                 variant="outline"
-                size="sm"
                 onClick={fillDahubTestData}
-                className="bg-yellow-500/20 border-yellow-400/30 text-yellow-400 hover:bg-yellow-500/30"
+                className="bg-blue-600/20 border-blue-400/30 text-blue-400 hover:bg-blue-600/30"
               >
-                🔧 Cargar Datos de Prueba (DaHub)
+                🧪 Cargar Datos DaHub (Testing)
               </Button>
             </div>
           </CardHeader>
 
           <CardContent className="p-6">
-            <form onSubmit={form.handleSubmit(onSubmit)}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
               {renderStep()}
               
-              <div className="flex justify-between mt-8">
-                {currentStep > 1 && (
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={prevStep}
-                    className="bg-white/10 border-white/30 text-white hover:bg-white/20"
-                  >
-                    <ArrowLeft className="w-4 h-4 mr-2" />
-                    Anterior
-                  </Button>
-                )}
+              <div className="flex justify-between pt-6">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={prevStep}
+                  disabled={currentStep === 1}
+                  className="flex items-center gap-2"
+                  data-testid="button-previous"
+                >
+                  <ArrowLeft className="w-4 h-4" />
+                  Anterior
+                </Button>
                 
                 {currentStep < totalSteps ? (
                   <Button
                     type="button"
                     onClick={nextStep}
-                    className="bg-green-600 hover:bg-green-700 text-white ml-auto"
+                    className="flex items-center gap-2 bg-green-600 hover:bg-green-700"
+                    data-testid="button-next"
                   >
                     Siguiente
-                    <ArrowRight className="w-4 h-4 ml-2" />
+                    <ArrowRight className="w-4 h-4" />
                   </Button>
                 ) : (
                   <Button
                     type="submit"
                     disabled={registerMutation.isPending}
-                    className="bg-green-600 hover:bg-green-700 text-white ml-auto"
+                    className="flex items-center gap-2 bg-green-600 hover:bg-green-700"
+                    data-testid="button-submit"
                   >
-                    {registerMutation.isPending ? "Activando Portal..." : "🚀 Activar Portal Completo"}
-                    <CheckCircle className="w-4 h-4 ml-2" />
+                    {registerMutation.isPending ? (
+                      <>
+                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                        Registrando...
+                      </>
+                    ) : (
+                      <>
+                        <CheckCircle className="w-4 h-4" />
+                        Completar Registro
+                      </>
+                    )}
                   </Button>
                 )}
               </div>
