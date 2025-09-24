@@ -468,7 +468,7 @@ const Auth = () => {
   };
 
   const handleNextStep = () => {
-    if (isEmpresas && currentStep < 10) {
+    if (isEmpresas && currentStep < 7) {
       setCurrentStep(currentStep + 1);
     } else if (!isEmpresas && currentStep < 6) {
       setCurrentStep(currentStep + 1);
@@ -529,12 +529,6 @@ const Auth = () => {
       case 6:
         return true; // Social media - optional
       case 7:
-        return !!(registrationData.emergencyContact.name && registrationData.emergencyContact.phone && registrationData.acceptTerms);
-      case 8:
-        return true; // Security and privacy settings - optional
-      case 9:
-        return true; // API integration settings - optional
-      case 10:
         return true; // Final review - always valid
       default:
         return false;
@@ -1066,163 +1060,6 @@ const Auth = () => {
         return (
           <div className="space-y-6">
             <div className="text-center mb-6">
-              <Shield className="mx-auto h-12 w-12 text-[#CAD95E] mb-4" />
-              <h3 className="text-xl font-bold text-gray-800 dark:text-white">Contacto de Emergencia</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Información de contacto de emergencia</p>
-            </div>
-            
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label className="text-sm font-medium">Nombre Completo *</Label>
-                <Input
-                  value={registrationData.emergencyContact.name || ""}
-                  onChange={(e) => setRegistrationData({
-                    ...registrationData, 
-                    emergencyContact: {
-                      ...registrationData.emergencyContact,
-                      name: e.target.value
-                    }
-                  })}
-                  placeholder="Juan Pérez"
-                  required
-                />
-              </div>
-              
-              <div className="space-y-2">
-                <Label className="text-sm font-medium">Teléfono *</Label>
-                <Input
-                  value={registrationData.emergencyContact.phone || ""}
-                  onChange={(e) => setRegistrationData({
-                    ...registrationData,
-                    emergencyContact: {
-                      ...registrationData.emergencyContact,
-                      phone: e.target.value
-                    }
-                  })}
-                  placeholder="+57 300 123 4567"
-                  required
-                />
-              </div>
-            </div>
-            
-            <div className="space-y-2">
-              <Label className="text-sm font-medium">Email *</Label>
-              <Input
-                type="email"
-                value={registrationData.emergencyContact.email || ""}
-                onChange={(e) => setRegistrationData({
-                  ...registrationData,
-                  emergencyContact: {
-                    ...registrationData.emergencyContact,
-                    email: e.target.value
-                  }
-                })}
-                placeholder="contacto@empresa.com"
-                required
-              />
-            </div>
-            
-            <div className="space-y-4 mt-6">
-              <div className="flex items-center space-x-2">
-                <input
-                  type="checkbox"
-                  id="acceptTerms"
-                  checked={registrationData.acceptTerms}
-                  onChange={(e) => setRegistrationData({...registrationData, acceptTerms: e.target.checked})}
-                  className="rounded"
-                  required
-                />
-                <Label htmlFor="acceptTerms" className="text-sm">
-                  Acepto los términos y condiciones y la política de privacidad *
-                </Label>
-              </div>
-            </div>
-          </div>
-        );
-
-
-
-      case 8:
-        return (
-          <div className="space-y-6">
-            <div className="text-center mb-6">
-              <Shield className="mx-auto h-12 w-12 text-[#CAD95E] mb-4" />
-              <h3 className="text-xl font-bold text-gray-800 dark:text-white">Configuración de Seguridad</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Configura la seguridad de tu cuenta</p>
-            </div>
-            
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <Label className="text-sm font-medium">Autenticación de Dos Factores</Label>
-                  <p className="text-xs text-gray-500">Agrega una capa extra de seguridad</p>
-                </div>
-                <input
-                  type="checkbox"
-                  checked={registrationData.twoFactorEnabled}
-                  onChange={(e) => setRegistrationData({...registrationData, twoFactorEnabled: e.target.checked})}
-                  className="rounded"
-                />
-              </div>
-              
-              <div className="flex items-center justify-between">
-                <div>
-                  <Label className="text-sm font-medium">Notificaciones de Login</Label>
-                  <p className="text-xs text-gray-500">Te avisamos cuando alguien acceda a tu cuenta</p>
-                </div>
-                <input
-                  type="checkbox"
-                  checked={registrationData.loginNotifications}
-                  onChange={(e) => setRegistrationData({...registrationData, loginNotifications: e.target.checked})}
-                  className="rounded"
-                />
-              </div>
-            </div>
-          </div>
-        );
-
-      case 9:
-        return (
-          <div className="space-y-6">
-            <div className="text-center mb-6">
-              <Building2 className="mx-auto h-12 w-12 text-[#CAD95E] mb-4" />
-              <h3 className="text-xl font-bold text-gray-800 dark:text-white">Configuración de API</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Configuración para integraciones avanzadas</p>
-            </div>
-            
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <Label className="text-sm font-medium">Acceso API</Label>
-                  <p className="text-xs text-gray-500">Habilitar acceso programático a tu cuenta</p>
-                </div>
-                <input
-                  type="checkbox"
-                  checked={registrationData.apiAccess}
-                  onChange={(e) => setRegistrationData({...registrationData, apiAccess: e.target.checked})}
-                  className="rounded"
-                />
-              </div>
-              
-              {registrationData.apiAccess && (
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium">URL de Webhook</Label>
-                  <Input
-                    value={registrationData.webhookUrl}
-                    onChange={(e) => setRegistrationData({...registrationData, webhookUrl: e.target.value})}
-                    placeholder="https://tuservidor.com/webhook"
-                  />
-                  <p className="text-xs text-gray-500">URL donde recibirás notificaciones automáticas</p>
-                </div>
-              )}
-            </div>
-          </div>
-        );
-
-      case 10:
-        return (
-          <div className="space-y-6">
-            <div className="text-center mb-6">
               <Check className="mx-auto h-12 w-12 text-[#CAD95E] mb-4" />
               <h3 className="text-xl font-bold text-gray-800 dark:text-white">Configuración Final</h3>
               <p className="text-sm text-gray-600 dark:text-gray-400">Revisa tu información antes de completar</p>
@@ -1255,6 +1092,7 @@ const Auth = () => {
           </div>
         );
 
+
       default:
         return <div>Paso no encontrado</div>;
     }
@@ -1267,7 +1105,7 @@ const Auth = () => {
       : "Descubre experiencias auténticas y conecta con viajeros conscientes"
   };
 
-  const maxSteps = isEmpresas ? 10 : 6;
+  const maxSteps = isEmpresas ? 7 : 6;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#0a1a0a] via-[#1a2f1a] to-[#0f2a0f] relative overflow-hidden">
@@ -1344,14 +1182,14 @@ const Auth = () => {
                       {isEmpresas ? (
                         <>
                           <p className="text-gray-600 dark:text-gray-400 text-sm">
-                            Paso {currentStep} de 10 - Configuración completa
+                            Paso {currentStep} de 7 - Configuración completa
                           </p>
                           
                           {/* Progress Bar */}
                           <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 mt-4">
                             <div 
                               className="bg-[#CAD95E] h-2 rounded-full transition-all duration-300"
-                              style={{ width: `${(currentStep / 10) * 100}%` }}
+                              style={{ width: `${(currentStep / 7) * 100}%` }}
                             ></div>
                           </div>
                           
