@@ -73,7 +73,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Authentication routes
+  // Authentication routes - Return complete user data including all company fields
   app.get("/api/auth/me", async (req, res) => {
     try {
       // Support both session-based auth (Google OAuth) and custom session auth
@@ -89,18 +89,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(401).json({ error: "User not found" });
       }
 
-      // Return user in the expected format with user property
-      res.json({ 
-        user: { 
-          id: user.id, 
-          email: user.email,
-          firstName: user.firstName,
-          lastName: user.lastName,
-          profilePicture: user.profilePicture,
-          authProvider: user.authProvider,
-          role: user.role
-        } 
-      });
+      // Return complete user data directly (not nested in user property)
+      const { password, verificationToken, verificationTokenExpiry, ...safeUserData } = user;
+      res.json(safeUserData);
     } catch (error) {
       console.error("Error fetching current user:", error);
       res.status(500).json({ error: "Internal server error" });
