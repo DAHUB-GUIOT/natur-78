@@ -437,6 +437,25 @@ const Auth = () => {
     ]
   };
 
+  // Countries and their respective cities
+  const countryCityMap = {
+    "Colombia": ["Bogotá", "Medellín", "Cali", "Barranquilla", "Cartagena", "Bucaramanga", "Pereira", "Ibagué", "Santa Marta", "Villavicencio", "Manizales", "Neiva", "Soledad", "Armenia", "Soacha", "Valledupar", "Montería", "Itagüí", "Pasto", "Palmira", "Buenaventura", "Floridablanca", "Sincelejo", "Popayán", "Dosquebradas", "Riohacha", "Tunja", "Envigado", "Cartago", "Girardot", "Ubaté", "Barrancas", "Duitama", "Fusagasugá", "Sogamoso"],
+    "Ecuador": ["Quito", "Guayaquil", "Cuenca", "Santo Domingo", "Machala", "Durán", "Manta", "Portoviejo", "Loja", "Ambato"],
+    "Perú": ["Lima", "Arequipa", "Trujillo", "Chiclayo", "Piura", "Cusco", "Chimbote", "Huancayo", "Ica", "Pucallpa", "Tacna", "Juliaca", "Iquitos"],
+    "Argentina": ["Buenos Aires", "Córdoba", "Rosario", "Mendoza", "Tucumán", "La Plata", "Mar del Plata", "Salta", "Santa Fe", "San Juan"],
+    "Chile": ["Santiago", "Valparaíso", "Concepción", "La Serena", "Antofagasta", "Temuco", "Rancagua", "Talca", "Arica", "Chillán"],
+    "Venezuela": ["Caracas", "Maracaibo", "Valencia", "Barquisimeto", "Maracay", "Ciudad Guayana", "San Cristóbal", "Maturín", "Ciudad Bolívar", "Cumana"],
+    "México": ["México DF", "Guadalajara", "Monterrey", "Puebla", "Tijuana", "León", "Juárez", "Torreón", "Querétaro", "San Luis Potosí"],
+    "España": ["Madrid", "Barcelona", "Valencia", "Sevilla", "Zaragoza", "Málaga", "Murcia", "Palma", "Las Palmas", "Bilbao"],
+    "Estados Unidos": ["Nueva York", "Los Ángeles", "Chicago", "Houston", "Phoenix", "Philadelphia", "San Antonio", "San Diego", "Dallas", "San José"],
+    "Canadá": ["Toronto", "Montreal", "Vancouver", "Calgary", "Edmonton", "Ottawa", "Winnipeg", "Quebec", "Hamilton", "London"],
+    "Francia": ["París", "Marsella", "Lyon", "Toulouse", "Nice", "Nantes", "Strasbourg", "Montpellier", "Bordeaux", "Lille"],
+    "Brasil": ["São Paulo", "Río de Janeiro", "Brasilia", "Salvador", "Fortaleza", "Belo Horizonte", "Manaus", "Curitiba", "Recife", "Porto Alegre"],
+    "Uruguay": ["Montevideo", "Salto", "Paysandú", "Las Piedras", "Rivera", "Maldonado", "Tacuarembó", "Melo", "Mercedes", "Artigas"],
+    "Paraguay": ["Asunción", "Ciudad del Este", "San Lorenzo", "Luque", "Capiatá", "Lambaré", "Fernando de la Mora", "Nemby", "Encarnación", "Pedro Juan Caballero"],
+    "Bolivia": ["La Paz", "Santa Cruz", "Cochabamba", "Oruro", "Sucre", "Tarija", "Potosí", "Cobija", "Trinidad", "Riberalta"]
+  };
+
   // Login mutation
   const loginMutation = useMutation({
     mutationFn: async (credentials: { email: string; password: string }) => {
@@ -914,151 +933,10 @@ const Auth = () => {
             
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label className="text-sm font-medium">Ciudad *</Label>
-                <Select value={registrationData.city} onValueChange={(value) => setRegistrationData({...registrationData, city: value})}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Selecciona una ciudad" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="Bogotá">Bogotá</SelectItem>
-                    <SelectItem value="Medellín">Medellín</SelectItem>
-                    <SelectItem value="Cali">Cali</SelectItem>
-                    <SelectItem value="Barranquilla">Barranquilla</SelectItem>
-                    <SelectItem value="Cartagena">Cartagena</SelectItem>
-                    <SelectItem value="Bucaramanga">Bucaramanga</SelectItem>
-                    <SelectItem value="Pereira">Pereira</SelectItem>
-                    <SelectItem value="Ibagué">Ibagué</SelectItem>
-                    <SelectItem value="Santa Marta">Santa Marta</SelectItem>
-                    <SelectItem value="Villavicencio">Villavicencio</SelectItem>
-                    <SelectItem value="Manizales">Manizales</SelectItem>
-                    <SelectItem value="Neiva">Neiva</SelectItem>
-                    <SelectItem value="Soledad">Soledad</SelectItem>
-                    <SelectItem value="Armenia">Armenia</SelectItem>
-                    <SelectItem value="Soacha">Soacha</SelectItem>
-                    <SelectItem value="Valledupar">Valledupar</SelectItem>
-                    <SelectItem value="Montería">Montería</SelectItem>
-                    <SelectItem value="Itagüí">Itagüí</SelectItem>
-                    <SelectItem value="Pasto">Pasto</SelectItem>
-                    <SelectItem value="Palmira">Palmira</SelectItem>
-                    <SelectItem value="Buenaventura">Buenaventura</SelectItem>
-                    <SelectItem value="Floridablanca">Floridablanca</SelectItem>
-                    <SelectItem value="Sincelejo">Sincelejo</SelectItem>
-                    <SelectItem value="Popayán">Popayán</SelectItem>
-                    <SelectItem value="Dosquebradas">Dosquebradas</SelectItem>
-                    <SelectItem value="Riohacha">Riohacha</SelectItem>
-                    <SelectItem value="Tunja">Tunja</SelectItem>
-                    <SelectItem value="Envigado">Envigado</SelectItem>
-                    <SelectItem value="Cartago">Cartago</SelectItem>
-                    <SelectItem value="Girardot">Girardot</SelectItem>
-                    <SelectItem value="Ubaté">Ubaté</SelectItem>
-                    <SelectItem value="Barrancas">Barrancas</SelectItem>
-                    <SelectItem value="Duitama">Duitama</SelectItem>
-                    <SelectItem value="Fusagasugá">Fusagasugá</SelectItem>
-                    <SelectItem value="Sogamoso">Sogamoso</SelectItem>
-                    <SelectItem value="Quito">Quito</SelectItem>
-                    <SelectItem value="Guayaquil">Guayaquil</SelectItem>
-                    <SelectItem value="Cuenca">Cuenca</SelectItem>
-                    <SelectItem value="Santo Domingo">Santo Domingo</SelectItem>
-                    <SelectItem value="Machala">Machala</SelectItem>
-                    <SelectItem value="Lima">Lima</SelectItem>
-                    <SelectItem value="Arequipa">Arequipa</SelectItem>
-                    <SelectItem value="Trujillo">Trujillo</SelectItem>
-                    <SelectItem value="Chiclayo">Chiclayo</SelectItem>
-                    <SelectItem value="Piura">Piura</SelectItem>
-                    <SelectItem value="Cusco">Cusco</SelectItem>
-                    <SelectItem value="Chimbote">Chimbote</SelectItem>
-                    <SelectItem value="Huancayo">Huancayo</SelectItem>
-                    <SelectItem value="Ica">Ica</SelectItem>
-                    <SelectItem value="Pucallpa">Pucallpa</SelectItem>
-                    <SelectItem value="Tacna">Tacna</SelectItem>
-                    <SelectItem value="Juliaca">Juliaca</SelectItem>
-                    <SelectItem value="Iquitos">Iquitos</SelectItem>
-                    <SelectItem value="Buenos Aires">Buenos Aires</SelectItem>
-                    <SelectItem value="Córdoba">Córdoba</SelectItem>
-                    <SelectItem value="Rosario">Rosario</SelectItem>
-                    <SelectItem value="Mendoza">Mendoza</SelectItem>
-                    <SelectItem value="Tucumán">Tucumán</SelectItem>
-                    <SelectItem value="La Plata">La Plata</SelectItem>
-                    <SelectItem value="Mar del Plata">Mar del Plata</SelectItem>
-                    <SelectItem value="Salta">Salta</SelectItem>
-                    <SelectItem value="Santa Fe">Santa Fe</SelectItem>
-                    <SelectItem value="San Juan">San Juan</SelectItem>
-                    <SelectItem value="Santiago">Santiago</SelectItem>
-                    <SelectItem value="Valparaíso">Valparaíso</SelectItem>
-                    <SelectItem value="Concepción">Concepción</SelectItem>
-                    <SelectItem value="La Serena">La Serena</SelectItem>
-                    <SelectItem value="Antofagasta">Antofagasta</SelectItem>
-                    <SelectItem value="Temuco">Temuco</SelectItem>
-                    <SelectItem value="Rancagua">Rancagua</SelectItem>
-                    <SelectItem value="Talca">Talca</SelectItem>
-                    <SelectItem value="Arica">Arica</SelectItem>
-                    <SelectItem value="Chillán">Chillán</SelectItem>
-                    <SelectItem value="Caracas">Caracas</SelectItem>
-                    <SelectItem value="Maracaibo">Maracaibo</SelectItem>
-                    <SelectItem value="Valencia">Valencia</SelectItem>
-                    <SelectItem value="Barquisimeto">Barquisimeto</SelectItem>
-                    <SelectItem value="Maracay">Maracay</SelectItem>
-                    <SelectItem value="Ciudad Guayana">Ciudad Guayana</SelectItem>
-                    <SelectItem value="San Cristóbal">San Cristóbal</SelectItem>
-                    <SelectItem value="Maturín">Maturín</SelectItem>
-                    <SelectItem value="Ciudad Bolívar">Ciudad Bolívar</SelectItem>
-                    <SelectItem value="Cumana">Cumana</SelectItem>
-                    <SelectItem value="México DF">México DF</SelectItem>
-                    <SelectItem value="Guadalajara">Guadalajara</SelectItem>
-                    <SelectItem value="Monterrey">Monterrey</SelectItem>
-                    <SelectItem value="Puebla">Puebla</SelectItem>
-                    <SelectItem value="Tijuana">Tijuana</SelectItem>
-                    <SelectItem value="León">León</SelectItem>
-                    <SelectItem value="Juárez">Juárez</SelectItem>
-                    <SelectItem value="Torreón">Torreón</SelectItem>
-                    <SelectItem value="Querétaro">Querétaro</SelectItem>
-                    <SelectItem value="San Luis Potosí">San Luis Potosí</SelectItem>
-                    <SelectItem value="Madrid">Madrid</SelectItem>
-                    <SelectItem value="Barcelona">Barcelona</SelectItem>
-                    <SelectItem value="Valencia">Valencia</SelectItem>
-                    <SelectItem value="Sevilla">Sevilla</SelectItem>
-                    <SelectItem value="Zaragoza">Zaragoza</SelectItem>
-                    <SelectItem value="Málaga">Málaga</SelectItem>
-                    <SelectItem value="Murcia">Murcia</SelectItem>
-                    <SelectItem value="Palma">Palma</SelectItem>
-                    <SelectItem value="Las Palmas">Las Palmas</SelectItem>
-                    <SelectItem value="Bilbao">Bilbao</SelectItem>
-                    <SelectItem value="Nueva York">Nueva York</SelectItem>
-                    <SelectItem value="Los Ángeles">Los Ángeles</SelectItem>
-                    <SelectItem value="Chicago">Chicago</SelectItem>
-                    <SelectItem value="Houston">Houston</SelectItem>
-                    <SelectItem value="Phoenix">Phoenix</SelectItem>
-                    <SelectItem value="Philadelphia">Philadelphia</SelectItem>
-                    <SelectItem value="San Antonio">San Antonio</SelectItem>
-                    <SelectItem value="San Diego">San Diego</SelectItem>
-                    <SelectItem value="Dallas">Dallas</SelectItem>
-                    <SelectItem value="San José">San José</SelectItem>
-                    <SelectItem value="Toronto">Toronto</SelectItem>
-                    <SelectItem value="Montreal">Montreal</SelectItem>
-                    <SelectItem value="Vancouver">Vancouver</SelectItem>
-                    <SelectItem value="Calgary">Calgary</SelectItem>
-                    <SelectItem value="Edmonton">Edmonton</SelectItem>
-                    <SelectItem value="Ottawa">Ottawa</SelectItem>
-                    <SelectItem value="Winnipeg">Winnipeg</SelectItem>
-                    <SelectItem value="Quebec">Quebec</SelectItem>
-                    <SelectItem value="Hamilton">Hamilton</SelectItem>
-                    <SelectItem value="London">London</SelectItem>
-                    <SelectItem value="París">París</SelectItem>
-                    <SelectItem value="Marsella">Marsella</SelectItem>
-                    <SelectItem value="Lyon">Lyon</SelectItem>
-                    <SelectItem value="Toulouse">Toulouse</SelectItem>
-                    <SelectItem value="Nice">Nice</SelectItem>
-                    <SelectItem value="Nantes">Nantes</SelectItem>
-                    <SelectItem value="Strasbourg">Strasbourg</SelectItem>
-                    <SelectItem value="Montpellier">Montpellier</SelectItem>
-                    <SelectItem value="Bordeaux">Bordeaux</SelectItem>
-                    <SelectItem value="Lille">Lille</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="space-y-2">
                 <Label className="text-sm font-medium">País *</Label>
-                <Select value={registrationData.country} onValueChange={(value) => setRegistrationData({...registrationData, country: value})}>
+                <Select value={registrationData.country} onValueChange={(value) => {
+                  setRegistrationData({...registrationData, country: value, city: ""});
+                }}>
                   <SelectTrigger>
                     <SelectValue placeholder="Selecciona un país" />
                   </SelectTrigger>
