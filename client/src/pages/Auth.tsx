@@ -12,6 +12,7 @@ import { useToast } from "@/hooks/use-toast";
 import { GoogleAuthButton } from "@/components/GoogleAuthButton";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronRight, ChevronLeft, Upload, MapPin, Building, User, Camera, Check, ArrowLeft, Mail, Briefcase, Clock, Languages, Shield, Building2 } from "lucide-react";
+import { MapboxAddressInput } from "@/components/ui/MapboxAddressInput";
 
 // Company categories with comprehensive subcategories
 const companyCategories = {
@@ -438,7 +439,7 @@ const Auth = () => {
   };
 
   // Countries and their respective cities
-  const countryCityMap = {
+  const countryCityMap: Record<string, string[]> = {
     "Colombia": ["Bogotá", "Medellín", "Cali", "Barranquilla", "Cartagena", "Bucaramanga", "Pereira", "Ibagué", "Santa Marta", "Villavicencio", "Manizales", "Neiva", "Soledad", "Armenia", "Soacha", "Valledupar", "Montería", "Itagüí", "Pasto", "Palmira", "Buenaventura", "Floridablanca", "Sincelejo", "Popayán", "Dosquebradas", "Riohacha", "Tunja", "Envigado", "Cartago", "Girardot", "Ubaté", "Barrancas", "Duitama", "Fusagasugá", "Sogamoso"],
     "Ecuador": ["Quito", "Guayaquil", "Cuenca", "Santo Domingo", "Machala", "Durán", "Manta", "Portoviejo", "Loja", "Ambato"],
     "Perú": ["Lima", "Arequipa", "Trujillo", "Chiclayo", "Piura", "Cusco", "Chimbote", "Huancayo", "Ica", "Pucallpa", "Tacna", "Juliaca", "Iquitos"],
@@ -921,15 +922,20 @@ const Auth = () => {
               <p className="text-sm text-gray-600 dark:text-gray-400">Donde te encuentras y cómo contactarte</p>
             </div>
             
-            <div className="space-y-2">
-              <Label className="text-sm font-medium">Dirección Completa *</Label>
-              <Input
-                value={registrationData.address}
-                onChange={(e) => setRegistrationData({...registrationData, address: e.target.value})}
-                placeholder="Calle 123 #45-67"
-                required
-              />
-            </div>
+            <MapboxAddressInput
+              value={registrationData.address}
+              onChange={(address, coordinates) => {
+                setRegistrationData({
+                  ...registrationData, 
+                  address,
+                  coordinates: coordinates || null
+                });
+              }}
+              label="Dirección Completa"
+              placeholder="Ej: Carrera 43A #18-95, El Poblado"
+              required={true}
+              className="mb-4"
+            />
             
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
