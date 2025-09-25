@@ -849,55 +849,90 @@ export default function HomePage() {
           )}
         </motion.section>
 
-        {/* Sección final optimizada con mejor UX */}
+        {/* Artículos Destacados - Enlaces Directos */}
         <motion.section 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 1.0 }}
-          className="text-center space-y-8"
+          className="space-y-6"
         >
-          <div className="bg-gradient-to-r from-green-500/20 to-blue-500/20 backdrop-blur-xl border border-white/30 rounded-3xl p-8 lg:p-12">
-            <h3 className="text-3xl lg:text-4xl font-gasoek text-white mb-4">
-              ¡Comienza tu Transformación Sostenible!
-            </h3>
-            <p className="text-white/80 text-lg mb-8 max-w-3xl mx-auto">
-              Únete a cientos de empresas que ya están creando impacto positivo en el turismo colombiano
-            </p>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-              <div className="text-center">
-                <div className="text-4xl font-bold text-green-400 mb-2">{stats?.totalCompanies || 0}</div>
-                <div className="text-white/70">Empresas Activas</div>
-              </div>
-              <div className="text-center">
-                <div className="text-4xl font-bold text-blue-400 mb-2">{stats?.totalTravelers || 0}</div>
-                <div className="text-white/70">Viajeros Conectados</div>
-              </div>
-              <div className="text-center">
-                <div className="text-4xl font-bold text-purple-400 mb-2">{categories?.length || 0}</div>
-                <div className="text-white/70">Categorías Disponibles</div>
-              </div>
-            </div>
-            
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/portal-empresas/mapa">
-                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                  <Button className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white px-8 py-4 rounded-full font-bold text-lg shadow-xl border-2 border-green-500">
-                    <Map className="w-5 h-5 mr-2" />
-                    Explorar Mapa Ahora
-                  </Button>
-                </motion.div>
-              </Link>
-              
-              <Link href="/portal-empresas/experiencias">
-                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                  <Button variant="outline" className="border-2 border-white/50 bg-white/10 backdrop-blur-xl text-white hover:bg-white/20 hover:border-white/70 px-8 py-4 rounded-full font-bold text-lg shadow-xl">
-                    <Star className="w-5 h-5 mr-2" />
-                    Crear Experiencia
-                  </Button>
-                </motion.div>
-              </Link>
-            </div>
+          <div className="text-center space-y-2">
+            <h3 className="text-3xl font-gasoek text-white">Artículos Destacados</h3>
+            <p className="text-white/70 text-lg">Descubre las últimas tendencias en turismo sostenible</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Artículo 1: Festival NATUR */}
+            <motion.div
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              className="cursor-pointer"
+              onClick={() => window.location.href = '/plataforma'}
+            >
+              <Card className="bg-gradient-to-br from-green-500/20 to-green-600/20 backdrop-blur-xl border-2 border-green-500/30 hover:border-green-400/50 transition-all duration-300 shadow-2xl">
+                <CardContent className="p-6">
+                  <div className="w-12 h-12 bg-green-500/30 rounded-full flex items-center justify-center mb-4">
+                    <Sparkles className="w-6 h-6 text-green-400" />
+                  </div>
+                  <h4 className="text-white font-bold text-lg mb-3">Festival NATUR: Forjando la Alianza de Turismo Sostenible</h4>
+                  <p className="text-white/70 text-sm mb-4 line-clamp-3">
+                    Descubre cómo la plataforma Festival NATUR está uniendo empresas, viajeros y comunidades para crear la alianza más grande de turismo sostenible en Colombia.
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <Badge className="bg-green-600/80 text-white">Plataforma NATUR</Badge>
+                    <span className="text-white/50 text-xs">8 min lectura</span>
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
+
+            {/* Artículo 2: Guía Turismo Sostenible */}
+            <motion.div
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              className="cursor-pointer"
+              onClick={() => alert('Guía Completa: Turismo Sostenible y Responsable en Colombia\n\nUna guía definitiva para practicar turismo sostenible en Colombia. Aprende cómo viajar de manera responsable, apoyar comunidades locales y conservar nuestros ecosistemas únicos.')}
+            >
+              <Card className="bg-gradient-to-br from-blue-500/20 to-blue-600/20 backdrop-blur-xl border-2 border-blue-500/30 hover:border-blue-400/50 transition-all duration-300 shadow-2xl">
+                <CardContent className="p-6">
+                  <div className="w-12 h-12 bg-blue-500/30 rounded-full flex items-center justify-center mb-4">
+                    <BookOpen className="w-6 h-6 text-blue-400" />
+                  </div>
+                  <h4 className="text-white font-bold text-lg mb-3">Guía Completa: Turismo Sostenible y Responsable</h4>
+                  <p className="text-white/70 text-sm mb-4 line-clamp-3">
+                    Una guía definitiva para practicar turismo sostenible en Colombia. Aprende cómo viajar de manera responsable y apoyar comunidades locales.
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <Badge className="bg-blue-600/80 text-white">Guía de Turismo</Badge>
+                    <span className="text-white/50 text-xs">12 min lectura</span>
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
+
+            {/* Artículo 3: Festival NATUR 2026 */}
+            <motion.div
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              className="cursor-pointer"
+              onClick={() => alert('Preparándonos para el Festival NATUR 2026\n\nConoce todos los detalles sobre el Festival NATUR 2026, el evento más importante de turismo sostenible en Colombia. Agenda, ponentes, experiencias y cómo ser parte de esta transformación.')}
+            >
+              <Card className="bg-gradient-to-br from-purple-500/20 to-purple-600/20 backdrop-blur-xl border-2 border-purple-500/30 hover:border-purple-400/50 transition-all duration-300 shadow-2xl">
+                <CardContent className="p-6">
+                  <div className="w-12 h-12 bg-purple-500/30 rounded-full flex items-center justify-center mb-4">
+                    <Calendar className="w-6 h-6 text-purple-400" />
+                  </div>
+                  <h4 className="text-white font-bold text-lg mb-3">Preparándonos para el Festival NATUR 2026</h4>
+                  <p className="text-white/70 text-sm mb-4 line-clamp-3">
+                    Conoce todos los detalles sobre el evento más importante de turismo sostenible en Colombia. Agenda, ponentes y experiencias.
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <Badge className="bg-purple-600/80 text-white">Festival NATUR 2026</Badge>
+                    <span className="text-white/50 text-xs">10 min lectura</span>
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
           </div>
         </motion.section>
       </div>
