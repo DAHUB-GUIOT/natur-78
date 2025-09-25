@@ -685,53 +685,11 @@ export default function HomePage() {
                   </motion.div>
                 </Link>
                 
-                <Link href="/portal-empresas/mensajes">
-                  <motion.div
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <Button variant="outline" className="border-2 border-white/60 bg-white/15 backdrop-blur-xl text-white hover:bg-white/25 hover:border-white/80 px-8 py-4 rounded-full font-bold text-lg shadow-xl">
-                      <MessageCircle className="w-5 h-5 mr-2" />
-                      Iniciar Chat
-                    </Button>
-                  </motion.div>
-                </Link>
               </div>
             </div>
           </motion.div>
         </motion.section>
 
-        {/* Navigation Links */}
-        <motion.section 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
-          className="space-y-6"
-        >
-          <div className="text-center space-y-2">
-            <h3 className="text-2xl font-gasoek text-white">Navega por el Portal</h3>
-            <p className="text-white/70">Accede rápidamente a todas las funcionalidades del portal empresas</p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {navigationLinks.map((link) => (
-              <Link key={link.id} href={link.path}>
-                <Card className="bg-white/10 backdrop-blur-xl border-white/20 hover:bg-white/15 hover:border-white/30 transition-all duration-300 cursor-pointer group">
-                  <CardContent className="p-6">
-                    <div className="flex items-start justify-between mb-3">
-                      <div className="w-10 h-10 bg-green-500/20 rounded-lg flex items-center justify-center">
-                        <link.icon className="w-5 h-5 text-green-400" />
-                      </div>
-                      <ArrowRight className="w-4 h-4 text-white/40 group-hover:text-white/80 transition-colors" />
-                    </div>
-                    <h4 className="text-white font-semibold mb-2">{link.label}</h4>
-                    <p className="text-white/70 text-sm">{link.description}</p>
-                  </CardContent>
-                </Card>
-              </Link>
-            ))}
-          </div>
-        </motion.section>
 
         {/* Featured Blogs */}
         <motion.section 
