@@ -145,22 +145,26 @@ export default function HomePage() {
     <div className="portal-empresas-content">
       <div className="max-w-7xl mx-auto px-4 lg:px-6 py-8 space-y-12">
         
-        {/* Hero Section with Split Layout */}
+        {/* Full Image Hero Banner */}
         <motion.section 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="relative overflow-hidden rounded-3xl"
+          initial={{ opacity: 0, scale: 1.1 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1.2 }}
+          className="relative overflow-hidden -mx-4 lg:-mx-6 mb-16"
         >
-          {/* Background with overlay */}
-          <div className="absolute inset-0 bg-black/60 z-10"></div>
+          {/* Full Screen Background Image */}
           <div 
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat scale-105"
             style={{ backgroundImage: `url(${heroImage})` }}
           ></div>
           
+          {/* Enhanced Gradient Overlays */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 to-black/40 z-10"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/50 z-10"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-green-900/30 to-blue-900/20 z-10"></div>
+          
           {/* Content */}
-          <div className="relative z-20 lg:grid lg:grid-cols-2 lg:gap-12 p-8 lg:p-16 min-h-[600px] flex items-center">
+          <div className="relative z-20 lg:grid lg:grid-cols-2 lg:gap-16 p-8 lg:p-20 min-h-[100vh] lg:min-h-[85vh] flex items-center">
             {/* Left side - Text content */}
             <motion.div 
               initial={{ opacity: 0, x: -50 }}
