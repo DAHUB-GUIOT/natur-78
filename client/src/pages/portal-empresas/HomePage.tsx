@@ -259,15 +259,6 @@ export default function HomePage() {
           className="space-y-8"
         >
           <div className="text-center space-y-4">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="inline-flex items-center gap-2 bg-green-600/20 backdrop-blur-lg border border-green-500/30 rounded-full px-6 py-3"
-            >
-              <Search className="w-5 h-5 text-green-400" />
-              <span className="text-green-400 font-semibold">Buscador Inteligente</span>
-            </motion.div>
             <h3 className="text-3xl lg:text-4xl font-gasoek text-white">Encuentra Empresas Sostenibles</h3>
             <p className="text-xl text-white/80 max-w-2xl mx-auto">Busca por nombre, categoría, país, ciudad o cualquier palabra clave relacionada</p>
           </div>
@@ -290,7 +281,6 @@ export default function HomePage() {
                 {/* Filtros Limpios y Mejorados */}
                 <div className="space-y-6">
                   <div className="flex flex-wrap gap-3 items-center justify-between">
-                    <h4 className="text-white font-semibold text-lg">Filtros de Búsqueda</h4>
                     
                     {hasActiveFilters && (
                       <Button
@@ -861,76 +851,112 @@ export default function HomePage() {
             <p className="text-white/70 text-lg">Descubre las últimas tendencias en turismo sostenible</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Artículo 1: Festival NATUR */}
             <motion.div
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className="cursor-pointer"
+              whileHover={{ scale: 1.05, y: -10 }}
+              whileTap={{ scale: 0.95 }}
+              className="cursor-pointer group"
               onClick={() => window.location.href = '/plataforma'}
             >
-              <Card className="bg-gradient-to-br from-green-500/20 to-green-600/20 backdrop-blur-xl border-2 border-green-500/30 hover:border-green-400/50 transition-all duration-300 shadow-2xl">
-                <CardContent className="p-6">
-                  <div className="w-12 h-12 bg-green-500/30 rounded-full flex items-center justify-center mb-4">
-                    <Sparkles className="w-6 h-6 text-green-400" />
+              <Card className="bg-black/20 backdrop-blur-2xl border border-white/20 hover:border-white/40 transition-all duration-500 shadow-2xl hover:shadow-3xl overflow-hidden h-full">
+                <div className="relative">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-10"></div>
+                  <img 
+                    src={heroImage}
+                    alt="Festival NATUR Alianza"
+                    className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-700"
+                  />
+                  <div className="absolute top-4 right-4 z-20">
+                    <Badge className="bg-green-600/90 text-white border-green-400/50 border">
+                      Plataforma NATUR
+                    </Badge>
                   </div>
-                  <h4 className="text-white font-bold text-lg mb-3">Festival NATUR: Forjando la Alianza de Turismo Sostenible</h4>
-                  <p className="text-white/70 text-sm mb-4 line-clamp-3">
-                    Descubre cómo la plataforma Festival NATUR está uniendo empresas, viajeros y comunidades para crear la alianza más grande de turismo sostenible en Colombia.
-                  </p>
-                  <div className="flex items-center justify-between">
-                    <Badge className="bg-green-600/80 text-white">Plataforma NATUR</Badge>
-                    <span className="text-white/50 text-xs">8 min lectura</span>
+                  <div className="absolute bottom-4 left-4 right-4 z-20">
+                    <h4 className="text-white font-bold text-xl mb-2 leading-tight">
+                      Festival NATUR: Forjando la Alianza de Turismo Sostenible
+                    </h4>
+                    <p className="text-white/80 text-sm line-clamp-2 mb-3">
+                      Descubre cómo estamos uniendo empresas, viajeros y comunidades para crear la alianza más grande de turismo sostenible en Colombia.
+                    </p>
+                    <div className="flex items-center justify-between">
+                      <span className="text-green-400 text-xs font-medium">8 min lectura</span>
+                      <ExternalLink className="w-4 h-4 text-white/60 group-hover:text-white transition-colors" />
+                    </div>
                   </div>
-                </CardContent>
+                </div>
               </Card>
             </motion.div>
 
             {/* Artículo 2: Guía Turismo Sostenible */}
             <motion.div
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className="cursor-pointer"
+              whileHover={{ scale: 1.05, y: -10 }}
+              whileTap={{ scale: 0.95 }}
+              className="cursor-pointer group"
               onClick={() => alert('Guía Completa: Turismo Sostenible y Responsable en Colombia\n\nUna guía definitiva para practicar turismo sostenible en Colombia. Aprende cómo viajar de manera responsable, apoyar comunidades locales y conservar nuestros ecosistemas únicos.')}
             >
-              <Card className="bg-gradient-to-br from-blue-500/20 to-blue-600/20 backdrop-blur-xl border-2 border-blue-500/30 hover:border-blue-400/50 transition-all duration-300 shadow-2xl">
-                <CardContent className="p-6">
-                  <div className="w-12 h-12 bg-blue-500/30 rounded-full flex items-center justify-center mb-4">
-                    <BookOpen className="w-6 h-6 text-blue-400" />
+              <Card className="bg-black/20 backdrop-blur-2xl border border-white/20 hover:border-white/40 transition-all duration-500 shadow-2xl hover:shadow-3xl overflow-hidden h-full">
+                <div className="relative">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-10"></div>
+                  <img 
+                    src={ecoImage}
+                    alt="Turismo Sostenible Colombia"
+                    className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-700"
+                  />
+                  <div className="absolute top-4 right-4 z-20">
+                    <Badge className="bg-blue-600/90 text-white border-blue-400/50 border">
+                      Guía de Turismo
+                    </Badge>
                   </div>
-                  <h4 className="text-white font-bold text-lg mb-3">Guía Completa: Turismo Sostenible y Responsable</h4>
-                  <p className="text-white/70 text-sm mb-4 line-clamp-3">
-                    Una guía definitiva para practicar turismo sostenible en Colombia. Aprende cómo viajar de manera responsable y apoyar comunidades locales.
-                  </p>
-                  <div className="flex items-center justify-between">
-                    <Badge className="bg-blue-600/80 text-white">Guía de Turismo</Badge>
-                    <span className="text-white/50 text-xs">12 min lectura</span>
+                  <div className="absolute bottom-4 left-4 right-4 z-20">
+                    <h4 className="text-white font-bold text-xl mb-2 leading-tight">
+                      Guía Completa: Turismo Sostenible y Responsable
+                    </h4>
+                    <p className="text-white/80 text-sm line-clamp-2 mb-3">
+                      Una guía definitiva para practicar turismo sostenible en Colombia. Aprende cómo viajar de manera responsable.
+                    </p>
+                    <div className="flex items-center justify-between">
+                      <span className="text-blue-400 text-xs font-medium">12 min lectura</span>
+                      <BookOpen className="w-4 h-4 text-white/60 group-hover:text-white transition-colors" />
+                    </div>
                   </div>
-                </CardContent>
+                </div>
               </Card>
             </motion.div>
 
             {/* Artículo 3: Festival NATUR 2026 */}
             <motion.div
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className="cursor-pointer"
+              whileHover={{ scale: 1.05, y: -10 }}
+              whileTap={{ scale: 0.95 }}
+              className="cursor-pointer group"
               onClick={() => alert('Preparándonos para el Festival NATUR 2026\n\nConoce todos los detalles sobre el Festival NATUR 2026, el evento más importante de turismo sostenible en Colombia. Agenda, ponentes, experiencias y cómo ser parte de esta transformación.')}
             >
-              <Card className="bg-gradient-to-br from-purple-500/20 to-purple-600/20 backdrop-blur-xl border-2 border-purple-500/30 hover:border-purple-400/50 transition-all duration-300 shadow-2xl">
-                <CardContent className="p-6">
-                  <div className="w-12 h-12 bg-purple-500/30 rounded-full flex items-center justify-center mb-4">
-                    <Calendar className="w-6 h-6 text-purple-400" />
+              <Card className="bg-black/20 backdrop-blur-2xl border border-white/20 hover:border-white/40 transition-all duration-500 shadow-2xl hover:shadow-3xl overflow-hidden h-full">
+                <div className="relative">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-10"></div>
+                  <img 
+                    src={businessImage}
+                    alt="Festival NATUR 2026"
+                    className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-700"
+                  />
+                  <div className="absolute top-4 right-4 z-20">
+                    <Badge className="bg-purple-600/90 text-white border-purple-400/50 border">
+                      Festival NATUR 2026
+                    </Badge>
                   </div>
-                  <h4 className="text-white font-bold text-lg mb-3">Preparándonos para el Festival NATUR 2026</h4>
-                  <p className="text-white/70 text-sm mb-4 line-clamp-3">
-                    Conoce todos los detalles sobre el evento más importante de turismo sostenible en Colombia. Agenda, ponentes y experiencias.
-                  </p>
-                  <div className="flex items-center justify-between">
-                    <Badge className="bg-purple-600/80 text-white">Festival NATUR 2026</Badge>
-                    <span className="text-white/50 text-xs">10 min lectura</span>
+                  <div className="absolute bottom-4 left-4 right-4 z-20">
+                    <h4 className="text-white font-bold text-xl mb-2 leading-tight">
+                      Preparándonos para el Festival NATUR 2026
+                    </h4>
+                    <p className="text-white/80 text-sm line-clamp-2 mb-3">
+                      Conoce todos los detalles sobre el evento más importante de turismo sostenible en Colombia.
+                    </p>
+                    <div className="flex items-center justify-between">
+                      <span className="text-purple-400 text-xs font-medium">10 min lectura</span>
+                      <Calendar className="w-4 h-4 text-white/60 group-hover:text-white transition-colors" />
+                    </div>
                   </div>
-                </CardContent>
+                </div>
               </Card>
             </motion.div>
           </div>
