@@ -3,11 +3,11 @@ import { createServer, type Server } from "http";
 
 import { storage } from "./storage";
 import { db } from "./db";
-import { insertUserSchema, insertUserProfileSchema, insertExperienceSchema, insertCompanySchema, adminLogs } from "@shared/schema";
+import { insertUserSchema, insertUserProfileSchema, insertExperienceSchema, insertCompanySchema, adminLogs, users } from "@shared/schema";
 import { z } from "zod";
 import passport from 'passport';
 import { setupGoogleAuth } from './googleAuth';
-import { desc, eq, and, or } from "drizzle-orm";
+import { desc, eq, and, or, sql } from "drizzle-orm";
 import { sendVerificationEmail, sendAdminNotification } from "./emailService";
 import crypto from "crypto";
 import path from "path";
@@ -1029,6 +1029,231 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Get companies for map error:", error);
       res.status(500).json({ error: "Internal server error" });
+    }
+  });
+
+  // Filter options endpoints for smart search
+  app.get("/api/search/filters/categories", async (req, res) => {
+    try {
+      const result = await db
+        .select({ companyCategory: users.companyCategory })
+        .from(users)
+        .where(
+          and(
+            eq(users.role, 'empresa'),
+            eq(users.isActive, true),
+            sql`${users.companyCategory} IS NOT NULL AND ${users.companyCategory} != ''`
+          )
+        )
+        .groupBy(users.companyCategory);
+      
+      const categories = result
+        .map(row => row.companyCategory)
+        .filter(cat => cat)
+        .sort();
+      
+      console.log(`📊 Found ${categories.length} unique company categories`);
+      res.json(categories);
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+      res.status(500).json({ error: "Failed to fetch categories" });
+    }
+  });
+
+  app.get("/api/search/filters/subcategories", async (req, res) => {
+    try {
+      const { category } = req.query;
+      let query = db
+        .select({ companySubcategory: users.companySubcategory })
+        .from(users)
+        .where(
+          and(
+            eq(users.role, 'empresa'),
+            eq(users.isActive, true),
+            sql`${users.companySubcategory} IS NOT NULL AND ${users.companySubcategory} != ''`
+          )
+        );
+
+      // If category is provided, filter subcategories for that category
+      if (category) {
+        query = query.where(
+          and(
+            eq(users.role, 'empresa'),
+            eq(users.isActive, true),
+            eq(users.companyCategory, category as string),
+            sql`${users.companySubcategory} IS NOT NULL AND ${users.companySubcategory} != ''`
+          )
+        );
+      }
+      
+      const result = await query.groupBy(users.companySubcategory);
+      
+      const subcategories = result
+        .map(row => row.companySubcategory)
+        .filter(subcat => subcat)
+        .sort();
+      
+      console.log(`📊 Found ${subcategories.length} unique subcategories${category ? ` for ${category}` : ''}`);
+      res.json(subcategories);
+    } catch (error) {
+      console.error("Error fetching subcategories:", error);
+      res.status(500).json({ error: "Failed to fetch subcategories" });
+    }
+  });
+
+  app.get("/api/search/filters/countries", async (req, res) => {
+    try {
+      const result = await db
+        .select({ country: users.country })
+        .from(users)
+        .where(
+          and(
+            eq(users.role, 'empresa'),
+            eq(users.isActive, true),
+            sql`${users.country} IS NOT NULL AND ${users.country} != ''`
+          )
+        )
+        .groupBy(users.country);
+      
+      const countries = result
+        .map(row => row.country)
+        .filter(country => country)
+        .sort();
+      
+      console.log(`📊 Found ${countries.length} unique countries`);
+      res.json(countries);
+    } catch (error) {
+      console.error("Error fetching countries:", error);
+      res.status(500).json({ error: "Failed to fetch countries" });
+    }
+  });
+
+  app.get("/api/search/filters/cities", async (req, res) => {
+    try {
+      const { country } = req.query;
+      let query = db
+        .select({ city: users.city })
+        .from(users)
+        .where(
+          and(
+            eq(users.role, 'empresa'),
+            eq(users.isActive, true),
+            sql`${users.city} IS NOT NULL AND ${users.city} != ''`
+          )
+        );
+
+      // If country is provided, filter cities for that country
+      if (country) {
+        query = query.where(
+          and(
+            eq(users.role, 'empresa'),
+            eq(users.isActive, true),
+            eq(users.country, country as string),
+            sql`${users.city} IS NOT NULL AND ${users.city} != ''`
+          )
+        );
+      }
+      
+      const result = await query.groupBy(users.city);
+      
+      const cities = result
+        .map(row => row.city)
+        .filter(city => city)
+        .sort();
+      
+      console.log(`📊 Found ${cities.length} unique cities${country ? ` in ${country}` : ''}`);
+      res.json(cities);
+    } catch (error) {
+      console.error("Error fetching cities:", error);
+      res.status(500).json({ error: "Failed to fetch cities" });
+    }
+  });
+
+  // Enhanced companies search with filters
+  app.get("/api/search/companies", async (req, res) => {
+    try {
+      const { 
+        query: searchQuery, 
+        category, 
+        subcategory, 
+        country, 
+        city, 
+        limit = 50 
+      } = req.query;
+
+      console.log('🔍 Company search with filters:', { 
+        searchQuery, category, subcategory, country, city, limit 
+      });
+
+      let queryBuilder = db
+        .select({
+          id: users.id,
+          companyName: users.companyName,
+          companyCategory: users.companyCategory,
+          companySubcategory: users.companySubcategory,
+          city: users.city,
+          country: users.country,
+          companyDescription: users.companyDescription,
+          coordinates: users.coordinates,
+          phone: users.phone,
+          website: users.website
+        })
+        .from(users)
+        .where(
+          and(
+            eq(users.role, 'empresa'),
+            eq(users.isActive, true),
+            sql`${users.companyName} IS NOT NULL AND ${users.companyName} != ''`
+          )
+        );
+
+      // Apply filters
+      const filters = [];
+      
+      if (category) {
+        filters.push(eq(users.companyCategory, category as string));
+      }
+      
+      if (subcategory) {
+        filters.push(eq(users.companySubcategory, subcategory as string));
+      }
+      
+      if (country) {
+        filters.push(eq(users.country, country as string));
+      }
+      
+      if (city) {
+        filters.push(eq(users.city, city as string));
+      }
+      
+      // Apply text search if provided
+      if (searchQuery && typeof searchQuery === 'string') {
+        const searchTerm = `%${searchQuery.toLowerCase()}%`;
+        filters.push(
+          or(
+            sql`LOWER(${users.companyName}) LIKE ${searchTerm}`,
+            sql`LOWER(${users.companyCategory}) LIKE ${searchTerm}`,
+            sql`LOWER(${users.companySubcategory}) LIKE ${searchTerm}`,
+            sql`LOWER(${users.city}) LIKE ${searchTerm}`,
+            sql`LOWER(${users.country}) LIKE ${searchTerm}`,
+            sql`LOWER(${users.companyDescription}) LIKE ${searchTerm}`
+          )
+        );
+      }
+      
+      if (filters.length > 0) {
+        queryBuilder = queryBuilder.where(and(...filters));
+      }
+      
+      const result = await queryBuilder
+        .limit(parseInt(limit as string))
+        .orderBy(users.companyName);
+
+      console.log(`📊 Search results: ${result.length} companies found`);
+      res.json(result);
+    } catch (error) {
+      console.error("Error searching companies:", error);
+      res.status(500).json({ error: "Failed to search companies" });
     }
   });
 
