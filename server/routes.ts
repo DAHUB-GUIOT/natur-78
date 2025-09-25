@@ -935,39 +935,39 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const blogs = [
         {
           id: 1,
-          title: "Turismo Regenerativo en los Cafetales Colombianos",
-          description: "Explora cómo las fincas cafeteras del Eje Cafetero están implementando prácticas regenerativas que no solo conservan el ecosistema, sino que lo mejoran, creando experiencias únicas para los viajeros conscientes.",
+          title: "Festival NATUR: Forjando la Alianza de Turismo Sostenible en Colombia",
+          description: "Descubre cómo la plataforma Festival NATUR está uniendo empresas, viajeros y comunidades para crear la alianza más grande de turismo sostenible en Colombia, transformando el sector hacia un futuro regenerativo.",
           image: "/api/image/colombia_coffee_plan_975065b6.jpg",
-          category: "Turismo Regenerativo",
-          readTime: "6 min lectura",
-          publishedDate: "2025-01-20",
-          slug: "turismo-regenerativo-cafetales-colombianos",
+          category: "Plataforma NATUR",
+          readTime: "8 min lectura",
+          publishedDate: "2025-09-25",
+          slug: "festival-natur-alianza-turismo-sostenible-colombia",
+          author: "Equipo Festival NATUR",
+          authorRole: "Líderes en Turismo Sostenible"
+        },
+        {
+          id: 2,
+          title: "Guía Completa: Turismo Sostenible y Responsable en Colombia",
+          description: "Una guía definitiva para practicar turismo sostenible en Colombia. Aprende cómo viajar de manera responsable, apoyar comunidades locales y conservar nuestros ecosistemas únicos mientras disfrutas experiencias auténticas.",
+          image: "/api/image/biodiversity_conserv_33d23d5e.jpg",
+          category: "Guía de Turismo",
+          readTime: "12 min lectura",
+          publishedDate: "2025-09-20",
+          slug: "guia-turismo-sostenible-responsable-colombia",
           author: "María Alejandra Rodríguez",
           authorRole: "Experta en Turismo Sostenible"
         },
         {
-          id: 2,
-          title: "Conservación de la Biodiversidad: Alianzas Exitosas",
-          description: "Descubre cómo las empresas de turismo están trabajando con comunidades locales para proteger la rica biodiversidad de Colombia, generando ingresos sostenibles y preservando ecosistemas únicos.",
-          image: "/api/image/biodiversity_conserv_33d23d5e.jpg",
-          category: "Conservación",
-          readTime: "5 min lectura",
-          publishedDate: "2025-01-15",
-          slug: "conservacion-biodiversidad-alianzas",
-          author: "Carlos Eduardo Martínez",
-          authorRole: "Biólogo Conservacionista"
-        },
-        {
           id: 3,
-          title: "Ecoturismo Comunitario: Casos de Éxito en Colombia",
-          description: "Conoce las historias inspiradoras de comunidades que han transformado sus territorios en destinos de ecoturismo, preservando sus tradiciones mientras generan oportunidades económicas sostenibles.",
+          title: "Preparándonos para el Festival NATUR 2026: Todo lo que Necesitas Saber",
+          description: "Conoce todos los detalles sobre el Festival NATUR 2026, el evento más importante de turismo sostenible en Colombia. Agenda, ponentes, experiencias y cómo ser parte de esta transformación histórica del sector.",
           image: "/api/image/sustainable_tourism,_75db2cd6.jpg",
-          category: "Turismo Comunitario",
-          readTime: "7 min lectura",
-          publishedDate: "2025-01-10",
-          slug: "ecoturismo-comunitario-casos-exito",
-          author: "Ana Sofía López",
-          authorRole: "Coordinadora de Turismo Comunitario"
+          category: "Festival NATUR 2026",
+          readTime: "10 min lectura",
+          publishedDate: "2025-09-15",
+          slug: "preparandonos-festival-natur-2026",
+          author: "Comité Organizador",
+          authorRole: "Festival NATUR 2026"
         }
       ];
 
