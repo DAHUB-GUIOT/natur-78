@@ -817,6 +817,16 @@ export default function HomePage() {
                       <Button 
                         className="w-full mt-4 bg-green-600/20 border-green-500/30 text-green-400 hover:bg-green-600/30"
                         data-testid={`button-read-blog-${blog.id}`}
+                        onClick={() => {
+                          // Para el artículo de la plataforma, abrir en la misma ventana
+                          if (blog.slug === 'festival-natur-alianza-turismo-sostenible-colombia') {
+                            window.location.href = '/plataforma';
+                          }
+                          // Para otros artículos, simular navegación a contenido completo
+                          else {
+                            alert(`Artículo: ${blog.title}\n\nEste artículo abrirá próximamente con el contenido completo.\n\nTemas incluidos:\n• ${blog.description}`);
+                          }
+                        }}
                       >
                         Leer Artículo
                         <ExternalLink className="w-4 h-4 ml-2" />
