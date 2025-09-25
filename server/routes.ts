@@ -1038,24 +1038,24 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Filter options endpoints for smart search
   app.get("/api/search/filters/categories", async (req, res) => {
     try {
-      const result = await db
-        .select({ companyCategory: users.companyCategory })
-        .from(users)
-        .where(
-          and(
-            eq(users.role, 'empresa'),
-            eq(users.isActive, true),
-            sql`${users.companyCategory} IS NOT NULL AND ${users.companyCategory} != ''`
-          )
-        )
-        .groupBy(users.companyCategory);
+      // Return all predefined categories
+      const categories = [
+        "Agencias u Operadores Turísticos",
+        "Alojamientos Sostenibles",
+        "Gastronomía Sostenible",
+        "Movilidad y Transporte Ecológico",
+        "ONG y Fundaciones",
+        "Educación y Sensibilización Ambiental",
+        "Tecnología para el Turismo Sostenible",
+        "Guía de turismo",
+        "Intérprete de idiomas",
+        "DMC (Destination Management Company)",
+        "Nómadas Digitales",
+        "Plataformas de Reservas Responsables",
+        "Innovación Social y Tecnológica"
+      ].sort();
       
-      const categories = result
-        .map(row => row.companyCategory)
-        .filter(cat => cat)
-        .sort();
-      
-      console.log(`📊 Found ${categories.length} unique company categories`);
+      console.log(`📊 Returning ${categories.length} predefined company categories`);
       res.json(categories);
     } catch (error) {
       console.error("Error fetching categories:", error);
@@ -1066,40 +1066,70 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/search/filters/subcategories", async (req, res) => {
     try {
       const { category } = req.query;
-      let query = db
-        .select({ companySubcategory: users.companySubcategory })
-        .from(users)
-        .where(
-          and(
-            eq(users.role, 'empresa'),
-            eq(users.isActive, true),
-            sql`${users.companySubcategory} IS NOT NULL AND ${users.companySubcategory} != ''`
-          )
-        );
-
-      // If category is provided, filter subcategories for that category
-      if (category) {
-        query = db
-          .select({ companySubcategory: users.companySubcategory })
-          .from(users)
-          .where(
-            and(
-              eq(users.role, 'empresa'),
-              eq(users.isActive, true),
-              eq(users.companyCategory, category as string),
-              sql`${users.companySubcategory} IS NOT NULL AND ${users.companySubcategory} != ''`
-            )
-          );
+      
+      // Define all subcategories by category
+      const subcategoriesByCategory: { [key: string]: string[] } = {
+        "Agencias u Operadores Turísticos": [
+          "Turismo de naturaleza y avistamiento de fauna",
+          "Turismo comunitario",
+          "Turismo rural y agroturismo",
+          "Turismo cultural e histórico",
+          "Turismo de bienestar y reconexión",
+          "Ecoturismo",
+          "Turismo regenerativo",
+          "Turismo de naturaleza",
+          "Turismo de aventura",
+          "Turismo urbano sostenible"
+        ],
+        "Alojamientos Sostenibles": [
+          "Hoteles ecológicos",
+          "Ecolodges",
+          "Glamping sostenible",
+          "Hospedajes comunitarios",
+          "Alojamientos rurales"
+        ],
+        "Gastronomía Sostenible": [
+          "Restaurantes farm-to-table",
+          "Gastronomía local",
+          "Productos orgánicos",
+          "Cocina tradicional"
+        ],
+        "Guía de turismo": [
+          "Guía de naturaleza y avistamiento de fauna",
+          "Guía cultural e histórico",
+          "Guía de turismo de aventura"
+        ],
+        "Intérprete de idiomas": [
+          "Español-Inglés",
+          "Español-Francés",
+          "Lenguas indígenas"
+        ],
+        "DMC (Destination Management Company)": [
+          "Ecoturismo",
+          "Cultural",
+          "Regenerativo"
+        ],
+        "Nómadas Digitales": [
+          "Content Creator",
+          "Remote Worker",
+          "Travel Blogger",
+          "Nomad Community",
+          "Nomad Entrepreneur"
+        ]
+      };
+      
+      let subcategories: string[] = [];
+      
+      if (category && subcategoriesByCategory[category as string]) {
+        subcategories = subcategoriesByCategory[category as string];
+      } else if (!category) {
+        // Return all subcategories if no category specified
+        subcategories = Object.values(subcategoriesByCategory).flat();
       }
       
-      const result = await query.groupBy(users.companySubcategory);
+      subcategories.sort();
       
-      const subcategories = result
-        .map(row => row.companySubcategory)
-        .filter(subcat => subcat)
-        .sort();
-      
-      console.log(`📊 Found ${subcategories.length} unique subcategories${category ? ` for ${category}` : ''}`);
+      console.log(`📊 Returning ${subcategories.length} predefined subcategories${category ? ` for ${category}` : ''}`);
       res.json(subcategories);
     } catch (error) {
       console.error("Error fetching subcategories:", error);
@@ -1109,24 +1139,41 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.get("/api/search/filters/countries", async (req, res) => {
     try {
-      const result = await db
-        .select({ country: users.country })
-        .from(users)
-        .where(
-          and(
-            eq(users.role, 'empresa'),
-            eq(users.isActive, true),
-            sql`${users.country} IS NOT NULL AND ${users.country} != ''`
-          )
-        )
-        .groupBy(users.country);
+      // Return all predefined countries
+      const countries = [
+        "Colombia",
+        "Argentina",
+        "Brasil", 
+        "Chile",
+        "Perú",
+        "Ecuador",
+        "Venezuela",
+        "Bolivia",
+        "Paraguay",
+        "Uruguay",
+        "México",
+        "Guatemala",
+        "El Salvador",
+        "Honduras",
+        "Nicaragua",
+        "Costa Rica",
+        "Panamá",
+        "España",
+        "Estados Unidos",
+        "Canadá",
+        "Reino Unido",
+        "Francia",
+        "Alemania",
+        "Italia",
+        "Países Bajos",
+        "Suiza",
+        "Australia",
+        "Nueva Zelanda",
+        "Japón",
+        "Corea del Sur"
+      ].sort();
       
-      const countries = result
-        .map(row => row.country)
-        .filter(country => country)
-        .sort();
-      
-      console.log(`📊 Found ${countries.length} unique countries`);
+      console.log(`📊 Returning ${countries.length} predefined countries`);
       res.json(countries);
     } catch (error) {
       console.error("Error fetching countries:", error);
@@ -1137,40 +1184,42 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/search/filters/cities", async (req, res) => {
     try {
       const { country } = req.query;
-      let query = db
-        .select({ city: users.city })
-        .from(users)
-        .where(
-          and(
-            eq(users.role, 'empresa'),
-            eq(users.isActive, true),
-            sql`${users.city} IS NOT NULL AND ${users.city} != ''`
-          )
-        );
-
-      // If country is provided, filter cities for that country
-      if (country) {
-        query = db
-          .select({ city: users.city })
-          .from(users)
-          .where(
-            and(
-              eq(users.role, 'empresa'),
-              eq(users.isActive, true),
-              eq(users.country, country as string),
-              sql`${users.city} IS NOT NULL AND ${users.city} != ''`
-            )
-          );
+      
+      // Define cities by country
+      const citiesByCountry: { [key: string]: string[] } = {
+        "Colombia": [
+          // Región Andina
+          "Bogotá", "Medellín", "Cali", "Bucaramanga", "Pereira", "Manizales", 
+          "Armenia", "Tunja", "Popayán", "Neiva", "Pasto", "Cúcuta", "Ibagué", "Villavicencio",
+          // Región Caribe
+          "Barranquilla", "Cartagena", "Santa Marta", "Valledupar", "Montería", "Sincelejo", "Riohacha", "San Andrés",
+          // Región Pacífica
+          "Quibdó", "Buenaventura", "Tumaco",
+          // Región Orinoquía
+          "Yopal", "Arauca", "Puerto Carreño",
+          // Región Amazónica
+          "Leticia", "Florencia", "Mocoa", "San José del Guaviare", "Inírida", "Mitú"
+        ],
+        "Argentina": ["Buenos Aires", "Córdoba", "Rosario", "Mendoza", "La Plata", "San Miguel de Tucumán"],
+        "Brasil": ["São Paulo", "Rio de Janeiro", "Brasília", "Salvador", "Fortaleza", "Belo Horizonte"],
+        "Chile": ["Santiago", "Valparaíso", "Concepción", "La Serena", "Temuco", "Antofagasta"],
+        "México": ["Ciudad de México", "Guadalajara", "Monterrey", "Puebla", "Tijuana", "León"],
+        "España": ["Madrid", "Barcelona", "Valencia", "Sevilla", "Zaragoza", "Málaga"],
+        "Estados Unidos": ["Nueva York", "Los Ángeles", "Chicago", "Houston", "Phoenix", "Filadelfia"]
+      };
+      
+      let cities: string[] = [];
+      
+      if (country && citiesByCountry[country as string]) {
+        cities = citiesByCountry[country as string];
+      } else if (!country) {
+        // Return all cities if no country specified
+        cities = Object.values(citiesByCountry).flat();
       }
       
-      const result = await query.groupBy(users.city);
+      cities.sort();
       
-      const cities = result
-        .map(row => row.city)
-        .filter(city => city)
-        .sort();
-      
-      console.log(`📊 Found ${cities.length} unique cities${country ? ` in ${country}` : ''}`);
+      console.log(`📊 Returning ${cities.length} predefined cities${country ? ` for ${country}` : ''}`);
       res.json(cities);
     } catch (error) {
       console.error("Error fetching cities:", error);
