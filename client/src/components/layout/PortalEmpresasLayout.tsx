@@ -255,14 +255,9 @@ export function PortalEmpresasLayout({ children }: PortalEmpresasLayoutProps) {
               {children}
             </div>
           ) : (
-            /* Regular page layout for other pages */
-            <div className="pt-24 lg:pt-20 pb-24 lg:pb-6 min-h-screen">
-              <div className="max-w-full mx-auto px-6 lg:px-8">
-                {/* Enhanced Content Wrapper */}
-                <div className="bg-white/8 backdrop-blur-md border border-white/15 rounded-3xl shadow-2xl min-h-[calc(100vh-8rem)] p-8 lg:p-10 transition-all duration-300 hover:bg-white/10">
-                  {children}
-                </div>
-              </div>
+            /* Full-width borderless layout for all other pages */
+            <div className="portal-empresas-content pt-24 lg:pt-20 pb-24 lg:pb-6 min-h-screen">
+              {children}
             </div>
           )}
         </div>
