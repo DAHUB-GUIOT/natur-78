@@ -551,58 +551,229 @@ export default function HomePage() {
           </Card>
         </motion.section>
 
-        {/* Portal Explanation */}
+        {/* Animated Portal Explanation with CTAs */}
         <motion.section 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="space-y-6"
+          className="space-y-12"
         >
-          <div className="text-center space-y-2">
-            <h3 className="text-2xl font-gasoek text-white">¿Qué es el Portal Empresas?</h3>
-            <p className="text-white/70 max-w-3xl mx-auto">
-              Una plataforma integral diseñada para empresas de turismo sostenible que buscan conectar, 
-              crecer y generar impacto positivo en sus comunidades.
-            </p>
+          <div className="text-center space-y-4">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, delay: 0.5 }}
+              className="inline-flex items-center gap-2 bg-green-600/20 backdrop-blur-lg border border-green-500/30 rounded-full px-8 py-4 mb-4"
+            >
+              <Sparkles className="w-6 h-6 text-green-400" />
+              <span className="text-green-400 font-bold text-lg">Portal Empresas NATUR</span>
+            </motion.div>
+            <motion.h3 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.6 }}
+              className="text-4xl lg:text-5xl font-gasoek text-white"
+            >
+              Tu Ecosistema de Turismo Sostenible
+            </motion.h3>
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.7 }}
+              className="text-xl text-white/80 max-w-4xl mx-auto"
+            >
+              Conecta, crece y transforma el turismo sostenible. Una plataforma completa donde tu empresa 
+              puede brillar, colaborar y generar impacto real en el mundo.
+            </motion.p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <Card className="bg-white/10 backdrop-blur-xl border-white/20">
-              <CardContent className="p-6">
-                <div className="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center mb-4">
-                  <Map className="w-6 h-6 text-green-400" />
-                </div>
-                <h4 className="text-white font-semibold mb-2">Visibilidad en el Mapa</h4>
-                <p className="text-white/70 text-sm">
-                  Aparece en nuestro mapa interactivo y conecta con viajeros que buscan experiencias sostenibles.
-                </p>
-              </CardContent>
-            </Card>
+          {/* Animated Features Flow */}
+          <div className="relative">
+            {/* Connecting Lines Animation */}
+            <div className="absolute inset-0 flex items-center justify-center opacity-20">
+              <svg width="800" height="400" className="hidden lg:block">
+                <motion.path
+                  d="M150,200 Q400,100 650,200"
+                  stroke="rgb(132, 204, 22)"
+                  strokeWidth="2"
+                  fill="none"
+                  initial={{ pathLength: 0 }}
+                  animate={{ pathLength: 1 }}
+                  transition={{ duration: 2, delay: 0.8 }}
+                />
+                <motion.path
+                  d="M150,200 Q400,300 650,200"
+                  stroke="rgb(132, 204, 22)"
+                  strokeWidth="2"
+                  fill="none"
+                  initial={{ pathLength: 0 }}
+                  animate={{ pathLength: 1 }}
+                  transition={{ duration: 2, delay: 1.2 }}
+                />
+              </svg>
+            </div>
 
-            <Card className="bg-white/10 backdrop-blur-xl border-white/20">
-              <CardContent className="p-6">
-                <div className="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center mb-4">
-                  <Network className="w-6 h-6 text-blue-400" />
-                </div>
-                <h4 className="text-white font-semibold mb-2">Red de Contactos</h4>
-                <p className="text-white/70 text-sm">
-                  Conecta con otras empresas del sector, forma alianzas estratégicas y comparte conocimientos.
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 relative z-10">
+              {/* Feature 1 */}
+              <motion.div
+                initial={{ opacity: 0, x: -50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, delay: 0.8 }}
+                className="text-center"
+              >
+                <motion.div
+                  animate={{ 
+                    scale: [1, 1.1, 1],
+                    rotate: [0, 5, -5, 0]
+                  }}
+                  transition={{ 
+                    duration: 4,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                  className="w-24 h-24 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-2xl"
+                >
+                  <Map className="w-12 h-12 text-white" />
+                </motion.div>
+                <h4 className="text-white font-bold text-xl mb-3">Visibilidad Global</h4>
+                <p className="text-white/70 mb-6">
+                  Aparece en nuestro mapa interactivo y conecta con miles de viajeros sostenibles
                 </p>
-              </CardContent>
-            </Card>
+                <Link href="/portal-empresas/mapa">
+                  <Button className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-full font-semibold transition-all duration-300 hover:scale-105">
+                    <Map className="w-4 h-4 mr-2" />
+                    Ver Mapa
+                  </Button>
+                </Link>
+              </motion.div>
 
-            <Card className="bg-white/10 backdrop-blur-xl border-white/20">
-              <CardContent className="p-6">
-                <div className="w-12 h-12 bg-purple-500/20 rounded-lg flex items-center justify-center mb-4">
-                  <UserIcon className="w-6 h-6 text-purple-400" />
-                </div>
-                <h4 className="text-white font-semibold mb-2">Gestión de Perfil</h4>
-                <p className="text-white/70 text-sm">
-                  Administra tu información empresarial, certificaciones y prácticas sostenibles de forma completa.
+              {/* Feature 2 */}
+              <motion.div
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 1.0 }}
+                className="text-center"
+              >
+                <motion.div
+                  animate={{ 
+                    scale: [1, 1.1, 1],
+                    rotate: [0, -5, 5, 0]
+                  }}
+                  transition={{ 
+                    duration: 4,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: 1.5
+                  }}
+                  className="w-24 h-24 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-2xl"
+                >
+                  <Network className="w-12 h-12 text-white" />
+                </motion.div>
+                <h4 className="text-white font-bold text-xl mb-3">Red Poderosa</h4>
+                <p className="text-white/70 mb-6">
+                  Conecta con empresas afines, forma alianzas y comparte conocimientos valiosos
                 </p>
-              </CardContent>
-            </Card>
+                <Link href="/portal-empresas/red">
+                  <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-full font-semibold transition-all duration-300 hover:scale-105">
+                    <Network className="w-4 h-4 mr-2" />
+                    Conectar
+                  </Button>
+                </Link>
+              </motion.div>
+
+              {/* Feature 3 */}
+              <motion.div
+                initial={{ opacity: 0, x: 50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, delay: 1.2 }}
+                className="text-center"
+              >
+                <motion.div
+                  animate={{ 
+                    scale: [1, 1.1, 1],
+                    rotate: [0, 5, -5, 0]
+                  }}
+                  transition={{ 
+                    duration: 4,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: 3
+                  }}
+                  className="w-24 h-24 bg-gradient-to-br from-purple-400 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-2xl"
+                >
+                  <UserIcon className="w-12 h-12 text-white" />
+                </motion.div>
+                <h4 className="text-white font-bold text-xl mb-3">Gestión Total</h4>
+                <p className="text-white/70 mb-6">
+                  Administra tu perfil, certificaciones y prácticas sostenibles de forma integral
+                </p>
+                <Link href="/portal-empresas/perfil">
+                  <Button className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-full font-semibold transition-all duration-300 hover:scale-105">
+                    <UserIcon className="w-4 h-4 mr-2" />
+                    Mi Perfil
+                  </Button>
+                </Link>
+              </motion.div>
+            </div>
           </div>
+
+          {/* Main CTA Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 1.4 }}
+            className="text-center space-y-8"
+          >
+            <div className="bg-gradient-to-r from-green-600/20 to-blue-600/20 backdrop-blur-xl border border-white/20 rounded-3xl p-8 lg:p-12">
+              <motion.h4 
+                animate={{ 
+                  textShadow: [
+                    "0 0 20px rgb(132, 204, 22)",
+                    "0 0 40px rgb(132, 204, 22)",
+                    "0 0 20px rgb(132, 204, 22)"
+                  ]
+                }}
+                transition={{ 
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+                className="text-3xl lg:text-4xl font-gasoek text-white mb-4"
+              >
+                ¿Listo para Transformar tu Empresa?
+              </motion.h4>
+              <p className="text-white/80 text-lg mb-8 max-w-2xl mx-auto">
+                Únete a la revolución del turismo sostenible y conecta con una comunidad global 
+                de empresas comprometidas con el futuro del planeta.
+              </p>
+              
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <Link href="/portal-empresas/experiencias">
+                  <motion.div
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <Button className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white px-8 py-4 rounded-full font-bold text-lg shadow-2xl">
+                      <Star className="w-5 h-5 mr-2" />
+                      Crear Experiencia
+                    </Button>
+                  </motion.div>
+                </Link>
+                
+                <Link href="/portal-empresas/mensajes">
+                  <motion.div
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <Button variant="outline" className="border-white/30 text-white hover:bg-white/10 px-8 py-4 rounded-full font-bold text-lg">
+                      <MessageCircle className="w-5 h-5 mr-2" />
+                      Iniciar Chat
+                    </Button>
+                  </motion.div>
+                </Link>
+              </div>
+            </div>
+          </motion.div>
         </motion.section>
 
         {/* Navigation Links */}
