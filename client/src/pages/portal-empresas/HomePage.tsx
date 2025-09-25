@@ -279,17 +279,10 @@ export default function HomePage() {
                   />
                 </div>
                 
-                {/* Always Visible Enhanced Filter System */}
+                {/* Filtros Limpios y Mejorados */}
                 <div className="space-y-6">
                   <div className="flex flex-wrap gap-3 items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <h4 className="text-white font-semibold text-lg">Filtros Disponibles:</h4>
-                      {activeFiltersCount > 0 && (
-                        <Badge className="bg-green-600 text-white px-3 py-1">
-                          {activeFiltersCount} activos
-                        </Badge>
-                      )}
-                    </div>
+                    <h4 className="text-white font-semibold text-lg">Filtros de Búsqueda</h4>
                     
                     {hasActiveFilters && (
                       <Button
@@ -299,56 +292,46 @@ export default function HomePage() {
                         data-testid="clear-filters"
                       >
                         <X className="w-4 h-4 mr-2" />
-                        Limpiar Filtros
+                        Limpiar ({activeFiltersCount})
                       </Button>
                     )}
                   </div>
 
-                  {/* Always Visible Filters Panel */}
+                  {/* Panel de Filtros Simplificado */}
                   <div className="bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                      {/* Category Filter */}
-                      <div className="space-y-3">
-                        <label className="text-white font-medium text-base flex items-center gap-2">
-                          <Building2 className="w-4 h-4 text-green-400" />
-                          Categoría ({categories.length} disponibles)
-                        </label>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                      
+                      {/* Categoría */}
+                      <div className="space-y-2">
+                        <label className="text-white font-medium text-sm">Categoría</label>
                         <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                          <SelectTrigger className="bg-white/10 border-white/20 text-white h-12 text-base">
+                          <SelectTrigger className="bg-white/10 border-white/20 text-white h-11">
                             <SelectValue placeholder="Todas las categorías" />
                           </SelectTrigger>
                           <SelectContent className="bg-black/90 border-white/20 max-h-[300px]">
                             {categories.map((category) => (
-                              <SelectItem key={category} value={category} className="text-white text-sm py-3">
+                              <SelectItem key={category} value={category} className="text-white">
                                 {category}
                               </SelectItem>
                             ))}
                           </SelectContent>
                         </Select>
-                        {selectedCategory && subcategories.length > 0 && (
-                          <p className="text-green-400 text-xs">
-                            {subcategories.length} subcategorías disponibles
-                          </p>
-                        )}
                       </div>
 
-                      {/* Subcategory Filter */}
-                      <div className="space-y-3">
-                        <label className="text-white font-medium text-base flex items-center gap-2">
-                          <Star className="w-4 h-4 text-blue-400" />
-                          Subcategoría
-                        </label>
+                      {/* Subcategoría */}
+                      <div className="space-y-2">
+                        <label className="text-white font-medium text-sm">Subcategoría</label>
                         <Select 
                           value={selectedSubcategory} 
                           onValueChange={setSelectedSubcategory}
-                          disabled={!selectedCategory || subcategories.length === 0}
+                          disabled={!selectedCategory}
                         >
-                          <SelectTrigger className="bg-white/10 border-white/20 text-white h-12 text-base disabled:opacity-50">
-                            <SelectValue placeholder={!selectedCategory ? "Selecciona categoría primero" : "Todas las subcategorías"} />
+                          <SelectTrigger className="bg-white/10 border-white/20 text-white h-11 disabled:opacity-50">
+                            <SelectValue placeholder={!selectedCategory ? "Selecciona categoría" : "Todas las subcategorías"} />
                           </SelectTrigger>
                           <SelectContent className="bg-black/90 border-white/20 max-h-[300px]">
                             {subcategories.map((subcategory) => (
-                              <SelectItem key={subcategory} value={subcategory} className="text-white text-sm py-3">
+                              <SelectItem key={subcategory} value={subcategory} className="text-white">
                                 {subcategory}
                               </SelectItem>
                             ))}
@@ -356,75 +339,42 @@ export default function HomePage() {
                         </Select>
                       </div>
 
-                      {/* Country Filter */}
-                      <div className="space-y-3">
-                        <label className="text-white font-medium text-base flex items-center gap-2">
-                          <Globe className="w-4 h-4 text-purple-400" />
-                          País ({countries.length} disponibles)
-                        </label>
+                      {/* País */}
+                      <div className="space-y-2">
+                        <label className="text-white font-medium text-sm">País</label>
                         <Select value={selectedCountry} onValueChange={setSelectedCountry}>
-                          <SelectTrigger className="bg-white/10 border-white/20 text-white h-12 text-base">
+                          <SelectTrigger className="bg-white/10 border-white/20 text-white h-11">
                             <SelectValue placeholder="Todos los países" />
                           </SelectTrigger>
                           <SelectContent className="bg-black/90 border-white/20 max-h-[300px]">
                             {countries.map((country) => (
-                              <SelectItem key={country} value={country} className="text-white text-sm py-3">
+                              <SelectItem key={country} value={country} className="text-white">
                                 {country}
                               </SelectItem>
                             ))}
                           </SelectContent>
                         </Select>
-                        {selectedCountry && cities.length > 0 && (
-                          <p className="text-purple-400 text-xs">
-                            {cities.length} ciudades disponibles
-                          </p>
-                        )}
                       </div>
 
-                      {/* City Filter */}
-                      <div className="space-y-3">
-                        <label className="text-white font-medium text-base flex items-center gap-2">
-                          <MapPin className="w-4 h-4 text-orange-400" />
-                          Ciudad
-                        </label>
+                      {/* Ciudad */}
+                      <div className="space-y-2">
+                        <label className="text-white font-medium text-sm">Ciudad</label>
                         <Select 
                           value={selectedCity} 
                           onValueChange={setSelectedCity}
-                          disabled={!selectedCountry || cities.length === 0}
+                          disabled={!selectedCountry}
                         >
-                          <SelectTrigger className="bg-white/10 border-white/20 text-white h-12 text-base disabled:opacity-50">
-                            <SelectValue placeholder={!selectedCountry ? "Selecciona país primero" : "Todas las ciudades"} />
+                          <SelectTrigger className="bg-white/10 border-white/20 text-white h-11 disabled:opacity-50">
+                            <SelectValue placeholder={!selectedCountry ? "Selecciona país" : "Todas las ciudades"} />
                           </SelectTrigger>
                           <SelectContent className="bg-black/90 border-white/20 max-h-[300px]">
                             {cities.map((city) => (
-                              <SelectItem key={city} value={city} className="text-white text-sm py-3">
+                              <SelectItem key={city} value={city} className="text-white">
                                 {city}
                               </SelectItem>
                             ))}
                           </SelectContent>
                         </Select>
-                      </div>
-                    </div>
-                    
-                    {/* Filter Summary */}
-                    <div className="mt-6 pt-6 border-t border-white/10">
-                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-                        <div className="bg-white/5 rounded-xl p-3">
-                          <div className="text-green-400 font-bold text-lg">{categories.length}</div>
-                          <div className="text-white/60 text-xs">Categorías</div>
-                        </div>
-                        <div className="bg-white/5 rounded-xl p-3">
-                          <div className="text-blue-400 font-bold text-lg">{selectedCategory ? subcategories.length : '...'}</div>
-                          <div className="text-white/60 text-xs">Subcategorías</div>
-                        </div>
-                        <div className="bg-white/5 rounded-xl p-3">
-                          <div className="text-purple-400 font-bold text-lg">{countries.length}</div>
-                          <div className="text-white/60 text-xs">Países</div>
-                        </div>
-                        <div className="bg-white/5 rounded-xl p-3">
-                          <div className="text-orange-400 font-bold text-lg">{selectedCountry ? cities.length : '...'}</div>
-                          <div className="text-white/60 text-xs">Ciudades</div>
-                        </div>
                       </div>
                     </div>
                   </div>
