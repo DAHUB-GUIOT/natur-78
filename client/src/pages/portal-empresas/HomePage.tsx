@@ -1,16 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "wouter";
 import { motion } from "framer-motion";
 import { 
   Search, Building2, Users, TrendingUp, MapPin, ArrowRight,
   BookOpen, Calendar, ExternalLink, Globe, Mail, Phone,
-  Map, Star, MessageCircle, Settings, User as UserIcon, Network, Sparkles
+  Map, Star, MessageCircle, Settings, User as UserIcon, Network, Sparkles,
+  Filter, X
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 // Import images
 import heroImage from '@assets/stock_images/sustainable_tourism,_9d122b10.jpg';
@@ -44,7 +46,11 @@ interface BlogPost {
 
 export default function HomePage() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [searchFilter, setSearchFilter] = useState("all");
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedSubcategory, setSelectedSubcategory] = useState("");
+  const [selectedCountry, setSelectedCountry] = useState("");
+  const [selectedCity, setSelectedCity] = useState("");
+  const [showFilters, setShowFilters] = useState(false);
 
   // Fetch portal statistics
   const { data: stats, isLoading: statsLoading } = useQuery({
@@ -58,28 +64,75 @@ export default function HomePage() {
     staleTime: 10 * 60 * 1000,
   }) as { data: BlogPost[]; isLoading: boolean };
 
-  // Fetch companies for search
-  const { data: allCompanies = [] } = useQuery({
-    queryKey: ['/api/companies/map'],
-    staleTime: 5 * 60 * 1000,
+  // Fetch filter options
+  const { data: categories = [] } = useQuery({
+    queryKey: ['/api/search/filters/categories'],
+    staleTime: 15 * 60 * 1000,
+  }) as { data: string[]; };
+
+  const { data: subcategories = [] } = useQuery({
+    queryKey: ['/api/search/filters/subcategories', selectedCategory],
+    enabled: !!selectedCategory,
+    staleTime: 10 * 60 * 1000,
+  }) as { data: string[]; };
+
+  const { data: countries = [] } = useQuery({
+    queryKey: ['/api/search/filters/countries'],
+    staleTime: 15 * 60 * 1000,
+  }) as { data: string[]; };
+
+  const { data: cities = [] } = useQuery({
+    queryKey: ['/api/search/filters/cities', selectedCountry],
+    enabled: !!selectedCountry,
+    staleTime: 10 * 60 * 1000,
+  }) as { data: string[]; };
+
+  // Build search params
+  const buildSearchParams = () => {
+    const params: Record<string, string> = {};
+    if (searchQuery) params.query = searchQuery;
+    if (selectedCategory) params.category = selectedCategory;
+    if (selectedSubcategory) params.subcategory = selectedSubcategory;
+    if (selectedCountry) params.country = selectedCountry;
+    if (selectedCity) params.city = selectedCity;
+    return params;
+  };
+
+  // Enhanced search with filters
+  const searchParams = buildSearchParams();
+  const hasActiveFilters = Object.keys(searchParams).length > 0;
+
+  const { data: searchResults = [] } = useQuery({
+    queryKey: ['/api/search/companies', searchParams],
+    enabled: hasActiveFilters,
+    staleTime: 2 * 60 * 1000,
   }) as { data: any[]; };
 
-  // Filter companies based on search
-  const filteredCompanies = allCompanies.filter(company => {
-    if (!searchQuery) return false;
-    
-    const searchLower = searchQuery.toLowerCase();
-    const matchesName = company.companyName?.toLowerCase().includes(searchLower);
-    const matchesCategory = company.companyCategory?.toLowerCase().includes(searchLower);
-    const matchesLocation = company.city?.toLowerCase().includes(searchLower) || 
-                           company.country?.toLowerCase().includes(searchLower);
-    
-    if (searchFilter === "name") return matchesName;
-    if (searchFilter === "category") return matchesCategory;
-    if (searchFilter === "location") return matchesLocation;
-    
-    return matchesName || matchesCategory || matchesLocation;
-  });
+  // Reset subcategory when category changes
+  useEffect(() => {
+    if (selectedCategory) {
+      setSelectedSubcategory("");
+    }
+  }, [selectedCategory]);
+
+  // Reset city when country changes
+  useEffect(() => {
+    if (selectedCountry) {
+      setSelectedCity("");
+    }
+  }, [selectedCountry]);
+
+  // Clear all filters
+  const clearAllFilters = () => {
+    setSearchQuery("");
+    setSelectedCategory("");
+    setSelectedSubcategory("");
+    setSelectedCountry("");
+    setSelectedCity("");
+  };
+
+  // Count active filters
+  const activeFiltersCount = [selectedCategory, selectedSubcategory, selectedCountry, selectedCity].filter(Boolean).length;
 
   const navigationLinks = [
     { id: "mapa", label: "Mapa Interactivo", icon: Map, path: "/portal-empresas/mapa", description: "Explora empresas de turismo sostenible" },
@@ -186,7 +239,6 @@ export default function HomePage() {
                   </div>
                 </CardContent>
               </Card>
-              
             </motion.div>
           </div>
         </motion.section>
@@ -227,150 +279,239 @@ export default function HomePage() {
                   />
                 </div>
                 
-                {/* Smart Filter Buttons */}
-                <div className="flex flex-wrap gap-3 justify-center">
-                  <Button
-                    variant={searchFilter === "all" ? "default" : "outline"}
-                    onClick={() => setSearchFilter("all")}
-                    className={`px-6 py-3 rounded-xl font-semibold transition-all duration-300 ${
-                      searchFilter === "all" 
-                        ? "bg-green-600 hover:bg-green-700 text-white shadow-lg" 
-                        : "bg-white/10 border-white/20 text-white hover:bg-white/20 hover:scale-105"
-                    }`}
-                    data-testid="filter-all"
-                  >
-                    <Globe className="w-4 h-4 mr-2" />
-                    Todo
-                  </Button>
-                  <Button
-                    variant={searchFilter === "name" ? "default" : "outline"}
-                    onClick={() => setSearchFilter("name")}
-                    className={`px-6 py-3 rounded-xl font-semibold transition-all duration-300 ${
-                      searchFilter === "name" 
-                        ? "bg-green-600 hover:bg-green-700 text-white shadow-lg" 
-                        : "bg-white/10 border-white/20 text-white hover:bg-white/20 hover:scale-105"
-                    }`}
-                    data-testid="filter-name"
-                  >
-                    <Building2 className="w-4 h-4 mr-2" />
-                    Nombre
-                  </Button>
-                  <Button
-                    variant={searchFilter === "category" ? "default" : "outline"}
-                    onClick={() => setSearchFilter("category")}
-                    className={`px-6 py-3 rounded-xl font-semibold transition-all duration-300 ${
-                      searchFilter === "category" 
-                        ? "bg-green-600 hover:bg-green-700 text-white shadow-lg" 
-                        : "bg-white/10 border-white/20 text-white hover:bg-white/20 hover:scale-105"
-                    }`}
-                    data-testid="filter-category"
-                  >
-                    <Star className="w-4 h-4 mr-2" />
-                    Categoría
-                  </Button>
-                  <Button
-                    variant={searchFilter === "location" ? "default" : "outline"}
-                    onClick={() => setSearchFilter("location")}
-                    className={`px-6 py-3 rounded-xl font-semibold transition-all duration-300 ${
-                      searchFilter === "location" 
-                        ? "bg-green-600 hover:bg-green-700 text-white shadow-lg" 
-                        : "bg-white/10 border-white/20 text-white hover:bg-white/20 hover:scale-105"
-                    }`}
-                    data-testid="filter-location"
-                  >
-                    <MapPin className="w-4 h-4 mr-2" />
-                    Ubicación
-                  </Button>
-                </div>
-
-                {/* Enhanced Search Results */}
-                {searchQuery && (
-                  <motion.div 
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="space-y-4"
-                  >
-                    <div className="flex items-center justify-between">
-                      <h4 className="text-white font-semibold text-lg">
-                        Resultados encontrados: {filteredCompanies.length}
-                      </h4>
-                      {filteredCompanies.length > 0 && (
-                        <Badge className="bg-green-600/80 text-white px-3 py-1">
-                          {searchFilter === "all" ? "Búsqueda global" : `Filtrado por ${searchFilter}`}
+                {/* Enhanced Smart Filter System */}
+                <div className="space-y-6">
+                  <div className="flex flex-wrap gap-3 items-center">
+                    <Button
+                      onClick={() => setShowFilters(!showFilters)}
+                      variant="outline"
+                      className="bg-white/10 border-white/20 text-white hover:bg-white/20 rounded-xl px-6 py-3 transition-all duration-300"
+                      data-testid="toggle-filters"
+                    >
+                      <Filter className="w-4 h-4 mr-2" />
+                      Filtros Avanzados
+                      {activeFiltersCount > 0 && (
+                        <Badge className="ml-2 bg-green-600 text-white px-2 py-1 text-xs">
+                          {activeFiltersCount}
                         </Badge>
                       )}
-                    </div>
+                    </Button>
                     
-                    {filteredCompanies.length > 0 ? (
-                      <>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-h-[500px] overflow-y-auto custom-scrollbar pr-2">
-                          {filteredCompanies.slice(0, 12).map((company, index) => (
-                            <motion.div
-                              key={company.id}
-                              initial={{ opacity: 0, scale: 0.9 }}
-                              animate={{ opacity: 1, scale: 1 }}
-                              transition={{ duration: 0.3, delay: index * 0.05 }}
-                            >
-                              <Card className="bg-white/10 backdrop-blur-lg border-white/20 hover:bg-white/20 hover:scale-105 hover:shadow-2xl transition-all duration-300 shadow-xl">
-                                <CardContent className="p-6">
-                                  <div className="flex items-start justify-between mb-3">
-                                    <h5 className="text-white font-bold text-lg leading-tight">{company.companyName}</h5>
-                                    <div className="w-2 h-2 bg-green-400 rounded-full flex-shrink-0 mt-2"></div>
-                                  </div>
-                                  <Badge className="bg-green-600/80 text-white mb-3 text-xs">
-                                    {company.companyCategory}
-                                  </Badge>
-                                  <div className="flex items-center text-white/70 text-sm">
-                                    <MapPin className="w-4 h-4 mr-2 text-green-400 flex-shrink-0" />
-                                    <span className="truncate">{company.city}, {company.country}</span>
-                                  </div>
-                                </CardContent>
-                              </Card>
-                            </motion.div>
-                          ))}
-                        </div>
-                        {filteredCompanies.length > 12 && (
-                          <div className="text-center pt-4">
-                            <Badge className="bg-blue-600/80 text-white px-4 py-2 text-sm">
-                              Y {filteredCompanies.length - 12} empresas más disponibles...
-                            </Badge>
-                          </div>
-                        )}
-                      </>
-                    ) : (
-                      <div className="text-center py-8">
-                        <div className="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                          <Search className="w-8 h-8 text-white/40" />
-                        </div>
-                        <p className="text-white/60 text-lg mb-2">No se encontraron empresas</p>
-                        <p className="text-white/40 text-sm">
-                          Prueba con otros términos de búsqueda o cambia el filtro
-                        </p>
-                      </div>
+                    {hasActiveFilters && (
+                      <Button
+                        onClick={clearAllFilters}
+                        variant="ghost"
+                        className="text-red-400 hover:text-red-300 hover:bg-red-500/20 rounded-xl px-4 py-2"
+                        data-testid="clear-filters"
+                      >
+                        <X className="w-4 h-4 mr-2" />
+                        Limpiar Filtros
+                      </Button>
                     )}
-                  </motion.div>
-                )}
+                  </div>
+
+                  {/* Advanced Filters Panel */}
+                  {showFilters && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: "auto" }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-6"
+                    >
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        {/* Category Filter */}
+                        <div className="space-y-2">
+                          <label className="text-white font-medium text-sm">Categoría</label>
+                          <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+                            <SelectTrigger className="bg-white/10 border-white/20 text-white">
+                              <SelectValue placeholder="Seleccionar categoría" />
+                            </SelectTrigger>
+                            <SelectContent className="bg-black/90 border-white/20">
+                              {categories.map((category) => (
+                                <SelectItem key={category} value={category} className="text-white">
+                                  {category}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
+
+                        {/* Subcategory Filter */}
+                        <div className="space-y-2">
+                          <label className="text-white font-medium text-sm">Subcategoría</label>
+                          <Select 
+                            value={selectedSubcategory} 
+                            onValueChange={setSelectedSubcategory}
+                            disabled={!selectedCategory || subcategories.length === 0}
+                          >
+                            <SelectTrigger className="bg-white/10 border-white/20 text-white">
+                              <SelectValue placeholder="Seleccionar subcategoría" />
+                            </SelectTrigger>
+                            <SelectContent className="bg-black/90 border-white/20">
+                              {subcategories.map((subcategory) => (
+                                <SelectItem key={subcategory} value={subcategory} className="text-white">
+                                  {subcategory}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
+
+                        {/* Country Filter */}
+                        <div className="space-y-2">
+                          <label className="text-white font-medium text-sm">País</label>
+                          <Select value={selectedCountry} onValueChange={setSelectedCountry}>
+                            <SelectTrigger className="bg-white/10 border-white/20 text-white">
+                              <SelectValue placeholder="Seleccionar país" />
+                            </SelectTrigger>
+                            <SelectContent className="bg-black/90 border-white/20">
+                              {countries.map((country) => (
+                                <SelectItem key={country} value={country} className="text-white">
+                                  {country}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
+
+                        {/* City Filter */}
+                        <div className="space-y-2">
+                          <label className="text-white font-medium text-sm">Ciudad</label>
+                          <Select 
+                            value={selectedCity} 
+                            onValueChange={setSelectedCity}
+                            disabled={!selectedCountry || cities.length === 0}
+                          >
+                            <SelectTrigger className="bg-white/10 border-white/20 text-white">
+                              <SelectValue placeholder="Seleccionar ciudad" />
+                            </SelectTrigger>
+                            <SelectContent className="bg-black/90 border-white/20">
+                              {cities.map((city) => (
+                                <SelectItem key={city} value={city} className="text-white">
+                                  {city}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+
+                  {/* Search Results */}
+                  {hasActiveFilters && (
+                    <motion.div 
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="space-y-4"
+                    >
+                      <div className="flex items-center justify-between">
+                        <h4 className="text-white font-semibold text-lg">
+                          Resultados encontrados: {searchResults.length}
+                        </h4>
+                        <div className="flex gap-2">
+                          {searchQuery && (
+                            <Badge className="bg-blue-600/80 text-white px-3 py-1">
+                              Texto: "{searchQuery}"
+                            </Badge>
+                          )}
+                          {activeFiltersCount > 0 && (
+                            <Badge className="bg-green-600/80 text-white px-3 py-1">
+                              {activeFiltersCount} filtros activos
+                            </Badge>
+                          )}
+                        </div>
+                      </div>
+                      
+                      {searchResults.length > 0 ? (
+                        <>
+                          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-h-[500px] overflow-y-auto custom-scrollbar pr-2">
+                            {searchResults.slice(0, 15).map((company, index) => (
+                              <motion.div
+                                key={company.id}
+                                initial={{ opacity: 0, scale: 0.9 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                transition={{ duration: 0.3, delay: index * 0.05 }}
+                              >
+                                <Card className="bg-white/10 backdrop-blur-lg border-white/20 hover:bg-white/20 hover:scale-105 hover:shadow-2xl transition-all duration-300 shadow-xl">
+                                  <CardContent className="p-6">
+                                    <div className="flex items-start justify-between mb-3">
+                                      <h5 className="text-white font-bold text-lg leading-tight">{company.companyName}</h5>
+                                      <div className="w-2 h-2 bg-green-400 rounded-full flex-shrink-0 mt-2"></div>
+                                    </div>
+                                    
+                                    <div className="space-y-2 mb-3">
+                                      {company.companyCategory && (
+                                        <Badge className="bg-green-600/80 text-white text-xs">
+                                          {company.companyCategory}
+                                        </Badge>
+                                      )}
+                                      {company.companySubcategory && (
+                                        <Badge className="bg-blue-600/80 text-white text-xs ml-2">
+                                          {company.companySubcategory}
+                                        </Badge>
+                                      )}
+                                    </div>
+                                    
+                                    <div className="flex items-center text-white/70 text-sm mb-2">
+                                      <MapPin className="w-4 h-4 mr-2 text-green-400 flex-shrink-0" />
+                                      <span className="truncate">{company.city}, {company.country}</span>
+                                    </div>
+                                    
+                                    {company.companyDescription && (
+                                      <p className="text-white/60 text-xs line-clamp-2 mt-2">
+                                        {company.companyDescription}
+                                      </p>
+                                    )}
+                                  </CardContent>
+                                </Card>
+                              </motion.div>
+                            ))}
+                          </div>
+                          {searchResults.length > 15 && (
+                            <div className="text-center pt-4">
+                              <Badge className="bg-purple-600/80 text-white px-4 py-2 text-sm">
+                                Mostrando 15 de {searchResults.length} empresas encontradas
+                              </Badge>
+                            </div>
+                          )}
+                        </>
+                      ) : (
+                        <div className="text-center py-8">
+                          <div className="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <Search className="w-8 h-8 text-white/40" />
+                          </div>
+                          <p className="text-white/60 text-lg mb-2">No se encontraron empresas</p>
+                          <p className="text-white/40 text-sm">
+                            Prueba modificando los filtros o términos de búsqueda
+                          </p>
+                        </div>
+                      )}
+                    </motion.div>
+                  )}
+                </div>
                 
                 {/* Search Tips */}
-                {!searchQuery && (
+                {!hasActiveFilters && (
                   <div className="bg-white/5 rounded-2xl p-6 border border-white/10">
                     <h5 className="text-white font-semibold mb-3 flex items-center">
                       <Sparkles className="w-5 h-5 mr-2 text-green-400" />
-                      Consejos de búsqueda
+                      Buscador Inteligente
                     </h5>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-white/70">
                       <div>
-                        <strong className="text-white">Por nombre:</strong> "EcoTours", "Aventura Verde"
+                        <strong className="text-white">Búsqueda por texto:</strong> Nombre de empresa, descripción, servicios
                       </div>
                       <div>
-                        <strong className="text-white">Por categoría:</strong> "Ecoturismo", "Turismo rural"
+                        <strong className="text-white">Filtro por categoría:</strong> {categories.length} categorías disponibles
                       </div>
                       <div>
-                        <strong className="text-white">Por país:</strong> "Colombia", "Costa Rica"
+                        <strong className="text-white">Filtro por ubicación:</strong> {countries.length} países registrados
                       </div>
                       <div>
-                        <strong className="text-white">Por ciudad:</strong> "Bogotá", "Medellín"
+                        <strong className="text-white">Filtros combinables:</strong> Usa múltiples filtros para búsquedas precisas
                       </div>
                     </div>
                   </div>
@@ -546,17 +687,17 @@ export default function HomePage() {
         >
           <div className="text-center space-y-2">
             <h3 className="text-2xl font-gasoek text-white">Empresas Registradas Recientemente</h3>
-            <p className="text-white/70">Conoce a las nuevas empresas que se han unido al ecosistema</p>
+            <p className="text-white/70">Conoce las empresas que se han unido recientemente a nuestra comunidad</p>
           </div>
 
           {statsLoading ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {[1, 2, 3, 4, 5, 6].map((i) => (
                 <Card key={i} className="bg-white/10 backdrop-blur-xl border-white/20">
                   <CardContent className="p-4">
                     <div className="animate-pulse">
                       <div className="h-4 bg-white/20 rounded mb-2"></div>
-                      <div className="h-3 bg-white/20 rounded w-2/3 mb-2"></div>
+                      <div className="h-3 bg-white/20 rounded w-3/4 mb-2"></div>
                       <div className="h-3 bg-white/20 rounded w-1/2"></div>
                     </div>
                   </CardContent>
@@ -564,20 +705,22 @@ export default function HomePage() {
               ))}
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {stats?.recentCompanies?.map((company) => (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {stats?.recentCompanies?.slice(0, 6).map((company) => (
                 <Card key={company.id} className="bg-white/10 backdrop-blur-xl border-white/20 hover:bg-white/15 transition-all duration-200">
                   <CardContent className="p-4">
-                    <h5 className="text-white font-semibold mb-1">{company.companyName}</h5>
-                    <p className="text-white/60 text-sm mb-2">{company.companyCategory}</p>
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center text-white/50 text-xs">
-                        <MapPin className="w-3 h-3 mr-1" />
-                        {company.city}, {company.country}
-                      </div>
-                      <div className="text-white/50 text-xs">
-                        {company.createdAt && new Date(company.createdAt).toLocaleDateString()}
-                      </div>
+                    <div className="flex items-start justify-between mb-2">
+                      <h5 className="text-white font-bold text-sm leading-tight">{company.companyName}</h5>
+                      <div className="w-2 h-2 bg-green-400 rounded-full flex-shrink-0 mt-1"></div>
+                    </div>
+                    <Badge className="bg-blue-600/80 text-white mb-2 text-xs">{company.companyCategory}</Badge>
+                    <div className="flex items-center text-white/60 text-xs mb-1">
+                      <MapPin className="w-3 h-3 mr-1 text-green-400" />
+                      <span>{company.city}, {company.country}</span>
+                    </div>
+                    <div className="flex items-center text-white/50 text-xs">
+                      <Calendar className="w-3 h-3 mr-1" />
+                      <span>{new Date(company.createdAt).toLocaleDateString()}</span>
                     </div>
                   </CardContent>
                 </Card>
@@ -585,7 +728,6 @@ export default function HomePage() {
             </div>
           )}
         </motion.section>
-
       </div>
     </div>
   );

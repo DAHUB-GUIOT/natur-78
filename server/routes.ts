@@ -1018,7 +1018,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
         linkedinUrl: user.linkedinUrl,
         businessType: user.businessType,
         createdAt: user.createdAt
-      })).filter(company => company.coordinates && company.coordinates.lat && company.coordinates.lng);
+      })).filter(company => {
+        const coords = company.coordinates as { lat?: number; lng?: number } | null;
+        return coords && coords.lat && coords.lng;
+      });
       
       console.log(`📍 Map Bubbles: Sending ${mapCompanies.length} companies with coordinates`);
       if (mapCompanies.length > 0) {
@@ -1076,14 +1079,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       // If category is provided, filter subcategories for that category
       if (category) {
-        query = query.where(
-          and(
-            eq(users.role, 'empresa'),
-            eq(users.isActive, true),
-            eq(users.companyCategory, category as string),
-            sql`${users.companySubcategory} IS NOT NULL AND ${users.companySubcategory} != ''`
-          )
-        );
+        query = db
+          .select({ companySubcategory: users.companySubcategory })
+          .from(users)
+          .where(
+            and(
+              eq(users.role, 'empresa'),
+              eq(users.isActive, true),
+              eq(users.companyCategory, category as string),
+              sql`${users.companySubcategory} IS NOT NULL AND ${users.companySubcategory} != ''`
+            )
+          );
       }
       
       const result = await query.groupBy(users.companySubcategory);
@@ -1144,14 +1150,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       // If country is provided, filter cities for that country
       if (country) {
-        query = query.where(
-          and(
-            eq(users.role, 'empresa'),
-            eq(users.isActive, true),
-            eq(users.country, country as string),
-            sql`${users.city} IS NOT NULL AND ${users.city} != ''`
-          )
-        );
+        query = db
+          .select({ city: users.city })
+          .from(users)
+          .where(
+            and(
+              eq(users.role, 'empresa'),
+              eq(users.isActive, true),
+              eq(users.country, country as string),
+              sql`${users.city} IS NOT NULL AND ${users.city} != ''`
+            )
+          );
       }
       
       const result = await query.groupBy(users.city);
@@ -1242,7 +1251,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
       
       if (filters.length > 0) {
-        queryBuilder = queryBuilder.where(and(...filters));
+        queryBuilder = queryBuilder.where(
+          and(
+            eq(users.role, 'empresa'),
+            eq(users.isActive, true),
+            sql`${users.companyName} IS NOT NULL AND ${users.companyName} != ''`,
+            ...filters
+          )
+        );
       }
       
       const result = await queryBuilder
