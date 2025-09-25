@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { useLocation, Link } from "wouter";
-import { Map, Building2, Star, MessageCircle, User, Settings, ChevronDown, LogOut, UserIcon, Bell } from "lucide-react";
-import { DesktopSidebar } from "./DesktopSidebar";
-import { MobileBottomNav } from "./MobileBottomNav";
+import { Map, Building2, Star, MessageCircle, User, Settings, ChevronDown, LogOut, UserIcon, Bell, Home } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -13,6 +11,12 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import mapBackgroundImage from '@assets/stock_images/world_map_background_96663005.jpg';
 
 interface PortalEmpresasLayoutProps {
@@ -21,7 +25,8 @@ interface PortalEmpresasLayoutProps {
 
 export function PortalEmpresasLayout({ children }: PortalEmpresasLayoutProps) {
   const [location] = useLocation();
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  // Always keep sidebar collapsed for better UX
+  const sidebarOpen = false;
 
   // Get current active view from URL
   const getActiveView = () => {
@@ -36,9 +41,9 @@ export function PortalEmpresasLayout({ children }: PortalEmpresasLayoutProps) {
   const activeView = getActiveView();
 
   const navItems = [
-    { id: "home", label: "Inicio", icon: Building2 },
-    { id: "map", label: "Mapa", icon: Map },
-    { id: "network", label: "Red", icon: Building2 },
+    { id: "home", label: "Inicio", icon: Home },
+    { id: "map", label: "Mapa Interactivo", icon: Map },
+    { id: "network", label: "Red de Contactos", icon: Building2 },
     { id: "experiences", label: "Experiencias", icon: Star },
     { id: "messages", label: "Chat", icon: MessageCircle }
   ];
@@ -116,58 +121,148 @@ export function PortalEmpresasLayout({ children }: PortalEmpresasLayoutProps) {
   );
 
   return (
-    <div className="min-h-screen relative overflow-hidden">
-      {/* Background Map with Glassmorphism */}
-      <div className="absolute inset-0 z-0">
-        <div 
-          className="absolute inset-0 opacity-15 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: `url(${mapBackgroundImage})` }}
-        ></div>
-        <div className="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
-      </div>
-      
-      {/* Top Profile Bar - Fixed and Transparent */}
-      <div className="fixed top-0 right-0 z-50 p-4">
-        <ProfileDropdown />
-      </div>
-      
-      {/* Mobile Top Bar - Simplified */}
-      <div className="fixed top-0 left-0 right-0 z-40 lg:hidden">
-        <div className="bg-white/5 backdrop-blur-xl border-b border-white/10">
-          <div className="flex items-center justify-between p-4">
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 bg-white/20 backdrop-blur-lg rounded-lg flex items-center justify-center border border-white/30">
-                <span className="text-green-400 font-gasoek text-lg font-bold">N</span>
+    <TooltipProvider>
+      <div className="min-h-screen relative overflow-hidden">
+        {/* Background Map with Glassmorphism */}
+        <div className="absolute inset-0 z-0">
+          <div 
+            className="absolute inset-0 opacity-15 bg-cover bg-center bg-no-repeat"
+            style={{ backgroundImage: `url(${mapBackgroundImage})` }}
+          ></div>
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+        </div>
+        
+        {/* Enhanced Top Menu Bar */}
+        <div className="fixed top-0 left-0 right-0 z-50">
+          <div className="bg-white/10 backdrop-blur-xl border-b border-white/20 shadow-2xl">
+            <div className="flex items-center justify-between px-6 py-3">
+              {/* Left side - Logo */}
+              <div className="flex items-center gap-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-green-600/20 backdrop-blur-lg rounded-xl flex items-center justify-center border border-green-500/30 shadow-lg">
+                    <span className="text-green-400 font-gasoek text-xl font-bold">N</span>
+                  </div>
+                  <div>
+                    <h1 className="text-white font-gasoek text-lg font-bold">NATUR</h1>
+                    <p className="text-green-400 text-xs font-medium">Portal Empresas</p>
+                  </div>
+                </div>
+                
+                {/* Current page indicator - Only on desktop */}
+                <div className="hidden lg:flex items-center">
+                  <div className="w-px h-6 bg-white/20 mx-4"></div>
+                  <div className="flex items-center gap-2">
+                    {(() => {
+                      const currentItem = navItems.find(item => item.id === activeView);
+                      const IconComponent = currentItem?.icon || Home;
+                      return (
+                        <>
+                          <IconComponent className="w-5 h-5 text-green-400" />
+                          <span className="text-white font-medium">{currentItem?.label || 'Inicio'}</span>
+                        </>
+                      );
+                    })()}
+                  </div>
+                </div>
               </div>
-              <div>
-                <h1 className="text-white font-semibold text-sm">Portal Empresas</h1>
-                <p className="text-white/60 text-xs">
-                  {navItems.find(item => item.id === activeView)?.label || 'Inicio'}
-                </p>
-              </div>
-            </div>
-            <div className="mr-20"> {/* Space for profile button */}
+              
+              {/* Right side - Profile */}
+              <ProfileDropdown />
             </div>
           </div>
         </div>
-      </div>
+        
+        {/* Mobile Current Page Indicator */}
+        <div className="fixed top-16 left-0 right-0 z-40 lg:hidden">
+          <div className="bg-white/5 backdrop-blur-lg border-b border-white/10">
+            <div className="px-4 py-2">
+              <div className="flex items-center gap-2">
+                {(() => {
+                  const currentItem = navItems.find(item => item.id === activeView);
+                  const IconComponent = currentItem?.icon || Home;
+                  return (
+                    <>
+                      <IconComponent className="w-4 h-4 text-green-400" />
+                      <span className="text-white text-sm font-medium">{currentItem?.label || 'Inicio'}</span>
+                    </>
+                  );
+                })()}
+              </div>
+            </div>
+          </div>
+        </div>
 
-      {/* Transparent Desktop Sidebar */}
-      <div className={`fixed left-0 top-0 h-full z-30 transition-all duration-300 ${sidebarOpen ? 'w-64' : 'w-20'}`}>
-        <div className="h-full bg-white/5 backdrop-blur-xl border-r border-white/20 shadow-2xl">
-          <div className="p-6">
-            {/* Toggle Button */}
-            <Button
-              onClick={() => setSidebarOpen(!sidebarOpen)}
-              variant="ghost"
-              size="sm"
-              className="mb-6 text-white hover:bg-white/20 rounded-full"
-            >
-              {sidebarOpen ? '←' : '→'}
-            </Button>
-            
-            {/* Navigation Items */}
-            <nav className="space-y-2">
+        {/* Enhanced Compact Sidebar */}
+        <div className="fixed left-0 top-16 h-[calc(100vh-4rem)] z-30 w-20">
+          <div className="h-full bg-white/10 backdrop-blur-xl border-r border-white/20 shadow-2xl">
+            <div className="p-4">
+              {/* Navigation Items with Enhanced Icons */}
+              <nav className="space-y-4 mt-4">
+                {navItems.map((item) => {
+                  const Icon = item.icon;
+                  const isActive = activeView === item.id;
+                  
+                  return (
+                    <Tooltip key={item.id} delayDuration={300}>
+                      <TooltipTrigger asChild>
+                        <button
+                          onClick={() => handleNavigation(item.id)}
+                          className={`w-12 h-12 flex items-center justify-center rounded-2xl transition-all duration-300 group relative overflow-hidden
+                            ${isActive 
+                              ? 'bg-green-600/40 text-green-400 border-2 border-green-500/60 shadow-2xl shadow-green-500/20 scale-110' 
+                              : 'text-white/60 hover:bg-white/20 hover:text-white hover:scale-105 border-2 border-transparent'
+                            }
+                          `}
+                          data-testid={`nav-${item.id}`}
+                        >
+                          <Icon className={`h-7 w-7 transition-all duration-300 ${
+                            isActive 
+                              ? 'text-green-400 drop-shadow-lg' 
+                              : 'text-white/60 group-hover:text-white group-hover:scale-110'
+                          }`} />
+                          
+                          {/* Active indicator */}
+                          {isActive && (
+                            <div className="absolute -right-1 top-1/2 transform -translate-y-1/2 w-1 h-8 bg-green-400 rounded-l-full shadow-lg"></div>
+                          )}
+                        </button>
+                      </TooltipTrigger>
+                      <TooltipContent 
+                        side="right" 
+                        className="bg-white/90 backdrop-blur-lg border border-white/20 shadow-2xl px-3 py-2 text-black font-medium"
+                      >
+                        <p>{item.label}</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  );
+                })}
+              </nav>
+              
+              {/* Sidebar decoration */}
+              <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2">
+                <div className="w-8 h-1 bg-gradient-to-r from-green-400 to-blue-400 rounded-full opacity-60"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Enhanced Main Content */}
+        <div className="transition-all duration-300 relative z-10 ml-20">
+          {/* Page Content with improved spacing */}
+          <div className="pt-24 lg:pt-20 pb-24 lg:pb-6 min-h-screen">
+            <div className="max-w-full mx-auto px-6 lg:px-8">
+              {/* Enhanced Content Wrapper */}
+              <div className="bg-white/8 backdrop-blur-md border border-white/15 rounded-3xl shadow-2xl min-h-[calc(100vh-8rem)] p-8 lg:p-10 transition-all duration-300 hover:bg-white/10">
+                {children}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Enhanced Mobile Bottom Navigation */}
+        <div className="fixed bottom-0 left-0 right-0 z-50 lg:hidden">
+          <div className="bg-white/15 backdrop-blur-xl border-t border-white/25 shadow-2xl">
+            <div className="flex justify-around items-center py-3 px-2">
               {navItems.map((item) => {
                 const Icon = item.icon;
                 const isActive = activeView === item.id;
@@ -176,65 +271,28 @@ export function PortalEmpresasLayout({ children }: PortalEmpresasLayoutProps) {
                   <button
                     key={item.id}
                     onClick={() => handleNavigation(item.id)}
-                    className={`w-full flex items-center gap-3 px-3 py-3 rounded-xl transition-all duration-200 text-left group
+                    className={`flex flex-col items-center p-3 rounded-2xl transition-all duration-300 min-w-[60px]
                       ${isActive 
-                        ? 'bg-green-600/30 text-white border border-green-500/50 shadow-lg' 
-                        : 'text-white/80 hover:bg-white/10 hover:text-white'
+                        ? 'text-green-400 bg-green-600/30 scale-105 shadow-lg' 
+                        : 'text-white/60 hover:text-white hover:bg-white/15 hover:scale-105'
                       }
                     `}
                   >
-                    <Icon className={`h-5 w-5 ${isActive ? 'text-green-400' : 'text-white/60 group-hover:text-white'}`} />
-                    {sidebarOpen && (
-                      <span className="font-medium">{item.label}</span>
-                    )}
+                    <Icon className={`h-6 w-6 transition-all duration-300 ${
+                      isActive ? 'scale-110' : ''
+                    }`} />
+                    <span className={`text-xs mt-1 font-medium transition-all duration-300 ${
+                      isActive ? 'text-green-400' : ''
+                    }`}>
+                      {item.label.split(' ')[0]}
+                    </span>
                   </button>
                 );
               })}
-            </nav>
-          </div>
-        </div>
-      </div>
-
-      {/* Main Content with Glassmorphism */}
-      <div className={`transition-all duration-300 relative z-10 ${sidebarOpen ? 'lg:ml-64' : 'lg:ml-20'}`}>
-        {/* Page Content */}
-        <div className="pt-16 lg:pt-6 pb-20 lg:pb-0 min-h-screen">
-          <div className="max-w-full mx-auto px-4 lg:px-6">
-            {/* Content Wrapper with subtle glassmorphism */}
-            <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl shadow-2xl min-h-[calc(100vh-6rem)] p-6 lg:p-8">
-              {children}
             </div>
           </div>
         </div>
       </div>
-
-      {/* Enhanced Mobile Bottom Navigation */}
-      <div className="fixed bottom-0 left-0 right-0 z-50 lg:hidden">
-        <div className="bg-white/10 backdrop-blur-xl border-t border-white/20 shadow-2xl">
-          <div className="flex justify-around items-center py-2">
-            {navItems.map((item) => {
-              const Icon = item.icon;
-              const isActive = activeView === item.id;
-              
-              return (
-                <button
-                  key={item.id}
-                  onClick={() => handleNavigation(item.id)}
-                  className={`flex flex-col items-center p-2 rounded-xl transition-all duration-200
-                    ${isActive 
-                      ? 'text-green-400 bg-green-600/20' 
-                      : 'text-white/60 hover:text-white hover:bg-white/10'
-                    }
-                  `}
-                >
-                  <Icon className="h-5 w-5" />
-                  <span className="text-xs mt-1 font-medium">{item.label}</span>
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      </div>
-    </div>
+    </TooltipProvider>
   );
 }
