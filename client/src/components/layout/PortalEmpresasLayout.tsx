@@ -122,7 +122,8 @@ export function PortalEmpresasLayout({ children }: PortalEmpresasLayoutProps) {
 
   return (
     <TooltipProvider>
-      <div className="min-h-screen relative overflow-hidden">
+      <div className="portal-empresas-full-image min-h-screen relative overflow-hidden" 
+           style={{ backgroundImage: `url(${mapBackgroundImage})` }}>
         {/* Background Map with Glassmorphism */}
         <div className="absolute inset-0 z-0">
           <div 
@@ -248,19 +249,26 @@ export function PortalEmpresasLayout({ children }: PortalEmpresasLayoutProps) {
 
         {/* Enhanced Main Content */}
         <div className="transition-all duration-300 relative z-10 ml-20">
-          {/* Page Content with improved spacing */}
-          <div className="pt-24 lg:pt-20 pb-24 lg:pb-6 min-h-screen">
-            <div className="max-w-full mx-auto px-6 lg:px-8">
-              {/* Enhanced Content Wrapper */}
-              <div className="bg-white/8 backdrop-blur-md border border-white/15 rounded-3xl shadow-2xl min-h-[calc(100vh-8rem)] p-8 lg:p-10 transition-all duration-300 hover:bg-white/10">
-                {children}
+          {/* Full-image layout for map page */}
+          {activeView === 'map' ? (
+            <div className="fixed inset-0 left-20 top-16">
+              {children}
+            </div>
+          ) : (
+            /* Regular page layout for other pages */
+            <div className="pt-24 lg:pt-20 pb-24 lg:pb-6 min-h-screen">
+              <div className="max-w-full mx-auto px-6 lg:px-8">
+                {/* Enhanced Content Wrapper */}
+                <div className="bg-white/8 backdrop-blur-md border border-white/15 rounded-3xl shadow-2xl min-h-[calc(100vh-8rem)] p-8 lg:p-10 transition-all duration-300 hover:bg-white/10">
+                  {children}
+                </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
 
-        {/* Enhanced Mobile Bottom Navigation */}
-        <div className="fixed bottom-0 left-0 right-0 z-50 lg:hidden">
+        {/* Enhanced Mobile Bottom Navigation - Hide on map page for full immersion */}
+        <div className={`fixed bottom-0 left-0 right-0 z-50 lg:hidden ${activeView === 'map' ? 'hidden' : ''}`}>
           <div className="bg-white/15 backdrop-blur-xl border-t border-white/25 shadow-2xl">
             <div className="flex justify-around items-center py-3 px-2">
               {navItems.map((item) => {

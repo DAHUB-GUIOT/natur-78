@@ -20,6 +20,51 @@
   -webkit-line-clamp: 3;
 }
 
+/* ===== FULL-IMAGE DESIGN SYSTEM ===== */
+
+/* Portal Empresas Full-Image Layout */
+.portal-empresas-full-image {
+  min-height: 100vh;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.portal-empresas-content {
+  min-height: 100vh;
+  position: relative;
+  z-index: 10;
+}
+
+/* Remove double borders and containers */
+.portal-no-borders {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.portal-full-width {
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  margin-right: calc(-50vw + 50%);
+}
+
+/* Transparent overlays for full-image design */
+.portal-overlay {
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.portal-glassmorphism {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+}
+
 /* ===== MOBILE-FIRST DESIGN SYSTEM ===== */
 
 /* Base mobile optimization for all devices */

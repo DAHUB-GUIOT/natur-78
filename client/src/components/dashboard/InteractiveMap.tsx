@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -403,197 +402,131 @@ export const InteractiveMap = ({ experiences = [], selectedCategory, showMarkers
         style={{ background: '#f8f9fa' }}
       />
 
-      {/* Compact Mobile Filters Panel */}
-      <div className="absolute top-2 right-2 z-40">
-        <Button
-          onClick={() => setShowFilters(!showFilters)}
-          className="mb-1 backdrop-blur-xl bg-black/30 border border-white/30 text-white hover:bg-white/20 rounded-lg px-3 py-2 shadow-2xl text-xs min-h-[36px] touch-manipulation"
-        >
-          <Filter className="h-3 w-3 mr-1" />
-          <span className="font-semibold">Filtros</span>
-        </Button>
-        
-        {showFilters && (
-          <Card className="w-64 backdrop-blur-xl bg-black/30 border border-white/30 rounded-xl shadow-2xl">
-            <CardHeader className="pb-2 p-3">
-              <div className="flex items-center justify-between">
-                <CardTitle className="text-white text-sm font-bold">Buscar Empresas</CardTitle>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => setShowFilters(false)}
-                  className="text-white hover:bg-white/20 rounded-lg p-1 min-h-[32px] min-w-[32px] touch-manipulation"
-                >
-                  <X className="h-3 w-3" />
-                </Button>
-              </div>
-            </CardHeader>
-            <CardContent className="space-y-3 p-3">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-3 w-3 text-white/70" />
-                <Input
-                  placeholder="Buscar..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-8 h-8 backdrop-blur-xl bg-white/10 border-white/40 text-white placeholder:text-white/60 rounded-lg font-medium text-xs touch-manipulation"
-                />
-              </div>
-              <div className="space-y-1">
-                <label className="text-white font-semibold text-xs">Tipo</label>
-                <Select value={selectedFilter} onValueChange={setSelectedFilter}>
-                  <SelectTrigger className="h-8 backdrop-blur-xl bg-white/10 border-white/40 text-white rounded-lg touch-manipulation text-xs">
-                    <SelectValue placeholder="Seleccionar" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-gray-900 border-white/30">
-                    <SelectItem value="all" className="text-white hover:bg-white/20 h-8 text-xs">Todas las empresas</SelectItem>
-                    <SelectItem value="agencias u operadores turísticos" className="text-white hover:bg-white/20 h-8 text-xs">Operadores Turísticos</SelectItem>
-                    <SelectItem value="alojamientos sostenibles" className="text-white hover:bg-white/20 h-8 text-xs">Alojamientos</SelectItem>
-                    <SelectItem value="gastronomía sostenible" className="text-white hover:bg-white/20 h-8 text-xs">Gastronomía</SelectItem>
-                    <SelectItem value="movilidad y transporte ecológico" className="text-white hover:bg-white/20 h-8 text-xs">Transporte</SelectItem>
-                    <SelectItem value="ong y fundaciones" className="text-white hover:bg-white/20 h-8 text-xs">ONG</SelectItem>
-                    <SelectItem value="educación y sensibilización ambiental" className="text-white hover:bg-white/20 h-8 text-xs">Educación</SelectItem>
-                    <SelectItem value="tecnología para el turismo sostenible" className="text-white hover:bg-white/20 h-8 text-xs">Tecnología</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="pt-1 border-t border-white/20">
-                <p className="text-white/90 text-xs font-medium">
-                  {filteredCompanies.length} empresas
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-        )}
-      </div>
 
-      {/* Floating Company Card */}
+      {/* Floating Company Card - Glassmorphism Overlay */}
       {selectedCompany && (
         <div className="absolute bottom-4 left-4 right-4 md:bottom-6 md:left-6 md:right-6 z-50 max-h-[60vh] overflow-y-auto">
-          <Card className="backdrop-blur-xl bg-gradient-to-br from-white/95 to-white/85 border border-green-200/50 rounded-2xl shadow-2xl">
-            <CardHeader className="pb-3 p-4">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-3 flex-1 min-w-0">
-                  <div className="p-2 bg-gradient-to-br from-lime-400 to-emerald-600 rounded-xl shadow-lg flex-shrink-0">
-                    <Building className="h-5 w-5 text-white" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center space-x-2">
-                      <CardTitle className="text-gray-900 text-lg font-bold truncate">
-                        {selectedCompany.companyName}
-                      </CardTitle>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => setLocation(`/portal-empresas/chat?company=${selectedCompany.id}`)}
-                        className="text-green-600 hover:bg-green-50 rounded-lg p-1.5 min-h-[32px] min-w-[32px] touch-manipulation"
-                        title="Enviar mensaje"
-                      >
-                        <MessageCircle className="h-4 w-4" />
-                      </Button>
-                    </div>
-                    <p className="text-gray-600 text-sm font-medium truncate">
-                      {selectedCompany.companyCategory}
-                    </p>
-                  </div>
+          <div className="portal-glassmorphism p-4 rounded-2xl shadow-2xl">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center space-x-3 flex-1 min-w-0">
+                <div className="p-2 bg-gradient-to-br from-lime-400 to-emerald-600 rounded-xl shadow-lg flex-shrink-0">
+                  <Building className="h-5 w-5 text-white" />
                 </div>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => setSelectedCompany(null)}
-                  className="text-gray-500 hover:bg-gray-100 rounded-lg p-1.5 min-h-[32px] min-w-[32px] touch-manipulation"
-                >
-                  <X className="h-4 w-4" />
-                </Button>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center space-x-2">
+                    <h3 className="text-white text-lg font-bold truncate">
+                      {selectedCompany.companyName}
+                    </h3>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => setLocation(`/portal-empresas/chat?company=${selectedCompany.id}`)}
+                      className="text-green-400 hover:bg-white/20 rounded-lg p-1.5 min-h-[32px] min-w-[32px] touch-manipulation"
+                      title="Enviar mensaje"
+                    >
+                      <MessageCircle className="h-4 w-4" />
+                    </Button>
+                  </div>
+                  <p className="text-white/70 text-sm font-medium truncate">
+                    {selectedCompany.companyCategory}
+                  </p>
+                </div>
               </div>
-            </CardHeader>
-            <CardContent className="space-y-3 p-4 pt-0">
-              <p className="text-gray-700 text-sm leading-relaxed line-clamp-2">
-                {selectedCompany.companyDescription || 'Empresa registrada en Festival NATUR'}
-              </p>
-              
-              {/* Company Info Grid */}
-              <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
-                <div className="flex items-center space-x-2 text-gray-700 p-2 bg-gray-50 rounded-lg">
-                  <MapPin className="h-4 w-4 flex-shrink-0 text-green-600" />
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm truncate">{selectedCompany.city}, {selectedCompany.country}</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-center space-x-2 text-gray-700 p-2 bg-gray-50 rounded-lg">
-                  <Building className="h-4 w-4 flex-shrink-0 text-green-600" />
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm truncate">{selectedCompany.businessType || 'Turismo'}</p>
-                  </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setSelectedCompany(null)}
+                className="text-white/60 hover:bg-white/20 rounded-lg p-1.5 min-h-[32px] min-w-[32px] touch-manipulation"
+              >
+                <X className="h-4 w-4" />
+              </Button>
+            </div>
+            
+            <p className="text-white/80 text-sm leading-relaxed line-clamp-2 mb-3">
+              {selectedCompany.companyDescription || 'Empresa registrada en Festival NATUR'}
+            </p>
+            
+            {/* Company Info Grid */}
+            <div className="grid grid-cols-1 gap-2 md:grid-cols-2 mb-3">
+              <div className="flex items-center space-x-2 text-white/80 p-2 bg-white/10 rounded-lg">
+                <MapPin className="h-4 w-4 flex-shrink-0 text-green-400" />
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm truncate">{selectedCompany.city}, {selectedCompany.country}</p>
                 </div>
               </div>
               
-              {/* Social Media and Website Links */}
-              <div className="flex items-center justify-between pt-2 border-t border-gray-200">
-                <div className="flex items-center space-x-2">
-                  {selectedCompany.website && (
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => window.open(`https://${selectedCompany.website}`, '_blank')}
-                      className="text-gray-600 hover:text-green-600 hover:bg-green-50 rounded-lg p-2 touch-manipulation"
-                      title="Sitio web"
-                    >
-                      <ExternalLink className="h-4 w-4" />
-                    </Button>
-                  )}
-                  {selectedCompany.facebookUrl && (
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => window.open(selectedCompany.facebookUrl, '_blank')}
-                      className="text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg p-2 touch-manipulation"
-                      title="Facebook"
-                    >
-                      <Facebook className="h-4 w-4" />
-                    </Button>
-                  )}
-                  {selectedCompany.twitterUrl && (
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => window.open(selectedCompany.twitterUrl, '_blank')}
-                      className="text-gray-600 hover:text-blue-400 hover:bg-blue-50 rounded-lg p-2 touch-manipulation"
-                      title="Twitter"
-                    >
-                      <Twitter className="h-4 w-4" />
-                    </Button>
-                  )}
-                  {selectedCompany.instagramUrl && (
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => window.open(selectedCompany.instagramUrl, '_blank')}
-                      className="text-gray-600 hover:text-pink-600 hover:bg-pink-50 rounded-lg p-2 touch-manipulation"
-                      title="Instagram"
-                    >
-                      <Instagram className="h-4 w-4" />
-                    </Button>
-                  )}
-                  {selectedCompany.linkedinUrl && (
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => window.open(selectedCompany.linkedinUrl, '_blank')}
-                      className="text-gray-600 hover:text-blue-700 hover:bg-blue-50 rounded-lg p-2 touch-manipulation"
-                      title="LinkedIn"
-                    >
-                      <Linkedin className="h-4 w-4" />
-                    </Button>
-                  )}
+              <div className="flex items-center space-x-2 text-white/80 p-2 bg-white/10 rounded-lg">
+                <Building className="h-4 w-4 flex-shrink-0 text-green-400" />
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm truncate">{selectedCompany.businessType || 'Turismo'}</p>
                 </div>
-                
-                <Badge className="bg-green-100 text-green-800 px-2 py-1 rounded-full font-semibold text-xs">
-                  Registrada
-                </Badge>
               </div>
-            </CardContent>
-          </Card>
+            </div>
+            
+            {/* Social Media and Website Links */}
+            <div className="flex items-center justify-between pt-2 border-t border-white/20">
+              <div className="flex items-center space-x-2">
+                {selectedCompany.website && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => window.open(`https://${selectedCompany.website}`, '_blank')}
+                    className="text-white/60 hover:text-green-400 hover:bg-white/20 rounded-lg p-2 touch-manipulation"
+                    title="Sitio web"
+                  >
+                    <ExternalLink className="h-4 w-4" />
+                  </Button>
+                )}
+                {selectedCompany.facebookUrl && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => window.open(selectedCompany.facebookUrl, '_blank')}
+                    className="text-white/60 hover:text-blue-400 hover:bg-white/20 rounded-lg p-2 touch-manipulation"
+                    title="Facebook"
+                  >
+                    <Facebook className="h-4 w-4" />
+                  </Button>
+                )}
+                {selectedCompany.twitterUrl && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => window.open(selectedCompany.twitterUrl, '_blank')}
+                    className="text-white/60 hover:text-blue-300 hover:bg-white/20 rounded-lg p-2 touch-manipulation"
+                    title="Twitter"
+                  >
+                    <Twitter className="h-4 w-4" />
+                  </Button>
+                )}
+                {selectedCompany.instagramUrl && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => window.open(selectedCompany.instagramUrl, '_blank')}
+                    className="text-white/60 hover:text-pink-400 hover:bg-white/20 rounded-lg p-2 touch-manipulation"
+                    title="Instagram"
+                  >
+                    <Instagram className="h-4 w-4" />
+                  </Button>
+                )}
+                {selectedCompany.linkedinUrl && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => window.open(selectedCompany.linkedinUrl, '_blank')}
+                    className="text-white/60 hover:text-blue-400 hover:bg-white/20 rounded-lg p-2 touch-manipulation"
+                    title="LinkedIn"
+                  >
+                    <Linkedin className="h-4 w-4" />
+                  </Button>
+                )}
+              </div>
+              <div className="bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded-full font-medium border border-green-400/30">
+                Activa
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </div>
