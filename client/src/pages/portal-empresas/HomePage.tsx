@@ -185,23 +185,31 @@ export default function HomePage() {
                 </p>
               </div>
               
-              {/* Action buttons */}
+              {/* Botones mejorados con mejor contraste */}
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                <Button 
-                  className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-full font-semibold text-lg shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
-                  data-testid="button-explore-map"
-                >
-                  <Map className="w-5 h-5 mr-2" />
-                  Explorar Mapa
-                </Button>
-                <Button 
-                  variant="outline" 
-                  className="border-white/30 bg-white/10 backdrop-blur-lg text-white hover:bg-white/20 px-8 py-3 rounded-full font-semibold text-lg shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
-                  data-testid="button-join-network"
-                >
-                  <Network className="w-5 h-5 mr-2" />
-                  Únete a la Red
-                </Button>
+                <Link href="/portal-empresas/mapa">
+                  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                    <Button 
+                      className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white px-8 py-4 rounded-full font-bold text-lg shadow-2xl border-2 border-green-500 hover:border-green-400 transition-all duration-300"
+                      data-testid="button-explore-map"
+                    >
+                      <Map className="w-5 h-5 mr-2" />
+                      Explorar Mapa
+                    </Button>
+                  </motion.div>
+                </Link>
+                <Link href="/portal-empresas/red">
+                  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                    <Button 
+                      variant="outline" 
+                      className="border-2 border-white/60 bg-white/15 backdrop-blur-xl text-white hover:bg-white/25 hover:border-white/80 px-8 py-4 rounded-full font-bold text-lg shadow-2xl transition-all duration-300"
+                      data-testid="button-join-network"
+                    >
+                      <Network className="w-5 h-5 mr-2" />
+                      Únete a la Red
+                    </Button>
+                  </motion.div>
+                </Link>
               </div>
             </motion.div>
             
@@ -703,7 +711,7 @@ export default function HomePage() {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    <Button className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white px-8 py-4 rounded-full font-bold text-lg shadow-2xl">
+                    <Button className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white px-8 py-4 rounded-full font-bold text-lg shadow-2xl border-2 border-green-500 hover:border-green-400">
                       <Star className="w-5 h-5 mr-2" />
                       Crear Experiencia
                     </Button>
@@ -715,7 +723,7 @@ export default function HomePage() {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    <Button variant="outline" className="border-white/30 text-white hover:bg-white/10 px-8 py-4 rounded-full font-bold text-lg">
+                    <Button variant="outline" className="border-2 border-white/60 bg-white/15 backdrop-blur-xl text-white hover:bg-white/25 hover:border-white/80 px-8 py-4 rounded-full font-bold text-lg shadow-xl">
                       <MessageCircle className="w-5 h-5 mr-2" />
                       Iniciar Chat
                     </Button>
@@ -814,23 +822,25 @@ export default function HomePage() {
                           {blog.readTime}
                         </div>
                       </div>
-                      <Button 
-                        className="w-full mt-4 bg-green-600/20 border-green-500/30 text-green-400 hover:bg-green-600/30"
-                        data-testid={`button-read-blog-${blog.id}`}
-                        onClick={() => {
-                          // Para el artículo de la plataforma, abrir en la misma ventana
-                          if (blog.slug === 'festival-natur-alianza-turismo-sostenible-colombia') {
-                            window.location.href = '/plataforma';
-                          }
-                          // Para otros artículos, simular navegación a contenido completo
-                          else {
-                            alert(`Artículo: ${blog.title}\n\nEste artículo abrirá próximamente con el contenido completo.\n\nTemas incluidos:\n• ${blog.description}`);
-                          }
-                        }}
-                      >
-                        Leer Artículo
-                        <ExternalLink className="w-4 h-4 ml-2" />
-                      </Button>
+                      <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                        <Button 
+                          className="w-full mt-4 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-semibold border-2 border-green-500 hover:border-green-400 shadow-lg hover:shadow-xl transition-all duration-300"
+                          data-testid={`button-read-blog-${blog.id}`}
+                          onClick={() => {
+                            // Para el artículo de la plataforma, abrir en la misma ventana
+                            if (blog.slug === 'festival-natur-alianza-turismo-sostenible-colombia') {
+                              window.location.href = '/plataforma';
+                            }
+                            // Para otros artículos, simular navegación a contenido completo
+                            else {
+                              alert(`Artículo: ${blog.title}\n\nEste artículo abrirá próximamente con el contenido completo.\n\nTemas incluidos:\n• ${blog.description}`);
+                            }
+                          }}
+                        >
+                          Leer Artículo
+                          <ExternalLink className="w-4 h-4 ml-2" />
+                        </Button>
+                      </motion.div>
                     </div>
                   </CardContent>
                 </Card>
@@ -839,55 +849,56 @@ export default function HomePage() {
           )}
         </motion.section>
 
-        {/* Recent Companies */}
+        {/* Sección final optimizada con mejor UX */}
         <motion.section 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 1.0 }}
-          className="space-y-6"
+          className="text-center space-y-8"
         >
-          <div className="text-center space-y-2">
-            <h3 className="text-2xl font-gasoek text-white">Empresas Registradas Recientemente</h3>
-            <p className="text-white/70">Conoce las empresas que se han unido recientemente a nuestra comunidad</p>
+          <div className="bg-gradient-to-r from-green-500/20 to-blue-500/20 backdrop-blur-xl border border-white/30 rounded-3xl p-8 lg:p-12">
+            <h3 className="text-3xl lg:text-4xl font-gasoek text-white mb-4">
+              ¡Comienza tu Transformación Sostenible!
+            </h3>
+            <p className="text-white/80 text-lg mb-8 max-w-3xl mx-auto">
+              Únete a cientos de empresas que ya están creando impacto positivo en el turismo colombiano
+            </p>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+              <div className="text-center">
+                <div className="text-4xl font-bold text-green-400 mb-2">{stats?.totalCompanies || 0}</div>
+                <div className="text-white/70">Empresas Activas</div>
+              </div>
+              <div className="text-center">
+                <div className="text-4xl font-bold text-blue-400 mb-2">{stats?.totalTravelers || 0}</div>
+                <div className="text-white/70">Viajeros Conectados</div>
+              </div>
+              <div className="text-center">
+                <div className="text-4xl font-bold text-purple-400 mb-2">{categories?.length || 0}</div>
+                <div className="text-white/70">Categorías Disponibles</div>
+              </div>
+            </div>
+            
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link href="/portal-empresas/mapa">
+                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                  <Button className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white px-8 py-4 rounded-full font-bold text-lg shadow-xl border-2 border-green-500">
+                    <Map className="w-5 h-5 mr-2" />
+                    Explorar Mapa Ahora
+                  </Button>
+                </motion.div>
+              </Link>
+              
+              <Link href="/portal-empresas/experiencias">
+                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                  <Button variant="outline" className="border-2 border-white/50 bg-white/10 backdrop-blur-xl text-white hover:bg-white/20 hover:border-white/70 px-8 py-4 rounded-full font-bold text-lg shadow-xl">
+                    <Star className="w-5 h-5 mr-2" />
+                    Crear Experiencia
+                  </Button>
+                </motion.div>
+              </Link>
+            </div>
           </div>
-
-          {statsLoading ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {[1, 2, 3, 4, 5, 6].map((i) => (
-                <Card key={i} className="bg-white/10 backdrop-blur-xl border-white/20">
-                  <CardContent className="p-4">
-                    <div className="animate-pulse">
-                      <div className="h-4 bg-white/20 rounded mb-2"></div>
-                      <div className="h-3 bg-white/20 rounded w-3/4 mb-2"></div>
-                      <div className="h-3 bg-white/20 rounded w-1/2"></div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {stats?.recentCompanies?.slice(0, 6).map((company) => (
-                <Card key={company.id} className="bg-white/10 backdrop-blur-xl border-white/20 hover:bg-white/15 transition-all duration-200">
-                  <CardContent className="p-4">
-                    <div className="flex items-start justify-between mb-2">
-                      <h5 className="text-white font-bold text-sm leading-tight">{company.companyName}</h5>
-                      <div className="w-2 h-2 bg-green-400 rounded-full flex-shrink-0 mt-1"></div>
-                    </div>
-                    <Badge className="bg-blue-600/80 text-white mb-2 text-xs">{company.companyCategory}</Badge>
-                    <div className="flex items-center text-white/60 text-xs mb-1">
-                      <MapPin className="w-3 h-3 mr-1 text-green-400" />
-                      <span>{company.city}, {company.country}</span>
-                    </div>
-                    <div className="flex items-center text-white/50 text-xs">
-                      <Calendar className="w-3 h-3 mr-1" />
-                      <span>{new Date(company.createdAt).toLocaleDateString()}</span>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          )}
         </motion.section>
       </div>
     </div>
