@@ -100,7 +100,7 @@ export default function HomePage() {
           className="relative overflow-hidden rounded-3xl"
         >
           {/* Background with overlay */}
-          <div className="absolute inset-0 bg-gradient-to-br from-green-900/90 via-black/80 to-purple-900/90 z-10"></div>
+          <div className="absolute inset-0 bg-black/60 z-10"></div>
           <div 
             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
             style={{ backgroundImage: `url(${heroImage})` }}
@@ -187,24 +187,11 @@ export default function HomePage() {
                 </CardContent>
               </Card>
               
-              <Card className="bg-white/15 backdrop-blur-xl border-white/20 shadow-2xl hover:bg-white/20 transition-all duration-300">
-                <CardContent className="p-6">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <div className="text-3xl lg:text-4xl font-bold text-white mb-1">
-                        {statsLoading ? "..." : stats?.totalUsers || 0}
-                      </div>
-                      <p className="text-white/70 font-medium">Total Usuarios</p>
-                    </div>
-                    <TrendingUp className="w-10 h-10 text-purple-400" />
-                  </div>
-                </CardContent>
-              </Card>
             </motion.div>
           </div>
         </motion.section>
 
-        {/* Company Search Section */}
+        {/* Enhanced Smart Search Section */}
         <motion.section 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -216,29 +203,32 @@ export default function HomePage() {
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="inline-flex items-center gap-2 bg-green-600/20 backdrop-blur-lg border border-green-500/30 rounded-full px-6 py-2"
+              className="inline-flex items-center gap-2 bg-green-600/20 backdrop-blur-lg border border-green-500/30 rounded-full px-6 py-3"
             >
-              <Search className="w-4 h-4 text-green-400" />
-              <span className="text-green-400 font-semibold text-sm">Directorio de Empresas</span>
+              <Search className="w-5 h-5 text-green-400" />
+              <span className="text-green-400 font-semibold">Buscador Inteligente</span>
             </motion.div>
-            <h3 className="text-3xl lg:text-4xl font-gasoek text-white">Buscar Empresas Sostenibles</h3>
-            <p className="text-xl text-white/80 max-w-2xl mx-auto">Encuentra empresas de turismo sostenible por nombre, categoría o ubicación</p>
+            <h3 className="text-3xl lg:text-4xl font-gasoek text-white">Encuentra Empresas Sostenibles</h3>
+            <p className="text-xl text-white/80 max-w-2xl mx-auto">Busca por nombre, categoría, país, ciudad o cualquier palabra clave relacionada</p>
           </div>
 
           <Card className="bg-white/10 backdrop-blur-xl border-white/20 shadow-2xl hover:bg-white/15 transition-all duration-300">
             <CardContent className="p-8">
-              <div className="flex flex-col lg:flex-row gap-6">
-                <div className="flex-1 relative">
+              <div className="space-y-6">
+                {/* Main Search Input */}
+                <div className="relative">
                   <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white/60 w-6 h-6" />
                   <Input
-                    placeholder="Buscar empresas sostenibles..."
+                    placeholder="Buscar empresas por nombre, categoría, país, ciudad..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="bg-white/10 border-white/20 text-white placeholder:text-white/60 pl-14 py-4 text-lg rounded-xl shadow-lg hover:bg-white/15 focus:bg-white/15 transition-all duration-300"
-                    data-testid="input-search-companies"
+                    className="bg-white/10 border-white/20 text-white placeholder:text-white/60 pl-14 pr-4 py-6 text-lg rounded-2xl shadow-lg hover:bg-white/15 focus:bg-white/15 transition-all duration-300 w-full"
+                    data-testid="input-smart-search"
                   />
                 </div>
-                <div className="flex flex-wrap gap-3">
+                
+                {/* Smart Filter Buttons */}
+                <div className="flex flex-wrap gap-3 justify-center">
                   <Button
                     variant={searchFilter === "all" ? "default" : "outline"}
                     onClick={() => setSearchFilter("all")}
@@ -249,6 +239,7 @@ export default function HomePage() {
                     }`}
                     data-testid="filter-all"
                   >
+                    <Globe className="w-4 h-4 mr-2" />
                     Todo
                   </Button>
                   <Button
@@ -261,6 +252,7 @@ export default function HomePage() {
                     }`}
                     data-testid="filter-name"
                   >
+                    <Building2 className="w-4 h-4 mr-2" />
                     Nombre
                   </Button>
                   <Button
@@ -273,6 +265,7 @@ export default function HomePage() {
                     }`}
                     data-testid="filter-category"
                   >
+                    <Star className="w-4 h-4 mr-2" />
                     Categoría
                   </Button>
                   <Button
@@ -285,40 +278,104 @@ export default function HomePage() {
                     }`}
                     data-testid="filter-location"
                   >
+                    <MapPin className="w-4 h-4 mr-2" />
                     Ubicación
                   </Button>
                 </div>
-              </div>
 
-              {/* Search Results */}
-              {searchQuery && (
-                <div className="mt-6">
-                  <h4 className="text-white font-semibold mb-3">
-                    Resultados de búsqueda ({filteredCompanies.length})
-                  </h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-h-96 overflow-y-auto custom-scrollbar">
-                    {filteredCompanies.slice(0, 9).map((company) => (
-                      <Card key={company.id} className="bg-white/10 backdrop-blur-lg border-white/20 hover:bg-white/20 hover:scale-105 transition-all duration-300 shadow-xl">
-                        <CardContent className="p-6">
-                          <h5 className="text-white font-bold text-lg mb-2">{company.companyName}</h5>
-                          <Badge className="bg-green-600/80 text-white mb-3">{company.companyCategory}</Badge>
-                          <div className="flex items-center text-white/70 text-sm">
-                            <MapPin className="w-4 h-4 mr-2 text-green-400" />
-                            {company.city}, {company.country}
-                          </div>
-                        </CardContent>
-                      </Card>
-                    ))}
-                  </div>
-                  {filteredCompanies.length > 9 && (
-                    <div className="mt-6 text-center">
-                      <Badge className="bg-blue-600/80 text-white px-4 py-2">
-                        Y {filteredCompanies.length - 9} empresas más...
-                      </Badge>
+                {/* Enhanced Search Results */}
+                {searchQuery && (
+                  <motion.div 
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="space-y-4"
+                  >
+                    <div className="flex items-center justify-between">
+                      <h4 className="text-white font-semibold text-lg">
+                        Resultados encontrados: {filteredCompanies.length}
+                      </h4>
+                      {filteredCompanies.length > 0 && (
+                        <Badge className="bg-green-600/80 text-white px-3 py-1">
+                          {searchFilter === "all" ? "Búsqueda global" : `Filtrado por ${searchFilter}`}
+                        </Badge>
+                      )}
                     </div>
-                  )}
-                </div>
-              )}
+                    
+                    {filteredCompanies.length > 0 ? (
+                      <>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-h-[500px] overflow-y-auto custom-scrollbar pr-2">
+                          {filteredCompanies.slice(0, 12).map((company, index) => (
+                            <motion.div
+                              key={company.id}
+                              initial={{ opacity: 0, scale: 0.9 }}
+                              animate={{ opacity: 1, scale: 1 }}
+                              transition={{ duration: 0.3, delay: index * 0.05 }}
+                            >
+                              <Card className="bg-white/10 backdrop-blur-lg border-white/20 hover:bg-white/20 hover:scale-105 hover:shadow-2xl transition-all duration-300 shadow-xl">
+                                <CardContent className="p-6">
+                                  <div className="flex items-start justify-between mb-3">
+                                    <h5 className="text-white font-bold text-lg leading-tight">{company.companyName}</h5>
+                                    <div className="w-2 h-2 bg-green-400 rounded-full flex-shrink-0 mt-2"></div>
+                                  </div>
+                                  <Badge className="bg-green-600/80 text-white mb-3 text-xs">
+                                    {company.companyCategory}
+                                  </Badge>
+                                  <div className="flex items-center text-white/70 text-sm">
+                                    <MapPin className="w-4 h-4 mr-2 text-green-400 flex-shrink-0" />
+                                    <span className="truncate">{company.city}, {company.country}</span>
+                                  </div>
+                                </CardContent>
+                              </Card>
+                            </motion.div>
+                          ))}
+                        </div>
+                        {filteredCompanies.length > 12 && (
+                          <div className="text-center pt-4">
+                            <Badge className="bg-blue-600/80 text-white px-4 py-2 text-sm">
+                              Y {filteredCompanies.length - 12} empresas más disponibles...
+                            </Badge>
+                          </div>
+                        )}
+                      </>
+                    ) : (
+                      <div className="text-center py-8">
+                        <div className="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                          <Search className="w-8 h-8 text-white/40" />
+                        </div>
+                        <p className="text-white/60 text-lg mb-2">No se encontraron empresas</p>
+                        <p className="text-white/40 text-sm">
+                          Prueba con otros términos de búsqueda o cambia el filtro
+                        </p>
+                      </div>
+                    )}
+                  </motion.div>
+                )}
+                
+                {/* Search Tips */}
+                {!searchQuery && (
+                  <div className="bg-white/5 rounded-2xl p-6 border border-white/10">
+                    <h5 className="text-white font-semibold mb-3 flex items-center">
+                      <Sparkles className="w-5 h-5 mr-2 text-green-400" />
+                      Consejos de búsqueda
+                    </h5>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-white/70">
+                      <div>
+                        <strong className="text-white">Por nombre:</strong> "EcoTours", "Aventura Verde"
+                      </div>
+                      <div>
+                        <strong className="text-white">Por categoría:</strong> "Ecoturismo", "Turismo rural"
+                      </div>
+                      <div>
+                        <strong className="text-white">Por país:</strong> "Colombia", "Costa Rica"
+                      </div>
+                      <div>
+                        <strong className="text-white">Por ciudad:</strong> "Bogotá", "Medellín"
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
             </CardContent>
           </Card>
         </motion.section>

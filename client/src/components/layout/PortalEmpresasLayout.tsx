@@ -120,10 +120,10 @@ export function PortalEmpresasLayout({ children }: PortalEmpresasLayoutProps) {
       {/* Background Map with Glassmorphism */}
       <div className="absolute inset-0 z-0">
         <div 
-          className="absolute inset-0 opacity-20 bg-cover bg-center bg-no-repeat"
+          className="absolute inset-0 opacity-15 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: `url(${mapBackgroundImage})` }}
         ></div>
-        <div className="absolute inset-0 bg-gradient-to-br from-gray-900/90 via-black/80 to-green-900/90 backdrop-blur-sm"></div>
+        <div className="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
       </div>
       
       {/* Top Profile Bar - Fixed and Transparent */}
