@@ -4,9 +4,24 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Send, MessageCircle, CheckCircle, ArrowLeft } from "lucide-react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { apiRequest } from "@/lib/queryClient";
+import { useToast } from "@/components/ui/use-toast";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface WhatsAppChatProps {
   onClose?: () => void;
+  selectedConversationId?: number | null;
+  conversationData?: any;
+}
+
+interface NormalizedMessage {
+  id: number;
+  content: string;
+  createdAt: Date;
+  sender: 'me' | 'them';
+  senderId: number;
+  receiverId: number;
 }
 
 interface Company {
@@ -19,83 +34,85 @@ interface Company {
   website?: string;
 }
 
-export function WhatsAppChat({ onClose }: WhatsAppChatProps) {
-  const [selectedCompany, setSelectedCompany] = useState<Company | null>(null);
+export function WhatsAppChat({ onClose, selectedConversationId, conversationData }: WhatsAppChatProps) {
   const [messageText, setMessageText] = useState("");
-  const [savedConversations, setSavedConversations] = useState<Array<{
-    id: number, 
-    companyName: string, 
-    userId: number,
-    messages: Array<{id: number, content: string, timestamp: Date, sender: 'me' | 'them'}>
-  }>>([
-    {
-      id: 1,
-      companyName: "TripCol",
-      userId: 22,
-      messages: [
-        {
-          id: 1,
-          content: "Hola! Estoy interesado en conocer más sobre sus experiencias turísticas.",
-          timestamp: new Date(Date.now() - 24 * 60 * 60 * 1000),
-          sender: 'me'
-        },
-        {
-          id: 2,
-          content: "¡Hola! Gracias por contactarnos. Nos especializamos en experiencias auténticas de turismo sostenible en Colombia. ¿Hay alguna región específica que te interese?",
-          timestamp: new Date(Date.now() - 23 * 60 * 60 * 1000),
-          sender: 'them'
-        }
-      ]
-    }
-  ]);
+  const { toast } = useToast();
+  const queryClient = useQueryClient();
+  const { user } = useAuth();
 
-  const verifiedCompanies: Company[] = [
-    {
-      id: 2,
-      companyName: "TripCol",
-      description: "Operador turístico especializado en experiencias auténticas",
-      userId: 22,
-      isVerified: true,
-      contactEmail: "tripcol.tour@gmail.com",
-      website: "tripcol.com"
+  // Fetch messages for selected conversation
+  const { data: rawMessages = [], isLoading: messagesLoading } = useQuery({
+    queryKey: ['/api/conversations', selectedConversationId, 'messages'],
+    enabled: !!selectedConversationId,
+    staleTime: 30 * 1000, // 30 seconds
+  });
+
+  // Normalize messages to match UI expectations
+  const normalizeMessage = (msg: any): NormalizedMessage => {
+    // Convert string user ID to number for comparison
+    const currentUserId = user?.id ? parseInt(user.id) : null;
+    
+    return {
+      id: msg.id,
+      content: msg.content,
+      createdAt: new Date(msg.createdAt), // Convert ISO string to Date
+      sender: msg.senderId === currentUserId ? 'me' : 'them',
+      senderId: msg.senderId,
+      receiverId: msg.receiverId
+    };
+  };
+
+  const messages = rawMessages.map(normalizeMessage);
+
+  // Fetch real companies from map endpoint 
+  const { data: companies = [], isLoading: companiesLoading } = useQuery({
+    queryKey: ['/api/companies/map'],
+    staleTime: 5 * 60 * 1000, // 5 minutes
+  });
+
+  // Send message mutation
+  const sendMessageMutation = useMutation({
+    mutationFn: async (messageData: { conversationId: number; content: string }) => {
+      return apiRequest(`/api/conversations/${messageData.conversationId}/messages`, {
+        method: 'POST',
+        body: JSON.stringify({ content: messageData.content }),
+        headers: { 'Content-Type': 'application/json' }
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['/api/conversations', selectedConversationId, 'messages'] });
+      queryClient.invalidateQueries({ queryKey: ['/api/conversations'] });
+      toast({
+        title: "Mensaje enviado",
+        description: "Tu mensaje se envió exitosamente"
+      });
+    },
+    onError: (error: any) => {
+      toast({
+        title: "Error al enviar mensaje",
+        description: error.message || "Hubo un problema al enviar el mensaje",
+        variant: "destructive"
+      });
     }
-  ];
+  });
+
+  // Get current conversation data
+  const currentConversation = conversationData || null;
+  const otherUser = currentConversation?.otherUser;
 
   const handleSendMessage = () => {
-    if (!messageText.trim() || !selectedCompany) return;
+    if (!messageText.trim() || !selectedConversationId) return;
     
-    const existingConversationIndex = savedConversations.findIndex(
-      conv => conv.userId === selectedCompany.userId
-    );
-    
-    const newMessage = {
-      id: Date.now(),
-      content: messageText.trim(),
-      timestamp: new Date(),
-      sender: 'me' as const
-    };
-
-    if (existingConversationIndex >= 0) {
-      const updatedConversations = [...savedConversations];
-      updatedConversations[existingConversationIndex].messages.push(newMessage);
-      setSavedConversations(updatedConversations);
-    } else {
-      const newConversation = {
-        id: Date.now(),
-        companyName: selectedCompany.companyName,
-        userId: selectedCompany.userId,
-        messages: [newMessage]
-      };
-      setSavedConversations([...savedConversations, newConversation]);
-    }
+    sendMessageMutation.mutate({
+      conversationId: selectedConversationId,
+      content: messageText.trim()
+    });
     
     setMessageText("");
   };
 
   const getCurrentMessages = () => {
-    if (!selectedCompany) return [];
-    const conversation = savedConversations.find(conv => conv.userId === selectedCompany.userId);
-    return conversation ? conversation.messages : [];
+    return messages || [];
   };
 
   const formatTime = (date: Date) => {
@@ -117,7 +134,7 @@ export function WhatsAppChat({ onClose }: WhatsAppChatProps) {
   return (
     <div className="w-full h-full flex flex-col">
       {/* Mobile WhatsApp-like Interface */}
-      {selectedCompany ? (
+      {currentConversation ? (
         /* Chat View - Mobile First */
         <div className="flex flex-col h-full">
           {/* Chat Header - Transparent Style */}
@@ -125,24 +142,28 @@ export function WhatsAppChat({ onClose }: WhatsAppChatProps) {
             <Button
               variant="ghost"
               size="sm"
-              onClick={() => setSelectedCompany(null)}
+              onClick={onClose}
               className="text-white hover:bg-green-600/50 p-2 mr-2 md:hidden min-h-[44px] min-w-[44px] touch-manipulation"
             >
               <ArrowLeft className="h-5 w-5" />
             </Button>
             <Avatar className="w-10 h-10 mr-3">
               <AvatarFallback className="bg-white/20 text-white font-bold text-sm">
-                {selectedCompany.companyName.substring(0, 2).toUpperCase()}
+                {(otherUser?.companyName || `${otherUser?.firstName} ${otherUser?.lastName}`)?.substring(0, 2).toUpperCase() || 'U'}
               </AvatarFallback>
             </Avatar>
             <div className="flex-1 min-w-0">
               <div className="flex items-center space-x-2">
-                <h3 className="text-white font-medium text-base md:text-lg truncate">{selectedCompany.companyName}</h3>
-                {selectedCompany.isVerified && (
+                <h3 className="text-white font-medium text-base md:text-lg truncate">
+                  {otherUser?.companyName || `${otherUser?.firstName} ${otherUser?.lastName}` || 'Usuario'}
+                </h3>
+                {otherUser?.isVerified && (
                   <CheckCircle className="h-4 w-4 text-white flex-shrink-0" />
                 )}
               </div>
-              <p className="text-white/70 text-xs md:text-sm truncate">En línea</p>
+              <p className="text-white/70 text-xs md:text-sm truncate">
+                {otherUser?.role || 'En línea'}
+              </p>
             </div>
           </div>
 
@@ -166,7 +187,7 @@ export function WhatsAppChat({ onClose }: WhatsAppChatProps) {
                       message.sender === 'me' ? 'text-white/70' : 'text-white/50'
                     }`}>
                       <span className="text-xs">
-                        {formatTime(message.timestamp)}
+                        {formatTime(message.createdAt)}
                       </span>
                       {message.sender === 'me' && (
                         <div className="flex">
@@ -192,13 +213,14 @@ export function WhatsAppChat({ onClose }: WhatsAppChatProps) {
               />
               <Button
                 onClick={handleSendMessage}
-                disabled={!messageText.trim()}
+                disabled={!messageText.trim() || sendMessageMutation.isPending}
                 size="sm"
                 className={`rounded-full p-2 min-h-[40px] min-w-[40px] touch-manipulation ${
-                  messageText.trim() 
+                  messageText.trim() && !sendMessageMutation.isPending
                     ? 'bg-white/20 hover:bg-white/30 text-white' 
                     : 'bg-transparent text-white/50 cursor-not-allowed'
                 }`}
+                data-testid="button-send-message"
               >
                 <Send className="h-4 w-4" />
               </Button>
@@ -221,82 +243,60 @@ export function WhatsAppChat({ onClose }: WhatsAppChatProps) {
 
           {/* Conversations List */}
           <div className="flex-1 overflow-y-auto bg-transparent">
-            {/* Active Conversations */}
-            {savedConversations.length > 0 && (
-              <div>
-                {savedConversations.map((conversation) => {
-                  const lastMessage = conversation.messages[conversation.messages.length - 1];
-                  return (
-                    <div
-                      key={conversation.id}
-                      onClick={() => setSelectedCompany(verifiedCompanies.find(c => c.userId === conversation.userId) || null)}
-                      className="flex items-center p-4 hover:bg-white/10 active:bg-white/20 cursor-pointer border-b border-white/10 touch-manipulation"
-                    >
-                      <Avatar className="w-12 h-12 mr-3">
-                        <AvatarFallback className="bg-white/20 text-white font-bold">
-                          {conversation.companyName.substring(0, 2).toUpperCase()}
-                        </AvatarFallback>
-                      </Avatar>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center justify-between mb-1">
-                          <h3 className="text-white font-medium text-base truncate">{conversation.companyName}</h3>
-                          <span className="text-white/60 text-xs">
-                            {lastMessage ? formatTimeAgo(lastMessage.timestamp) : ''}
-                          </span>
-                        </div>
-                        <p className="text-white/80 text-sm truncate">
-                          {lastMessage 
-                            ? (lastMessage.sender === 'me' ? '✓ ' : '') + lastMessage.content 
-                            : 'Sin mensajes'
-                          }
-                        </p>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            )}
-
-            {/* Available Companies */}
-            <div className="px-4 py-3 border-b border-white/20 bg-transparent">
-              <h4 className="text-white/80 font-medium text-sm mb-3">Empresas Disponibles</h4>
-            </div>
-            {verifiedCompanies.filter(company => 
-              !savedConversations.some(conv => conv.userId === company.userId)
-            ).map((company) => (
-              <div
-                key={company.id}
-                onClick={() => setSelectedCompany(company)}
-                className="flex items-center p-4 hover:bg-white/10 active:bg-white/20 cursor-pointer border-b border-white/10 touch-manipulation"
-              >
-                <Avatar className="w-12 h-12 mr-3">
-                  <AvatarFallback className="bg-white/20 text-white font-bold">
-                    {company.companyName.substring(0, 2).toUpperCase()}
-                  </AvatarFallback>
-                </Avatar>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center space-x-2 mb-1">
-                    <h3 className="text-white font-medium text-base truncate">{company.companyName}</h3>
-                    {company.isVerified && (
-                      <CheckCircle className="h-4 w-4 text-white flex-shrink-0" />
-                    )}
-                  </div>
-                  <p className="text-white/80 text-sm truncate">{company.description}</p>
+            {/* Loading state */}
+            {companiesLoading ? (
+              <div className="p-8 text-center">
+                <div className="animate-pulse">
+                  <div className="h-4 bg-white/20 rounded mb-4"></div>
+                  <div className="h-3 bg-white/20 rounded w-3/4 mx-auto"></div>
                 </div>
               </div>
-            ))}
+            ) : (
+              <>
+                {/* Available Companies */}
+                <div className="px-4 py-3 border-b border-white/20 bg-transparent">
+                  <h4 className="text-white/80 font-medium text-sm mb-3">Empresas Disponibles</h4>
+                </div>
+                {companies.map((company: any) => (
+                  <div
+                    key={company.id}
+                    className="flex items-center p-4 hover:bg-white/10 active:bg-white/20 cursor-pointer border-b border-white/10 touch-manipulation"
+                    data-testid={`company-${company.id}`}
+                  >
+                    <Avatar className="w-12 h-12 mr-3">
+                      <AvatarFallback className="bg-white/20 text-white font-bold">
+                        {company.companyName?.substring(0, 2).toUpperCase() || 'C'}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center space-x-2 mb-1">
+                        <h3 className="text-white font-medium text-base truncate">
+                          {company.companyName || 'Empresa'}
+                        </h3>
+                        {company.isVerified && (
+                          <CheckCircle className="h-4 w-4 text-white flex-shrink-0" />
+                        )}
+                      </div>
+                      <p className="text-white/80 text-sm truncate">
+                        {company.companyCategory || company.businessType || 'Empresa turística'}
+                      </p>
+                    </div>
+                  </div>
+                ))}
 
-            {/* Empty State */}
-            {savedConversations.length === 0 && verifiedCompanies.length === 0 && (
-              <div className="flex flex-col items-center justify-center p-8 text-center">
-                <MessageCircle className="h-16 w-16 text-white/40 mb-4" />
-                <h3 className="text-white/70 text-lg font-medium mb-2">
-                  No hay conversaciones
-                </h3>
-                <p className="text-white/60 text-sm">
-                  Las empresas aparecerán aquí cuando estén disponibles
-                </p>
-              </div>
+                {/* Empty State */}
+                {companies.length === 0 && (
+                  <div className="flex flex-col items-center justify-center p-8 text-center">
+                    <MessageCircle className="h-16 w-16 text-white/40 mb-4" />
+                    <h3 className="text-white/70 text-lg font-medium mb-2">
+                      No hay empresas disponibles
+                    </h3>
+                    <p className="text-white/60 text-sm">
+                      Las empresas aparecerán aquí cuando se registren
+                    </p>
+                  </div>
+                )}
+              </>
             )}
           </div>
         </div>

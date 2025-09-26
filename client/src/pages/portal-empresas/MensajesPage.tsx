@@ -153,7 +153,10 @@ export default function MensajesPage() {
         <div className="flex-1 lg:flex hidden">
           {selectedConversation ? (
             <div className="w-full h-full">
-              <WhatsAppChat />
+              <WhatsAppChat 
+                selectedConversationId={selectedConversation}
+                conversationData={filteredConversations.find(conv => conv.id === selectedConversation)}
+              />
             </div>
           ) : (
             <div className="flex-1 flex items-center justify-center bg-white/5 backdrop-blur-xl">
@@ -183,7 +186,11 @@ export default function MensajesPage() {
               </Button>
             </div>
             <div className="h-[calc(100vh-80px)]">
-              <WhatsAppChat />
+              <WhatsAppChat 
+                selectedConversationId={selectedConversation}
+                conversationData={filteredConversations.find(conv => conv.id === selectedConversation)}
+                onClose={() => setSelectedConversation(null)}
+              />
             </div>
           </div>
         )}
