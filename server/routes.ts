@@ -1243,7 +1243,47 @@ export async function registerRoutes(app: Express): Promise<Server> {
         searchQuery, category, subcategory, country, city, limit 
       });
 
-      let queryBuilder = db
+      // Build base filters
+      const baseFilters = [
+        eq(users.role, 'empresa'),
+        eq(users.isActive, true),
+        sql`${users.companyName} IS NOT NULL AND ${users.companyName} != ''`
+      ];
+      
+      // Add dynamic filters
+      if (category) {
+        baseFilters.push(eq(users.companyCategory, category as string));
+      }
+      
+      if (subcategory) {
+        baseFilters.push(eq(users.companySubcategory, subcategory as string));
+      }
+      
+      if (country) {
+        baseFilters.push(eq(users.country, country as string));
+      }
+      
+      if (city) {
+        baseFilters.push(eq(users.city, city as string));
+      }
+      
+      // Apply text search if provided
+      if (searchQuery && typeof searchQuery === 'string' && searchQuery.trim()) {
+        const searchTerm = `%${searchQuery.toLowerCase()}%`;
+        const searchFilter = or(
+          sql`LOWER(${users.companyName}) LIKE ${searchTerm}`,
+          sql`LOWER(${users.companyCategory}) LIKE ${searchTerm}`,
+          sql`LOWER(${users.companySubcategory}) LIKE ${searchTerm}`,
+          sql`LOWER(${users.city}) LIKE ${searchTerm}`,
+          sql`LOWER(${users.country}) LIKE ${searchTerm}`,
+          sql`LOWER(${users.companyDescription}) LIKE ${searchTerm}`
+        );
+        if (searchFilter) {
+          baseFilters.push(searchFilter);
+        }
+      }
+
+      const queryBuilder = db
         .select({
           id: users.id,
           companyName: users.companyName,
@@ -1257,58 +1297,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           website: users.website
         })
         .from(users)
-        .where(
-          and(
-            eq(users.role, 'empresa'),
-            eq(users.isActive, true),
-            sql`${users.companyName} IS NOT NULL AND ${users.companyName} != ''`
-          )
-        );
-
-      // Apply filters
-      const filters = [];
-      
-      if (category) {
-        filters.push(eq(users.companyCategory, category as string));
-      }
-      
-      if (subcategory) {
-        filters.push(eq(users.companySubcategory, subcategory as string));
-      }
-      
-      if (country) {
-        filters.push(eq(users.country, country as string));
-      }
-      
-      if (city) {
-        filters.push(eq(users.city, city as string));
-      }
-      
-      // Apply text search if provided
-      if (searchQuery && typeof searchQuery === 'string') {
-        const searchTerm = `%${searchQuery.toLowerCase()}%`;
-        filters.push(
-          or(
-            sql`LOWER(${users.companyName}) LIKE ${searchTerm}`,
-            sql`LOWER(${users.companyCategory}) LIKE ${searchTerm}`,
-            sql`LOWER(${users.companySubcategory}) LIKE ${searchTerm}`,
-            sql`LOWER(${users.city}) LIKE ${searchTerm}`,
-            sql`LOWER(${users.country}) LIKE ${searchTerm}`,
-            sql`LOWER(${users.companyDescription}) LIKE ${searchTerm}`
-          )
-        );
-      }
-      
-      if (filters.length > 0) {
-        queryBuilder = queryBuilder.where(
-          and(
-            eq(users.role, 'empresa'),
-            eq(users.isActive, true),
-            sql`${users.companyName} IS NOT NULL AND ${users.companyName} != ''`,
-            ...filters
-          )
-        );
-      }
+        .where(and(...baseFilters));
       
       const result = await queryBuilder
         .limit(parseInt(limit as string))
