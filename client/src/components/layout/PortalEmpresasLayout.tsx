@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import { useLocation, Link } from "wouter";
-import { Map, Building2, Star, MessageCircle, User, Settings, ChevronDown, LogOut, UserIcon, Bell, Home } from "lucide-react";
+import { useLocation, Link, useRoute } from "wouter";
+import { useQuery } from "@tanstack/react-query";
+import { Map, Building2, Star, MessageCircle, Settings, ChevronDown, LogOut, UserIcon, Bell, Home, MapPin, CheckCircle } from "lucide-react";
+import type { SafeUser } from "@shared/schema";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -17,14 +19,18 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { Badge } from "@/components/ui/badge";
+import { apiRequest } from "@/lib/queryClient";
+import { useToast } from "@/hooks/use-toast";
 import mapBackgroundImage from '@assets/stock_images/world_map_background_96663005.jpg';
 
 interface PortalEmpresasLayoutProps {
   children: React.ReactNode;
 }
 
+
 export function PortalEmpresasLayout({ children }: PortalEmpresasLayoutProps) {
-  const [location] = useLocation();
+  const [location, navigate] = useLocation();
   // Always keep sidebar collapsed for better UX
   const sidebarOpen = false;
 
@@ -57,68 +63,188 @@ export function PortalEmpresasLayout({ children }: PortalEmpresasLayoutProps) {
       messages: '/portal-empresas/mensajes'
     };
     
-    window.location.href = routeMap[viewId as keyof typeof routeMap] || '/portal-empresas';
+    navigate(routeMap[viewId as keyof typeof routeMap] || '/portal-empresas');
   };
 
-  // Mock user data - in production this would come from auth context
-  const mockUser = {
-    name: "María González",
-    email: "maria@empresa.com",
-    avatar: "", // Empty for now, will show initials
-    company: "EcoTours Colombia"
+  // Fetch current user data from auth endpoint
+  const { data: currentUser, isLoading: userLoading, error: userError } = useQuery<SafeUser>({
+    queryKey: ['/api/auth/me'],
+    queryFn: async () => {
+      try {
+        return await apiRequest('/api/auth/me');
+      } catch (error: any) {
+        // Handle authentication errors gracefully - return null instead of throwing
+        if (error.status === 401) {
+          console.log('User not authenticated, showing login prompt');
+          return null;
+        }
+        throw error;
+      }
+    },
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    gcTime: 10 * 60 * 1000, // 10 minutes
+    retry: (failureCount, error: any) => {
+      // Don't retry if user is not authenticated (401)
+      if (error?.status === 401) {
+        return false;
+      }
+      return failureCount < 1;
+    },
+  });
+
+  const { toast } = useToast();
+
+  const handleLogout = async () => {
+    try {
+      await apiRequest('/api/auth/logout', {
+        method: 'POST',
+      });
+      
+      toast({
+        title: "Sesión cerrada",
+        description: "Has cerrado sesión correctamente",
+      });
+      
+      // Redirect to home after logout
+      setTimeout(() => {
+        window.location.href = '/';
+      }, 1000);
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Error al cerrar sesión",
+        variant: "destructive",
+      });
+    }
   };
 
-  const ProfileDropdown = () => (
+  const ProfileDropdown = () => {
+    // Show loading state while fetching user data
+    if (userLoading) {
+      return (
+        <div className="animate-pulse">
+          <div className="h-12 w-40 bg-white/10 backdrop-blur-xl rounded-full"></div>
+        </div>
+      );
+    }
+
+    // Handle authentication error or missing user data
+    if (userError || !currentUser) {
+      // Log authentication errors for debugging
+      if (userError && userError.status === 401) {
+        console.log('Authentication required for Portal Empresas');
+      }
+      
+      return (
+        <div className="flex items-center gap-2">
+          <Button
+            variant="ghost"
+            className="h-10 px-4 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 hover:bg-white/20 transition-all duration-300 shadow-lg text-white text-sm"
+            onClick={() => navigate('/auth/empresas')}
+            data-testid="login-prompt"
+          >
+            Iniciar sesión
+          </Button>
+        </div>
+      );
+    }
+
+    const user = currentUser;
+
+    const displayName = `${user.firstName || ''} ${user.lastName || ''}`.trim() || user.email?.split('@')[0] || 'Usuario';
+    const companyInfo = user.companyName || 'Empresa';
+    const location = user.city && user.country ? `${user.city}, ${user.country}` : (user.city || user.country || 'Ubicación');
+    const avatar = user.profilePicture || '';
+    const initials = displayName.split(' ').map((n: string) => n[0]).join('').toUpperCase() || 'U';
+
+    return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
           className="relative h-12 w-auto px-3 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 hover:bg-white/20 transition-all duration-300 shadow-lg"
+          data-testid="profile-dropdown-trigger"
         >
           <Avatar className="h-8 w-8 mr-3">
-            <AvatarImage src={mockUser.avatar} alt={mockUser.name} />
+            <AvatarImage src={avatar} alt={displayName} />
             <AvatarFallback className="bg-green-600 text-white font-semibold">
-              {mockUser.name.split(' ').map(n => n[0]).join('')}
+              {initials}
             </AvatarFallback>
           </Avatar>
           <div className="flex flex-col items-start mr-2">
-            <span className="text-white font-semibold text-sm">{mockUser.name}</span>
-            <span className="text-white/60 text-xs">{mockUser.company}</span>
+            <span className="text-white font-semibold text-sm" data-testid="user-name-display">{displayName}</span>
+            <div className="flex items-center gap-1">
+              <span className="text-white/60 text-xs" data-testid="company-name-display">{companyInfo}</span>
+              {user.isVerified && (
+                <CheckCircle className="h-3 w-3 text-green-400" />
+              )}
+            </div>
           </div>
           <ChevronDown className="h-4 w-4 text-white/60" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent 
-        className="w-64 bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl" 
+        className="w-80 bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl" 
         align="end"
+        data-testid="profile-dropdown-content"
       >
         <DropdownMenuLabel className="text-white">
-          <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none">{mockUser.name}</p>
-            <p className="text-xs leading-none text-white/60">{mockUser.email}</p>
+          <div className="flex flex-col space-y-2 p-1">
+            <div className="flex items-center gap-2">
+              <p className="text-sm font-medium leading-none" data-testid="dropdown-user-name">{displayName}</p>
+              {user.isVerified && (
+                <Badge variant="secondary" className="bg-green-500/20 text-green-400 text-xs">
+                  Verificada
+                </Badge>
+              )}
+            </div>
+            <p className="text-xs leading-none text-white/60" data-testid="dropdown-user-email">{user.email}</p>
+            
+            {/* Company Information */}
+            <div className="flex flex-col gap-1 mt-2 pt-2 border-t border-white/20">
+              <div className="flex items-center gap-1">
+                <Building2 className="h-3 w-3 text-green-400" />
+                <span className="text-xs text-green-400 font-medium" data-testid="dropdown-company-name">{companyInfo}</span>
+              </div>
+              {user.companyCategory && (
+                <div className="flex items-center gap-1">
+                  <Star className="h-3 w-3 text-white/60" />
+                  <span className="text-xs text-white/60" data-testid="dropdown-company-category">{user.companyCategory}</span>
+                </div>
+              )}
+              <div className="flex items-center gap-1">
+                <MapPin className="h-3 w-3 text-white/60" />
+                <span className="text-xs text-white/60" data-testid="dropdown-location">{location}</span>
+              </div>
+            </div>
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator className="bg-white/20" />
-        <DropdownMenuItem className="text-white hover:bg-white/20 cursor-pointer">
+        <DropdownMenuItem className="text-white hover:bg-white/20 cursor-pointer" data-testid="menu-profile">
           <UserIcon className="mr-2 h-4 w-4" />
-          <Link href="/portal-empresas/perfil">Ver perfil</Link>
+          <Link href="/portal-empresas/perfil" className="flex-1">Ver perfil</Link>
         </DropdownMenuItem>
-        <DropdownMenuItem className="text-white hover:bg-white/20 cursor-pointer">
+        <DropdownMenuItem className="text-white hover:bg-white/20 cursor-pointer" data-testid="menu-config">
           <Settings className="mr-2 h-4 w-4" />
-          <Link href="/portal-empresas/config">Configuración</Link>
+          <Link href="/portal-empresas/config" className="flex-1">Configuración</Link>
         </DropdownMenuItem>
-        <DropdownMenuItem className="text-white hover:bg-white/20 cursor-pointer">
+        <DropdownMenuItem className="text-white hover:bg-white/20 cursor-pointer" data-testid="menu-notifications">
           <Bell className="mr-2 h-4 w-4" />
           Notificaciones
         </DropdownMenuItem>
         <DropdownMenuSeparator className="bg-white/20" />
-        <DropdownMenuItem className="text-red-400 hover:bg-red-500/20 cursor-pointer">
+        <DropdownMenuItem 
+          className="text-red-400 hover:bg-red-500/20 cursor-pointer" 
+          onClick={handleLogout}
+          data-testid="menu-logout"
+        >
           <LogOut className="mr-2 h-4 w-4" />
           Cerrar sesión
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
-  );
+    );
+  };
 
   return (
     <TooltipProvider>

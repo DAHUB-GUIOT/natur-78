@@ -482,6 +482,9 @@ export const bookings = pgTable("bookings", {
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 
+// Safe user type for API responses (excludes sensitive fields)
+export type SafeUser = Omit<User, 'password' | 'verificationToken' | 'verificationTokenExpiry'>;
+
 export type InsertMessage = z.infer<typeof insertMessageSchema>;
 export type Message = typeof messages.$inferSelect;
 export type InsertConversation = z.infer<typeof insertConversationSchema>;

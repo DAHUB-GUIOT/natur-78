@@ -69,7 +69,9 @@ const apiRequest = async (url: string, options: RequestInit = {}) => {
         } catch (e) {
           // If response is not JSON, use status text
         }
-        throw new Error(errorMessage);
+        const error = new Error(errorMessage) as any;
+        error.status = response.status;
+        throw error;
       }
 
       return response.json();
@@ -95,7 +97,9 @@ const apiRequest = async (url: string, options: RequestInit = {}) => {
         } catch (e) {
           // If response is not JSON, use status text
         }
-        throw new Error(errorMessage);
+        const error = new Error(errorMessage) as any;
+        error.status = response.status;
+        throw error;
       }
 
       return response.json();
