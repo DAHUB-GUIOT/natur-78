@@ -15,7 +15,7 @@ export default function MapaPage() {
 
   // Fetch all companies for the map
   const { data: allCompanies = [], isLoading: companiesLoading } = useQuery({
-    queryKey: ['/api/users/companies'],
+    queryKey: ['/api/companies/map'],
     staleTime: 5 * 60 * 1000,
   }) as { data: any[]; isLoading: boolean };
 
