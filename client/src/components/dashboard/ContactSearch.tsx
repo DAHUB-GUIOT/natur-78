@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useLocation } from 'wouter';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -20,74 +20,7 @@ import {
   Building
 } from "lucide-react";
 
-// Mock data para contactos
-const contacts = [
-  {
-    id: 1,
-    name: "María González",
-    title: "CEO & Fundadora",
-    company: "EcoTours Colombia",
-    category: "startup",
-    location: "Bogotá, Colombia",
-    bio: "Emprendedora apasionada por el turismo sostenible. 10+ años de experiencia en ecoturismo.",
-    skills: ["Ecoturismo", "Sostenibilidad", "Liderazgo"],
-    connections: 234,
-    verified: true,
-    avatar: "/api/placeholder/40/40"
-  },
-  {
-    id: 2,
-    name: "Carlos Rivera",
-    title: "Managing Partner",
-    company: "Green Impact Fund",
-    category: "investor",
-    location: "Medellín, Colombia",
-    bio: "Inversionista especializado en startups de impacto ambiental. MBA Stanford.",
-    skills: ["Venture Capital", "ESG", "Fintech"],
-    connections: 892,
-    verified: true,
-    avatar: "/api/placeholder/40/40"
-  },
-  {
-    id: 3,
-    name: "Ana Morales",
-    title: "Conservation Director",
-    company: "Amazon Regenerative",
-    category: "ecosystem",
-    location: "Manaus, Brasil",
-    bio: "Bióloga marina especializada en conservación amazónica. PhD en Ecología.",
-    skills: ["Conservación", "Biología Marina", "Investigación"],
-    connections: 567,
-    verified: true,
-    avatar: "/api/placeholder/40/40"
-  },
-  {
-    id: 4,
-    name: "Diego Herrera",
-    title: "Mentor & Advisor",
-    company: "Tech for Good",
-    category: "mentor",
-    location: "Lima, Perú",
-    bio: "Mentor de startups tech. Ex-CTO de 3 unicornios latinoamericanos.",
-    skills: ["Mentoring", "Technology", "Scaling"],
-    connections: 1205,
-    verified: true,
-    avatar: "/api/placeholder/40/40"
-  },
-  {
-    id: 5,
-    name: "Sofia Vargas",
-    title: "Community Manager",
-    company: "Digital Nomad Hub",
-    category: "digital-nomad",
-    location: "Remote",
-    bio: "Nómada digital construyendo comunidades remotas en Latinoamérica.",
-    skills: ["Community Building", "Remote Work", "Marketing"],
-    connections: 445,
-    verified: false,
-    avatar: "/api/placeholder/40/40"
-  }
-];
+// Remove mock data - will use real data from API
 
 interface ContactSearchProps {
   onChatSelect?: (userId: number) => void;
@@ -99,6 +32,12 @@ export const ContactSearch = ({ onChatSelect }: ContactSearchProps) => {
   const [locationFilter, setLocationFilter] = useState('all');
   const [, setLocation] = useLocation();
   const queryClient = useQueryClient();
+
+  // Fetch all companies from API
+  const { data: allCompanies = [], isLoading: companiesLoading } = useQuery({
+    queryKey: ['/api/companies/map'],
+    staleTime: 5 * 60 * 1000,
+  }) as { data: any[]; isLoading: boolean };
 
   // Create or get conversation mutation
   const createConversationMutation = useMutation({
@@ -125,14 +64,24 @@ export const ContactSearch = ({ onChatSelect }: ContactSearchProps) => {
     createConversationMutation.mutate(contactId);
   };
 
-  const filteredContacts = contacts.filter(contact => {
-    const matchesSearch = contact.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         contact.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         contact.company.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         contact.skills.some(skill => skill.toLowerCase().includes(searchQuery.toLowerCase()));
+  // Filter companies based on search and filters
+  const filteredContacts = allCompanies.filter((company: any) => {
+    const fullName = `${company.firstName || ''} ${company.lastName || ''}`.trim();
+    const companyName = company.companyName || '';
+    const location = `${company.city || ''}, ${company.country || ''}`;
     
-    const matchesCategory = categoryFilter === 'all' || contact.category === categoryFilter;
-    const matchesLocation = locationFilter === 'all' || contact.location.includes(locationFilter);
+    const matchesSearch = searchQuery === "" ||
+      fullName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      companyName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      company.companyCategory?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      company.companyDescription?.toLowerCase().includes(searchQuery.toLowerCase());
+    
+    const matchesCategory = categoryFilter === 'all' || 
+      company.companyCategory?.toLowerCase().includes(categoryFilter.toLowerCase());
+    
+    const matchesLocation = locationFilter === 'all' || 
+      company.city?.toLowerCase().includes(locationFilter.toLowerCase()) ||
+      company.country?.toLowerCase().includes(locationFilter.toLowerCase());
     
     return matchesSearch && matchesCategory && matchesLocation;
   });
