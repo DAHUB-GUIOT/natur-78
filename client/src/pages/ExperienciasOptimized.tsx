@@ -8,15 +8,25 @@ import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/components/ui/use-toast";
 import { Plus, Edit, Trash2, MapPin, Calendar, Users, Search, Filter, Eye, Clock, CheckCircle2 } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { apiRequest } from "@/lib/queryClient";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const ExperienciasOptimized = () => {
   const { toast } = useToast();
   const { user } = useAuth();
+  const queryClient = useQueryClient();
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
+
+  // Fetch authenticated user data for auto-completion
+  const { data: userData, isLoading: userLoading } = useQuery({
+    queryKey: ['/api/auth/me'],
+    enabled: !!user,
+    staleTime: 5 * 60 * 1000, // 5 minutes
+  });
   
   const [formData, setFormData] = useState({
     title: '',
@@ -33,73 +43,103 @@ const ExperienciasOptimized = () => {
     images: []
   });
 
-  // Mock user experiences with more detailed data
-  const [experiences, setExperiences] = useState([
-    {
-      id: '1',
-      title: 'Caminata Ecológica Sierra Nevada',
-      description: 'Experiencia única de senderismo en la Sierra Nevada de Santa Marta con guías especializados de la comunidad Arhuaca. Aprende sobre biodiversidad, plantas medicinales y cosmovisión indígena.',
-      location: 'Sierra Nevada, Santa Marta, Magdalena',
-      category: 'Ecoturismo',
-      price: '180000',
-      dates: '2025-02-15 al 2025-02-17',
-      duration: '3 días, 2 noches',
-      maxParticipants: '12',
-      tags: 'naturaleza, aventura, sostenible, indígena, plantas medicinales',
-      status: 'activa',
-      views: 45,
-      bookings: 8,
-      rating: 4.8,
-      createdAt: '2025-01-20',
-      requirements: 'Buen estado físico, calzado de montaña',
-      includes: 'Guía especializado, alimentación, hospedaje rural, transporte interno'
-    },
-    {
-      id: '2',
-      title: 'Taller de Cocina Ancestral Boyacense',
-      description: 'Sumérgete en la tradición culinaria de Boyacá. Aprende a preparar platos típicos con ingredientes orgánicos locales junto a cocineras tradicionales.',
-      location: 'Villa de Leyva, Boyacá',
-      category: 'Cultura y Gastronomía',
-      price: '120000',
-      dates: '2025-03-10',
-      duration: '1 día (8 horas)',
-      maxParticipants: '15',
-      tags: 'gastronomía, tradición, local, orgánico, mujeres rurales',
-      status: 'pendiente',
-      views: 23,
-      bookings: 0,
-      rating: 0,
-      createdAt: '2025-01-22',
-      requirements: 'Ninguno especial',
-      includes: 'Ingredientes, utensilios, almuerzo tradicional, recetas'
-    },
-    {
-      id: '3',
-      title: 'Avistamiento de Aves Endémicas',
-      description: 'Descubre la increíble diversidad de aves del Chocó biogeográfico. Expedición especializada para observar especies endémicas y migratorias.',
-      location: 'Reserva Natural Río Ñambí, Nariño',
-      category: 'Ecoturismo',
-      price: '250000',
-      dates: '2025-04-05 al 2025-04-07',
-      duration: '3 días, 2 noches',
-      maxParticipants: '8',
-      tags: 'aves, biodiversidad, conservación, investigación, fotografía',
-      status: 'borrador',
-      views: 0,
-      bookings: 0,
-      rating: 0,
-      createdAt: '2025-01-24',
-      requirements: 'Binoculares (se pueden prestar), ropa de lluvia',
-      includes: 'Guía ornitólogo, hospedaje, alimentación, lista de especies'
+  // Map company categories to experience categories
+  const mapCompanyToExperienceCategory = (companyCategory: string) => {
+    const categoryMap: { [key: string]: string } = {
+      'Agencia de turismo': 'Ecoturismo',
+      'Operador turístico': 'Aventura',
+      'Guía de turismo': 'Cultura y Gastronomía',
+      'Alojamiento turístico': 'Bienestar',
+      'Ecoturismo': 'Ecoturismo',
+      'Turismo comunitario': 'Cultura y Gastronomía',
+      'Turismo regenerativo': 'Ecoturismo',
+      'Turismo de naturaleza': 'Ecoturismo',
+      'Transporte turístico': 'Aventura'
+    };
+    return categoryMap[companyCategory] || 'Ecoturismo';
+  };
+
+  // Helper functions to normalize API data for display
+  const getDisplayLocation = (location: any) => {
+    if (typeof location === 'string') return location;
+    if (typeof location === 'object' && location) {
+      const parts = [location.city, location.state, location.country].filter(Boolean);
+      return parts.length > 0 ? parts.join(', ') : location.address || 'Ubicación no especificada';
     }
-  ]);
+    return 'Ubicación no especificada';
+  };
+
+  const getDisplayDates = (availability: any) => {
+    if (typeof availability === 'string') return availability;
+    if (typeof availability === 'object' && availability?.dates) {
+      return Array.isArray(availability.dates) ? availability.dates.join(', ') : availability.dates;
+    }
+    return 'Fechas por definir';
+  };
+
+  // Auto-complete form with company data when creating new experience
+  const autoCompleteForm = () => {
+    if (!userData) return;
+    
+    const location = userData?.city && userData?.country 
+      ? `${userData?.city}, ${userData?.country}`
+      : userData?.address || '';
+    
+    setFormData({
+      title: '',
+      description: userData?.servicesOffered ? `Ofrecemos servicios de ${userData?.servicesOffered?.join(', ')}` : '',
+      location: location,
+      category: mapCompanyToExperienceCategory(userData?.companyCategory || ''),
+      price: '',
+      dates: '',
+      duration: '',
+      maxParticipants: '',
+      tags: userData?.businessType ? `${userData?.businessType}, sostenible, ${userData?.companyCategory?.toLowerCase()}` : '',
+      requirements: '',
+      includes: 'Servicios profesionales, asesoría especializada',
+      images: []
+    });
+  };
+
+  // Fetch real experiences from API
+  const { data: experiences = [], isLoading: experiencesLoading } = useQuery({
+    queryKey: ['/api/experiences'],
+    staleTime: 5 * 60 * 1000, // 5 minutes
+  });
 
   const filteredExperiences = experiences.filter(exp => {
-    const matchesSearch = exp.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         exp.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         exp.location.toLowerCase().includes(searchQuery.toLowerCase());
+    const displayLocation = getDisplayLocation(exp.location);
+    const matchesSearch = exp.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                         exp.description?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                         displayLocation.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesStatus = statusFilter === 'all' || exp.status === statusFilter;
     return matchesSearch && matchesStatus;
+  });
+
+  // Create experience mutation
+  const createExperienceMutation = useMutation({
+    mutationFn: async (experienceData: any) => {
+      return apiRequest('/api/experiences', {
+        method: 'POST',
+        body: JSON.stringify(experienceData),
+        headers: { 'Content-Type': 'application/json' }
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['/api/experiences'] });
+      toast({
+        title: "Experiencia creada",
+        description: "Tu experiencia se guardó exitosamente"
+      });
+      resetForm();
+    },
+    onError: (error: any) => {
+      toast({
+        title: "Error al crear experiencia",
+        description: error.message || "Hubo un problema al guardar la experiencia",
+        variant: "destructive"
+      });
+    }
   });
 
   const handleSubmit = () => {
@@ -112,42 +152,63 @@ const ExperienciasOptimized = () => {
       return;
     }
 
-    if (editingId) {
-      setExperiences(experiences.map(exp => 
-        exp.id === editingId 
-          ? { 
-              ...exp,
-              ...formData,
-              status: 'pendiente',
-              views: exp.views,
-              bookings: exp.bookings,
-              rating: exp.rating,
-              createdAt: exp.createdAt
-            }
-          : exp
-      ));
+    // Ensure userData is loaded before proceeding
+    if (!userData || userLoading) {
       toast({
-        title: "Experiencia actualizada",
-        description: "Los cambios están pendientes de aprobación"
+        title: "Cargando datos de empresa",
+        description: "Por favor espera a que se carguen los datos de tu empresa",
+        variant: "destructive"
       });
-    } else {
-      const newExperience = {
-        ...formData,
-        id: Date.now().toString(),
-        status: 'borrador',
-        views: 0,
-        bookings: 0,
-        rating: 0,
-        createdAt: new Date().toISOString().split('T')[0]
-      };
-      setExperiences([...experiences, newExperience]);
-      toast({
-        title: "Experiencia creada",
-        description: "Tu experiencia se guardó como borrador"
-      });
+      return;
     }
 
-    resetForm();
+    // Map form data to API schema
+    const experienceData = {
+      title: formData.title,
+      description: formData.description,
+      shortDescription: formData.description.substring(0, 150),
+      category: formData.category.toLowerCase(),
+      subcategory: formData.category,
+      difficulty: 'moderado',
+      duration: formData.duration,
+      groupSize: { min: 1, max: parseInt(formData.maxParticipants) || 10 },
+      location: { 
+        address: formData.location,
+        city: userData?.city,
+        country: userData?.country,
+        coordinates: userData?.coordinates 
+      },
+      meetingPoint: formData.location,
+      whatIncludes: formData.includes.split(',').map(item => item.trim()).filter(Boolean),
+      requirements: formData.requirements.split(',').map(item => item.trim()).filter(Boolean),
+      pricing: { 
+        basePrice: parseFloat(formData.price) || 0,
+        currency: 'COP',
+        includes: formData.includes 
+      },
+      availability: { 
+        dates: formData.dates ? [formData.dates] : [],
+        isAvailable: true 
+      },
+      tags: formData.tags.split(',').map(tag => tag.trim()).filter(Boolean),
+      // Company context
+      userId: userData.id,
+      companyId: userData.id,
+      isActive: true,
+      status: 'pendiente'
+    };
+
+    if (editingId) {
+      // TODO: Implement update API when available
+      toast({
+        title: "Función no disponible",
+        description: "La edición de experiencias estará disponible próximamente",
+        variant: "destructive"
+      });
+    } else {
+      // Create new experience via API
+      createExperienceMutation.mutate(experienceData);
+    }
   };
 
   const resetForm = () => {
@@ -161,18 +222,19 @@ const ExperienciasOptimized = () => {
   };
 
   const handleEdit = (experience: any) => {
+    // Map real API fields to form fields
     setFormData({
-      title: experience.title,
-      description: experience.description,
-      location: experience.location,
-      category: experience.category,
-      price: experience.price,
-      dates: experience.dates,
-      duration: experience.duration,
-      maxParticipants: experience.maxParticipants,
-      tags: experience.tags,
-      requirements: experience.requirements,
-      includes: experience.includes,
+      title: experience.title || '',
+      description: experience.description || '',
+      location: experience.location?.address || '',
+      category: experience.category || '',
+      price: experience.pricing?.basePrice?.toString() || '',
+      dates: experience.availability?.dates || '',
+      duration: experience.duration || '',
+      maxParticipants: experience.groupSize?.max?.toString() || '',
+      tags: experience.tags?.join(', ') || '',
+      requirements: experience.requirements?.join(', ') || '',
+      includes: experience.whatIncludes?.join(', ') || '',
       images: []
     });
     setEditingId(experience.id);
@@ -180,20 +242,20 @@ const ExperienciasOptimized = () => {
   };
 
   const handleDelete = (id: string) => {
-    setExperiences(experiences.filter(exp => exp.id !== id));
+    // TODO: Implement delete API when available
     toast({
-      title: "Experiencia eliminada",
-      description: "La experiencia ha sido eliminada exitosamente"
+      title: "Función no disponible",
+      description: "La eliminación de experiencias estará disponible próximamente",
+      variant: "destructive"
     });
   };
 
   const handlePublish = (id: string) => {
-    setExperiences(experiences.map(exp => 
-      exp.id === id ? { ...exp, status: 'pendiente' } : exp
-    ));
+    // TODO: Implement publish API when available  
     toast({
-      title: "Experiencia enviada",
-      description: "Tu experiencia está pendiente de aprobación"
+      title: "Función no disponible",
+      description: "La publicación de experiencias estará disponible próximamente",
+      variant: "destructive"
     });
   };
 
@@ -228,8 +290,12 @@ const ExperienciasOptimized = () => {
               </p>
             </div>
             <Button
-              onClick={() => setShowCreateForm(true)}
+              onClick={() => {
+                setShowCreateForm(true);
+                autoCompleteForm();
+              }}
               className="bg-green-600 hover:bg-green-700 text-white shadow-sm"
+              data-testid="button-create-experience"
             >
               <Plus className="h-4 w-4 mr-2" />
               Nueva Experiencia
@@ -475,32 +541,32 @@ const ExperienciasOptimized = () => {
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-gray-600">
                           <div className="flex items-center">
                             <MapPin className="h-4 w-4 mr-2 text-gray-400" />
-                            {experience.location}
+                            {getDisplayLocation(experience.location)}
                           </div>
                           <div className="flex items-center">
                             <Calendar className="h-4 w-4 mr-2 text-gray-400" />
-                            {experience.dates}
+                            {getDisplayDates(experience.availability)}
                           </div>
                           <div className="flex items-center">
                             <Users className="h-4 w-4 mr-2 text-gray-400" />
-                            {experience.duration}
+                            {experience.duration || 'Duración no especificada'}
                           </div>
                         </div>
 
-                        {experience.tags && (
+                        {experience.tags && experience.tags.length > 0 && (
                           <div className="flex flex-wrap gap-2 mt-3">
-                            {experience.tags.split(',').slice(0, 4).map((tag: string, index: number) => (
+                            {experience.tags.slice(0, 4).map((tag: string, index: number) => (
                               <Badge 
                                 key={index}
                                 variant="outline" 
                                 className="text-xs text-gray-600 border-gray-200 bg-gray-50"
                               >
-                                {tag.trim()}
+                                {tag}
                               </Badge>
                             ))}
-                            {experience.tags.split(',').length > 4 && (
+                            {experience.tags.length > 4 && (
                               <Badge variant="outline" className="text-xs text-gray-600 border-gray-200 bg-gray-50">
-                                +{experience.tags.split(',').length - 4} más
+                                +{experience.tags.length - 4} más
                               </Badge>
                             )}
                           </div>
@@ -513,16 +579,16 @@ const ExperienciasOptimized = () => {
                     {/* Stats */}
                     <div className="grid grid-cols-3 gap-4 p-4 bg-gray-50 rounded-lg">
                       <div className="text-center">
-                        <div className="text-lg font-semibold text-gray-900">{experience.views}</div>
+                        <div className="text-lg font-semibold text-gray-900">{experience.viewCount || 0}</div>
                         <div className="text-xs text-gray-600">Vistas</div>
                       </div>
                       <div className="text-center">
-                        <div className="text-lg font-semibold text-gray-900">{experience.bookings}</div>
+                        <div className="text-lg font-semibold text-gray-900">{experience.bookingCount || 0}</div>
                         <div className="text-xs text-gray-600">Reservas</div>
                       </div>
                       <div className="text-center">
                         <div className="text-lg font-semibold text-gray-900">
-                          {experience.rating > 0 ? experience.rating : '-'}
+                          {experience.rating && experience.rating > 0 ? experience.rating : '-'}
                         </div>
                         <div className="text-xs text-gray-600">Rating</div>
                       </div>
@@ -531,7 +597,7 @@ const ExperienciasOptimized = () => {
                     {/* Price */}
                     <div className="text-center p-3 bg-green-50 rounded-lg border border-green-200">
                       <div className="text-2xl font-bold text-green-700">
-                        ${parseInt(experience.price).toLocaleString()} COP
+                        ${(experience.pricing?.basePrice || 0).toLocaleString()} {experience.pricing?.currency || 'COP'}
                       </div>
                       <div className="text-sm text-green-600">por persona</div>
                     </div>
